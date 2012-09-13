@@ -3,11 +3,15 @@ package lector.share.model;
 import com.google.gwt.user.client.rpc.IsSerializable;
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.List;
+
 import javax.persistence.Basic;
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 
 import javax.persistence.Table;
 
@@ -15,57 +19,65 @@ import javax.persistence.Table;
 @Table(name = "catalogo")
 public class Catalogo implements Serializable, IsSerializable {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
-    @Basic
-    private ArrayList<Long> entryIds;
-    //NUEVO
-    private boolean isPrivate = true;
-    private Long professorId;
-    private String catalogName;
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private Long id;
+	@OneToMany(mappedBy = "catalog", cascade = CascadeType.ALL)
+	private List<Entry> entries = new ArrayList<Entry>();
+	// NUEVO
+	private boolean isPrivate = true;
+	private Long professorId;
+	private String catalogName;
 
-    public Catalogo() {
-        this.entryIds = new ArrayList<Long>();
-    }
+	public Catalogo() {
 
-    public Long getId() {
-        return id;
-    }
+	}
 
-    public void setId(Long id) {
-        this.id = id;
-    }
+	public Long getId() {
+		return id;
+	}
 
-    public ArrayList<Long> getEntryIds() {
-        return entryIds;
-    }
+	public void setId(Long id) {
+		this.id = id;
+	}
 
-    public void setEntryIds(ArrayList<Long> entryIds) {
-        this.entryIds = entryIds;
-    }
+	public List<Entry> getEntries() {
+		return entries;
+	}
 
-    public String getCatalogName() {
-        return catalogName;
-    }
+	public void setEntries(List<Entry> entries) {
+		this.entries = entries;
+	}
 
-    public void setCatalogName(String catalogName) {
-        this.catalogName = catalogName;
-    }
+	public boolean isPrivate() {
+		return isPrivate;
+	}
 
-    public boolean isIsPrivate() {
-        return isPrivate;
-    }
+	public void setPrivate(boolean isPrivate) {
+		this.isPrivate = isPrivate;
+	}
 
-    public void setIsPrivate(boolean isPrivate) {
-        this.isPrivate = isPrivate;
-    }
+	public String getCatalogName() {
+		return catalogName;
+	}
 
-    public Long getProfessorId() {
-        return professorId;
-    }
+	public void setCatalogName(String catalogName) {
+		this.catalogName = catalogName;
+	}
 
-    public void setProfessorId(Long professorId) {
-        this.professorId = professorId;
-    }
+	public boolean isIsPrivate() {
+		return isPrivate;
+	}
+
+	public void setIsPrivate(boolean isPrivate) {
+		this.isPrivate = isPrivate;
+	}
+
+	public Long getProfessorId() {
+		return professorId;
+	}
+
+	public void setProfessorId(Long professorId) {
+		this.professorId = professorId;
+	}
 }

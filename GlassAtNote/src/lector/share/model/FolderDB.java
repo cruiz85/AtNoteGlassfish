@@ -3,8 +3,11 @@ package lector.share.model;
 import com.google.gwt.user.client.rpc.IsSerializable;
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.List;
+
 import javax.persistence.Basic;
 import javax.persistence.Entity;
+import javax.persistence.ManyToMany;
 
 import javax.persistence.Table;
 
@@ -12,8 +15,8 @@ import javax.persistence.Table;
 @Table(name = "folder")
 public class FolderDB extends Entry implements Serializable, IsSerializable {
 
-	@Basic
-	private ArrayList<Long> entryIds;
+	@ManyToMany(mappedBy = "entries")
+	private List<Entry> children = new ArrayList<Entry>();
 
 	public FolderDB() {
 		super();

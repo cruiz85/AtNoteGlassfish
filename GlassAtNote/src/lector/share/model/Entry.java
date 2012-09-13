@@ -1,5 +1,6 @@
 package lector.share.model;
 
+
 import com.google.gwt.user.client.rpc.IsSerializable;
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -12,6 +13,9 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
 import javax.persistence.PrePersist;
 import javax.persistence.PreUpdate;
 
@@ -25,10 +29,13 @@ public class Entry implements Serializable, IsSerializable {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
-	@Basic
-	private List<Entry> parents = new ArrayList<Entry>();;
+
 	private String name;
+	@ManyToOne
+	@JoinColumn(name = "catalogId")
 	private Catalogo catalog;
+	@ManyToMany(mappedBy = "entries")
+	private List<Entry> parents = new ArrayList<Entry>();
 
 	public Entry() {
 
@@ -50,13 +57,6 @@ public class Entry implements Serializable, IsSerializable {
 		this.name = name;
 	}
 
-	public ArrayList<Long> getFathers() {
-		return fathers;
-	}
-
-	public void setFathers(ArrayList<Long> fathers) {
-		this.fathers = fathers;
-	}
 
 	public String getName() {
 		return name;
@@ -74,13 +74,27 @@ public class Entry implements Serializable, IsSerializable {
 		this.id = id;
 	}
 
-	public Long getCatalogId() {
-		return catalogId;
+
+	public List<Entry> getParents() {
+		return parents;
 	}
 
-	public void setCatalogId(Long catalogId) {
-		this.catalogId = catalogId;
+
+	public void setParents(List<Entry> parents) {
+		this.parents = parents;
 	}
+
+
+	public Catalogo getCatalog() {
+		return catalog;
+	}
+
+
+	public void setCatalog(Catalogo catalog) {
+		this.catalog = catalog;
+	}
+
+
 
 	private String uppercaseName;
 
