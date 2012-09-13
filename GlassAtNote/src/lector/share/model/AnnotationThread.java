@@ -1,12 +1,11 @@
 package lector.share.model;
 
+
 import com.google.gwt.user.client.rpc.IsSerializable;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-
-import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -32,8 +31,9 @@ public class AnnotationThread implements Serializable, IsSerializable {
 	@OneToMany(mappedBy = "father", cascade = CascadeType.ALL)
 	private List<AnnotationThread> subThreads = new ArrayList<AnnotationThread>();
 	
-	private Long annotationId; 
-
+	@ManyToOne
+	@JoinColumn(name = "annotation")
+	private Annotation annotation;
 	private String comment;
 	private Long userId;    
 	private String userName;
@@ -45,12 +45,12 @@ public class AnnotationThread implements Serializable, IsSerializable {
 	}
 
 	public AnnotationThread(AnnotationThread father,
-			List<AnnotationThread> subThreads, Long annotationId,
+			List<AnnotationThread> subThreads, Annotation annotation,
 			String comment, Long userId, String userName, Date createdDate) {
 		super();
 		this.father = father;
 		this.subThreads = subThreads;
-		this.annotationId = annotationId;
+		this.annotation = annotation;
 		this.comment = comment;
 		this.userId = userId;
 		this.userName = userName;
@@ -104,13 +104,13 @@ public class AnnotationThread implements Serializable, IsSerializable {
 	public void setId(Long id) {
 		this.id = id;
 	}
-
-	public Long getAnnotationId() {
-		return annotationId;
+	
+	public Annotation getAnnotation() {
+		return annotation;
 	}
 
-	public void setAnnotationId(Long annotationId) {
-		this.annotationId = annotationId;
+	public void setAnnotation(Annotation annotation) {
+		this.annotation = annotation;
 	}
 
 	public String getUserName() {

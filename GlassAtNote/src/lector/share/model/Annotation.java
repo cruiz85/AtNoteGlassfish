@@ -1,5 +1,8 @@
 package lector.share.model;
 
+
+
+
 import com.google.gwt.user.client.rpc.IsSerializable;
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -13,6 +16,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 
 import javax.persistence.Table;
@@ -28,10 +32,14 @@ public class Annotation implements Serializable, IsSerializable {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	private String bookId;
-	private Long userId; // no debería ser necesario guardar el objeto, existe
-							// una transacción que juegue con las dos
-							// referencias
-
+	@ManyToOne
+	@JoinColumn(name = "userId")
+	private UserApp user;
+	@ManyToOne
+	@JoinColumn(name = "activityId")
+	private ReadingActivity activity;
+	@OneToMany(mappedBy = "annotation", cascade = CascadeType.ALL)
+	private List<AnnotationThread> threads = new ArrayList<AnnotationThread>();
 	private String userName;
 	private int visibility = 0;
 	private int updatability = 0;
@@ -86,8 +94,24 @@ public class Annotation implements Serializable, IsSerializable {
 		this.bookId = bookId;
 	}
 
+	public List<AnnotationThread> getThreads() {
+		return threads;
+	}
+
+	public void setThreads(List<AnnotationThread> threads) {
+		this.threads = threads;
+	}
+
 	public static long getSerialversionuid() {
 		return serialVersionUID;
+	}
+
+	public ReadingActivity getActivity() {
+		return activity;
+	}
+
+	public void setActivity(ReadingActivity activity) {
+		this.activity = activity;
 	}
 
 	public Integer getPageNumber() {
@@ -134,12 +158,12 @@ public class Annotation implements Serializable, IsSerializable {
 		this.createdDate = createdDate;
 	}
 
-	public Long getUserId() {
-		return userId;
+	public UserApp getUser() {
+		return user;
 	}
 
-	public void setUserId(Long userId) {
-		this.userId = userId;
+	public void setUser(UserApp user) {
+		this.user = user;
 	}
 
 	public boolean isPersisted() {

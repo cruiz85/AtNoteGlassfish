@@ -1,27 +1,28 @@
 package lector.share.model;
 
+
 import com.google.gwt.user.client.rpc.IsSerializable;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.persistence.Basic;
+
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
+
 import javax.persistence.ManyToMany;
-import javax.persistence.OneToOne;
+import javax.persistence.OneToMany;
+
 
 import javax.persistence.Table;
 import javax.persistence.Transient;
 import javax.xml.bind.annotation.XmlRootElement;
 
 import lector.client.controler.Constants;
-import lector.client.reader.filter.FilterConfig;
+
 
 @Entity
 @Table(name = "user_app")
@@ -38,8 +39,14 @@ public class UserApp implements Serializable, IsSerializable {
 	private String profile;
 	@ManyToMany(mappedBy = "users")
 	private List<GroupApp> groups = new ArrayList<GroupApp>();
+	@OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+	private List<Annotation> annotations = new ArrayList<Annotation>();
 	
+	@OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+	private List<ReadingActivity> readingActivities = new ArrayList<ReadingActivity>();
 	private ArrayList<String> bookIds; // SOLO PARA PROFESORES. 
+	@OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+	private List<Template> templates = new ArrayList<Template>();
 	// DATOS DE GOOGLE.
 	@Transient
 	private boolean loggedIn = false;
@@ -110,7 +117,21 @@ public class UserApp implements Serializable, IsSerializable {
 		this.email = email;
 	}
 
+	public List<ReadingActivity> getReadingActivities() {
+		return readingActivities;
+	}
 
+	public void setReadingActivities(List<ReadingActivity> readingActivities) {
+		this.readingActivities = readingActivities;
+	}
+
+	public List<Template> getTemplates() {
+		return templates;
+	}
+
+	public void setTemplates(List<Template> templates) {
+		this.templates = templates;
+	}
 
 	public List<GroupApp> getGroups() {
 		return groups;
@@ -172,6 +193,13 @@ public class UserApp implements Serializable, IsSerializable {
 		this.isAuthenticated = isAuthenticated;
 	}
 
+	public List<Annotation> getAnnotations() {
+		return annotations;
+	}
+
+	public void setAnnotations(List<Annotation> annotations) {
+		this.annotations = annotations;
+	}
 
 	@Override
 	public String toString() {

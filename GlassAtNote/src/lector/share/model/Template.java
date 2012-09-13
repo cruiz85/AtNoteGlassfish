@@ -4,11 +4,13 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.CascadeType;
-import javax.persistence.Column;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
@@ -23,27 +25,28 @@ public class Template implements Serializable {
 	private short modifyable = 0;
 	@OneToMany(mappedBy = "template", cascade = CascadeType.ALL)
 	private List<TemplateCategory> categories = new ArrayList<TemplateCategory>();
-	@Column(name = "userId")
-	private Long userApp;  // no debe ser necesario tener el objeto
+	@ManyToOne
+	@JoinColumn(name = "userId")
+	private UserApp user;
 
 	public Template() {
 	}
 
-	public Long getUserApp() {
-		return userApp;
-	}
-
 	public Template(String name, short modifyable,
-			List<TemplateCategory> categories, Long userApp) {
+			List<TemplateCategory> categories, UserApp user) {
 		this();
 		this.name = name;
 		this.modifyable = modifyable;
 		this.categories = categories;
-		this.userApp = userApp;
+		this.user = user;
 	}
 
-	public void setUserApp(Long userApp) {
-		this.userApp = userApp;
+	public UserApp getUser() {
+		return user;
+	}
+
+	public void setUser(UserApp user) {
+		this.user = user;
 	}
 
 	public String getName() {
