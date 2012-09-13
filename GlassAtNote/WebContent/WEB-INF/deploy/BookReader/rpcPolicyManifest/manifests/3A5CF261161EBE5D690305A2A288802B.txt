@@ -1,0 +1,2 @@
+serviceClass: lector.client.book.reader.LoggerService
+path: 98198F0502AD59DACE5C4E15C6AA4435.gwt.rpc

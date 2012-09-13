@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<persistence version="1.0"
+	xmlns="http://java.sun.com/xml/ns/persistence" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://java.sun.com/xml/ns/persistence http://java.sun.com/xml/ns/persistence/persistence_1_0.xsd">
+	<persistence-unit name="System" transaction-type="JTA">
+	    <provider>org.eclipse.persistence.jpa.PersistenceProvider</provider>
+	     <jta-data-source>jdbc/_atnotePool</jta-data-source>
+		<class>lector.share.model.Annotation</class>
+		<class>lector.share.model.TextSelector</class>
+		<class>lector.share.model.GroupApp</class>
+		<class>lector.share.model.UserApp</class>
+		<class>lector.share.model.FolderDB</class>
+		<class>lector.share.model.FileDB</class>
+		<class>lector.share.model.Entry</class>
+		<class>lector.share.model.Catalogo</class>
+		<!--  <class>lector.client.catalogo.client.Catalog</class> -->
+		<class>lector.share.model.Language</class>
+		<class>lector.share.model.ReadingActivity</class>
+		<class>lector.share.model.AnnotationThread</class>
+		<class>lector.share.model.BookBlob</class>
+		<class>lector.share.model.Template</class>
+		<class>lector.share.model.TemplateCategory</class>
+		
+	
+		<class>lector.client.reader.filter.FilterConfig</class>
+		<class>lector.client.service.AnnotationSchema</class>
+		
+		
+		<!-- <class>com.service.AnnotationSimp</class>
+		<class>com.service.AnnotationToExport</class>
+		<class>com.service.BookSimp</class>
+		<class>com.service.FileToExport</class>
+
+		<class>com.service.ListOfList</class>
+		<class>com.service.ListOfSchema</class>
+		<class>com.service.UserAppSimp</class>
+		 -->
+		<exclude-unlisted-classes>false</exclude-unlisted-classes>
+		<properties>
+    	<property name="eclipselink.target-server" value="SunAS9"/>
+           <property name="eclipselink.target-database" 
+                      value="org.eclipse.persistence.platform.database.DerbyPlatform"/>
+            <property name="eclipselink.logging.level" value="FINEST"/>
+            <!-- turn off DDL generation after the model is stable -->            
+         <property name="eclipselink.ddl-generation" value="create-tables"/>
+            <property name="eclipselink.ddl-generation.output-mode" value="database"/> 
+        </properties>
+    </persistence-unit>
+</persistence>

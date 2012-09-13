@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?><web-app xmlns="http://java.sun.com/xml/ns/javaee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" version="2.5" xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd">
+	<servlet>
+		<servlet-name>GWTService</servlet-name>
+		<servlet-class>lector.server.GWTServiceImpl</servlet-class>
+	</servlet>
+	<servlet>
+		<servlet-name>ServletAdaptor</servlet-name>
+		<servlet-class>com.sun.jersey.spi.container.servlet.ServletContainer</servlet-class>
+	</servlet>
+	<servlet>
+		<servlet-name>ImageService</servlet-name>
+		<servlet-class>lector.server.ImageServiceImpl</servlet-class>
+	</servlet>
+	
+	<servlet>
+		<servlet-name>LoggerService</servlet-name>
+		<servlet-class>lector.server.LoggerServiceImpl</servlet-class>
+	</servlet>
+	<servlet>
+		<servlet-name>ExportService</servlet-name>
+		<servlet-class>lector.server.ExportServiceImpl</servlet-class>
+	</servlet>
+	<servlet>
+		<servlet-name>Upload</servlet-name>
+		<servlet-class>lector.server.Upload</servlet-class>
+	</servlet>
+	<servlet>
+		<servlet-name>Serve</servlet-name>
+		<servlet-class>lector.server.Serve</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>Upload</servlet-name>
+		<url-pattern>/upload</url-pattern>
+	</servlet-mapping>
+	<servlet-mapping>
+		<servlet-name>Serve</servlet-name>
+		<url-pattern>/serve</url-pattern>
+	</servlet-mapping>
+	<servlet-mapping>
+		<servlet-name>GWTService</servlet-name>
+		<url-pattern>/BookReader/book.reader/gwtservice</url-pattern>
+	</servlet-mapping>
+	<servlet-mapping>
+		<servlet-name>ImageService</servlet-name>
+		<url-pattern>/BookReader/book.reader/imageservice</url-pattern>
+	</servlet-mapping>
+	<servlet-mapping>
+		<servlet-name>LoggerService</servlet-name>
+		<url-pattern>/BookReader/book.reader/loggerservice</url-pattern>
+	</servlet-mapping>
+	<servlet-mapping>
+		<servlet-name>ExportService</servlet-name>
+		<url-pattern>/BookReader/book.reader/exportservice</url-pattern>
+	</servlet-mapping>
+	<servlet-mapping>
+		<servlet-name>ServletAdaptor</servlet-name>
+		<url-pattern>/rs/*</url-pattern>
+	</servlet-mapping>
+	<session-config>
+		<session-timeout>30</session-timeout>
+	</session-config>
+	<persistence-context-ref>
+		<persistence-context-ref-name>persistence/System</persistence-context-ref-name>
+		<persistence-unit-name>System</persistence-unit-name>
+	</persistence-context-ref>
+	<resource-ref>
+		<res-ref-name>UserTransaction</res-ref-name>
+		<res-type>javax.transaction.UserTransaction</res-type>
+		<res-auth>Container</res-auth>
+	</resource-ref>
+	<welcome-file-list>
+		<welcome-file>welcomeGWT.html</welcome-file>
+	</welcome-file-list>
+
+
+
+  <servlet>
+    <servlet-name>SystemServiceServlet</servlet-name>
+    <servlet-class>com.google.api.server.spi.SystemServiceServlet</servlet-class>
+    <init-param>
+      <param-name>services</param-name>
+      <param-value/>
+    </init-param>
+  </servlet>
+
+  <servlet-mapping>
+    <servlet-name>SystemServiceServlet</servlet-name>
+    <url-pattern>/_ah/spi/*</url-pattern>
+  </servlet-mapping>
+  
+   <servlet>
+         <servlet-name>quercus</servlet-name>
+         <servlet-class>com.caucho.quercus.servlet.GoogleQuercusServlet</servlet-class>
+    </servlet>
+    
+    <servlet-mapping>
+         <servlet-name>quercus</servlet-name>
+         <url-pattern>*.php</url-pattern>
+    </servlet-mapping>
+
+</web-app>

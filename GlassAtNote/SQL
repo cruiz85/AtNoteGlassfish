@@ -1,0 +1,26 @@
+CREATE  TABLE `atnote`.`template` (
+
+  `id` INT(11) NOT NULL AUTO_INCREMENT ,
+
+  `name` VARCHAR(45) NULL ,
+
+  `modifyable` SMALLINT NULL ,
+
+  `userId` INT(11) NOT NULL ,
+
+  PRIMARY KEY (`id`) );
+
+CREATE  TABLE `atnote`.`template_category` (
+
+  `id` INT(11) NOT NULL AUTO_INCREMENT ,
+
+  `name` VARCHAR(45) NULL ,
+
+  `order` INT NOT NULL ,
+
+  `fathertId` INT NULL ,
+
+  `templateId` INT NOT NULL ,
+
+  PRIMARY KEY (`id`) );
+
