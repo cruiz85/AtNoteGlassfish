@@ -21,15 +21,6 @@ import lector.client.reader.ExportObject;
 import lector.share.model.BookBlob;
 import lector.share.model.TextSelector;
 
-import com.google.appengine.api.blobstore.BlobInfo;
-import com.google.appengine.api.blobstore.BlobInfoFactory;
-import com.google.appengine.api.blobstore.BlobKey;
-import com.google.appengine.api.blobstore.BlobstoreService;
-import com.google.appengine.api.blobstore.BlobstoreServiceFactory;
-import com.google.appengine.api.images.Image;
-import com.google.appengine.api.images.ImagesService;
-import com.google.appengine.api.images.ImagesServiceFactory;
-import com.google.appengine.api.images.Transform;
 import com.google.gwt.user.server.rpc.RemoteServiceServlet;
 
 /**

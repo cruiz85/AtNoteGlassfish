@@ -1,6 +1,5 @@
 package com.service;
 
-import com.google.appengine.api.datastore.Text;
 import com.google.gwt.user.client.rpc.IsSerializable;
 import java.io.Serializable;
 import java.util.ArrayList;
