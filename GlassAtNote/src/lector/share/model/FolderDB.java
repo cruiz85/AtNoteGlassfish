@@ -1,5 +1,6 @@
 package lector.share.model;
 
+
 import com.google.gwt.user.client.rpc.IsSerializable;
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -7,7 +8,10 @@ import java.util.List;
 
 import javax.persistence.Basic;
 import javax.persistence.Entity;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+import javax.persistence.OneToMany;
 
 import javax.persistence.Table;
 
@@ -15,39 +19,27 @@ import javax.persistence.Table;
 @Table(name = "folder")
 public class FolderDB extends Entry implements Serializable, IsSerializable {
 
-	@ManyToMany(mappedBy = "entries")
+	@OneToMany
 	private List<Entry> children = new ArrayList<Entry>();
 
 	public FolderDB() {
 		super();
-		this.entryIds = new ArrayList<Long>();
+	
 	}
 
 	public FolderDB(String name) {
 		super(name);
-		this.entryIds = new ArrayList<Long>();
+	
 	}
 
-	public FolderDB(ArrayList<Long> fathers, String name) {
-		super(fathers, name);
+	public List<Entry> getChildren() {
+		return children;
 	}
 
-	public ArrayList<Long> getEntryIds() {
-		return entryIds;
+	public void setChildren(List<Entry> children) {
+		this.children = children;
 	}
 
-	public void setEntryIds(ArrayList<Long> entryIds) {
-		this.entryIds = entryIds;
-	}
-
-	@Override
-	public Long getCatalogId() {
-		return super.getCatalogId();
-	}
-
-	@Override
-	public void setCatalogId(Long catalogId) {
-		super.setCatalogId(catalogId);
-	}
+	
 
 }

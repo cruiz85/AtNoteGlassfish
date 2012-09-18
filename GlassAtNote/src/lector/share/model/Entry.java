@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.Basic;
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -16,6 +17,7 @@ import javax.persistence.InheritanceType;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.PrePersist;
 import javax.persistence.PreUpdate;
 
@@ -34,7 +36,7 @@ public class Entry implements Serializable, IsSerializable {
 	@ManyToOne
 	@JoinColumn(name = "catalogId")
 	private Catalogo catalog;
-	@ManyToMany(mappedBy = "entries")
+	@OneToMany
 	private List<Entry> parents = new ArrayList<Entry>();
 
 	public Entry() {

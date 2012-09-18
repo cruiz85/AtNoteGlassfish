@@ -1,8 +1,4 @@
 package lector.share.model;
-
-
-
-
 import com.google.gwt.user.client.rpc.IsSerializable;
 import java.io.Serializable;
 import java.util.ArrayList;
