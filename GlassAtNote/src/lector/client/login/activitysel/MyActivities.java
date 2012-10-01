@@ -14,7 +14,7 @@ import lector.client.login.bookselec.ButtonActivityReader;
 import lector.client.reader.Book;
 import lector.client.reader.LoadingPanel;
 import lector.client.reader.MainEntryPoint;
-import lector.share.model.BookBlob;
+import lector.share.model.LocalBook;
 import lector.share.model.Catalogo;
 import lector.share.model.Language;
 import lector.share.model.ReadingActivity;
@@ -262,7 +262,7 @@ public class MyActivities implements EntryPoint {
 				
 				button.addClickHandler(new ClickHandler() {
 					private AsyncCallback<Book> callback;
-					private AsyncCallback<BookBlob> callback2;
+					private AsyncCallback<LocalBook> callback2;
 
 					public void onClick(ClickEvent event) {
 
@@ -307,9 +307,9 @@ public class MyActivities implements EntryPoint {
 						};
 						
 						
-						callback2=new AsyncCallback<BookBlob>() {
+						callback2=new AsyncCallback<LocalBook>() {
 							
-							public void onSuccess(BookBlob result) {
+							public void onSuccess(LocalBook result) {
 								ActualUser.setReadingactivity(RA);
 								Book B=new Book(result.getAuthor(), String.valueOf(result.getId()), result.getPagesCount(), result.getPublishedYear(), result.getTitle(), "LocalBooks.jpg", (String)null);
 								ActualUser.setBook(B);
@@ -416,7 +416,7 @@ public class MyActivities implements EntryPoint {
 				
 				button.addClickHandler(new ClickHandler() {
 					private AsyncCallback<Book> callback;
-					private AsyncCallback<BookBlob> callback2;
+					private AsyncCallback<LocalBook> callback2;
 
 					public void onClick(ClickEvent event) {
 
@@ -459,9 +459,9 @@ public class MyActivities implements EntryPoint {
 
 
 						};
-						callback2=new AsyncCallback<BookBlob>() {
+						callback2=new AsyncCallback<LocalBook>() {
 							
-							public void onSuccess(BookBlob result) {
+							public void onSuccess(LocalBook result) {
 								ActualUser.setReadingactivity(RA);
 								Book B=new Book(result.getAuthor(), String.valueOf(result.getId()), result.getPagesCount(), result.getPublishedYear(), result.getTitle(), "LocalBooks.jpg", (String)null);
 								ActualUser.setBook(B);

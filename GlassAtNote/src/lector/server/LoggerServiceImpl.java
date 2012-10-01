@@ -12,7 +12,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import lector.client.book.reader.ImageService;
 import lector.client.book.reader.LoggerService;
-import lector.share.model.BookBlob;
+import lector.share.model.LocalBook;
 
 import com.google.appengine.api.blobstore.BlobstoreService;
 import com.google.appengine.api.blobstore.BlobstoreServiceFactory;

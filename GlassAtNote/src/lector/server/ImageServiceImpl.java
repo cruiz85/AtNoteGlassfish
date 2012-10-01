@@ -18,7 +18,7 @@ import org.apache.commons.codec.binary.Base64;
 import lector.client.book.reader.GWTService;
 import lector.client.book.reader.ImageService;
 import lector.client.reader.ExportObject;
-import lector.share.model.BookBlob;
+import lector.share.model.LocalBook;
 import lector.share.model.TextSelector;
 
 import com.google.gwt.user.server.rpc.RemoteServiceServlet;
@@ -37,18 +37,18 @@ public class ImageServiceImpl extends RemoteServiceServlet implements
 		return blobstoreService.createUploadUrl("/upload");
 	}
 
-	public ArrayList<BookBlob> getBookBlobsByUserId(Long userAppId) {
+	public ArrayList<LocalBook> getBookBlobsByUserId(Long userAppId) {
 		EntityManager entityManager = EMF.get().createEntityManager();
-		List<BookBlob> list;
-		ArrayList<BookBlob> bookBlobs;
+		List<LocalBook> list;
+		ArrayList<LocalBook> bookBlobs;
 		String sql = "SELECT r FROM BookBlob r WHERE r.userApp=" + userAppId;
 		list = entityManager.createQuery(sql).getResultList();
-		bookBlobs = new ArrayList<BookBlob>(list);
+		bookBlobs = new ArrayList<LocalBook>(list);
 
 		if (list.isEmpty()) {
 			return null;
 		} else {
-			for (BookBlob bookieBlob : bookBlobs) {
+			for (LocalBook bookieBlob : bookBlobs) {
 				java.util.ArrayList<String> webLinks = new java.util.ArrayList<String>(
 						(java.util.ArrayList<String>) bookieBlob.getWebLinks());
 				bookieBlob.getWebLinks().clear();
@@ -63,18 +63,18 @@ public class ImageServiceImpl extends RemoteServiceServlet implements
 		return bookBlobs;
 	}
 
-	public BookBlob loadBookBlobById(Long id) {
+	public LocalBook loadBookBlobById(Long id) {
 		EntityManager entityManager = EMF.get().createEntityManager();
-		List<BookBlob> list;
-		ArrayList<BookBlob> bookBlobs;
+		List<LocalBook> list;
+		ArrayList<LocalBook> bookBlobs;
 		String sql = "SELECT r FROM BookBlob r WHERE r.id=" + id;
 		list = entityManager.createQuery(sql).getResultList();
-		bookBlobs = new ArrayList<BookBlob>(list);
+		bookBlobs = new ArrayList<LocalBook>(list);
 
 		if (list.isEmpty()) {
 			return null;
 		} else {
-			BookBlob bookieBlob = bookBlobs.get(0);
+			LocalBook bookieBlob = bookBlobs.get(0);
 			java.util.ArrayList<String> webLinks = new java.util.ArrayList<String>(
 					(java.util.ArrayList<String>) bookieBlob.getWebLinks());
 			bookieBlob.getWebLinks().clear();
@@ -87,7 +87,7 @@ public class ImageServiceImpl extends RemoteServiceServlet implements
 		return bookBlobs.get(0);
 	}
 
-	public void saveBookBlob(BookBlob bookBlob) {
+	public void saveBookBlob(LocalBook bookBlob) {
 		EntityManager entityManager = EMF.get().createEntityManager();
 		EntityTransaction entityTransaction = entityManager.getTransaction();
 
@@ -257,7 +257,7 @@ public class ImageServiceImpl extends RemoteServiceServlet implements
 	}
 
 	public String logoImage() {
-		BookBlob logo = loadBookBlobById(283002l);
+		LocalBook logo = loadBookBlobById(283002l);
 		String blobKeyString = logo.getWebLinks().get(0);
 		String[] split = blobKeyString.split("=");
 		BlobKey blobKey = new BlobKey(split[1]);

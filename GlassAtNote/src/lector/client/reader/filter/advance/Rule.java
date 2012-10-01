@@ -9,7 +9,7 @@ import lector.client.book.reader.GWTServiceAsync;
 import lector.client.controler.Constants;
 import lector.client.login.ActualUser;
 import lector.share.model.Annotation;
-import lector.share.model.FileDB;
+import lector.share.model.Tag;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.user.client.Window;
@@ -162,10 +162,10 @@ public class Rule extends Composite {
 		}
 		
 		
-		bookReaderServiceHolder.getEntriesIdsByIdsRec(TiposPos, new AsyncCallback<ArrayList<FileDB>>() {
+		bookReaderServiceHolder.getEntriesIdsByIdsRec(TiposPos, new AsyncCallback<ArrayList<Tag>>() {
 			
 
-			public void onSuccess(ArrayList<FileDB> result) {
+			public void onSuccess(ArrayList<Tag> result) {
 				ArrayList<Long> ListaAnot=listaAnotClear(result);
 				
 				
@@ -262,11 +262,11 @@ public class Rule extends Composite {
 				
 			}
 			
-			private ArrayList<Long> listaAnotClear(ArrayList<FileDB> result) {
+			private ArrayList<Long> listaAnotClear(ArrayList<Tag> result) {
 				ArrayList<Long> Salida=new ArrayList<Long>();
 				if (!result.isEmpty())
 				{			
-				for (FileDB FileUni : result) {
+				for (Tag FileUni : result) {
 					Salida=addSalida(Salida,FileUni);
 				}
 				}
@@ -277,7 +277,7 @@ public class Rule extends Composite {
 			}
 
 			private ArrayList<Long> addSalida(
-					ArrayList<Long> entrada, FileDB fileUni) {
+					ArrayList<Long> entrada, Tag fileUni) {
 				ArrayList<Long> Actual=fileUni.getAnnotationsIds();
 				
 				for (Long long1 : Actual) {

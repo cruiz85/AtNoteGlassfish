@@ -16,7 +16,7 @@ import lector.client.reader.AnnotationNotFoundException;
 import lector.client.reader.LoadingPanel;
 import lector.client.reader.filter.advance.ClickHandlerMioFilterAdvance;
 import lector.share.model.Annotation;
-import lector.share.model.FileDB;
+import lector.share.model.Tag;
 import lector.share.model.Language;
 
 import com.google.gwt.core.client.EntryPoint;
@@ -307,18 +307,18 @@ public class Browser implements EntryPoint {
 			BotonesStackPanelBrowser BSM= (BotonesStackPanelBrowser)SelectedB.getWidget(i);
 			Tipos.add(BSM.getEntidad().getID()) ;
 		}
-		bookReaderServiceHolder.getEntriesIdsByIdsRec(Tipos, new AsyncCallback<ArrayList<FileDB>>() {
+		bookReaderServiceHolder.getEntriesIdsByIdsRec(Tipos, new AsyncCallback<ArrayList<Tag>>() {
 			
-			public void onSuccess(ArrayList<FileDB> result) {
+			public void onSuccess(ArrayList<Tag> result) {
 				generafiltro(result);
 				filterAndAdd(result);
 				
 				
 			}
 			
-			private void generafiltro(ArrayList<FileDB> result) {
+			private void generafiltro(ArrayList<Tag> result) {
 				filtroResidual=new ArrayList<Long>();
-				for (FileDB long1 : result) {
+				for (Tag long1 : result) {
 					filtroResidual.add(long1.getId());
 				}
 			}
@@ -330,9 +330,9 @@ public class Browser implements EntryPoint {
 		});
 	}
 
-	protected void filterAndAdd(ArrayList<FileDB> result) {
+	protected void filterAndAdd(ArrayList<Tag> result) {
 		ArrayList<Long> ArrayAnotaciones=new ArrayList<Long>();
-		for (FileDB long1 : result) {
+		for (Tag long1 : result) {
 			boolean esta=false;
 			for (Long PosibleIds : long1.getAnnotationsIds()) {
 				for (Long EstaIds : ArrayAnotaciones) {

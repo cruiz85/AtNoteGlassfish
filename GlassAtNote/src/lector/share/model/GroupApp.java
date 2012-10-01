@@ -3,7 +3,8 @@ package lector.share.model;
 import com.google.gwt.user.client.rpc.IsSerializable;
 import java.io.Serializable;
 import java.util.ArrayList;
-import javax.persistence.Basic;
+import java.util.List;
+
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -12,62 +13,76 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
-
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "group_app")
+@Table(name = "group")
 public class GroupApp implements Serializable, IsSerializable {
-//TODO: Revisar esta clase, para que es necesario los bookIds
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
-    private String name;
-    @ManyToMany(cascade = CascadeType.ALL)
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private Long id;
+	private String name;
+	@ManyToOne
+	Professor professor;
+	@ManyToMany(cascade = CascadeType.ALL)
 	@JoinTable(name = "group_user", joinColumns = { @JoinColumn(name = "groupId", referencedColumnName = "id") }, inverseJoinColumns = { @JoinColumn(name = "userId", referencedColumnName = "id") })
-    private ArrayList<UserApp> users = new ArrayList<UserApp>();
-    //@Basic
-   // private ArrayList<String> bookIds; //Por qué se tiene esto?.
+	private List<Student> participatingStudents = new ArrayList<Student>();
 
-    public GroupApp() {
-       // this.bookIds = new ArrayList<String>();
-    }
+	@ManyToMany(cascade = CascadeType.ALL)
+	@JoinTable(name = "group_user", joinColumns = { @JoinColumn(name = "groupId", referencedColumnName = "id") }, inverseJoinColumns = { @JoinColumn(name = "userId", referencedColumnName = "id") })
+	private List<Student> remainingStudents = new ArrayList<Student>();
 
-    public GroupApp(String name) {
-        this();
-        this.name = name;
-    }
 
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-//    public ArrayList<String> getBookIds() {
-//        return bookIds;
-//    }
-//
-//    public void setBookIds(ArrayList<String> bookIds) {
-//        this.bookIds = bookIds;
-//    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-	public ArrayList<UserApp> getUsers() {
-		return users;
+	public GroupApp() {
+	
 	}
 
-	public void setUsers(ArrayList<UserApp> users) {
-		this.users = users;
+	public GroupApp(String name) {
+		this();
+		this.name = name;
 	}
-    
+
+	public Long getId() {
+		return id;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	public Professor getProfessor() {
+		return professor;
+	}
+
+	public void setProfessor(Professor professor) {
+		this.professor = professor;
+	}
+
+	public List<Student> getParticipatingStudents() {
+		return participatingStudents;
+	}
+
+	public void setParticipatingStudents(List<Student> participatingStudents) {
+		this.participatingStudents = participatingStudents;
+	}
+
+	public List<Student> getRemainingStudents() {
+		return remainingStudents;
+	}
+
+	public void setRemainingStudents(List<Student> remainingStudents) {
+		this.remainingStudents = remainingStudents;
+	}
+
+	
 }

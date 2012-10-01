@@ -30,7 +30,7 @@ import lector.client.service.AnnotationSchema;
 import lector.share.model.Annotation;
 import lector.share.model.AnnotationThread;
 import lector.share.model.Catalogo;
-import lector.share.model.FileDB;
+import lector.share.model.Tag;
 import lector.share.model.GroupApp;
 import lector.share.model.Language;
 import lector.share.model.ReadingActivity;
@@ -86,7 +86,7 @@ public interface GWTService extends RemoteService {
 	public ArrayList<Annotation> getAnnotationsByIdsAndAuthorsTeacher(
 			ArrayList<Long> ids, ArrayList<Long> authorIds, Long Activity);
 
-	public ArrayList<FileDB> getEntriesIdsByIdsRec(ArrayList<Long> Ids);
+	public ArrayList<Tag> getEntriesIdsByIdsRec(ArrayList<Long> Ids);
 
 	public ArrayList<Annotation> getAnnotationsByIdsTeacher(
 			ArrayList<Long> ids, Long readingActivityId);
@@ -164,9 +164,9 @@ public interface GWTService extends RemoteService {
 
 	public ArrayList<Catalog> getCatalogs();
 
-	public FileDB loadFileById(Long id);
+	public Tag loadFileById(Long id);
 
-	public FileDB loadFileByNameAndCatalogId(String fileName, Long catalogId);
+	public Tag loadFileByNameAndCatalogId(String fileName, Long catalogId);
 
 	public void deleteCatalog(Long catalogId) throws GeneralException,
 			NullParameterException;
@@ -209,9 +209,9 @@ public interface GWTService extends RemoteService {
 
 	public void removeFileFromAnnotation(Long annotationId, Long fileId);
 
-	public ArrayList<FileDB> getFilesByIds(ArrayList<Long> ids);
+	public ArrayList<Tag> getFilesByIds(ArrayList<Long> ids);
 
-	public ArrayList<FileDB> getFilesByNameAndCatalogId(
+	public ArrayList<Tag> getFilesByNameAndCatalogId(
 			ArrayList<String> names, Long catalogId);
 
 	public ArrayList<Long> getEntriesIdsByNames(ArrayList<String> names,

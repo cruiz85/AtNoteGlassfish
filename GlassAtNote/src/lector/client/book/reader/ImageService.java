@@ -7,7 +7,7 @@ package lector.client.book.reader;
 import java.util.ArrayList;
 
 import lector.client.reader.ExportObject;
-import lector.share.model.BookBlob;
+import lector.share.model.LocalBook;
 import lector.share.model.TextSelector;
 
 import com.google.gwt.user.client.rpc.RemoteService;
@@ -22,11 +22,11 @@ public interface ImageService extends RemoteService {
 
 	public String getBlobstoreUploadUrl();
 
-	public ArrayList<BookBlob> getBookBlobsByUserId(Long userAppId);
+	public ArrayList<LocalBook> getBookBlobsByUserId(Long userAppId);
 
-	public BookBlob loadBookBlobById(Long id);
+	public LocalBook loadBookBlobById(Long id);
 
-	public void saveBookBlob(BookBlob bookBlob);
+	public void saveBookBlob(LocalBook bookBlob);
 
 	public String loadHTMLStringForExport(ArrayList<ExportObject> exportObjects);
 	

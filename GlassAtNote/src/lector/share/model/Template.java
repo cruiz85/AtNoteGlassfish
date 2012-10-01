@@ -26,27 +26,26 @@ public class Template implements Serializable {
 	@OneToMany(mappedBy = "template", cascade = CascadeType.ALL)
 	private List<TemplateCategory> categories = new ArrayList<TemplateCategory>();
 	@ManyToOne
-	@JoinColumn(name = "userId")
-	private UserApp user;
+	private Professor professor;
 
 	public Template() {
 	}
 
 	public Template(String name, short modifyable,
-			List<TemplateCategory> categories, UserApp user) {
+			List<TemplateCategory> categories, Professor professor) {
 		this();
 		this.name = name;
 		this.modifyable = modifyable;
 		this.categories = categories;
-		this.user = user;
+		this.professor = professor;
 	}
 
-	public UserApp getUser() {
-		return user;
+	public Professor getProfessor() {
+		return professor;
 	}
 
-	public void setUser(UserApp user) {
-		this.user = user;
+	public void setProfessor(Professor professor) {
+		this.professor = professor;
 	}
 
 	public String getName() {

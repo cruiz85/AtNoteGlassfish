@@ -9,7 +9,7 @@ import lector.client.controler.Constants;
 import lector.client.login.ActualUser;
 import lector.client.reader.PanelTextComent.CatalogTipo;
 import lector.share.model.Annotation;
-import lector.share.model.FileDB;
+import lector.share.model.Tag;
 import lector.share.model.Language;
 
 import com.google.appengine.api.datastore.Text;
@@ -116,16 +116,16 @@ public class TextComentNoEdit extends DialogBox {
 		
 
 		bookReaderServiceHolder.getFilesByIds(annotation.getFileIds(),
-				new AsyncCallback<ArrayList<FileDB>>() {
+				new AsyncCallback<ArrayList<Tag>>() {
 
 					public void onFailure(Throwable caught) {
 
 					}
 
-					public void onSuccess(ArrayList<FileDB> result) {
+					public void onSuccess(ArrayList<Tag> result) {
 						Antiguos=new ArrayList<Long>();
 						for (int i = 0; i < result.size(); i++) {
-						FileDB resulttmp=result.get(i);
+						Tag resulttmp=result.get(i);
 						Antiguos.add(resulttmp.getId());
 						File F=new File(resulttmp.getName(), resulttmp.getId(), resulttmp.getCatalogId());
 						F.setFathers(null);

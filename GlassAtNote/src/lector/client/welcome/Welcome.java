@@ -10,7 +10,7 @@ import lector.client.controler.LogMessageConstants;
 import lector.client.logger.Logger;
 import lector.client.login.ActualUser;
 import lector.client.reader.About;
-import lector.share.model.BookBlob;
+import lector.share.model.LocalBook;
 import lector.share.model.UserApp;
 
 import com.google.appengine.api.datastore.Text;

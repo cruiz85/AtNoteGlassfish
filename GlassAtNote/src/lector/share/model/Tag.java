@@ -10,16 +10,16 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "file")
-public class FileDB extends Entry implements Serializable, IsSerializable {
+public class Tag extends Entry implements Serializable, IsSerializable {
 
-	@ManyToMany(mappedBy = "files")
+	@ManyToMany(mappedBy = "tags")
 	private List<Annotation> annotations = new ArrayList<Annotation>();
 
-	public FileDB() {
+	public Tag() {
 		super();
 	}
 
-	public FileDB(String name) {
+	public Tag(String name) {
 		super(name);
 	}
 

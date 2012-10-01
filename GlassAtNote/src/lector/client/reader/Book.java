@@ -2,126 +2,157 @@ package lector.client.reader;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.List;
+
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.ManyToOne;
+import javax.persistence.Table;
 
 import lector.share.model.Annotation;
+import lector.share.model.Professor;
 
+@Entity
+@Table(name = "book")
 public class Book implements Serializable {
-
-    /**
-	 * 
-	 */
 	private static final long serialVersionUID = 1L;
+
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private Long id;
 	private String author;
-    private String id;
-    private String pagesCount;
-    private String publishedYear;
-    private String title;
-    private String tbURL;
-    private String imagesPath;
-    private String url;
-    private int annotationsCount = 0;
-    private ArrayList<Annotation> annotations;
-    private ArrayList<String> webLinks = new ArrayList<String>();
+	private String title;
+	private String ISBN;
+	private String pagesCount;
+	private String publishedYear;
+	@ManyToOne
+	private Professor professor;
+//	private String tbURL;   de Google
+//	private String imagesPath;
+//	private String url;
+	private int annotationsCount = 0;
+	private ArrayList<Annotation> annotations;
+	private List<String> webLinks = new ArrayList<String>();
 
-    public Book() {
-    }
+	public Book() {
+	}
 
-    public Book(String author, String id, String pagesCount, String publishedYear, String title, String tbURL, String url) {
-        this.author = author;
-        this.id = id;
-        this.pagesCount = pagesCount;
-        this.publishedYear = publishedYear;
-        this.title = title;
-        this.tbURL = tbURL;
-        this.url = url;
-    }
+	public Book(Professor professor,String author, String ISBN, String pagesCount,
+			String publishedYear, String title, String tbURL, String url) {
+		this.professor = professor;
+		this.author = author;
+		this.ISBN = ISBN;
+		this.pagesCount = pagesCount;
+		this.publishedYear = publishedYear;
+		this.title = title;
+		this.tbURL = tbURL;
+		this.url = url;
+	}
 
-    public String getUrl() {
-        return url;
-    }
+	public String getUrl() {
+		return url;
+	}
 
-    public void setUrl(String url) {
-        this.url = url;
-    }
+	public void setUrl(String url) {
+		this.url = url;
+	}
 
-    public int getAnnotationsCount() {
-        return annotationsCount;
-    }
+	public int getAnnotationsCount() {
+		return annotationsCount;
+	}
 
-    public void setAnnotationsCount(int annotationsCount) {
-        this.annotationsCount = annotationsCount;
-    }
+	public void setAnnotationsCount(int annotationsCount) {
+		this.annotationsCount = annotationsCount;
+	}
 
-    public String getAuthor() {
-        return author;
-    }
+	public String getAuthor() {
+		return author;
+	}
 
-    public void setAuthor(String author) {
-        this.author = author;
-    }
+	public void setAuthor(String author) {
+		this.author = author;
+	}
 
-    public String getId() {
-        return id;
-    }
+	public Professor getProfessor() {
+		return professor;
+	}
 
-    public void setId(String id) {
-        this.id = id;
-    }
+	public void setProfessor(Professor professor) {
+		this.professor = professor;
+	}
 
-    public String getImagesPath() {
-        return imagesPath;
-    }
+	public Long getId() {
+		return id;
+	}
 
-    public void setImagesPath(String imagesPath) {
-        this.imagesPath = imagesPath;
-    }
+	public void setId(Long id) {
+		this.id = id;
+	}
 
-    public String getPagesCount() {
-        return pagesCount;
-    }
+	public String getISBN() {
+		return ISBN;
+	}
 
-    public void setPagesCount(String pagesCount) {
-        this.pagesCount = pagesCount;
-    }
+	public void setISBN(String iSBN) {
+		ISBN = iSBN;
+	}
 
-    public String getPublishedYear() {
-        return publishedYear;
-    }
+	public String getImagesPath() {
+		return imagesPath;
+	}
 
-    public void setPublishedYear(String publishedYear) {
-        this.publishedYear = publishedYear;
-    }
+	public void setImagesPath(String imagesPath) {
+		this.imagesPath = imagesPath;
+	}
 
-    public String getTbURL() {
-        return tbURL;
-    }
+	public String getPagesCount() {
+		return pagesCount;
+	}
 
-    public void setTbURL(String tbURL) {
-        this.tbURL = tbURL;
-    }
+	public void setPagesCount(String pagesCount) {
+		this.pagesCount = pagesCount;
+	}
 
-    public String getTitle() {
-        return title;
-    }
+	public String getPublishedYear() {
+		return publishedYear;
+	}
 
-    public void setTitle(String title) {
-        this.title = title;
-    }
+	public void setPublishedYear(String publishedYear) {
+		this.publishedYear = publishedYear;
+	}
 
-    public ArrayList<String> getWebLinks() {
-        return webLinks;
-    }
+	public String getTbURL() {
+		return tbURL;
+	}
 
-    public void setWebLinks(ArrayList<String> webLinks) {
-        this.webLinks = webLinks;
-    }
+	public void setTbURL(String tbURL) {
+		this.tbURL = tbURL;
+	}
 
-    public void setAnnotations(ArrayList<Annotation> annotations) {
-        this.annotations = annotations;
-        this.annotationsCount = this.annotations.size();
-    }
+	public String getTitle() {
+		return title;
+	}
 
-    public ArrayList<Annotation> getAnnotations() {
-        return annotations;
-    }
+	public void setTitle(String title) {
+		this.title = title;
+	}
+
+	public List<String> getWebLinks() {
+		return webLinks;
+	}
+
+	public void setWebLinks(List<String> webLinks) {
+		this.webLinks = webLinks;
+	}
+
+	public void setAnnotations(ArrayList<Annotation> annotations) {
+		this.annotations = annotations;
+		this.annotationsCount = this.annotations.size();
+	}
+
+	public ArrayList<Annotation> getAnnotations() {
+		return annotations;
+	}
 }

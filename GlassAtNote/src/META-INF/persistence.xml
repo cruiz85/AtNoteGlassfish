@@ -10,14 +10,17 @@
 		<class>lector.share.model.GroupApp</class>
 		<class>lector.share.model.UserApp</class>
 		<class>lector.share.model.FolderDB</class>
-		<class>lector.share.model.FileDB</class>
+		<class>lector.share.model.Tag</class>
 		<class>lector.share.model.Entry</class>
 		<class>lector.share.model.Catalogo</class>
 		<!--  <class>lector.client.catalogo.client.Catalog</class> -->
 		<class>lector.share.model.Language</class>
 		<class>lector.share.model.ReadingActivity</class>
+		<class>lector.share.model.Student</class>
+		<class>lector.share.model.Professor</class>
+		<class>lector.client.reader.Book</class>
 		<class>lector.share.model.AnnotationThread</class>
-		<class>lector.share.model.BookBlob</class>
+		<class>lector.share.model.LocalBook</class>
 		<class>lector.share.model.Template</class>
 		<class>lector.share.model.TemplateCategory</class>
 		

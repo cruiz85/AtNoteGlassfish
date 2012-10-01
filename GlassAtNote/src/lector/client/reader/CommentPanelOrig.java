@@ -12,7 +12,7 @@ import lector.client.controler.Constants;
 import lector.client.login.ActualUser;
 import lector.client.reader.hilocomentarios.ReplyDialog;
 import lector.share.model.Annotation;
-import lector.share.model.FileDB;
+import lector.share.model.Tag;
 import lector.share.model.TextSelector;
 
 import com.google.gwt.user.client.Command;
@@ -325,7 +325,7 @@ public enum CatalogTipo {
 
 
         bookReaderServiceHolder.getFilesByIds(annotation.getFileIds(),
-				new AsyncCallback<ArrayList<FileDB>>() {
+				new AsyncCallback<ArrayList<Tag>>() {
 
         		private int whithPanel;
         		
@@ -333,11 +333,11 @@ public enum CatalogTipo {
 
 					}
 
-					public void onSuccess(ArrayList<FileDB> result) {
+					public void onSuccess(ArrayList<Tag> result) {
 					//	System.out.println(annotation.getComment());
 						whithPanel=0;
 						for (int i = 0; i < result.size(); i++) {
-						FileDB resulttmp=result.get(i);
+						Tag resulttmp=result.get(i);
 						File F=new File(resulttmp.getName(), resulttmp.getId(), resulttmp.getCatalogId());
 						F.setFathers(null);
 						if (F.getCatalogId().equals(ActualUser.getReadingactivity().getCatalogId()))

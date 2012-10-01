@@ -10,7 +10,7 @@ import lector.client.catalogo.client.Entity;
 import lector.client.controler.Constants;
 import lector.client.login.ActualUser;
 import lector.share.model.Annotation;
-import lector.share.model.FileDB;
+import lector.share.model.Tag;
 import lector.share.model.Language;
 import lector.share.model.TextSelector;
 
@@ -95,14 +95,14 @@ public class TextComment extends DialogBox {
 					
 					
 					
-					bookReaderServiceHolder.getFilesByIds(ListaASalvar,new AsyncCallback<ArrayList<FileDB>>()
+					bookReaderServiceHolder.getFilesByIds(ListaASalvar,new AsyncCallback<ArrayList<Tag>>()
 							{
 
 								public void onFailure(Throwable caught) {
 									Window.alert(ActualLang.getE_loading()+" File");
 								}
 
-								public void onSuccess(ArrayList<FileDB> result) {
+								public void onSuccess(ArrayList<Tag> result) {
 									LoadingPanel.getInstance().hide();
 									ArrayList<Long> L= new ArrayList<Long>();
 									boolean IsInCatalog = false;

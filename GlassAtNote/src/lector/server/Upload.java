@@ -12,7 +12,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import lector.client.controler.Constants;
-import lector.share.model.BookBlob;
+import lector.share.model.LocalBook;
 import lector.share.model.UserApp;
 
 import com.google.appengine.api.blobstore.BlobInfo;
@@ -57,7 +57,7 @@ public class Upload extends HttpServlet {
 		String author = req.getParameter(Constants.BLOB_AUTHOR);
 		Long userAppId = Long.parseLong(req
 				.getParameter(Constants.BLOB_UPLOADER));
-		BookBlob bookBlob = new BookBlob(pagesCount, publishedYear, title,
+		LocalBook bookBlob = new LocalBook(pagesCount, publishedYear, title,
 				author, webLinks, userAppId);
 		// BlobInfoFactory blobInfoFactory = new BlobInfoFactory();
 		// BlobInfo blobInfo = blobInfoFactory.loadBlobInfo(blobKeys.get(0));

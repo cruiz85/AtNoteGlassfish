@@ -19,7 +19,7 @@ import javax.persistence.Transient;
 @Entity
 @Table(name = "template_category")
 public class TemplateCategory implements Serializable {
-	// TODO: las annotationIds se persisten o son volatiles?.
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
@@ -33,7 +33,7 @@ public class TemplateCategory implements Serializable {
 	private ArrayList<Long> annotationsIds = new ArrayList<Long>();
 
 	@ManyToOne
-	@JoinColumn(name = "templateId")
+	@JoinColumn
 	private Template template;
 	private Integer order = 0;
 

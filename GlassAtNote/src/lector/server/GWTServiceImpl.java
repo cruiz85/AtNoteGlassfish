@@ -51,10 +51,10 @@ import com.google.gwt.user.server.rpc.RemoteServiceServlet;
 import lector.client.service.AnnotationSchema;
 import lector.share.model.Annotation;
 import lector.share.model.AnnotationThread;
-import lector.share.model.BookBlob;
+import lector.share.model.LocalBook;
 import lector.share.model.Catalogo;
 import lector.share.model.Entry;
-import lector.share.model.FileDB;
+import lector.share.model.Tag;
 import lector.share.model.FolderDB;
 import lector.share.model.GroupApp;
 import lector.share.model.Language;
@@ -191,7 +191,7 @@ public class GWTServiceImpl extends RemoteServiceServlet implements GWTService {
 		for (int i = 0; i < fileIds.size(); i++) {
 			entityManager = EMF.get().createEntityManager();
 			entityTransaction = entityManager.getTransaction();
-			FileDB fileChanged = entityManager.find(FileDB.class,
+			Tag fileChanged = entityManager.find(Tag.class,
 					fileIds.get(i));
 			if (!(fileChanged.getAnnotationsIds().contains(annotationId))) {
 				fileChanged.getAnnotationsIds().add(annotationId);
@@ -552,8 +552,8 @@ public class GWTServiceImpl extends RemoteServiceServlet implements GWTService {
 	// }
 	// }
 
-	private FileDB swapFileDB(FileDB fileDB) {
-		FileDB fileAux = new FileDB();
+	private Tag swapFileDB(Tag fileDB) {
+		Tag fileAux = new Tag();
 		fileAux.setId(fileDB.getId());
 		fileAux.setCatalogId(fileDB.getCatalogId());
 		fileAux.setName(fileDB.getName());
@@ -744,7 +744,7 @@ public class GWTServiceImpl extends RemoteServiceServlet implements GWTService {
 	public void moveFile(Long fatherFromId, Long fileId, Long fToId)
 			throws GeneralException {
 		if (!fatherFromId.equals(fToId) && !(fileId.equals(fToId))) {
-			FileDB file = loadFileById2(fileId);
+			Tag file = loadFileById2(fileId);
 			deleteFileFromParent(file, fatherFromId);
 			deleteFatherFromFile(fileId, fatherFromId);
 
@@ -825,11 +825,11 @@ public class GWTServiceImpl extends RemoteServiceServlet implements GWTService {
 
 	// TODO: NO CONSIDERA CUANDO EL FILE SE MUEVE AL ROOT
 
-	private void setNewFatherToFiles(ArrayList<FileDB> fileChildren,
+	private void setNewFatherToFiles(ArrayList<Tag> fileChildren,
 			Long oldFather, Long newFather) throws GeneralException {
 		for (int i = 0; i < fileChildren.size(); i++) {
 			try {
-				FileDB file = fileChildren.get(i);
+				Tag file = fileChildren.get(i);
 				file.getFathers().remove(oldFather);
 				savePlainFile(file);
 				addFather(fileChildren.get(i).getId(), newFather);
@@ -841,14 +841,14 @@ public class GWTServiceImpl extends RemoteServiceServlet implements GWTService {
 		}
 	}
 
-	private ArrayList<FileDB> getFileChildren(FolderDB folder) {
+	private ArrayList<Tag> getFileChildren(FolderDB folder) {
 		EntityManager entityManager;
-		List<FileDB> files;
-		ArrayList<FileDB> fileList;
+		List<Tag> files;
+		ArrayList<Tag> fileList;
 		entityManager = EMF.get().createEntityManager();
 		String sql = "SELECT a FROM FileDB a WHERE a.fathers=" + folder.getId();
 		files = entityManager.createQuery(sql).getResultList();
-		fileList = new ArrayList<FileDB>(files);
+		fileList = new ArrayList<Tag>(files);
 		if (entityManager.isOpen())
 			entityManager.close();
 		return fileList;
@@ -869,8 +869,8 @@ public class GWTServiceImpl extends RemoteServiceServlet implements GWTService {
 		}
 	}
 
-	private FileDB swapFile(FileDB file) {
-		FileDB fileAux = new FileDB();
+	private Tag swapFile(Tag file) {
+		Tag fileAux = new Tag();
 		fileAux.setId(file.getId());
 		fileAux.setFathers(file.getFathers());
 		fileAux.setName(file.getName());
@@ -906,7 +906,7 @@ public class GWTServiceImpl extends RemoteServiceServlet implements GWTService {
 
 	// todo: CAMBIADO EL 25-12
 	public void deleteFile(Long fileId, Long fatherId) {
-		FileDB fileDB = loadFileById2(fileId);
+		Tag fileDB = loadFileById2(fileId);
 		deleteFileFromParent(fileDB, fatherId);
 		fileDB.getFathers().remove(fatherId);
 		if (fileDB.getFathers().isEmpty()) {
@@ -953,7 +953,7 @@ public class GWTServiceImpl extends RemoteServiceServlet implements GWTService {
 
 	private void deleteAnnotationInFiles(Long annotationId) {
 		int total = 0;
-		List<FileDB> fileDBs;
+		List<Tag> fileDBs;
 		EntityManager entityManager = EMF.get().createEntityManager();
 		EntityTransaction entityTransaction = entityManager.getTransaction();
 		entityTransaction.begin();
@@ -964,7 +964,7 @@ public class GWTServiceImpl extends RemoteServiceServlet implements GWTService {
 			if (fileDBs.get(i).getAnnotationsIds().contains(annotationId)) {
 				fileDBs.get(i).getAnnotationsIds().remove(annotationId);
 				total++;
-				FileDB fileDBAux = swapFileDB(fileDBs.get(i));
+				Tag fileDBAux = swapFileDB(fileDBs.get(i));
 				if (fileDBAux.getAnnotationsIds().size() > 0) {
 					savePlainFile(fileDBAux);
 				}
@@ -987,7 +987,7 @@ public class GWTServiceImpl extends RemoteServiceServlet implements GWTService {
 	// }
 	// }
 	/* modified on graph. */
-	private void deleteFileFromParent(FileDB file, Long father) {
+	private void deleteFileFromParent(Tag file, Long father) {
 		if (father.equals(Constants.CATALOGID)) {
 			Catalogo catalogo = loadCatalogById2(file.getCatalogId());
 			catalogo.getEntryIds().remove(file.getId());
@@ -1001,16 +1001,16 @@ public class GWTServiceImpl extends RemoteServiceServlet implements GWTService {
 
 	private void deleteFatherFromFile(Long fileId, Long fatherId) {
 		if (fatherId != null) {
-			FileDB file = loadFileById2(fileId);
+			Tag file = loadFileById2(fileId);
 			file.getFathers().remove(fatherId);
 			savePlainFile(file);
 		}
 	}
 
-	private void deletePlainFile(FileDB file) {
+	private void deletePlainFile(Tag file) {
 		EntityManager entityManager;
 		EntityTransaction entityTransaction;
-		List<FileDB> files;
+		List<Tag> files;
 		entityManager = EMF.get().createEntityManager();
 		entityTransaction = entityManager.getTransaction();
 		entityTransaction.begin();
@@ -1042,7 +1042,7 @@ public class GWTServiceImpl extends RemoteServiceServlet implements GWTService {
 			throw new FileException(
 					"The type you are trying to save already exist in the Database, please check the name or reuse it otherwise");
 		}
-		FileDB file = cloneFile(filesys);
+		Tag file = cloneFile(filesys);
 		if (!(file.getFathers().contains(fatherId))) {
 			file.getFathers().add(fatherId);
 		}
@@ -1074,7 +1074,7 @@ public class GWTServiceImpl extends RemoteServiceServlet implements GWTService {
 
 	private boolean isFileNameInDB(String fileName, Long catalogId) {
 		EntityManager entityManager = EMF.get().createEntityManager();
-		List<FileDB> list;
+		List<Tag> list;
 		boolean flag = true;
 		String sql = "SELECT a FROM FileDB a WHERE a.name='" + fileName
 				+ "' AND a.catalogId=" + catalogId;
@@ -1093,7 +1093,7 @@ public class GWTServiceImpl extends RemoteServiceServlet implements GWTService {
 	private boolean isFolderBrotherNameInDB(String fileName, Long fatherId,
 			Long catalogId) {
 		EntityManager entityManager = EMF.get().createEntityManager();
-		List<FileDB> list;
+		List<Tag> list;
 		boolean flag = true;
 		String sql = "SELECT a FROM FolderDB a WHERE a.name='" + fileName
 				+ "' AND a.catalogId=" + catalogId + " AND a.fathers="
@@ -1110,7 +1110,7 @@ public class GWTServiceImpl extends RemoteServiceServlet implements GWTService {
 		return flag;
 	}
 
-	private void cloneFileSys(FileDB fileDB, File file) {
+	private void cloneFileSys(Tag fileDB, File file) {
 		// if (file.getFather() != null) {
 		// file.getFather().setID(fileDB.getFatherId());
 		// }
@@ -1118,7 +1118,7 @@ public class GWTServiceImpl extends RemoteServiceServlet implements GWTService {
 
 	}
 
-	private void saveFile(FileDB file, Long fatherId) {
+	private void saveFile(Tag file, Long fatherId) {
 		savePlainFile(file);
 		if (fatherId != null) {
 			FolderDB fatherFolder = loadFolderById(fatherId);
@@ -1136,8 +1136,8 @@ public class GWTServiceImpl extends RemoteServiceServlet implements GWTService {
 
 	}
 
-	private FileDB cloneFile(File f) {
-		FileDB fileDB = new FileDB();
+	private Tag cloneFile(File f) {
+		Tag fileDB = new Tag();
 		fileDB.setId(f.getID());
 		ArrayList<Long> fileDbs = new ArrayList<Long>();
 		if (f.getFathers() != null) {
@@ -1166,7 +1166,7 @@ public class GWTServiceImpl extends RemoteServiceServlet implements GWTService {
 		}
 	}
 
-	private void savePlainFile(FileDB file) {
+	private void savePlainFile(Tag file) {
 
 		EntityManager entityManager;
 		EntityTransaction entityTransaction;
@@ -1335,16 +1335,16 @@ public class GWTServiceImpl extends RemoteServiceServlet implements GWTService {
 		return folders.get(0);
 	}
 
-	public FileDB loadFileById(Long id) {
+	public Tag loadFileById(Long id) {
 		EntityManager entityManager;
 		entityManager = EMF.get().createEntityManager();
-		List<FileDB> list;
-		ArrayList<FileDB> files;
+		List<Tag> list;
+		ArrayList<Tag> files;
 		String sql = "SELECT r FROM FileDB r WHERE r.id=" + id;
 		list = entityManager.createQuery(sql).getResultList();
-		files = new ArrayList<FileDB>(list);
+		files = new ArrayList<Tag>(list);
 
-		FileDB fileDB = null;
+		Tag fileDB = null;
 		if (!list.isEmpty()) {
 			fileDB = files.get(0);
 			java.util.ArrayList<Long> annotationsIds = new java.util.ArrayList<Long>(
@@ -1360,14 +1360,14 @@ public class GWTServiceImpl extends RemoteServiceServlet implements GWTService {
 		return fileDB;
 	}
 
-	private FileDB loadFileById2(Long id) {
+	private Tag loadFileById2(Long id) {
 		EntityManager entityManager;
 		entityManager = EMF.get().createEntityManager();
-		List<FileDB> list;
-		ArrayList<FileDB> files;
+		List<Tag> list;
+		ArrayList<Tag> files;
 		String sql = "SELECT r FROM FileDB r WHERE r.id=" + id;
 		list = entityManager.createQuery(sql).getResultList();
-		files = new ArrayList<FileDB>(list);
+		files = new ArrayList<Tag>(list);
 
 		if (entityManager.isOpen()) {
 			entityManager.close();
@@ -1375,7 +1375,7 @@ public class GWTServiceImpl extends RemoteServiceServlet implements GWTService {
 		if (list.isEmpty()) {
 			return null;
 		}
-		FileDB fileDB = files.get(0);
+		Tag fileDB = files.get(0);
 		java.util.ArrayList<Long> annotationsIds = new java.util.ArrayList<Long>(
 				(java.util.ArrayList<Long>) fileDB.getAnnotationsIds());
 		fileDB.getAnnotationsIds().clear();
@@ -1383,21 +1383,21 @@ public class GWTServiceImpl extends RemoteServiceServlet implements GWTService {
 		return fileDB;
 	}
 
-	public FileDB loadFileByNameAndCatalogId(String fileName, Long catalogId) {
+	public Tag loadFileByNameAndCatalogId(String fileName, Long catalogId) {
 		EntityManager entityManager;
 		entityManager = EMF.get().createEntityManager();
-		List<FileDB> list;
-		ArrayList<FileDB> files;
+		List<Tag> list;
+		ArrayList<Tag> files;
 		String sql = "SELECT r FROM FileDB r WHERE r.uppercaseName='"
 				+ fileName + "' AND r.catalogId=" + catalogId;
 		list = entityManager.createQuery(sql).getResultList();
-		files = new ArrayList<FileDB>(list);
+		files = new ArrayList<Tag>(list);
 
 		if (list.isEmpty()) {
 			return null;
 		}
 
-		FileDB fileDB = files.get(0);
+		Tag fileDB = files.get(0);
 		java.util.ArrayList<Long> annotationsIds = new java.util.ArrayList<Long>(
 				(java.util.ArrayList<Long>) fileDB.getAnnotationsIds());
 		fileDB.getAnnotationsIds().clear();
@@ -1643,7 +1643,7 @@ public class GWTServiceImpl extends RemoteServiceServlet implements GWTService {
 				deepFolderDeletion(foldersChildren.get(i).getId());
 
 			}
-			ArrayList<FileDB> filesChildren = getFileChildren(folder);
+			ArrayList<Tag> filesChildren = getFileChildren(folder);
 			for (int i = 0; i < filesChildren.size(); i++) {
 				ids.add(filesChildren.get(i).getId());
 			}
@@ -2739,7 +2739,7 @@ public class GWTServiceImpl extends RemoteServiceServlet implements GWTService {
 			entityTransaction.commit();
 			entityManager = EMF.get().createEntityManager();
 			entityTransaction = entityManager.getTransaction();
-			FileDB fileDB = entityManager.find(FileDB.class, fileId);
+			Tag fileDB = entityManager.find(Tag.class, fileId);
 			if (fileDB.getAnnotationsIds().contains(annotationId)) {
 				fileDB.getAnnotationsIds().remove(annotationId);
 				// entityManager = EMF.get().createEntityManager();
@@ -2751,10 +2751,10 @@ public class GWTServiceImpl extends RemoteServiceServlet implements GWTService {
 
 	}
 
-	public ArrayList<FileDB> getFilesByIds(ArrayList<Long> ids) {
-		ArrayList<FileDB> fileDBs = new ArrayList<FileDB>();
+	public ArrayList<Tag> getFilesByIds(ArrayList<Long> ids) {
+		ArrayList<Tag> fileDBs = new ArrayList<Tag>();
 		for (int i = 0; i < ids.size(); i++) {
-			FileDB FB = loadFileById(ids.get(i));
+			Tag FB = loadFileById(ids.get(i));
 			fileDBs.add(FB);
 		}
 
@@ -2790,17 +2790,17 @@ public class GWTServiceImpl extends RemoteServiceServlet implements GWTService {
 
 	}
 
-	private FileDB loadFileDBByNameAndCatalogId(String name, Long id) {
+	private Tag loadFileDBByNameAndCatalogId(String name, Long id) {
 		EntityManager entityManager;
 		entityManager = EMF.get().createEntityManager();
-		List<FileDB> list;
-		ArrayList<FileDB> files;
+		List<Tag> list;
+		ArrayList<Tag> files;
 		String sql = "SELECT f FROM FileDB f WHERE f.name='" + name
 				+ "' AND f.catalogId=" + id;
 		list = entityManager.createQuery(sql).getResultList();
-		files = new ArrayList<FileDB>(list);
+		files = new ArrayList<Tag>(list);
 
-		FileDB fileDB = null;
+		Tag fileDB = null;
 		if (!list.isEmpty()) {
 			fileDB = files.get(0);
 			java.util.ArrayList<Long> annotationsIds = new java.util.ArrayList<Long>(
@@ -2817,9 +2817,9 @@ public class GWTServiceImpl extends RemoteServiceServlet implements GWTService {
 		return fileDB;
 	}
 
-	public ArrayList<FileDB> getFilesByNameAndCatalogId(
+	public ArrayList<Tag> getFilesByNameAndCatalogId(
 			ArrayList<String> names, Long catalogId) {
-		ArrayList<FileDB> fileDBs = new ArrayList<FileDB>();
+		ArrayList<Tag> fileDBs = new ArrayList<Tag>();
 		for (int i = 0; i < names.size(); i++) {
 			fileDBs.add(loadFileDBByNameAndCatalogId(names.get(i), catalogId));
 		}
@@ -2905,7 +2905,7 @@ public class GWTServiceImpl extends RemoteServiceServlet implements GWTService {
 		ArrayList<Long> folderSons = new ArrayList<Long>();
 
 		for (Entry entry : entryChildren) {
-			if (entry instanceof FileDB) {
+			if (entry instanceof Tag) {
 				fileSons.add(entry.getId());
 			} else {
 
@@ -3111,14 +3111,14 @@ public class GWTServiceImpl extends RemoteServiceServlet implements GWTService {
 		return false;
 	}
 
-	public ArrayList<FileDB> getEntriesIdsByIdsRec(ArrayList<Long> Ids) {
+	public ArrayList<Tag> getEntriesIdsByIdsRec(ArrayList<Long> Ids) {
 		/*
 		 * buscar tipos con los nombres/* buscar las carpetas con names añadir a
 		 * la lista los tipos obtenidos añadir a la lista funcion-recursiva
 		 * {lista de carpetas}
 		 */
 		EntityManager entityManager;
-		ArrayList<FileDB> listFiles = new ArrayList<FileDB>();
+		ArrayList<Tag> listFiles = new ArrayList<Tag>();
 		ArrayList<FolderDB> listFolder = new ArrayList<FolderDB>();
 		entityManager = EMF.get().createEntityManager();
 		String sql;
@@ -3126,7 +3126,7 @@ public class GWTServiceImpl extends RemoteServiceServlet implements GWTService {
 			Entry inputFile = loadFileById(Ids.get(i));
 			Entry inputFolder = loadFolderById((Ids.get(i)));
 			if (inputFile != null) {
-				listFiles.add((FileDB) inputFile);
+				listFiles.add((Tag) inputFile);
 			}
 			if (inputFolder != null) {
 				listFolder.add((FolderDB) inputFolder);
@@ -3137,17 +3137,17 @@ public class GWTServiceImpl extends RemoteServiceServlet implements GWTService {
 
 		listFiles.addAll(getChildrenFilesIdsByFoldersRec(listFolder));
 
-		ArrayList<FileDB> Salida = new ArrayList<FileDB>();
-		for (FileDB fileDB : listFiles) {
+		ArrayList<Tag> Salida = new ArrayList<Tag>();
+		for (Tag fileDB : listFiles) {
 			java.util.ArrayList<Long> annotationsIds = new java.util.ArrayList<Long>(
 					(java.util.ArrayList<Long>) fileDB.getAnnotationsIds());
 			fileDB.getAnnotationsIds().clear();
 			java.util.ArrayList<Long> fatherIds = new java.util.ArrayList<Long>(
 					(java.util.ArrayList<Long>) fileDB.getFathers());
 			fileDB.getFathers().clear();
-			FileDB A;
+			Tag A;
 			if (annotationsIds.isEmpty()) {
-				A = new FileDB();
+				A = new Tag();
 				A.setAnnotationsIds(new java.util.ArrayList<Long>());
 				A.setCatalogId(fileDB.getCatalogId());
 
@@ -3169,19 +3169,19 @@ public class GWTServiceImpl extends RemoteServiceServlet implements GWTService {
 
 	}
 
-	private ArrayList<FileDB> getChildrenFilesIdsByFoldersRec(
+	private ArrayList<Tag> getChildrenFilesIdsByFoldersRec(
 			ArrayList<FolderDB> folderIds) {
 		ArrayList<Entry> entryChildren = new ArrayList<Entry>();
 		for (FolderDB fatherId : folderIds) {
 			entryChildren.addAll(getSons(fatherId.getId()));
 		}
 
-		ArrayList<FileDB> fileSons = new ArrayList<FileDB>();
+		ArrayList<Tag> fileSons = new ArrayList<Tag>();
 		ArrayList<FolderDB> folderSons = new ArrayList<FolderDB>();
 
 		for (Entry entry : entryChildren) {
-			if (entry instanceof FileDB) {
-				FileDB fileDB = (FileDB) entry;
+			if (entry instanceof Tag) {
+				Tag fileDB = (Tag) entry;
 				fileSons.add(fileDB);
 
 			} else {
@@ -3190,18 +3190,18 @@ public class GWTServiceImpl extends RemoteServiceServlet implements GWTService {
 			}
 		}
 		if (!folderSons.isEmpty()) {
-			ArrayList<FileDB> recursiveChildren = getChildrenFilesIdsByFoldersRec(folderSons);
+			ArrayList<Tag> recursiveChildren = getChildrenFilesIdsByFoldersRec(folderSons);
 			fileSons.addAll(recursiveChildren);
 		}
 
-		ArrayList<FileDB> Salida = new ArrayList<FileDB>();
-		for (FileDB fileDB : fileSons) {
+		ArrayList<Tag> Salida = new ArrayList<Tag>();
+		for (Tag fileDB : fileSons) {
 			java.util.ArrayList<Long> annotationsIds = new java.util.ArrayList<Long>(
 					(java.util.ArrayList<Long>) fileDB.getAnnotationsIds());
 			fileDB.getAnnotationsIds().clear();
 			if (annotationsIds.isEmpty()) {
 				annotationsIds = new java.util.ArrayList<Long>();
-				FileDB A = new FileDB();
+				Tag A = new Tag();
 				A.setAnnotationsIds(annotationsIds);
 				A.setCatalogId(fileDB.getCatalogId());
 				A.setFathers(fileDB.getFathers());
@@ -3228,7 +3228,7 @@ public class GWTServiceImpl extends RemoteServiceServlet implements GWTService {
 
 	private void addFatherToFile(Long fileId, Long fatherId)
 			throws FileException {
-		FileDB sonFile = loadFileById2(fileId);
+		Tag sonFile = loadFileById2(fileId);
 		FolderDB folder = null;
 
 		if (!fatherId.equals(Constants.CATALOGID)) {
@@ -3290,7 +3290,7 @@ public class GWTServiceImpl extends RemoteServiceServlet implements GWTService {
 		}
 	}
 
-	private int addAnnotationsFromFileToAnother(FileDB fFrom, FileDB fTo) {
+	private int addAnnotationsFromFileToAnother(Tag fFrom, Tag fTo) {
 		ArrayList<Long> annotationFromIds = fFrom.getAnnotationsIds();
 		int total = 0;
 		int annotationsToFileTo = 0;
@@ -3333,10 +3333,10 @@ public class GWTServiceImpl extends RemoteServiceServlet implements GWTService {
 					"Parameter cant be null in method deleteDnServices");
 		}
 		int total = 0;
-		FileDB fileFrom = loadFileById(fFromId);
+		Tag fileFrom = loadFileById(fFromId);
 		try {
 
-			FileDB fileTo = loadFileById2(fToId);
+			Tag fileTo = loadFileById2(fToId);
 			total = addAnnotationsFromFileToAnother(fileFrom, fileTo);
 			for (int i = 0; i < fileFrom.getFathers().size(); i++) {
 				deleteFileFromParent(fileFrom, fileFrom.getFathers().get(i));
@@ -3369,7 +3369,7 @@ public class GWTServiceImpl extends RemoteServiceServlet implements GWTService {
 			if (!foldersChildren.isEmpty()) {
 				setNewFatherToFolders(foldersChildren, fFromId, fToId);
 			}
-			ArrayList<FileDB> fileChildren = getFileChildren(fFrom);
+			ArrayList<Tag> fileChildren = getFileChildren(fFrom);
 			if (!fileChildren.isEmpty()) {
 
 				setNewFatherToFiles(fileChildren, fFromId, fToId);
@@ -3420,7 +3420,7 @@ public class GWTServiceImpl extends RemoteServiceServlet implements GWTService {
 	}
 
 	public void renameFile(Long fileId, String newName) throws FileException {
-		FileDB fileDB = loadFileById(fileId);
+		Tag fileDB = loadFileById(fileId);
 		if (isFileNameInDB(newName, fileDB.getCatalogId())) {
 			throw new FileException(
 					"The type you are trying to save already exist in the Database, please check the name or reuse it otherwise");
@@ -3722,7 +3722,7 @@ public class GWTServiceImpl extends RemoteServiceServlet implements GWTService {
 			for (int i = 0; i < foldersChildren.size(); i++) {
 				deepingRoot(foldersChildren.get(i).getId());
 			}
-			List<FileDB> filesChildren = getFileChildren(folder);
+			List<Tag> filesChildren = getFileChildren(folder);
 			for (int i = 0; i < filesChildren.size(); i++) {
 				sonIds.add(filesChildren.get(i).getId());
 			}
@@ -3751,7 +3751,7 @@ public class GWTServiceImpl extends RemoteServiceServlet implements GWTService {
 		}
 
 		for (Long id : ids) {
-			FileDB folder = loadFileById(id);
+			Tag folder = loadFileById(id);
 			if (folder != null) {
 				AnnotationSchema son = new AnnotationSchema(id,
 						folder.getName(), new ArrayList<Long>(), false);
@@ -3787,7 +3787,7 @@ public class GWTServiceImpl extends RemoteServiceServlet implements GWTService {
 
 	// TODO comprobar si el cliente esta usando esta función.
 	public void addFather(Long sonId, Long fatherId) throws FileException {
-		FileDB file = loadFileById2(sonId);
+		Tag file = loadFileById2(sonId);
 		if (file != null) {
 			addFatherToFile(sonId, fatherId);
 		} else {
@@ -3816,7 +3816,7 @@ public class GWTServiceImpl extends RemoteServiceServlet implements GWTService {
 	private void deletePlainBookBlob(Long bookId) {
 		EntityManager entityManager;
 		EntityTransaction entityTransaction;
-		List<BookBlob> books;
+		List<LocalBook> books;
 		entityManager = EMF.get().createEntityManager();
 		entityTransaction = entityManager.getTransaction();
 		entityTransaction.begin();

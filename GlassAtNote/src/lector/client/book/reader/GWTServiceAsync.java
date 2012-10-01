@@ -17,7 +17,7 @@ import lector.client.reader.Book;
 import lector.share.model.Annotation;
 import lector.share.model.AnnotationThread;
 import lector.share.model.Catalogo;
-import lector.share.model.FileDB;
+import lector.share.model.Tag;
 import lector.share.model.GroupApp;
 import lector.share.model.Language;
 import lector.share.model.ReadingActivity;
@@ -116,10 +116,10 @@ public interface GWTServiceAsync {
 
 	public void getCatalogs(AsyncCallback<ArrayList<Catalog>> asyncCallback);
 
-	void loadFileById(Long id, AsyncCallback<FileDB> callback);
+	void loadFileById(Long id, AsyncCallback<Tag> callback);
 
 	void loadFileByNameAndCatalogId(String fileName, Long catalogId,
-			AsyncCallback<FileDB> callback);
+			AsyncCallback<Tag> callback);
 
 	void deleteCatalog(Long catalogId, AsyncCallback<Void> callback);
 
@@ -170,10 +170,10 @@ public interface GWTServiceAsync {
 			AsyncCallback<Void> callback);
 
 	void getFilesByNameAndCatalogId(ArrayList<String> names, Long catalogId,
-			AsyncCallback<ArrayList<FileDB>> callback);
+			AsyncCallback<ArrayList<Tag>> callback);
 
 	void getFilesByIds(ArrayList<Long> ids,
-			AsyncCallback<ArrayList<FileDB>> callback);
+			AsyncCallback<ArrayList<Tag>> callback);
 
 	void getEntriesIdsByNames(ArrayList<String> names, Long catalogTeacher,
 			Long catalogOpen, AsyncCallback<ArrayList<Long>> callback);
@@ -196,7 +196,7 @@ public interface GWTServiceAsync {
 			AsyncCallback<ArrayList<Annotation>> callback);
 
 	void getEntriesIdsByIdsRec(ArrayList<Long> Ids,
-			AsyncCallback<ArrayList<FileDB>> callback);
+			AsyncCallback<ArrayList<Tag>> callback);
 
 	void getAnnotationsByIdsTeacher(ArrayList<Long> ids,
 			Long readingActivityId,

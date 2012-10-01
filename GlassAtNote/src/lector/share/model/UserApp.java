@@ -32,22 +32,13 @@ public class UserApp implements Serializable, IsSerializable {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
-	private String name;
+	private String firstName;	
 	private String lastName;
-	private String DNI;
 	private String email;
-	private String profile;
-	@ManyToMany(mappedBy = "users")
-	private List<GroupApp> groups = new ArrayList<GroupApp>();
-	@OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+
+	@OneToMany(mappedBy = "creator", cascade = CascadeType.ALL)
 	private List<Annotation> annotations = new ArrayList<Annotation>();
-	
-	@OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
-	private List<ReadingActivity> readingActivities = new ArrayList<ReadingActivity>();
-	private ArrayList<String> bookIds; // SOLO PARA PROFESORES. 
-	@OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
-	private List<Template> templates = new ArrayList<Template>();
-	// DATOS DE GOOGLE.
+
 	@Transient
 	private boolean loggedIn = false;
 	@Transient
@@ -60,13 +51,10 @@ public class UserApp implements Serializable, IsSerializable {
 	public UserApp() {
 	}
 
-	public UserApp(String email, String profile) {
-		this();
+	
+	public UserApp(String email) {
+		super();
 		this.email = email;
-		this.profile = profile;
-		if (profile.equals(Constants.PROFESSOR)) {
-			this.bookIds = new ArrayList<String>();
-		}
 	}
 
 	public Long getId() {
@@ -101,13 +89,7 @@ public class UserApp implements Serializable, IsSerializable {
 		this.logoutUrl = logoutUrl;
 	}
 
-	public ArrayList<String> getBookIds() {
-		return bookIds;
-	}
-
-	public void setBookIds(ArrayList<String> bookIds) {
-		this.bookIds = bookIds;
-	}
+	
 
 	public String getEmail() {
 		return email;
@@ -117,30 +99,7 @@ public class UserApp implements Serializable, IsSerializable {
 		this.email = email;
 	}
 
-	public List<ReadingActivity> getReadingActivities() {
-		return readingActivities;
-	}
-
-	public void setReadingActivities(List<ReadingActivity> readingActivities) {
-		this.readingActivities = readingActivities;
-	}
-
-	public List<Template> getTemplates() {
-		return templates;
-	}
-
-	public void setTemplates(List<Template> templates) {
-		this.templates = templates;
-	}
-
-	public List<GroupApp> getGroups() {
-		return groups;
-	}
-
-	public void setGroups(List<GroupApp> groups) {
-		this.groups = groups;
-	}
-
+	
 	public boolean isAuthenticated() {
 		return isAuthenticated;
 	}
@@ -161,30 +120,7 @@ public class UserApp implements Serializable, IsSerializable {
 		this.lastName = lastName;
 	}
 
-	public String getName() {
-		return name;
-	}
-
-	public void setName(String name) {
-		this.name = name;
-	}
-
-	public String getProfile() {
-		return profile;
-	}
-
-	public void setProfile(String profile) {
-		this.profile = profile;
-	}
-
-	public String getDNI() {
-		return DNI;
-	}
-
-	public void setDNI(String DNI) {
-		this.DNI = DNI;
-	}
-
+	
 	public boolean isIsAuthenticated() {
 		return isAuthenticated;
 	}
@@ -203,7 +139,7 @@ public class UserApp implements Serializable, IsSerializable {
 
 	@Override
 	public String toString() {
-		return "name:" + name + " lastName:" + lastName;
+		return "name:" + firstName + " lastName:" + lastName;
 	}
 
 }

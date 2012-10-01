@@ -43,9 +43,9 @@ import lector.server.JSONArray;
 import lector.server.JSONException;
 import lector.server.JSONObject;
 import lector.share.model.Annotation;
-import lector.share.model.BookBlob;
+import lector.share.model.LocalBook;
 import lector.share.model.Catalogo;
-import lector.share.model.FileDB;
+import lector.share.model.Tag;
 import lector.share.model.FolderDB;
 import lector.share.model.UserApp;
 
@@ -315,7 +315,7 @@ public class AnnotationService {
 			for (int i = 0; i < foldersChildren.size(); i++) {
 				deepingRoot(foldersChildren.get(i).getId());
 			}
-			List<FileDB> filesChildren = getFileChildren(folderId);
+			List<Tag> filesChildren = getFileChildren(folderId);
 			for (int i = 0; i < filesChildren.size(); i++) {
 				sonIds.add(filesChildren.get(i).getId());
 			}
@@ -338,14 +338,14 @@ public class AnnotationService {
 		return folderList;
 	}
 
-	private List<FileDB> getFileChildren(Long folderId) {
+	private List<Tag> getFileChildren(Long folderId) {
 		EntityManager entityManager;
-		List<FileDB> files;
-		List<FileDB> fileList;
+		List<Tag> files;
+		List<Tag> fileList;
 		entityManager = EMF.get().createEntityManager();
 		String sql = "SELECT a FROM FileDB a WHERE a.fathers=" + folderId;
 		files = entityManager.createQuery(sql).getResultList();
-		fileList = new ArrayList<FileDB>(files);
+		fileList = new ArrayList<Tag>(files);
 		if (entityManager.isOpen()) {
 			entityManager.close();
 		}
@@ -353,10 +353,10 @@ public class AnnotationService {
 		return fileList;
 	}
 
-	private FileDB loadFileById(Long id) {
+	private Tag loadFileById(Long id) {
 		EntityManager entityManager;
 		entityManager = EMF.get().createEntityManager();
-		FileDB fileDB = entityManager.find(FileDB.class, id);
+		Tag fileDB = entityManager.find(Tag.class, id);
 		if (entityManager.isOpen()) {
 			entityManager.close();
 		}
@@ -564,7 +564,7 @@ public class AnnotationService {
 
 		List<FileToExport> files = new ArrayList<FileToExport>();
 		for (Long fileId : annotation.getFileIds()) {
-			FileDB file = loadFileById(fileId);
+			Tag file = loadFileById(fileId);
 			FileToExport fileToExport = new FileToExport(file.getId(),
 					file.getName(), file.getCatalogId());
 			files.add(fileToExport);

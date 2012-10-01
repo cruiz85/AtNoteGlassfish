@@ -1,4 +1,5 @@
 package lector.share.model;
+
 import com.google.gwt.user.client.rpc.IsSerializable;
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -21,36 +22,31 @@ import javax.persistence.Transient;
 
 @Entity
 @Table(name = "annotation")
-public class Annotation implements Serializable, IsSerializable {
+public class Annotation implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
-	private String bookId;
 	@ManyToOne
-	@JoinColumn(name = "userId")
-	private UserApp user;
+	private UserApp creator;
 	@ManyToOne
-	@JoinColumn(name = "activityId")
 	private ReadingActivity activity;
 	@OneToMany(mappedBy = "annotation", cascade = CascadeType.ALL)
 	private List<AnnotationThread> threads = new ArrayList<AnnotationThread>();
-	private String userName;
-	private int visibility = 0;
-	private int updatability = 0;
-	private Integer pageNumber;
-
 	@OneToMany(cascade = CascadeType.ALL)
 	private ArrayList<TextSelector> textSelectors;
-
 	private String comment;
+	private Long bookId;
+
+	private short visibility = 0;
+	private short updatability = 0;
+	private Integer pageNumber;
+
 	@ManyToMany(cascade = CascadeType.ALL)
 	@JoinTable(name = "ann_file", joinColumns = { @JoinColumn(name = "annotationId", referencedColumnName = "id") }, inverseJoinColumns = { @JoinColumn(name = "fileId", referencedColumnName = "id") })
-	private List<FileDB> files;
-	@Transient
-	private boolean isPersisted;
-	private Long readingActivity; // NO ES NECESARIO TENER EL OBJETO
+	private List<Tag> tags;
+
 	@Temporal(javax.persistence.TemporalType.DATE)
 	private Date createdDate;
 
@@ -58,36 +54,24 @@ public class Annotation implements Serializable, IsSerializable {
 	private boolean isEditable = false;
 
 	public Annotation() {
-		isPersisted = false;
-
 		this.textSelectors = new ArrayList<TextSelector>();
 	}
 
-	public Annotation(String bookId, Integer pageNumber,
-			ArrayList<TextSelector> textSelectors, String comment) {
-		this();
-		this.bookId = bookId;
-		this.pageNumber = pageNumber;
+	public Annotation(UserApp creator, ReadingActivity activity,
+			ArrayList<TextSelector> textSelectors, String comment, Long bookId,
+			short visibility, short updatability, Integer pageNumber,
+			List<Tag> tags, boolean isEditable) {
+		super();
+		this.creator = creator;
+		this.activity = activity;
 		this.textSelectors = textSelectors;
 		this.comment = comment;
-	}
-
-	public Annotation(String bookId, Integer pageNumber,
-			ArrayList<TextSelector> textSelectors, String comment,
-			ArrayList<FileDB> files) {
 		this.bookId = bookId;
+		this.visibility = visibility;
+		this.updatability = updatability;
 		this.pageNumber = pageNumber;
-		this.textSelectors = textSelectors;
-		this.comment = comment;
-		this.files = files;
-	}
-
-	public String getBookId() {
-		return bookId;
-	}
-
-	public void setBookId(String bookId) {
-		this.bookId = bookId;
+		this.tags = tags;
+		this.isEditable = isEditable;
 	}
 
 	public List<AnnotationThread> getThreads() {
@@ -142,32 +126,12 @@ public class Annotation implements Serializable, IsSerializable {
 		this.id = id;
 	}
 
-	public void setIsPersisted(boolean isPersisted) {
-		this.isPersisted = isPersisted;
-	}
-
 	public Date getCreatedDate() {
 		return createdDate;
 	}
 
 	public void setCreatedDate(Date createdDate) {
 		this.createdDate = createdDate;
-	}
-
-	public UserApp getUser() {
-		return user;
-	}
-
-	public void setUser(UserApp user) {
-		this.user = user;
-	}
-
-	public boolean isPersisted() {
-		return isPersisted;
-	}
-
-	public void setPersisted(boolean isPersisted) {
-		this.isPersisted = isPersisted;
 	}
 
 	public boolean isEditable() {
@@ -178,28 +142,12 @@ public class Annotation implements Serializable, IsSerializable {
 		this.isEditable = isEditable;
 	}
 
-	public String getUserName() {
-		return userName;
-	}
-
-	public void setUserName(String userName) {
-		this.userName = userName;
-	}
-
 	public int getVisibility() {
 		return visibility;
 	}
 
-	public void setVisibility(int visibility) {
-		this.visibility = visibility;
-	}
-
 	public int getUpdatability() {
 		return updatability;
-	}
-
-	public void setUpdatability(int updatability) {
-		this.updatability = updatability;
 	}
 
 	public String getComment() {
@@ -210,20 +158,36 @@ public class Annotation implements Serializable, IsSerializable {
 		this.comment = comment;
 	}
 
-	public List<FileDB> getFiles() {
-		return files;
+	public List<Tag> getTags() {
+		return tags;
 	}
 
-	public void setFiles(List<FileDB> files) {
-		this.files = files;
+	public void setTags(List<Tag> tags) {
+		this.tags = tags;
 	}
 
-	public Long getReadingActivity() {
-		return readingActivity;
+	public UserApp getCreator() {
+		return creator;
 	}
 
-	public void setReadingActivity(Long readingActivity) {
-		this.readingActivity = readingActivity;
+	public void setCreator(UserApp creator) {
+		this.creator = creator;
+	}
+
+	public Long getBookId() {
+		return bookId;
+	}
+
+	public void setBookId(Long bookId) {
+		this.bookId = bookId;
+	}
+
+	public void setVisibility(short visibility) {
+		this.visibility = visibility;
+	}
+
+	public void setUpdatability(short updatability) {
+		this.updatability = updatability;
 	}
 
 }

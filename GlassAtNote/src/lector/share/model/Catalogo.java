@@ -5,7 +5,6 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -25,7 +24,7 @@ public class Catalogo implements Serializable, IsSerializable {
 	@OneToMany(mappedBy = "catalog", cascade = CascadeType.ALL)
 	private List<Entry> entries = new ArrayList<Entry>();
 	// NUEVO
-	private boolean isPrivate = true;
+	private short isPrivate = 1;
 	private Long professorId;
 	private String catalogName;
 
@@ -49,14 +48,6 @@ public class Catalogo implements Serializable, IsSerializable {
 		this.entries = entries;
 	}
 
-	public boolean isPrivate() {
-		return isPrivate;
-	}
-
-	public void setPrivate(boolean isPrivate) {
-		this.isPrivate = isPrivate;
-	}
-
 	public String getCatalogName() {
 		return catalogName;
 	}
@@ -65,11 +56,11 @@ public class Catalogo implements Serializable, IsSerializable {
 		this.catalogName = catalogName;
 	}
 
-	public boolean isIsPrivate() {
+	public short getIsPrivate() {
 		return isPrivate;
 	}
 
-	public void setIsPrivate(boolean isPrivate) {
+	public void setIsPrivate(short isPrivate) {
 		this.isPrivate = isPrivate;
 	}
 

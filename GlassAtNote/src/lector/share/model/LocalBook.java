@@ -10,22 +10,13 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
-@Entity
-@Table(name = "book_blob")
-public class BookBlob implements Serializable {
+import lector.client.reader.Book;
 
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Long id;
-	private String pagesCount;
-	private String publishedYear;
-	private String title;
-	private String author;
-	@Basic
-	private ArrayList<String> webLinks = new ArrayList<String>();
-	private Long userApp; // el usuarios solo guarda strings de ids de libros de
-							// google, no debería ser necesario guardar la
-							// referencia
+@Entity
+@Table(name = "local_book")
+public class LocalBook extends Book implements Serializable {
+
+
 
 	public Long getUserApp() {
 		return userApp;
@@ -35,11 +26,11 @@ public class BookBlob implements Serializable {
 		this.userApp = userApp;
 	}
 
-	public BookBlob() {
+	public LocalBook() {
 		webLinks = new ArrayList<String>();
 	}
 
-	public BookBlob(String pagesCount, String publishedYear, String title,
+	public LocalBook(String pagesCount, String publishedYear, String title,
 			String author, ArrayList<String> webLinks, Long userApp) {
 		this();
 		this.pagesCount = pagesCount;

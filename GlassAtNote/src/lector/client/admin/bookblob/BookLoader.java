@@ -45,7 +45,7 @@ import lector.client.book.reader.GWTService;
 import lector.client.book.reader.GWTServiceAsync;
 import lector.client.book.reader.ImageServiceAsync;
 import lector.client.book.reader.ImageService;
-import lector.share.model.BookBlob;
+import lector.share.model.LocalBook;
 import lector.share.model.UserApp;
 
 public class BookLoader implements EntryPoint {

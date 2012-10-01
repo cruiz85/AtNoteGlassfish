@@ -2,7 +2,7 @@ package lector.client.book.reader;
 
 import java.util.ArrayList;
 
-import lector.share.model.BookBlob;
+import lector.share.model.LocalBook;
 
 import com.google.gwt.user.client.rpc.AsyncCallback;
 
