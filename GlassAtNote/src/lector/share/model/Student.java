@@ -16,8 +16,6 @@ public class Student extends UserApp implements Serializable {
 
 	@ManyToMany(mappedBy = "participatingStudents")
 	private List<GroupApp> participatingGroups = new ArrayList<GroupApp>();
-	@ManyToMany(mappedBy = "remainingStudents")
-	private List<GroupApp> remainingGroups = new ArrayList<GroupApp>();
 
 	public Student() {
 	}
@@ -33,14 +31,6 @@ public class Student extends UserApp implements Serializable {
 
 	public void setParticipatingGroups(List<GroupApp> participatingGroups) {
 		this.participatingGroups = participatingGroups;
-	}
-
-	public List<GroupApp> getRemainingGroups() {
-		return remainingGroups;
-	}
-
-	public void setRemainingGroups(List<GroupApp> remainingGroups) {
-		this.remainingGroups = remainingGroups;
 	}
 
 	public static long getSerialversionuid() {

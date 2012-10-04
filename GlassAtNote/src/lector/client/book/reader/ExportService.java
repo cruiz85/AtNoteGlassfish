@@ -5,7 +5,9 @@
 package lector.client.book.reader;
 
 import java.util.ArrayList;
+import java.util.List;
 
+import lector.client.reader.ExportObject;
 import lector.share.model.Template;
 import lector.share.model.TemplateCategory;
 
@@ -19,30 +21,43 @@ import com.google.gwt.user.client.rpc.RemoteServiceRelativePath;
 @RemoteServiceRelativePath("book.reader/exportservice")
 public interface ExportService extends RemoteService {
 
-	public void saveTemplate(Template template);
+	// Templates
 
-	public void saveTemplateCategory(TemplateCategory templateCategory);
-
-	public void deleteTemplate(Long templateId);
-
-	public void deleteTemplateCategory(Long templateCategoryId);
-
-	public Template removeCategoriesFromTemplate(Long templateId,
-			ArrayList<Long> categoriesIds);
-
-	public ArrayList<Template> getTemplates();
+	void saveTemplate(Template template);
 
 	public Template loadTemplateById(Long Id);
 
-	public ArrayList<TemplateCategory> getTemplateCategoriesByIds(
+	public List<Template> getTemplatesByProfessorId(Long professorId);
+
+	public void getTemplates();
+
+	public Long deleteTemplate(Long templateId);
+
+	// Template Category
+
+	public void saveTemplateCategory(TemplateCategory templateCategory);
+
+	public List<TemplateCategory> getTemplateCategoriesByIds(
 			ArrayList<Long> categoriesIds);
 
-	public ArrayList<Template> getTemplatesByIds(ArrayList<Long> ids);
+	/* mueve alguna categoria */
+	public void moveCategory(Long fromFatherId, Long toFatherId,
+			Long categoryId, Long templateId);
+
+	public Long deleteTemplateCategory(Long templateCategoryId);
+
+	public Template removeCategoriesFromTemplate(Long templateId,
+			List<Long> categoriesIds);
+
+	public void swapCategoryWeight(Long movingCategoryId, Long staticCategoryId);
+
+	public List<Template> getTemplatesByIds(ArrayList<Long> ids);
+	//Exportacion 	
 	
-	public void moveCategory(Long fromFatherId, Long toFatherId, Long categoryId, Long templateId);
-	
-	public void swapCategoryWeight(Long movingCategoryId,Long staticCategoryId);
-	
-	public ArrayList<Template> getTemplatesByProfessorId(Long professorId);
+	public String loadHTMLStringForExport(List<ExportObject> exportObjects);
+
+	public String loadHTMLStringForExportUni(ExportObject exportObject);
+
+	public String loadRTFStringForExportUni(ExportObject exportObject);
 
 }

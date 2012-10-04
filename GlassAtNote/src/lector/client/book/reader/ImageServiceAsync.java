@@ -5,7 +5,9 @@
 package lector.client.book.reader;
 
 import java.util.ArrayList;
+import java.util.List;
 
+import lector.client.reader.Book;
 import lector.client.reader.ExportObject;
 import lector.share.model.LocalBook;
 import lector.share.model.TextSelector;
@@ -20,25 +22,10 @@ public interface ImageServiceAsync {
 
 	void getBlobstoreUploadUrl(AsyncCallback<String> callback);
 
-	
-	void getBookBlobsByUserId(Long userAppId, AsyncCallback<ArrayList<LocalBook>> callback);
+	void loadBookById(Long id, AsyncCallback<Book> callback);
 
+	void saveBook(Book book, AsyncCallback<Void> callback);
 
-	void loadBookBlobById(Long id, AsyncCallback<LocalBook> callback);
-
-
-	void saveBookBlob(LocalBook bookBlob, AsyncCallback<Void> callback);
-
-
-	void loadHTMLStringForExport(ArrayList<ExportObject> exportObjects,
-			AsyncCallback<String> callback);
-
-
-	void loadHTMLStringForExportUni(ExportObject exportObject,
-			AsyncCallback<String> callback);
-
-
-	void loadRTFStringForExportUni(ExportObject exportObject,
-			AsyncCallback<String> callback);
+	void getBookByUserId(Long userAppId, AsyncCallback<List<Book>> callback);
 
 }

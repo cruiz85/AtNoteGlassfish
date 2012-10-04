@@ -23,8 +23,8 @@
 		<class>lector.share.model.LocalBook</class>
 		<class>lector.share.model.Template</class>
 		<class>lector.share.model.TemplateCategory</class>
-		
-	
+		<class>lector.share.model.GoogleBook</class>
+		<class>lector.share.model.RemoteBook</class>
 		<class>lector.client.reader.filter.FilterConfig</class>
 		<class>lector.client.service.AnnotationSchema</class>
 		

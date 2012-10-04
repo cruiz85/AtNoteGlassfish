@@ -5,6 +5,7 @@
 package lector.client.book.reader;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import lector.client.catalogo.client.Catalog;
 import lector.client.catalogo.client.DecendanceException;
@@ -30,6 +31,10 @@ import lector.client.service.AnnotationSchema;
 import lector.share.model.Annotation;
 import lector.share.model.AnnotationThread;
 import lector.share.model.Catalogo;
+import lector.share.model.Entry;
+import lector.share.model.FolderDB;
+import lector.share.model.Professor;
+import lector.share.model.Student;
 import lector.share.model.Tag;
 import lector.share.model.GroupApp;
 import lector.share.model.Language;
@@ -48,201 +53,250 @@ public interface GWTService extends RemoteService {
 	 * @gwt.typeArgs bookId <java.lang.String>
 	 * @gwt.typeArgs <org.yournamehere.client.Annotation>
 	 */
-	public ArrayList<Annotation> getAnnotationsByBookId(String bookId)
-			throws GeneralException, AnnotationNotFoundException,
-			NullParameterException, BookNotFoundException;
 
-	public Long saveAnnotation(Annotation annotation);
+	UserApp login(String requestUri) throws UserNotFoundException;
 
-	public ArrayList<Annotation> getAnnotationsByPageNumber(Integer pageNumber,
-			String bookId, Long readingActivityId) throws GeneralException,
-			AnnotationNotFoundException, NullParameterException,
-			BookNotFoundException;
+	// Usuarios
 
-	public int deleteAnnotation(Annotation annotation) throws GeneralException,
-			NullParameterException, AnnotationNotFoundException;
+	public void saveUser(UserApp user);
 
-	public ArrayList<Book> getBooks(String query);
+	public UserApp loadUserById(Long userId) throws UserNotFoundException;
 
-	public ArrayList<Book> getBooks(String query, int start);
+	public UserApp loadUserByEmail(String email) throws UserNotFoundException;
 
-	public Book loadFullBookInGoogle(String query);
+	// Student
 
-	public int getAnnotationsNumberByFileName(String annotationTypeName)
-			throws GeneralException, NullParameterException,
-			AnnotationNotFoundException;
+	public List<Student> getStudentsByGroupId(Long groupId);
 
-	public int fusionFiles(Long fFromId, Long fToId) throws GeneralException,
-			NullParameterException;
+	public List<Student> getStudents();
 
-	public void fusionFolder(Long fFromId, Long fToId)
-			throws IlegalFolderFusionException, GeneralException;
+	public Long deleteStudentById(Long studentId);
 
-	public ArrayList<Annotation> getAnnotationsByAnnotationTypeAndBook(
-			String annotationType, String bookId, Integer pageNumber)
-			throws GeneralException, AnnotationNotFoundException,
-			NullParameterException, BookNotFoundException;
+	// Professor
 
-	public ArrayList<Annotation> getAnnotationsByIdsAndAuthorsTeacher(
-			ArrayList<Long> ids, ArrayList<Long> authorIds, Long Activity);
+	public List<Professor> getProfessors();
 
-	public ArrayList<Tag> getEntriesIdsByIdsRec(ArrayList<Long> Ids);
+	public Long deleteProfessorById(Long professorId);
 
-	public ArrayList<Annotation> getAnnotationsByIdsTeacher(
-			ArrayList<Long> ids, Long readingActivityId);
+	void deleteBookFromUser(String bookId, Long userId);
 
-	public ArrayList<Annotation> getAnnotationsByIdsStudent(
-			ArrayList<Long> ids, Long Student, Long readingActivityId);
-
-	public ArrayList<Annotation> getAnnotationsByIdsAndAuthorsStudent(
-			ArrayList<Long> ids, ArrayList<Long> authorIds, Long Activity,
-			Long Student);
-
-	public void moveFile(Long fatherFromId, Long fileId, Long fToId)
-			throws GeneralException;
-
-	public void moveFolder(Long fatherFromId, Long fFromId, Long fToId)
-			throws GeneralException, DecendanceException;
-
-	public void deleteFolder(Long folderId, Long fatherId)
-			throws GeneralException;
-
-	public void deleteFile(Long fileId, Long fatherId) throws GeneralException,
-			NullParameterException;
-
-	public Long saveFile(File filesys, Long fatherId) throws FileException;
-
-	public Long saveFolder(Folder folderSys, Long fatherId)
-			throws FolderException;
-
-	public ArrayList<Entity> getSons(Long fatherId, Long catalogId);
-
-	public boolean isRecentToSave(Annotation annotation);
-
-	public void saveCatalog(Catalogo catalog);
-
-	public UserApp login(String requestUri) throws UserNotFoundException;
-
-	public UserApp loadUserById(Long userId);
-
-	public ArrayList<UserApp> getUsersApp() throws UserNotFoundException;
-
-	public int deleteUserApp(Long userId) throws GeneralException,
-			NullParameterException;
-
-	public void removeUserAndGroupRelation(Long userId, Long groupId);
+	// Groups
+	public void saveGroup(GroupApp groupApp);
 
 	public GroupApp loadGroupById(Long groupId);
 
-	public void saveGroup(GroupApp groupApp);
+	public List<GroupApp> getGroupsByUserId(Long userId);
 
-	public ArrayList<GroupApp> getGroups() throws GroupNotFoundException;
+	public Long deleteGroup(Long groupId);
 
-	public int deleteGroup(Long groupId);
+	/* Metodo Nuevo, para añadir usuarios a un grupo, en la lista para validar */
+	public void addUserAndGroupRelation(Long userId, Long groupId);
 
-	public ArrayList<Annotation> getAnnotationsByPageNumbertByStudentId(
+	/*
+	 * Valida al usuario en el grupo pasandolo de la lista de en espera a
+	 * validos
+	 */
+	public void validUserAndGroupRelation(Long userId, Long groupId);
+
+	// Annotations
+
+	public void saveAnnotation(Annotation annotation);
+
+	public List<Annotation> getAnnotationsByBookId(String bookId)
+			throws GeneralException, AnnotationNotFoundException,
+			NullParameterException, BookNotFoundException;
+
+	public List<Annotation> getAnnotationsByPageNumbertAndUserId(
 			Integer pageNumber, String bookId, Long studentId,
 			Long readingActivityId);
 
-	public ArrayList<GroupApp> getGroupsByUserId(Long userId);
+	public List<Annotation> getAnnotationsByPageNumber(Integer pageNumber,
+			String bookId, Long readingActivityId) throws GeneralException,
+			AnnotationNotFoundException, NullParameterException,
+			BookNotFoundException;;
 
-	// TODO: RETIRAR CUANDO SE HAGA EL LOGIN CON GOOGLE
-	public UserApp loginAuxiliar(String userEmail) throws UserNotFoundException;
+	public List<Annotation> getAnnotationsByIds(List<Long> ids);
 
-	public UserApp loadUserByEmail(String email);
+	public List<Annotation> getAnnotationsByIdsAndAuthorsTeacher(
+			List<Long> ids, List<Long> authorIds, Long Activity);
 
-	public ArrayList<UserApp> getProfessor() throws UserNotFoundException;
+	public List<Annotation> getAnnotationsByTeacherIds(List<Long> ids,
+			Long readingActivityId);
 
-	public GroupApp loadGroupByName(String groupName);
+	public List<Annotation> getAnnotationsByStudentIds(List<Long> ids,
+			Long Student, Long readingActivityId);
 
-	public ArrayList<UserApp> getUsersByGroupId(Long groupId);
+	public List<Annotation> getAnnotationsByIdsAndAuthorsStudent(
+			List<Long> ids, List<Long> authorIds, Long Activity, Long Student);
 
-	public boolean saveNewGroup(GroupApp groupApp)
-			throws GroupNotFoundException;
+	public Long deleteAnnotation(Annotation annotation)
+			throws GeneralException, NullParameterException,
+			AnnotationNotFoundException;
 
-	public boolean saveUser(UserApp user);
+	// Annotations Threads
 
-	public ArrayList<Catalog> getCatalogs();
+	public void saveAnnotationThread(AnnotationThread annotationThread);
 
-	public Tag loadFileById(Long id);
+	public Long deleteAnnotationThread(AnnotationThread annotationThread)
+			throws GeneralException;
 
-	public Tag loadFileByNameAndCatalogId(String fileName, Long catalogId);
+	public List<AnnotationThread> getAnnotationThreadsByItsFather(
+			Long annotationId, Long threadFatherId);
 
-	public void deleteCatalog(Long catalogId) throws GeneralException,
-			NullParameterException;
+	// Books
+
+	public Book loadBookById(Long id);
+
+	// Carga un libro desde la factoria.
+
+	public Book loadFullBookInGoogle(String query);
+
+	// Recupera un libro de google, se vuelve interno
+
+	public List<Book> getBooks(String query);
+
+	// Recupera un libro de la libreria de google, se combertira interno de la
+	// factotia de de carga)
+
+	public List<Book> getBooks(String query, int start);
+
+	// Recupera los libros de goole para la busqueda, se combertira en un
+	// proceso interno de la carga)
+
+	// Catalog
+
+	public void saveCatalog(Catalogo catalog);
+
+	public Catalogo loadCatalogById(Long catalogId);
+
+	public void getCatalogs();
+
+	public List<Catalogo> getVisbibleCatalogsByProfessorId(Long professorId);
+
+	void deleteCatalog(Long catalogId);
+
+	// Entity
+
+	public List<Long> getEntriesIdsByNames(ArrayList<String> names,
+			Long catalogTeacher, Long catalogOpen);
+
+	public List<Entry> getEntriesByIdsRecursiveIfFolder(ArrayList<Long> Ids);
+
+	// Type
+
+	public Tag loadTagById(Long typeId);
+
+	public Tag loadTagByNameAndCatalogId(String typeName, Long catalogId);
+
+	public void saveTag(Tag typesys, Long typeCategoryId);
+
+	public Long deleteTag(Long typeId, Long typeCategoryId)
+			throws GeneralException;;
+
+	public Integer getAnnotationsNumberByTagName(String annotationTagName)
+			throws GeneralException, NullParameterException,
+			AnnotationNotFoundException;
+
+	public Long fusionTags(Long typeFromId, Long typeToId)
+			throws GeneralException, NullParameterException;
+
+	public void moveTag(Long typeCategoryFromId, Long typeId,
+			Long typeCategoryToId) throws GeneralException;;
+
+	public List<Tag> getTagsByNameAndCatalogId(ArrayList<String> typeNames,
+			Long catalogId);
+
+	public List<Tag> getTagsByIds(ArrayList<Long> typeIds);
+
+	public List<String> getTagNamesByIds(ArrayList<Long> typeIds);
+
+	public void renameTag(Long typeIds, String newTagName);
+
+	public void addTagToFolderDB(Long typeIds, Long fatherFolderDBId);
+
+	// TypeCategory
+
+	public FolderDB loadFolderDBById(Long typeCategoryId);
+
+	public FolderDB loadFolderDBByNameAndCatalogId(String FolderDBName,
+			Long catalogId);
+
+	public void deleteFolderDB(Long typeCategoryId, Long fatherFolderDBId)
+			throws GeneralException;;
+
+	public List<Entry> getSonsFromFolderDB(Long typeCategoryId);
+
+	public void renameFolderDB(Long typeCategoryId, String newFolderDBName);
+
+	public void saveFolderDB(Folder typeCategory, Long typeCategoryFatherId);
+
+	public void moveFolderDB(Long typeCategoryId, Long typeCategoryFromId,
+			Long typeCategoryToId) throws GeneralException, DecendanceException;;
+
+	public void fusionFolder(Long typeCategoryFromId, Long typeCategoryToId)
+			throws IlegalFolderFusionException, GeneralException;
+
+	// ReadingActivity
+
+	public ReadingActivity loadReadingActivityById(Long readingActivityId);
 
 	public void deleteReadingActivity(Long readingActivityId)
 			throws GeneralException, NullParameterException,
 			AnnotationNotFoundException;
 
-	public ArrayList<Language> getLanguages() throws GeneralException,
-			LanguageNotFoundException, NullParameterException;
+	public Integer removeReadingActivityAnnotations(Long readingActivity);
 
-	public ArrayList<String> getLanguagesNames() throws GeneralException,
-			LanguageNotFoundException, NullParameterException;
+	public ReadingActivity getReadingActivityByUserId(Long userId);
 
-	public void saveLanguage(Language language);
-
-	public int deleteLanguage(String languageName);
-
-	public ArrayList<Catalogo> getVisbibleCatalogsByProfessorId(Long professorId);
-
-	public ArrayList<ReadingActivity> getReadingActivityByUserId(Long userId);
-
-	public int deleteProfessor(Long professorId) throws GeneralException,
-			NullParameterException;
-
-	public ArrayList<ReadingActivity> getReadingActivityByProfessorId(
+	public List<ReadingActivity> loadReadingActivityByProfessorId(
 			Long professorId);
 
 	public void saveReadingActivity(ReadingActivity readingActivity);
 
-	public Catalogo loadCatalogById(Long catalogId);
+	public void updateReadingActivities();
 
-	public Language loadLanguageByName(String nameId);
+	// Language
 
-	public int removeReadingActivityFromAnnotations(Long readingActivity)
-			throws GeneralException, NullParameterException,
-			AnnotationNotFoundException;
+	public void saveLanguage(Language language);
 
-	public ReadingActivity loadReadingActivityById(Long id);
+	public Long deleteLanguage(Long languageId);
 
-	public void removeFileFromAnnotation(Long annotationId, Long fileId);
+	public List<String> getLanguagesNames() throws GeneralException,
+			LanguageNotFoundException, NullParameterException;;
 
-	public ArrayList<Tag> getFilesByIds(ArrayList<Long> ids);
+	public List<Language> getLanguages() throws GeneralException,
+			LanguageNotFoundException, NullParameterException;
 
-	public ArrayList<Tag> getFilesByNameAndCatalogId(
-			ArrayList<String> names, Long catalogId);
+	public Language loadLanguageById(Long languageId);
+	
+	//Procesos Internos
+	
+			//Generacion del Grafo // Se debe de implementar internamente
+		
+	String getJSONServiceTODrawGraph(String url,String body);
 
-	public ArrayList<Long> getEntriesIdsByNames(ArrayList<String> names,
-			Long catalogTeacher, Long catalogOpen);
+	AnnotationSchema getSchemaByCatalogId(Long catalogId);
 
-	public ArrayList<Annotation> getAnnotationsByIds(ArrayList<Long> ids);
 
-	public void addFather(Long sonId, Long fatherId) throws FileException;
+//	public ArrayList<Tag> getEntriesIdsByIdsRec(ArrayList<Long> Ids);
 
-	public void renameFile(Long fileId, String newName) throws FileException;
+//	public Long saveFile(File filesys, Long fatherId) throws FileException;
+//
+//	public Long saveFolder(Folder folderSys, Long fatherId)
+//			throws FolderException;
+//
+//	public ArrayList<Entity> getSons(Long fatherId, Long catalogId);
 
-	public void renameFolder(Long folderId, String newName)
-			throws FolderException;
 
-	public Long saveAnnotationThread(AnnotationThread annotationThread);
+	// TODO: RETIRAR CUANDO SE HAGA EL LOGIN CON GOOGLE
+	public UserApp loginAuxiliar(String userEmail) throws UserNotFoundException;
 
-	public void deleteAnnotationThread(Long annotationThread)
-			throws GeneralException;
 
-	public ArrayList<AnnotationThread> getAnnotationThreadsByItsFather(
-			Long annotationId, Long threadFatherId) throws GeneralException;
 
-	public String getJSONServiceTODrawGraph(String url, String body);
-
-	public ArrayList<AnnotationSchema> getSchemaByCatalogId(Long catalogId);
-
-	public void updateRenameOfUser(Long userId);
 
 	public void deleteBook(String bookId, Long userId);
 
-	public ArrayList<String> getFileNamesByIds(ArrayList<Long> ids);
+	//public ArrayList<String> getFileNamesByIds(ArrayList<Long> ids);
 
-	public void updateReadingActivities();
+	
 }
