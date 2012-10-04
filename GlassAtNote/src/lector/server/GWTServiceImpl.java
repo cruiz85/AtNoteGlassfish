@@ -75,41 +75,7 @@ public class GWTServiceImpl extends RemoteServiceServlet implements GWTService {
 
 	@Override
 	public UserApp login(String requestUri) throws UserNotFoundException {
-		UserService userService = UserServiceFactory.getUserService();
-		User user = userService.getCurrentUser();
-		UserApp userApp = new UserApp();
-		if (user != null) {
-
-			userApp = loadUserByEmail(user.getEmail());
-			if (userApp == null) { // PROBAR AQUI LANZANDO UNA EXCEPCION CON EL
-				// URL COMO MENSAJE, PERO NO FUNCIONA, VER
-				// QUE PASA
-				/*
-				 * Logger.getLogger(GWTServiceImpl.class.getName()).log(Level.INFO
-				 * , null, user.getEmail());
-				 */
-				userApp = new UserApp();
-				userApp.setLoggedIn(false);
-				userApp.setLoginUrl(userService.createLoginURL(requestUri));
-				userApp.setLogoutUrl(userService.createLogoutURL(requestUri));
-				userApp.setEmail(user.getEmail());
-				userApp.setIsAuthenticated(false);
-				return userApp;
-			}
-
-			makeAUtilArrayListLong(userApp);
-			makeAUtilArrayListString(userApp);
-			userApp.setLoggedIn(true);
-			userApp.setLogoutUrl(userService.createLogoutURL(requestUri));
-			userApp.setLoginUrl(userService.createLoginURL(requestUri));
-		} else {
-
-			userApp.setLoggedIn(false);
-			userApp.setLoginUrl(userService.createLoginURL(requestUri));
-			userApp.setLogoutUrl(userService.createLogoutURL(requestUri));
-		}
-
-		return userApp;
+		return null;
 	}
 
 	@Override
@@ -592,7 +558,5 @@ public class GWTServiceImpl extends RemoteServiceServlet implements GWTService {
 		// TODO Auto-generated method stub
 
 	}
-
-	
 
 }

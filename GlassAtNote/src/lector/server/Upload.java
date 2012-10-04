@@ -57,8 +57,8 @@ public class Upload extends HttpServlet {
 		String author = req.getParameter(Constants.BLOB_AUTHOR);
 		Long userAppId = Long.parseLong(req
 				.getParameter(Constants.BLOB_UPLOADER));
-		LocalBook bookBlob = new LocalBook(pagesCount, publishedYear, title,
-				author, webLinks, userAppId);
+//		LocalBook bookBlob = new LocalBook(pagesCount, publishedYear, title,    SE HA COMENTADO RECIENTEMENTE POR LA GENERACION DE LOCALBOOK
+//				author, webLinks, userAppId);
 		// BlobInfoFactory blobInfoFactory = new BlobInfoFactory();
 		// BlobInfo blobInfo = blobInfoFactory.loadBlobInfo(blobKeys.get(0));
 
@@ -77,13 +77,13 @@ public class Upload extends HttpServlet {
 		//
 		//
 		// }
-
-		imageService.saveBookBlob(bookBlob);
-
-		UserApp upLoader = gwtServiceImpl.loadUserById(userAppId);
-		String book = title + " - " + "##" + bookBlob.getId();
-		upLoader.getBookIds().add(book);
-		gwtServiceImpl.saveUser(upLoader);
+// LAS LINEAS DE ABAJO SE HAN COMENTADO RECIENTEMENTE PORQUE YA NO EXISTE BOOKBLOB
+//		imageService.saveBookBlob(bookBlob);
+//
+//		UserApp upLoader = gwtServiceImpl.loadUserById(userAppId);
+//		String book = title + " - " + "##" + bookBlob.getId();
+//		upLoader.getBookIds().add(book);
+//		gwtServiceImpl.saveUser(upLoader);
 
 	}
 
