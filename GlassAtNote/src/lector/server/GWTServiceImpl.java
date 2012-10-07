@@ -39,6 +39,7 @@ import lector.share.model.Book;
 import lector.share.model.BookNotFoundException;
 import lector.share.model.DecendanceException;
 import lector.share.model.GeneralException;
+import lector.share.model.GoogleBook;
 import lector.share.model.GroupNotFoundException;
 import lector.share.model.IlegalFolderFusionException;
 import lector.share.model.LanguageNotFoundException;
@@ -663,17 +664,21 @@ public class GWTServiceImpl extends RemoteServiceServlet implements GWTService {
 	}
 
 	@Override
-	public List<AnnotationThread> getAnnotationThreadsByItsFather(Long threadFatherId) throws GeneralException, AnnotationThreadNotFoundException {
+	public List<AnnotationThread> getAnnotationThreadsByItsFather(
+			Long threadFatherId) throws GeneralException,
+			AnnotationThreadNotFoundException {
 		EntityManager entityManager = emf.createEntityManager();
 		List<AnnotationThread> list;
 
-		String sql = "SELECT r FROM AnnotationThread r WHERE r.father.id=" + threadFatherId;
+		String sql = "SELECT r FROM AnnotationThread r WHERE r.father.id="
+				+ threadFatherId;
 		try {
 			list = entityManager.createQuery(sql).getResultList();
 		} catch (Exception e) {
 			// logger.error ("Exception in method loadUserById: ", e)
-			throw new GeneralException("Exception in method getAnnotationThreadsByItsFather:"
-					+ e.getMessage(), e.getStackTrace());
+			throw new GeneralException(
+					"Exception in method getAnnotationThreadsByItsFather:"
+							+ e.getMessage(), e.getStackTrace());
 
 		}
 		if (list == null || list.isEmpty()) {
@@ -690,27 +695,214 @@ public class GWTServiceImpl extends RemoteServiceServlet implements GWTService {
 	}
 
 	@Override
-	public Book loadBookById(Long id) {
-		// TODO Auto-generated method stub
-		return null;
+	public Book loadBookById(Long id) throws BookNotFoundException,
+			GeneralException {
+		EntityManager entityManager = emf.createEntityManager();
+		List<Book> list;
+
+		String sql = "SELECT r FROM Book r WHERE r.id=" + id;
+		try {
+			list = entityManager.createQuery(sql).getResultList();
+		} catch (Exception e) {
+			// logger.error ("Exception in method loadGroupById: ", e)
+			throw new GeneralException("Exception in method loadBookById:"
+					+ e.getMessage(), e.getStackTrace());
+
+		}
+		if (list == null || list.isEmpty()) {
+			// logger.error ("Exception in method loadGroupById: ", e)
+			throw new BookNotFoundException(
+					"Book not found in method loadBookById");
+
+		}
+		if (entityManager.isOpen()) {
+			entityManager.close();
+		}
+
+		return list.get(0);
 	}
 
 	@Override
-	public Book loadFullBookInGoogle(String query) {
-		// TODO Auto-generated method stub
-		return null;
+	public GoogleBook loadFullBookInGoogle(String query) {
+		GoogleBook googleBook = getBookInGoogleByISBN(query);
+		String cleanGoogleBookId = googleBook.getUrl().substring(33, 45);
+		googleBook
+				.setWebLinks(getBookImageInGoole(getBookImageStringInGoogle(cleanGoogleBookId)));
+		googleBook.setImagesPath(googleBook.getWebLinks().get(0));
+		return googleBook;
+	}
+
+	private ArrayList<String> getBookImageInGoole(String imagesWithinHTML) {
+		ArrayList<String> list = new ArrayList<String>();
+		// System.out.println(imagesWithinHTML);
+		// Portadas
+		String[] PP0 = imagesWithinHTML.split("\"pid\":\"PP0\",\"src\":\"");
+		if (PP0.length == 2) {
+			String[] PP = PP0[1].split("\"");
+
+			list.add(PP[0].replaceAll("\\\\u0026", "&"));
+		}
+		String[] PP1 = imagesWithinHTML.split("\"pid\":\"PP1\",\"src\":\"");
+		if (PP1.length == 2) {
+			String[] PP = PP1[1].split("\"");
+
+			list.add(PP[0].replaceAll("\\\\u0026", "&"));
+		}
+		// Hojas
+		String[] PAI = imagesWithinHTML.split("\"pid\":\"PA1\",\"src\":\"");
+		String[] PP = PAI[1].split("\"");
+
+		list.add(PP[0].replaceAll("\\\\u0026", "&"));
+		int cont = 2;
+		while (PAI.length != 1) {
+			PAI = imagesWithinHTML.split("\"pid\":\"PA" + cont
+					+ "\",\"src\":\"");
+			if (PAI.length != 1) {
+				PP = PAI[1].split("\"");
+				list.add(PP[0].replaceAll("\\\\u0026", "&"));
+			}
+			cont++;
+		}
+		return list;
+	}
+
+	private String getBookImageStringInGoogle(String id) {
+		URL url;
+		URLConnection connection;
+		String line;
+		StringBuilder builder = new StringBuilder();
+		BufferedReader reader;
+		try {
+			url = new URL(
+					"http://books.google.com/ebooks/reader?id="
+							+ id
+							+ "&pg=PP0&key=ABQIAAAAgGfd0Syld4wI6M_8-PchExQ_l6-Ytnm_KJl3gFahMrxfvqMmehRrB92flZ-iJptRd3l62UsasikVhg");
+			connection = url.openConnection();
+			connection.addRequestProperty("Referer",
+					"http://kido180020783.appspot.com/");
+			reader = new BufferedReader(new InputStreamReader(
+					connection.getInputStream()));
+			while ((line = reader.readLine()) != null) {
+				builder.append(line);
+			}
+		} catch (MalformedURLException ex) {
+			Logger.getLogger(GWTServiceImpl.class.getName()).log(
+					Level.SEVERE, null, ex);
+		} catch (IOException ex) {
+			Logger.getLogger(GWTServiceImpl.class.getName()).log(
+					Level.SEVERE, null, ex);
+		}
+		return builder.toString();
+	}
+
+	private GoogleBook getBookInGoogleByISBN(String query) {
+		return getGoogleBooks(query).get(0);
 	}
 
 	@Override
-	public List<Book> getBooks(String query) {
-		// TODO Auto-generated method stub
-		return null;
+	public List<GoogleBook> getGoogleBooks(String query) {
+		String cleanQuery = ServiceManagerUtils.removeSpaces(query);
+		URL url;
+		URLConnection connection;
+		String line;
+		StringBuilder builder = new StringBuilder();
+		BufferedReader reader;
+		List<GoogleBook> googleBooks = new ArrayList<GoogleBook>();
+
+		try {
+			url = new URL(
+					"https://ajax.googleapis.com/ajax/services/search/books?"
+							+ "as_brr=1&v=1.0&q="
+							+ cleanQuery
+							+ "&rsz=8&start=3&key=ABQIAAAAgGfd0Syld4wI6M_8-PchExQ_l6-Ytnm_KJl3gFahMrxfvqMmehRrB92flZ-iJptRd3l62UsasikVhg");
+			connection = url.openConnection();
+			connection.addRequestProperty("Referer",
+					"http://kido180020783.appspot.com/");
+			reader = new BufferedReader(new InputStreamReader(
+					connection.getInputStream()));
+			while ((line = reader.readLine()) != null) {
+				builder.append(line);
+			}
+
+			JSONObject json = new JSONObject(builder.toString());
+			JSONObject responseObject = json.getJSONObject("responseData");
+			JSONArray results = responseObject.getJSONArray("results");
+			for (int i = 0; i < results.length(); i++) {
+				JSONObject jsonBook = results.getJSONObject(i);
+				googleBooks.add(new GoogleBook(jsonBook.getString("authors"),
+						jsonBook.getString("bookId"), jsonBook
+								.getString("pageCount"), jsonBook
+								.getString("publishedYear"), jsonBook
+								.getString("title"), jsonBook
+								.getString("tbUrl"), jsonBook
+								.getString("unescapedUrl")));
+			}
+
+		} catch (MalformedURLException ex) {
+			Logger.getLogger(GWTServiceImpl.class.getName()).log(
+					Level.SEVERE, null, ex);
+		} catch (IOException ex) {
+			Logger.getLogger(GWTServiceImpl.class.getName()).log(
+					Level.SEVERE, null, ex);
+		} catch (JSONException ex) {
+			Logger.getLogger(GWTServiceImpl.class.getName()).log(
+					Level.SEVERE, null, ex);
+		}
+		return googleBooks;
 	}
 
 	@Override
-	public List<Book> getBooks(String query, int start) {
-		// TODO Auto-generated method stub
-		return null;
+	public List<GoogleBook> getBooks(String query, int start) {
+		String cleanQuery = ServiceManagerUtils.removeSpaces(query);
+		URL url;
+		URLConnection connection;
+		String line;
+		StringBuilder builder = new StringBuilder();
+		BufferedReader reader;
+		List<GoogleBook> googleBooks = new ArrayList<GoogleBook>();
+
+		try {
+			url = new URL(
+					"https://ajax.googleapis.com/ajax/services/search/books?"
+							+ "v=1.0&as_brr=1&q="
+							+ cleanQuery
+							+ "&rsz=8&start="
+							+ start
+							+ "&rsz=8&key=ABQIAAAAgGfd0Syld4wI6M_8-PchExQ_l6-Ytnm_KJl3gFahMrxfvqMmehRrB92flZ-iJptRd3l62UsasikVhg");
+			connection = url.openConnection();
+			connection.addRequestProperty("Referer",
+					"http://kido180020783.appspot.com/");
+			reader = new BufferedReader(new InputStreamReader(
+					connection.getInputStream()));
+			while ((line = reader.readLine()) != null) {
+				builder.append(line);
+			}
+
+			JSONObject json = new JSONObject(builder.toString());
+			JSONObject responseObject = json.getJSONObject("responseData");
+			JSONArray results = responseObject.getJSONArray("results");
+			for (int i = 0; i < results.length(); i++) {
+				JSONObject jsonBook = results.getJSONObject(i);
+				googleBooks.add(new GoogleBook(jsonBook.getString("authors"),
+						jsonBook.getString("bookId"), jsonBook
+								.getString("pageCount"), jsonBook
+								.getString("publishedYear"), jsonBook
+								.getString("title"), jsonBook
+								.getString("tbUrl"), jsonBook
+								.getString("unescapedUrl")));
+			}
+
+		} catch (MalformedURLException ex) {
+			Logger.getLogger(GWTServiceImpl.class.getName()).log(
+					Level.SEVERE, null, ex);
+		} catch (IOException ex) {
+			Logger.getLogger(GWTServiceImpl.class.getName()).log(
+					Level.SEVERE, null, ex);
+		} catch (JSONException ex) {
+			Logger.getLogger(GWTServiceImpl.class.getName()).log(
+					Level.SEVERE, null, ex);
+		}
+		return googleBooks;
 	}
 
 	@Override

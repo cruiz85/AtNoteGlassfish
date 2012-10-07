@@ -24,9 +24,20 @@ public class GoogleBook extends RemoteBook implements Serializable {
 	private String url;
 
 	public GoogleBook() {
-		super();
+		super("GOOGLE LIBRARY");
 	}
 
+	public GoogleBook(String author, String ISBN, String pagesCount,
+			String publishedYear, String title, String tbURL, String unscapedURL) {
+		this();
+		super.setAuthor(author);
+		super.setISBN(ISBN);
+		super.setPagesCount(pagesCount);
+		super.setPublishedYear(publishedYear);
+		super.setTitle(title);
+		this.tbURL = tbURL;
+		this.url = unscapedURL;
+	}
 
 	public String getImagesPath() {
 		return imagesPath;

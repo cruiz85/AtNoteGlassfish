@@ -16,6 +16,11 @@ public class RemoteBook extends Book implements Serializable {
 		super();
 	}
 
+	public RemoteBook(String libraryName) {
+		super();
+		this.libraryName = libraryName;
+	}
+
 	public String getLibraryName() {
 		return libraryName;
 	}

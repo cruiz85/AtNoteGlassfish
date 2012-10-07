@@ -24,6 +24,7 @@ import lector.share.model.DecendanceException;
 import lector.share.model.Entry;
 import lector.share.model.FolderDB;
 import lector.share.model.GeneralException;
+import lector.share.model.GoogleBook;
 import lector.share.model.GroupNotFoundException;
 import lector.share.model.IlegalFolderFusionException;
 import lector.share.model.LanguageNotFoundException;
@@ -141,20 +142,20 @@ public interface GWTService extends RemoteService {
 
 	// Books
 
-	public Book loadBookById(Long id);
+	public Book loadBookById(Long id) throws BookNotFoundException, GeneralException;
 
 	// Carga un libro desde la factoria.
 
-	public Book loadFullBookInGoogle(String query);
+	public GoogleBook loadFullBookInGoogle(String query);
 
 	// Recupera un libro de google, se vuelve interno
 
-	public List<Book> getBooks(String query);
+	public List<GoogleBook> getGoogleBooks(String query);
 
 	// Recupera un libro de la libreria de google, se combertira interno de la
 	// factotia de de carga)
 
-	public List<Book> getBooks(String query, int start);
+	public List<GoogleBook> getBooks(String query, int start);
 
 	// Recupera los libros de goole para la busqueda, se combertira en un
 	// proceso interno de la carga)

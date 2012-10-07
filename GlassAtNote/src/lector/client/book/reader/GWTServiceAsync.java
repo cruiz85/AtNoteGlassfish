@@ -14,6 +14,7 @@ import lector.share.model.Book;
 import lector.share.model.Catalogo;
 import lector.share.model.Entry;
 import lector.share.model.FolderDB;
+import lector.share.model.GoogleBook;
 import lector.share.model.Professor;
 import lector.share.model.Student;
 import lector.share.model.Tag;
@@ -28,16 +29,13 @@ import lector.share.model.UserApp;
  */
 public interface GWTServiceAsync {
 
-
-	void getBooks(String query, AsyncCallback<List<Book>> asyncCallback);
-
 	void getBooks(String query, int start,
-			AsyncCallback<List<Book>> asyncCallback);
+			AsyncCallback<List<GoogleBook>> asyncCallback);
 
 	void deleteAnnotation(Long annotationId, AsyncCallback<Void> asyncCallback);
 
 	public void loadFullBookInGoogle(String query,
-			AsyncCallback<Book> asyncCallback);
+			AsyncCallback<GoogleBook> asyncCallback);
 
 	void saveAnnotation(Annotation annotation, AsyncCallback<Void> asyncCallback);
 
@@ -123,8 +121,8 @@ public interface GWTServiceAsync {
 	void getJSONServiceTODrawGraph(String url, String body,
 			AsyncCallback<String> callback);
 
-//	void getSchemaByCatalogId(Long catalogId,
-//			AsyncCallback<AnnotationSchema> callback);
+	// void getSchemaByCatalogId(Long catalogId,
+	// AsyncCallback<AnnotationSchema> callback);
 
 	void deleteBook(String bookId, Long userId, AsyncCallback<Void> callback);
 
@@ -223,5 +221,7 @@ public interface GWTServiceAsync {
 
 	void getAnnotationsByBookId(Long activityId, String bookId,
 			AsyncCallback<List<Annotation>> callback);
+
+	void getGoogleBooks(String query, AsyncCallback<List<GoogleBook>> callback);
 
 }
