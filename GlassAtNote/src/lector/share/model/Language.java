@@ -1,6 +1,9 @@
 package lector.share.model;
+
 import java.io.Serializable;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
@@ -10,454 +13,460 @@ public class Language implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
-	//Generales
-    @Id
-    private String nameId;
-    //MainWindow
-    private String NamePage = "@Note";
-    private String Specifications = "Book Card";
-    private String Annotation = "Annotation";
-    private String No_Annotation = "No Annotations";
-    private String All_Annotation = "All Annotations";
-    private String Only_Selected = "On mouse over";
-    private String BackAdministrationButton = "Administration";
-    private String BackUserButton = "Back";
-    private String FilterMainButton = "Filter";
-    private String BrowserMainButton = "Browser";
-    private String AnnotationsFiltering="Active Filter";
-    private String DOYOUFilterOUT="Do you want to desactivate the filter?";
-    private String AcceptFilter="Accept";
-    private String CancelFilter="Cancel";
-    private String ShowDensity = "Show Density";
-    
-    //Specifications
-    private String ID = "ID";
-    private String Authors = "Authors";
-    private String Pages = "Pages";
-    private String Publication_Year = "Publication Year";
-    private String Title = "Title";
-    private String Front_Cover = "Front_Cover";
-    //Filter
-    private String Advance = "Advance";
-    private String FilterButton = "Filter";
-    private String Select_All = "Select All";
-    private String AllSelected = "All Selected";
-    //Advance
-    private String CloseFA="Close";
-    private String FilterButtonFA="Filter";
-    private String New_Rule="New Rule";
-    private String Remove="Remove";
-    private String GO_To_PageFA="Go to Page";
-    private String Comment_AreaFA="Comment Area";
-    private String PageFA="Page";
-    private String Rule="Rule";
-    //Annotation
-    private String Save = "Save";
-    private String ClearAnot = "Clear";
-    private String Cancel = "Cancel";
-    private String DeleteAnnotation = "Delete Annotation";
-    private String SetTypes = "Teacher Catalog";
+	// Generales
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private Long id;
+
+	private String name;
+	// MainWindow
+	private String NamePage = "@Note";
+	private String Specifications = "Book Card";
+	private String Annotation = "Annotation";
+	private String No_Annotation = "No Annotations";
+	private String All_Annotation = "All Annotations";
+	private String Only_Selected = "On mouse over";
+	private String BackAdministrationButton = "Administration";
+	private String BackUserButton = "Back";
+	private String FilterMainButton = "Filter";
+	private String BrowserMainButton = "Browser";
+	private String AnnotationsFiltering = "Active Filter";
+	private String DOYOUFilterOUT = "Do you want to desactivate the filter?";
+	private String AcceptFilter = "Accept";
+	private String CancelFilter = "Cancel";
+	private String ShowDensity = "Show Density";
+
+	// Specifications
+	private String ID = "ID";
+	private String Authors = "Authors";
+	private String Pages = "Pages";
+	private String Publication_Year = "Publication Year";
+	private String Title = "Title";
+	private String Front_Cover = "Front_Cover";
+	// Filter
+	private String Advance = "Advance";
+	private String FilterButton = "Filter";
+	private String Select_All = "Select All";
+	private String AllSelected = "All Selected";
+	// Advance
+	private String CloseFA = "Close";
+	private String FilterButtonFA = "Filter";
+	private String New_Rule = "New Rule";
+	private String Remove = "Remove";
+	private String GO_To_PageFA = "Go to Page";
+	private String Comment_AreaFA = "Comment Area";
+	private String PageFA = "Page";
+	private String Rule = "Rule";
+	// Annotation
+	private String Save = "Save";
+	private String ClearAnot = "Clear";
+	private String Cancel = "Cancel";
+	private String DeleteAnnotation = "Delete Annotation";
+	private String SetTypes = "Teacher Catalog";
 	private String SetTypesPublic = "Student Catalog";
-    private String Visibility = "Visibility";
-    private String Upgradeable = "Public Editable?";
-    private String New="New";
-    private String FromExist="Reuse";
+	private String Visibility = "Visibility";
+	private String Upgradeable = "Public Editable?";
+	private String New = "New";
+	private String FromExist = "Reuse";
 	private String NewAdmin = "Admin";
-	private String Done="Done";
-    //Varios
-    private String E_Page_Dont_Exist="Error: Page does not exist";
-    private String E_Not_a_number="Error: Page number could not be a letter";
-    private String Loading="Loading...";
-    private String Saving="Saving...";
-    private String Deleting="Deleting...";
-    private String Filtering="Filtering...";
-    private String E_Coments_dont_be_refresh="Error: Comments could not be refreshed";
-    private String E_Need_to_select_a_type="Error: Select a Type from ";
-    private String W_Newer_version_of_anotation="Warning : There's a newer version for this Annotacion, Are you sure you want to save it anyway?";
-    private String E_Tags_Refresh="Error : Tags cannot be refreshed";
-    private String E_Types_refresh="Error : Types cannot be refreshed";
-    private String E_Empty_Or_2Less_Tag="Error : Tags must be more than 2 letters long";
-    private String E_Tag_Dont_Exist="Error : Tag does not exist";
-    private String E_loading="Error Loading";
-    private String E_saving="Error Saving";
-    private String E_deleting="Error Deleting";	
-    private String E_ExistBefore = "Error: This type was added Before";
-    private String E_typeFilter= "Error: Filter found problems when retrieving types";
-    private String E_UserLoad="Error: Users can't be load";
-    private String E_filteringmesagetypes="Error filtering Message: Load Types";
-    private String E_filteringmesageAnnotations="Error filtering Message: Load Annotations";
-    private String E_Saving="Error: Error Saving";
+	private String Done = "Done";
+	// Varios
+	private String E_Page_Dont_Exist = "Error: Page does not exist";
+	private String E_Not_a_number = "Error: Page number could not be a letter";
+	private String Loading = "Loading...";
+	private String Saving = "Saving...";
+	private String Deleting = "Deleting...";
+	private String Filtering = "Filtering...";
+	private String E_Coments_dont_be_refresh = "Error: Comments could not be refreshed";
+	private String E_Need_to_select_a_type = "Error: Select a Type from ";
+	private String W_Newer_version_of_anotation = "Warning : There's a newer version for this Annotacion, Are you sure you want to save it anyway?";
+	private String E_Tags_Refresh = "Error : Tags cannot be refreshed";
+	private String E_Types_refresh = "Error : Types cannot be refreshed";
+	private String E_Empty_Or_2Less_Tag = "Error : Tags must be more than 2 letters long";
+	private String E_Tag_Dont_Exist = "Error : Tag does not exist";
+	private String E_loading = "Error Loading";
+	private String E_saving = "Error Saving";
+	private String E_deleting = "Error Deleting";
+	private String E_ExistBefore = "Error: This type was added Before";
+	private String E_typeFilter = "Error: Filter found problems when retrieving types";
+	private String E_UserLoad = "Error: Users can't be load";
+	private String E_filteringmesagetypes = "Error filtering Message: Load Types";
+	private String E_filteringmesageAnnotations = "Error filtering Message: Load Annotations";
+	private String E_Saving = "Error: Error Saving";
 	private String E_DeleteReply = "Error: Error Deleting Reply, Please Try Again";
-   //Browser
-    private String Close="Close";
-    private String FilterButtonBrowser="Filter";
-    private String GO_To_Page="Go to Page";
-    private String Comment_Area="Comment Area";
-    private String Page="Page";
-    private String TeacherTypes = "Teacher Types";
+	// Browser
+	private String Close = "Close";
+	private String FilterButtonBrowser = "Filter";
+	private String GO_To_Page = "Go to Page";
+	private String Comment_Area = "Comment Area";
+	private String Page = "Page";
+	private String TeacherTypes = "Teacher Types";
 	private String OpenTypes = "Open Types";
 
-    
-    
-    public Language() {
-    }
+	public Language() {
+	}
 
-    //TODO Generales
-    public Language(String name) {
-        nameId = name;
-    }
+	// TODO Generales
+	public Language(String name) {
+		this.name = name;
+	}
 
-    public String getName() {
-        	return nameId;
-    }
+	public Long getId() {
+		return id;
+	}
 
-    public void setName(String name) {
-        this.nameId = name;
-    }
+	public void setId(Long id) {
+		this.id = id;
+	}
 
-    //TODO MainWindow
-    public String getNamePage() {
-    	return NamePage;
-    }
+	public String getName() {
+		return name;
+	}
 
-    public void setNamePage(String namePage) {
-        NamePage = namePage;
-    }
+	public void setName(String name) {
+		this.name = name;
+	}
 
-    public String getSpecifications() {
-        return Specifications;
-    }
+	public void setNewAdmin(String newAdmin) {
+		NewAdmin = newAdmin;
+	}
 
-    public void setSpecifications(String specifications) {
-        Specifications = specifications;
-    }
+	// TODO MainWindow
+	public String getNamePage() {
+		return NamePage;
+	}
 
-    public String getAnnotation() {
-        return Annotation;
-    }
+	public void setNamePage(String namePage) {
+		NamePage = namePage;
+	}
 
-    public void setAnnotation(String annotation) {
-        Annotation = annotation;
-    }
+	public String getSpecifications() {
+		return Specifications;
+	}
 
-    public String getNo_Annotation() {
-        return No_Annotation;
-    }
+	public void setSpecifications(String specifications) {
+		Specifications = specifications;
+	}
 
-    public void setNo_Annotation(String no_Annotation) {
-        No_Annotation = no_Annotation;
-    }
+	public String getAnnotation() {
+		return Annotation;
+	}
 
-    public String getAll_Annotation() {
-        return All_Annotation;
-    }
+	public void setAnnotation(String annotation) {
+		Annotation = annotation;
+	}
 
-    public void setAll_Annotation(String all_Annotation) {
-        All_Annotation = all_Annotation;
-    }
+	public String getNo_Annotation() {
+		return No_Annotation;
+	}
 
-    public String getOnly_Selected() {
-        return Only_Selected;
-    }
+	public void setNo_Annotation(String no_Annotation) {
+		No_Annotation = no_Annotation;
+	}
 
-    public void setOnly_Selected(String only_Selected) {
-        Only_Selected = only_Selected;
-    }
+	public String getAll_Annotation() {
+		return All_Annotation;
+	}
 
-    public String getBackAdministrationButton() {
-        return BackAdministrationButton;
-    }
+	public void setAll_Annotation(String all_Annotation) {
+		All_Annotation = all_Annotation;
+	}
 
-    public void setBackAdministrationButton(String backAdministrationButton) {
-        BackAdministrationButton = backAdministrationButton;
-    }
+	public String getOnly_Selected() {
+		return Only_Selected;
+	}
 
-    public String getBackUserButton() {
-        return BackUserButton;
-    }
+	public void setOnly_Selected(String only_Selected) {
+		Only_Selected = only_Selected;
+	}
 
-    public void setBackUserButton(String backUserButton) {
-        BackUserButton = backUserButton;
-    }
-    
-    public void setBrowserMainButton(String browserMainButton) {
+	public String getBackAdministrationButton() {
+		return BackAdministrationButton;
+	}
+
+	public void setBackAdministrationButton(String backAdministrationButton) {
+		BackAdministrationButton = backAdministrationButton;
+	}
+
+	public String getBackUserButton() {
+		return BackUserButton;
+	}
+
+	public void setBackUserButton(String backUserButton) {
+		BackUserButton = backUserButton;
+	}
+
+	public void setBrowserMainButton(String browserMainButton) {
 		BrowserMainButton = browserMainButton;
 	}
-    
-    public void setFilterMainButton(String filterMainButton) {
+
+	public void setFilterMainButton(String filterMainButton) {
 		FilterMainButton = filterMainButton;
 	}
-    
-    public String getBrowserMainButton() {
+
+	public String getBrowserMainButton() {
 		return BrowserMainButton;
 	}
-    
-    public String getFilterMainButton() {
+
+	public String getFilterMainButton() {
 		return FilterMainButton;
 	}
-    
-    public String getAnnotationsFiltering() {
+
+	public String getAnnotationsFiltering() {
 		return AnnotationsFiltering;
 	}
-    
-    public void setAnnotationsFiltering(String annotationsFiltering) {
+
+	public void setAnnotationsFiltering(String annotationsFiltering) {
 		AnnotationsFiltering = annotationsFiltering;
 	}
-    
-    public String getDOYOUFilterOUT() {
+
+	public String getDOYOUFilterOUT() {
 		return DOYOUFilterOUT;
 	}
-    
-    public void setDOYOUFilterOUT(String dOYOUFilterOUT) {
+
+	public void setDOYOUFilterOUT(String dOYOUFilterOUT) {
 		DOYOUFilterOUT = dOYOUFilterOUT;
 	}
-    
-    public String getAcceptFilter() {
+
+	public String getAcceptFilter() {
 		return AcceptFilter;
 	}
-    
-    public void setAcceptFilter(String acceptFilter) {
+
+	public void setAcceptFilter(String acceptFilter) {
 		AcceptFilter = acceptFilter;
 	}
-    
-    public void setCancelFilter(String cancelFilter) {
+
+	public void setCancelFilter(String cancelFilter) {
 		CancelFilter = cancelFilter;
 	}
-    
-    public String getCancelFilter() {
+
+	public String getCancelFilter() {
 		return CancelFilter;
 	}
-    
-    public String getShowDensity() {
-    	return ShowDensity;
-    }
 
-   public void setShowDensity(String showDensity) {
-	ShowDensity = showDensity;
-}
-    
-    //TODO Specifications
-    public String getID() {
-        return ID;
-    }
+	public String getShowDensity() {
+		return ShowDensity;
+	}
 
-    public void setID(String iD) {
-        ID = iD;
-    }
+	public void setShowDensity(String showDensity) {
+		ShowDensity = showDensity;
+	}
 
-    public String getAuthors() {
-        return Authors;
-    }
+	// TODO Specifications
+	public String getID() {
+		return ID;
+	}
 
-    public void setAuthors(String authors) {
-        Authors = authors;
-    }
+	public void setID(String iD) {
+		ID = iD;
+	}
 
-    public String getPages() {
-        return Pages;
-    }
+	public String getAuthors() {
+		return Authors;
+	}
 
-    public void setPages(String pages) {
-        Pages = pages;
-    }
+	public void setAuthors(String authors) {
+		Authors = authors;
+	}
 
-    public String getPublication_Year() {
-        return Publication_Year;
-    }
+	public String getPages() {
+		return Pages;
+	}
 
-    public void setPublication_Year(String publication_Year) {
-        Publication_Year = publication_Year;
-    }
+	public void setPages(String pages) {
+		Pages = pages;
+	}
 
-    public String getTitle() {
-        return Title;
-    }
+	public String getPublication_Year() {
+		return Publication_Year;
+	}
 
-    public void setTitle(String title) {
-        Title = title;
-    }
+	public void setPublication_Year(String publication_Year) {
+		Publication_Year = publication_Year;
+	}
 
-    public String getFront_Cover() {
-        return Front_Cover;
-    }
+	public String getTitle() {
+		return Title;
+	}
 
-    public void setFront_Cover(String front_Cover) {
-        Front_Cover = front_Cover;
-    }
+	public void setTitle(String title) {
+		Title = title;
+	}
 
-    //TODO Filter
-    public String getAdvance() {
-        return Advance;
-    }
+	public String getFront_Cover() {
+		return Front_Cover;
+	}
 
-    public void setAdvance(String advance) {
-    	Advance = advance;
-    }
+	public void setFront_Cover(String front_Cover) {
+		Front_Cover = front_Cover;
+	}
 
-    public String getFilterButton() {
-        return FilterButton;
-    }
+	// TODO Filter
+	public String getAdvance() {
+		return Advance;
+	}
 
-    public void setFilterButton(String filterButton) {
-        FilterButton = filterButton;
-    }
+	public void setAdvance(String advance) {
+		Advance = advance;
+	}
 
-    public String getSelect_All() {
-        return Select_All;
-    }
+	public String getFilterButton() {
+		return FilterButton;
+	}
 
-    public void setSelect_All(String select_All) {
-        Select_All = select_All;
-    }
-  //Advance
+	public void setFilterButton(String filterButton) {
+		FilterButton = filterButton;
+	}
 
-    public String getCloseFA() {
-    	return CloseFA;
-    }
+	public String getSelect_All() {
+		return Select_All;
+	}
 
-    public String getComment_AreaFA() {
-    	return Comment_AreaFA;
-    }
+	public void setSelect_All(String select_All) {
+		Select_All = select_All;
+	}
 
-    public String getFilterButtonFA() {
-    	return FilterButtonFA;
-    }
+	// Advance
 
-    public String getGO_To_PageFA() {
-    	return GO_To_PageFA;
-    }
+	public String getCloseFA() {
+		return CloseFA;
+	}
 
-    public String getNew_Rule() {
-    	return New_Rule;
-    }
+	public String getComment_AreaFA() {
+		return Comment_AreaFA;
+	}
 
-    public void setCloseFA(String closeFA) {
-    	CloseFA = closeFA;
-    }
+	public String getFilterButtonFA() {
+		return FilterButtonFA;
+	}
 
-    public void setComment_AreaFA(String comment_AreaFA) {
-    	Comment_AreaFA = comment_AreaFA;
-    }
+	public String getGO_To_PageFA() {
+		return GO_To_PageFA;
+	}
 
-    public void setFilterButtonFA(String filterButtonFA) {
-    	FilterButtonFA = filterButtonFA;
-    }
+	public String getNew_Rule() {
+		return New_Rule;
+	}
 
-    public void setGO_To_PageFA(String gO_To_PageFA) {
-    	GO_To_PageFA = gO_To_PageFA;
-    }
+	public void setCloseFA(String closeFA) {
+		CloseFA = closeFA;
+	}
 
-    public void setNew_Rule(String new_Rule) {
-    	New_Rule = new_Rule;
-    }
+	public void setComment_AreaFA(String comment_AreaFA) {
+		Comment_AreaFA = comment_AreaFA;
+	}
 
-    public String getRemove() {
-    	return Remove;
-    }
+	public void setFilterButtonFA(String filterButtonFA) {
+		FilterButtonFA = filterButtonFA;
+	}
 
-    public void setRemove(String remove) {
-    	Remove = remove;
-    }
+	public void setGO_To_PageFA(String gO_To_PageFA) {
+		GO_To_PageFA = gO_To_PageFA;
+	}
 
-    public String getPageFA() {
-    	return PageFA;
-    }
+	public void setNew_Rule(String new_Rule) {
+		New_Rule = new_Rule;
+	}
 
-    public void setPageFA(String pageFA) {
-    	PageFA = pageFA;
-    }
+	public String getRemove() {
+		return Remove;
+	}
 
-    public String getRule() {
-    	return Rule;
-    }
+	public void setRemove(String remove) {
+		Remove = remove;
+	}
 
-    public void setRule(String rule) {
-    	Rule = rule;
-    }
+	public String getPageFA() {
+		return PageFA;
+	}
 
+	public void setPageFA(String pageFA) {
+		PageFA = pageFA;
+	}
 
-    //TODO Annotation
-    public String getSave() {
-        return Save;
-    }
+	public String getRule() {
+		return Rule;
+	}
 
-    public void setSave(String save) {
-        Save = save;
-    }
+	public void setRule(String rule) {
+		Rule = rule;
+	}
 
-    public String getClearAnot() {
-        return ClearAnot;
-    }
+	// TODO Annotation
+	public String getSave() {
+		return Save;
+	}
 
-    public void setClearAnot(String clearAnot) {
-        ClearAnot = clearAnot;
-    }
+	public void setSave(String save) {
+		Save = save;
+	}
 
-    public String getCancel() {
-        return Cancel;
-    }
+	public String getClearAnot() {
+		return ClearAnot;
+	}
 
-    public void setCancel(String cancel) {
-        Cancel = cancel;
-    }
+	public void setClearAnot(String clearAnot) {
+		ClearAnot = clearAnot;
+	}
 
-    public String getDeleteAnnotation() {
-        return DeleteAnnotation;
-    }
+	public String getCancel() {
+		return Cancel;
+	}
 
-    public void setDeleteAnnotation(String DeleteAnnotation) {
-        this.DeleteAnnotation = DeleteAnnotation;
-    }
+	public void setCancel(String cancel) {
+		Cancel = cancel;
+	}
 
-    public String getNameId() {
-        return nameId;
-    }
+	public String getDeleteAnnotation() {
+		return DeleteAnnotation;
+	}
 
-    public void setNameId(String nameId) {
-        this.nameId = nameId;
-    }
+	public void setDeleteAnnotation(String DeleteAnnotation) {
+		this.DeleteAnnotation = DeleteAnnotation;
+	}
 
 
-    public String getSetTypes() {
-        return SetTypes;
-    }
-    
-    public String getSetTypesPublic() {
-    	return SetTypesPublic;
-    }
-    
+	public String getSetTypes() {
+		return SetTypes;
+	}
+
+	public String getSetTypesPublic() {
+		return SetTypesPublic;
+	}
+
 	public void setSetTypesPublic(String setTypesPublic) {
 		SetTypesPublic = setTypesPublic;
 	}
-    public void setSetTypes(String setTypes) {
-        SetTypes = setTypes;
-    }
 
-    public String getVisibility() {
-        return Visibility;
-    }
+	public void setSetTypes(String setTypes) {
+		SetTypes = setTypes;
+	}
 
-    public void setVisibility(String visibility) {
-        Visibility = visibility;
-    }
+	public String getVisibility() {
+		return Visibility;
+	}
 
-    public String getUpgradeable() {
-        return Upgradeable;
-    }
+	public void setVisibility(String visibility) {
+		Visibility = visibility;
+	}
 
-    public void setUpgradeable(String upgradeable) {
-        Upgradeable = upgradeable;
-    }
-    
-    public String getNew() {
+	public String getUpgradeable() {
+		return Upgradeable;
+	}
+
+	public void setUpgradeable(String upgradeable) {
+		Upgradeable = upgradeable;
+	}
+
+	public String getNew() {
 		return New;
 	}
-    
-    public void setNew(String new1) {
+
+	public void setNew(String new1) {
 		New = new1;
 	}
 
-    public String getFromExist() {
+	public String getFromExist() {
 		return FromExist;
 	}
 
@@ -468,21 +477,21 @@ public class Language implements Serializable {
 	public String getNewAdmin() {
 		return NewAdmin;
 	}
-	
+
 	public void setNewAdmint(String newAdmin) {
-		NewAdmin=newAdmin;
-		
+		NewAdmin = newAdmin;
+
 	}
-	
+
 	public void setDone(String done) {
 		Done = done;
 	}
-	
+
 	public String getDone() {
 		return Done;
 	}
-	
-	//TODO Varios
+
+	// TODO Varios
 	public String getE_Page_Dont_Exist() {
 		return E_Page_Dont_Exist;
 	}
@@ -526,11 +535,11 @@ public class Language implements Serializable {
 	public String getFiltering() {
 		return Filtering;
 	}
-	
+
 	public void setFiltering(String filtering) {
 		Filtering = filtering;
 	}
-	
+
 	public String getE_Coments_dont_be_refresh() {
 		return E_Coments_dont_be_refresh;
 	}
@@ -551,7 +560,8 @@ public class Language implements Serializable {
 		return W_Newer_version_of_anotation;
 	}
 
-	public void setW_Newer_version_of_anotation(String w_Newer_version_of_anotation) {
+	public void setW_Newer_version_of_anotation(
+			String w_Newer_version_of_anotation) {
 		W_Newer_version_of_anotation = w_Newer_version_of_anotation;
 	}
 
@@ -602,145 +612,136 @@ public class Language implements Serializable {
 	public void setE_saving(String e_saving) {
 		E_saving = e_saving;
 	}
-    
+
 	public String getE_deleting() {
 		return E_deleting;
 	}
-	
+
 	public void setE_deleting(String e_deleting) {
 		E_deleting = e_deleting;
 	}
 
-	
-public String getAllSelected() {
-	return AllSelected;
-}
+	public String getAllSelected() {
+		return AllSelected;
+	}
 
-public void setAllSelected(String allSelected) {
-	AllSelected = allSelected;
-}
+	public void setAllSelected(String allSelected) {
+		AllSelected = allSelected;
+	}
 
-public String getE_ExistBefore() {
-	return E_ExistBefore;
-}
+	public String getE_ExistBefore() {
+		return E_ExistBefore;
+	}
 
-public void setE_ExistBefore(String e_ExistBefore) {
-	E_ExistBefore = e_ExistBefore;
-}
+	public void setE_ExistBefore(String e_ExistBefore) {
+		E_ExistBefore = e_ExistBefore;
+	}
 
-public String getE_typeFilter() {
-	return E_typeFilter;
-}
+	public String getE_typeFilter() {
+		return E_typeFilter;
+	}
 
-public void setE_typeFilter(String e_typeFilter) {
-	E_typeFilter = e_typeFilter;
-}
- 
+	public void setE_typeFilter(String e_typeFilter) {
+		E_typeFilter = e_typeFilter;
+	}
 
-public String getE_UserLoad() {
-	return E_UserLoad;
-}
+	public String getE_UserLoad() {
+		return E_UserLoad;
+	}
 
-public void setE_UserLoad(String e_UserLoad) {
-	E_UserLoad = e_UserLoad;
-}
+	public void setE_UserLoad(String e_UserLoad) {
+		E_UserLoad = e_UserLoad;
+	}
 
+	public String getE_filteringmesageAnnotations() {
+		return E_filteringmesageAnnotations;
+	}
 
-public String getE_filteringmesageAnnotations() {
-	return E_filteringmesageAnnotations;
-}
+	public String getE_filteringmesagetypes() {
+		return E_filteringmesagetypes;
+	}
 
-public String getE_filteringmesagetypes() {
-	return E_filteringmesagetypes;
-}
+	public void setE_filteringmesageAnnotations(
+			String e_filteringmesageAnnotations) {
+		E_filteringmesageAnnotations = e_filteringmesageAnnotations;
+	}
 
-public void setE_filteringmesageAnnotations(String e_filteringmesageAnnotations) {
-	E_filteringmesageAnnotations = e_filteringmesageAnnotations;
-}
+	public void setE_filteringmesagetypes(String e_filteringmesagetypes) {
+		E_filteringmesagetypes = e_filteringmesagetypes;
+	}
 
+	public String getE_DeleteReply() {
+		return E_DeleteReply;
+	}
 
-public void setE_filteringmesagetypes(String e_filteringmesagetypes) {
-	E_filteringmesagetypes = e_filteringmesagetypes;
-}
+	public void setE_DeleteReply(String e_DeleteReply) {
+		E_DeleteReply = e_DeleteReply;
+	}
 
-public String getE_DeleteReply() {
-	return E_DeleteReply;
-}
+	// TODO Browser
 
-public void setE_DeleteReply(String e_DeleteReply) {
-	E_DeleteReply = e_DeleteReply;
-}
+	public String getE_Saving() {
+		return E_Saving;
+	}
 
-//TODO Browser
+	public void setE_Saving(String e_Saving) {
+		E_Saving = e_Saving;
+	}
 
-public String getE_Saving() {
-	return E_Saving;
-}
+	public String getClose() {
+		return Close;
+	}
 
-public void setE_Saving(String e_Saving) {
-	E_Saving = e_Saving;
-}
+	public void setClose(String close) {
+		Close = close;
+	}
 
-public String getClose() {
-	return Close;
-}
+	public String getFilterButtonBrowser() {
+		return FilterButtonBrowser;
+	}
 
-public void setClose(String close) {
-	Close = close;
-}
+	public void setFilterButtonBrowser(String filterButtonBrowser) {
+		FilterButtonBrowser = filterButtonBrowser;
+	}
 
-public String getFilterButtonBrowser() {
-	return FilterButtonBrowser;
-}
+	public String getGO_To_Page() {
+		return GO_To_Page;
+	}
 
-public void setFilterButtonBrowser(String filterButtonBrowser) {
-	FilterButtonBrowser = filterButtonBrowser;
-}
+	public void setGO_To_Page(String gO_To_Page) {
+		GO_To_Page = gO_To_Page;
+	}
 
-public String getGO_To_Page() {
-	return GO_To_Page;
-}
+	public String getComment_Area() {
+		return Comment_Area;
+	}
 
-public void setGO_To_Page(String gO_To_Page) {
-	GO_To_Page = gO_To_Page;
-}
+	public void setComment_Area(String comment_Area) {
+		Comment_Area = comment_Area;
+	}
 
-public String getComment_Area() {
-	return Comment_Area;
-}
+	public String getPage() {
+		return Page;
+	}
 
-public void setComment_Area(String comment_Area) {
-	Comment_Area = comment_Area;
-}
+	public void setPage(String page) {
+		Page = page;
+	}
 
-public String getPage() {
-	return Page;
-}
+	public String getTeacherTypes() {
+		return TeacherTypes;
+	}
 
-public void setPage(String page) {
-	Page = page;
-}
+	public String getOpenTypes() {
+		return OpenTypes;
+	}
 
+	public void setTeacherTypes(String teacherTypes) {
+		TeacherTypes = teacherTypes;
+	}
 
-public String getTeacherTypes() {
-	return TeacherTypes;
-}
-
-public String getOpenTypes() {
-	return OpenTypes;
-}
-
- public void setTeacherTypes(String teacherTypes) {
-	TeacherTypes = teacherTypes;
-}
-
-public void setOpenTypes(String openTypes) {
-	OpenTypes = openTypes;
-}
-
-
-
-
+	public void setOpenTypes(String openTypes) {
+		OpenTypes = openTypes;
+	}
 
 }
-

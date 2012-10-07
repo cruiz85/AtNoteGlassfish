@@ -70,14 +70,11 @@ public interface GWTServiceAsync {
 
 	void saveLanguage(Language language, AsyncCallback<Void> callback);
 
-	void deleteLanguage(Long languageId, AsyncCallback<Long> callback);
+	void deleteLanguage(Long languageId, AsyncCallback<Void> callback);
 
 	void getLanguagesNames(AsyncCallback<List<String>> callback);
 
 	void getLanguages(AsyncCallback<List<Language>> callback);
-
-	void getReadingActivityByUserId(Long userId,
-			AsyncCallback<ReadingActivity> callback);
 
 	void saveReadingActivity(ReadingActivity readingActivity,
 			AsyncCallback<Void> callback);
@@ -208,9 +205,6 @@ public interface GWTServiceAsync {
 	void removeReadingActivityAnnotations(Long readingActivity,
 			AsyncCallback<Integer> callback);
 
-	void loadReadingActivityByProfessorId(Long professorId,
-			AsyncCallback<List<ReadingActivity>> callback);
-
 	void loadLanguageById(Long languageId, AsyncCallback<Language> callback);
 
 	void addStudentToBeValidated(Long userId, Long groupId,
@@ -223,5 +217,11 @@ public interface GWTServiceAsync {
 			AsyncCallback<List<Annotation>> callback);
 
 	void getGoogleBooks(String query, AsyncCallback<List<GoogleBook>> callback);
+
+	void getReadingActivitiesByProfessorId(Long professorId,
+			AsyncCallback<List<ReadingActivity>> callback);
+
+	void getReadingActivitiesByStudentId(Long studentId,
+			AsyncCallback<List<ReadingActivity>> callback);
 
 }

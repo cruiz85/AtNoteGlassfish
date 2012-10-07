@@ -49,6 +49,7 @@ import lector.share.model.Entry;
 import lector.share.model.NullParameterException;
 import lector.share.model.Professor;
 import lector.share.model.ProfessorNotFoundException;
+import lector.share.model.ReadingActivityNotFoundException;
 import lector.share.model.Student;
 import lector.share.model.StudentNotFoundException;
 import lector.share.model.Tag;
@@ -56,6 +57,7 @@ import lector.share.model.FolderDB;
 import lector.share.model.GroupApp;
 import lector.share.model.Language;
 import lector.share.model.ReadingActivity;
+import lector.share.model.TagNotFoundException;
 import lector.share.model.TextSelector;
 import lector.share.model.UserApp;
 import lector.share.model.UserNotFoundException;
@@ -786,11 +788,11 @@ public class GWTServiceImpl extends RemoteServiceServlet implements GWTService {
 				builder.append(line);
 			}
 		} catch (MalformedURLException ex) {
-			Logger.getLogger(GWTServiceImpl.class.getName()).log(
-					Level.SEVERE, null, ex);
+			Logger.getLogger(GWTServiceImpl.class.getName()).log(Level.SEVERE,
+					null, ex);
 		} catch (IOException ex) {
-			Logger.getLogger(GWTServiceImpl.class.getName()).log(
-					Level.SEVERE, null, ex);
+			Logger.getLogger(GWTServiceImpl.class.getName()).log(Level.SEVERE,
+					null, ex);
 		}
 		return builder.toString();
 	}
@@ -839,14 +841,14 @@ public class GWTServiceImpl extends RemoteServiceServlet implements GWTService {
 			}
 
 		} catch (MalformedURLException ex) {
-			Logger.getLogger(GWTServiceImpl.class.getName()).log(
-					Level.SEVERE, null, ex);
+			Logger.getLogger(GWTServiceImpl.class.getName()).log(Level.SEVERE,
+					null, ex);
 		} catch (IOException ex) {
-			Logger.getLogger(GWTServiceImpl.class.getName()).log(
-					Level.SEVERE, null, ex);
+			Logger.getLogger(GWTServiceImpl.class.getName()).log(Level.SEVERE,
+					null, ex);
 		} catch (JSONException ex) {
-			Logger.getLogger(GWTServiceImpl.class.getName()).log(
-					Level.SEVERE, null, ex);
+			Logger.getLogger(GWTServiceImpl.class.getName()).log(Level.SEVERE,
+					null, ex);
 		}
 		return googleBooks;
 	}
@@ -893,14 +895,14 @@ public class GWTServiceImpl extends RemoteServiceServlet implements GWTService {
 			}
 
 		} catch (MalformedURLException ex) {
-			Logger.getLogger(GWTServiceImpl.class.getName()).log(
-					Level.SEVERE, null, ex);
+			Logger.getLogger(GWTServiceImpl.class.getName()).log(Level.SEVERE,
+					null, ex);
 		} catch (IOException ex) {
-			Logger.getLogger(GWTServiceImpl.class.getName()).log(
-					Level.SEVERE, null, ex);
+			Logger.getLogger(GWTServiceImpl.class.getName()).log(Level.SEVERE,
+					null, ex);
 		} catch (JSONException ex) {
-			Logger.getLogger(GWTServiceImpl.class.getName()).log(
-					Level.SEVERE, null, ex);
+			Logger.getLogger(GWTServiceImpl.class.getName()).log(Level.SEVERE,
+					null, ex);
 		}
 		return googleBooks;
 	}
@@ -949,20 +951,64 @@ public class GWTServiceImpl extends RemoteServiceServlet implements GWTService {
 	}
 
 	@Override
-	public Tag loadTagById(Long typeId) {
-		// TODO Auto-generated method stub
-		return null;
+	public Tag loadTagById(Long tagId) throws TagNotFoundException,
+			GeneralException {
+		EntityManager entityManager = emf.createEntityManager();
+		List<Tag> list;
+
+		String sql = "SELECT r FROM Tag r WHERE r.id=" + tagId;
+		try {
+			list = entityManager.createQuery(sql).getResultList();
+		} catch (Exception e) {
+			// logger.error ("Exception in method loadTagById: ", e)
+			throw new GeneralException("Exception in method loadTagById:"
+					+ e.getMessage(), e.getStackTrace());
+
+		}
+		if (list == null || list.isEmpty()) {
+			// logger.error ("Exception in method loadTagById: ", e)
+			throw new TagNotFoundException(
+					"Tag not found in method loadTagById");
+
+		}
+		if (entityManager.isOpen()) {
+			entityManager.close();
+		}
+
+		return list.get(0);
 	}
 
 	@Override
-	public Tag loadTagByNameAndCatalogId(String typeName, Long catalogId) {
-		// TODO Auto-generated method stub
-		return null;
+	public Tag loadTagByNameAndCatalogId(String tagName, Long catalogId)
+			throws TagNotFoundException, GeneralException {
+		EntityManager entityManager = emf.createEntityManager();
+		List<Tag> list;
+
+		String sql = "SELECT r FROM Tag r WHERE r.name='" + tagName
+				+ "' AND r.catalog.id=" + catalogId;
+		try {
+			list = entityManager.createQuery(sql).getResultList();
+		} catch (Exception e) {
+			// logger.error ("Exception in method loadTagById: ", e)
+			throw new GeneralException("Exception in method loadTagById:"
+					+ e.getMessage(), e.getStackTrace());
+
+		}
+		if (list == null || list.isEmpty()) {
+			// logger.error ("Exception in method loadTagById: ", e)
+			throw new TagNotFoundException(
+					"Tag not found in method loadTagById");
+
+		}
+		if (entityManager.isOpen()) {
+			entityManager.close();
+		}
+
+		return list.get(0);
 	}
 
 	@Override
 	public void saveTag(Tag typesys, Long typeCategoryId) {
-		// TODO Auto-generated method stub
 
 	}
 
@@ -1079,17 +1125,52 @@ public class GWTServiceImpl extends RemoteServiceServlet implements GWTService {
 	}
 
 	@Override
-	public ReadingActivity loadReadingActivityById(Long readingActivityId) {
-		// TODO Auto-generated method stub
-		return null;
+	public ReadingActivity loadReadingActivityById(Long readingActivityId)
+			throws ReadingActivityNotFoundException, GeneralException {
+		EntityManager entityManager = emf.createEntityManager();
+		List<ReadingActivity> list;
+
+		String sql = "SELECT r FROM ReadingActivity r WHERE r.id="
+				+ readingActivityId;
+		try {
+			list = entityManager.createQuery(sql).getResultList();
+		} catch (Exception e) {
+			// logger.error ("Exception in method loadReadingActivityById: ", e)
+			throw new GeneralException(
+					"Exception in method loadReadingActivityById:"
+							+ e.getMessage(), e.getStackTrace());
+
+		}
+		if (list == null || list.isEmpty()) {
+			// logger.error ("Exception in method loadReadingActivityById: ", e)
+			throw new ReadingActivityNotFoundException(
+					"ReadingActivity not found in method loadReadingActivityById");
+
+		}
+		if (entityManager.isOpen()) {
+			entityManager.close();
+		}
+
+		return list.get(0);
 	}
 
 	@Override
 	public void deleteReadingActivity(Long readingActivityId)
-			throws GeneralException, NullParameterException,
-			AnnotationNotFoundException {
-		// TODO Auto-generated method stub
-
+			throws GeneralException {
+		EntityManager entityManager = emf.createEntityManager();
+		EntityTransaction entityTransaction = entityManager.getTransaction();
+		try {
+			entityTransaction.begin();
+			entityManager.createQuery(
+					"DELETE FROM ReadingActivity s WHERE s.id="
+							+ readingActivityId).executeUpdate();
+			entityTransaction.commit();
+		} catch (Exception e) {
+			ServiceManagerUtils.rollback(entityTransaction);
+			throw new GeneralException(
+					"Exception in method deleteReadingActivityById"
+							+ e.getMessage(), e.getStackTrace());
+		}
 	}
 
 	@Override
@@ -1099,60 +1180,196 @@ public class GWTServiceImpl extends RemoteServiceServlet implements GWTService {
 	}
 
 	@Override
-	public ReadingActivity getReadingActivityByUserId(Long userId) {
+	public List<ReadingActivity> getReadingActivitiesByStudentId(Long userId) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public List<ReadingActivity> loadReadingActivityByProfessorId(
-			Long professorId) {
-		// TODO Auto-generated method stub
-		return null;
+	public List<ReadingActivity> getReadingActivitiesByProfessorId(
+			Long professorId) throws GeneralException,
+			ReadingActivityNotFoundException {
+		EntityManager entityManager = emf.createEntityManager();
+		List<ReadingActivity> list;
+
+		String sql = "SELECT r FROM ReadingActivity r WHERE r.professor.id="
+				+ professorId;
+		try {
+			list = entityManager.createQuery(sql).getResultList();
+		} catch (Exception e) {
+			// logger.error ("Exception in method loadUserById: ", e)
+			throw new GeneralException(
+					"Exception in method getReadingActivitysByItsFather:"
+							+ e.getMessage(), e.getStackTrace());
+
+		}
+		if (list == null || list.isEmpty()) {
+			// logger.error ("Exception in method loadUserById: ", e)
+			throw new ReadingActivityNotFoundException(
+					"ReadingActivity not found in method getReadingActivitysByItsFather");
+
+		}
+		if (entityManager.isOpen()) {
+			entityManager.close();
+		}
+
+		return list;
 	}
 
 	@Override
-	public void saveReadingActivity(ReadingActivity readingActivity) {
+	public void saveReadingActivity(ReadingActivity readingActivity)
+			throws GeneralException {
+		EntityManager entityManager = emf.createEntityManager();
+		EntityTransaction entityTransaction = entityManager.getTransaction();
+		try {
+			entityTransaction.begin();
+			if (readingActivity.getId() == null) {
+				entityManager.persist(readingActivity);
+			} else {
+				entityManager.merge(readingActivity);
+			}
+
+			entityTransaction.commit();
+		} catch (Exception e) {
+			ServiceManagerUtils.rollback(entityTransaction); // TODO utilizar
+																// método de
+																// logger
+		}
+		if (entityManager.isOpen()) {
+			entityManager.close();
+		}
+
+	}
+
+	@Override
+	public void updateReadingActivities() { // TODO que hace esto?.
 		// TODO Auto-generated method stub
 
 	}
 
 	@Override
-	public void updateReadingActivities() {
-		// TODO Auto-generated method stub
+	public void saveLanguage(Language language) throws GeneralException {
+		EntityManager entityManager = emf.createEntityManager();
+		EntityTransaction entityTransaction = entityManager.getTransaction();
+		try {
+			entityTransaction.begin();
+			if (language.getId() == null) {
+				entityManager.persist(language);
+			} else {
+				entityManager.merge(language);
+			}
+
+			entityTransaction.commit();
+		} catch (Exception e) {
+			ServiceManagerUtils.rollback(entityTransaction); // TODO utilizar
+																// método de
+																// logger
+		}
+		if (entityManager.isOpen()) {
+			entityManager.close();
+		}
 
 	}
 
 	@Override
-	public void saveLanguage(Language language) {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
-	public Long deleteLanguage(Long languageId) {
-		// TODO Auto-generated method stub
-		return null;
+	public void deleteLanguage(Long languageId) throws GeneralException {
+		EntityManager entityManager = emf.createEntityManager();
+		EntityTransaction entityTransaction = entityManager.getTransaction();
+		try {
+			entityTransaction.begin();
+			entityManager.createQuery(
+					"DELETE FROM Language s WHERE s.id=" + languageId)
+					.executeUpdate();
+			entityTransaction.commit();
+		} catch (Exception e) {
+			ServiceManagerUtils.rollback(entityTransaction);
+			throw new GeneralException("Exception in method deleteLanguageById"
+					+ e.getMessage(), e.getStackTrace());
+		}
 	}
 
 	@Override
 	public List<String> getLanguagesNames() throws GeneralException,
-			LanguageNotFoundException, NullParameterException {
-		// TODO Auto-generated method stub
-		return null;
+			LanguageNotFoundException {
+		EntityManager entityManager = emf.createEntityManager();
+		List<String> list;
+
+		String sql = "SELECT r.name FROM Language r";
+		try {
+			list = entityManager.createQuery(sql).getResultList();
+		} catch (Exception e) {
+			// logger.error ("Exception in method loadGroupByEmail: ", e)
+			throw new GeneralException("Exception in method getLanguages:"
+					+ e.getMessage(), e.getStackTrace());
+
+		}
+		if (list == null || list.isEmpty()) {
+			// logger.error ("Exception in method loadGroupById: ", e)
+			throw new LanguageNotFoundException(
+					"Language not found in method getLanguages");
+
+		}
+		if (entityManager.isOpen()) {
+			entityManager.close();
+		}
+
+		return list;
 	}
 
 	@Override
 	public List<Language> getLanguages() throws GeneralException,
-			LanguageNotFoundException, NullParameterException {
-		// TODO Auto-generated method stub
-		return null;
+			LanguageNotFoundException {
+		EntityManager entityManager = emf.createEntityManager();
+		List<Language> list;
+
+		String sql = "SELECT r FROM Language r";
+		try {
+			list = entityManager.createQuery(sql).getResultList();
+		} catch (Exception e) {
+			// logger.error ("Exception in method loadGroupByEmail: ", e)
+			throw new GeneralException("Exception in method getLanguages:"
+					+ e.getMessage(), e.getStackTrace());
+
+		}
+		if (list == null || list.isEmpty()) {
+			// logger.error ("Exception in method loadGroupById: ", e)
+			throw new LanguageNotFoundException(
+					"Language not found in method getLanguages");
+
+		}
+		if (entityManager.isOpen()) {
+			entityManager.close();
+		}
+
+		return list;
 	}
 
 	@Override
-	public Language loadLanguageById(Long languageId) {
-		// TODO Auto-generated method stub
-		return null;
+	public Language loadLanguageById(Long languageId)
+			throws LanguageNotFoundException, GeneralException {
+		EntityManager entityManager = emf.createEntityManager();
+		List<Language> list;
+
+		String sql = "SELECT r FROM Language r WHERE r.id=" + languageId;
+		try {
+			list = entityManager.createQuery(sql).getResultList();
+		} catch (Exception e) {
+			// logger.error ("Exception in method loadLanguageById: ", e)
+			throw new GeneralException("Exception in method loadLanguageById:"
+					+ e.getMessage(), e.getStackTrace());
+
+		}
+		if (list == null || list.isEmpty()) {
+			// logger.error ("Exception in method loadLanguageById: ", e)
+			throw new LanguageNotFoundException(
+					"Language not found in method loadLanguageById");
+
+		}
+		if (entityManager.isOpen()) {
+			entityManager.close();
+		}
+
+		return list.get(0);
 	}
 
 	@Override
@@ -1168,9 +1385,20 @@ public class GWTServiceImpl extends RemoteServiceServlet implements GWTService {
 	}
 
 	@Override
-	public void deleteBook(String bookId, Long userId) {
-		// TODO Auto-generated method stub
-
+	public void deleteBook(String bookId, Long userId) throws GeneralException {
+		EntityManager entityManager = emf.createEntityManager();
+		EntityTransaction entityTransaction = entityManager.getTransaction();
+		try {
+			entityTransaction.begin();
+			entityManager.createQuery(
+					"DELETE FROM Book s WHERE s.ISBN='" + bookId
+							+ "' AND s.professor.id=" + userId).executeUpdate();
+			entityTransaction.commit();
+		} catch (Exception e) {
+			ServiceManagerUtils.rollback(entityTransaction);
+			throw new GeneralException("Exception in method deleteBookById"
+					+ e.getMessage(), e.getStackTrace());
+		}
 	}
 
 }

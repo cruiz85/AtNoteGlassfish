@@ -31,12 +31,14 @@ import lector.share.model.LanguageNotFoundException;
 import lector.share.model.NullParameterException;
 import lector.share.model.Professor;
 import lector.share.model.ProfessorNotFoundException;
+import lector.share.model.ReadingActivityNotFoundException;
 import lector.share.model.Student;
 import lector.share.model.StudentNotFoundException;
 import lector.share.model.Tag;
 import lector.share.model.GroupApp;
 import lector.share.model.Language;
 import lector.share.model.ReadingActivity;
+import lector.share.model.TagNotFoundException;
 import lector.share.model.UserApp;
 import lector.share.model.UserNotFoundException;
 
@@ -181,11 +183,11 @@ public interface GWTService extends RemoteService {
 
 	// Type
 
-	public Tag loadTagById(Long typeId);
+	public Tag loadTagById(Long typeId) throws TagNotFoundException, GeneralException;
 
-	public Tag loadTagByNameAndCatalogId(String typeName, Long catalogId);
+	public Tag loadTagByNameAndCatalogId(String typeName, Long catalogId) throws TagNotFoundException, GeneralException;
 
-	public void saveTag(Tag typesys, Long typeCategoryId);
+	public void saveTag(Tag typesys, Long typeCategoryId); //TODO para que se quiere el padre?.
 
 	public Long deleteTag(Long typeId, Long typeCategoryId)
 			throws GeneralException;;
@@ -235,7 +237,7 @@ public interface GWTService extends RemoteService {
 
 	// ReadingActivity
 
-	public ReadingActivity loadReadingActivityById(Long readingActivityId);
+	public ReadingActivity loadReadingActivityById(Long readingActivityId) throws ReadingActivityNotFoundException, GeneralException;  
 
 	public void deleteReadingActivity(Long readingActivityId)
 			throws GeneralException, NullParameterException,
@@ -243,20 +245,20 @@ public interface GWTService extends RemoteService {
 
 	public Integer removeReadingActivityAnnotations(Long readingActivity);
 
-	public ReadingActivity getReadingActivityByUserId(Long userId);
+	public List<ReadingActivity> getReadingActivitiesByStudentId(Long studentId);
 
-	public List<ReadingActivity> loadReadingActivityByProfessorId(
-			Long professorId);
+	public List<ReadingActivity> getReadingActivitiesByProfessorId(
+			Long professorId) throws GeneralException, ReadingActivityNotFoundException;
 
-	public void saveReadingActivity(ReadingActivity readingActivity);
+	public void saveReadingActivity(ReadingActivity readingActivity) throws GeneralException;
 
 	public void updateReadingActivities();
 
 	// Language
 
-	public void saveLanguage(Language language);
+	public void saveLanguage(Language language) throws GeneralException;
 
-	public Long deleteLanguage(Long languageId);
+	public void deleteLanguage(Long languageId) throws GeneralException;
 
 	public List<String> getLanguagesNames() throws GeneralException,
 			LanguageNotFoundException, NullParameterException;;
@@ -264,7 +266,7 @@ public interface GWTService extends RemoteService {
 	public List<Language> getLanguages() throws GeneralException,
 			LanguageNotFoundException, NullParameterException;
 
-	public Language loadLanguageById(Long languageId);
+	public Language loadLanguageById(Long languageId) throws LanguageNotFoundException, GeneralException;
 	
 	//Procesos Internos
 	
@@ -291,7 +293,7 @@ public interface GWTService extends RemoteService {
 
 
 
-	public void deleteBook(String bookId, Long userId);
+	public void deleteBook(String bookId, Long userId) throws GeneralException;
 
 	//public ArrayList<String> getFileNamesByIds(ArrayList<Long> ids);
 
