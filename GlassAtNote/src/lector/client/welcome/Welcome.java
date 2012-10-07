@@ -11,6 +11,7 @@ import lector.client.logger.Logger;
 import lector.client.login.ActualUser;
 import lector.client.reader.About;
 import lector.share.model.LocalBook;
+import lector.share.model.Student;
 import lector.share.model.UserApp;
 
 import com.google.appengine.api.datastore.Text;
@@ -49,21 +50,21 @@ public class Welcome implements EntryPoint {
 	private HorizontalPanel horizontalPanel;
 	private RootPanel Footer;
 
-//	 DESCOMENTAR EN DESARROLLO, CREA UN USUARIO ROOT.
-	 private void callUserRoot() {
-	 UserApp adminUser2 = new UserApp();
-	 adminUser2.setEmail("root");
-	 adminUser2.setProfile(Constants.PROFESSOR);
-	 bookReaderServiceHolder.saveUser(adminUser2,
-	 new AsyncCallback<Boolean>() {
-	 public void onSuccess(Boolean result) {
-	 }
-	
-	 public void onFailure(Throwable caught) {
-	 Window.alert("Ha fallado Cesar");
-	 }
-	 });
-	 }
+////	 DESCOMENTAR EN DESARROLLO, CREA UN USUARIO ROOT.
+//	 private void callUserRoot() {
+//	 UserApp adminUser2 = new UserApp();
+//	 adminUser2.setEmail("root");
+//	 adminUser2.setProfile(Constants.PROFESSOR);
+//	 bookReaderServiceHolder.saveUser(adminUser2,
+//	 new AsyncCallback<Boolean>() {
+//	 public void onSuccess(Boolean result) {
+//	 }
+//	
+//	 public void onFailure(Throwable caught) {
+//	 Window.alert("Ha fallado Cesar");
+//	 }
+//	 });
+//	 }
 	FormPanel formPanel = new FormPanel();
 
 	public void onModuleLoad() {
@@ -268,11 +269,10 @@ public class Welcome implements EntryPoint {
 						if (result.isLoggedIn()) {
 							Logger L = Logger.GetLogger();
 
-							if (result.getProfile().equals(Constants.STUDENT)) {
+							if (result instanceof Student) {
 								Controlador.change2MyActivities();
 								Footer.clear();
-							} else if (result.getProfile().equals(
-									Constants.PROFESSOR)) {
+							} else if (result instanceof Student) {
 								Controlador.change2Administrator();
 								Footer.clear();
 							}
