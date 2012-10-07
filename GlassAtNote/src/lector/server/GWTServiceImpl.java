@@ -34,6 +34,7 @@ import com.google.gwt.user.server.rpc.RemoteServiceServlet;
 import lector.share.model.Annotation;
 import lector.share.model.AnnotationNotFoundException;
 import lector.share.model.AnnotationThread;
+import lector.share.model.AnnotationThreadNotFoundException;
 import lector.share.model.Book;
 import lector.share.model.BookNotFoundException;
 import lector.share.model.DecendanceException;
@@ -425,41 +426,145 @@ public class GWTServiceImpl extends RemoteServiceServlet implements GWTService {
 
 	@Override
 	public void saveAnnotation(Annotation annotation) {
-		// TODO Auto-generated method stub
+		EntityManager entityManager = emf.createEntityManager();
+		EntityTransaction entityTransaction = entityManager.getTransaction();
+		Date now = new Date();
+		Calendar calendar = Calendar.getInstance();
+		now = calendar.getTime();
+		annotation.setCreatedDate(now);
+		try {
+			entityTransaction.begin();
+			if (annotation.getId() == null) {
+				entityManager.persist(annotation);
+			} else {
+				entityManager.merge(annotation);
+			}
+
+			entityTransaction.commit();
+		} catch (Exception e) {
+			ServiceManagerUtils.rollback(entityTransaction); // TODO utilizar
+																// método de
+																// logger
+		}
+		if (entityManager.isOpen()) {
+			entityManager.close();
+		}
 
 	}
 
 	@Override
-	public List<Annotation> getAnnotationsByBookId(String bookId)
-			throws GeneralException, AnnotationNotFoundException,
-			NullParameterException, BookNotFoundException {
-		// TODO Auto-generated method stub
-		return null;
+	public List<Annotation> getAnnotationsByBookId(Long activityId,
+			String bookId) throws GeneralException, AnnotationNotFoundException {
+		EntityManager entityManager = emf.createEntityManager();
+		List<Annotation> list;
+
+		String sql = "SELECT r FROM Annotation r WHERE r.r.readinActivity.id="
+				+ activityId + "r.readinActivity.book.ISBN'=" + bookId + "'";
+		try {
+			list = entityManager.createQuery(sql).getResultList();
+		} catch (Exception e) {
+			// logger.error ("Exception in method loadGroupByEmail: ", e)
+			throw new GeneralException("Exception in method loadGroupByEmail:"
+					+ e.getMessage(), e.getStackTrace());
+
+		}
+		if (list == null || list.isEmpty()) {
+			// logger.error ("Exception in method loadGroupById: ", e)
+			throw new AnnotationNotFoundException(
+					"Group not found in method loadGroupByEmail");
+
+		}
+		if (entityManager.isOpen()) {
+			entityManager.close();
+		}
+
+		return list;
 	}
 
 	@Override
 	public List<Annotation> getAnnotationsByPageNumbertAndUserId(
 			Integer pageNumber, String bookId, Long studentId,
-			Long readingActivityId) {
-		// TODO Auto-generated method stub
-		return null;
+			Long readingActivityId) throws GeneralException,
+			AnnotationNotFoundException {
+		EntityManager entityManager = emf.createEntityManager();
+		List<Annotation> list;
+
+		String sql = "SELECT r FROM Annotation r WHERE r.readinActivity.id="
+				+ readingActivityId + "r.readinActivity.book.ISBN'=" + bookId
+				+ "' AND r.pageNumber=" + pageNumber + "AND r.creator.id="
+				+ studentId;
+		try {
+			list = entityManager.createQuery(sql).getResultList();
+		} catch (Exception e) {
+			// logger.error ("Exception in method loadGroupByEmail: ", e)
+			throw new GeneralException("Exception in method loadGroupByEmail:"
+					+ e.getMessage(), e.getStackTrace());
+
+		}
+		if (list == null || list.isEmpty()) {
+			// logger.error ("Exception in method loadGroupById: ", e)
+			throw new AnnotationNotFoundException(
+					"Group not found in method loadGroupByEmail");
+
+		}
+		if (entityManager.isOpen()) {
+			entityManager.close();
+		}
+
+		return list;
 	}
 
 	@Override
 	public List<Annotation> getAnnotationsByPageNumber(Integer pageNumber,
 			String bookId, Long readingActivityId) throws GeneralException,
-			AnnotationNotFoundException, NullParameterException,
-			BookNotFoundException {
-		// TODO Auto-generated method stub
-		return null;
+			AnnotationNotFoundException {
+		EntityManager entityManager = emf.createEntityManager();
+		List<Annotation> list;
+
+		String sql = "SELECT r FROM Annotation r WHERE r.readinActivity.id="
+				+ readingActivityId + "r.readinActivity.book.ISBN'=" + bookId
+				+ "' AND r.pageNumber=" + pageNumber;
+		try {
+			list = entityManager.createQuery(sql).getResultList();
+		} catch (Exception e) {
+			// logger.error ("Exception in method loadGroupByEmail: ", e)
+			throw new GeneralException("Exception in method loadGroupByEmail:"
+					+ e.getMessage(), e.getStackTrace());
+
+		}
+		if (list == null || list.isEmpty()) {
+			// logger.error ("Exception in method loadGroupById: ", e)
+			throw new AnnotationNotFoundException(
+					"Group not found in method loadGroupByEmail");
+
+		}
+		if (entityManager.isOpen()) {
+			entityManager.close();
+		}
+
+		return list;
 	}
 
 	@Override
 	public List<Annotation> getAnnotationsByIds(List<Long> ids) {
-		// TODO Auto-generated method stub
-		return null;
+		List<Annotation> annotations = new ArrayList<Annotation>();
+		for (int i = 0; i < ids.size(); i++) {
+			Annotation annotation = quickFind(ids.get(i));
+			if (annotation != null) {
+				annotations.add(annotation);
+			}
+
+		}
+		return annotations;
 	}
 
+	private Annotation quickFind(Long id) {
+		EntityManager entityManager = emf.createEntityManager();
+		Annotation a = entityManager.find(Annotation.class, id);
+		return a;
+	}
+
+	// TODO que hace este método.
 	@Override
 	public List<Annotation> getAnnotationsByIdsAndAuthorsTeacher(
 			List<Long> ids, List<Long> authorIds, Long Activity) {
@@ -467,6 +572,7 @@ public class GWTServiceImpl extends RemoteServiceServlet implements GWTService {
 		return null;
 	}
 
+	// TODO que hace este método.
 	@Override
 	public List<Annotation> getAnnotationsByTeacherIds(List<Long> ids,
 			Long readingActivityId) {
@@ -474,6 +580,7 @@ public class GWTServiceImpl extends RemoteServiceServlet implements GWTService {
 		return null;
 	}
 
+	// TODO que hace este método.
 	@Override
 	public List<Annotation> getAnnotationsByStudentIds(List<Long> ids,
 			Long Student, Long readingActivityId) {
@@ -481,6 +588,7 @@ public class GWTServiceImpl extends RemoteServiceServlet implements GWTService {
 		return null;
 	}
 
+	// TODO que hace este método.
 	@Override
 	public List<Annotation> getAnnotationsByIdsAndAuthorsStudent(
 			List<Long> ids, List<Long> authorIds, Long Activity, Long Student) {
@@ -489,31 +597,96 @@ public class GWTServiceImpl extends RemoteServiceServlet implements GWTService {
 	}
 
 	@Override
-	public Long deleteAnnotation(Annotation annotation)
-			throws GeneralException, NullParameterException,
+	public void deleteAnnotation(Long annotationId) throws GeneralException,
 			AnnotationNotFoundException {
-		// TODO Auto-generated method stub
-		return null;
+		EntityManager entityManager = emf.createEntityManager();
+		EntityTransaction entityTransaction = entityManager.getTransaction();
+		try {
+			entityTransaction.begin();
+			entityManager.createQuery(
+					"DELETE FROM Annotation s WHERE s.id=" + annotationId)
+					.executeUpdate();
+			entityTransaction.commit();
+		} catch (Exception e) {
+			ServiceManagerUtils.rollback(entityTransaction);
+			throw new GeneralException(
+					"Exception in method deleteAnnotationById" + e.getMessage(),
+					e.getStackTrace());
+		}
 	}
 
 	@Override
 	public void saveAnnotationThread(AnnotationThread annotationThread) {
-		// TODO Auto-generated method stub
+		EntityManager entityManager = emf.createEntityManager();
+		EntityTransaction entityTransaction = entityManager.getTransaction();
+		Date now = new Date();
+		Calendar calendar = Calendar.getInstance();
+		now = calendar.getTime();
+		annotationThread.setCreatedDate(now);
+		try {
+			entityTransaction.begin();
+			if (annotationThread.getId() == null) {
+				entityManager.persist(annotationThread);
+			} else {
+				entityManager.merge(annotationThread);
+			}
+
+			entityTransaction.commit();
+		} catch (Exception e) {
+			ServiceManagerUtils.rollback(entityTransaction); // TODO utilizar
+																// método de
+																// logger
+		}
+		if (entityManager.isOpen()) {
+			entityManager.close();
+		}
 
 	}
 
 	@Override
-	public Long deleteAnnotationThread(AnnotationThread annotationThread)
+	public void deleteAnnotationThread(Long annotationThreadId)
 			throws GeneralException {
-		// TODO Auto-generated method stub
-		return null;
+		EntityManager entityManager = emf.createEntityManager();
+		EntityTransaction entityTransaction = entityManager.getTransaction();
+		try {
+			entityTransaction.begin();
+			entityManager.createQuery(
+					"DELETE FROM AnnotationThread s WHERE s.id="
+							+ annotationThreadId).executeUpdate();
+			entityTransaction.commit();
+		} catch (Exception e) {
+			ServiceManagerUtils.rollback(entityTransaction);
+			throw new GeneralException(
+					"Exception in method deleteAnnotationThreadById"
+							+ e.getMessage(), e.getStackTrace());
+		}
 	}
 
 	@Override
-	public List<AnnotationThread> getAnnotationThreadsByItsFather(
-			Long annotationId, Long threadFatherId) {
-		// TODO Auto-generated method stub
-		return null;
+	public List<AnnotationThread> getAnnotationThreadsByItsFather(Long threadFatherId) throws GeneralException, AnnotationThreadNotFoundException {
+		EntityManager entityManager = emf.createEntityManager();
+		List<AnnotationThread> list;
+
+		String sql = "SELECT r FROM AnnotationThread r WHERE r.father.id=" + threadFatherId;
+		try {
+			list = entityManager.createQuery(sql).getResultList();
+		} catch (Exception e) {
+			// logger.error ("Exception in method loadUserById: ", e)
+			throw new GeneralException("Exception in method getAnnotationThreadsByItsFather:"
+					+ e.getMessage(), e.getStackTrace());
+
+		}
+		if (list == null || list.isEmpty()) {
+			// logger.error ("Exception in method loadUserById: ", e)
+			throw new AnnotationThreadNotFoundException(
+					"AnnotationThread not found in method getAnnotationThreadsByItsFather");
+
+		}
+		if (entityManager.isOpen()) {
+			entityManager.close();
+		}
+
+		return list.get(0).getSubThreads();
 	}
 
 	@Override

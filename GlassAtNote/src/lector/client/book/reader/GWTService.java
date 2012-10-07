@@ -16,6 +16,7 @@ import com.google.gwt.user.client.rpc.RemoteServiceRelativePath;
 import lector.share.model.Annotation;
 import lector.share.model.AnnotationNotFoundException;
 import lector.share.model.AnnotationThread;
+import lector.share.model.AnnotationThreadNotFoundException;
 import lector.share.model.Book;
 import lector.share.model.BookNotFoundException;
 import lector.share.model.Catalogo;
@@ -99,13 +100,13 @@ public interface GWTService extends RemoteService {
 
 	public void saveAnnotation(Annotation annotation);
 
-	public List<Annotation> getAnnotationsByBookId(String bookId)
+	public List<Annotation> getAnnotationsByBookId(Long activityId, String bookId) 
 			throws GeneralException, AnnotationNotFoundException,
 			NullParameterException, BookNotFoundException;
 
 	public List<Annotation> getAnnotationsByPageNumbertAndUserId(
 			Integer pageNumber, String bookId, Long studentId,
-			Long readingActivityId);
+			Long readingActivityId) throws GeneralException, AnnotationNotFoundException;
 
 	public List<Annotation> getAnnotationsByPageNumber(Integer pageNumber,
 			String bookId, Long readingActivityId) throws GeneralException,
@@ -126,19 +127,17 @@ public interface GWTService extends RemoteService {
 	public List<Annotation> getAnnotationsByIdsAndAuthorsStudent(
 			List<Long> ids, List<Long> authorIds, Long Activity, Long Student);
 
-	public Long deleteAnnotation(Annotation annotation)
-			throws GeneralException, NullParameterException,
-			AnnotationNotFoundException;
+	public void deleteAnnotation(Long annotationId)
+			throws GeneralException, AnnotationNotFoundException;
 
 	// Annotations Threads
 
 	public void saveAnnotationThread(AnnotationThread annotationThread);
 
-	public Long deleteAnnotationThread(AnnotationThread annotationThread)
+	public void deleteAnnotationThread(Long annotationThreadId)
 			throws GeneralException;
 
-	public List<AnnotationThread> getAnnotationThreadsByItsFather(
-			Long annotationId, Long threadFatherId);
+	public List<AnnotationThread> getAnnotationThreadsByItsFather(Long threadFatherId) throws GeneralException, AnnotationThreadNotFoundException;
 
 	// Books
 

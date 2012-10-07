@@ -28,16 +28,13 @@ import lector.share.model.UserApp;
  */
 public interface GWTServiceAsync {
 
-	void getAnnotationsByBookId(String bookId,
-			AsyncCallback<List<Annotation>> asyncCallback);
 
 	void getBooks(String query, AsyncCallback<List<Book>> asyncCallback);
 
 	void getBooks(String query, int start,
 			AsyncCallback<List<Book>> asyncCallback);
 
-	void deleteAnnotation(Annotation annotation,
-			AsyncCallback<Long> asyncCallback);
+	void deleteAnnotation(Long annotationId, AsyncCallback<Void> asyncCallback);
 
 	public void loadFullBookInGoogle(String query,
 			AsyncCallback<Book> asyncCallback);
@@ -117,11 +114,11 @@ public interface GWTServiceAsync {
 	void saveAnnotationThread(AnnotationThread annotationThread,
 			AsyncCallback<Void> callback);
 
-	void deleteAnnotationThread(AnnotationThread annotationThread,
-			AsyncCallback<Long> callback);
+	void deleteAnnotationThread(Long annotationThreadId,
+			AsyncCallback<Void> callback);
 
-	void getAnnotationThreadsByItsFather(Long annotationId,
-			Long threadFatherId, AsyncCallback<List<AnnotationThread>> callback);
+	void getAnnotationThreadsByItsFather(Long threadFatherId,
+			AsyncCallback<List<AnnotationThread>> callback);
 
 	void getJSONServiceTODrawGraph(String url, String body,
 			AsyncCallback<String> callback);
@@ -223,5 +220,8 @@ public interface GWTServiceAsync {
 
 	void validStudentToBeInGroup(Long userId, Long groupId,
 			AsyncCallback<Void> callback);
+
+	void getAnnotationsByBookId(Long activityId, String bookId,
+			AsyncCallback<List<Annotation>> callback);
 
 }
