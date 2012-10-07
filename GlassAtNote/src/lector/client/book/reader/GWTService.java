@@ -23,11 +23,14 @@ import lector.share.model.DecendanceException;
 import lector.share.model.Entry;
 import lector.share.model.FolderDB;
 import lector.share.model.GeneralException;
+import lector.share.model.GroupNotFoundException;
 import lector.share.model.IlegalFolderFusionException;
 import lector.share.model.LanguageNotFoundException;
 import lector.share.model.NullParameterException;
 import lector.share.model.Professor;
+import lector.share.model.ProfessorNotFoundException;
 import lector.share.model.Student;
+import lector.share.model.StudentNotFoundException;
 import lector.share.model.Tag;
 import lector.share.model.GroupApp;
 import lector.share.model.Language;
@@ -52,45 +55,45 @@ public interface GWTService extends RemoteService {
 
 	// Usuarios
 
-	public void saveUser(UserApp user);
+	public void saveUser(UserApp user) throws GeneralException;
 
-	public UserApp loadUserById(Long userId) throws UserNotFoundException;
+	public UserApp loadUserById(Long userId) throws UserNotFoundException, GeneralException;
 
-	public UserApp loadUserByEmail(String email) throws UserNotFoundException;
+	public UserApp loadUserByEmail(String email) throws UserNotFoundException, GeneralException;
 
 	// Student
 
-	public List<Student> getStudentsByGroupId(Long groupId);
+	public List<Student> getStudentsByGroupId(Long groupId) throws GeneralException, GroupNotFoundException;
 
-	public List<Student> getStudents();
+	public List<Student> getStudents() throws GeneralException, StudentNotFoundException;
 
-	public Long deleteStudentById(Long studentId);
+	public void deleteStudentById(Long studentId) throws GeneralException;
 
 	// Professor
 
-	public List<Professor> getProfessors();
+	public List<Professor> getProfessors() throws GeneralException, ProfessorNotFoundException;
 
-	public Long deleteProfessorById(Long professorId);
+	public void deleteProfessorById(Long professorId) throws GeneralException;
 
-	void deleteBookFromUser(String bookId, Long userId);
+//	void deleteBookFromUser(String bookId, Long userId);  no debe ser necesario, eliminarlo de la lista y save
 
 	// Groups
-	public void saveGroup(GroupApp groupApp);
+	public void saveGroup(GroupApp groupApp) throws GeneralException;
 
-	public GroupApp loadGroupById(Long groupId);
+	public GroupApp loadGroupById(Long groupId) throws GroupNotFoundException, GeneralException;
 
-	public List<GroupApp> getGroupsByUserId(Long userId);
+	public List<GroupApp> getGroupsByUserId(Long userId) throws GroupNotFoundException, GeneralException;  //No debe ser necesario
 
-	public Long deleteGroup(Long groupId);
+	public void deleteGroup(Long groupId) throws GeneralException;
 
 	/* Metodo Nuevo, para añadir usuarios a un grupo, en la lista para validar */
-	public void addUserAndGroupRelation(Long userId, Long groupId);
+	public void addStudentToBeValidated(Long userId, Long groupId) throws GeneralException;
 
 	/*
 	 * Valida al usuario en el grupo pasandolo de la lista de en espera a
 	 * validos
 	 */
-	public void validUserAndGroupRelation(Long userId, Long groupId);
+	public void validStudentToBeInGroup(Long userId, Long groupId) throws GeneralException;
 
 	// Annotations
 

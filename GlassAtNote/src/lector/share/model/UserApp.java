@@ -27,7 +27,7 @@ import lector.client.controler.Constants;
 @Entity
 @Table(name = "user_app")
 @XmlRootElement
-public class UserApp implements Serializable, IsSerializable {
+public class UserApp implements Serializable {
 	private static final long serialVersionUID = 1L;
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)

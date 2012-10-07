@@ -57,7 +57,7 @@ public interface GWTServiceAsync {
 
 	public void saveGroup(GroupApp groupApp, AsyncCallback<Void> asyncCallback);
 
-	void deleteGroup(Long groupId, AsyncCallback<Long> asyncCallback);
+	void deleteGroup(Long groupId, AsyncCallback<Void> asyncCallback);
 
 	void getGroupsByUserId(Long userId,
 			AsyncCallback<List<GroupApp>> asyncCallback);
@@ -138,20 +138,11 @@ public interface GWTServiceAsync {
 
 	void getStudents(AsyncCallback<List<Student>> callback);
 
-	void deleteStudentById(Long studentId, AsyncCallback<Long> callback);
+	void deleteStudentById(Long studentId, AsyncCallback<Void> callback);
 
 	void getProfessors(AsyncCallback<List<Professor>> callback);
 
-	void deleteProfessorById(Long professorId, AsyncCallback<Long> callback);
-
-	void deleteBookFromUser(String bookId, Long userId,
-			AsyncCallback<Void> callback);
-
-	void addUserAndGroupRelation(Long userId, Long groupId,
-			AsyncCallback<Void> callback);
-
-	void validUserAndGroupRelation(Long userId, Long groupId,
-			AsyncCallback<Void> callback);
+	void deleteProfessorById(Long professorId, AsyncCallback<Void> callback);
 
 	void getAnnotationsByPageNumbertAndUserId(Integer pageNumber,
 			String bookId, Long studentId, Long readingActivityId,
@@ -226,5 +217,11 @@ public interface GWTServiceAsync {
 			AsyncCallback<List<ReadingActivity>> callback);
 
 	void loadLanguageById(Long languageId, AsyncCallback<Language> callback);
+
+	void addStudentToBeValidated(Long userId, Long groupId,
+			AsyncCallback<Void> callback);
+
+	void validStudentToBeInGroup(Long userId, Long groupId,
+			AsyncCallback<Void> callback);
 
 }

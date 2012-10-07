@@ -20,13 +20,13 @@ import java.util.logging.Logger;
 
 import javax.persistence.Basic;
 import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
 import javax.persistence.EntityTransaction;
+import javax.persistence.Persistence;
 import javax.persistence.PersistenceContext;
 import lector.client.book.reader.GWTService;
 
 import lector.client.controler.Constants;
-
-
 import com.google.appengine.api.users.User;
 import com.google.appengine.api.users.UserService;
 import com.google.appengine.api.users.UserServiceFactory;
@@ -38,6 +38,7 @@ import lector.share.model.Book;
 import lector.share.model.BookNotFoundException;
 import lector.share.model.DecendanceException;
 import lector.share.model.GeneralException;
+import lector.share.model.GroupNotFoundException;
 import lector.share.model.IlegalFolderFusionException;
 import lector.share.model.LanguageNotFoundException;
 import lector.share.model.LocalBook;
@@ -45,7 +46,9 @@ import lector.share.model.Catalogo;
 import lector.share.model.Entry;
 import lector.share.model.NullParameterException;
 import lector.share.model.Professor;
+import lector.share.model.ProfessorNotFoundException;
 import lector.share.model.Student;
+import lector.share.model.StudentNotFoundException;
 import lector.share.model.Tag;
 import lector.share.model.FolderDB;
 import lector.share.model.GroupApp;
@@ -60,102 +63,363 @@ public class GWTServiceImpl extends RemoteServiceServlet implements GWTService {
 	private static ArrayList<Long> ids;
 	private static ArrayList<Long> annotationThreadIds;
 	private static List<Long> sonIds; // used in schema generator
-	@PersistenceContext(name = "BookReader11Abr01PU")
-	private EntityManager entityManager;
-	private EntityTransaction entityTransaction;
+
+	private EntityManager em;
+	private String PERSISTENCE_UNIT_NAME = "System";
+	private EntityManagerFactory emf = Persistence
+			.createEntityManagerFactory(PERSISTENCE_UNIT_NAME);
 
 	@Override
 	public UserApp login(String requestUri) throws UserNotFoundException {
-		return null;
+		UserService userService = UserServiceFactory.getUserService();
+		User user = userService.getCurrentUser();
+		UserApp userApp = new UserApp();
+		if (user != null) {
+			try {
+				userApp = loadUserByEmail(user.getEmail());
+			} catch (GeneralException ge) {
+				userApp = new UserApp();
+				userApp.setLoggedIn(false);
+				userApp.setLoginUrl(userService.createLoginURL(requestUri));
+				userApp.setLogoutUrl(userService.createLogoutURL(requestUri));
+				userApp.setEmail(user.getEmail());
+				userApp.setIsAuthenticated(false);
+				return userApp;
+			}
+			userApp.setLoggedIn(true);
+			userApp.setLogoutUrl(userService.createLogoutURL(requestUri));
+			userApp.setLoginUrl(userService.createLoginURL(requestUri));
+		} else {
+
+			userApp.setLoggedIn(false);
+			userApp.setLoginUrl(userService.createLoginURL(requestUri));
+			userApp.setLogoutUrl(userService.createLogoutURL(requestUri));
+		}
+		return userApp;
 	}
 
 	@Override
-	public void saveUser(UserApp user) {
-		// TODO Auto-generated method stub
+	public void saveUser(UserApp user) throws GeneralException {
+		EntityManager entityManager = emf.createEntityManager();
+		EntityTransaction entityTransaction = entityManager.getTransaction();
+		try {
+			entityTransaction.begin();
+			if (user.getId() == null) {
+				entityManager.persist(user);
+			} else {
+				entityManager.merge(user);
+			}
 
-	}
-
-	@Override
-	public UserApp loadUserById(Long userId) throws UserNotFoundException {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public UserApp loadUserByEmail(String email) throws UserNotFoundException {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public List<Student> getStudentsByGroupId(Long groupId) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public List<Student> getStudents() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public Long deleteStudentById(Long studentId) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public List<Professor> getProfessors() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public Long deleteProfessorById(Long professorId) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public void deleteBookFromUser(String bookId, Long userId) {
-		// TODO Auto-generated method stub
+			entityTransaction.commit();
+		} catch (Exception e) {
+			ServiceManagerUtils.rollback(entityTransaction); // TODO utilizar
+																// método de
+																// logger
+		}
+		if (entityManager.isOpen()) {
+			entityManager.close();
+		}
 
 	}
 
 	@Override
-	public void saveGroup(GroupApp groupApp) {
-		// TODO Auto-generated method stub
+	public UserApp loadUserById(Long userId) throws UserNotFoundException,
+			GeneralException {
+		EntityManager entityManager = emf.createEntityManager();
+		List<UserApp> list;
+
+		String sql = "SELECT r FROM UserApp r WHERE r.id=" + userId;
+		try {
+			list = entityManager.createQuery(sql).getResultList();
+		} catch (Exception e) {
+			// logger.error ("Exception in method loadUserById: ", e)
+			throw new GeneralException("Exception in method loadUserById:"
+					+ e.getMessage(), e.getStackTrace());
+
+		}
+		if (list == null || list.isEmpty()) {
+			// logger.error ("Exception in method loadUserById: ", e)
+			throw new UserNotFoundException(
+					"User not found in method loadUserById");
+
+		}
+		if (entityManager.isOpen()) {
+			entityManager.close();
+		}
+
+		return list.get(0);
+	}
+
+	@Override
+	public UserApp loadUserByEmail(String email) throws UserNotFoundException,
+			GeneralException {
+		EntityManager entityManager = emf.createEntityManager();
+		List<UserApp> list;
+
+		String sql = "SELECT r FROM UserApp r WHERE r.email'=" + email + "'";
+		try {
+			list = entityManager.createQuery(sql).getResultList();
+		} catch (Exception e) {
+			// logger.error ("Exception in method loadUserByEmail: ", e)
+			throw new GeneralException("Exception in method loadUserByEmail:"
+					+ e.getMessage(), e.getStackTrace());
+
+		}
+		if (list == null || list.isEmpty()) {
+			// logger.error ("Exception in method loadUserById: ", e)
+			throw new UserNotFoundException(
+					"User not found in method loadUserByEmail");
+
+		}
+		if (entityManager.isOpen()) {
+			entityManager.close();
+		}
+
+		return list.get(0);
+	}
+
+	@Override
+	public List<Student> getStudentsByGroupId(Long groupId)
+			throws GroupNotFoundException, GeneralException {
+		EntityManager entityManager = emf.createEntityManager();
+		List<GroupApp> list;
+
+		String sql = "SELECT r FROM GroupApp r WHERE r.id=" + groupId;
+		try {
+			list = entityManager.createQuery(sql).getResultList();
+		} catch (Exception e) {
+			// logger.error ("Exception in method loadGroupByEmail: ", e)
+			throw new GeneralException("Exception in method loadGroupByEmail:"
+					+ e.getMessage(), e.getStackTrace());
+
+		}
+		if (list == null || list.isEmpty()) {
+			// logger.error ("Exception in method loadGroupById: ", e)
+			throw new GroupNotFoundException(
+					"Group not found in method loadGroupByEmail");
+
+		}
+		if (entityManager.isOpen()) {
+			entityManager.close();
+		}
+
+		return list.get(0).getParticipatingStudents();
+	}
+
+	@Override
+	public List<Student> getStudents() throws GeneralException,
+			StudentNotFoundException {
+		EntityManager entityManager = emf.createEntityManager();
+		List<Student> list;
+
+		String sql = "SELECT r FROM Student r";
+		try {
+			list = entityManager.createQuery(sql).getResultList();
+		} catch (Exception e) {
+			// logger.error ("Exception in method loadGroupByEmail: ", e)
+			throw new GeneralException("Exception in method getStudents:"
+					+ e.getMessage(), e.getStackTrace());
+
+		}
+		if (list == null || list.isEmpty()) {
+			// logger.error ("Exception in method loadGroupById: ", e)
+			throw new StudentNotFoundException(
+					"Student not found in method getStudents");
+
+		}
+		if (entityManager.isOpen()) {
+			entityManager.close();
+		}
+
+		return list;
+	}
+
+	@Override
+	public void deleteStudentById(Long studentId) throws GeneralException {
+		EntityManager entityManager = emf.createEntityManager();
+		EntityTransaction entityTransaction = entityManager.getTransaction();
+		try {
+			entityTransaction.begin();
+			entityManager.createQuery(
+					"DELETE FROM Student s WHERE s.id=" + studentId)
+					.executeUpdate();
+			entityTransaction.commit();
+		} catch (Exception e) {
+			ServiceManagerUtils.rollback(entityTransaction);
+			throw new GeneralException("Exception in method deleteStudentById"
+					+ e.getMessage(), e.getStackTrace());
+		}
+	}
+
+	@Override
+	public List<Professor> getProfessors() throws GeneralException,
+			ProfessorNotFoundException {
+		EntityManager entityManager = emf.createEntityManager();
+		List<Professor> list;
+
+		String sql = "SELECT r FROM Professor r";
+		try {
+			list = entityManager.createQuery(sql).getResultList();
+		} catch (Exception e) {
+			// logger.error ("Exception in method loadGroupByEmail: ", e)
+			throw new GeneralException("Exception in method getProfessors:"
+					+ e.getMessage(), e.getStackTrace());
+
+		}
+		if (list == null || list.isEmpty()) {
+			// logger.error ("Exception in method loadGroupById: ", e)
+			throw new ProfessorNotFoundException(
+					"Professor not found in method getProfessors");
+
+		}
+		if (entityManager.isOpen()) {
+			entityManager.close();
+		}
+
+		return list;
+	}
+
+	@Override
+	public void deleteProfessorById(Long professorId) throws GeneralException {
+		EntityManager entityManager = emf.createEntityManager();
+		EntityTransaction entityTransaction = entityManager.getTransaction();
+		try {
+			entityTransaction.begin();
+			entityManager.createQuery(
+					"DELETE FROM Professor s WHERE s.id=" + professorId)
+					.executeUpdate();
+			entityTransaction.commit();
+		} catch (Exception e) {
+			ServiceManagerUtils.rollback(entityTransaction);
+			throw new GeneralException(
+					"Exception in method deleteProfessorById" + e.getMessage(),
+					e.getStackTrace());
+		}
+	}
+
+	@Override
+	public void saveGroup(GroupApp group) {
+		EntityManager entityManager = emf.createEntityManager();
+		EntityTransaction entityTransaction = entityManager.getTransaction();
+		try {
+			entityTransaction.begin();
+			if (group.getId() == null) {
+				entityManager.persist(group);
+			} else {
+				entityManager.merge(group);
+			}
+
+			entityTransaction.commit();
+		} catch (Exception e) {
+			ServiceManagerUtils.rollback(entityTransaction); // TODO utilizar
+																// método de
+																// logger
+		}
+		if (entityManager.isOpen()) {
+			entityManager.close();
+		}
 
 	}
 
 	@Override
-	public GroupApp loadGroupById(Long groupId) {
-		// TODO Auto-generated method stub
-		return null;
+	public GroupApp loadGroupById(Long groupId) throws GeneralException,
+			GroupNotFoundException {
+		EntityManager entityManager = emf.createEntityManager();
+		List<GroupApp> list;
+
+		String sql = "SELECT r FROM GroupApp r WHERE r.id=" + groupId;
+		try {
+			list = entityManager.createQuery(sql).getResultList();
+		} catch (Exception e) {
+			// logger.error ("Exception in method loadGroupById: ", e)
+			throw new GeneralException("Exception in method loadGroupById:"
+					+ e.getMessage(), e.getStackTrace());
+
+		}
+		if (list == null || list.isEmpty()) {
+			// logger.error ("Exception in method loadGroupById: ", e)
+			throw new GroupNotFoundException(
+					"Group not found in method loadGroupById");
+
+		}
+		if (entityManager.isOpen()) {
+			entityManager.close();
+		}
+
+		return list.get(0);
 	}
 
 	@Override
-	public List<GroupApp> getGroupsByUserId(Long userId) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public Long deleteGroup(Long groupId) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public void addUserAndGroupRelation(Long userId, Long groupId) {
-		// TODO Auto-generated method stub
+	public List<GroupApp> getGroupsByUserId(Long userId)
+			throws GeneralException {
+		try {
+			UserApp userApp = loadUserById(userId);
+			if (userApp instanceof Professor) {
+				return ((Professor) userApp).getGroups();
+			} else {
+				return ((Student) userApp).getParticipatingGroups();
+			}
+		} catch (Exception e) {
+			throw new GeneralException("Exception in method getGroupsByUserId");
+		}
 
 	}
 
 	@Override
-	public void validUserAndGroupRelation(Long userId, Long groupId) {
-		// TODO Auto-generated method stub
+	public void deleteGroup(Long groupId) throws GeneralException {
+		EntityManager entityManager = emf.createEntityManager();
+		EntityTransaction entityTransaction = entityManager.getTransaction();
+		try {
+			entityTransaction.begin();
+			entityManager.createQuery(
+					"DELETE FROM GroupApp s WHERE s.id=" + groupId)
+					.executeUpdate();
+			entityTransaction.commit();
+		} catch (Exception e) {
+			ServiceManagerUtils.rollback(entityTransaction);
+			throw new GeneralException("Exception in method deleteGroupAppById"
+					+ e.getMessage(), e.getStackTrace());
+		}
+	}
+
+	@Override
+	public void addStudentToBeValidated(Long userId, Long groupId)
+			throws GeneralException {
+		try {
+			GroupApp group = loadGroupById(groupId);
+			Student student = (Student) loadUserById(userId);
+			if (!group.getRemainingStudents().contains(student)) {
+				group.getRemainingStudents().add(student);
+			}
+			saveGroup(group);
+		} catch (Exception e) {
+			throw new GeneralException(
+					"Error in method addStudentToBeValidated");
+		}
+
+	}
+
+	@Override
+	public void validStudentToBeInGroup(Long userId, Long groupId)
+			throws GeneralException {
+		try {
+			Student student = (Student) loadUserById(userId);
+			GroupApp group = loadGroupById(groupId);
+			if (group.getRemainingStudents().contains(student)) {
+				group.getRemainingStudents().remove(student);
+			} else {
+				throw new GeneralException(
+						"Hey!!! this user was not on the list to be validated from: the remainingList");
+			}
+			if (!group.getParticipatingStudents().contains(student)) {
+				group.getParticipatingStudents().add(student);
+			}
+			saveGroup(group);
+
+		} catch (Exception e) {
+			throw new GeneralException(
+					"Error in method validStudentToBeInGroup");
+		}
 
 	}
 
