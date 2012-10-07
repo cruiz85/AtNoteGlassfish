@@ -9,8 +9,10 @@ import java.util.List;
 
 
 import lector.share.model.ExportObject;
+import lector.share.model.GeneralException;
 import lector.share.model.Template;
 import lector.share.model.TemplateCategory;
+import lector.share.model.TemplateNotFoundException;
 
 import com.google.gwt.user.client.rpc.RemoteService;
 import com.google.gwt.user.client.rpc.RemoteServiceRelativePath;
@@ -24,19 +26,17 @@ public interface ExportService extends RemoteService {
 
 	// Templates
 
-	void saveTemplate(Template template);
+	void saveTemplate(Template template) throws GeneralException;
 
-	public Template loadTemplateById(Long Id);
+	public Template loadTemplateById(Long Id) throws TemplateNotFoundException, GeneralException;
 
-	public List<Template> getTemplatesByProfessorId(Long professorId);
+	public List<Template> getTemplates() throws GeneralException, TemplateNotFoundException;
 
-	public void getTemplates();
-
-	public Long deleteTemplate(Long templateId);
+	public void deleteTemplate(Long templateId) throws GeneralException;
 
 	// Template Category
 
-	public void saveTemplateCategory(TemplateCategory templateCategory);
+	public void saveTemplateCategory(TemplateCategory templateCategory) throws GeneralException;
 
 	public List<TemplateCategory> getTemplateCategoriesByIds(
 			ArrayList<Long> categoriesIds);

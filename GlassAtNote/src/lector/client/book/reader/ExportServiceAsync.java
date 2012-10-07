@@ -16,12 +16,12 @@ public interface ExportServiceAsync {
 	void saveTemplateCategory(TemplateCategory templateCategory,
 			AsyncCallback<Void> callback);
 
-	void deleteTemplate(Long templateId, AsyncCallback<Long> callback);
+	void deleteTemplate(Long templateId, AsyncCallback<Void> callback);
 
 	void deleteTemplateCategory(Long templateCategoryId,
 			AsyncCallback<Long> callback);
 
-	void getTemplates(AsyncCallback<Void> callback);
+	void getTemplates(AsyncCallback<List<Template>> callback);
 
 	void loadTemplateById(Long Id, AsyncCallback<Template> callback);
 
@@ -39,9 +39,6 @@ public interface ExportServiceAsync {
 
 	void swapCategoryWeight(Long movingCategoryId, Long staticCategoryId,
 			AsyncCallback<Void> callback);
-
-	void getTemplatesByProfessorId(Long professorId,
-			AsyncCallback<List<Template>> callback);
 
 	void loadHTMLStringForExport(
 			List<lector.share.model.ExportObject> exportObjects,
