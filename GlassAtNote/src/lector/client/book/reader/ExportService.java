@@ -7,7 +7,8 @@ package lector.client.book.reader;
 import java.util.ArrayList;
 import java.util.List;
 
-import lector.client.reader.ExportObject;
+
+import lector.share.model.ExportObject;
 import lector.share.model.Template;
 import lector.share.model.TemplateCategory;
 

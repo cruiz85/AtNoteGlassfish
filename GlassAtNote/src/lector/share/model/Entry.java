@@ -6,8 +6,6 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.persistence.Basic;
-import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -26,7 +24,7 @@ import javax.persistence.Table;
 @Entity
 @Table(name = "entry")
 @Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
-public class Entry implements Serializable, IsSerializable {
+public class Entry implements Serializable{
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)

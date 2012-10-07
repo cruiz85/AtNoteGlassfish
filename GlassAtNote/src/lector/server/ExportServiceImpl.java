@@ -7,7 +7,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
 import lector.client.book.reader.ExportService;
 import lector.client.controler.Constants;
-import lector.client.reader.ExportObject;
+import lector.share.model.ExportObject;
 import lector.share.model.Template;
 import lector.share.model.TemplateCategory;
 
@@ -112,5 +112,7 @@ public class ExportServiceImpl extends RemoteServiceServlet implements
 		// TODO Auto-generated method stub
 		return null;
 	}
+
+	
 
 }

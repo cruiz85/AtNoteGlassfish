@@ -20,7 +20,7 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "annotation_thread")
-public class AnnotationThread implements Serializable, IsSerializable {
+public class AnnotationThread implements Serializable {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)

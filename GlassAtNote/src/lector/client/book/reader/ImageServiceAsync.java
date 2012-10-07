@@ -7,8 +7,8 @@ package lector.client.book.reader;
 import java.util.ArrayList;
 import java.util.List;
 
-import lector.client.reader.Book;
-import lector.client.reader.ExportObject;
+import lector.share.model.Book;
+
 import lector.share.model.LocalBook;
 import lector.share.model.TextSelector;
 
@@ -22,7 +22,7 @@ public interface ImageServiceAsync {
 
 	void getBlobstoreUploadUrl(AsyncCallback<String> callback);
 
-	void loadBookById(Long id, AsyncCallback<Book> callback);
+	void loadBookById(Long id, AsyncCallback<lector.share.model.Book> callback);
 
 	void saveBook(Book book, AsyncCallback<Void> callback);
 

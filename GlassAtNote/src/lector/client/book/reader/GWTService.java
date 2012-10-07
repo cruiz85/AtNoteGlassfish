@@ -7,32 +7,25 @@ package lector.client.book.reader;
 import java.util.ArrayList;
 import java.util.List;
 
-import lector.client.catalogo.client.Catalog;
-import lector.client.catalogo.client.DecendanceException;
-import lector.client.catalogo.client.Entity;
-import lector.client.catalogo.client.File;
-import lector.client.catalogo.client.FileException;
-import lector.client.catalogo.client.Folder;
-import lector.client.catalogo.client.FolderException;
-import lector.client.language.LanguageNotFoundException;
-import lector.client.login.GroupNotFoundException;
-import lector.client.login.UserNotFoundException;
-import lector.client.reader.AnnotationNotFoundException;
-import lector.client.reader.Book;
-import lector.client.reader.BookNotFoundException;
-import lector.client.reader.GeneralException;
-import lector.client.reader.IlegalFolderFusionException;
 
-import lector.client.reader.NullParameterException;
+
 
 import com.google.gwt.user.client.rpc.RemoteService;
 import com.google.gwt.user.client.rpc.RemoteServiceRelativePath;
-import lector.client.service.AnnotationSchema;
+
 import lector.share.model.Annotation;
+import lector.share.model.AnnotationNotFoundException;
 import lector.share.model.AnnotationThread;
+import lector.share.model.Book;
+import lector.share.model.BookNotFoundException;
 import lector.share.model.Catalogo;
+import lector.share.model.DecendanceException;
 import lector.share.model.Entry;
 import lector.share.model.FolderDB;
+import lector.share.model.GeneralException;
+import lector.share.model.IlegalFolderFusionException;
+import lector.share.model.LanguageNotFoundException;
+import lector.share.model.NullParameterException;
 import lector.share.model.Professor;
 import lector.share.model.Student;
 import lector.share.model.Tag;
@@ -40,6 +33,7 @@ import lector.share.model.GroupApp;
 import lector.share.model.Language;
 import lector.share.model.ReadingActivity;
 import lector.share.model.UserApp;
+import lector.share.model.UserNotFoundException;
 
 /**
  * 
@@ -228,7 +222,7 @@ public interface GWTService extends RemoteService {
 
 	public void renameFolderDB(Long typeCategoryId, String newFolderDBName);
 
-	public void saveFolderDB(Folder typeCategory, Long typeCategoryFatherId);
+	public void saveFolderDB(FolderDB typeCategory, Long typeCategoryFatherId);
 
 	public void moveFolderDB(Long typeCategoryId, Long typeCategoryFromId,
 			Long typeCategoryToId) throws GeneralException, DecendanceException;;
@@ -275,7 +269,7 @@ public interface GWTService extends RemoteService {
 		
 	String getJSONServiceTODrawGraph(String url,String body);
 
-	AnnotationSchema getSchemaByCatalogId(Long catalogId);
+//	AnnotationSchema getSchemaByCatalogId(Long catalogId);
 
 
 //	public ArrayList<Tag> getEntriesIdsByIdsRec(ArrayList<Long> Ids);

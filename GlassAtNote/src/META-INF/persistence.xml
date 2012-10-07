@@ -18,15 +18,16 @@
 		<class>lector.share.model.ReadingActivity</class>
 		<class>lector.share.model.Student</class>
 		<class>lector.share.model.Professor</class>
-		<class>lector.client.reader.Book</class>
+		<class>lector.share.model.Book</class>
 		<class>lector.share.model.AnnotationThread</class>
 		<class>lector.share.model.LocalBook</class>
 		<class>lector.share.model.Template</class>
 		<class>lector.share.model.TemplateCategory</class>
 		<class>lector.share.model.GoogleBook</class>
 		<class>lector.share.model.RemoteBook</class>
-		<class>lector.client.reader.filter.FilterConfig</class>
-		<class>lector.client.service.AnnotationSchema</class>
+	
+		<!-- 	<class>lector.client.reader.filter.FilterConfig</class>
+		<class>lector.client.service.AnnotationSchema</class>  -->
 		
 		
 		<!-- <class>com.service.AnnotationSimp</class>

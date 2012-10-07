@@ -3,7 +3,7 @@ package lector.share.model;
 import java.io.Serializable;
 import javax.persistence.Entity;
 import javax.persistence.Table;
-import lector.client.reader.Book;
+import lector.share.model.Book;
 
 @Entity
 @Table(name = "local_book")

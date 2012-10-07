@@ -15,7 +15,7 @@ import javax.persistence.OneToMany;
 
 import javax.persistence.Table;
 
-import lector.client.reader.Book;
+import lector.share.model.Book;
 
 @Entity
 @Table(name = "reading_activity")

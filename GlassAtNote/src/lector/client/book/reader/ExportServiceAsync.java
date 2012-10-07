@@ -3,7 +3,7 @@ package lector.client.book.reader;
 import java.util.ArrayList;
 import java.util.List;
 
-import lector.client.reader.ExportObject;
+import lector.share.model.ExportObject;
 import lector.share.model.Template;
 import lector.share.model.TemplateCategory;
 
@@ -43,7 +43,8 @@ public interface ExportServiceAsync {
 	void getTemplatesByProfessorId(Long professorId,
 			AsyncCallback<List<Template>> callback);
 
-	void loadHTMLStringForExport(List<ExportObject> exportObjects,
+	void loadHTMLStringForExport(
+			List<lector.share.model.ExportObject> exportObjects,
 			AsyncCallback<String> callback);
 
 	void loadHTMLStringForExportUni(ExportObject exportObject,

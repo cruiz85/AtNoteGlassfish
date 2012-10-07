@@ -22,38 +22,28 @@ import javax.persistence.Basic;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
 import javax.persistence.PersistenceContext;
-
-import org.mortbay.util.ajax.JSON;
-
 import lector.client.book.reader.GWTService;
-import lector.client.catalogo.client.Catalog;
-import lector.client.catalogo.client.DecendanceException;
-import lector.client.catalogo.client.Entity;
-import lector.client.catalogo.client.File;
-import lector.client.catalogo.client.FileException;
-import lector.client.catalogo.client.Folder;
-import lector.client.catalogo.client.FolderException;
+
 import lector.client.controler.Constants;
-import lector.client.language.LanguageNotFoundException;
-import lector.client.login.GroupNotFoundException;
-import lector.client.login.UserNotFoundException;
-import lector.client.reader.AnnotationNotFoundException;
-import lector.client.reader.Book;
-import lector.client.reader.BookNotFoundException;
-import lector.client.reader.GeneralException;
-import lector.client.reader.IlegalFolderFusionException;
-import lector.client.reader.NullParameterException;
+
 
 import com.google.appengine.api.users.User;
 import com.google.appengine.api.users.UserService;
 import com.google.appengine.api.users.UserServiceFactory;
 import com.google.gwt.user.server.rpc.RemoteServiceServlet;
-import lector.client.service.AnnotationSchema;
 import lector.share.model.Annotation;
+import lector.share.model.AnnotationNotFoundException;
 import lector.share.model.AnnotationThread;
+import lector.share.model.Book;
+import lector.share.model.BookNotFoundException;
+import lector.share.model.DecendanceException;
+import lector.share.model.GeneralException;
+import lector.share.model.IlegalFolderFusionException;
+import lector.share.model.LanguageNotFoundException;
 import lector.share.model.LocalBook;
 import lector.share.model.Catalogo;
 import lector.share.model.Entry;
+import lector.share.model.NullParameterException;
 import lector.share.model.Professor;
 import lector.share.model.Student;
 import lector.share.model.Tag;
@@ -63,6 +53,7 @@ import lector.share.model.Language;
 import lector.share.model.ReadingActivity;
 import lector.share.model.TextSelector;
 import lector.share.model.UserApp;
+import lector.share.model.UserNotFoundException;
 
 public class GWTServiceImpl extends RemoteServiceServlet implements GWTService {
 
@@ -439,7 +430,7 @@ public class GWTServiceImpl extends RemoteServiceServlet implements GWTService {
 	}
 
 	@Override
-	public void saveFolderDB(Folder typeCategory, Long typeCategoryFatherId) {
+	public void saveFolderDB(FolderDB typeCategory, Long typeCategoryFatherId) {
 		// TODO Auto-generated method stub
 
 	}
@@ -537,12 +528,6 @@ public class GWTServiceImpl extends RemoteServiceServlet implements GWTService {
 
 	@Override
 	public String getJSONServiceTODrawGraph(String url, String body) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public AnnotationSchema getSchemaByCatalogId(Long catalogId) {
 		// TODO Auto-generated method stub
 		return null;
 	}

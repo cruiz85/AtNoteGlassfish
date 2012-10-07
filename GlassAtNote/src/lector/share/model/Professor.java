@@ -9,7 +9,7 @@ import javax.persistence.Entity;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.xml.bind.annotation.XmlRootElement;
-import lector.client.reader.Book;
+import lector.share.model.Book;
 
 @Entity
 @Table(name = "professor")

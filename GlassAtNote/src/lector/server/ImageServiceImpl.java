@@ -17,8 +17,8 @@ import org.apache.commons.codec.binary.Base64;
 
 import lector.client.book.reader.GWTService;
 import lector.client.book.reader.ImageService;
-import lector.client.reader.Book;
-import lector.client.reader.ExportObject;
+import lector.share.model.Book;
+import lector.share.model.ExportObject;
 import lector.share.model.LocalBook;
 import lector.share.model.TextSelector;
 

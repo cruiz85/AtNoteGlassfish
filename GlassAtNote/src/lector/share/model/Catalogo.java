@@ -1,6 +1,5 @@
 package lector.share.model;
 
-import com.google.gwt.user.client.rpc.IsSerializable;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
@@ -16,7 +15,7 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "catalogo")
-public class Catalogo implements Serializable, IsSerializable {
+public class Catalogo implements Serializable {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)

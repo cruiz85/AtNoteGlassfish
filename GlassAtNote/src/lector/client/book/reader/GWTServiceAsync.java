@@ -5,17 +5,12 @@
 package lector.client.book.reader;
 
 import com.google.gwt.user.client.rpc.AsyncCallback;
-import lector.client.service.AnnotationSchema;
-
 import java.util.ArrayList;
 import java.util.List;
 
-import lector.client.catalogo.client.Entity;
-import lector.client.catalogo.client.File;
-import lector.client.catalogo.client.Folder;
-import lector.client.reader.Book;
 import lector.share.model.Annotation;
 import lector.share.model.AnnotationThread;
+import lector.share.model.Book;
 import lector.share.model.Catalogo;
 import lector.share.model.Entry;
 import lector.share.model.FolderDB;
@@ -131,8 +126,8 @@ public interface GWTServiceAsync {
 	void getJSONServiceTODrawGraph(String url, String body,
 			AsyncCallback<String> callback);
 
-	void getSchemaByCatalogId(Long catalogId,
-			AsyncCallback<AnnotationSchema> callback);
+//	void getSchemaByCatalogId(Long catalogId,
+//			AsyncCallback<AnnotationSchema> callback);
 
 	void deleteBook(String bookId, Long userId, AsyncCallback<Void> callback);
 
@@ -215,7 +210,7 @@ public interface GWTServiceAsync {
 	void renameFolderDB(Long typeCategoryId, String newFolderDBName,
 			AsyncCallback<Void> callback);
 
-	void saveFolderDB(Folder typeCategory, Long typeCategoryFatherId,
+	void saveFolderDB(FolderDB typeCategory, Long typeCategoryFatherId,
 			AsyncCallback<Void> callback);
 
 	void moveFolderDB(Long typeCategoryId, Long typeCategoryFromId,
