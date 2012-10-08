@@ -3,10 +3,13 @@ package lector.server;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+
+import javax.annotation.Resource;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.EntityTransaction;
 import javax.persistence.Persistence;
+import javax.transaction.UserTransaction;
 
 import lector.client.book.reader.ExportService;
 import lector.client.controler.Constants;
@@ -32,23 +35,26 @@ public class ExportServiceImpl extends RemoteServiceServlet implements
 	private EntityManagerFactory emf = Persistence
 			.createEntityManagerFactory(PERSISTENCE_UNIT_NAME);
 
+	@Resource
+	UserTransaction userTransaction;
+
 	@Override
 	public void saveTemplate(Template template) throws GeneralException {
 		EntityManager entityManager = emf.createEntityManager();
-		EntityTransaction entityTransaction = entityManager.getTransaction();
+
 		try {
-			entityTransaction.begin();
+			userTransaction.begin();
 			if (template.getId() == null) {
 				entityManager.persist(template);
 			} else {
 				entityManager.merge(template);
 			}
 
-			entityTransaction.commit();
+			userTransaction.commit();
 		} catch (Exception e) {
-			ServiceManagerUtils.rollback(entityTransaction); // TODO utilizar
-																// método de
-																// logger
+			ServiceManagerUtils.rollback(userTransaction); // TODO utilizar
+															// método de
+															// logger
 		}
 		if (entityManager.isOpen()) {
 			entityManager.close();
@@ -115,15 +121,15 @@ public class ExportServiceImpl extends RemoteServiceServlet implements
 	@Override
 	public void deleteTemplate(Long templateId) throws GeneralException {
 		EntityManager entityManager = emf.createEntityManager();
-		EntityTransaction entityTransaction = entityManager.getTransaction();
+
 		try {
-			entityTransaction.begin();
+			userTransaction.begin();
 			entityManager.createQuery(
 					"DELETE FROM Template s WHERE s.id=" + templateId)
 					.executeUpdate();
-			entityTransaction.commit();
+			userTransaction.commit();
 		} catch (Exception e) {
-			ServiceManagerUtils.rollback(entityTransaction);
+			ServiceManagerUtils.rollback(userTransaction);
 			throw new GeneralException("Exception in method deleteTemplateById"
 					+ e.getMessage(), e.getStackTrace());
 		}
@@ -133,20 +139,20 @@ public class ExportServiceImpl extends RemoteServiceServlet implements
 	public void saveTemplateCategory(TemplateCategory templateCategory)
 			throws GeneralException {
 		EntityManager entityManager = emf.createEntityManager();
-		EntityTransaction entityTransaction = entityManager.getTransaction();
+
 		try {
-			entityTransaction.begin();
+			userTransaction.begin();
 			if (templateCategory.getId() == null) {
 				entityManager.persist(templateCategory);
 			} else {
 				entityManager.merge(templateCategory);
 			}
 
-			entityTransaction.commit();
+			userTransaction.commit();
 		} catch (Exception e) {
-			ServiceManagerUtils.rollback(entityTransaction); // TODO utilizar
-																// método de
-																// logger
+			ServiceManagerUtils.rollback(userTransaction); // TODO utilizar
+															// método de
+															// logger
 		}
 		if (entityManager.isOpen()) {
 			entityManager.close();

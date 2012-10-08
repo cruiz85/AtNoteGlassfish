@@ -18,12 +18,15 @@ import java.util.StringTokenizer;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import javax.annotation.Resource;
 import javax.persistence.Basic;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.EntityTransaction;
 import javax.persistence.Persistence;
 import javax.persistence.PersistenceContext;
+import javax.transaction.UserTransaction;
+
 import lector.client.book.reader.GWTService;
 
 import lector.client.controler.Constants;
@@ -70,7 +73,10 @@ public class GWTServiceImpl extends RemoteServiceServlet implements GWTService {
 
 	private EntityManager em;
 	private String PERSISTENCE_UNIT_NAME = "System";
-	private EntityManagerFactory emf = Persistence.createEntityManagerFactory(PERSISTENCE_UNIT_NAME);
+	private EntityManagerFactory emf = Persistence
+			.createEntityManagerFactory(PERSISTENCE_UNIT_NAME);
+	@Resource
+	UserTransaction userTransaction;
 
 	// @Override
 	// public UserApp login(String requestUri) throws UserNotFoundException {
@@ -136,18 +142,18 @@ public class GWTServiceImpl extends RemoteServiceServlet implements GWTService {
 	@Override
 	public void saveUser(UserApp user) throws GeneralException {
 		EntityManager entityManager = emf.createEntityManager();
-		EntityTransaction entityTransaction = entityManager.getTransaction();
+		
 		try {
-			entityTransaction.begin();
+			userTransaction.begin();
 			if (user.getId() == null) {
 				entityManager.persist(user);
 			} else {
 				entityManager.merge(user);
 			}
 
-			entityTransaction.commit();
+			userTransaction.commit();
 		} catch (Exception e) {
-			ServiceManagerUtils.rollback(entityTransaction); // TODO utilizar
+			ServiceManagerUtils.rollback(userTransaction); // TODO utilizar
 																// método de
 																// logger
 		}
@@ -272,15 +278,15 @@ public class GWTServiceImpl extends RemoteServiceServlet implements GWTService {
 	@Override
 	public void deleteStudentById(Long studentId) throws GeneralException {
 		EntityManager entityManager = emf.createEntityManager();
-		EntityTransaction entityTransaction = entityManager.getTransaction();
+		
 		try {
-			entityTransaction.begin();
+			userTransaction.begin();
 			entityManager.createQuery(
 					"DELETE FROM Student s WHERE s.id=" + studentId)
 					.executeUpdate();
-			entityTransaction.commit();
+			userTransaction.commit();
 		} catch (Exception e) {
-			ServiceManagerUtils.rollback(entityTransaction);
+			ServiceManagerUtils.rollback(userTransaction);
 			throw new GeneralException("Exception in method deleteStudentById"
 					+ e.getMessage(), e.getStackTrace());
 		}
@@ -317,15 +323,15 @@ public class GWTServiceImpl extends RemoteServiceServlet implements GWTService {
 	@Override
 	public void deleteProfessorById(Long professorId) throws GeneralException {
 		EntityManager entityManager = emf.createEntityManager();
-		EntityTransaction entityTransaction = entityManager.getTransaction();
+		
 		try {
-			entityTransaction.begin();
+			userTransaction.begin();
 			entityManager.createQuery(
 					"DELETE FROM Professor s WHERE s.id=" + professorId)
 					.executeUpdate();
-			entityTransaction.commit();
+			userTransaction.commit();
 		} catch (Exception e) {
-			ServiceManagerUtils.rollback(entityTransaction);
+			ServiceManagerUtils.rollback(userTransaction);
 			throw new GeneralException(
 					"Exception in method deleteProfessorById" + e.getMessage(),
 					e.getStackTrace());
@@ -335,18 +341,18 @@ public class GWTServiceImpl extends RemoteServiceServlet implements GWTService {
 	@Override
 	public void saveGroup(GroupApp group) {
 		EntityManager entityManager = emf.createEntityManager();
-		EntityTransaction entityTransaction = entityManager.getTransaction();
+		
 		try {
-			entityTransaction.begin();
+			userTransaction.begin();
 			if (group.getId() == null) {
 				entityManager.persist(group);
 			} else {
 				entityManager.merge(group);
 			}
 
-			entityTransaction.commit();
+			userTransaction.commit();
 		} catch (Exception e) {
-			ServiceManagerUtils.rollback(entityTransaction); // TODO utilizar
+			ServiceManagerUtils.rollback(userTransaction); // TODO utilizar
 																// método de
 																// logger
 		}
@@ -403,15 +409,15 @@ public class GWTServiceImpl extends RemoteServiceServlet implements GWTService {
 	@Override
 	public void deleteGroup(Long groupId) throws GeneralException {
 		EntityManager entityManager = emf.createEntityManager();
-		EntityTransaction entityTransaction = entityManager.getTransaction();
+		
 		try {
-			entityTransaction.begin();
+			userTransaction.begin();
 			entityManager.createQuery(
 					"DELETE FROM GroupApp s WHERE s.id=" + groupId)
 					.executeUpdate();
-			entityTransaction.commit();
+			userTransaction.commit();
 		} catch (Exception e) {
-			ServiceManagerUtils.rollback(entityTransaction);
+			ServiceManagerUtils.rollback(userTransaction);
 			throw new GeneralException("Exception in method deleteGroupAppById"
 					+ e.getMessage(), e.getStackTrace());
 		}
@@ -461,22 +467,22 @@ public class GWTServiceImpl extends RemoteServiceServlet implements GWTService {
 	@Override
 	public void saveAnnotation(Annotation annotation) {
 		EntityManager entityManager = emf.createEntityManager();
-		EntityTransaction entityTransaction = entityManager.getTransaction();
+		
 		Date now = new Date();
 		Calendar calendar = Calendar.getInstance();
 		now = calendar.getTime();
 		annotation.setCreatedDate(now);
 		try {
-			entityTransaction.begin();
+			userTransaction.begin();
 			if (annotation.getId() == null) {
 				entityManager.persist(annotation);
 			} else {
 				entityManager.merge(annotation);
 			}
 
-			entityTransaction.commit();
+			userTransaction.commit();
 		} catch (Exception e) {
-			ServiceManagerUtils.rollback(entityTransaction); // TODO utilizar
+			ServiceManagerUtils.rollback(userTransaction); // TODO utilizar
 																// método de
 																// logger
 		}
@@ -634,15 +640,15 @@ public class GWTServiceImpl extends RemoteServiceServlet implements GWTService {
 	public void deleteAnnotation(Long annotationId) throws GeneralException,
 			AnnotationNotFoundException {
 		EntityManager entityManager = emf.createEntityManager();
-		EntityTransaction entityTransaction = entityManager.getTransaction();
+		
 		try {
-			entityTransaction.begin();
+			userTransaction.begin();
 			entityManager.createQuery(
 					"DELETE FROM Annotation s WHERE s.id=" + annotationId)
 					.executeUpdate();
-			entityTransaction.commit();
+			userTransaction.commit();
 		} catch (Exception e) {
-			ServiceManagerUtils.rollback(entityTransaction);
+			ServiceManagerUtils.rollback(userTransaction);
 			throw new GeneralException(
 					"Exception in method deleteAnnotationById" + e.getMessage(),
 					e.getStackTrace());
@@ -652,22 +658,22 @@ public class GWTServiceImpl extends RemoteServiceServlet implements GWTService {
 	@Override
 	public void saveAnnotationThread(AnnotationThread annotationThread) {
 		EntityManager entityManager = emf.createEntityManager();
-		EntityTransaction entityTransaction = entityManager.getTransaction();
+		
 		Date now = new Date();
 		Calendar calendar = Calendar.getInstance();
 		now = calendar.getTime();
 		annotationThread.setCreatedDate(now);
 		try {
-			entityTransaction.begin();
+			userTransaction.begin();
 			if (annotationThread.getId() == null) {
 				entityManager.persist(annotationThread);
 			} else {
 				entityManager.merge(annotationThread);
 			}
 
-			entityTransaction.commit();
+			userTransaction.commit();
 		} catch (Exception e) {
-			ServiceManagerUtils.rollback(entityTransaction); // TODO utilizar
+			ServiceManagerUtils.rollback(userTransaction); // TODO utilizar
 																// método de
 																// logger
 		}
@@ -681,15 +687,15 @@ public class GWTServiceImpl extends RemoteServiceServlet implements GWTService {
 	public void deleteAnnotationThread(Long annotationThreadId)
 			throws GeneralException {
 		EntityManager entityManager = emf.createEntityManager();
-		EntityTransaction entityTransaction = entityManager.getTransaction();
+		
 		try {
-			entityTransaction.begin();
+			userTransaction.begin();
 			entityManager.createQuery(
 					"DELETE FROM AnnotationThread s WHERE s.id="
 							+ annotationThreadId).executeUpdate();
-			entityTransaction.commit();
+			userTransaction.commit();
 		} catch (Exception e) {
-			ServiceManagerUtils.rollback(entityTransaction);
+			ServiceManagerUtils.rollback(userTransaction);
 			throw new GeneralException(
 					"Exception in method deleteAnnotationThreadById"
 							+ e.getMessage(), e.getStackTrace());
@@ -1189,15 +1195,15 @@ public class GWTServiceImpl extends RemoteServiceServlet implements GWTService {
 	public void deleteReadingActivity(Long readingActivityId)
 			throws GeneralException {
 		EntityManager entityManager = emf.createEntityManager();
-		EntityTransaction entityTransaction = entityManager.getTransaction();
+		
 		try {
-			entityTransaction.begin();
+			userTransaction.begin();
 			entityManager.createQuery(
 					"DELETE FROM ReadingActivity s WHERE s.id="
 							+ readingActivityId).executeUpdate();
-			entityTransaction.commit();
+			userTransaction.commit();
 		} catch (Exception e) {
-			ServiceManagerUtils.rollback(entityTransaction);
+			ServiceManagerUtils.rollback(userTransaction);
 			throw new GeneralException(
 					"Exception in method deleteReadingActivityById"
 							+ e.getMessage(), e.getStackTrace());
@@ -1251,18 +1257,18 @@ public class GWTServiceImpl extends RemoteServiceServlet implements GWTService {
 	public void saveReadingActivity(ReadingActivity readingActivity)
 			throws GeneralException {
 		EntityManager entityManager = emf.createEntityManager();
-		EntityTransaction entityTransaction = entityManager.getTransaction();
+		
 		try {
-			entityTransaction.begin();
+			userTransaction.begin();
 			if (readingActivity.getId() == null) {
 				entityManager.persist(readingActivity);
 			} else {
 				entityManager.merge(readingActivity);
 			}
 
-			entityTransaction.commit();
+			userTransaction.commit();
 		} catch (Exception e) {
-			ServiceManagerUtils.rollback(entityTransaction); // TODO utilizar
+			ServiceManagerUtils.rollback(userTransaction); // TODO utilizar
 																// método de
 																// logger
 		}
@@ -1281,18 +1287,18 @@ public class GWTServiceImpl extends RemoteServiceServlet implements GWTService {
 	@Override
 	public void saveLanguage(Language language) throws GeneralException {
 		EntityManager entityManager = emf.createEntityManager();
-		EntityTransaction entityTransaction = entityManager.getTransaction();
+		
 		try {
-			entityTransaction.begin();
+			userTransaction.begin();
 			if (language.getId() == null) {
 				entityManager.persist(language);
 			} else {
 				entityManager.merge(language);
 			}
 
-			entityTransaction.commit();
+			userTransaction.commit();
 		} catch (Exception e) {
-			ServiceManagerUtils.rollback(entityTransaction); // TODO utilizar
+			ServiceManagerUtils.rollback(userTransaction); // TODO utilizar
 																// método de
 																// logger
 		}
@@ -1305,15 +1311,15 @@ public class GWTServiceImpl extends RemoteServiceServlet implements GWTService {
 	@Override
 	public void deleteLanguage(Long languageId) throws GeneralException {
 		EntityManager entityManager = emf.createEntityManager();
-		EntityTransaction entityTransaction = entityManager.getTransaction();
+		
 		try {
-			entityTransaction.begin();
+			userTransaction.begin();
 			entityManager.createQuery(
 					"DELETE FROM Language s WHERE s.id=" + languageId)
 					.executeUpdate();
-			entityTransaction.commit();
+			userTransaction.commit();
 		} catch (Exception e) {
-			ServiceManagerUtils.rollback(entityTransaction);
+			ServiceManagerUtils.rollback(userTransaction);
 			throw new GeneralException("Exception in method deleteLanguageById"
 					+ e.getMessage(), e.getStackTrace());
 		}
@@ -1418,15 +1424,16 @@ public class GWTServiceImpl extends RemoteServiceServlet implements GWTService {
 	@Override
 	public void deleteBook(String bookId, Long userId) throws GeneralException {
 		EntityManager entityManager = emf.createEntityManager();
-		EntityTransaction entityTransaction = entityManager.getTransaction();
+		
+		
 		try {
-			entityTransaction.begin();
+			userTransaction.begin();
 			entityManager.createQuery(
 					"DELETE FROM Book s WHERE s.ISBN='" + bookId
 							+ "' AND s.professor.id=" + userId).executeUpdate();
-			entityTransaction.commit();
+			userTransaction.commit();
 		} catch (Exception e) {
-			ServiceManagerUtils.rollback(entityTransaction);
+			ServiceManagerUtils.rollback(userTransaction);
 			throw new GeneralException("Exception in method deleteBookById"
 					+ e.getMessage(), e.getStackTrace());
 		}

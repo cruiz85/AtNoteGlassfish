@@ -3,10 +3,10 @@
 		<servlet-name>GWTService</servlet-name>
 		<servlet-class>lector.server.GWTServiceImpl</servlet-class>
 	</servlet>
-<!--  	<servlet>
+  	<servlet>
 		<servlet-name>ServletAdaptor</servlet-name>
 		<servlet-class>com.sun.jersey.spi.container.servlet.ServletContainer</servlet-class>
-	</servlet> -->
+	</servlet> 
 	<servlet>
 		<servlet-name>ImageService</servlet-name>
 		<servlet-class>lector.server.ImageServiceImpl</servlet-class>
@@ -52,7 +52,7 @@
 		<servlet-name>ExportService</servlet-name>
 		<url-pattern>/BookReader/book.reader/exportservice</url-pattern>
 	</servlet-mapping>
-<!--	<servlet-mapping>
+	<servlet-mapping>
 		<servlet-name>ServletAdaptor</servlet-name>
 		<url-pattern>/rs/*</url-pattern>
 	</servlet-mapping>
@@ -67,7 +67,7 @@
 		<res-ref-name>UserTransaction</res-ref-name>
 		<res-type>javax.transaction.UserTransaction</res-type>
 		<res-auth>Container</res-auth>
-	</resource-ref> -->
+	</resource-ref>
 	<welcome-file-list>
 		<welcome-file>welcomeGWT.html</welcome-file>
 	</welcome-file-list>
