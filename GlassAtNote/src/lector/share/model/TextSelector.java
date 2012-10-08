@@ -1,6 +1,5 @@
 package lector.share.model;
 
-import com.google.gwt.user.client.rpc.IsSerializable;
 import java.io.Serializable;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -10,7 +9,7 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "text_selector")
-public class TextSelector implements Serializable, IsSerializable {
+public class TextSelector implements Serializable{
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)

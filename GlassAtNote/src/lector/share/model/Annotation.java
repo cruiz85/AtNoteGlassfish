@@ -1,6 +1,5 @@
 package lector.share.model;
 
-
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
@@ -24,7 +23,6 @@ import javax.persistence.Transient;
 @Table(name = "annotation")
 public class Annotation implements Serializable {
 
-	private static final long serialVersionUID = 1L;
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
@@ -80,10 +78,6 @@ public class Annotation implements Serializable {
 
 	public void setThreads(List<AnnotationThread> threads) {
 		this.threads = threads;
-	}
-
-	public static long getSerialversionuid() {
-		return serialVersionUID;
 	}
 
 	public ReadingActivity getActivity() {

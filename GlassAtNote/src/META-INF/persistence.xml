@@ -4,8 +4,8 @@
 	xsi:schemaLocation="http://java.sun.com/xml/ns/persistence http://java.sun.com/xml/ns/persistence/persistence_1_0.xsd">
 	<persistence-unit name="System" transaction-type="JTA">
 	    <provider>org.eclipse.persistence.jpa.PersistenceProvider</provider>
-	     <jta-data-source>jdbc/_atnotePool</jta-data-source>
-		<class>lector.share.model.Annotation</class>
+	 	 <jta-data-source>jdbc/_atnotePool</jta-data-source>
+	  	<class>lector.share.model.Annotation</class>
 		<class>lector.share.model.TextSelector</class>
 		<class>lector.share.model.GroupApp</class>
 		<class>lector.share.model.UserApp</class>
@@ -39,15 +39,23 @@
 		<class>com.service.ListOfSchema</class>
 		<class>com.service.UserAppSimp</class>
 		 -->
-		<exclude-unlisted-classes>false</exclude-unlisted-classes>
+		
 		<properties>
-    	<property name="eclipselink.target-server" value="SunAS9"/>
+    <!-- 	<property name="eclipselink.target-server" value="SunAS9"/>
            <property name="eclipselink.target-database" 
                       value="org.eclipse.persistence.platform.database.DerbyPlatform"/>
             <property name="eclipselink.logging.level" value="FINEST"/>
-            <!-- turn off DDL generation after the model is stable -->            
-         <property name="eclipselink.ddl-generation" value="create-tables"/>
-            <property name="eclipselink.ddl-generation.output-mode" value="database"/> 
+           turn off DDL generation after the model is stable             
+            <property name="eclipselink.ddl-generation" value="create-tables"/>
+            <property name="eclipselink.ddl-generation.output-mode" value="database"/>  -->
+            <property name="eclipselink.jdbc.password" value="15148785"/>
+			<property name="eclipselink.jdbc.user" value="root"/>
+			<property name="eclipselink.jdbc.driver" value="com.mysql.jdbc.Driver"/>
+			<property name="eclipselink.jdbc.url" value="jdbc:mysql://localhost:3306/atnote"/>
+            <property name="eclipselink.logging.level" value="FINEST"/>
+            <property name="eclipselink.ddl-generation" value="create-tables" />
+      		<property name="eclipselink.ddl-generation.output-mode" value="database" />
+            
         </properties>
     </persistence-unit>
 </persistence>

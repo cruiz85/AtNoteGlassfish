@@ -51,11 +51,12 @@ public interface GWTService extends RemoteService {
 
 	/**
 	 * 
+	 * @throws GeneralException 
 	 * @gwt.typeArgs bookId <java.lang.String>
 	 * @gwt.typeArgs <org.yournamehere.client.Annotation>
 	 */
 
-	UserApp login(String requestUri) throws UserNotFoundException;
+	UserApp login(String requestUri) throws UserNotFoundException, GeneralException;
 
 	// Usuarios
 
