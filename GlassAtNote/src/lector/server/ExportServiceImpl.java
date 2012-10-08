@@ -1,28 +1,20 @@
 package lector.server;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 import javax.annotation.Resource;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
-import javax.persistence.EntityTransaction;
 import javax.persistence.Persistence;
 import javax.transaction.UserTransaction;
 
 import lector.client.book.reader.ExportService;
-import lector.client.controler.Constants;
-import lector.share.model.Annotation;
 import lector.share.model.ExportObject;
 import lector.share.model.GeneralException;
-import lector.share.model.Professor;
-import lector.share.model.ProfessorNotFoundException;
 import lector.share.model.Template;
 import lector.share.model.TemplateCategory;
 import lector.share.model.TemplateNotFoundException;
-import lector.share.model.UserApp;
-import lector.share.model.UserNotFoundException;
 
 import com.google.gwt.user.server.rpc.RemoteServiceServlet;
 
