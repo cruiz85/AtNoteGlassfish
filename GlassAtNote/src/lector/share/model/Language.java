@@ -37,7 +37,7 @@ public class Language implements Serializable {
 	private String ShowDensity = "Show Density";
 
 	// Specifications
-	private String ID = "ID";
+	private String IDSpf = "ID";
 	private String Authors = "Authors";
 	private String Pages = "Pages";
 	private String Publication_Year = "Publication Year";
@@ -85,7 +85,6 @@ public class Language implements Serializable {
 	private String E_Empty_Or_2Less_Tag = "Error : Tags must be more than 2 letters long";
 	private String E_Tag_Dont_Exist = "Error : Tag does not exist";
 	private String E_loading = "Error Loading";
-	private String E_saving = "Error Saving";
 	private String E_deleting = "Error Deleting";
 	private String E_ExistBefore = "Error: This type was added Before";
 	private String E_typeFilter = "Error: Filter found problems when retrieving types";
@@ -253,12 +252,12 @@ public class Language implements Serializable {
 	}
 
 	// TODO Specifications
-	public String getID() {
-		return ID;
+	public String getIDSpf() {
+		return IDSpf;
 	}
 
-	public void setID(String iD) {
-		ID = iD;
+	public void setID(String iDSpf) {
+		IDSpf = iDSpf;
 	}
 
 	public String getAuthors() {
@@ -605,13 +604,6 @@ public class Language implements Serializable {
 		E_loading = e_loading;
 	}
 
-	public String getE_saving() {
-		return E_saving;
-	}
-
-	public void setE_saving(String e_saving) {
-		E_saving = e_saving;
-	}
 
 	public String getE_deleting() {
 		return E_deleting;

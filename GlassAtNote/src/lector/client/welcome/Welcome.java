@@ -205,7 +205,10 @@ public class Welcome implements EntryPoint {
 				new AsyncCallback<UserApp>() {
 
 					public void onFailure(Throwable error) {
-						Window.Location.reload();
+//						Window.Location.reload()
+						Logger.GetLogger().severe(this.getClass().getName(), getClass().getName() + " Login Error" );
+						throw new Error(getClass().getName() + " Login Error");
+						
 					}
 
 					public void onSuccess(UserApp result) {
