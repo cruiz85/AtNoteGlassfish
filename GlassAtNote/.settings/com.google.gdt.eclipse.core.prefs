@@ -1,5 +1,5 @@
 eclipse.preferences.version=1
 jarsExcludedFromWebInfLib=C\:/Documents and Settings/usuario/Mis documentos/Beca/CAnootator20111026 whitout Root User/gwt-dnd-3.1.1.jar
-launchConfigExternalUrlPrefix=
+launchConfigExternalUrlPrefix=http\://localhost\:8080/GlassAtNote/
 warSrcDir=WebContent
 warSrcDirIsOutput=true

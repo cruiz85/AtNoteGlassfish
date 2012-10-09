@@ -1,2 +1,0 @@
-serviceClass: lector.client.book.reader.ExportService
-path: EEDD3F9802B805153BE161AF18019331.gwt.rpc

@@ -1,0 +1,2 @@
+serviceClass: lector.client.book.reader.ImageService
+path: D98679AA0C4E0EED327BF6285605022C.gwt.rpc

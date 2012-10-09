@@ -1,2 +1,0 @@
-serviceClass: lector.client.book.reader.GWTService
-path: B87F5DC7531B711AE37B1A6C0C92CA16.gwt.rpc

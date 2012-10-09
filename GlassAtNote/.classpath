@@ -22,6 +22,7 @@
 	<classpathentry kind="lib" path="libs/gwt-incubator-20101117-r1766.jar"/>
 	<classpathentry kind="lib" path="libs/resin.jar"/>
 	<classpathentry kind="lib" path="libs/persistence-api-1.0.jar"/>
+	<classpathentry kind="lib" path="libs/appengine-api-1.0-sdk-1.6.1.1.jar"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
 	<classpathentry kind="con" path="org.eclipse.jst.j2ee.internal.module.container"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/EclipseLink 2.4.0 - Juno">
