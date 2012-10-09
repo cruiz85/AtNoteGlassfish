@@ -48,7 +48,7 @@
            turn off DDL generation after the model is stable             
             <property name="eclipselink.ddl-generation" value="create-tables"/>
             <property name="eclipselink.ddl-generation.output-mode" value="database"/>  -->
-            <property name="eclipselink.jdbc.password" value="15148785"/>
+            <property name="eclipselink.jdbc.password" value="root"/>
 			<property name="eclipselink.jdbc.user" value="root"/>
 			<property name="eclipselink.jdbc.driver" value="com.mysql.jdbc.Driver"/>
 			<property name="eclipselink.jdbc.url" value="jdbc:mysql://localhost:3306/atnote"/>

@@ -5,6 +5,8 @@ package lector.client.login;
 import lector.client.book.reader.GWTService;
 import lector.client.book.reader.GWTServiceAsync;
 import lector.client.controler.Constants;
+import lector.share.model.Professor;
+import lector.share.model.UserApp;
 
 import com.google.gwt.core.client.EntryPoint;
 import com.google.gwt.core.client.GWT;
@@ -17,12 +19,11 @@ public class Generador_Basico implements EntryPoint {
 	.create(GWTService.class);
 	
 	public void onModuleLoad() {
-//		UserApp adminUser = new UserApp();
+//		Professor adminUser = new Professor();
 //		adminUser.setEmail("root@gmail.com");
-//		adminUser.setProfile(Constants.PROFESSOR);
-//		bookReaderServiceHolder.saveUser(adminUser, new AsyncCallback<Boolean>() {
+//		bookReaderServiceHolder.saveUser(adminUser, new AsyncCallback<Void>() {
 //
-//			public void onSuccess(Boolean result) {
+//			public void onSuccess(Void result) {
 //
 //			}
 //
