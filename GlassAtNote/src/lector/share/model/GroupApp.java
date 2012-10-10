@@ -25,7 +25,7 @@ public class GroupApp implements Serializable, IsSerializable {
 	private Long id;
 	private String name;
 	@ManyToOne
-	Professor professor;
+	private Professor professor;
 	@ManyToMany(cascade = CascadeType.ALL)
 	@JoinTable(name = "group_user", joinColumns = { @JoinColumn(name = "groupId", referencedColumnName = "id") }, inverseJoinColumns = { @JoinColumn(name = "userId", referencedColumnName = "id") })
 	private List<Student> participatingStudents = new ArrayList<Student>();

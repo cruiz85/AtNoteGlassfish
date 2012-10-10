@@ -13,7 +13,6 @@ import lector.share.model.Book;
 
 @Entity
 @Table(name = "professor")
-@XmlRootElement
 public class Professor extends UserApp implements Serializable {
 	private static final long serialVersionUID = 1L;
 

@@ -1,10 +1,19 @@
 package lector.server;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.StringTokenizer;
 
 import javax.persistence.EntityTransaction;
 import javax.transaction.SystemException;
 import javax.transaction.UserTransaction;
+
+import lector.share.model.Annotation;
+import lector.share.model.Book;
+import lector.share.model.GroupApp;
+import lector.share.model.Professor;
+import lector.share.model.ReadingActivity;
+import lector.share.model.Template;
 
 import org.apache.logging.log4j.Logger;
 
@@ -42,6 +51,34 @@ public class ServiceManagerUtils {
 			t += st.nextElement();
 		}
 		return t;
+	}
+	
+	public static void cleanProfessor(Professor professor){
+		List<Annotation> annotations = new ArrayList<Annotation>();
+		for (Annotation annotation : professor.getAnnotations()) {
+			annotations.add(annotation);
+		}
+		professor.setAnnotations(annotations);
+		List<Book> books = new ArrayList<Book>();
+		for (Book book : professor.getBooks()) {
+			books.add(book);
+		}
+		professor.setBooks(books);
+		List<ReadingActivity> readingActivitys = new ArrayList<ReadingActivity>();
+		for (ReadingActivity readingActivity : professor.getReadingActivities()) {
+			readingActivitys.add(readingActivity);
+		}
+		professor.setReadingActivities(readingActivitys);
+		List<GroupApp> groupApps = new ArrayList<GroupApp>();
+		for (GroupApp groupApp : professor.getGroups()) {
+			groupApps.add(groupApp);
+		}
+		professor.setGroups(groupApps);
+		List<Template> templates = new ArrayList<Template>();
+		for (Template template : professor.getTemplates()) {
+			templates.add(template);
+		}
+		professor.setTemplates(templates);
 	}
 
 }

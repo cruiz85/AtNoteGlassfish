@@ -11,6 +11,7 @@ import lector.client.logger.Logger;
 import lector.client.login.ActualUser;
 import lector.client.reader.About;
 import lector.share.model.LocalBook;
+import lector.share.model.Professor;
 import lector.share.model.Student;
 import lector.share.model.UserApp;
 
@@ -212,7 +213,9 @@ public class Welcome implements EntryPoint {
 					}
 
 					public void onSuccess(UserApp result) {
-
+                        Professor professor = (Professor) result;
+                        professor.getAnnotations();
+                        Window.alert("Paso!");
 						ActualUser.setUser(result);
 						btnNewButton = new Button("Log In");
 						horizontalPanel.add(btnNewButton);

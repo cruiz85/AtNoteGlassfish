@@ -61,6 +61,7 @@ import lector.share.model.GroupApp;
 import lector.share.model.Language;
 import lector.share.model.ReadingActivity;
 import lector.share.model.TagNotFoundException;
+import lector.share.model.Template;
 import lector.share.model.TextSelector;
 import lector.share.model.UserApp;
 import lector.share.model.UserNotFoundException;
@@ -114,7 +115,7 @@ public class GWTServiceImpl extends RemoteServiceServlet implements GWTService {
 		UserApp userApp = new UserApp();
 
 		try {
-			
+
 			userApp = loadUserByEmail("root@root");
 
 		} catch (GeneralException ge) {
@@ -131,13 +132,15 @@ public class GWTServiceImpl extends RemoteServiceServlet implements GWTService {
 		if (!flag) {
 			return loadUserByEmail("root@root");
 		}
+		ServiceManagerUtils.cleanProfessor((Professor) userApp);
+
 		return userApp;
 	}
 
 	@Override
 	public void saveUser(UserApp user) throws GeneralException {
 		EntityManager entityManager = emf.createEntityManager();
-		
+
 		try {
 			userTransaction.begin();
 			if (user.getId() == null) {
@@ -149,8 +152,8 @@ public class GWTServiceImpl extends RemoteServiceServlet implements GWTService {
 			userTransaction.commit();
 		} catch (Exception e) {
 			ServiceManagerUtils.rollback(userTransaction); // TODO utilizar
-																// método de
-																// logger
+															// método de
+															// logger
 		}
 		if (entityManager.isOpen()) {
 			entityManager.close();
@@ -273,7 +276,7 @@ public class GWTServiceImpl extends RemoteServiceServlet implements GWTService {
 	@Override
 	public void deleteStudentById(Long studentId) throws GeneralException {
 		EntityManager entityManager = emf.createEntityManager();
-		
+
 		try {
 			userTransaction.begin();
 			entityManager.createQuery(
@@ -318,7 +321,7 @@ public class GWTServiceImpl extends RemoteServiceServlet implements GWTService {
 	@Override
 	public void deleteProfessorById(Long professorId) throws GeneralException {
 		EntityManager entityManager = emf.createEntityManager();
-		
+
 		try {
 			userTransaction.begin();
 			entityManager.createQuery(
@@ -336,7 +339,7 @@ public class GWTServiceImpl extends RemoteServiceServlet implements GWTService {
 	@Override
 	public void saveGroup(GroupApp group) {
 		EntityManager entityManager = emf.createEntityManager();
-		
+
 		try {
 			userTransaction.begin();
 			if (group.getId() == null) {
@@ -348,8 +351,8 @@ public class GWTServiceImpl extends RemoteServiceServlet implements GWTService {
 			userTransaction.commit();
 		} catch (Exception e) {
 			ServiceManagerUtils.rollback(userTransaction); // TODO utilizar
-																// método de
-																// logger
+															// método de
+															// logger
 		}
 		if (entityManager.isOpen()) {
 			entityManager.close();
@@ -404,7 +407,7 @@ public class GWTServiceImpl extends RemoteServiceServlet implements GWTService {
 	@Override
 	public void deleteGroup(Long groupId) throws GeneralException {
 		EntityManager entityManager = emf.createEntityManager();
-		
+
 		try {
 			userTransaction.begin();
 			entityManager.createQuery(
@@ -462,7 +465,7 @@ public class GWTServiceImpl extends RemoteServiceServlet implements GWTService {
 	@Override
 	public void saveAnnotation(Annotation annotation) {
 		EntityManager entityManager = emf.createEntityManager();
-		
+
 		Date now = new Date();
 		Calendar calendar = Calendar.getInstance();
 		now = calendar.getTime();
@@ -478,8 +481,8 @@ public class GWTServiceImpl extends RemoteServiceServlet implements GWTService {
 			userTransaction.commit();
 		} catch (Exception e) {
 			ServiceManagerUtils.rollback(userTransaction); // TODO utilizar
-																// método de
-																// logger
+															// método de
+															// logger
 		}
 		if (entityManager.isOpen()) {
 			entityManager.close();
@@ -635,7 +638,7 @@ public class GWTServiceImpl extends RemoteServiceServlet implements GWTService {
 	public void deleteAnnotation(Long annotationId) throws GeneralException,
 			AnnotationNotFoundException {
 		EntityManager entityManager = emf.createEntityManager();
-		
+
 		try {
 			userTransaction.begin();
 			entityManager.createQuery(
@@ -653,7 +656,7 @@ public class GWTServiceImpl extends RemoteServiceServlet implements GWTService {
 	@Override
 	public void saveAnnotationThread(AnnotationThread annotationThread) {
 		EntityManager entityManager = emf.createEntityManager();
-		
+
 		Date now = new Date();
 		Calendar calendar = Calendar.getInstance();
 		now = calendar.getTime();
@@ -669,8 +672,8 @@ public class GWTServiceImpl extends RemoteServiceServlet implements GWTService {
 			userTransaction.commit();
 		} catch (Exception e) {
 			ServiceManagerUtils.rollback(userTransaction); // TODO utilizar
-																// método de
-																// logger
+															// método de
+															// logger
 		}
 		if (entityManager.isOpen()) {
 			entityManager.close();
@@ -682,7 +685,7 @@ public class GWTServiceImpl extends RemoteServiceServlet implements GWTService {
 	public void deleteAnnotationThread(Long annotationThreadId)
 			throws GeneralException {
 		EntityManager entityManager = emf.createEntityManager();
-		
+
 		try {
 			userTransaction.begin();
 			entityManager.createQuery(
@@ -1190,7 +1193,7 @@ public class GWTServiceImpl extends RemoteServiceServlet implements GWTService {
 	public void deleteReadingActivity(Long readingActivityId)
 			throws GeneralException {
 		EntityManager entityManager = emf.createEntityManager();
-		
+
 		try {
 			userTransaction.begin();
 			entityManager.createQuery(
@@ -1252,7 +1255,7 @@ public class GWTServiceImpl extends RemoteServiceServlet implements GWTService {
 	public void saveReadingActivity(ReadingActivity readingActivity)
 			throws GeneralException {
 		EntityManager entityManager = emf.createEntityManager();
-		
+
 		try {
 			userTransaction.begin();
 			if (readingActivity.getId() == null) {
@@ -1264,8 +1267,8 @@ public class GWTServiceImpl extends RemoteServiceServlet implements GWTService {
 			userTransaction.commit();
 		} catch (Exception e) {
 			ServiceManagerUtils.rollback(userTransaction); // TODO utilizar
-																// método de
-																// logger
+															// método de
+															// logger
 		}
 		if (entityManager.isOpen()) {
 			entityManager.close();
@@ -1282,7 +1285,7 @@ public class GWTServiceImpl extends RemoteServiceServlet implements GWTService {
 	@Override
 	public void saveLanguage(Language language) throws GeneralException {
 		EntityManager entityManager = emf.createEntityManager();
-		
+
 		try {
 			userTransaction.begin();
 			if (language.getId() == null) {
@@ -1294,8 +1297,8 @@ public class GWTServiceImpl extends RemoteServiceServlet implements GWTService {
 			userTransaction.commit();
 		} catch (Exception e) {
 			ServiceManagerUtils.rollback(userTransaction); // TODO utilizar
-																// método de
-																// logger
+															// método de
+															// logger
 		}
 		if (entityManager.isOpen()) {
 			entityManager.close();
@@ -1306,7 +1309,7 @@ public class GWTServiceImpl extends RemoteServiceServlet implements GWTService {
 	@Override
 	public void deleteLanguage(Long languageId) throws GeneralException {
 		EntityManager entityManager = emf.createEntityManager();
-		
+
 		try {
 			userTransaction.begin();
 			entityManager.createQuery(
@@ -1419,8 +1422,7 @@ public class GWTServiceImpl extends RemoteServiceServlet implements GWTService {
 	@Override
 	public void deleteBook(String bookId, Long userId) throws GeneralException {
 		EntityManager entityManager = emf.createEntityManager();
-		
-		
+
 		try {
 			userTransaction.begin();
 			entityManager.createQuery(
