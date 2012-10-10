@@ -18,7 +18,7 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "group")
+@Table(name = "group_app")
 public class GroupApp implements Serializable, IsSerializable {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)

@@ -213,7 +213,7 @@ public class GWTServiceImpl extends RemoteServiceServlet implements GWTService {
 		if (entityManager.isOpen()) {
 			entityManager.close();
 		}
-
+	//	ServiceManagerUtils.cleanProfessor((Professor) list.get(0));
 		return list.get(0);
 	}
 
