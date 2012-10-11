@@ -27,6 +27,7 @@ import javax.persistence.Persistence;
 import javax.persistence.PersistenceContext;
 import javax.transaction.UserTransaction;
 
+import lector.client.book.reader.ExportService;
 import lector.client.book.reader.GWTService;
 
 import lector.client.controler.Constants;
@@ -62,6 +63,8 @@ import lector.share.model.Language;
 import lector.share.model.ReadingActivity;
 import lector.share.model.TagNotFoundException;
 import lector.share.model.Template;
+import lector.share.model.TemplateCategory;
+import lector.share.model.TemplateNotFoundException;
 import lector.share.model.TextSelector;
 import lector.share.model.UserApp;
 import lector.share.model.UserNotFoundException;
@@ -78,6 +81,8 @@ public class GWTServiceImpl extends RemoteServiceServlet implements GWTService {
 			.createEntityManagerFactory(PERSISTENCE_UNIT_NAME);
 	@Resource
 	UserTransaction userTransaction;
+
+	private ExportService exportService = new ExportServiceImpl();
 
 	// @Override
 	// public UserApp login(String requestUri) throws UserNotFoundException {
@@ -132,9 +137,32 @@ public class GWTServiceImpl extends RemoteServiceServlet implements GWTService {
 		if (!flag) {
 			return loadUserByEmail("root@root");
 		}
-		ServiceManagerUtils.cleanProfessor((Professor) userApp);
 
 		return userApp;
+	}
+
+	private Template provisionalTesting(Professor professor) {
+		List<TemplateCategory> templateCategories = new ArrayList<TemplateCategory>();
+		Template template = new Template("Plantilla", (short) 1, professor);
+		TemplateCategory templateCategory = new TemplateCategory("Categoria1",
+				null, template);
+		TemplateCategory subCategory1 = new TemplateCategory("subCategoria1",
+				templateCategory, template);
+		List<TemplateCategory> subCategories = new ArrayList<TemplateCategory>();
+		subCategories.add(subCategory1);
+		templateCategory.setSubCategories(subCategories);
+		templateCategories.add(templateCategory);
+		template.setCategories(templateCategories);
+		try {
+			Long id = exportService.saveTemplate(template);
+			return exportService.loadTemplateById(id);
+		} catch (GeneralException e) {
+
+			e.printStackTrace();
+		} catch (TemplateNotFoundException tnfe) {
+			tnfe.printStackTrace();
+		}
+		return null;
 	}
 
 	@Override
@@ -186,6 +214,7 @@ public class GWTServiceImpl extends RemoteServiceServlet implements GWTService {
 			entityManager.close();
 		}
 
+		ServiceManagerUtils.cleanUser(list.get(0));
 		return list.get(0);
 	}
 
@@ -213,7 +242,7 @@ public class GWTServiceImpl extends RemoteServiceServlet implements GWTService {
 		if (entityManager.isOpen()) {
 			entityManager.close();
 		}
-	//	ServiceManagerUtils.cleanProfessor((Professor) list.get(0));
+		ServiceManagerUtils.cleanUser(list.get(0));
 		return list.get(0);
 	}
 
@@ -241,7 +270,7 @@ public class GWTServiceImpl extends RemoteServiceServlet implements GWTService {
 		if (entityManager.isOpen()) {
 			entityManager.close();
 		}
-
+		ServiceManagerUtils.cleanGroup(list.get(0));
 		return list.get(0).getParticipatingStudents();
 	}
 
@@ -384,7 +413,7 @@ public class GWTServiceImpl extends RemoteServiceServlet implements GWTService {
 		if (entityManager.isOpen()) {
 			entityManager.close();
 		}
-
+		ServiceManagerUtils.cleanGroup(list.get(0));
 		return list.get(0);
 	}
 

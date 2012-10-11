@@ -31,7 +31,7 @@ public class ExportServiceImpl extends RemoteServiceServlet implements
 	UserTransaction userTransaction;
 
 	@Override
-	public void saveTemplate(Template template) throws GeneralException {
+	public Long saveTemplate(Template template) throws GeneralException {
 		EntityManager entityManager = emf.createEntityManager();
 
 		try {
@@ -51,7 +51,7 @@ public class ExportServiceImpl extends RemoteServiceServlet implements
 		if (entityManager.isOpen()) {
 			entityManager.close();
 		}
-
+		return template.getId();
 	}
 
 	@Override
@@ -78,7 +78,7 @@ public class ExportServiceImpl extends RemoteServiceServlet implements
 		if (entityManager.isOpen()) {
 			entityManager.close();
 		}
-
+		ServiceManagerUtils.cleanTemplate(list.get(0));
 		return list.get(0);
 	}
 

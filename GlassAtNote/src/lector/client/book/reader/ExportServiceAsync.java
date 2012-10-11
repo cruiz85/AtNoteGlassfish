@@ -11,7 +11,7 @@ import com.google.gwt.user.client.rpc.AsyncCallback;
 
 public interface ExportServiceAsync {
 
-	void saveTemplate(Template template, AsyncCallback<Void> callback);
+	void saveTemplate(Template template, AsyncCallback<Long> callback);
 
 	void saveTemplateCategory(TemplateCategory templateCategory,
 			AsyncCallback<Void> callback);

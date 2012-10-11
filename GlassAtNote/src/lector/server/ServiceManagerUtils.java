@@ -10,10 +10,14 @@ import javax.transaction.UserTransaction;
 
 import lector.share.model.Annotation;
 import lector.share.model.Book;
+import lector.share.model.GoogleBook;
 import lector.share.model.GroupApp;
 import lector.share.model.Professor;
 import lector.share.model.ReadingActivity;
+import lector.share.model.Student;
 import lector.share.model.Template;
+import lector.share.model.TemplateCategory;
+import lector.share.model.UserApp;
 
 import org.apache.logging.log4j.Logger;
 
@@ -43,7 +47,7 @@ public class ServiceManagerUtils {
 		}
 
 	}
-	
+
 	public static String removeSpaces(String s) {
 		StringTokenizer st = new StringTokenizer(s, " ", false);
 		String t = "";
@@ -52,8 +56,66 @@ public class ServiceManagerUtils {
 		}
 		return t;
 	}
-	
-	public static void cleanProfessor(Professor professor){
+
+	public static void cleanTemplate(Template template) {
+		List<TemplateCategory> templateCategories = new ArrayList<TemplateCategory>();
+		for (TemplateCategory templateCategory : template.getCategories()) {
+			templateCategories.add(templateCategory);
+		}
+		template.setCategories(templateCategories);
+	}
+
+	public static void cleanBook(Book book) {
+		if (book instanceof GoogleBook) {
+			cleanGoogleBook((GoogleBook) book);
+		}
+
+	}
+
+	private static void cleanGoogleBook(GoogleBook googleBook) {
+		List<Annotation> annotations = new ArrayList<Annotation>();
+		for (Annotation annotation : googleBook.getAnnotations()) {
+			annotations.add(annotation);
+		}
+		googleBook.setAnnotations(annotations);
+		List<String> webLinks = new ArrayList<String>();
+		for (String googleBookApp : googleBook.getWebLinks()) {
+			webLinks.add(googleBookApp);
+		}
+		googleBook.setWebLinks(webLinks);
+	}
+
+	public static void cleanGroup(GroupApp group) {
+
+		List<Student> participatingStudents = new ArrayList<Student>();
+		for (Student groupApp : group.getParticipatingStudents()) {
+			participatingStudents.add(groupApp);
+		}
+		group.setParticipatingStudents(participatingStudents);
+		List<Student> remainingStudents = new ArrayList<Student>();
+		for (Student groupApp : group.getParticipatingStudents()) {
+			remainingStudents.add(groupApp);
+		}
+		group.setParticipatingStudents(remainingStudents);
+	}
+
+	public static void cleanUser(UserApp user) {
+		if (user instanceof Professor) {
+			cleanProfessor((Professor) user);
+		} else {
+			cleanStudent((Student) user);
+		}
+	}
+
+	private static void cleanStudent(Student student) {
+		List<GroupApp> groupApps = new ArrayList<GroupApp>();
+		for (GroupApp groupApp : student.getParticipatingGroups()) {
+			groupApps.add(groupApp);
+		}
+		student.setParticipatingGroups(groupApps);
+	}
+
+	private static void cleanProfessor(Professor professor) {
 		List<Annotation> annotations = new ArrayList<Annotation>();
 		for (Annotation annotation : professor.getAnnotations()) {
 			annotations.add(annotation);

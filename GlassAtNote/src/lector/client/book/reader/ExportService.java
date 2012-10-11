@@ -26,7 +26,7 @@ public interface ExportService extends RemoteService {
 
 	// Templates
 
-	void saveTemplate(Template template) throws GeneralException;
+	public Long saveTemplate(Template template) throws GeneralException;
 
 	public Template loadTemplateById(Long Id) throws TemplateNotFoundException, GeneralException;
 

@@ -33,7 +33,7 @@ public class Book implements Serializable {
 	// private String imagesPath;
 	// private String url;
 	private int annotationsCount = 0;
-	private ArrayList<Annotation> annotations;
+	private List<Annotation> annotations;
 	private List<String> webLinks = new ArrayList<String>();
 
 	public Book() {
@@ -122,12 +122,12 @@ public class Book implements Serializable {
 		this.webLinks = webLinks;
 	}
 
-	public void setAnnotations(ArrayList<Annotation> annotations) {
+	public void setAnnotations(List<Annotation> annotations) {
 		this.annotations = annotations;
 		this.annotationsCount = this.annotations.size();
 	}
 
-	public ArrayList<Annotation> getAnnotations() {
+	public List<Annotation> getAnnotations() {
 		return annotations;
 	}
 }
