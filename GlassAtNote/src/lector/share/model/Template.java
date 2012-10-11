@@ -40,6 +40,13 @@ public class Template implements Serializable {
 		this.professor = professor;
 	}
 
+	public Template(String name, short modifyable, Professor professor) {
+		super();
+		this.name = name;
+		this.modifyable = modifyable;
+		this.professor = professor;
+	}
+
 	public Professor getProfessor() {
 		return professor;
 	}
