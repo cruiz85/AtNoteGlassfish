@@ -213,9 +213,9 @@ public class Welcome implements EntryPoint {
 					}
 
 					public void onSuccess(UserApp result) {
-                        Professor professor = (Professor) result;
-                        professor.getAnnotations();
-                        Window.alert("Paso!");
+//                        Professor professor = (Professor) result;
+//                        professor.getAnnotations();
+//                        Window.alert("Paso!");
 						ActualUser.setUser(result);
 						btnNewButton = new Button("Log In");
 						horizontalPanel.add(btnNewButton);

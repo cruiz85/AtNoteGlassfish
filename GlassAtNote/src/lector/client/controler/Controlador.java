@@ -1,6 +1,6 @@
 package lector.client.controler;
 
-//import lector.client.admin.Administrador;
+import lector.client.admin.Administrador;
 //import lector.client.admin.activity.NewAdminActivities;
 //import lector.client.admin.admins.NewAdminAdministrator;
 //import lector.client.admin.book.BookAdministration;
@@ -16,7 +16,7 @@ package lector.client.controler;
 //import lector.client.browser.Browser;
 //import lector.client.login.ActualUser;
 //import lector.client.login.Login;
-//import lector.client.login.activitysel.MyActivities;
+import lector.client.login.activitysel.MyActivities;
 //import lector.client.login.activitysel.VisorEntry;
 //import lector.client.login.bookselec.MyBooks;
 //import lector.client.reader.Book;
@@ -39,7 +39,7 @@ public class Controlador implements EntryPoint {
     private static EntryPoint Actual = null;
 //    private static Searcher Search = new Searcher();
 //  //  private static ControladorEntrada controladorEntrada = new ControladorEntrada();
-//    private static Administrador Admin = new Administrador();
+    private static Administrador Admin = new Administrador();
 //    private static EditorTagsAndTypes AdminTagsAndTypes = new EditorTagsAndTypes();
 //    private static Login LoginPage=new Login();
 //    private static BookAdministration bookAdministrador=new BookAdministration();
@@ -51,7 +51,7 @@ public class Controlador implements EntryPoint {
 //    private static NewAdminLangs AdminLenguaje = new NewAdminLangs();
 //    private static NewAdminCatalogs CatalogAdmin= new NewAdminCatalogs();
 //    private static NewAdminActivities Activitys= new NewAdminActivities();
-//    private static MyActivities MyActivities= new MyActivities();
+    private static MyActivities MyActivities= new MyActivities();
 //    private static VisorEntry Visor=new VisorEntry();
 //    private static Browser Browser=new Browser();
 //    private static FilterAdvance FilterAdvance=new FilterAdvance();
@@ -85,7 +85,7 @@ public class Controlador implements EntryPoint {
 
 
     
-//    public static void change2Reader() {
+    public static void change2Reader() {
 //        
 //    	clear();
 //        Actual = MEP;
@@ -94,163 +94,163 @@ public class Controlador implements EntryPoint {
 //        
 //        MainEntryPoint.SetBook(book);
 //        MainEntryPoint.getTechnicalSpecs().setBook(book);
-//    }
-//
-//    public static void change2Searcher() {
+    }
+
+    public static void change2Searcher() {
 //        clear();
 //        Actual = Search;
 //        Actual.onModuleLoad();
-//    }
+    }
     
    
 
-//    public static void change2ControladorEntrada() {
+    public static void change2ControladorEntrada() {
 //        clear();
 //        Actual = controladorEntrada;
 //        Actual.onModuleLoad();
-//    }
+    }
 
     public static void change2Administrator() {
-//        clear();
-//        Actual = Admin;
-//        Actual.onModuleLoad();
+        clear();
+        Actual = Admin;
+        Actual.onModuleLoad();
     }
-//    
-//    public static void change2Login() {
+    
+    public static void change2Login() {
 //        clear();
 //        Actual = LoginPage;
 //        Actual.onModuleLoad();
-//    }
-//
-//	public static void change2EditorTagsAndTypes() {
+    }
+
+	public static void change2EditorTagsAndTypes() {
 //		clear();
 //        Actual = AdminTagsAndTypes;
 //        Actual.onModuleLoad();
 //		
-//	}
-//	
-//	public static void change2BookAdminstrator() {
+	}
+	
+	public static void change2BookAdminstrator() {
 //		clear();
 //        Actual = bookAdministrador;
 //        Actual.onModuleLoad();
 //		
-//	}
-//	
-//	public static void change2MyBooks(){
+	}
+	
+	public static void change2MyBooks(){
 //		clear();
 //		Actual = MyBooksUser;
 //		Actual.onModuleLoad();
-//	}
-//	
-//	public static void change2GroupAdministration() {
+	}
+	
+	public static void change2GroupAdministration() {
 //		clear();
 //		Actual = GroupAdmin;
 //		Actual.onModuleLoad();
-//		
-//	}
-//	
-//	public static void change2UserAdministration() {
+		
+	}
+	
+	public static void change2UserAdministration() {
 //		clear();
 //		Actual = UserAdmin;
 //		Actual.onModuleLoad();
-//		
-//	}
-//
-//	public static void change2AdminAdministration() {
+		
+	}
+
+	public static void change2AdminAdministration() {
 //		clear();
 //		Actual = AdminAdmin;
 //		Actual.onModuleLoad();
-//		
-//	}
-//
-//	public static void change2EditorLenguaje() {
+		
+	}
+
+	public static void change2EditorLenguaje() {
 //		clear();
 //		Actual = EditorLenguaje;
 //		Actual.onModuleLoad();
 //		
-//	}
-//	
-//	public static void change2AdminLenguaje() {
+	}
+	
+	public static void change2AdminLenguaje() {
 //		clear();
 //		Actual = AdminLenguaje;
 //		Actual.onModuleLoad();
 //		
-//	}
-//	
-//	public static void change2CatalogAdmin() {
+	}
+	
+	public static void change2CatalogAdmin() {
 //		clear();
 //		Actual = CatalogAdmin;
 //		Actual.onModuleLoad();
 //		
-//	}
-//	
-//	public static void change2ActivityAdmin() {
+	}
+	
+	public static void change2ActivityAdmin() {
 //		clear();
 //		Actual = Activitys;
 //		Actual.onModuleLoad();
 //		
-//	}
-//
+	}
+
 	public static void change2MyActivities() {
-//		clear();
-//		Actual = MyActivities;
-//		Actual.onModuleLoad();
+		clear();
+		Actual = MyActivities;
+		Actual.onModuleLoad();
 		
 	}
-//
-//	public static void change2VisorEntry(String Path) {
+
+	public static void change2VisorEntry(String Path) {
 //		clear();
 //		Actual = Visor;
 //		Visor.setBook(Path);
 //		Actual.onModuleLoad();
 //		
-//	}
-//	
-//	public static void change2Browser() {
+	}
+	
+	public static void change2Browser() {
 //		clear();
 //		Actual = Browser;
 //		Actual.onModuleLoad();
 //		
-//	}
-//	
-//	public static void change2FilterAdvance() {
+	}
+	
+	public static void change2FilterAdvance() {
 //		clear();
 //		Actual = FilterAdvance;
 //		Actual.onModuleLoad();
 //		
-//	}
-//
-//	public static void change2UserEdition() {
+	}
+
+	public static void change2UserEdition() {
 //		clear();
 //		Actual = UserEdition;
 //		Actual.onModuleLoad();
-//	}
-//
-//	public static void change2LoadABook() {
+	}
+
+	public static void change2LoadABook() {
 //		clear();
 //		Actual = BooKLoader;
 //		Actual.onModuleLoad();
 //		
-//	}
-//	
-//	public static void change2AdminTemplate() {
+	}
+	
+	public static void change2AdminTemplate() {
 //		clear();
 //		Actual = AdminTemplate;
 //		Actual.onModuleLoad();
 //		
-//	}
-//
-//	public static void change2ExportResult() {
+	}
+
+	public static void change2ExportResult() {
 //		clear();
 //		Actual = ExportResultado;
 //		Actual.onModuleLoad();
 //		
-//	}
-//
-//	public static void change2EditTemplate() {
+	}
+
+	public static void change2EditTemplate() {
 //		clear();
 //		Actual = EditTemplateE;
 //		Actual.onModuleLoad();
-//		
-//	}
+		
+	}
 }

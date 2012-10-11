@@ -129,4 +129,11 @@ public class UserApp implements Serializable, IsSerializable {
 		return "name:" + firstName + " lastName:" + lastName;
 	}
 
+	public String getFirstName() {
+		return firstName;
+	}
+	
+	public void setFirstName(String firstName) {
+		this.firstName = firstName;
+	}
 }
