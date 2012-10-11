@@ -290,8 +290,9 @@ public class FinderKeys extends Finder {
 			IdPathActual = null;
 		else*/
 			IdPathActual = elementKeyllamada.getEntidad().getID();
-		bookReaderServiceHolder.getSons(IdPathActual, C
-				.getId(), callback1);
+//TODO
+//		bookReaderServiceHolder.getSons(IdPathActual, C
+//				.getId(), callback1);
 		
 	}
 

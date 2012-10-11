@@ -234,8 +234,11 @@ public class Finder extends Composite {
 			IdPathActual = null;
 		else*/
 			IdPathActual = ActualRama.getEntidad().getID();
-		bookReaderServiceHolder.getSons(IdPathActual, C
-				.getId(), callback1);
+		
+		
+			//TODO
+//		bookReaderServiceHolder.getSons(IdPathActual, C
+//				.getId(), callback1);
 		
 	}
 

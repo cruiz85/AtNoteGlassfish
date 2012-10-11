@@ -12,7 +12,6 @@ import lector.client.controler.Controlador;
 import lector.client.login.ActualUser;
 import lector.client.login.bookselec.ButtonActivityReader;
 import lector.client.reader.LoadingPanel;
-import lector.client.reader.MainEntryPoint;
 import lector.share.model.Book;
 import lector.share.model.Catalogo;
 import lector.share.model.Language;
@@ -170,346 +169,346 @@ public class MyActivities implements EntryPoint {
 
 		UserApp User = ActualUser.getUser();
 		if (ActualUser.getUser() instanceof Professor) {
-			bookReaderServiceHolder.getReadingActivityByProfessorId(
-					User.getId(),
-					new AsyncCallback<ArrayList<ReadingActivity>>()
-
-					{
-
-						public void onSuccess(ArrayList<ReadingActivity> result) {
-							BooksIDs = result;
-							setealibros();
-
-						}
-
-						public void onFailure(Throwable caught) {
-							Window.alert("The Activities could not be retrived, try again later");
-
-						}
-					});
+//			bookReaderServiceHolder.getReadingActivityByProfessorId(
+//					User.getId(),
+//					new AsyncCallback<ArrayList<ReadingActivity>>()
+//
+//					{
+//
+//						public void onSuccess(ArrayList<ReadingActivity> result) {
+//							BooksIDs = result;
+//							setealibros();
+//
+//						}
+//
+//						public void onFailure(Throwable caught) {
+//							Window.alert("The Activities could not be retrived, try again later");
+//
+//						}
+//					});
 
 		} else if (User instanceof Student) {
 
-			bookReaderServiceHolder.getReadingActivityByUserId(User.getId(),
-					new AsyncCallback<ArrayList<ReadingActivity>>()
-
-					{
-
-						public void onSuccess(ArrayList<ReadingActivity> result) {
-							BooksIDs = result;
-							setealibros();
-
-						}
-
-						public void onFailure(Throwable caught) {
-							Window.alert("The Activities could not be retrived, try again later");
-
-						}
-					});
+//			bookReaderServiceHolder.getReadingActivityByUserId(User.getId(),
+//					new AsyncCallback<ArrayList<ReadingActivity>>()
+//
+//					{
+//
+//						public void onSuccess(ArrayList<ReadingActivity> result) {
+//							BooksIDs = result;
+//							setealibros();
+//
+//						}
+//
+//						public void onFailure(Throwable caught) {
+//							Window.alert("The Activities could not be retrived, try again later");
+//
+//						}
+//					});
 
 		}
 	}
 
-	private void setealibros() {
-		for (int i = 0; i < BooksIDs.size()-1; i++) {
-
-			ButtonActivityReader button = new ButtonActivityReader(BooksIDs.get(i));
-			button.setSize("100%", "100%");
-			if (!buttonexist(button)) {
-				if (CheckCompleta(button))
-				{
-				verticalPanel.add(button);
-				button.setStyleName("gwt-ButtonTOP");
-				button.addMouseDownHandler(new MouseDownHandler() {
-					public void onMouseDown(MouseDownEvent event) {
-						((Button)event.getSource()).setStyleName("gwt-ButtonPush");
-					}
-				});
-				button.addMouseOutHandler(new MouseOutHandler() {
-					public void onMouseOut(MouseOutEvent event) {
-						((Button)event.getSource()).setStyleName("gwt-ButtonTOP");
-					}
-				});
-				button.addMouseOverHandler(new MouseOverHandler() {
-					public void onMouseOver(MouseOverEvent event) {
-						((Button)event.getSource()).setStyleName("gwt-ButtonTOPOver");
-					}
-				});
-				}else
-				{
-					if (ActualUser.getUser() instanceof Professor)	
-					{
-						verticalPanel.add(button);
-						button.setEnabled(false);
-						button.setTitle("Inclomplete Activity Data");
-						button.setStyleName("gwt-ButtonGris");
-						button.addMouseDownHandler(new MouseDownHandler() {
-							public void onMouseDown(MouseDownEvent event) {
-								((Button)event.getSource()).setStyleName("gwt-ButtonGrisPush");
-							}
-						});
-						button.addMouseOutHandler(new MouseOutHandler() {
-							public void onMouseOut(MouseOutEvent event) {
-								((Button)event.getSource()).setStyleName("gwt-ButtonGris");
-							}
-						});
-						button.addMouseOverHandler(new MouseOverHandler() {
-							public void onMouseOver(MouseOverEvent event) {
-								((Button)event.getSource()).setStyleName("gwt-ButtonGrisOver");
-							}
-						});
-					}
-				}
-	
-				
-				button.addClickHandler(new ClickHandler() {
-					private AsyncCallback<Book> callback;
-					private AsyncCallback<LocalBook> callback2;
-
-					public void onClick(ClickEvent event) {
-
-						LoadingPanel.getInstance().center();
-						LoadingPanel.getInstance().setLabelTexto("Loading...");
-						callback = new AsyncCallback<Book>() {
-
-							public void onFailure(Throwable caught) {
-								if (retryCounter<3)
-								{
-								retryCounter++;
-								//TODO Error a lenguaje
-								Window.alert("Try Again " + retryCounter);
-								bookReaderServiceHolder.loadFullBookInGoogle(RAtemp,
-										callback);
-								
-								}else
-								{
-								Window.alert("Failed to load the book, this may be unavailable or the connection is too slow.");
-								LoadingPanel.getInstance().hide();
-//								throw new UnsupportedOperationException(
-//										"Not supported yet.");
-								}
-							}
-
-							public void onSuccess(Book result) {
-								ActualUser.setReadingactivity(RA);
-								ActualUser.setBook(result);
-								ArrayList<Long> L=new ArrayList<Long>();
-								L.add(new Long(Long.MIN_VALUE));
-								MainEntryPoint.setFiltroTypes(L);
-								
-								loadCatalog();
-								LoadingPanel.getInstance().hide();
-
-								// MainEntryPoint.SetBook(result);
-								// labelTester.setText(result.getAuthor());
-								// MainEntryPoint.getTechnicalSpecs().setBook(result);
-
-							}
-
-
-						};
-						
-						
-						callback2=new AsyncCallback<LocalBook>() {
-							
-							public void onSuccess(LocalBook B) {
-								ActualUser.setReadingactivity(RA);
-								ActualUser.setBook(B);
-								ArrayList<Long> L=new ArrayList<Long>();
-								L.add(new Long(Long.MIN_VALUE));
-								MainEntryPoint.setFiltroTypes(L);
-								loadCatalog();
-								LoadingPanel.getInstance().hide();
-								
-							}
-							
-							public void onFailure(Throwable caught) {
-								if (retryCounter<3)
-								{
-								retryCounter++;
-								//TODO Error a lenguaje
-								Window.alert("Try Again " + retryCounter);
-								userImageService.loadBookBlobById(Long.parseLong(RAtemp), callback2);
-								
-								}else
-								{
-								Window.alert("Failed to load the book, this may be unavailable or the connection is too slow.");
-								LoadingPanel.getInstance().hide();
-//								throw new UnsupportedOperationException(
-//										"Not supported yet.");
-								}
-								
-							}
-						};
-						ButtonActivityReader B = (ButtonActivityReader) event.getSource();
-						String[] SS = B.getRA().getBookId().split(Constants.BREAKER);
-						RA=B.getRA();
-						retryCounter=0;
-						RAtemp=SS[1];
-						 if (!RAtemp.startsWith(" ##"))
-							 bookReaderServiceHolder.loadFullBookInGoogle(SS[1],
-									 callback);
-						 else 
-						 {
-							String[] RAtemp2=RAtemp.split("##");
-							RAtemp=RAtemp2[1];
-							userImageService.loadBookBlobById(Long.parseLong(RAtemp), callback2);
-							
-						 }
-					}
-				});
-			}
-
-		}
-		
-		//Ultimo Botton
-		if (!BooksIDs.isEmpty())
-		{
-			ButtonActivityReader button = new ButtonActivityReader(BooksIDs.get(BooksIDs.size()-1));
-			button.setSize("100%", "100%");
-			if (!buttonexist(button)) {
-				if (CheckCompleta(button))
-				{
-				verticalPanel.add(button);
-				button.setStyleName("gwt-ButtonBotton");
-				button.addMouseOutHandler(new MouseOutHandler() {
-					public void onMouseOut(MouseOutEvent event) {
-						((Button)event.getSource()).setStyleName("gwt-ButtonBotton");
-					}
-				});
-				button.addMouseOverHandler(new MouseOverHandler() {
-					public void onMouseOver(MouseOverEvent event) {
-						((Button)event.getSource()).setStyleName("gwt-ButtonBottonOver");
-					}
-				});
-				button.addMouseDownHandler(new MouseDownHandler() {
-					public void onMouseDown(MouseDownEvent event) {
-						((Button)event.getSource()).setStyleName("gwt-ButtonPushBotton");
-					}
-				});
-				}else
-				{
-					if (ActualUser.getUser().getProfile().equals(Constants.PROFESSOR))	
-					{
-						verticalPanel.add(button);
-						button.setEnabled(false);
-						button.setTitle("Inclomplete Activity Data");
-						button.setStyleName("gwt-ButtonGrisDown");
-						button.addMouseOutHandler(new MouseOutHandler() {
-							public void onMouseOut(MouseOutEvent event) {
-								((Button)event.getSource()).setStyleName("gwt-ButtonGrisDown");
-							}
-						});
-						button.addMouseOverHandler(new MouseOverHandler() {
-							public void onMouseOver(MouseOverEvent event) {
-								((Button)event.getSource()).setStyleName("gwt-ButtonGrisDownOver");
-							}
-						});
-						button.addMouseDownHandler(new MouseDownHandler() {
-							public void onMouseDown(MouseDownEvent event) {
-								((Button)event.getSource()).setStyleName("gwt-ButtonGrisDownPush");
-							}
-						});
-					}
-				}
-				
-				
-				button.addClickHandler(new ClickHandler() {
-					private AsyncCallback<Book> callback;
-					private AsyncCallback<LocalBook> callback2;
-
-					public void onClick(ClickEvent event) {
-
-						LoadingPanel.getInstance().center();
-						LoadingPanel.getInstance().setLabelTexto("Loading...");
-						callback = new AsyncCallback<Book>() {
-
-							public void onFailure(Throwable caught) {
-								if (retryCounter<3)
-								{
-								retryCounter++;
-								//TODO Error a lenguaje
-								Window.alert("Try Again " + retryCounter);
-								bookReaderServiceHolder.loadFullBookInGoogle(RAtemp,
-										callback);
-								
-								}else
-								{
-								Window.alert("Failed to load the book, this may be unavailable or the connection is too slow.");
-								LoadingPanel.getInstance().hide();
-//								throw new UnsupportedOperationException(
-//										"Not supported yet.");
-								}
-							}
-
-							public void onSuccess(Book result) {
-								ActualUser.setReadingactivity(RA);
-								ActualUser.setBook(result);
-								ArrayList<Long> L=new ArrayList<Long>();
-								L.add(new Long(Long.MIN_VALUE));
-								MainEntryPoint.setFiltroTypes(L);
-								loadCatalog();
-								LoadingPanel.getInstance().hide();
-
-								// MainEntryPoint.SetBook(result);
-								// labelTester.setText(result.getAuthor());
-								// MainEntryPoint.getTechnicalSpecs().setBook(result);
-
-							}
-
-
-						};
-						callback2=new AsyncCallback<LocalBook>() {
-							
-							public void onSuccess(LocalBook B) {
-								ActualUser.setReadingactivity(RA);
-								ActualUser.setBook(B);
-								ArrayList<Long> L=new ArrayList<Long>();
-								L.add(new Long(Long.MIN_VALUE));
-								MainEntryPoint.setFiltroTypes(L);
-								loadCatalog();
-								LoadingPanel.getInstance().hide();
-								
-							}
-							
-							public void onFailure(Throwable caught) {
-								if (retryCounter<3)
-								{
-								retryCounter++;
-								//TODO Error a lenguaje
-								Window.alert("Try Again " + retryCounter);
-								userImageService.loadBookBlobById(Long.parseLong(RAtemp), callback2);
-								
-								}else
-								{
-								Window.alert("Failed to load the book, this may be unavailable or the connection is too slow.");
-								LoadingPanel.getInstance().hide();
-//								throw new UnsupportedOperationException(
-//										"Not supported yet.");
-								}
-								
-							}
-						};
-						ButtonActivityReader B = (ButtonActivityReader) event.getSource();
-						String[] SS = B.getRA().getBookId().split(Constants.BREAKER);
-						RA=B.getRA();
-						retryCounter=0;
-						RAtemp=SS[SS.length-1];
-						 if (!RAtemp.startsWith(" ##"))
-							 bookReaderServiceHolder.loadFullBookInGoogle(SS[1],
-									 callback);
-						 else 
-						 {
-							String[] RAtemp2=RAtemp.split("##");
-							RAtemp=RAtemp2[1];
-							userImageService.loadBookBlobById(Long.parseLong(RAtemp), callback2);
-							
-						 }
-					}
-				});
-			}
-		}
-	}
+//	private void setealibros() {
+//		for (int i = 0; i < BooksIDs.size()-1; i++) {
+//
+//			ButtonActivityReader button = new ButtonActivityReader(BooksIDs.get(i));
+//			button.setSize("100%", "100%");
+//			if (!buttonexist(button)) {
+//				if (CheckCompleta(button))
+//				{
+//				verticalPanel.add(button);
+//				button.setStyleName("gwt-ButtonTOP");
+//				button.addMouseDownHandler(new MouseDownHandler() {
+//					public void onMouseDown(MouseDownEvent event) {
+//						((Button)event.getSource()).setStyleName("gwt-ButtonPush");
+//					}
+//				});
+//				button.addMouseOutHandler(new MouseOutHandler() {
+//					public void onMouseOut(MouseOutEvent event) {
+//						((Button)event.getSource()).setStyleName("gwt-ButtonTOP");
+//					}
+//				});
+//				button.addMouseOverHandler(new MouseOverHandler() {
+//					public void onMouseOver(MouseOverEvent event) {
+//						((Button)event.getSource()).setStyleName("gwt-ButtonTOPOver");
+//					}
+//				});
+//				}else
+//				{
+//					if (ActualUser.getUser() instanceof Professor)	
+//					{
+//						verticalPanel.add(button);
+//						button.setEnabled(false);
+//						button.setTitle("Inclomplete Activity Data");
+//						button.setStyleName("gwt-ButtonGris");
+//						button.addMouseDownHandler(new MouseDownHandler() {
+//							public void onMouseDown(MouseDownEvent event) {
+//								((Button)event.getSource()).setStyleName("gwt-ButtonGrisPush");
+//							}
+//						});
+//						button.addMouseOutHandler(new MouseOutHandler() {
+//							public void onMouseOut(MouseOutEvent event) {
+//								((Button)event.getSource()).setStyleName("gwt-ButtonGris");
+//							}
+//						});
+//						button.addMouseOverHandler(new MouseOverHandler() {
+//							public void onMouseOver(MouseOverEvent event) {
+//								((Button)event.getSource()).setStyleName("gwt-ButtonGrisOver");
+//							}
+//						});
+//					}
+//				}
+//	
+//				
+//				button.addClickHandler(new ClickHandler() {
+//					private AsyncCallback<Book> callback;
+//					private AsyncCallback<LocalBook> callback2;
+//
+//					public void onClick(ClickEvent event) {
+//
+//						LoadingPanel.getInstance().center();
+//						LoadingPanel.getInstance().setLabelTexto("Loading...");
+//						callback = new AsyncCallback<Book>() {
+//
+//							public void onFailure(Throwable caught) {
+//								if (retryCounter<3)
+//								{
+//								retryCounter++;
+//								//TODO Error a lenguaje
+//								Window.alert("Try Again " + retryCounter);
+//								bookReaderServiceHolder.loadFullBookInGoogle(RAtemp,
+//										callback);
+//								
+//								}else
+//								{
+//								Window.alert("Failed to load the book, this may be unavailable or the connection is too slow.");
+//								LoadingPanel.getInstance().hide();
+////								throw new UnsupportedOperationException(
+////										"Not supported yet.");
+//								}
+//							}
+//
+//							public void onSuccess(Book result) {
+//								ActualUser.setReadingactivity(RA);
+//								ActualUser.setBook(result);
+//								ArrayList<Long> L=new ArrayList<Long>();
+//								L.add(new Long(Long.MIN_VALUE));
+//								MainEntryPoint.setFiltroTypes(L);
+//								
+//								loadCatalog();
+//								LoadingPanel.getInstance().hide();
+//
+//								// MainEntryPoint.SetBook(result);
+//								// labelTester.setText(result.getAuthor());
+//								// MainEntryPoint.getTechnicalSpecs().setBook(result);
+//
+//							}
+//
+//
+//						};
+//						
+//						
+//						callback2=new AsyncCallback<LocalBook>() {
+//							
+//							public void onSuccess(LocalBook B) {
+//								ActualUser.setReadingactivity(RA);
+//								ActualUser.setBook(B);
+//								ArrayList<Long> L=new ArrayList<Long>();
+//								L.add(new Long(Long.MIN_VALUE));
+//								MainEntryPoint.setFiltroTypes(L);
+//								loadCatalog();
+//								LoadingPanel.getInstance().hide();
+//								
+//							}
+//							
+//							public void onFailure(Throwable caught) {
+//								if (retryCounter<3)
+//								{
+//								retryCounter++;
+//								//TODO Error a lenguaje
+//								Window.alert("Try Again " + retryCounter);
+//								userImageService.loadBookBlobById(Long.parseLong(RAtemp), callback2);
+//								
+//								}else
+//								{
+//								Window.alert("Failed to load the book, this may be unavailable or the connection is too slow.");
+//								LoadingPanel.getInstance().hide();
+////								throw new UnsupportedOperationException(
+////										"Not supported yet.");
+//								}
+//								
+//							}
+//						};
+//						ButtonActivityReader B = (ButtonActivityReader) event.getSource();
+//						String[] SS = B.getRA().getBookId().split(Constants.BREAKER);
+//						RA=B.getRA();
+//						retryCounter=0;
+//						RAtemp=SS[1];
+//						 if (!RAtemp.startsWith(" ##"))
+//							 bookReaderServiceHolder.loadFullBookInGoogle(SS[1],
+//									 callback);
+//						 else 
+//						 {
+//							String[] RAtemp2=RAtemp.split("##");
+//							RAtemp=RAtemp2[1];
+//							userImageService.loadBookBlobById(Long.parseLong(RAtemp), callback2);
+//							
+//						 }
+//					}
+//				});
+//			}
+//
+//		}
+//		
+//		//Ultimo Botton
+//		if (!BooksIDs.isEmpty())
+//		{
+//			ButtonActivityReader button = new ButtonActivityReader(BooksIDs.get(BooksIDs.size()-1));
+//			button.setSize("100%", "100%");
+//			if (!buttonexist(button)) {
+//				if (CheckCompleta(button))
+//				{
+//				verticalPanel.add(button);
+//				button.setStyleName("gwt-ButtonBotton");
+//				button.addMouseOutHandler(new MouseOutHandler() {
+//					public void onMouseOut(MouseOutEvent event) {
+//						((Button)event.getSource()).setStyleName("gwt-ButtonBotton");
+//					}
+//				});
+//				button.addMouseOverHandler(new MouseOverHandler() {
+//					public void onMouseOver(MouseOverEvent event) {
+//						((Button)event.getSource()).setStyleName("gwt-ButtonBottonOver");
+//					}
+//				});
+//				button.addMouseDownHandler(new MouseDownHandler() {
+//					public void onMouseDown(MouseDownEvent event) {
+//						((Button)event.getSource()).setStyleName("gwt-ButtonPushBotton");
+//					}
+//				});
+//				}else
+//				{
+//					if (ActualUser.getUser().getProfile().equals(Constants.PROFESSOR))	
+//					{
+//						verticalPanel.add(button);
+//						button.setEnabled(false);
+//						button.setTitle("Inclomplete Activity Data");
+//						button.setStyleName("gwt-ButtonGrisDown");
+//						button.addMouseOutHandler(new MouseOutHandler() {
+//							public void onMouseOut(MouseOutEvent event) {
+//								((Button)event.getSource()).setStyleName("gwt-ButtonGrisDown");
+//							}
+//						});
+//						button.addMouseOverHandler(new MouseOverHandler() {
+//							public void onMouseOver(MouseOverEvent event) {
+//								((Button)event.getSource()).setStyleName("gwt-ButtonGrisDownOver");
+//							}
+//						});
+//						button.addMouseDownHandler(new MouseDownHandler() {
+//							public void onMouseDown(MouseDownEvent event) {
+//								((Button)event.getSource()).setStyleName("gwt-ButtonGrisDownPush");
+//							}
+//						});
+//					}
+//				}
+//				
+//				
+//				button.addClickHandler(new ClickHandler() {
+//					private AsyncCallback<Book> callback;
+//					private AsyncCallback<LocalBook> callback2;
+//
+//					public void onClick(ClickEvent event) {
+//
+//						LoadingPanel.getInstance().center();
+//						LoadingPanel.getInstance().setLabelTexto("Loading...");
+//						callback = new AsyncCallback<Book>() {
+//
+//							public void onFailure(Throwable caught) {
+//								if (retryCounter<3)
+//								{
+//								retryCounter++;
+//								//TODO Error a lenguaje
+//								Window.alert("Try Again " + retryCounter);
+//								bookReaderServiceHolder.loadFullBookInGoogle(RAtemp,
+//										callback);
+//								
+//								}else
+//								{
+//								Window.alert("Failed to load the book, this may be unavailable or the connection is too slow.");
+//								LoadingPanel.getInstance().hide();
+////								throw new UnsupportedOperationException(
+////										"Not supported yet.");
+//								}
+//							}
+//
+//							public void onSuccess(Book result) {
+//								ActualUser.setReadingactivity(RA);
+//								ActualUser.setBook(result);
+//								ArrayList<Long> L=new ArrayList<Long>();
+//								L.add(new Long(Long.MIN_VALUE));
+//								MainEntryPoint.setFiltroTypes(L);
+//								loadCatalog();
+//								LoadingPanel.getInstance().hide();
+//
+//								// MainEntryPoint.SetBook(result);
+//								// labelTester.setText(result.getAuthor());
+//								// MainEntryPoint.getTechnicalSpecs().setBook(result);
+//
+//							}
+//
+//
+//						};
+//						callback2=new AsyncCallback<LocalBook>() {
+//							
+//							public void onSuccess(LocalBook B) {
+//								ActualUser.setReadingactivity(RA);
+//								ActualUser.setBook(B);
+//								ArrayList<Long> L=new ArrayList<Long>();
+//								L.add(new Long(Long.MIN_VALUE));
+//								MainEntryPoint.setFiltroTypes(L);
+//								loadCatalog();
+//								LoadingPanel.getInstance().hide();
+//								
+//							}
+//							
+//							public void onFailure(Throwable caught) {
+//								if (retryCounter<3)
+//								{
+//								retryCounter++;
+//								//TODO Error a lenguaje
+//								Window.alert("Try Again " + retryCounter);
+//								userImageService.loadBookBlobById(Long.parseLong(RAtemp), callback2);
+//								
+//								}else
+//								{
+//								Window.alert("Failed to load the book, this may be unavailable or the connection is too slow.");
+//								LoadingPanel.getInstance().hide();
+////								throw new UnsupportedOperationException(
+////										"Not supported yet.");
+//								}
+//								
+//							}
+//						};
+//						ButtonActivityReader B = (ButtonActivityReader) event.getSource();
+//						String[] SS = B.getRA().getBookId().split(Constants.BREAKER);
+//						RA=B.getRA();
+//						retryCounter=0;
+//						RAtemp=SS[SS.length-1];
+//						 if (!RAtemp.startsWith(" ##"))
+//							 bookReaderServiceHolder.loadFullBookInGoogle(SS[1],
+//									 callback);
+//						 else 
+//						 {
+//							String[] RAtemp2=RAtemp.split("##");
+//							RAtemp=RAtemp2[1];
+//							userImageService.loadBookBlobById(Long.parseLong(RAtemp), callback2);
+//							
+//						 }
+//					}
+//				});
+//			}
+//		}
+//	}
 
 	private boolean CheckCompleta(ButtonActivityReader button) {
 		ReadingActivity RA=button.getRA();
