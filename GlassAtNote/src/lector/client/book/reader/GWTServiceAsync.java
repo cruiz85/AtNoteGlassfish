@@ -22,6 +22,20 @@ import lector.share.model.GroupApp;
 import lector.share.model.Language;
 import lector.share.model.ReadingActivity;
 import lector.share.model.UserApp;
+import lector.share.model.client.AnnotationClient;
+import lector.share.model.client.AnnotationThreadClient;
+import lector.share.model.client.BookClient;
+import lector.share.model.client.CatalogoClient;
+import lector.share.model.client.EntryClient;
+import lector.share.model.client.GoogleBookClient;
+import lector.share.model.client.GroupClient;
+import lector.share.model.client.LanguageClient;
+import lector.share.model.client.ProfessorClient;
+import lector.share.model.client.ReadingActivityClient;
+import lector.share.model.client.StudentClient;
+import lector.share.model.client.TypeCategoryClient;
+import lector.share.model.client.TypeClient;
+import lector.share.model.client.UserClient;
 
 /**
  * 
@@ -29,13 +43,9 @@ import lector.share.model.UserApp;
  */
 public interface GWTServiceAsync {
 
-	void getBooks(String query, int start,
-			AsyncCallback<List<GoogleBook>> asyncCallback);
+	
 
 	void deleteAnnotation(Long annotationId, AsyncCallback<Void> asyncCallback);
-
-	public void loadFullBookInGoogle(String query,
-			AsyncCallback<GoogleBook> asyncCallback);
 
 	void saveAnnotation(Annotation annotation, AsyncCallback<Void> asyncCallback);
 
@@ -45,23 +55,11 @@ public interface GWTServiceAsync {
 
 	void saveUser(UserApp user, AsyncCallback<Void> asyncCallback);
 
-	public void loadUserById(Long userId, AsyncCallback<UserApp> asyncCallback);
-
-	public void loadGroupById(Long groupId,
-			AsyncCallback<GroupApp> asyncCallback);
 
 	public void saveGroup(GroupApp groupApp, AsyncCallback<Void> asyncCallback);
 
 	void deleteGroup(Long groupId, AsyncCallback<Void> asyncCallback);
 
-	void getGroupsByUserId(Long userId,
-			AsyncCallback<List<GroupApp>> asyncCallback);
-
-	void loginAuxiliar(String userEmail, AsyncCallback<UserApp> callback);
-
-	void loadUserByEmail(String email, AsyncCallback<UserApp> callback);
-
-	void getCatalogs(AsyncCallback<Void> asyncCallback);
 
 	void deleteCatalog(Long catalogId, AsyncCallback<Void> callback);
 
@@ -72,37 +70,13 @@ public interface GWTServiceAsync {
 
 	void deleteLanguage(Long languageId, AsyncCallback<Void> callback);
 
-	void getLanguagesNames(AsyncCallback<List<String>> callback);
-
-	void getLanguages(AsyncCallback<List<Language>> callback);
 
 	void saveReadingActivity(ReadingActivity readingActivity,
 			AsyncCallback<Void> callback);
 
-	void loadCatalogById(Long catalogId, AsyncCallback<Catalogo> callback);
-
-	void getVisbibleCatalogsByProfessorId(Long professorId,
-			AsyncCallback<List<Catalogo>> callback);
-
-	void getAnnotationsByPageNumber(Integer pageNumber, String bookId,
-			Long readingActivityId, AsyncCallback<List<Annotation>> callback);
-
-	void loadReadingActivityById(Long id,
-			AsyncCallback<ReadingActivity> callback);
 
 	void getEntriesIdsByNames(ArrayList<String> names, Long catalogTeacher,
 			Long catalogOpen, AsyncCallback<List<Long>> callback);
-
-	void getAnnotationsByIds(List<Long> ids,
-			AsyncCallback<List<Annotation>> callback);
-
-	void getAnnotationsByIdsAndAuthorsTeacher(List<Long> ids,
-			List<Long> authorIds, Long Activity,
-			AsyncCallback<List<Annotation>> callback);
-
-	void getAnnotationsByIdsAndAuthorsStudent(List<Long> ids,
-			List<Long> authorIds, Long Activity, Long Student,
-			AsyncCallback<List<Annotation>> callback);
 
 	void fusionFolder(Long fFromId, Long fToId, AsyncCallback<Void> callback);
 
@@ -112,9 +86,7 @@ public interface GWTServiceAsync {
 	void deleteAnnotationThread(Long annotationThreadId,
 			AsyncCallback<Void> callback);
 
-	void getAnnotationThreadsByItsFather(Long threadFatherId,
-			AsyncCallback<List<AnnotationThread>> callback);
-
+	
 	void getJSONServiceTODrawGraph(String url, String body,
 			AsyncCallback<String> callback);
 
@@ -125,36 +97,10 @@ public interface GWTServiceAsync {
 
 	void updateReadingActivities(AsyncCallback<Void> callback);
 
-	void getStudentsByGroupId(Long groupId,
-			AsyncCallback<List<Student>> callback);
-
-	void getStudents(AsyncCallback<List<Student>> callback);
-
-	void deleteStudentById(Long studentId, AsyncCallback<Void> callback);
-
-	void getProfessors(AsyncCallback<List<Professor>> callback);
-
 	void deleteProfessorById(Long professorId, AsyncCallback<Void> callback);
-
-	void getAnnotationsByPageNumbertAndUserId(Integer pageNumber,
-			String bookId, Long studentId, Long readingActivityId,
-			AsyncCallback<List<Annotation>> callback);
-
-	void getAnnotationsByTeacherIds(List<Long> ids, Long readingActivityId,
-			AsyncCallback<List<Annotation>> callback);
-
-	void getAnnotationsByStudentIds(List<Long> ids, Long Student,
-			Long readingActivityId, AsyncCallback<List<Annotation>> callback);
-
-	void loadBookById(Long id, AsyncCallback<Book> callback);
 
 	void getEntriesByIdsRecursiveIfFolder(ArrayList<Long> Ids,
 			AsyncCallback<List<Entry>> callback);
-
-	void loadTagById(Long typeId, AsyncCallback<Tag> callback);
-
-	void loadTagByNameAndCatalogId(String typeName, Long catalogId,
-			AsyncCallback<Tag> callback);
 
 	void saveTag(Tag typesys, Long typeCategoryId, AsyncCallback<Void> callback);
 
@@ -169,11 +115,6 @@ public interface GWTServiceAsync {
 	void moveTag(Long typeCategoryFromId, Long typeId, Long typeCategoryToId,
 			AsyncCallback<Void> callback);
 
-	void getTagsByNameAndCatalogId(ArrayList<String> typeNames, Long catalogId,
-			AsyncCallback<List<Tag>> callback);
-
-	void getTagsByIds(ArrayList<Long> typeIds, AsyncCallback<List<Tag>> callback);
-
 	void getTagNamesByIds(ArrayList<Long> typeIds,
 			AsyncCallback<List<String>> callback);
 
@@ -182,13 +123,8 @@ public interface GWTServiceAsync {
 	void addTagToFolderDB(Long typeIds, Long fatherFolderDBId,
 			AsyncCallback<Void> callback);
 
-	void loadFolderDBById(Long typeCategoryId, AsyncCallback<FolderDB> callback);
-
 	void deleteFolderDB(Long typeCategoryId, Long fatherFolderDBId,
 			AsyncCallback<Void> callback);
-
-	void getSonsFromFolderDB(Long typeCategoryId,
-			AsyncCallback<List<Entry>> callback);
 
 	void renameFolderDB(Long typeCategoryId, String newFolderDBName,
 			AsyncCallback<Void> callback);
@@ -199,13 +135,8 @@ public interface GWTServiceAsync {
 	void moveFolderDB(Long typeCategoryId, Long typeCategoryFromId,
 			Long typeCategoryToId, AsyncCallback<Void> callback);
 
-	void loadFolderDBByNameAndCatalogId(String FolderDBName, Long catalogId,
-			AsyncCallback<FolderDB> callback);
-
 	void removeReadingActivityAnnotations(Long readingActivity,
 			AsyncCallback<Integer> callback);
-
-	void loadLanguageById(Long languageId, AsyncCallback<Language> callback);
 
 	void addStudentToBeValidated(Long userId, Long groupId,
 			AsyncCallback<Void> callback);
@@ -213,15 +144,111 @@ public interface GWTServiceAsync {
 	void validStudentToBeInGroup(Long userId, Long groupId,
 			AsyncCallback<Void> callback);
 
+	void loadUserById(Long userId, AsyncCallback<UserClient> callback);
+
+	void loadUserByEmail(String email, AsyncCallback<UserClient> callback);
+
+	void deleteStudentById(Long studentId, AsyncCallback<Void> callback);
+
 	void getAnnotationsByBookId(Long activityId, String bookId,
-			AsyncCallback<List<Annotation>> callback);
+			AsyncCallback<List<AnnotationClient>> callback);
 
-	void getGoogleBooks(String query, AsyncCallback<List<GoogleBook>> callback);
+	void getAnnotationsByIds(List<Long> ids,
+			AsyncCallback<List<AnnotationClient>> callback);
 
-	void getReadingActivitiesByProfessorId(Long professorId,
-			AsyncCallback<List<ReadingActivity>> callback);
+	void getAnnotationsByIdsAndAuthorsStudent(List<Long> ids,
+			List<Long> authorIds, Long Activity, Long Student,
+			AsyncCallback<List<AnnotationClient>> callback);
+
+	void getStudentsByGroupId(Long groupId,
+			AsyncCallback<List<StudentClient>> callback);
+
+	void getStudents(AsyncCallback<List<StudentClient>> callback);
+
+	void getProfessors(AsyncCallback<List<ProfessorClient>> callback);
+
+	void loadGroupById(Long groupId, AsyncCallback<GroupClient> callback);
+
+	void getGroupsByUserId(Long userId,
+			AsyncCallback<List<GroupClient>> callback);
+
+	void getAnnotationsByPageNumbertAndUserId(Integer pageNumber,
+			String bookId, Long studentId, Long readingActivityId,
+			AsyncCallback<List<AnnotationClient>> callback);
+
+	void getAnnotationsByIdsAndAuthorsTeacher(List<Long> ids,
+			List<Long> authorIds, Long Activity,
+			AsyncCallback<List<AnnotationClient>> callback);
+
+	void getAnnotationsByTeacherIds(List<Long> ids, Long readingActivityId,
+			AsyncCallback<List<AnnotationClient>> callback);
+
+	void getAnnotationsByPageNumber(Integer pageNumber, String bookId,
+			Long readingActivityId,
+			AsyncCallback<List<AnnotationClient>> callback);
+
+	void getAnnotationsByStudentIds(List<Long> ids, Long Student,
+			Long readingActivityId,
+			AsyncCallback<List<AnnotationClient>> callback);
+
+	void getAnnotationThreadsByItsFather(Long threadFatherId,
+			AsyncCallback<List<AnnotationThreadClient>> callback);
+
+	void loadBookById(Long id, AsyncCallback<BookClient> callback);
+
+	void loadFullBookInGoogle(String query,
+			AsyncCallback<GoogleBookClient> callback);
+
+	void getGoogleBooks(String query,
+			AsyncCallback<List<GoogleBookClient>> callback);
+
+	void getBooks(String query, int start,
+			AsyncCallback<List<GoogleBookClient>> callback);
+
+	void loadCatalogById(Long catalogId, AsyncCallback<CatalogoClient> callback);
+
+	void getCatalogs(AsyncCallback<List<CatalogoClient>> callback);
+
+	void getVisbibleCatalogsByProfessorId(Long professorId,
+			AsyncCallback<List<CatalogoClient>> callback);
+
+	void loadTagById(Long typeId, AsyncCallback<TypeClient> callback);
+
+	void loadTagByNameAndCatalogId(String typeName, Long catalogId,
+			AsyncCallback<TypeClient> callback);
+
+	void getTagsByNameAndCatalogId(ArrayList<String> typeNames, Long catalogId,
+			AsyncCallback<List<TypeClient>> callback);
+
+	void getTagsByIds(ArrayList<Long> typeIds,
+			AsyncCallback<List<TypeClient>> callback);
+
+	void loadFolderDBById(Long typeCategoryId,
+			AsyncCallback<TypeCategoryClient> callback);
+
+	void loadFolderDBByNameAndCatalogId(String FolderDBName, Long catalogId,
+			AsyncCallback<TypeCategoryClient> callback);
+
+	void getSonsFromFolderDB(Long typeCategoryId,
+			AsyncCallback<List<EntryClient>> callback);
+
+	void loadReadingActivityById(Long readingActivityId,
+			AsyncCallback<ReadingActivityClient> callback);
 
 	void getReadingActivitiesByStudentId(Long studentId,
-			AsyncCallback<List<ReadingActivity>> callback);
+			AsyncCallback<List<ReadingActivityClient>> callback);
 
+	void getReadingActivitiesByProfessorId(Long professorId,
+			AsyncCallback<List<ReadingActivityClient>> callback);
+
+	void getLanguagesNames(AsyncCallback<List<String>> callback);
+
+	void getLanguages(AsyncCallback<List<LanguageClient>> callback);
+
+	void loadLanguageById(Long languageId,
+			AsyncCallback<LanguageClient> callback);
+
+	void loginAuxiliar(String userEmail, AsyncCallback<UserClient> callback);
+
+	
 }

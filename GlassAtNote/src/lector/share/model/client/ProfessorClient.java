@@ -18,6 +18,19 @@ public class ProfessorClient extends UserClient{
 	public ProfessorClient() {
 	}
 
+	
+	public ProfessorClient(Long id, String firstName, String lastName,
+			String email, boolean loggedIn, String loginUrl, String logoutUrl,
+			boolean isAuthenticated, List<Long> readingActivities, List<Long> books, List<Long> templates, List<Long> groups) {
+		super(id, firstName, lastName, email, loggedIn, loginUrl, logoutUrl,
+				isAuthenticated);
+		this.readingActivities = readingActivities;
+		this.books = books;
+		this.templates = templates;
+		this.groups = groups;
+	}
+
+
 	public ProfessorClient(String email) {
 		super(email);
 	}

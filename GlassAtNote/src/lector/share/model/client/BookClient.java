@@ -21,13 +21,14 @@ public class BookClient{
 	}
 
 	public BookClient(Long professor, String author, String ISBN,
-			String pagesCount, String publishedYear, String title) {
+			String pagesCount, String publishedYear, String title, List<String> webLinks) {
 		this.professor = professor;
 		this.author = author;
 		this.ISBN = ISBN;
 		this.pagesCount = pagesCount;
 		this.publishedYear = publishedYear;
 		this.title = title;
+		this.webLinks = webLinks;
 
 	}
 

@@ -108,14 +108,6 @@ public class UserApp implements Serializable, IsSerializable {
 		this.lastName = lastName;
 	}
 
-	public boolean isIsAuthenticated() {
-		return isAuthenticated;
-	}
-
-	public void setIsAuthenticated(boolean isAuthenticated) {
-		this.isAuthenticated = isAuthenticated;
-	}
-
 	public List<Annotation> getAnnotations() {
 		return annotations;
 	}
@@ -136,4 +128,6 @@ public class UserApp implements Serializable, IsSerializable {
 	public void setFirstName(String firstName) {
 		this.firstName = firstName;
 	}
+	
+	
 }

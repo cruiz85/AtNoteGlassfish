@@ -1,5 +1,7 @@
 package lector.share.model.client;
 
+import java.util.List;
+
 public class GoogleBookClient extends RemoteBookClient{
 
 	private String tbURL;
@@ -11,13 +13,14 @@ public class GoogleBookClient extends RemoteBookClient{
 	}
 
 	public GoogleBookClient(String author, String ISBN, String pagesCount,
-			String publishedYear, String title, String tbURL, String unscapedURL) {
+			String publishedYear, String title, String tbURL, String unscapedURL, List<String> webLinks) {
 		this();
 		super.setAuthor(author);
 		super.setISBN(ISBN);
 		super.setPagesCount(pagesCount);
 		super.setPublishedYear(publishedYear);
 		super.setTitle(title);
+		super.setWebLinks(webLinks);
 		this.tbURL = tbURL;
 		this.url = unscapedURL;
 	}

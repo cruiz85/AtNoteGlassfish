@@ -19,6 +19,17 @@ public class GroupClient {
 	
 	}
 
+	public GroupClient(Long id, String name, ProfessorClient professor,
+			List<StudentClient> participatingStudents,
+			List<StudentClient> remainingStudents) {
+		super();
+		this.id = id;
+		this.name = name;
+		this.professor = professor;
+		this.participatingStudents = participatingStudents;
+		this.remainingStudents = remainingStudents;
+	}
+
 	public GroupClient(String name) {
 		this();
 		this.name = name;

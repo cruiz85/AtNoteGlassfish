@@ -13,4 +13,10 @@ public class LocalBook extends Book implements Serializable {
 		super();
 	}
 
+	public LocalBook(Professor professor, String author, String ISBN,
+			String pagesCount, String publishedYear, String title) {
+		super(professor, author, ISBN, pagesCount, publishedYear, title);
+		// TODO Auto-generated constructor stub
+	}
+
 }

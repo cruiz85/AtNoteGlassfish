@@ -1,5 +1,7 @@
 package lector.share.model.client;
 
+import lector.share.model.Language;
+
 public class ReadingActivityClient{
 
 	private Long id;
@@ -7,7 +9,7 @@ public class ReadingActivityClient{
 
 	ProfessorClient professor;
 
-	private LanguageClient language;
+	private Language language;
 	private BookClient book;
 	
 	private GroupClient group;
@@ -22,7 +24,7 @@ public class ReadingActivityClient{
 	public ReadingActivityClient() {
 	}
 
-	public ReadingActivityClient(String name, ProfessorClient professor, LanguageClient language,
+	public ReadingActivityClient(String name, ProfessorClient professor, Language language,
 			BookClient book, GroupClient group, CatalogoClient closeCatalogo,
 			CatalogoClient openCatalogo, String visualization, TemplateClient template,
 			boolean isFreeTemplateAllowed) {
@@ -64,12 +66,16 @@ public class ReadingActivityClient{
 		this.professor = professor;
 	}
 
-	public LanguageClient getLanguage() {
+	public Language getLanguage() {
 		return language;
 	}
 
-	public void setLanguage(LanguageClient language) {
+	public void setLanguage(Language language) {
 		this.language = language;
+	}
+
+	public void setFreeTemplateAllowed(boolean isFreeTemplateAllowed) {
+		this.isFreeTemplateAllowed = isFreeTemplateAllowed;
 	}
 
 	public BookClient getBook() {

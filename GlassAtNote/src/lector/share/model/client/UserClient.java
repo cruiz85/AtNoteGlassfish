@@ -15,6 +15,20 @@ public class UserClient {
 	public UserClient() {
 	}
 
+	public UserClient(Long id, String firstName, String lastName, String email,
+			boolean loggedIn, String loginUrl, String logoutUrl,
+			boolean isAuthenticated) {
+		super();
+		this.id = id;
+		this.firstName = firstName;
+		this.lastName = lastName;
+		this.email = email;
+		this.loggedIn = loggedIn;
+		this.loginUrl = loginUrl;
+		this.logoutUrl = logoutUrl;
+		this.isAuthenticated = isAuthenticated;
+	}
+
 	public UserClient(String email) {
 		super();
 		this.email = email;
