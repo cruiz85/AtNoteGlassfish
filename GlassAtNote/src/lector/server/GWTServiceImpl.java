@@ -68,6 +68,19 @@ import lector.share.model.TemplateNotFoundException;
 import lector.share.model.TextSelector;
 import lector.share.model.UserApp;
 import lector.share.model.UserNotFoundException;
+import lector.share.model.client.AnnotationClient;
+import lector.share.model.client.AnnotationThreadClient;
+import lector.share.model.client.BookClient;
+import lector.share.model.client.CatalogoClient;
+import lector.share.model.client.EntryClient;
+import lector.share.model.client.GoogleBookClient;
+import lector.share.model.client.GroupClient;
+import lector.share.model.client.ProfessorClient;
+import lector.share.model.client.ReadingActivityClient;
+import lector.share.model.client.StudentClient;
+import lector.share.model.client.TypeCategoryClient;
+import lector.share.model.client.TypeClient;
+import lector.share.model.client.UserClient;
 
 public class GWTServiceImpl extends RemoteServiceServlet implements GWTService {
 
@@ -114,14 +127,14 @@ public class GWTServiceImpl extends RemoteServiceServlet implements GWTService {
 	// }
 
 	@Override
-	public UserApp login(String requestUri) throws UserNotFoundException,
+	public UserClient login(String requestUri) throws UserNotFoundException,
 			GeneralException {
 		boolean flag = true;
 		UserApp userApp = new UserApp();
 
 		try {
 
-			userApp = loadUserByEmail("root@root");
+			userApp = findByEmail("root@root");
 
 		} catch (GeneralException ge) {
 			saveUser(userApp);
@@ -138,31 +151,7 @@ public class GWTServiceImpl extends RemoteServiceServlet implements GWTService {
 			return loadUserByEmail("root@root");
 		}
 
-		return userApp;
-	}
-
-	private Template provisionalTesting(Professor professor) {
-		List<TemplateCategory> templateCategories = new ArrayList<TemplateCategory>();
-		Template template = new Template("Plantilla", (short) 1, professor);
-		TemplateCategory templateCategory = new TemplateCategory("Categoria1",
-				null, template);
-		TemplateCategory subCategory1 = new TemplateCategory("subCategoria1",
-				templateCategory, template);
-		List<TemplateCategory> subCategories = new ArrayList<TemplateCategory>();
-		subCategories.add(subCategory1);
-		templateCategory.setSubCategories(subCategories);
-		templateCategories.add(templateCategory);
-		template.setCategories(templateCategories);
-		try {
-			Long id = exportService.saveTemplate(template);
-			return exportService.loadTemplateById(id);
-		} catch (GeneralException e) {
-
-			e.printStackTrace();
-		} catch (TemplateNotFoundException tnfe) {
-			tnfe.printStackTrace();
-		}
-		return null;
+		return ServiceManagerUtils.produceUserClient(userApp);
 	}
 
 	@Override
@@ -190,7 +179,7 @@ public class GWTServiceImpl extends RemoteServiceServlet implements GWTService {
 	}
 
 	@Override
-	public UserApp loadUserById(Long userId) throws UserNotFoundException,
+	public UserClient loadUserById(Long userId) throws UserNotFoundException,
 			GeneralException {
 		EntityManager entityManager = emf.createEntityManager();
 		List<UserApp> list;
@@ -214,13 +203,12 @@ public class GWTServiceImpl extends RemoteServiceServlet implements GWTService {
 			entityManager.close();
 		}
 
-		ServiceManagerUtils.cleanUser(list.get(0));
-		return list.get(0);
+		return ServiceManagerUtils.produceUserClient(list.get(0));
 	}
 
 	@Override
-	public UserApp loadUserByEmail(String email) throws UserNotFoundException,
-			GeneralException {
+	public UserClient loadUserByEmail(String email)
+			throws UserNotFoundException, GeneralException {
 		EntityManager entityManager = emf.createEntityManager();
 		List<UserApp> list;
 
@@ -242,12 +230,11 @@ public class GWTServiceImpl extends RemoteServiceServlet implements GWTService {
 		if (entityManager.isOpen()) {
 			entityManager.close();
 		}
-		ServiceManagerUtils.cleanUser(list.get(0));
-		return list.get(0);
+		return ServiceManagerUtils.produceUserClient(list.get(0));
 	}
 
 	@Override
-	public List<Student> getStudentsByGroupId(Long groupId)
+	public List<StudentClient> getStudentsByGroupId(Long groupId)
 			throws GroupNotFoundException, GeneralException {
 		EntityManager entityManager = emf.createEntityManager();
 		List<GroupApp> list;
@@ -270,12 +257,13 @@ public class GWTServiceImpl extends RemoteServiceServlet implements GWTService {
 		if (entityManager.isOpen()) {
 			entityManager.close();
 		}
-		ServiceManagerUtils.cleanGroup(list.get(0));
-		return list.get(0).getParticipatingStudents();
+		return ServiceManagerUtils.produceStudentClients(list.get(0)
+				.getParticipatingStudents());
+
 	}
 
 	@Override
-	public List<Student> getStudents() throws GeneralException,
+	public List<StudentClient> getStudents() throws GeneralException,
 			StudentNotFoundException {
 		EntityManager entityManager = emf.createEntityManager();
 		List<Student> list;
@@ -299,7 +287,7 @@ public class GWTServiceImpl extends RemoteServiceServlet implements GWTService {
 			entityManager.close();
 		}
 
-		return list;
+		return ServiceManagerUtils.produceStudentClients(list);
 	}
 
 	@Override
@@ -320,7 +308,7 @@ public class GWTServiceImpl extends RemoteServiceServlet implements GWTService {
 	}
 
 	@Override
-	public List<Professor> getProfessors() throws GeneralException,
+	public List<ProfessorClient> getProfessors() throws GeneralException,
 			ProfessorNotFoundException {
 		EntityManager entityManager = emf.createEntityManager();
 		List<Professor> list;
@@ -344,7 +332,7 @@ public class GWTServiceImpl extends RemoteServiceServlet implements GWTService {
 			entityManager.close();
 		}
 
-		return list;
+		return ServiceManagerUtils.produceProfessorClients(list);
 	}
 
 	@Override
@@ -390,7 +378,7 @@ public class GWTServiceImpl extends RemoteServiceServlet implements GWTService {
 	}
 
 	@Override
-	public GroupApp loadGroupById(Long groupId) throws GeneralException,
+	public GroupClient loadGroupById(Long groupId) throws GeneralException,
 			GroupNotFoundException {
 		EntityManager entityManager = emf.createEntityManager();
 		List<GroupApp> list;
@@ -413,24 +401,114 @@ public class GWTServiceImpl extends RemoteServiceServlet implements GWTService {
 		if (entityManager.isOpen()) {
 			entityManager.close();
 		}
-		ServiceManagerUtils.cleanGroup(list.get(0));
-		return list.get(0);
+		return ServiceManagerUtils.produceGroupClient(list.get(0));
 	}
 
 	@Override
-	public List<GroupApp> getGroupsByUserId(Long userId)
+	public List<GroupClient> getGroupsByUserId(Long userId)
 			throws GeneralException {
 		try {
-			UserApp userApp = loadUserById(userId);
+			UserApp userApp = findUser(userId);
 			if (userApp instanceof Professor) {
-				return ((Professor) userApp).getGroups();
+				return ServiceManagerUtils
+						.produceGroupClients(((Professor) userApp).getGroups());
 			} else {
-				return ((Student) userApp).getParticipatingGroups();
+				return ServiceManagerUtils
+						.produceGroupClients(((Student) userApp)
+								.getParticipatingGroups());
 			}
 		} catch (Exception e) {
 			throw new GeneralException("Exception in method getGroupsByUserId");
 		}
 
+	}
+
+	// TODO LANZAR EXCEPCIÓN
+	private UserApp findUser(Long id) throws UserNotFoundException {
+		EntityManager entityManager = emf.createEntityManager();
+		UserApp a = entityManager.find(UserApp.class, id);
+		if (a == null) {
+			throw new UserNotFoundException(
+					"User not found in method loadUserById");
+		}
+		entityManager.close();
+		return a;
+	}
+
+	
+	public UserApp findByEmail(String email)
+			throws UserNotFoundException, GeneralException {
+		EntityManager entityManager = emf.createEntityManager();
+		List<UserApp> list;
+
+		String sql = "SELECT r FROM UserApp r WHERE r.email='" + email + "'";
+		try {
+			list = entityManager.createQuery(sql).getResultList();
+		} catch (Exception e) {
+			// logger.error ("Exception in method loadUserByEmail: ", e)
+			throw new GeneralException("Exception in method loadUserByEmail:"
+					+ e.getMessage(), e.getStackTrace());
+
+		}
+		if (list == null || list.isEmpty()) {
+			// logger.error ("Exception in method loadUserById: ", e)
+			throw new UserNotFoundException(
+					"User not found in method loadUserByEmail");
+
+		}
+		if (entityManager.isOpen()) {
+			entityManager.close();
+		}
+		return list.get(0);
+	}
+	
+	// TODO LANZAR EXCEPCIÓN
+	private GroupApp findGroup(Long id) throws GroupNotFoundException {
+		EntityManager entityManager = emf.createEntityManager();
+		GroupApp a = entityManager.find(GroupApp.class, id);
+		if (a == null) {
+			throw new GroupNotFoundException(
+					"Group not found in method loadGroupById");
+		}
+		entityManager.close();
+		return a;
+	}
+
+	// TODO LANZAR EXCEPCIÓN
+	private Student findStudent(Long id) throws StudentNotFoundException {
+		EntityManager entityManager = emf.createEntityManager();
+		Student a = entityManager.find(Student.class, id);
+		if (a == null) {
+			throw new StudentNotFoundException(
+					"Student not found in method loadStudentById");
+		}
+		entityManager.close();
+		return a;
+	}
+
+	// TODO LANZAR EXCEPCIÓN
+	private Annotation findAnnotation(Long id)
+			throws AnnotationNotFoundException {
+		EntityManager entityManager = emf.createEntityManager();
+		Annotation a = entityManager.find(Annotation.class, id);
+		if (a == null) {
+			throw new AnnotationNotFoundException(
+					"Annotation not found in method loadAnnotationById");
+		}
+		entityManager.close();
+		return a;
+	}
+
+	// TODO LANZAR EXCEPCIÓN
+	private Professor findProfessor(Long id) throws ProfessorNotFoundException {
+		EntityManager entityManager = emf.createEntityManager();
+		Professor a = entityManager.find(Professor.class, id);
+		if (a == null) {
+			throw new ProfessorNotFoundException(
+					"Professor not found in method loadProfessorById");
+		}
+		entityManager.close();
+		return a;
 	}
 
 	@Override
@@ -454,8 +532,8 @@ public class GWTServiceImpl extends RemoteServiceServlet implements GWTService {
 	public void addStudentToBeValidated(Long userId, Long groupId)
 			throws GeneralException {
 		try {
-			GroupApp group = loadGroupById(groupId);
-			Student student = (Student) loadUserById(userId);
+			GroupApp group = findGroup(groupId);
+			Student student = findStudent(userId);
 			if (!group.getRemainingStudents().contains(student)) {
 				group.getRemainingStudents().add(student);
 			}
@@ -471,8 +549,8 @@ public class GWTServiceImpl extends RemoteServiceServlet implements GWTService {
 	public void validStudentToBeInGroup(Long userId, Long groupId)
 			throws GeneralException {
 		try {
-			Student student = (Student) loadUserById(userId);
-			GroupApp group = loadGroupById(groupId);
+			Student student = findStudent(userId);
+			GroupApp group = findGroup(groupId);
 			if (group.getRemainingStudents().contains(student)) {
 				group.getRemainingStudents().remove(student);
 			} else {
@@ -520,7 +598,7 @@ public class GWTServiceImpl extends RemoteServiceServlet implements GWTService {
 	}
 
 	@Override
-	public List<Annotation> getAnnotationsByBookId(Long activityId,
+	public List<AnnotationClient> getAnnotationsByBookId(Long activityId,
 			String bookId) throws GeneralException, AnnotationNotFoundException {
 		EntityManager entityManager = emf.createEntityManager();
 		List<Annotation> list;
@@ -544,12 +622,13 @@ public class GWTServiceImpl extends RemoteServiceServlet implements GWTService {
 		if (entityManager.isOpen()) {
 			entityManager.close();
 		}
-
-		return list;
+		return ServiceManagerUtils.produceAnnotationClients(list); // método esta
+															// retornando null
+	
 	}
 
 	@Override
-	public List<Annotation> getAnnotationsByPageNumbertAndUserId(
+	public List<AnnotationClient> getAnnotationsByPageNumbertAndUserId(
 			Integer pageNumber, String bookId, Long studentId,
 			Long readingActivityId) throws GeneralException,
 			AnnotationNotFoundException {
@@ -578,11 +657,12 @@ public class GWTServiceImpl extends RemoteServiceServlet implements GWTService {
 			entityManager.close();
 		}
 
-		return list;
+		return ServiceManagerUtils.produceAnnotationClients(list); // método esta
+		// retornando null
 	}
 
 	@Override
-	public List<Annotation> getAnnotationsByPageNumber(Integer pageNumber,
+	public List<AnnotationClient> getAnnotationsByPageNumber(Integer pageNumber,
 			String bookId, Long readingActivityId) throws GeneralException,
 			AnnotationNotFoundException {
 		EntityManager entityManager = emf.createEntityManager();
@@ -609,31 +689,34 @@ public class GWTServiceImpl extends RemoteServiceServlet implements GWTService {
 			entityManager.close();
 		}
 
-		return list;
+		return ServiceManagerUtils.produceAnnotationClients(list); // método esta
+		// retornando null
 	}
 
 	@Override
-	public List<Annotation> getAnnotationsByIds(List<Long> ids) {
+	public List<AnnotationClient> getAnnotationsByIds(List<Long> ids) {
 		List<Annotation> annotations = new ArrayList<Annotation>();
 		for (int i = 0; i < ids.size(); i++) {
-			Annotation annotation = quickFind(ids.get(i));
+			Annotation annotation = quickFind(ids.get(i)); 
 			if (annotation != null) {
 				annotations.add(annotation);
 			}
 
 		}
-		return annotations;
+		return ServiceManagerUtils.produceAnnotationClients(annotations); // método esta
+		// retornando null
 	}
 
 	private Annotation quickFind(Long id) {
 		EntityManager entityManager = emf.createEntityManager();
 		Annotation a = entityManager.find(Annotation.class, id);
+		entityManager.close();
 		return a;
 	}
 
 	// TODO que hace este método.
 	@Override
-	public List<Annotation> getAnnotationsByIdsAndAuthorsTeacher(
+	public List<AnnotationClient> getAnnotationsByIdsAndAuthorsTeacher(
 			List<Long> ids, List<Long> authorIds, Long Activity) {
 		// TODO Auto-generated method stub
 		return null;
@@ -641,7 +724,7 @@ public class GWTServiceImpl extends RemoteServiceServlet implements GWTService {
 
 	// TODO que hace este método.
 	@Override
-	public List<Annotation> getAnnotationsByTeacherIds(List<Long> ids,
+	public List<AnnotationClient> getAnnotationsByTeacherIds(List<Long> ids,
 			Long readingActivityId) {
 		// TODO Auto-generated method stub
 		return null;
@@ -649,7 +732,7 @@ public class GWTServiceImpl extends RemoteServiceServlet implements GWTService {
 
 	// TODO que hace este método.
 	@Override
-	public List<Annotation> getAnnotationsByStudentIds(List<Long> ids,
+	public List<AnnotationClient> getAnnotationsByStudentIds(List<Long> ids,
 			Long Student, Long readingActivityId) {
 		// TODO Auto-generated method stub
 		return null;
@@ -657,7 +740,7 @@ public class GWTServiceImpl extends RemoteServiceServlet implements GWTService {
 
 	// TODO que hace este método.
 	@Override
-	public List<Annotation> getAnnotationsByIdsAndAuthorsStudent(
+	public List<AnnotationClient> getAnnotationsByIdsAndAuthorsStudent(
 			List<Long> ids, List<Long> authorIds, Long Activity, Long Student) {
 		// TODO Auto-generated method stub
 		return null;
@@ -730,7 +813,7 @@ public class GWTServiceImpl extends RemoteServiceServlet implements GWTService {
 	}
 
 	@Override
-	public List<AnnotationThread> getAnnotationThreadsByItsFather(
+	public List<AnnotationThreadClient> getAnnotationThreadsByItsFather(
 			Long threadFatherId) throws GeneralException,
 			AnnotationThreadNotFoundException {
 		EntityManager entityManager = emf.createEntityManager();
@@ -757,11 +840,11 @@ public class GWTServiceImpl extends RemoteServiceServlet implements GWTService {
 			entityManager.close();
 		}
 
-		return list.get(0).getSubThreads();
+		return ServiceManagerUtils.produceAnnotationThreadClients(list.get(0).getSubThreads());
 	}
 
 	@Override
-	public Book loadBookById(Long id) throws BookNotFoundException,
+	public BookClient loadBookById(Long id) throws BookNotFoundException,
 			GeneralException {
 		EntityManager entityManager = emf.createEntityManager();
 		List<Book> list;
@@ -785,17 +868,17 @@ public class GWTServiceImpl extends RemoteServiceServlet implements GWTService {
 			entityManager.close();
 		}
 
-		return list.get(0);
+		return ServiceManagerUtils.produceBookClient(list.get(0));
 	}
 
 	@Override
-	public GoogleBook loadFullBookInGoogle(String query) {
+	public GoogleBookClient loadFullBookInGoogle(String query) {
 		GoogleBook googleBook = getBookInGoogleByISBN(query);
 		String cleanGoogleBookId = googleBook.getUrl().substring(33, 45);
 		googleBook
 				.setWebLinks(getBookImageInGoole(getBookImageStringInGoogle(cleanGoogleBookId)));
 		googleBook.setImagesPath(googleBook.getWebLinks().get(0));
-		return googleBook;
+		return ServiceManagerUtils.produceGoogleBookClient(googleBook);
 	}
 
 	private ArrayList<String> getBookImageInGoole(String imagesWithinHTML) {
@@ -866,6 +949,11 @@ public class GWTServiceImpl extends RemoteServiceServlet implements GWTService {
 	}
 
 	@Override
+	public List<GoogleBookClient> getGoogleBookClients(String query) {
+		return ServiceManagerUtils.produceGoogleBookClients(getGoogleBooks(query));
+	}
+	
+	
 	public List<GoogleBook> getGoogleBooks(String query) {
 		String cleanQuery = ServiceManagerUtils.removeSpaces(query);
 		URL url;
@@ -917,8 +1005,10 @@ public class GWTServiceImpl extends RemoteServiceServlet implements GWTService {
 		return googleBooks;
 	}
 
-	@Override
-	public List<GoogleBook> getBooks(String query, int start) {
+	public List<GoogleBookClient> getBookClients(String query, int start){
+		return ServiceManagerUtils.produceGoogleBookClients(getBooks(query, start));
+	}
+	private List<GoogleBook> getBooks(String query, int start) {
 		String cleanQuery = ServiceManagerUtils.removeSpaces(query);
 		URL url;
 		URLConnection connection;
@@ -978,19 +1068,19 @@ public class GWTServiceImpl extends RemoteServiceServlet implements GWTService {
 	}
 
 	@Override
-	public Catalogo loadCatalogById(Long catalogId) {
+	public CatalogoClient loadCatalogById(Long catalogId) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public void getCatalogs() {
-		// TODO Auto-generated method stub
+	public List<CatalogoClient> getCatalogs() {
+		return null;
 
 	}
 
 	@Override
-	public List<Catalogo> getVisbibleCatalogsByProfessorId(Long professorId) {
+	public List<CatalogoClient> getVisbibleCatalogsByProfessorId(Long professorId) {
 		// TODO Auto-generated method stub
 		return null;
 	}
@@ -1015,7 +1105,7 @@ public class GWTServiceImpl extends RemoteServiceServlet implements GWTService {
 	}
 
 	@Override
-	public Tag loadTagById(Long tagId) throws TagNotFoundException,
+	public TypeClient loadTagById(Long tagId) throws TagNotFoundException,
 			GeneralException {
 		EntityManager entityManager = emf.createEntityManager();
 		List<Tag> list;
@@ -1039,11 +1129,11 @@ public class GWTServiceImpl extends RemoteServiceServlet implements GWTService {
 			entityManager.close();
 		}
 
-		return list.get(0);
+		return ServiceManagerUtils.produceTypeClient(list.get(0));
 	}
 
 	@Override
-	public Tag loadTagByNameAndCatalogId(String tagName, Long catalogId)
+	public TypeClient loadTagByNameAndCatalogId(String tagName, Long catalogId)
 			throws TagNotFoundException, GeneralException {
 		EntityManager entityManager = emf.createEntityManager();
 		List<Tag> list;
@@ -1068,7 +1158,7 @@ public class GWTServiceImpl extends RemoteServiceServlet implements GWTService {
 			entityManager.close();
 		}
 
-		return list.get(0);
+		return ServiceManagerUtils.produceTypeClient(list.get(0));
 	}
 
 	@Override
@@ -1106,14 +1196,14 @@ public class GWTServiceImpl extends RemoteServiceServlet implements GWTService {
 	}
 
 	@Override
-	public List<Tag> getTagsByNameAndCatalogId(ArrayList<String> typeNames,
+	public List<TypeClient> getTagsByNameAndCatalogId(ArrayList<String> typeNames,
 			Long catalogId) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public List<Tag> getTagsByIds(ArrayList<Long> typeIds) {
+	public List<TypeClient> getTagsByIds(ArrayList<Long> typeIds) {
 		// TODO Auto-generated method stub
 		return null;
 	}
@@ -1137,13 +1227,13 @@ public class GWTServiceImpl extends RemoteServiceServlet implements GWTService {
 	}
 
 	@Override
-	public FolderDB loadFolderDBById(Long typeCategoryId) {
+	public TypeCategoryClient loadFolderDBById(Long typeCategoryId) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public FolderDB loadFolderDBByNameAndCatalogId(String FolderDBName,
+	public TypeCategoryClient loadFolderDBByNameAndCatalogId(String FolderDBName,
 			Long catalogId) {
 		// TODO Auto-generated method stub
 		return null;
@@ -1157,7 +1247,7 @@ public class GWTServiceImpl extends RemoteServiceServlet implements GWTService {
 	}
 
 	@Override
-	public List<Entry> getSonsFromFolderDB(Long typeCategoryId) {
+	public List<EntryClient> getSonsFromFolderDB(Long typeCategoryId) {
 		// TODO Auto-generated method stub
 		return null;
 	}
@@ -1189,7 +1279,7 @@ public class GWTServiceImpl extends RemoteServiceServlet implements GWTService {
 	}
 
 	@Override
-	public ReadingActivity loadReadingActivityById(Long readingActivityId)
+	public ReadingActivityClient loadReadingActivityById(Long readingActivityId)
 			throws ReadingActivityNotFoundException, GeneralException {
 		EntityManager entityManager = emf.createEntityManager();
 		List<ReadingActivity> list;
@@ -1215,7 +1305,7 @@ public class GWTServiceImpl extends RemoteServiceServlet implements GWTService {
 			entityManager.close();
 		}
 
-		return list.get(0);
+		return ServiceManagerUtils.produceReadingActivityClient(list.get(0));
 	}
 
 	@Override
@@ -1244,13 +1334,13 @@ public class GWTServiceImpl extends RemoteServiceServlet implements GWTService {
 	}
 
 	@Override
-	public List<ReadingActivity> getReadingActivitiesByStudentId(Long userId) {
+	public List<ReadingActivityClient> getReadingActivitiesByStudentId(Long userId) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public List<ReadingActivity> getReadingActivitiesByProfessorId(
+	public List<ReadingActivityClient> getReadingActivitiesByProfessorId(
 			Long professorId) throws GeneralException,
 			ReadingActivityNotFoundException {
 		EntityManager entityManager = emf.createEntityManager();
@@ -1277,7 +1367,7 @@ public class GWTServiceImpl extends RemoteServiceServlet implements GWTService {
 			entityManager.close();
 		}
 
-		return list;
+		return ServiceManagerUtils.produceReadingActivityClients(list);
 	}
 
 	@Override
@@ -1443,7 +1533,7 @@ public class GWTServiceImpl extends RemoteServiceServlet implements GWTService {
 	}
 
 	@Override
-	public UserApp loginAuxiliar(String userEmail) throws UserNotFoundException {
+	public UserClient loginAuxiliar(String userEmail) throws UserNotFoundException {
 		// TODO Auto-generated method stub
 		return null;
 	}

@@ -29,7 +29,7 @@ import lector.share.model.client.CatalogoClient;
 import lector.share.model.client.EntryClient;
 import lector.share.model.client.GoogleBookClient;
 import lector.share.model.client.GroupClient;
-import lector.share.model.client.LanguageClient;
+
 import lector.share.model.client.ProfessorClient;
 import lector.share.model.client.ReadingActivityClient;
 import lector.share.model.client.StudentClient;
@@ -51,7 +51,7 @@ public interface GWTServiceAsync {
 
 	void saveCatalog(Catalogo catalog, AsyncCallback<Void> callback);
 
-	public void login(String requestUri, AsyncCallback<UserApp> asyncCallback);
+	void login(String requestUri, AsyncCallback<UserClient> asyncCallback);
 
 	void saveUser(UserApp user, AsyncCallback<Void> asyncCallback);
 
@@ -199,12 +199,6 @@ public interface GWTServiceAsync {
 	void loadFullBookInGoogle(String query,
 			AsyncCallback<GoogleBookClient> callback);
 
-	void getGoogleBooks(String query,
-			AsyncCallback<List<GoogleBookClient>> callback);
-
-	void getBooks(String query, int start,
-			AsyncCallback<List<GoogleBookClient>> callback);
-
 	void loadCatalogById(Long catalogId, AsyncCallback<CatalogoClient> callback);
 
 	void getCatalogs(AsyncCallback<List<CatalogoClient>> callback);
@@ -243,12 +237,17 @@ public interface GWTServiceAsync {
 
 	void getLanguagesNames(AsyncCallback<List<String>> callback);
 
-	void getLanguages(AsyncCallback<List<LanguageClient>> callback);
+	void getLanguages(AsyncCallback<List<Language>> callback);
 
-	void loadLanguageById(Long languageId,
-			AsyncCallback<LanguageClient> callback);
+	void loadLanguageById(Long languageId, AsyncCallback<Language> callback);
 
 	void loginAuxiliar(String userEmail, AsyncCallback<UserClient> callback);
+
+	void getGoogleBookClients(String query,
+			AsyncCallback<List<GoogleBookClient>> callback);
+
+	void getBookClients(String query, int start,
+			AsyncCallback<List<GoogleBookClient>> callback);
 
 	
 }

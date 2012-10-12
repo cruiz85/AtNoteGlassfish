@@ -48,7 +48,6 @@ import lector.share.model.client.CatalogoClient;
 import lector.share.model.client.EntryClient;
 import lector.share.model.client.GoogleBookClient;
 import lector.share.model.client.GroupClient;
-import lector.share.model.client.LanguageClient;
 import lector.share.model.client.ProfessorClient;
 import lector.share.model.client.ReadingActivityClient;
 import lector.share.model.client.StudentClient;
@@ -70,7 +69,7 @@ public interface GWTService extends RemoteService {
 	 * @gwt.typeArgs <org.yournamehere.client.Annotation>
 	 */
 
-	UserApp login(String requestUri) throws UserNotFoundException, GeneralException;
+	public UserClient login(String requestUri) throws UserNotFoundException, GeneralException;
 
 	// Usuarios
 
@@ -167,12 +166,12 @@ public interface GWTService extends RemoteService {
 
 	// Recupera un libro de google, se vuelve interno
 
-	public List<GoogleBookClient> getGoogleBooks(String query);
+	public List<GoogleBookClient> getGoogleBookClients(String query);
 
 	// Recupera un libro de la libreria de google, se combertira interno de la
 	// factotia de de carga)
 
-	public List<GoogleBookClient> getBooks(String query, int start);
+	public List<GoogleBookClient> getBookClients(String query, int start);
 
 	// Recupera los libros de goole para la busqueda, se combertira en un
 	// proceso interno de la carga)
@@ -278,10 +277,10 @@ public interface GWTService extends RemoteService {
 	public List<String> getLanguagesNames() throws GeneralException,
 			LanguageNotFoundException, NullParameterException;;
 
-	public List<LanguageClient> getLanguages() throws GeneralException,
+	public List<Language> getLanguages() throws GeneralException,
 			LanguageNotFoundException, NullParameterException;
 
-	public LanguageClient loadLanguageById(Long languageId) throws LanguageNotFoundException, GeneralException;
+	public Language loadLanguageById(Long languageId) throws LanguageNotFoundException, GeneralException;
 	
 	//Procesos Internos
 	
