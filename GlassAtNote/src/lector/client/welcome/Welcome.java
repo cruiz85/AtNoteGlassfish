@@ -208,6 +208,7 @@ public class Welcome implements EntryPoint {
 					public void onFailure(Throwable error) {
 //						Window.Location.reload()
 						Logger.GetLogger().severe(this.getClass().getName(), getClass().getName() + " Login Error" );
+						Logger.GetLogger().severe(this.getClass().getName(), error.getMessage().toString());
 						throw new Error(getClass().getName() + " Login Error");
 						
 					}
