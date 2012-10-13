@@ -14,6 +14,9 @@ import lector.share.model.LocalBook;
 import lector.share.model.Professor;
 import lector.share.model.Student;
 import lector.share.model.UserApp;
+import lector.share.model.client.ProfessorClient;
+import lector.share.model.client.StudentClient;
+import lector.share.model.client.UserClient;
 
 import com.google.appengine.api.datastore.Text;
 import com.google.gwt.core.client.EntryPoint;
@@ -203,7 +206,7 @@ public class Welcome implements EntryPoint {
 
 		// LoginNew
 		bookReaderServiceHolder.login(Window.Location.getHref(),
-				new AsyncCallback<UserApp>() {
+				new AsyncCallback<UserClient>() {
 
 					public void onFailure(Throwable error) {
 //						Window.Location.reload()
@@ -213,7 +216,7 @@ public class Welcome implements EntryPoint {
 						
 					}
 
-					public void onSuccess(UserApp result) {
+					public void onSuccess(UserClient result) {
 //                        Professor professor = (Professor) result;
 //                        professor.getAnnotations();
 //                        Window.alert("Paso!");
@@ -225,6 +228,23 @@ public class Welcome implements EntryPoint {
 								btnNewButton.setEnabled(false);
 								Window.open(ActualUser.getUser().getLoginUrl(),
 										"_self", "");
+								
+								//TODO Temporal
+								Logger L = Logger.GetLogger();
+
+								if (ActualUser.getUser() instanceof StudentClient) {
+									Controlador.change2MyActivities();
+									Footer.clear();
+								} else if (ActualUser.getUser() instanceof ProfessorClient) {
+									Controlador.change2Administrator();
+									Footer.clear();
+								}
+								L.info(Welcome.class.getName(),
+										LogMessageConstants.USER_SUCCESS_LOGGED_IN
+												+ ActualUser.getUser().getEmail());
+
+								////
+								
 							}
 						});
 						btnNewButton.setText("Log In");
@@ -273,13 +293,19 @@ public class Welcome implements EntryPoint {
 						 * (ActualUser.getUser().getLogoutUrl());
 						 * horizontalPanel.add(signOutLink);
 						 */
+						
+						
+						
+						
+						
 						if (result.isLoggedIn()) {
+							
 							Logger L = Logger.GetLogger();
 
-							if (result instanceof Student) {
+							if (result instanceof StudentClient) {
 								Controlador.change2MyActivities();
 								Footer.clear();
-							} else if (result instanceof Student) {
+							} else if (result instanceof ProfessorClient) {
 								Controlador.change2Administrator();
 								Footer.clear();
 							}

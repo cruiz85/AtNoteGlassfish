@@ -3,7 +3,9 @@ package lector.share.model.client;
 import java.util.ArrayList;
 import java.util.List;
 
-public class GroupClient {
+import com.google.gwt.user.client.rpc.IsSerializable;
+
+public class GroupClient implements IsSerializable{
 
 	private Long id;
 	private String name;

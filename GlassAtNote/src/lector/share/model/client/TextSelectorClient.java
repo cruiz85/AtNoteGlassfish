@@ -1,7 +1,9 @@
 package lector.share.model.client;
 
+import com.google.gwt.user.client.rpc.IsSerializable;
 
-public class TextSelectorClient{
+
+public class TextSelectorClient implements IsSerializable{
 
 	private Long id;
 	private Long x;

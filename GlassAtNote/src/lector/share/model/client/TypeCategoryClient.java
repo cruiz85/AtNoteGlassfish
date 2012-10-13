@@ -3,7 +3,9 @@ package lector.share.model.client;
 import java.util.ArrayList;
 import java.util.List;
 
-public class TypeCategoryClient extends EntryClient {
+import com.google.gwt.user.client.rpc.IsSerializable;
+
+public class TypeCategoryClient extends EntryClient implements IsSerializable{
 
 	private List<EntryClient> children = new ArrayList<EntryClient>();
 

@@ -1,6 +1,8 @@
 package lector.share.model.client;
 
-public class UserClient {
+import com.google.gwt.user.client.rpc.IsSerializable;
+
+public class UserClient implements IsSerializable{
 
 	private Long id;
 	private String firstName;

@@ -2,7 +2,9 @@ package lector.share.model.client;
 
 import java.util.List;
 
-public class GoogleBookClient extends RemoteBookClient{
+import com.google.gwt.user.client.rpc.IsSerializable;
+
+public class GoogleBookClient extends RemoteBookClient  implements IsSerializable{
 
 	private String tbURL;
 	private String imagesPath;

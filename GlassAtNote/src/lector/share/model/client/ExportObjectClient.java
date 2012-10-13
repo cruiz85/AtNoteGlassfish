@@ -1,6 +1,8 @@
 package lector.share.model.client;
 
-public class ExportObjectClient{
+import com.google.gwt.user.client.rpc.IsSerializable;
+
+public class ExportObjectClient  implements IsSerializable{
 
 	private AnnotationClient annotation;
 	private String imageURL;

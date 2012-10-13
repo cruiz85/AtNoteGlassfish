@@ -4,7 +4,9 @@ package lector.share.model.client;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ProfessorClient extends UserClient{
+import com.google.gwt.user.client.rpc.IsSerializable;
+
+public class ProfessorClient extends UserClient implements IsSerializable{
 	private static final long serialVersionUID = 1L;
 
 	private List<Long> readingActivities = new ArrayList<Long>();

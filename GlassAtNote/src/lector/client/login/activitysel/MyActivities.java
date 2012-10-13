@@ -20,6 +20,10 @@ import lector.share.model.Professor;
 import lector.share.model.ReadingActivity;
 import lector.share.model.Student;
 import lector.share.model.UserApp;
+import lector.share.model.client.CatalogoClient;
+import lector.share.model.client.ProfessorClient;
+import lector.share.model.client.StudentClient;
+import lector.share.model.client.UserClient;
 
 import com.google.gwt.core.client.EntryPoint;
 import com.google.gwt.core.client.GWT;
@@ -105,9 +109,9 @@ public class MyActivities implements EntryPoint {
 			}
 		});
 
-		if (ActualUser.getUser() instanceof Professor)
+		if (ActualUser.getUser() instanceof ProfessorClient)
 			menuBar.addItem(menuItem_1);
-		else if (ActualUser.getUser() instanceof Student)
+		else if (ActualUser.getUser() instanceof StudentClient)
 			{
 			menuBar.addItem(mntmNewItem);
 			menuBar.addItem(menuItem_2);
@@ -167,8 +171,8 @@ public class MyActivities implements EntryPoint {
 
 	private void generaBookIds() {
 
-		UserApp User = ActualUser.getUser();
-		if (ActualUser.getUser() instanceof Professor) {
+		UserClient User = ActualUser.getUser();
+		if (ActualUser.getUser() instanceof ProfessorClient) {
 //			bookReaderServiceHolder.getReadingActivityByProfessorId(
 //					User.getId(),
 //					new AsyncCallback<ArrayList<ReadingActivity>>()
@@ -187,7 +191,7 @@ public class MyActivities implements EntryPoint {
 //						}
 //					});
 
-		} else if (User instanceof Student) {
+		} else if (User instanceof StudentClient) {
 
 //			bookReaderServiceHolder.getReadingActivityByUserId(User.getId(),
 //					new AsyncCallback<ArrayList<ReadingActivity>>()
@@ -519,9 +523,9 @@ public class MyActivities implements EntryPoint {
 
 	protected void loadCatalog()
 	{
-		bookReaderServiceHolder.loadCatalogById(RA.getCloseCatalogo().getId(), new AsyncCallback<Catalogo>() {
+		bookReaderServiceHolder.loadCatalogById(RA.getCloseCatalogo().getId(), new AsyncCallback<CatalogoClient>() {
 			
-			public void onSuccess(Catalogo result) {
+			public void onSuccess(CatalogoClient result) {
 				ActualUser.setCatalogo(result);
 				loadOpenCatalog();
 				
@@ -538,9 +542,9 @@ public class MyActivities implements EntryPoint {
 	
 	protected void loadOpenCatalog()
 	{
-		bookReaderServiceHolder.loadCatalogById(RA.getOpenCatalogo().getId(), new AsyncCallback<Catalogo>() {
+		bookReaderServiceHolder.loadCatalogById(RA.getOpenCatalogo().getId(), new AsyncCallback<CatalogoClient>() {
 			
-			public void onSuccess(Catalogo result) {
+			public void onSuccess(CatalogoClient result) {
 				ActualUser.setOpenCatalog(result);
 				loadLanguage();
 				
@@ -564,6 +568,8 @@ public class MyActivities implements EntryPoint {
 				
 			}
 			
+
+
 			public void onFailure(Throwable caught) {
 				Window.alert("Book not supported yet");
 				throw new UnsupportedOperationException(

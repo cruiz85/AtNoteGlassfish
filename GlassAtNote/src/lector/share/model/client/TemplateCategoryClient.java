@@ -3,7 +3,9 @@ package lector.share.model.client;
 import java.util.ArrayList;
 import java.util.List;
 
-public class TemplateCategoryClient{
+import com.google.gwt.user.client.rpc.IsSerializable;
+
+public class TemplateCategoryClient implements IsSerializable{
 
 	private Long id;
 	private String name;

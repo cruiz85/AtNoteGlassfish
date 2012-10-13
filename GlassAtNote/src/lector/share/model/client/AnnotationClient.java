@@ -4,7 +4,9 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-public class AnnotationClient {
+import com.google.gwt.user.client.rpc.IsSerializable;
+
+public class AnnotationClient implements IsSerializable{
 
 	private Long id;
 	private UserClient creator;

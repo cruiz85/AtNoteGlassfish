@@ -2,7 +2,9 @@ package lector.share.model.client;
 
 import java.util.List;
 
-public class RemoteBookClient extends BookClient {
+import com.google.gwt.user.client.rpc.IsSerializable;
+
+public class RemoteBookClient extends BookClient implements IsSerializable{
 
 	private String libraryName;
 

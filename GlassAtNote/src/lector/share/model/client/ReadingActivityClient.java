@@ -1,8 +1,10 @@
 package lector.share.model.client;
 
+import com.google.gwt.user.client.rpc.IsSerializable;
+
 import lector.share.model.Language;
 
-public class ReadingActivityClient{
+public class ReadingActivityClient implements IsSerializable{
 
 	private Long id;
 	private String name;

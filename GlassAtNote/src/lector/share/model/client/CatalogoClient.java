@@ -3,8 +3,10 @@ package lector.share.model.client;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.google.gwt.user.client.rpc.IsSerializable;
 
-public class CatalogoClient {
+
+public class CatalogoClient implements IsSerializable{
 
 
 	private Long id;

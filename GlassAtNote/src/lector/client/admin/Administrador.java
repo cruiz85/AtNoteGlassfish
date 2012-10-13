@@ -5,6 +5,7 @@ import lector.client.book.reader.GWTServiceAsync;
 import lector.client.controler.Controlador;
 import lector.client.login.ActualUser;
 import lector.share.model.ReadingActivity;
+import lector.share.model.client.ReadingActivityClient;
 
 import com.google.gwt.core.client.EntryPoint;
 import com.google.gwt.core.client.GWT;
@@ -431,9 +432,9 @@ public class Administrador implements EntryPoint {
 		}
 		btnNewButton_4.addClickHandler(new ClickHandler() {
 			public void onClick(ClickEvent event) {
-				bookReaderServiceHolder.loadReadingActivityById(ActualUser.getReadingactivity().getId(), new AsyncCallback<ReadingActivity>() {
+				bookReaderServiceHolder.loadReadingActivityById(ActualUser.getReadingactivity().getId(), new AsyncCallback<ReadingActivityClient>() {
 					
-					public void onSuccess(ReadingActivity result) {
+					public void onSuccess(ReadingActivityClient result) {
 						ActualUser.setReadingactivity(null);
 						if (checkComplete(result)){
 							ActualUser.setReadingactivity(result);
@@ -446,7 +447,7 @@ public class Administrador implements EntryPoint {
 						}
 					}
 					
-					private boolean checkComplete(ReadingActivity result) {
+					private boolean checkComplete(ReadingActivityClient result) {
 						
 						return (
 								(result.getBook()!=null)&&
