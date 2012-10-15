@@ -836,7 +836,7 @@ public class GWTServiceImpl extends RemoteServiceServlet implements GWTService {
 		}
 
 		return ServiceManagerUtils.produceAnnotationThreadClients(list.get(0)
-				.getSubThreads());
+				.getSubThreads(), null);
 	}
 
 	@Override
