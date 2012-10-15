@@ -38,6 +38,17 @@ public class AnnotationThreadClient implements IsSerializable{
 		this.createdDate = createdDate;
 	}
 
+	public AnnotationThreadClient(Long id, AnnotationClient annotation,
+			String comment, Long userId, String userName, Date createdDate) {
+		super();
+		this.id = id;
+		this.annotation = annotation;
+		this.comment = comment;
+		this.userId = userId;
+		this.userName = userName;
+		this.createdDate = createdDate;
+	}
+
 	public AnnotationThreadClient getFather() {
 		return father;
 	}

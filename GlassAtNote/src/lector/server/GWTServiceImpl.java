@@ -14,26 +14,22 @@ import java.util.HashSet;
 import java.util.Date;
 
 import java.util.List;
-import java.util.StringTokenizer;
+
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import javax.annotation.Resource;
-import javax.persistence.Basic;
+
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
-import javax.persistence.EntityTransaction;
+
 import javax.persistence.Persistence;
-import javax.persistence.PersistenceContext;
+
 import javax.transaction.UserTransaction;
 
 import lector.client.book.reader.ExportService;
 import lector.client.book.reader.GWTService;
 
-import lector.client.controler.Constants;
-import com.google.appengine.api.users.User;
-import com.google.appengine.api.users.UserService;
-import com.google.appengine.api.users.UserServiceFactory;
 import com.google.gwt.user.server.rpc.RemoteServiceServlet;
 import lector.share.model.Annotation;
 import lector.share.model.AnnotationNotFoundException;
@@ -47,7 +43,7 @@ import lector.share.model.GoogleBook;
 import lector.share.model.GroupNotFoundException;
 import lector.share.model.IlegalFolderFusionException;
 import lector.share.model.LanguageNotFoundException;
-import lector.share.model.LocalBook;
+
 import lector.share.model.Catalogo;
 import lector.share.model.Entry;
 import lector.share.model.NullParameterException;
@@ -62,10 +58,7 @@ import lector.share.model.GroupApp;
 import lector.share.model.Language;
 import lector.share.model.ReadingActivity;
 import lector.share.model.TagNotFoundException;
-import lector.share.model.Template;
-import lector.share.model.TemplateCategory;
-import lector.share.model.TemplateNotFoundException;
-import lector.share.model.TextSelector;
+
 import lector.share.model.UserApp;
 import lector.share.model.UserNotFoundException;
 import lector.share.model.client.AnnotationClient;
@@ -435,9 +428,8 @@ public class GWTServiceImpl extends RemoteServiceServlet implements GWTService {
 		return a;
 	}
 
-	
-	public UserApp findByEmail(String email)
-			throws UserNotFoundException, GeneralException {
+	public UserApp findByEmail(String email) throws UserNotFoundException,
+			GeneralException {
 		EntityManager entityManager = emf.createEntityManager();
 		List<UserApp> list;
 
@@ -461,7 +453,7 @@ public class GWTServiceImpl extends RemoteServiceServlet implements GWTService {
 		}
 		return list.get(0);
 	}
-	
+
 	// TODO LANZAR EXCEPCIÓN
 	private GroupApp findGroup(Long id) throws GroupNotFoundException {
 		EntityManager entityManager = emf.createEntityManager();
@@ -622,9 +614,10 @@ public class GWTServiceImpl extends RemoteServiceServlet implements GWTService {
 		if (entityManager.isOpen()) {
 			entityManager.close();
 		}
-		return ServiceManagerUtils.produceAnnotationClients(list); // método esta
-															// retornando null
-	
+		return ServiceManagerUtils.produceAnnotationClients(list); // método
+																	// esta
+		// retornando null
+
 	}
 
 	@Override
@@ -657,14 +650,15 @@ public class GWTServiceImpl extends RemoteServiceServlet implements GWTService {
 			entityManager.close();
 		}
 
-		return ServiceManagerUtils.produceAnnotationClients(list); // método esta
+		return ServiceManagerUtils.produceAnnotationClients(list); // método
+																	// esta
 		// retornando null
 	}
 
 	@Override
-	public List<AnnotationClient> getAnnotationsByPageNumber(Integer pageNumber,
-			String bookId, Long readingActivityId) throws GeneralException,
-			AnnotationNotFoundException {
+	public List<AnnotationClient> getAnnotationsByPageNumber(
+			Integer pageNumber, String bookId, Long readingActivityId)
+			throws GeneralException, AnnotationNotFoundException {
 		EntityManager entityManager = emf.createEntityManager();
 		List<Annotation> list;
 
@@ -689,7 +683,8 @@ public class GWTServiceImpl extends RemoteServiceServlet implements GWTService {
 			entityManager.close();
 		}
 
-		return ServiceManagerUtils.produceAnnotationClients(list); // método esta
+		return ServiceManagerUtils.produceAnnotationClients(list); // método
+																	// esta
 		// retornando null
 	}
 
@@ -697,13 +692,14 @@ public class GWTServiceImpl extends RemoteServiceServlet implements GWTService {
 	public List<AnnotationClient> getAnnotationsByIds(List<Long> ids) {
 		List<Annotation> annotations = new ArrayList<Annotation>();
 		for (int i = 0; i < ids.size(); i++) {
-			Annotation annotation = quickFind(ids.get(i)); 
+			Annotation annotation = quickFind(ids.get(i));
 			if (annotation != null) {
 				annotations.add(annotation);
 			}
 
 		}
-		return ServiceManagerUtils.produceAnnotationClients(annotations); // método esta
+		return ServiceManagerUtils.produceAnnotationClients(annotations); // método
+																			// esta
 		// retornando null
 	}
 
@@ -840,7 +836,8 @@ public class GWTServiceImpl extends RemoteServiceServlet implements GWTService {
 			entityManager.close();
 		}
 
-		return ServiceManagerUtils.produceAnnotationThreadClients(list.get(0).getSubThreads());
+		return ServiceManagerUtils.produceAnnotationThreadClients(list.get(0)
+				.getSubThreads());
 	}
 
 	@Override
@@ -950,10 +947,10 @@ public class GWTServiceImpl extends RemoteServiceServlet implements GWTService {
 
 	@Override
 	public List<GoogleBookClient> getGoogleBookClients(String query) {
-		return ServiceManagerUtils.produceGoogleBookClients(getGoogleBooks(query));
+		return ServiceManagerUtils
+				.produceGoogleBookClients(getGoogleBooks(query));
 	}
-	
-	
+
 	public List<GoogleBook> getGoogleBooks(String query) {
 		String cleanQuery = ServiceManagerUtils.removeSpaces(query);
 		URL url;
@@ -1005,9 +1002,11 @@ public class GWTServiceImpl extends RemoteServiceServlet implements GWTService {
 		return googleBooks;
 	}
 
-	public List<GoogleBookClient> getBookClients(String query, int start){
-		return ServiceManagerUtils.produceGoogleBookClients(getBooks(query, start));
+	public List<GoogleBookClient> getBookClients(String query, int start) {
+		return ServiceManagerUtils.produceGoogleBookClients(getBooks(query,
+				start));
 	}
+
 	private List<GoogleBook> getBooks(String query, int start) {
 		String cleanQuery = ServiceManagerUtils.removeSpaces(query);
 		URL url;
@@ -1080,7 +1079,8 @@ public class GWTServiceImpl extends RemoteServiceServlet implements GWTService {
 	}
 
 	@Override
-	public List<CatalogoClient> getVisbibleCatalogsByProfessorId(Long professorId) {
+	public List<CatalogoClient> getVisbibleCatalogsByProfessorId(
+			Long professorId) {
 		// TODO Auto-generated method stub
 		return null;
 	}
@@ -1196,8 +1196,8 @@ public class GWTServiceImpl extends RemoteServiceServlet implements GWTService {
 	}
 
 	@Override
-	public List<TypeClient> getTagsByNameAndCatalogId(ArrayList<String> typeNames,
-			Long catalogId) {
+	public List<TypeClient> getTagsByNameAndCatalogId(
+			ArrayList<String> typeNames, Long catalogId) {
 		// TODO Auto-generated method stub
 		return null;
 	}
@@ -1233,8 +1233,8 @@ public class GWTServiceImpl extends RemoteServiceServlet implements GWTService {
 	}
 
 	@Override
-	public TypeCategoryClient loadFolderDBByNameAndCatalogId(String FolderDBName,
-			Long catalogId) {
+	public TypeCategoryClient loadFolderDBByNameAndCatalogId(
+			String FolderDBName, Long catalogId) {
 		// TODO Auto-generated method stub
 		return null;
 	}
@@ -1334,7 +1334,8 @@ public class GWTServiceImpl extends RemoteServiceServlet implements GWTService {
 	}
 
 	@Override
-	public List<ReadingActivityClient> getReadingActivitiesByStudentId(Long userId) {
+	public List<ReadingActivityClient> getReadingActivitiesByStudentId(
+			Long userId) {
 		// TODO Auto-generated method stub
 		return null;
 	}
@@ -1533,7 +1534,8 @@ public class GWTServiceImpl extends RemoteServiceServlet implements GWTService {
 	}
 
 	@Override
-	public UserClient loginAuxiliar(String userEmail) throws UserNotFoundException {
+	public UserClient loginAuxiliar(String userEmail)
+			throws UserNotFoundException {
 		// TODO Auto-generated method stub
 		return null;
 	}

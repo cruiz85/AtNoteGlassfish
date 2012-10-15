@@ -1,9 +1,10 @@
 package lector.share.model.client;
 
+import java.util.List;
+
 import com.google.gwt.user.client.rpc.IsSerializable;
 
-
-public class TypeClient extends EntryClient  implements IsSerializable{
+public class TypeClient extends EntryClient implements IsSerializable {
 
 	public TypeClient() {
 		super();
@@ -13,5 +14,10 @@ public class TypeClient extends EntryClient  implements IsSerializable{
 		super(name);
 	}
 
+	public TypeClient(List<EntryClient> parents, String name,
+			CatalogoClient catalog) {
+		super(parents, name, catalog);
+
+	}
 
 }

@@ -71,47 +71,44 @@ public class ServiceManagerUtils {
 		return t;
 	}
 
-	// TODO hacer cuando se tenga lo que pasará con los tgas
 	public static AnnotationClient produceAnnotationClient(Annotation a) {
-		// boolean visibility = false;
-		// boolean updatability = false;
-		// if (a.getVisibility() == 1) {
-		// visibility = true;
-		// }
-		// if (a.getUpdatability() == 1) {
-		// updatability = true;
-		// }
-		// AnnotationClient annotationClient = new AnnotationClient(
-		// produceUserClient(a.getCreator()), a.getActivity().getId(),
-		// produceTextSelectors(a.getTextSelectors()), a.getComment(),
-		// a.getBookId(), visibility, updatability, a.getPageNumber(),
-		// produceTypeClients(a.getTags()), a.isEditable());
-		// }
-		//
-		// public static List<TypeClient> produceTypeClients(List<Tag> tags) {
-		// List<TypeClient> typeClients = new ArrayList<TypeClient>();
-		// for (Tag tag : tags) {
-		// typeClients.add(produceTypeClient);
-		// }
-		// }
-		//
-		// private static TypeClient produceTypeClient(Tag t){
-		return null;
+		boolean visibility = false;
+		boolean updatability = false;
+		if (a.getVisibility() == 1) {
+			visibility = true;
+		}
+		if (a.getUpdatability() == 1) {
+			updatability = true;
+		}
+		return new AnnotationClient(produceUserClient(a.getCreator()), a
+				.getActivity().getId(),
+				produceTextSelectors(a.getTextSelectors()), a.getComment(),
+				a.getBookId(), visibility, updatability, a.getPageNumber(),
+				produceTypeClients(a.getTags()), a.isEditable());
+	}
+
+	public static List<TypeClient> produceTypeClients(List<Tag> tags) {
+		List<TypeClient> typeClients = new ArrayList<TypeClient>();
+		for (Tag tag : tags) {
+			typeClients.add(produceTypeClient(tag));
+		}
+		return typeClients;
 	}
 
 	public static TypeClient produceTypeClient(Tag t) {
+		return new TypeClient(null, t.getName(), null);
+	}
+
+	public static ReadingActivityClient produceReadingActivityClient(
+			ReadingActivity t) {
 		return null;
 	}
 
-	public static ReadingActivityClient produceReadingActivityClient(ReadingActivity t) {
-		return null;
-	}
-	
 	public static List<ReadingActivityClient> produceReadingActivityClients(
 			List<ReadingActivity> a) {
 		return null;
 	}
-	
+
 	public static List<AnnotationClient> produceAnnotationClients(
 			List<Annotation> a) {
 		return null;
@@ -119,7 +116,24 @@ public class ServiceManagerUtils {
 
 	public static List<AnnotationThreadClient> produceAnnotationThreadClients(
 			List<AnnotationThread> at) {
-		return null;
+		List<AnnotationThreadClient> annotationThreadClients = new ArrayList<AnnotationThreadClient>();
+		for (AnnotationThread annotationThread : at) {
+			annotationThreadClients
+					.add(produceAnnotationThreadClient(annotationThread));
+		}
+		return annotationThreadClients;
+	}
+
+	public static AnnotationThreadClient produceAnnotationThreadClient(
+			AnnotationThread a) {
+		AnnotationThreadClient atc = new AnnotationThreadClient(a.getId(),
+				produceAnnotationClient(a.getAnnotation()), a.getComment(),
+				a.getUserId(), a.getUserName(), a.getCreatedDate());
+		for (AnnotationThread child : a.getSubThreads()) {
+			atc.setFather(atc);
+			atc.getSubThreads().add(produceAnnotationThreadClient(child));
+		}
+		return atc;
 	}
 
 	public static LocalBookClient produceLocalBookClient(LocalBook lb) {

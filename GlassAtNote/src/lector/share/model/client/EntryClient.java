@@ -24,13 +24,12 @@ public class EntryClient implements IsSerializable{
 	}
 
 
-	public EntryClient(List<EntryClient> parents, String name, CatalogoClient catalog,
-			String uppercaseName) {
+	public EntryClient(List<EntryClient> parents, String name, CatalogoClient catalog) {
 		super();
 		this.parents = parents;
 		this.name = name;
 		this.catalog = catalog;
-		this.setUppercaseName(uppercaseName);
+		
 	}
 
 
