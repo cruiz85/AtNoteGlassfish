@@ -115,24 +115,22 @@ public class ServiceManagerUtils {
 	}
 
 	public static List<AnnotationThreadClient> produceAnnotationThreadClients(
-			List<AnnotationThread> at) {
+			List<AnnotationThread> at, AnnotationThreadClient father) {
 		List<AnnotationThreadClient> annotationThreadClients = new ArrayList<AnnotationThreadClient>();
 		for (AnnotationThread annotationThread : at) {
 			annotationThreadClients
-					.add(produceAnnotationThreadClient(annotationThread));
+					.add(produceAnnotationThreadClient(annotationThread,father));
 		}
 		return annotationThreadClients;
 	}
 
 	public static AnnotationThreadClient produceAnnotationThreadClient(
-			AnnotationThread a) {
+			AnnotationThread a, AnnotationThreadClient father) {
 		AnnotationThreadClient atc = new AnnotationThreadClient(a.getId(),
 				produceAnnotationClient(a.getAnnotation()), a.getComment(),
 				a.getUserId(), a.getUserName(), a.getCreatedDate());
-		for (AnnotationThread child : a.getSubThreads()) {
-			atc.setFather(atc);
-			atc.getSubThreads().add(produceAnnotationThreadClient(child));
-		}
+		atc.setFather(father);
+		produceAnnotationThreadClients(a.getSubThreads(), atc);
 		return atc;
 	}
 

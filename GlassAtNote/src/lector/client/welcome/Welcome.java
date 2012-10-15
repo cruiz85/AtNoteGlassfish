@@ -194,16 +194,17 @@ public class Welcome implements EntryPoint {
 		lblCollaborativeAnnotationOf.setWidth("1112px");
 
 		// LoginOL
-		// btnNewButton = new Button("Log In");
-		// horizontalPanel.add(btnNewButton);
-		// btnNewButton.addClickHandler(new ClickHandler() {
-		// public void onClick(ClickEvent event) {
-		// Controlador.change2Login();
-		// }
-		// });
-		// btnNewButton.setText("Log In");
-		// btnNewButton.setSize("164px", "50px");
+//		 btnNewButton = new Button("Log In");
+//		 horizontalPanel.add(btnNewButton);
+//		 btnNewButton.addClickHandler(new ClickHandler() {
+//		 public void onClick(ClickEvent event) {
+//		 Controlador.change2Login();
+//		 }
+//		 });
+//		 btnNewButton.setText("Log In");
+//		 btnNewButton.setSize("164px", "50px");
 
+		
 		// LoginNew
 		bookReaderServiceHolder.login(Window.Location.getHref(),
 				new AsyncCallback<UserClient>() {

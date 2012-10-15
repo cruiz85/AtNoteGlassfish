@@ -1,6 +1,9 @@
 package lector.client.controler;
 
 import lector.client.admin.Administrador;
+import lector.client.admin.langedit.EditordeLenguajes;
+import lector.client.admin.langedit.NewAdminLangs;
+import lector.client.login.Login;
 //import lector.client.admin.activity.NewAdminActivities;
 //import lector.client.admin.admins.NewAdminAdministrator;
 //import lector.client.admin.book.BookAdministration;
@@ -9,13 +12,10 @@ import lector.client.admin.Administrador;
 //import lector.client.admin.export.NewAdminTemplate;
 //import lector.client.admin.export.admin.EditTemplate;
 //import lector.client.admin.group.Groupadministration;
-//import lector.client.admin.langedit.EditordeLenguajes;
-//import lector.client.admin.langedit.NewAdminLangs;
 //import lector.client.admin.tagstypes.EditorTagsAndTypes;
 //import lector.client.admin.users.NewUserAdministrator;
 //import lector.client.browser.Browser;
 //import lector.client.login.ActualUser;
-//import lector.client.login.Login;
 import lector.client.login.activitysel.MyActivities;
 //import lector.client.login.activitysel.VisorEntry;
 //import lector.client.login.bookselec.MyBooks;
@@ -41,14 +41,14 @@ public class Controlador implements EntryPoint {
 //  //  private static ControladorEntrada controladorEntrada = new ControladorEntrada();
     private static Administrador Admin = new Administrador();
 //    private static EditorTagsAndTypes AdminTagsAndTypes = new EditorTagsAndTypes();
-//    private static Login LoginPage=new Login();
+    private static Login LoginPage=new Login();
 //    private static BookAdministration bookAdministrador=new BookAdministration();
 //    private static MyBooks MyBooksUser=new MyBooks();
 //    private static Groupadministration GroupAdmin = new Groupadministration();
 //    private static NewUserAdministrator UserAdmin = new NewUserAdministrator();
 //    private static NewAdminAdministrator AdminAdmin = new NewAdminAdministrator();
-//    private static EditordeLenguajes EditorLenguaje = new EditordeLenguajes();
-//    private static NewAdminLangs AdminLenguaje = new NewAdminLangs();
+    private static EditordeLenguajes EditorLenguaje = new EditordeLenguajes();
+    private static NewAdminLangs AdminLenguaje = new NewAdminLangs();
 //    private static NewAdminCatalogs CatalogAdmin= new NewAdminCatalogs();
 //    private static NewAdminActivities Activitys= new NewAdminActivities();
     private static MyActivities MyActivities= new MyActivities();
@@ -117,9 +117,9 @@ public class Controlador implements EntryPoint {
     }
     
     public static void change2Login() {
-//        clear();
-//        Actual = LoginPage;
-//        Actual.onModuleLoad();
+        clear();
+        Actual = LoginPage;
+        Actual.onModuleLoad();
     }
 
 	public static void change2EditorTagsAndTypes() {
@@ -164,17 +164,17 @@ public class Controlador implements EntryPoint {
 	}
 
 	public static void change2EditorLenguaje() {
-//		clear();
-//		Actual = EditorLenguaje;
-//		Actual.onModuleLoad();
-//		
+		clear();
+		Actual = EditorLenguaje;
+		Actual.onModuleLoad();
+		
 	}
 	
 	public static void change2AdminLenguaje() {
-//		clear();
-//		Actual = AdminLenguaje;
-//		Actual.onModuleLoad();
-//		
+		clear();
+		Actual = AdminLenguaje;
+		Actual.onModuleLoad();
+		
 	}
 	
 	public static void change2CatalogAdmin() {
