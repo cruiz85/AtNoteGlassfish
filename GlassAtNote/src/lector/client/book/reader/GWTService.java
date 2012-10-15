@@ -69,7 +69,7 @@ public interface GWTService extends RemoteService {
 	 * @gwt.typeArgs <org.yournamehere.client.Annotation>
 	 */
 
-	public UserClient login(String requestUri) throws UserNotFoundException, GeneralException;
+	public UserClient login(String userName, String password) throws UserNotFoundException, GeneralException;
 
 	// Usuarios
 

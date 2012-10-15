@@ -31,7 +31,7 @@ public class UserApp implements Serializable, IsSerializable {
 	private String firstName;
 	private String lastName;
 	private String email;
-
+	private String password;
 	@OneToMany(mappedBy = "creator", cascade = CascadeType.ALL)
 	private List<Annotation> annotations = new ArrayList<Annotation>();
 
@@ -58,6 +58,14 @@ public class UserApp implements Serializable, IsSerializable {
 
 	public void setId(Long id) {
 		this.id = id;
+	}
+
+	public String getPassword() {
+		return password;
+	}
+
+	public void setPassword(String password) {
+		this.password = password;
 	}
 
 	public boolean isLoggedIn() {
@@ -124,10 +132,9 @@ public class UserApp implements Serializable, IsSerializable {
 	public String getFirstName() {
 		return firstName;
 	}
-	
+
 	public void setFirstName(String firstName) {
 		this.firstName = firstName;
 	}
-	
-	
+
 }

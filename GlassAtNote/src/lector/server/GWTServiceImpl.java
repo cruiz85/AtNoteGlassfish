@@ -120,7 +120,7 @@ public class GWTServiceImpl extends RemoteServiceServlet implements GWTService {
 	// }
 
 	@Override
-	public UserClient login(String requestUri) throws UserNotFoundException,
+	public UserClient login(String userName, String password) throws UserNotFoundException,
 			GeneralException {
 		boolean flag = true;
 		UserApp userApp = new UserApp();

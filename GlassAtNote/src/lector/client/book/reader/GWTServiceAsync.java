@@ -51,7 +51,8 @@ public interface GWTServiceAsync {
 
 	void saveCatalog(Catalogo catalog, AsyncCallback<Void> callback);
 
-	void login(String requestUri, AsyncCallback<UserClient> asyncCallback);
+	void login(String userName, String password,
+			AsyncCallback<UserClient> asyncCallback);
 
 	void saveUser(UserApp user, AsyncCallback<Void> asyncCallback);
 
