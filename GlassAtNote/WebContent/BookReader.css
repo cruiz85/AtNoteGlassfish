@@ -193,7 +193,7 @@ height: 100%;
 }
 
 .gwt-ButtonTOP {
- background: transparent url('/BotonesLista/BotonArriba.jpg') no-repeat center center;
+ background: transparent url('BotonesLista/BotonArriba.jpg') no-repeat center center;
  display: block;
     float: left;
     font: normal 12px arial, sans-serif;
@@ -204,7 +204,7 @@ height: 100%;
 	font-size: 24px;
 }
 .gwt-ButtonTOPOver {
- background: transparent url('/BotonesLista/BotonArriba.jpg') no-repeat  center center;
+ background: transparent url('BotonesLista/BotonArriba.jpg') no-repeat  center center;
  display: block;
     float: left;
     font: normal 12px arial, sans-serif;
@@ -216,7 +216,7 @@ height: 100%;
 }
 
 .gwt-ButtonTOPSelect {
-background: transparent url('/BotonesLista/BotonArriba.jpg') no-repeat center center;
+background: transparent url('BotonesLista/BotonArriba.jpg') no-repeat center center;
  display: block;
     float: left;
     font: normal 12px arial, sans-serif;
@@ -241,7 +241,7 @@ background: transparent url('/BotonesLista/BotonArriba.jpg') no-repeat center ce
 
 
 .gwt-ButtonBotton  {
- background: transparent url('/BotonesLista/BotonAbajo.jpg') no-repeat center center;
+ background: transparent url('BotonesLista/BotonAbajo.jpg') no-repeat center center;
  display: block;
     float: left;
     font: normal 12px arial, sans-serif;
@@ -254,7 +254,7 @@ background: transparent url('/BotonesLista/BotonArriba.jpg') no-repeat center ce
 }
 
 .gwt-ButtonBottonOver {
-background: transparent url('/BotonesLista/BotonAbajo.jpg') no-repeat center center;
+background: transparent url('BotonesLista/BotonAbajo.jpg') no-repeat center center;
  display: block;
     float: left;
     font: normal 12px arial, sans-serif;
@@ -278,7 +278,7 @@ background: transparent url('/BotonesLista/BotonAbajo.jpg') no-repeat center cen
 
 
 .gwt-ButtonBottonSelect {
-background: transparent url('/BotonesLista/BotonAbajo.jpg') no-repeat center center;
+background: transparent url('BotonesLista/BotonAbajo.jpg') no-repeat center center;
  display: block;
     float: left;
     font: normal 12px arial, sans-serif;
@@ -292,7 +292,7 @@ background: transparent url('/BotonesLista/BotonAbajo.jpg') no-repeat center cen
 
 
 .gwt-ButtonBottonSave {
- background: transparent url('/BotonesLista/BotonAbajo.jpg') no-repeat center center;
+ background: transparent url('BotonesLista/BotonAbajo.jpg') no-repeat center center;
  display: block;
     float: left;
     font: normal 12px arial, sans-serif;
@@ -305,7 +305,7 @@ background: transparent url('/BotonesLista/BotonAbajo.jpg') no-repeat center cen
 }
 .gwt-ButtonBottonSaveOver {
 
-	 background: transparent url('/BotonesLista/BotonAbajo.jpg') no-repeat center center;
+	 background: transparent url('BotonesLista/BotonAbajo.jpg') no-repeat center center;
  display: block;
     float: left;
     font: normal 12px arial, sans-serif;
@@ -330,7 +330,7 @@ display: block;
 font-size: 11px;
 }
 .gwt-ButtonCenter {
- background: transparent url('/BotonesSueltos/Boton.jpg') no-repeat center center;
+ background: transparent url('BotonesSueltos/Boton.jpg') no-repeat center center;
  display: block;
     float: left;
     font: normal 12px arial, sans-serif;
@@ -341,7 +341,7 @@ font-size: 11px;
 	font-size: 24px;
 }
 .gwt-ButtonCenterOver {
- background: transparent url('/BotonesSueltos/Boton.jpg') no-repeat  center center;
+ background: transparent url('BotonesSueltos/Boton.jpg') no-repeat  center center;
  display: block;
     float: left;
     font: normal 12px arial, sans-serif;
@@ -353,7 +353,7 @@ font-size: 11px;
 }
 
 .gwt-ButtonCenterSelect {
-background: transparent url('/BotonesSueltos/Boton.jpg') no-repeat center center;
+background: transparent url('BotonesSueltos/Boton.jpg') no-repeat center center;
  display: block;
     float: left;
     font: normal 12px arial, sans-serif;
@@ -377,7 +377,7 @@ background: transparent url('/BotonesSueltos/Boton.jpg') no-repeat center center
 }
 
 .gwt-ButtonGris {
- background: transparent url('/BotonesLista/BotonArribaGris.jpg') no-repeat center center;
+ background: transparent url('BotonesLista/BotonArribaGris.jpg') no-repeat center center;
  display: block;
     float: left;
     font: normal 12px arial, sans-serif;
@@ -388,7 +388,7 @@ background: transparent url('/BotonesSueltos/Boton.jpg') no-repeat center center
 	font-size: 24px;
 }
 .gwt-ButtonGrisOver {
- background: transparent url('/BotonesLista/BotonArribaGris.jpg') no-repeat  center center;
+ background: transparent url('BotonesLista/BotonArribaGris.jpg') no-repeat  center center;
  display: block;
     float: left;
     font: normal 12px arial, sans-serif;
@@ -400,7 +400,7 @@ background: transparent url('/BotonesSueltos/Boton.jpg') no-repeat center center
 }
 
 .gwt-ButtonGrisSelect {
-background: transparent url('/BotonesLista/BotonArribaGris.jpg') no-repeat center center;
+background: transparent url('BotonesLista/BotonArribaGris.jpg') no-repeat center center;
  display: block;
     float: left;
     font: normal 12px arial, sans-serif;
@@ -424,7 +424,7 @@ background: transparent url('/BotonesLista/BotonArribaGris.jpg') no-repeat cente
 }
 
 .gwt-ButtonGrisDown {
- background: transparent url('/BotonesLista/BotonAbajoGris.jpg') no-repeat center center;
+ background: transparent url('BotonesLista/BotonAbajoGris.jpg') no-repeat center center;
  display: block;
     float: left;
     font: normal 12px arial, sans-serif;
@@ -435,7 +435,7 @@ background: transparent url('/BotonesLista/BotonArribaGris.jpg') no-repeat cente
 	font-size: 24px;
 }
 .gwt-ButtonGrisDownOver {
- background: transparent url('/BotonesLista/BotonAbajoGris.jpg') no-repeat  center center;
+ background: transparent url('BotonesLista/BotonAbajoGris.jpg') no-repeat  center center;
  display: block;
     float: left;
     font: normal 12px arial, sans-serif;
@@ -447,7 +447,7 @@ background: transparent url('/BotonesLista/BotonArribaGris.jpg') no-repeat cente
 }
 
 .gwt-ButtonGrisDownSelect {
-background: transparent url('/BotonesLista/BotonAbajoGris.jpg') no-repeat center center;
+background: transparent url('BotonesLista/BotonAbajoGris.jpg') no-repeat center center;
  display: block;
     float: left;
     font: normal 12px arial, sans-serif;
@@ -471,7 +471,7 @@ background: transparent url('/BotonesLista/BotonAbajoGris.jpg') no-repeat center
 }
 
 .gwt-ButtonDerecha {
- background: transparent url('/BotonesSueltos/BotonDer.jpg') no-repeat center center;
+ background: transparent url('BotonesSueltos/BotonDer.jpg') no-repeat center center;
  display: block;
     float: left;
     font: normal 12px arial, sans-serif;
@@ -482,7 +482,7 @@ background: transparent url('/BotonesLista/BotonAbajoGris.jpg') no-repeat center
 	font-size: 24px;
 }
 .gwt-ButtonDerechaOver {
- background: transparent url('/BotonesSueltos/BotonDer.jpg') no-repeat  center center;
+ background: transparent url('BotonesSueltos/BotonDer.jpg') no-repeat  center center;
  display: block;
     float: left;
     font: normal 12px arial, sans-serif;
@@ -494,7 +494,7 @@ background: transparent url('/BotonesLista/BotonAbajoGris.jpg') no-repeat center
 }
 
 .gwt-ButtonDerechaSelect {
-background: transparent url('/BotonesSueltos/BotonDer.jpg') no-repeat center center;
+background: transparent url('BotonesSueltos/BotonDer.jpg') no-repeat center center;
  display: block;
     float: left;
     font: normal 12px arial, sans-serif;
@@ -518,7 +518,7 @@ background: transparent url('/BotonesSueltos/BotonDer.jpg') no-repeat center cen
 }
 
 .gwt-ButtonIzquierda {
- background: transparent url('/BotonesSueltos/BotonIzq.jpg') no-repeat center center;
+ background: transparent url('BotonesSueltos/BotonIzq.jpg') no-repeat center center;
  display: block;
     float: left;
     font: normal 12px arial, sans-serif;
@@ -529,7 +529,7 @@ background: transparent url('/BotonesSueltos/BotonDer.jpg') no-repeat center cen
 	font-size: 24px;
 }
 .gwt-ButtonIzquierdaOver {
- background: transparent url('/BotonesSueltos/BotonIzq.jpg') no-repeat  center center;
+ background: transparent url('BotonesSueltos/BotonIzq.jpg') no-repeat  center center;
  display: block;
     float: left;
     font: normal 12px arial, sans-serif;
@@ -541,7 +541,7 @@ background: transparent url('/BotonesSueltos/BotonDer.jpg') no-repeat center cen
 }
 
 .gwt-ButtonIzquierdaSelect {
-background: transparent url('/BotonesSueltos/BotonIzq.jpg') no-repeat center center;
+background: transparent url('BotonesSueltos/BotonIzq.jpg') no-repeat center center;
  display: block;
     float: left;
     font: normal 12px arial, sans-serif;
@@ -587,7 +587,7 @@ max-height:400px;
 }
 
 .gwt-ButtonCenterGraph {
- background: transparent url('/BotonesSueltos/Boton.jpg') no-repeat center center;
+ background: transparent url('BotonesSueltos/Boton.jpg') no-repeat center center;
  display: block;
     float: left;
      background-size:  100% 100%;
@@ -598,7 +598,7 @@ max-height:400px;
 	text-decoration: none;
 }
 .gwt-ButtonCenterGraphOver {
- background: transparent url('/BotonesSueltos/Boton.jpg') no-repeat  center center;
+ background: transparent url('BotonesSueltos/Boton.jpg') no-repeat  center center;
  display: block;
     float: left;
 		    background-size:  100% 100%;
@@ -611,7 +611,7 @@ max-height:400px;
 }
 
 .gwt-ButtonCenterGraphSelect {
-background: transparent url('/BotonesSueltos/Boton.jpg') no-repeat center center;
+background: transparent url('BotonesSueltos/Boton.jpg') no-repeat center center;
  display: block;
     float: left;
 	color: Scrollbar;
@@ -637,7 +637,7 @@ background: transparent url('/BotonesSueltos/Boton.jpg') no-repeat center center
 }
 
 .gwt-ButtonCenterMoreLess {
- background: transparent url('/BotonesSueltos/Boton.jpg') no-repeat center center;
+ background: transparent url('BotonesSueltos/Boton.jpg') no-repeat center center;
  display: block;
     float: left;
      background-size:  100% 100%;
@@ -648,7 +648,7 @@ background: transparent url('/BotonesSueltos/Boton.jpg') no-repeat center center
 	text-decoration: none;
 }
 .gwt-ButtonCenterMoreLessOver {
- background: transparent url('/BotonesSueltos/Boton.jpg') no-repeat  center center;
+ background: transparent url('BotonesSueltos/Boton.jpg') no-repeat  center center;
  display: block;
     float: left;
 		    background-size:  100% 100%;
@@ -661,7 +661,7 @@ background: transparent url('/BotonesSueltos/Boton.jpg') no-repeat center center
 }
 
 .gwt-ButtonCenterMoreLessSelect {
-background: transparent url('/BotonesSueltos/Boton.jpg') no-repeat center center;
+background: transparent url('BotonesSueltos/Boton.jpg') no-repeat center center;
  display: block;
     float: left;
 	color: Scrollbar;
@@ -691,7 +691,7 @@ font-size: 11px;
 }
 
 .gwt-ButtonCenterPequ {
- background: transparent url('/BotonesSueltos/Boton.jpg') no-repeat center center;
+ background: transparent url('BotonesSueltos/Boton.jpg') no-repeat center center;
  display: block;
     float: left;
     font: normal 12px arial, sans-serif;
@@ -702,7 +702,7 @@ font-size: 11px;
 	font-size: 11px;
 }
 .gwt-ButtonCenterPequOver {
- background: transparent url('/BotonesSueltos/Boton.jpg') no-repeat  center center;
+ background: transparent url('BotonesSueltos/Boton.jpg') no-repeat  center center;
  display: block;
     float: left;
     font: normal 12px arial, sans-serif;
@@ -714,7 +714,7 @@ font-size: 11px;
 }
 
 .gwt-ButtonCenterPequSelect {
-background: transparent url('/BotonesSueltos/Boton.jpg') no-repeat center center;
+background: transparent url('BotonesSueltos/Boton.jpg') no-repeat center center;
  display: block;
     float: left;
     font: normal 12px arial, sans-serif;
@@ -738,7 +738,7 @@ background: transparent url('/BotonesSueltos/Boton.jpg') no-repeat center center
 }
 
 .gwt-ButtonDerechaMIN {
- background: transparent url('/BotonesSueltos/BotonDer.jpg') no-repeat center center;
+ background: transparent url('BotonesSueltos/BotonDer.jpg') no-repeat center center;
  display: block;
     float: left;
     font: normal 12px arial, sans-serif;
@@ -748,7 +748,7 @@ background: transparent url('/BotonesSueltos/Boton.jpg') no-repeat center center
 	border: 0px solid;
 }
 .gwt-ButtonDerechaOverMIN {
- background: transparent url('/BotonesSueltos/BotonDer.jpg') no-repeat  center center;
+ background: transparent url('BotonesSueltos/BotonDer.jpg') no-repeat  center center;
  display: block;
     float: left;
     font: normal 12px arial, sans-serif;
@@ -759,7 +759,7 @@ background: transparent url('/BotonesSueltos/Boton.jpg') no-repeat center center
 }
 
 .gwt-ButtonDerechaSelectMIN {
-background: transparent url('/BotonesSueltos/BotonDer.jpg') no-repeat center center;
+background: transparent url('BotonesSueltos/BotonDer.jpg') no-repeat center center;
  display: block;
     float: left;
     font: normal 12px arial, sans-serif;
@@ -781,7 +781,7 @@ background: transparent url('/BotonesSueltos/BotonDer.jpg') no-repeat center cen
 }
 
 .gwt-ButtonIzquierdaMIN {
- background: transparent url('/BotonesSueltos/BotonIzq.jpg') no-repeat center center;
+ background: transparent url('BotonesSueltos/BotonIzq.jpg') no-repeat center center;
  display: block;
     float: left;
     font: normal 12px arial, sans-serif;
@@ -791,7 +791,7 @@ background: transparent url('/BotonesSueltos/BotonDer.jpg') no-repeat center cen
 	border: 0px solid;
 }
 .gwt-ButtonIzquierdaOverMIN {
- background: transparent url('/BotonesSueltos/BotonIzq.jpg') no-repeat  center center;
+ background: transparent url('BotonesSueltos/BotonIzq.jpg') no-repeat  center center;
  display: block;
     float: left;
     font: normal 12px arial, sans-serif;
@@ -802,7 +802,7 @@ background: transparent url('/BotonesSueltos/BotonDer.jpg') no-repeat center cen
 }
 
 .gwt-ButtonIzquierdaSelectMIN {
-background: transparent url('/BotonesSueltos/BotonIzq.jpg') no-repeat center center;
+background: transparent url('BotonesSueltos/BotonIzq.jpg') no-repeat center center;
  display: block;
     float: left;
     font: normal 12px arial, sans-serif;
@@ -836,7 +836,7 @@ height: 100%;
 }
 
 .gwt-ButtonDerechaUP {
- background: transparent url('/Direccionales/BotonDerArriba.jpg') no-repeat center center;
+ background: transparent url('Direccionales/BotonDerArriba.jpg') no-repeat center center;
  display: block;
     float: left;
     font: normal 12px arial, sans-serif;
@@ -847,7 +847,7 @@ height: 100%;
 	font-size: 24px;
 }
 .gwt-ButtonDerechaOverUP {
- background: transparent url('/Direccionales/BotonDerArriba.jpg') no-repeat  center center;
+ background: transparent url('Direccionales/BotonDerArriba.jpg') no-repeat  center center;
  display: block;
     float: left;
     font: normal 12px arial, sans-serif;
@@ -859,7 +859,7 @@ height: 100%;
 }
 
 .gwt-ButtonDerechaSelectUP {
-background: transparent url('/Direccionales/BotonDerArriba.jpg') no-repeat center center;
+background: transparent url('Direccionales/BotonDerArriba.jpg') no-repeat center center;
  display: block;
     float: left;
     font: normal 12px arial, sans-serif;
@@ -883,7 +883,7 @@ background: transparent url('/Direccionales/BotonDerArriba.jpg') no-repeat cente
 }
 
 .gwt-ButtonDerechaDown {
- background: transparent url('/Direccionales/BotonDerAbajo.jpg') no-repeat center center;
+ background: transparent url('Direccionales/BotonDerAbajo.jpg') no-repeat center center;
  display: block;
     float: left;
     font: normal 12px arial, sans-serif;
@@ -894,7 +894,7 @@ background: transparent url('/Direccionales/BotonDerArriba.jpg') no-repeat cente
 	font-size: 24px;
 }
 .gwt-ButtonDerechaOverDown {
- background: transparent url('/Direccionales/BotonDerAbajo.jpg') no-repeat  center center;
+ background: transparent url('Direccionales/BotonDerAbajo.jpg') no-repeat  center center;
  display: block;
     float: left;
     font: normal 12px arial, sans-serif;
@@ -906,7 +906,7 @@ background: transparent url('/Direccionales/BotonDerArriba.jpg') no-repeat cente
 }
 
 .gwt-ButtonDerechaSelectDown {
-background: transparent url('/Direccionales/BotonDerAbajo.jpg') no-repeat center center;
+background: transparent url('Direccionales/BotonDerAbajo.jpg') no-repeat center center;
  display: block;
     float: left;
     font: normal 12px arial, sans-serif;
@@ -930,7 +930,7 @@ background: transparent url('/Direccionales/BotonDerAbajo.jpg') no-repeat center
 }
 
 .gwt-ButtonCenterContinuo {
- background: transparent url('/Direccionales/BotonCentroDer.jpg') no-repeat center center;
+ background: transparent url('Direccionales/BotonCentroDer.jpg') no-repeat center center;
  display: block;
     float: left;
     font: normal 12px arial, sans-serif;
@@ -941,7 +941,7 @@ background: transparent url('/Direccionales/BotonDerAbajo.jpg') no-repeat center
 	font-size: 24px;
 }
 .gwt-ButtonCenterContinuoOver {
- background: transparent url('/Direccionales/BotonCentroDer.jpg') no-repeat  center center;
+ background: transparent url('Direccionales/BotonCentroDer.jpg') no-repeat  center center;
  display: block;
     float: left;
     font: normal 12px arial, sans-serif;
@@ -953,7 +953,7 @@ background: transparent url('/Direccionales/BotonDerAbajo.jpg') no-repeat center
 }
 
 .gwt-ButtonCenterContinuoSelect {
-background: transparent url('/Direccionales/BotonCentroDer.jpg') no-repeat center center;
+background: transparent url('Direccionales/BotonCentroDer.jpg') no-repeat center center;
  display: block;
     float: left;
     font: normal 12px arial, sans-serif;
@@ -977,7 +977,7 @@ background: transparent url('/Direccionales/BotonCentroDer.jpg') no-repeat cente
 }
 
 .gwt-ButtonCenterContinuoEnd {
- background: transparent url('/Direccionales/BotonCentroEnd.jpg') no-repeat center center;
+ background: transparent url('Direccionales/BotonCentroEnd.jpg') no-repeat center center;
  display: block;
     float: left;
     font: normal 12px arial, sans-serif;
@@ -988,7 +988,7 @@ background: transparent url('/Direccionales/BotonCentroDer.jpg') no-repeat cente
 	font-size: 24px;
 }
 .gwt-ButtonCenterContinuoEndOver {
- background: transparent url('/Direccionales/BotonCentroEnd.jpg') no-repeat  center center;
+ background: transparent url('Direccionales/BotonCentroEnd.jpg') no-repeat  center center;
  display: block;
     float: left;
     font: normal 12px arial, sans-serif;
@@ -1000,7 +1000,7 @@ background: transparent url('/Direccionales/BotonCentroDer.jpg') no-repeat cente
 }
 
 .gwt-ButtonCenterContinuoEndSelect {
-background: transparent url('/Direccionales/BotonCentroEnd.jpg') no-repeat center center;
+background: transparent url('Direccionales/BotonCentroEnd.jpg') no-repeat center center;
  display: block;
     float: left;
     font: normal 12px arial, sans-serif;
@@ -1024,7 +1024,7 @@ background: transparent url('/Direccionales/BotonCentroEnd.jpg') no-repeat cente
 }
 
 .gwt-ButtonCenterContinuoIzq {
- background: transparent url('/Direccionales/BotonIzqDer.jpg') no-repeat center center;
+ background: transparent url('Direccionales/BotonIzqDer.jpg') no-repeat center center;
  display: block;
     float: left;
     font: normal 12px arial, sans-serif;
@@ -1035,7 +1035,7 @@ background: transparent url('/Direccionales/BotonCentroEnd.jpg') no-repeat cente
 	font-size: 24px;
 }
 .gwt-ButtonCenterContinuoIzqOver {
- background: transparent url('/Direccionales/BotonIzqDer.jpg') no-repeat  center center;
+ background: transparent url('Direccionales/BotonIzqDer.jpg') no-repeat  center center;
  display: block;
     float: left;
     font: normal 12px arial, sans-serif;
@@ -1047,7 +1047,7 @@ background: transparent url('/Direccionales/BotonCentroEnd.jpg') no-repeat cente
 }
 
 .gwt-ButtonCenterContinuoIzqSelect {
-background: transparent url('/Direccionales/BotonIzqDer.jpg') no-repeat center center;
+background: transparent url('Direccionales/BotonIzqDer.jpg') no-repeat center center;
  display: block;
     float: left;
     font: normal 12px arial, sans-serif;
@@ -1071,7 +1071,7 @@ background: transparent url('/Direccionales/BotonIzqDer.jpg') no-repeat center c
 }
 
 .gwt-ButtonCenterContinuoIzqEnd {
- background: transparent url('/Direccionales/BotonIzqIzq.jpg') no-repeat center center;
+ background: transparent url('Direccionales/BotonIzqIzq.jpg') no-repeat center center;
  display: block;
     float: left;
     font: normal 12px arial, sans-serif;
@@ -1082,7 +1082,7 @@ background: transparent url('/Direccionales/BotonIzqDer.jpg') no-repeat center c
 	font-size: 24px;
 }
 .gwt-ButtonCenterContinuoIzqEndOver {
- background: transparent url('/Direccionales/BotonIzqIzq.jpg') no-repeat  center center;
+ background: transparent url('Direccionales/BotonIzqIzq.jpg') no-repeat  center center;
  display: block;
     float: left;
     font: normal 12px arial, sans-serif;
@@ -1094,7 +1094,7 @@ background: transparent url('/Direccionales/BotonIzqDer.jpg') no-repeat center c
 }
 
 .gwt-ButtonCenterContinuoIzqEndSelect {
-background: transparent url('/Direccionales/BotonIzqIzq.jpg') no-repeat center center;
+background: transparent url('Direccionales/BotonIzqIzq.jpg') no-repeat center center;
  display: block;
     float: left;
     font: normal 12px arial, sans-serif;
@@ -1118,7 +1118,7 @@ background: transparent url('/Direccionales/BotonIzqIzq.jpg') no-repeat center c
 }
 
 .gwt-ButtonCenterContinuoDoble {
- background: transparent url('/Direccionales/BotonCentro.jpg') no-repeat center center;
+ background: transparent url('Direccionales/BotonCentro.jpg') no-repeat center center;
  display: block;
     float: left;
     font: normal 12px arial, sans-serif;
@@ -1129,7 +1129,7 @@ background: transparent url('/Direccionales/BotonIzqIzq.jpg') no-repeat center c
 	font-size: 24px;
 }
 .gwt-ButtonCenterContinuoDobleOver {
- background: transparent url('/Direccionales/BotonCentro.jpg') no-repeat  center center;
+ background: transparent url('Direccionales/BotonCentro.jpg') no-repeat  center center;
  display: block;
     float: left;
     font: normal 12px arial, sans-serif;
@@ -1141,7 +1141,7 @@ background: transparent url('/Direccionales/BotonIzqIzq.jpg') no-repeat center c
 }
 
 .gwt-ButtonCenterContinuoDobleSelect {
-background: transparent url('/Direccionales/BotonCentro.jpg') no-repeat center center;
+background: transparent url('Direccionales/BotonCentro.jpg') no-repeat center center;
  display: block;
     float: left;
     font: normal 12px arial, sans-serif;
