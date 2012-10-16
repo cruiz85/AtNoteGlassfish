@@ -8,7 +8,6 @@ public class UserClient implements IsSerializable{
 	private String firstName;
 	private String lastName;
 	private String email;
-	private String password;
 
 	private boolean loggedIn = false;
 	private String loginUrl;
@@ -113,13 +112,5 @@ public class UserClient implements IsSerializable{
 	
 	public void setFirstName(String firstName) {
 		this.firstName = firstName;
-	}
-
-	public String getPassword() {
-		return password;
-	}
-
-	public void setPassword(String password) {
-		this.password = password;
 	}
 }
