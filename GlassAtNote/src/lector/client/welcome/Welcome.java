@@ -193,7 +193,44 @@ public class Welcome implements EntryPoint {
 		// verticalPanel.add(lblCollaborativeAnnotationOf);
 		lblCollaborativeAnnotationOf.setWidth("1112px");
 
-		// LoginOL
+		 btnNewButton = new Button("Log In");
+		 horizontalPanel.add(btnNewButton);
+		 btnNewButton.addClickHandler(new ClickHandler() {
+		 public void onClick(ClickEvent event) {
+		 Controlador.change2Login();
+		 Footer.clear();
+		 }
+		 });
+		 btnNewButton.setText("Log In");
+		 
+btnNewButton.addMouseDownHandler(new MouseDownHandler() {
+				public void onMouseDown(MouseDownEvent event) {
+					((Button) event.getSource())
+							.setStyleName("gwt-ButtonCenterPush");
+				}
+			});
+
+	btnNewButton.addMouseOutHandler(new MouseOutHandler() {
+		public void onMouseOut(MouseOutEvent event) {
+			((Button) event.getSource())
+					.setStyleName("gwt-ButtonCenter");
+		}
+	});
+
+	btnNewButton
+			.addMouseOverHandler(new MouseOverHandler() {
+				public void onMouseOver(MouseOverEvent event) {
+
+					((Button) event.getSource())
+							.setStyleName("gwt-ButtonCenterOver");
+
+				}
+			});
+
+	btnNewButton.setStyleName("gwt-ButtonCenter");
+	btnNewButton.setSize("164px", "50px");
+		
+		// LoginOLDOLD
 //		 btnNewButton = new Button("Log In");
 //		 horizontalPanel.add(btnNewButton);
 //		 btnNewButton.addClickHandler(new ClickHandler() {
@@ -205,193 +242,193 @@ public class Welcome implements EntryPoint {
 //		 btnNewButton.setSize("164px", "50px");
 
 		
-		// LoginNew
-		bookReaderServiceHolder.login(Window.Location.getHref(),
-				new AsyncCallback<UserClient>() {
-
-					public void onFailure(Throwable error) {
-//						Window.Location.reload()
-						Logger.GetLogger().severe(this.getClass().getName(), getClass().getName() + " Login Error" );
-						Logger.GetLogger().severe(this.getClass().getName(), error.getMessage().toString());
-						throw new Error(getClass().getName() + " Login Error");
-						
-					}
-
-					public void onSuccess(UserClient result) {
-//                        Professor professor = (Professor) result;
-//                        professor.getAnnotations();
-//                        Window.alert("Paso!");
-						ActualUser.setUser(result);
-						btnNewButton = new Button("Log In");
-						horizontalPanel.add(btnNewButton);
-						btnNewButton.addClickHandler(new ClickHandler() {
-							public void onClick(ClickEvent event) {
-								btnNewButton.setEnabled(false);
-								Window.open(ActualUser.getUser().getLoginUrl(),
-										"_self", "");
-								
-								//TODO Temporal
-								Logger L = Logger.GetLogger();
-
-								if (ActualUser.getUser() instanceof StudentClient) {
-									Controlador.change2MyActivities();
-									Footer.clear();
-								} else if (ActualUser.getUser() instanceof ProfessorClient) {
-									Controlador.change2Administrator();
-									Footer.clear();
-								}
-								L.info(Welcome.class.getName(),
-										LogMessageConstants.USER_SUCCESS_LOGGED_IN
-												+ ActualUser.getUser().getEmail());
-
-								////
-								
-							}
-						});
-						btnNewButton.setText("Log In");
-						btnNewButton.setSize("164px", "50px");
-						btnNewButton.addClickHandler(new ClickHandler() {
-
-							public void onClick(ClickEvent event) {
-								((Button) event.getSource())
-										.setStyleName("gwt-ButtonCenter");
-
-							}
-						});
-
-						btnNewButton
-								.addMouseDownHandler(new MouseDownHandler() {
-									public void onMouseDown(MouseDownEvent event) {
-										((Button) event.getSource())
-												.setStyleName("gwt-ButtonCenterPush");
-									}
-								});
-
-						btnNewButton.addMouseOutHandler(new MouseOutHandler() {
-							public void onMouseOut(MouseOutEvent event) {
-								((Button) event.getSource())
-										.setStyleName("gwt-ButtonCenter");
-							}
-						});
-
-						btnNewButton
-								.addMouseOverHandler(new MouseOverHandler() {
-									public void onMouseOver(MouseOverEvent event) {
-
-										((Button) event.getSource())
-												.setStyleName("gwt-ButtonCenterOver");
-
-									}
-								});
-
-						btnNewButton.setStyleName("gwt-ButtonCenter");
-
-						/*
-						 * Anchor A = new Anchor("Sign In");
-						 * A.setHref(ActualUser.getUser().getLoginUrl()); Anchor
-						 * signOutLink = new Anchor("Sign Out");
-						 * signOutLink.setHref
-						 * (ActualUser.getUser().getLogoutUrl());
-						 * horizontalPanel.add(signOutLink);
-						 */
-						
-						
-						
-						
-						
-						if (result.isLoggedIn()) {
-							
-							Logger L = Logger.GetLogger();
-
-							if (result instanceof StudentClient) {
-								Controlador.change2MyActivities();
-								Footer.clear();
-							} else if (result instanceof ProfessorClient) {
-								Controlador.change2Administrator();
-								Footer.clear();
-							}
-							L.info(Welcome.class.getName(),
-									LogMessageConstants.USER_SUCCESS_LOGGED_IN
-											+ result.getEmail());
-
-						} else {
-							if (!result.isIsAuthenticated()) {
-								Logger L = Logger.GetLogger();
-
-								Window.alert("You are not authorized to view this application");
-								horizontalPanel.remove(btnNewButton);
-								btnNewButton = new Button("Log Out");
-								btnNewButton.setText("Log Out");
-
-								horizontalPanel.add(btnNewButton);
-
-								btnNewButton.setSize("164px", "50px");
-								btnNewButton.setEnabled(true);
-								L.warning(
-										Welcome.class.getName(),
-										LogMessageConstants.USER_FAILURE_LOGGED_IN
-												+ result.getEmail());
-								btnNewButton
-										.addClickHandler(new ClickHandler() {
-											public void onClick(ClickEvent event) {
-
-												// btnNewButton.setEnabled(false);
-												Window.open(ActualUser
-														.getUser()
-														.getLogoutUrl(),
-														"_self", "");
-												// Window.open(ActualUser.getUser().getLogoutUrl(),
-												// "_self", "");
-												// ActualUser.getUser().setLoggedIn(true);
-												// ActualUser.getUser().setIsAuthenticated(true);
-											}
-										});
-								btnNewButton
-										.addClickHandler(new ClickHandler() {
-
-											public void onClick(ClickEvent event) {
-												((Button) event.getSource())
-														.setStyleName("gwt-ButtonCenter");
-
-											}
-										});
-
-								btnNewButton
-										.addMouseDownHandler(new MouseDownHandler() {
-											public void onMouseDown(
-													MouseDownEvent event) {
-												((Button) event.getSource())
-														.setStyleName("gwt-ButtonCenterPush");
-											}
-										});
-
-								btnNewButton
-										.addMouseOutHandler(new MouseOutHandler() {
-											public void onMouseOut(
-													MouseOutEvent event) {
-												((Button) event.getSource())
-														.setStyleName("gwt-ButtonCenter");
-											}
-										});
-
-								btnNewButton
-										.addMouseOverHandler(new MouseOverHandler() {
-											public void onMouseOver(
-													MouseOverEvent event) {
-
-												((Button) event.getSource())
-														.setStyleName("gwt-ButtonCenterOver");
-
-											}
-										});
-
-								btnNewButton.setStyleName("gwt-ButtonCenter");
-
-							}
-
-						}
-					}
-				});
+//		// LoginOLD
+//		bookReaderServiceHolder.login(Window.Location.getHref(),
+//				new AsyncCallback<UserClient>() {
+//
+//					public void onFailure(Throwable error) {
+////						Window.Location.reload()
+//						Logger.GetLogger().severe(this.getClass().getName(), getClass().getName() + " Login Error" );
+//						Logger.GetLogger().severe(this.getClass().getName(), error.getMessage().toString());
+//						throw new Error(getClass().getName() + " Login Error");
+//						
+//					}
+//
+//					public void onSuccess(UserClient result) {
+////                        Professor professor = (Professor) result;
+////                        professor.getAnnotations();
+////                        Window.alert("Paso!");
+//						ActualUser.setUser(result);
+//						btnNewButton = new Button("Log In");
+//						horizontalPanel.add(btnNewButton);
+//						btnNewButton.addClickHandler(new ClickHandler() {
+//							public void onClick(ClickEvent event) {
+//								btnNewButton.setEnabled(false);
+//								Window.open(ActualUser.getUser().getLoginUrl(),
+//										"_self", "");
+//								
+//								//TODO Temporal
+//								Logger L = Logger.GetLogger();
+//
+//								if (ActualUser.getUser() instanceof StudentClient) {
+//									Controlador.change2MyActivities();
+//									Footer.clear();
+//								} else if (ActualUser.getUser() instanceof ProfessorClient) {
+//									Controlador.change2Administrator();
+//									Footer.clear();
+//								}
+//								L.info(Welcome.class.getName(),
+//										LogMessageConstants.USER_SUCCESS_LOGGED_IN
+//												+ ActualUser.getUser().getEmail());
+//
+//								////
+//								
+//							}
+//						});
+//						btnNewButton.setText("Log In");
+//						btnNewButton.setSize("164px", "50px");
+//						btnNewButton.addClickHandler(new ClickHandler() {
+//
+//							public void onClick(ClickEvent event) {
+//								((Button) event.getSource())
+//										.setStyleName("gwt-ButtonCenter");
+//
+//							}
+//						});
+//
+//						btnNewButton
+//								.addMouseDownHandler(new MouseDownHandler() {
+//									public void onMouseDown(MouseDownEvent event) {
+//										((Button) event.getSource())
+//												.setStyleName("gwt-ButtonCenterPush");
+//									}
+//								});
+//
+//						btnNewButton.addMouseOutHandler(new MouseOutHandler() {
+//							public void onMouseOut(MouseOutEvent event) {
+//								((Button) event.getSource())
+//										.setStyleName("gwt-ButtonCenter");
+//							}
+//						});
+//
+//						btnNewButton
+//								.addMouseOverHandler(new MouseOverHandler() {
+//									public void onMouseOver(MouseOverEvent event) {
+//
+//										((Button) event.getSource())
+//												.setStyleName("gwt-ButtonCenterOver");
+//
+//									}
+//								});
+//
+//						btnNewButton.setStyleName("gwt-ButtonCenter");
+//
+//						/*
+//						 * Anchor A = new Anchor("Sign In");
+//						 * A.setHref(ActualUser.getUser().getLoginUrl()); Anchor
+//						 * signOutLink = new Anchor("Sign Out");
+//						 * signOutLink.setHref
+//						 * (ActualUser.getUser().getLogoutUrl());
+//						 * horizontalPanel.add(signOutLink);
+//						 */
+//						
+//						
+//						
+//						
+//						
+//						if (result.isLoggedIn()) {
+//							
+//							Logger L = Logger.GetLogger();
+//
+//							if (result instanceof StudentClient) {
+//								Controlador.change2MyActivities();
+//								Footer.clear();
+//							} else if (result instanceof ProfessorClient) {
+//								Controlador.change2Administrator();
+//								Footer.clear();
+//							}
+//							L.info(Welcome.class.getName(),
+//									LogMessageConstants.USER_SUCCESS_LOGGED_IN
+//											+ result.getEmail());
+//
+//						} else {
+//							if (!result.isIsAuthenticated()) {
+//								Logger L = Logger.GetLogger();
+//
+//								Window.alert("You are not authorized to view this application");
+//								horizontalPanel.remove(btnNewButton);
+//								btnNewButton = new Button("Log Out");
+//								btnNewButton.setText("Log Out");
+//
+//								horizontalPanel.add(btnNewButton);
+//
+//								btnNewButton.setSize("164px", "50px");
+//								btnNewButton.setEnabled(true);
+//								L.warning(
+//										Welcome.class.getName(),
+//										LogMessageConstants.USER_FAILURE_LOGGED_IN
+//												+ result.getEmail());
+//								btnNewButton
+//										.addClickHandler(new ClickHandler() {
+//											public void onClick(ClickEvent event) {
+//
+//												// btnNewButton.setEnabled(false);
+//												Window.open(ActualUser
+//														.getUser()
+//														.getLogoutUrl(),
+//														"_self", "");
+//												// Window.open(ActualUser.getUser().getLogoutUrl(),
+//												// "_self", "");
+//												// ActualUser.getUser().setLoggedIn(true);
+//												// ActualUser.getUser().setIsAuthenticated(true);
+//											}
+//										});
+//								btnNewButton
+//										.addClickHandler(new ClickHandler() {
+//
+//											public void onClick(ClickEvent event) {
+//												((Button) event.getSource())
+//														.setStyleName("gwt-ButtonCenter");
+//
+//											}
+//										});
+//
+//								btnNewButton
+//										.addMouseDownHandler(new MouseDownHandler() {
+//											public void onMouseDown(
+//													MouseDownEvent event) {
+//												((Button) event.getSource())
+//														.setStyleName("gwt-ButtonCenterPush");
+//											}
+//										});
+//
+//								btnNewButton
+//										.addMouseOutHandler(new MouseOutHandler() {
+//											public void onMouseOut(
+//													MouseOutEvent event) {
+//												((Button) event.getSource())
+//														.setStyleName("gwt-ButtonCenter");
+//											}
+//										});
+//
+//								btnNewButton
+//										.addMouseOverHandler(new MouseOverHandler() {
+//											public void onMouseOver(
+//													MouseOverEvent event) {
+//
+//												((Button) event.getSource())
+//														.setStyleName("gwt-ButtonCenterOver");
+//
+//											}
+//										});
+//
+//								btnNewButton.setStyleName("gwt-ButtonCenter");
+//
+//							}
+//
+//						}
+//					}
+//				});
 
 	}
 }
