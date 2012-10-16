@@ -131,7 +131,7 @@ public class GWTServiceImpl extends RemoteServiceServlet implements GWTService {
 			throw new NotAuthenticatedException(
 					"Error in Login: User not Authenticated, please verify your login input");
 		}
-		return ServiceManagerUtils.produceUserClient(user);
+		return ServiceManagerUtils.produceUserClient(user); 
 	}
 
 	public UserApp loadUserByName(String name) throws UserNotFoundException,

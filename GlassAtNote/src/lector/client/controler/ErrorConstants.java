@@ -38,5 +38,6 @@ public class ErrorConstants {
 	public static String TEMPLATES_CAT_BE_EMPTY="You can not unselect if you do not select a template first";
 	public static String ERROR_RETRIVING_TEMPLATE_MASTER_EXPORT_PANEL="Error Retriving Template, please reload";
 	public static String ERROR_ON_MOVE_CATEGORY_ASCENDESCEN = "Error moving category with her brothers, please retry it";
+	public static String ERROR_PASS_OR_USER_EMPTY="Error, Password or Username are empty";
 	
 }
