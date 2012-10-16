@@ -47,17 +47,18 @@ public interface GWTServiceAsync {
 
 	void deleteAnnotation(Long annotationId, AsyncCallback<Void> asyncCallback);
 
-	void saveAnnotation(Annotation annotation, AsyncCallback<Void> asyncCallback);
+	void saveAnnotation(AnnotationClient annotationClient,
+			AsyncCallback<Void> asyncCallback);
 
-	void saveCatalog(Catalogo catalog, AsyncCallback<Void> callback);
+	void saveCatalog(CatalogoClient catalogClient, AsyncCallback<Void> callback);
 
 	void login(String userName, String password,
 			AsyncCallback<UserClient> asyncCallback);
 
-	void saveUser(UserApp user, AsyncCallback<Void> asyncCallback);
+	void saveUser(UserClient userClient, AsyncCallback<Void> asyncCallback);
 
 
-	public void saveGroup(GroupApp groupApp, AsyncCallback<Void> asyncCallback);
+	void saveGroup(GroupClient groupClient, AsyncCallback<Void> asyncCallback);
 
 	void deleteGroup(Long groupId, AsyncCallback<Void> asyncCallback);
 
@@ -72,7 +73,7 @@ public interface GWTServiceAsync {
 	void deleteLanguage(Long languageId, AsyncCallback<Void> callback);
 
 
-	void saveReadingActivity(ReadingActivity readingActivity,
+	void saveReadingActivity(ReadingActivityClient readingActivityClient,
 			AsyncCallback<Void> callback);
 
 
@@ -81,7 +82,7 @@ public interface GWTServiceAsync {
 
 	void fusionFolder(Long fFromId, Long fToId, AsyncCallback<Void> callback);
 
-	void saveAnnotationThread(AnnotationThread annotationThread,
+	void saveAnnotationThread(AnnotationThreadClient annotationThreadClient,
 			AsyncCallback<Void> callback);
 
 	void deleteAnnotationThread(Long annotationThreadId,
@@ -249,6 +250,9 @@ public interface GWTServiceAsync {
 
 	void getBookClients(String query, int start,
 			AsyncCallback<List<GoogleBookClient>> callback);
+
+	void removeStudentToBeValidated(Long userId, Long groupId,
+			AsyncCallback<Void> callback);
 
 	
 }

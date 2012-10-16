@@ -20,6 +20,12 @@ public class Student extends UserApp implements Serializable {
 	public Student() {
 	}
 
+	public Student(Long id, String firstName, String lastName, String email,
+			String password) {
+		super(id, firstName, lastName, email, password);
+		// TODO Auto-generated constructor stub
+	}
+
 	public Student(String email) {
 		super(email);
 

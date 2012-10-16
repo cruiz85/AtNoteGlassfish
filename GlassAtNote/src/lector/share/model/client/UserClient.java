@@ -2,13 +2,13 @@ package lector.share.model.client;
 
 import com.google.gwt.user.client.rpc.IsSerializable;
 
-public class UserClient implements IsSerializable{
+public class UserClient implements IsSerializable {
 
 	private Long id;
 	private String firstName;
 	private String lastName;
 	private String email;
-
+	private String password;
 	private boolean loggedIn = false;
 	private String loginUrl;
 	private String logoutUrl;
@@ -38,6 +38,14 @@ public class UserClient implements IsSerializable{
 
 	public Long getId() {
 		return id;
+	}
+
+	public String getPassword() {
+		return password;
+	}
+
+	public void setPassword(String password) {
+		this.password = password;
 	}
 
 	public void setId(Long id) {
@@ -100,7 +108,6 @@ public class UserClient implements IsSerializable{
 		this.isAuthenticated = isAuthenticated;
 	}
 
-
 	@Override
 	public String toString() {
 		return "name:" + firstName + " lastName:" + lastName;
@@ -109,7 +116,7 @@ public class UserClient implements IsSerializable{
 	public String getFirstName() {
 		return firstName;
 	}
-	
+
 	public void setFirstName(String firstName) {
 		this.firstName = firstName;
 	}

@@ -28,6 +28,7 @@ import lector.share.model.GoogleBook;
 import lector.share.model.GroupNotFoundException;
 import lector.share.model.IlegalFolderFusionException;
 import lector.share.model.LanguageNotFoundException;
+import lector.share.model.NotAuthenticatedException;
 import lector.share.model.NullParameterException;
 import lector.share.model.Professor;
 import lector.share.model.ProfessorNotFoundException;
@@ -69,11 +70,11 @@ public interface GWTService extends RemoteService {
 	 * @gwt.typeArgs <org.yournamehere.client.Annotation>
 	 */
 
-	public UserClient login(String userName, String password) throws UserNotFoundException, GeneralException;
+	public UserClient login(String userName, String password) throws UserNotFoundException, NotAuthenticatedException, GeneralException;
 
 	// Usuarios
 
-	public void saveUser(UserApp user) throws GeneralException;
+	public void saveUser(UserClient userClient) throws GeneralException;
 
 	public UserClient loadUserById(Long userId) throws UserNotFoundException, GeneralException;
 
@@ -96,16 +97,18 @@ public interface GWTService extends RemoteService {
 //	void deleteBookFromUser(String bookId, Long userId);  no debe ser necesario, eliminarlo de la lista y save
 
 	// Groups
-	public void saveGroup(GroupApp groupApp) throws GeneralException;
+	public void saveGroup(GroupClient groupClient) throws GeneralException;
 
 	public GroupClient loadGroupById(Long groupId) throws GroupNotFoundException, GeneralException;
 
-	public List<GroupClient> getGroupsByUserId(Long userId) throws GroupNotFoundException, GeneralException;  //No debe ser necesario
+	public List<GroupClient> getGroupsByUserId(Long userId) throws GroupNotFoundException, GeneralException;  
 
 	public void deleteGroup(Long groupId) throws GeneralException;
 
 	/* Metodo Nuevo, para añadir usuarios a un grupo, en la lista para validar */
 	public void addStudentToBeValidated(Long userId, Long groupId) throws GeneralException;
+	
+	public void removeStudentToBeValidated(Long userId, Long groupId) throws GeneralException;
 
 	/*
 	 * Valida al usuario en el grupo pasandolo de la lista de en espera a
@@ -115,7 +118,7 @@ public interface GWTService extends RemoteService {
 
 	// Annotations
 
-	public void saveAnnotation(Annotation annotation);
+	public void saveAnnotation(AnnotationClient annotationClient);
 
 	public List<AnnotationClient> getAnnotationsByBookId(Long activityId, String bookId) 
 			throws GeneralException, AnnotationNotFoundException,
@@ -149,7 +152,7 @@ public interface GWTService extends RemoteService {
 
 	// Annotations Threads
 
-	public void saveAnnotationThread(AnnotationThread annotationThread);
+	public void saveAnnotationThread(AnnotationThreadClient annotationThreadClient);
 
 	public void deleteAnnotationThread(Long annotationThreadId)
 			throws GeneralException;
@@ -178,7 +181,7 @@ public interface GWTService extends RemoteService {
 
 	// Catalog
 
-	public void saveCatalog(Catalogo catalog);
+	public void saveCatalog(CatalogoClient catalogClient);
 
 	public CatalogoClient loadCatalogById(Long catalogId);
 
@@ -264,7 +267,7 @@ public interface GWTService extends RemoteService {
 	public List<ReadingActivityClient> getReadingActivitiesByProfessorId(
 			Long professorId) throws GeneralException, ReadingActivityNotFoundException;
 
-	public void saveReadingActivity(ReadingActivity readingActivity) throws GeneralException;
+	public void saveReadingActivity(ReadingActivityClient readingActivityClient) throws GeneralException;
 
 	public void updateReadingActivities();
 

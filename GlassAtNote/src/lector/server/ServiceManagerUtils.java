@@ -80,8 +80,8 @@ public class ServiceManagerUtils {
 		if (a.getUpdatability() == 1) {
 			updatability = true;
 		}
-		return new AnnotationClient(produceUserClient(a.getCreator()), a
-				.getActivity().getId(),
+		return new AnnotationClient(a.getId(),
+				produceUserClient(a.getCreator()), a.getActivity().getId(),
 				produceTextSelectors(a.getTextSelectors()), a.getComment(),
 				a.getBookId(), visibility, updatability, a.getPageNumber(),
 				produceTypeClients(a.getTags()), a.isEditable());
@@ -118,8 +118,8 @@ public class ServiceManagerUtils {
 			List<AnnotationThread> at, AnnotationThreadClient father) {
 		List<AnnotationThreadClient> annotationThreadClients = new ArrayList<AnnotationThreadClient>();
 		for (AnnotationThread annotationThread : at) {
-			annotationThreadClients
-					.add(produceAnnotationThreadClient(annotationThread,father));
+			annotationThreadClients.add(produceAnnotationThreadClient(
+					annotationThread, father));
 		}
 		return annotationThreadClients;
 	}

@@ -46,6 +46,7 @@ import lector.share.model.LanguageNotFoundException;
 
 import lector.share.model.Catalogo;
 import lector.share.model.Entry;
+import lector.share.model.NotAuthenticatedException;
 import lector.share.model.NullParameterException;
 import lector.share.model.Professor;
 import lector.share.model.ProfessorNotFoundException;
@@ -120,35 +121,121 @@ public class GWTServiceImpl extends RemoteServiceServlet implements GWTService {
 	// }
 
 	@Override
-	public UserClient login(String userName, String password) throws UserNotFoundException,
+	public UserClient login(String userName, String password)
+			throws UserNotFoundException, NotAuthenticatedException,
 			GeneralException {
-		boolean flag = true;
-		UserApp userApp = new UserApp();
 
+		UserApp user = loadUserByName(userName);
+
+		if (!user.getPassword().equals(password)) {
+			throw new NotAuthenticatedException(
+					"Error in Login: User not Authenticated, please verify your login input");
+		}
+		return ServiceManagerUtils.produceUserClient(user);
+	}
+
+	public UserApp loadUserByName(String name) throws UserNotFoundException,
+			GeneralException {
+		EntityManager entityManager = emf.createEntityManager();
+		List<UserApp> list;
+		String sql = "SELECT r FROM UserApp r WHERE r.name='" + name + "'";
 		try {
+			list = entityManager.createQuery(sql).getResultList();
+		} catch (Exception e) {
+			// logger.error ("Exception in method loadUserByName: ", e)
+			throw new GeneralException("Exception in method loadUserByName:"
+					+ e.getMessage(), e.getStackTrace());
 
-			userApp = findByEmail("root@root");
-
-		} catch (GeneralException ge) {
-			saveUser(userApp);
-			flag = false;
-		} catch (UserNotFoundException une) {
-			userApp = new Professor("root@root");
-			userApp.setLastName("Joaquin");
-			userApp.setAuthenticated(true);
-			userApp.setLoggedIn(true);
-			saveUser(userApp);
-			flag = false;
 		}
-		if (!flag) {
-			return loadUserByEmail("root@root");
-		}
+		if (list == null || list.isEmpty()) {
+			// logger.error ("Exception in method loadUserById: ", e)
+			throw new UserNotFoundException(
+					"User not found in method loadUserByName");
 
-		return ServiceManagerUtils.produceUserClient(userApp);
+		}
+		if (entityManager.isOpen()) {
+			entityManager.close();
+		}
+		return list.get(0);
 	}
 
 	@Override
-	public void saveUser(UserApp user) throws GeneralException {
+	public void saveUser(UserClient userClient) throws GeneralException {
+		if (userClient instanceof ProfessorClient) {
+			saveProfessor((ProfessorClient) userClient);
+		} else {
+			saveStudent((StudentClient) userClient);
+		}
+
+	}
+
+	private void saveStudent(StudentClient pClient) {
+		boolean isNew = false;
+		Student oldStudent = null;
+		try {
+			if (pClient.getId() != null) {
+				oldStudent = findStudent(pClient.getId());
+			} else {
+				saveUser(new Student(pClient.getId(), pClient.getFirstName(),
+						pClient.getLastName(), pClient.getEmail(),
+						pClient.getPassword()));
+				isNew = true;
+			}
+
+		} catch (StudentNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (GeneralException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		if (!isNew) {
+			boolean isThereAChange = comparareStudents(oldStudent, pClient);
+			if (isThereAChange) {
+				try {
+					saveUser(oldStudent);
+				} catch (GeneralException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+		}
+	}
+
+	private void saveProfessor(ProfessorClient pClient) {
+		boolean isNew = false;
+		Professor oldProfessor = null;
+		try {
+			if (pClient.getId() != null) {
+				oldProfessor = findProfessor(pClient.getId());
+			} else {
+				saveUser(new Professor(pClient.getId(), pClient.getFirstName(),
+						pClient.getLastName(), pClient.getEmail(),
+						pClient.getPassword()));
+				isNew = true;
+			}
+
+		} catch (ProfessorNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (GeneralException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		if (!isNew) {
+			boolean isThereAChange = comparareProfessors(oldProfessor, pClient);
+			if (isThereAChange) {
+				try {
+					saveUser(oldProfessor);
+				} catch (GeneralException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+		}
+	}
+
+	private void saveUser(UserApp user) throws GeneralException {
 		EntityManager entityManager = emf.createEntityManager();
 
 		try {
@@ -346,6 +433,20 @@ public class GWTServiceImpl extends RemoteServiceServlet implements GWTService {
 	}
 
 	@Override
+	public void saveGroup(GroupClient groupClient) {
+		GroupApp oldGroup = new GroupApp();
+		if (groupClient.getId() != null) {
+			try {
+				oldGroup = findGroup(groupClient.getId());
+			} catch (GroupNotFoundException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		oldGroup.setName(groupClient.getName());
+		saveGroup(oldGroup);
+	}
+
 	public void saveGroup(GroupApp group) {
 		EntityManager entityManager = emf.createEntityManager();
 
@@ -491,6 +592,29 @@ public class GWTServiceImpl extends RemoteServiceServlet implements GWTService {
 	}
 
 	// TODO LANZAR EXCEPCIÓN
+	private AnnotationThread findAnnotationThread(Long id)
+			throws AnnotationThreadNotFoundException {
+		EntityManager entityManager = emf.createEntityManager();
+		AnnotationThread a = entityManager.find(AnnotationThread.class, id);
+		if (a == null) {
+			throw new AnnotationThreadNotFoundException(
+					"Annotation not found in method loadAnnotationById");
+		}
+		entityManager.close();
+		return a;
+	}
+
+	private Tag findTag(Long id) throws TagNotFoundException {
+		EntityManager entityManager = emf.createEntityManager();
+		Tag a = entityManager.find(Tag.class, id);
+		if (a == null) {
+			throw new TagNotFoundException("Tag not found in method findTag");
+		}
+		entityManager.close();
+		return a;
+	}
+
+	// TODO LANZAR EXCEPCIÓN
 	private Professor findProfessor(Long id) throws ProfessorNotFoundException {
 		EntityManager entityManager = emf.createEntityManager();
 		Professor a = entityManager.find(Professor.class, id);
@@ -537,6 +661,23 @@ public class GWTServiceImpl extends RemoteServiceServlet implements GWTService {
 	}
 
 	@Override
+	public void removeStudentToBeValidated(Long userId, Long groupId)
+			throws GeneralException {
+		try {
+			GroupApp group = findGroup(groupId);
+			Student student = findStudent(userId);
+			if (group.getRemainingStudents().contains(student)) {
+				group.getRemainingStudents().remove(student);
+			}
+			saveGroup(group);
+		} catch (Exception e) {
+			throw new GeneralException(
+					"Error in method addStudentToBeValidated");
+		}
+
+	}
+
+	@Override
 	public void validStudentToBeInGroup(Long userId, Long groupId)
 			throws GeneralException {
 		try {
@@ -561,6 +702,102 @@ public class GWTServiceImpl extends RemoteServiceServlet implements GWTService {
 	}
 
 	@Override
+	public void saveAnnotation(AnnotationClient annotationClient) {
+		Annotation oldAnnotation;
+		if (annotationClient.getId() != null) {
+			try {
+				oldAnnotation = findAnnotation(annotationClient.getId());
+				seeEditionOnAnnotation(oldAnnotation, annotationClient);
+				saveAnnotation(oldAnnotation);
+			} catch (AnnotationNotFoundException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+
+		}
+	}
+
+	private void seeEditionOnAnnotation(Annotation annotation,
+			AnnotationClient aClient) {
+		boolean isUpdatability = false;
+		boolean isVisibility = false;
+
+		if (!annotation.getBookId().equals(aClient.getBookId())) {
+			annotation.setBookId(aClient.getBookId());
+		}
+		if (!annotation.getComment().equals(aClient.getComment())) {
+			annotation.setComment(aClient.getComment());
+		}
+		if (annotation.isEditable() != aClient.isEditable()) {
+			annotation.setIsEditable(aClient.isEditable());
+		}
+		if (!annotation.getPageNumber().equals(aClient.getPageNumber())) {
+			annotation.setPageNumber(aClient.getPageNumber());
+		}
+
+		if (annotation.getUpdatability() == 1) {
+			isUpdatability = true;
+		}
+		if (annotation.getVisibility() == 1) {
+			isVisibility = true;
+		}
+		if (isUpdatability != aClient.isUpdatability()) {
+			short isUpdatable = 0;
+			if (aClient.isUpdatability()) {
+				isUpdatable = 1;
+			}
+			annotation.setUpdatability(isUpdatable);
+		}
+		if (isVisibility != aClient.isVisibility()) {
+			short isVisble = 0;
+			if (aClient.isVisibility()) {
+				isVisble = 1;
+			}
+			annotation.setVisibility(isVisble);
+		}
+		List<Long> oldAnnotationTagIds = getTagIdsFromAnnotation(annotation);
+		List<Long> aClientTags = getTagIdsFromAnnotationClient(aClient);
+		try {
+			checkChangesOnTags(annotation, oldAnnotationTagIds, aClientTags);
+		} catch (TagNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		saveAnnotation(annotation);
+	}
+
+	private List<Long> getTagIdsFromAnnotation(Annotation a) {
+		List<Long> ids = new ArrayList<Long>();
+		for (Tag tag : a.getTags()) {
+			ids.add(tag.getId());
+		}
+		return ids;
+	}
+
+	private List<Long> getTagIdsFromAnnotationClient(AnnotationClient a) {
+		List<Long> ids = new ArrayList<Long>();
+		for (TypeClient tag : a.getTags()) {
+			ids.add(tag.getId());
+		}
+		return ids;
+	}
+
+	private void checkChangesOnTags(Annotation oldAnnotation, List<Long> aTags,
+			List<Long> aClientTags) throws TagNotFoundException {
+
+		for (Long id : aTags) {
+			if (!aClientTags.contains(id)) {
+				oldAnnotation.getTags().remove(findTag(id));
+			}
+		}
+
+		for (Long id : aClientTags) {
+			if (!aTags.contains(id)) {
+				oldAnnotation.getTags().add(findTag(id));
+			}
+		}
+	}
+
 	public void saveAnnotation(Annotation annotation) {
 		EntityManager entityManager = emf.createEntityManager();
 
@@ -761,6 +998,37 @@ public class GWTServiceImpl extends RemoteServiceServlet implements GWTService {
 	}
 
 	@Override
+	public void saveAnnotationThread(
+			AnnotationThreadClient annotationThreadClient) {
+		AnnotationThread oldAnnotationThread = new AnnotationThread();
+		if (annotationThreadClient.getId() != null) {
+			try {
+				oldAnnotationThread = findAnnotationThread(annotationThreadClient
+						.getId());
+
+			} catch (AnnotationThreadNotFoundException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+
+		}
+		seeChangesInAnnotationThread(oldAnnotationThread,
+				annotationThreadClient);
+		saveAnnotationThread(oldAnnotationThread);
+	}
+
+	private void seeChangesInAnnotationThread(
+			AnnotationThread annotationThread,
+			AnnotationThreadClient aThreadClient) {
+		if (!annotationThread.getComment().equals(aThreadClient.getComment())) {
+			annotationThread.setComment(aThreadClient.getComment());
+		}
+		if (!annotationThread.getUserName().equals(aThreadClient.getUserName())) {
+			annotationThread.setUserName(aThreadClient.getUserName());
+		}
+
+	}
+
 	public void saveAnnotationThread(AnnotationThread annotationThread) {
 		EntityManager entityManager = emf.createEntityManager();
 
@@ -1060,7 +1328,7 @@ public class GWTServiceImpl extends RemoteServiceServlet implements GWTService {
 	}
 
 	@Override
-	public void saveCatalog(Catalogo catalog) {
+	public void saveCatalog(CatalogoClient catalogClient) {
 		// TODO Auto-generated method stub
 
 	}
@@ -1370,28 +1638,27 @@ public class GWTServiceImpl extends RemoteServiceServlet implements GWTService {
 		return ServiceManagerUtils.produceReadingActivityClients(list);
 	}
 
+	// TODO HACER ESTE MÉTODO CUANDO SE HAGA EL CATÁLOGO
 	@Override
-	public void saveReadingActivity(ReadingActivity readingActivity)
+	public void saveReadingActivity(ReadingActivityClient readingActivityClient)
 			throws GeneralException {
-		EntityManager entityManager = emf.createEntityManager();
-
-		try {
-			userTransaction.begin();
-			if (readingActivity.getId() == null) {
-				entityManager.persist(readingActivity);
-			} else {
-				entityManager.merge(readingActivity);
-			}
-
-			userTransaction.commit();
-		} catch (Exception e) {
-			ServiceManagerUtils.rollback(userTransaction); // TODO utilizar
-															// método de
-															// logger
-		}
-		if (entityManager.isOpen()) {
-			entityManager.close();
-		}
+		// EntityManager entityManager = emf.createEntityManager();
+		//
+		// try {
+		// userTransaction.begin();
+		// if (readingActivity.getId() == null) {
+		// entityManager.persist(readingActivity);
+		// } else {
+		// entityManager.merge(readingActivity);
+		// }
+		//
+		// userTransaction.commit();
+		// } catch (Exception e) {
+		// ServiceManagerUtils.rollback(userTransaction);
+		// }
+		// if (entityManager.isOpen()) {
+		// entityManager.close();
+		// }
 
 	}
 
@@ -1556,4 +1823,74 @@ public class GWTServiceImpl extends RemoteServiceServlet implements GWTService {
 		}
 	}
 
+	private boolean seeEditionOnRemainingStudents(
+			List<Long> oldRemainingStudents,
+			List<Long> remainingStudentFromClients) {
+
+		boolean isThereAChange = false;
+		List<Long> deletedItems = new ArrayList<Long>();
+		List<Long> newItems = new ArrayList<Long>();
+
+		for (Long oldStudentId : oldRemainingStudents) { // busca por ids
+															// eliminados
+			if (!remainingStudentFromClients.contains(oldStudentId)) {
+				deletedItems.add(oldStudentId);
+				isThereAChange = true;
+			}
+		}
+
+		return isThereAChange;
+	}
+
+	private boolean comparareStudents(Student oldStudent,
+			StudentClient studentFromClient) {
+		boolean isThereAChange = false;
+		if (!oldStudent.getEmail().equals(studentFromClient.getEmail())) {
+			isThereAChange = true;
+			oldStudent.setEmail(studentFromClient.getEmail());
+		} else if ((!oldStudent.getFirstName().equals(
+				studentFromClient.getFirstName()))) {
+			isThereAChange = true;
+			oldStudent.setFirstName(studentFromClient.getFirstName());
+		} else if ((!oldStudent.getLastName().equals(
+				studentFromClient.getLastName()))) {
+			isThereAChange = true;
+			oldStudent.setLastName(studentFromClient.getLastName());
+		} else if ((!oldStudent.getPassword().equals(
+				studentFromClient.getPassword()))) {
+			isThereAChange = true;
+			oldStudent.setPassword(studentFromClient.getPassword());
+		} else if ((oldStudent.getPassword().equals(studentFromClient
+				.getPassword()))) {
+			isThereAChange = true;
+			oldStudent.setPassword(studentFromClient.getPassword());
+		}
+		return isThereAChange;
+	}
+
+	private boolean comparareProfessors(Professor oldProfessor,
+			ProfessorClient professorFromClient) {
+		boolean isThereAChange = false;
+		if (!oldProfessor.getEmail().equals(professorFromClient.getEmail())) {
+			isThereAChange = true;
+			oldProfessor.setEmail(professorFromClient.getEmail());
+		} else if ((!oldProfessor.getFirstName().equals(
+				professorFromClient.getFirstName()))) {
+			isThereAChange = true;
+			oldProfessor.setFirstName(professorFromClient.getFirstName());
+		} else if ((!oldProfessor.getLastName().equals(
+				professorFromClient.getLastName()))) {
+			isThereAChange = true;
+			oldProfessor.setLastName(professorFromClient.getLastName());
+		} else if ((!oldProfessor.getPassword().equals(
+				professorFromClient.getPassword()))) {
+			isThereAChange = true;
+			oldProfessor.setPassword(professorFromClient.getPassword());
+		} else if ((oldProfessor.getPassword().equals(professorFromClient
+				.getPassword()))) {
+			isThereAChange = true;
+			oldProfessor.setPassword(professorFromClient.getPassword());
+		}
+		return isThereAChange;
+	}
 }

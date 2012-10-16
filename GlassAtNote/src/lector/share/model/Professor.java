@@ -31,6 +31,12 @@ public class Professor extends UserApp implements Serializable {
 	public Professor() {
 	}
 
+	public Professor(Long id, String firstName, String lastName, String email,
+			String password) {
+		super(id, firstName, lastName, email, password);
+		// TODO Auto-generated constructor stub
+	}
+
 	public Professor(String email) {
 		super(email);
 	}

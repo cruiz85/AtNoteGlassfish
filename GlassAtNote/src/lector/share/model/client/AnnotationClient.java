@@ -30,11 +30,12 @@ public class AnnotationClient implements IsSerializable{
 		this.textSelectors = new ArrayList<TextSelectorClient>();
 	}
 
-	public AnnotationClient(UserClient creator, Long activity,
+	public AnnotationClient(Long id, UserClient creator, Long activity,
 			List<TextSelectorClient> textSelectors, String comment,
 			Long bookId, boolean visibility, boolean updatability,
 			Integer pageNumber, List<TypeClient> tags, boolean isEditable) {
 		super();
+		this.id = id;
 		this.creator = creator;
 		this.activity = activity;
 		this.textSelectors = textSelectors;
