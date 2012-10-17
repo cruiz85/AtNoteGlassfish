@@ -5,6 +5,7 @@ import lector.client.book.reader.GWTServiceAsync;
 import lector.client.controler.Constants;
 import lector.client.controler.Controlador;
 import lector.client.controler.ErrorConstants;
+import lector.client.controler.InformationConstants;
 import lector.share.model.UserApp;
 import lector.share.model.client.ProfessorClient;
 import lector.share.model.client.StudentClient;
@@ -40,6 +41,9 @@ import com.google.gwt.user.client.Command;
 import com.google.gwt.user.client.ui.PasswordTextBox;
 import com.google.gwt.user.client.ui.DecoratorPanel;
 import com.google.gwt.user.client.ui.SimplePanel;
+import com.google.gwt.user.client.ui.Image;
+import com.google.gwt.event.dom.client.ChangeHandler;
+import com.google.gwt.event.dom.client.ChangeEvent;
 
 public class Login implements EntryPoint {
 
@@ -47,8 +51,14 @@ public class Login implements EntryPoint {
 	private GWTServiceAsync bookReaderServiceHolder = GWT
 			.create(GWTService.class);
 	private Button btnNewButton;
-	private PasswordTextBox passwordTextBox;
+	private PasswordTextBox passwordLogin;
 	private Button buttonRegister;
+	private PasswordTextBox PasswordB;
+	private PasswordTextBox PaswordA;
+	private Image Verificado;
+	private TextBox lastName;
+	private TextBox email;
+	private TextBox FirstName;
 
 	public void onModuleLoad() {
 
@@ -130,8 +140,8 @@ public class Login implements EntryPoint {
 		lblPassword.setStyleName("gwt-LabelMargen2px");
 		verticalPanel_6.add(lblPassword);
 
-		passwordTextBox = new PasswordTextBox();
-		horizontalPanel_2.add(passwordTextBox);
+		passwordLogin = new PasswordTextBox();
+		horizontalPanel_2.add(passwordLogin);
 				
 				HorizontalPanel horizontalPanel_4 = new HorizontalPanel();
 				horizontalPanel_4.setHorizontalAlignment(HasHorizontalAlignment.ALIGN_CENTER);
@@ -218,15 +228,15 @@ horizontalPanel_4.add(verticalPanel_4);
 		verticalPanel_8.setStyleName("BlancoTransparente");
 		verticalPanel_8.setHorizontalAlignment(HasHorizontalAlignment.ALIGN_CENTER);
 		horizontalPanel_6.add(verticalPanel_8);
-		verticalPanel_8.setHeight("28px");
+		verticalPanel_8.setSize("76px", "28px");
 		
-		Label lblFirstname = new Label("FirstName");
+		Label lblFirstname = new Label("First Name");
 		lblFirstname.setStyleName("gwt-LabelMargen2px");
 		lblFirstname.setHorizontalAlignment(HasHorizontalAlignment.ALIGN_LEFT);
 		verticalPanel_8.add(lblFirstname);
 		lblFirstname.setSize("", "");
 		
-		TextBox FirstName = new TextBox();
+		FirstName = new TextBox();
 		horizontalPanel_6.add(FirstName);
 		
 		HorizontalPanel horizontalPanel_7 = new HorizontalPanel();
@@ -238,15 +248,15 @@ horizontalPanel_4.add(verticalPanel_4);
 		verticalPanel_9.setStyleName("BlancoTransparente");
 		verticalPanel_9.setHorizontalAlignment(HasHorizontalAlignment.ALIGN_CENTER);
 		horizontalPanel_7.add(verticalPanel_9);
-		verticalPanel_9.setSize("67px", "28px");
+		verticalPanel_9.setSize("76px", "28px");
 		
-		Label lblLastname = new Label("LastName");
+		Label lblLastname = new Label("Last Name");
 		lblLastname.setStyleName("gwt-LabelMargen2px");
 		lblLastname.setHorizontalAlignment(HasHorizontalAlignment.ALIGN_LEFT);
 		verticalPanel_9.add(lblLastname);
 		lblLastname.setSize("", "");
 		
-		TextBox lastName = new TextBox();
+		lastName = new TextBox();
 		horizontalPanel_7.add(lastName);
 		
 		HorizontalPanel horizontalPanel_8 = new HorizontalPanel();
@@ -258,7 +268,7 @@ horizontalPanel_4.add(verticalPanel_4);
 		verticalPanel_10.setStyleName("BlancoTransparente");
 		verticalPanel_10.setHorizontalAlignment(HasHorizontalAlignment.ALIGN_CENTER);
 		horizontalPanel_8.add(verticalPanel_10);
-		verticalPanel_10.setSize("67px", "28px");
+		verticalPanel_10.setSize("76px", "28px");
 		
 		Label lblEmail = new Label("Email");
 		lblEmail.setStyleName("gwt-LabelMargen2px");
@@ -266,7 +276,7 @@ horizontalPanel_4.add(verticalPanel_4);
 		verticalPanel_10.add(lblEmail);
 		lblEmail.setSize("", "");
 		
-		TextBox email = new TextBox();
+		email = new TextBox();
 		horizontalPanel_8.add(email);
 		
 		HorizontalPanel horizontalPanel_9 = new HorizontalPanel();
@@ -278,16 +288,55 @@ horizontalPanel_4.add(verticalPanel_4);
 		verticalPanel_11.setStyleName("BlancoTransparente");
 		verticalPanel_11.setHorizontalAlignment(HasHorizontalAlignment.ALIGN_CENTER);
 		horizontalPanel_9.add(verticalPanel_11);
-		verticalPanel_11.setSize("67px", "28px");
+		verticalPanel_11.setSize("117px", "28px");
 		
-		Label lblPassword_1 = new Label("Password");
+		Label lblPassword_1 = new Label("Enter Password");
 		lblPassword_1.setStyleName("gwt-LabelMargen2px");
 		lblPassword_1.setHorizontalAlignment(HasHorizontalAlignment.ALIGN_LEFT);
 		verticalPanel_11.add(lblPassword_1);
 		lblPassword_1.setSize("", "");
 		
-		PasswordTextBox password = new PasswordTextBox();
-		horizontalPanel_9.add(password);
+		PaswordA = new PasswordTextBox();
+		PaswordA.addChangeHandler(new ChangeHandler() {
+			public void onChange(ChangeEvent event) {
+				if (PaswordA.getText().equals(PasswordB.getText()))
+					Verificado.setVisible(true);
+				else Verificado.setVisible(false);
+			}
+		});
+		horizontalPanel_9.add(PaswordA);
+		
+		
+		HorizontalPanel horizontalPanel_12 = new HorizontalPanel();
+		horizontalPanel_12.setSpacing(10);
+		verticalPanel_3.add(horizontalPanel_12);
+		
+		VerticalPanel verticalPanel_14 = new VerticalPanel();
+		verticalPanel_14.setVerticalAlignment(HasVerticalAlignment.ALIGN_MIDDLE);
+		verticalPanel_14.setStyleName("BlancoTransparente");
+		verticalPanel_14.setHorizontalAlignment(HasHorizontalAlignment.ALIGN_CENTER);
+		horizontalPanel_12.add(verticalPanel_14);
+		verticalPanel_14.setSize("117px", "28px");
+		
+		Label lblRepeatPassword = new Label("Repeat Password");
+		lblRepeatPassword.setStyleName("gwt-LabelMargen2px");
+		lblRepeatPassword.setHorizontalAlignment(HasHorizontalAlignment.ALIGN_LEFT);
+		verticalPanel_14.add(lblRepeatPassword);
+		lblRepeatPassword.setSize("", "");
+		
+		PasswordB = new PasswordTextBox();
+		PasswordB.addChangeHandler(new ChangeHandler() {
+			public void onChange(ChangeEvent event) {
+				if (PaswordA.getText().equals(PasswordB.getText()))
+					Verificado.setVisible(true);
+				else Verificado.setVisible(false);
+			}
+		});
+		horizontalPanel_12.add(PasswordB);
+		
+		Verificado = new Image("Free.gif");
+		horizontalPanel_12.add(Verificado);
+		Verificado.setVisible(false);
 		
 		HorizontalPanel horizontalPanel_10 = new HorizontalPanel();
 		horizontalPanel_10.setVerticalAlignment(HasVerticalAlignment.ALIGN_MIDDLE);
@@ -315,7 +364,35 @@ horizontalPanel_4.add(verticalPanel_4);
 		buttonRegister = new Button("Enter");
 		buttonRegister.addClickHandler(new ClickHandler() {
 			public void onClick(ClickEvent event) {
-				
+				if (!PaswordA.getText().equals(PasswordB.getText()))
+					{
+					PaswordA.setText("");
+					PasswordB.setText("");
+					Window.alert(ErrorConstants.ERROR_PASSWORDS_NOT_MATCH);
+					}
+				else
+				{
+					StudentClient UC=new StudentClient();
+					UC.setFirstName(FirstName.getText());
+					UC.setLastName(lastName.getText());
+					UC.setEmail(email.getText());
+					UC.setPassword(PaswordA.getText());
+					bookReaderServiceHolder.saveUser(UC, new AsyncCallback<Void>() {
+						
+						@Override
+						public void onSuccess(Void result) {
+							
+							Window.alert(InformationConstants.A_EMAIL_BE_SEND_TO_YOUR_EMAIL_FOR_CONFIRM_THE_REGISTRATION);
+							Window.Location.reload();
+						}
+						
+						@Override
+						public void onFailure(Throwable caught) {
+							Window.alert(ErrorConstants.ERROR_IN_REGISTERATION);
+							
+						}
+					});
+				}
 			}
 		});
 		buttonRegister.setText("Register");
@@ -353,7 +430,7 @@ horizontalPanel_4.add(verticalPanel_4);
 
 	protected void revisarTextboxAndEnter() {
 		String nombre = User.getText();
-		String contrasena = passwordTextBox.getText();
+		String contrasena = passwordLogin.getText();
 		if (nombre.isEmpty()||contrasena.isEmpty()){
 			Window.alert(ErrorConstants.ERROR_PASS_OR_USER_EMPTY);
 			btnNewButton.setEnabled(true);

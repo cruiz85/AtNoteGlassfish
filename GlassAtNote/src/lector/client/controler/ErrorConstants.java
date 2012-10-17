@@ -40,5 +40,7 @@ public class ErrorConstants {
 	public static String ERROR_ON_MOVE_CATEGORY_ASCENDESCEN = "Error moving category with her brothers, please retry it";
 	public static String ERROR_PASS_OR_USER_EMPTY="Error, Password or Username are empty";
 	public static String ERROR_UPDATING_USER_DATA="Error updating User.";
+	public static String ERROR_PASSWORDS_NOT_MATCH="The passwords not match";
+	public static String ERROR_IN_REGISTERATION="Error in the procces of the registration, try again";
 	
 }

@@ -205,12 +205,7 @@ public class UserEdition implements EntryPoint {
 										});
 									}
 								});
-		String Nombre="";
-		if ((ActualUser.getUser().getFirstName()!=null)&&(!ActualUser.getUser().getFirstName().isEmpty()))
-			Nombre=ActualUser.getUser().getFirstName();
-		String Apellido="";
-		if ((ActualUser.getUser().getLastName()!=null)&&(!ActualUser.getUser().getLastName().isEmpty()))
-			Apellido=ActualUser.getUser().getLastName();
+
 	}
 
 }

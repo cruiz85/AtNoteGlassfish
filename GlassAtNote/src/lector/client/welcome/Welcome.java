@@ -44,6 +44,7 @@ import com.google.gwt.event.dom.client.MouseOverEvent;
 import com.google.gwt.event.dom.client.MouseOverHandler;
 import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.HasVerticalAlignment;
+import com.google.gwt.user.client.ui.FocusPanel;
 
 public class Welcome implements EntryPoint {
 	static GWTServiceAsync bookReaderServiceHolder = GWT
@@ -105,12 +106,13 @@ public class Welcome implements EntryPoint {
 		verticalPanel.setVerticalAlignment(HasVerticalAlignment.ALIGN_MIDDLE);
 		verticalPanel
 				.setHorizontalAlignment(HasHorizontalAlignment.ALIGN_CENTER);
-		verticalPanel.setStyleName("Root");
+		verticalPanel.setStyleName("fondoLogo");
 		rootPanel.add(verticalPanel, 0, 0);
 		// rootPanel.add(verticalPanel);
 		verticalPanel.setSize("100%", "100%");
 
 		VerticalPanel verticalPanel_1 = new VerticalPanel();
+//		verticalPanel_1.setStyleName("fondoLogo");
 		verticalPanel_1.setVerticalAlignment(HasVerticalAlignment.ALIGN_MIDDLE);
 		verticalPanel_1
 				.setHorizontalAlignment(HasHorizontalAlignment.ALIGN_CENTER);
@@ -128,7 +130,17 @@ public class Welcome implements EntryPoint {
 				About.center();
 			}
 		});
-		horizontalPanel_1.add(image_1);
+		//horizontalPanel_1.add(image_1);
+		
+		FocusPanel simplePanel = new FocusPanel();
+		simplePanel.addClickHandler(new ClickHandler() {
+			public void onClick(ClickEvent event) {
+				PopupPanel About = new About();
+				About.center();
+			}
+		});
+		horizontalPanel_1.add(simplePanel);
+		simplePanel.setSize("728px", "343px");
 
 		HorizontalPanel horizontalPanel_2 = new HorizontalPanel();
 		horizontalPanel_2
