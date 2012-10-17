@@ -101,8 +101,8 @@ public class MyActivities implements EntryPoint {
 
 		MenuItem menuItem_2 = new MenuItem("Sign out", false, new Command() {
 			public void execute() {
-				//Controlador.change2Welcome();
-				 Window.open(ActualUser.getUser().getLogoutUrl(), "_self", "");
+				Controlador.change2Welcome();
+			//	 Window.open(ActualUser.getUser().getLogoutUrl(), "_self", "");
 				ActualUser.setUser(null);
 				ActualUser.setBook(null);
 				ActualUser.setReadingactivity(null);

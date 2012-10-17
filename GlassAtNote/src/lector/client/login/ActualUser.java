@@ -44,7 +44,8 @@ public class ActualUser {
 	}
 	
 	public static void setBook(BookClient book) {
-		readingactivity.setBook(book);
+		if (readingactivity!=null)
+			readingactivity.setBook(book);
 	}
 	
 	public static CatalogoClient getCatalogo() {
@@ -56,11 +57,11 @@ public class ActualUser {
 	}
 	
 	public static void setCatalogo(CatalogoClient catalogo) {
-		readingactivity.setCloseCatalogo(catalogo);
+		if (readingactivity!=null) readingactivity.setCloseCatalogo(catalogo);
 	}
 	
 	public static void setLanguage(Language language) {
-		readingactivity.setLanguage(language);
+		if (readingactivity!=null) readingactivity.setLanguage(language);
 	}
 	
 	public static ReadingActivityClient getReadingactivity() {
@@ -76,7 +77,7 @@ public class ActualUser {
 	}
 	
 	public static void setOpenCatalog(CatalogoClient openCatalog) {
-		readingactivity.setOpenCatalogo(openCatalog);
+		if (readingactivity!=null) readingactivity.setOpenCatalogo(openCatalog);
 	}
 	
 }

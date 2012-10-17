@@ -138,7 +138,7 @@ public class GWTServiceImpl extends RemoteServiceServlet implements GWTService {
 			GeneralException {
 		EntityManager entityManager = emf.createEntityManager();
 		List<UserApp> list;
-		String sql = "SELECT r FROM UserApp r WHERE r.name='" + name + "'";
+		String sql = "SELECT r FROM UserApp r WHERE r.email='" + name + "'";
 		try {
 			list = entityManager.createQuery(sql).getResultList();
 		} catch (Exception e) {

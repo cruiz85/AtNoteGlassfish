@@ -25,7 +25,7 @@ import lector.client.login.activitysel.MyActivities;
 //import lector.client.reader.filter.advance.FilterAdvance;
 //import lector.client.search.Searcher;
 import lector.client.welcome.Welcome;
-//import lector.client.login.UserEdition;
+import lector.client.login.UserEdition;
 
 import com.google.gwt.core.client.EntryPoint;
 import com.google.gwt.user.client.ui.RootPanel;
@@ -55,7 +55,7 @@ public class Controlador implements EntryPoint {
 //    private static VisorEntry Visor=new VisorEntry();
 //    private static Browser Browser=new Browser();
 //    private static FilterAdvance FilterAdvance=new FilterAdvance();
-//    private static UserEdition UserEdition = new UserEdition();
+    private static UserEdition UserEdition = new UserEdition();
 //	private static BookLoader BooKLoader=new BookLoader();
 //	private static NewAdminTemplate AdminTemplate=new NewAdminTemplate();
 //	private static ExportResult ExportResultado=new ExportResult();
@@ -221,9 +221,9 @@ public class Controlador implements EntryPoint {
 	}
 
 	public static void change2UserEdition() {
-//		clear();
-//		Actual = UserEdition;
-//		Actual.onModuleLoad();
+		clear();
+		Actual = UserEdition;
+		Actual.onModuleLoad();
 	}
 
 	public static void change2LoadABook() {

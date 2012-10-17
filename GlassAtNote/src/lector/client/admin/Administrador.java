@@ -65,8 +65,8 @@ public class Administrador implements EntryPoint {
 		
 		MenuItem mntmNewItem = new MenuItem("Close Session", false, new Command() {
 			public void execute() {
-				//Controlador.change2Welcome();
-				Window.open(ActualUser.getUser().getLogoutUrl(), "_self", "");
+				Controlador.change2Welcome();
+//				Window.open(ActualUser.getUser().getLogoutUrl(), "_self", "");
 				ActualUser.setUser(null);
 				ActualUser.setBook(null);
 				ActualUser.setReadingactivity(null);

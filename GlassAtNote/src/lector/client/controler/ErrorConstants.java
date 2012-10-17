@@ -39,5 +39,6 @@ public class ErrorConstants {
 	public static String ERROR_RETRIVING_TEMPLATE_MASTER_EXPORT_PANEL="Error Retriving Template, please reload";
 	public static String ERROR_ON_MOVE_CATEGORY_ASCENDESCEN = "Error moving category with her brothers, please retry it";
 	public static String ERROR_PASS_OR_USER_EMPTY="Error, Password or Username are empty";
+	public static String ERROR_UPDATING_USER_DATA="Error updating User.";
 	
 }
