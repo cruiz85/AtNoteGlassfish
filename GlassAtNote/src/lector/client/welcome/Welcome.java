@@ -143,39 +143,61 @@ public class Welcome implements EntryPoint {
 		simplePanel.setSize("728px", "343px");
 
 		HorizontalPanel horizontalPanel_2 = new HorizontalPanel();
+		horizontalPanel_2.setStyleName("AzulTransparente");
 		horizontalPanel_2
 				.setVerticalAlignment(HasVerticalAlignment.ALIGN_MIDDLE);
 		horizontalPanel_2.setSpacing(10);
 		verticalPanel_1.add(horizontalPanel_2);
+		
+		HorizontalPanel horizontalPanel_6 = new HorizontalPanel();
+		horizontalPanel_6.setStyleName("BlancoTransparente");
+		horizontalPanel_6.setVerticalAlignment(HasVerticalAlignment.ALIGN_MIDDLE);
+		horizontalPanel_6.setHorizontalAlignment(HasHorizontalAlignment.ALIGN_CENTER);
+		horizontalPanel_2.add(horizontalPanel_6);
+		horizontalPanel_6.setWidth("90px");
+		
+				Image image = new Image("logo_ucm.jpg");
+				horizontalPanel_6.add(image);
+				image.addClickHandler(new ClickHandler() {
+					public void onClick(ClickEvent event) {
+						Window.open("http://www.ucm.es", "_blank", null);
 
-		Image image = new Image("logo_ucm.jpg");
-		image.addClickHandler(new ClickHandler() {
-			public void onClick(ClickEvent event) {
-				Window.open("http://www.ucm.es", "_blank", null);
-
-			}
-		});
-		horizontalPanel_2.add(image);
+					}
+				});
 		image.setSize("75px", "78px");
-
-		Image image_2 = new Image("logo-leethi_fa.gif");
-		image_2.addClickHandler(new ClickHandler() {
-			public void onClick(ClickEvent event) {
-				Window.open("http://www.ucm.es/info/leethi/", "_blank", null);
-
-			}
-		});
 
 		HorizontalPanel horizontalPanel_4 = new HorizontalPanel();
 		horizontalPanel_2.add(horizontalPanel_4);
-		horizontalPanel_2.add(image_2);
+		
+		HorizontalPanel horizontalPanel_7 = new HorizontalPanel();
+		horizontalPanel_7.setStyleName("BlancoTransparente");
+		horizontalPanel_7.setVerticalAlignment(HasVerticalAlignment.ALIGN_MIDDLE);
+		horizontalPanel_7.setHorizontalAlignment(HasHorizontalAlignment.ALIGN_CENTER);
+		horizontalPanel_2.add(horizontalPanel_7);
+		horizontalPanel_7.setWidth("180px");
+		
+				Image image_2 = new Image("logo-leethi_fa.gif");
+				horizontalPanel_7.add(image_2);
+				image_2.addClickHandler(new ClickHandler() {
+					public void onClick(ClickEvent event) {
+						Window.open("http://www.ucm.es/info/leethi/", "_blank", null);
+
+					}
+				});
 		image_2.setSize("164px", "72px");
 
 		HorizontalPanel horizontalPanel_5 = new HorizontalPanel();
 		horizontalPanel_2.add(horizontalPanel_5);
+		
+		HorizontalPanel horizontalPanel_8 = new HorizontalPanel();
+		horizontalPanel_8.setHorizontalAlignment(HasHorizontalAlignment.ALIGN_CENTER);
+		horizontalPanel_8.setVerticalAlignment(HasVerticalAlignment.ALIGN_MIDDLE);
+		horizontalPanel_8.setStyleName("BlancoTransparente");
+		horizontalPanel_2.add(horizontalPanel_8);
+		horizontalPanel_8.setWidth("220px");
 
 		Image image_3 = new Image("ISLA.jpg");
-		horizontalPanel_2.add(image_3);
+		horizontalPanel_8.add(image_3);
 		image_3.addClickHandler(new ClickHandler() {
 			public void onClick(ClickEvent event) {
 				Window.open("http://ilsa.fdi.ucm.es/", "_blank", null);
@@ -204,9 +226,22 @@ public class Welcome implements EntryPoint {
 		lblCollaborativeAnnotationOf.setStyleName("TituloWelcome");
 		// verticalPanel.add(lblCollaborativeAnnotationOf);
 		lblCollaborativeAnnotationOf.setWidth("1112px");
+		 
+		 HorizontalPanel horizontalPanel_9 = new HorizontalPanel();
+		 horizontalPanel_9.setSpacing(5);
+		 horizontalPanel_9.setVerticalAlignment(HasVerticalAlignment.ALIGN_MIDDLE);
+		 horizontalPanel_9.setHorizontalAlignment(HasHorizontalAlignment.ALIGN_CENTER);
+		 horizontalPanel_9.setStyleName("AzulTransparente");
+		 horizontalPanel.add(horizontalPanel_9);
+		 horizontalPanel_9.setWidth("184px");
+		 
+		 HorizontalPanel horizontalPanel_10 = new HorizontalPanel();
+		 horizontalPanel_10.setSpacing(3);
+		 horizontalPanel_10.setStyleName("BlancoTransparente");
+		 horizontalPanel_9.add(horizontalPanel_10);
 
 		 btnNewButton = new Button("Log In");
-		 horizontalPanel.add(btnNewButton);
+		 horizontalPanel_10.add(btnNewButton);
 		 btnNewButton.addClickHandler(new ClickHandler() {
 		 public void onClick(ClickEvent event) {
 		 Controlador.change2Login();

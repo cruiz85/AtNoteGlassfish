@@ -118,53 +118,18 @@ public class MyActivities implements EntryPoint {
 			}
 
 		HorizontalPanel horizontalPanel = new HorizontalPanel();
-		horizontalPanel.setHorizontalAlignment(HasHorizontalAlignment.ALIGN_CENTER);
+		horizontalPanel.setSpacing(10);
+		horizontalPanel.setStyleName("fondoLogo");
 		RootTXOriginal.add(horizontalPanel, 0, 24);
 		horizontalPanel.setSize("100%", "100%");
 		verticalPanel = new VerticalPanel();
+		verticalPanel.setSpacing(12);
 		horizontalPanel.add(verticalPanel);
-		verticalPanel.setWidth("272px");
 		verticalPanel.setHorizontalAlignment(HasHorizontalAlignment.ALIGN_CENTER);
 		
 		HorizontalPanel Glue = new HorizontalPanel();
 		verticalPanel.add(Glue);
-		Glue.setHeight("20px");
-		
-//		
-//		ButtonActivityReader button = new ButtonActivityReader(new ReadingActivity("HOLA",null,null,null,null));
-//		button.setStyleName("gwt-ButtonTOP");
-//		button.setWidth("100%");
-//		verticalPanel.add(button);
-//		button.addMouseDownHandler(new MouseDownHandler() {
-//				public void onMouseDown(MouseDownEvent event) {
-//					((Button)event.getSource()).setStyleName("gwt-ButtonPush");
-//				}
-//			});
-//		button.addMouseOutHandler(new MouseOutHandler() {
-//				public void onMouseOut(MouseOutEvent event) {
-//					((Button)event.getSource()).setStyleName("gwt-ButtonTOP");
-//				}
-//			});
-//		button.addMouseOverHandler(new MouseOverHandler() {
-//				public void onMouseOver(MouseOverEvent event) {
-//					((Button)event.getSource()).setStyleName("gwt-ButtonTOPOver");
-//				}
-//			});
-		
-		
-		VerticalPanel verticalPanel_1 = new VerticalPanel();
-		verticalPanel_1.setVerticalAlignment(HasVerticalAlignment.ALIGN_MIDDLE);
-		verticalPanel_1.setHorizontalAlignment(HasHorizontalAlignment.ALIGN_CENTER);
-		horizontalPanel.add(verticalPanel_1);
-		verticalPanel_1.setSize("100%", "100%");
-		
-		HorizontalPanel horizontalPanel_1 = new HorizontalPanel();
-		horizontalPanel_1.setVerticalAlignment(HasVerticalAlignment.ALIGN_MIDDLE);
-		horizontalPanel_1.setHorizontalAlignment(HasHorizontalAlignment.ALIGN_CENTER);
-		verticalPanel_1.add(horizontalPanel_1);
-		
-		Image image_1 = new Image("Logo.jpg");
-		horizontalPanel_1.add(image_1);
+		Glue.setSize("272px", "20px");
 		BooksIDs = new ArrayList<ReadingActivity>();
 
 	}

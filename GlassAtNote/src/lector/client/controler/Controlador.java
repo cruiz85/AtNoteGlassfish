@@ -6,7 +6,7 @@ import lector.client.admin.langedit.NewAdminLangs;
 import lector.client.login.Login;
 //import lector.client.admin.activity.NewAdminActivities;
 //import lector.client.admin.admins.NewAdminAdministrator;
-//import lector.client.admin.book.BookAdministration;
+import lector.client.admin.book.BookAdministration;
 //import lector.client.admin.bookblob.BookLoader;
 //import lector.client.admin.catalog.NewAdminCatalogs;
 //import lector.client.admin.export.NewAdminTemplate;
@@ -42,7 +42,7 @@ public class Controlador implements EntryPoint {
     private static Administrador Admin = new Administrador();
 //    private static EditorTagsAndTypes AdminTagsAndTypes = new EditorTagsAndTypes();
     private static Login LoginPage=new Login();
-//    private static BookAdministration bookAdministrador=new BookAdministration();
+    private static BookAdministration bookAdministrador=new BookAdministration();
 //    private static MyBooks MyBooksUser=new MyBooks();
 //    private static Groupadministration GroupAdmin = new Groupadministration();
 //    private static NewUserAdministrator UserAdmin = new NewUserAdministrator();
@@ -130,10 +130,10 @@ public class Controlador implements EntryPoint {
 	}
 	
 	public static void change2BookAdminstrator() {
-//		clear();
-//        Actual = bookAdministrador;
-//        Actual.onModuleLoad();
-//		
+		clear();
+        Actual = bookAdministrador;
+        Actual.onModuleLoad();
+		
 	}
 	
 	public static void change2MyBooks(){

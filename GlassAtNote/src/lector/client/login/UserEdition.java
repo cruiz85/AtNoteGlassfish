@@ -68,6 +68,7 @@ public class UserEdition implements EntryPoint {
 		simplePanel.setSize("100%", "100%");
 		
 		VerticalPanel verticalPanel_1 = new VerticalPanel();
+		verticalPanel_1.setSpacing(10);
 		verticalPanel_1.setStyleName("fondoLogo");
 		verticalPanel_1.setVerticalAlignment(HasVerticalAlignment.ALIGN_MIDDLE);
 		simplePanel.setWidget(verticalPanel_1);
@@ -180,7 +181,6 @@ public class UserEdition implements EntryPoint {
 										LoadingPanel.getInstance().center();
 										LoadingPanel.getInstance().setLabelTexto("Updating...");
 									
-										//TODO Pedir a Cesar que Se realize del tiron
 										bookReaderServiceHolder.saveUser(AU, new AsyncCallback<Void>() {
 											
 											public void onSuccess(Void result) {

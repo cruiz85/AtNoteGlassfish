@@ -83,34 +83,20 @@ public class NewAdminLangs implements EntryPoint {
 		menuBar.addItem(mntmBack);
 		
 		VerticalPanel verticalPanel = new VerticalPanel();
+		verticalPanel.setStyleName("fondoLogo");
 		verticalPanel.setVerticalAlignment(HasVerticalAlignment.ALIGN_MIDDLE);
-		verticalPanel.setHorizontalAlignment(HasHorizontalAlignment.ALIGN_CENTER);
 		RootTXOriginal.add(verticalPanel);
 		verticalPanel.setSize("100%", "100%");
 		
 		HorizontalPanel horizontalPanel = new HorizontalPanel();
-		horizontalPanel.setSpacing(6);
-		horizontalPanel.setHorizontalAlignment(HasHorizontalAlignment.ALIGN_CENTER);
+		horizontalPanel.setSpacing(8);
 		verticalPanel.add(horizontalPanel);
-		horizontalPanel.setSize("100%", "100%");
+		horizontalPanel.setSize("", "100%");
 		
 		Actual = new VerticalPanel();
 		horizontalPanel.add(Actual);
-		Actual.setWidth("400px");
+		Actual.setSize("400px", "");
 		Actual.setHorizontalAlignment(HasHorizontalAlignment.ALIGN_CENTER);
-		
-		VerticalPanel verticalPanel_1 = new VerticalPanel();
-		verticalPanel_1.setVerticalAlignment(HasVerticalAlignment.ALIGN_MIDDLE);
-		verticalPanel_1.setHorizontalAlignment(HasHorizontalAlignment.ALIGN_CENTER);
-		horizontalPanel.add(verticalPanel_1);
-		
-		HorizontalPanel horizontalPanel_1 = new HorizontalPanel();
-		horizontalPanel_1.setVerticalAlignment(HasVerticalAlignment.ALIGN_MIDDLE);
-		horizontalPanel_1.setHorizontalAlignment(HasHorizontalAlignment.ALIGN_CENTER);
-		verticalPanel_1.add(horizontalPanel_1);
-		
-		Image image = new Image("Logo.jpg");
-		horizontalPanel_1.add(image);
 		
 		bookReaderServiceHolder.getLanguages(new AsyncCallback<List<Language>>() {
 			
