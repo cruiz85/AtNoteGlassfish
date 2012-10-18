@@ -45,12 +45,14 @@ import lector.share.model.IlegalFolderFusionException;
 import lector.share.model.LanguageNotFoundException;
 
 import lector.share.model.Catalogo;
+import lector.share.model.CatalogoNotFoundException;
 import lector.share.model.Entry;
 import lector.share.model.NotAuthenticatedException;
 import lector.share.model.NullParameterException;
 import lector.share.model.Professor;
 import lector.share.model.ProfessorNotFoundException;
 import lector.share.model.ReadingActivityNotFoundException;
+import lector.share.model.Relation;
 import lector.share.model.Student;
 import lector.share.model.StudentNotFoundException;
 import lector.share.model.Tag;
@@ -125,7 +127,7 @@ public class GWTServiceImpl extends RemoteServiceServlet implements GWTService {
 			throws UserNotFoundException, NotAuthenticatedException,
 			GeneralException {
 
-		UserApp user = loadUserByName(userName);
+		UserApp user = loadUserByEmail(userName);
 
 		if (!user.getPassword().equals(password)) {
 			throw new NotAuthenticatedException(
@@ -138,7 +140,7 @@ public class GWTServiceImpl extends RemoteServiceServlet implements GWTService {
 			GeneralException {
 		EntityManager entityManager = emf.createEntityManager();
 		List<UserApp> list;
-		String sql = "SELECT r FROM UserApp r WHERE r.email='" + name + "'";
+		String sql = "SELECT r FROM UserApp r WHERE r.name='" + name + "'";
 		try {
 			list = entityManager.createQuery(sql).getResultList();
 		} catch (Exception e) {
@@ -176,9 +178,12 @@ public class GWTServiceImpl extends RemoteServiceServlet implements GWTService {
 			if (pClient.getId() != null) {
 				oldStudent = findStudent(pClient.getId());
 			} else {
+				Date now = new Date();
+				Calendar calendar = Calendar.getInstance();
+				now = calendar.getTime();
 				saveUser(new Student(pClient.getId(), pClient.getFirstName(),
 						pClient.getLastName(), pClient.getEmail(),
-						pClient.getPassword()));
+						pClient.getPassword(), now));
 				isNew = true;
 			}
 
@@ -209,9 +214,12 @@ public class GWTServiceImpl extends RemoteServiceServlet implements GWTService {
 			if (pClient.getId() != null) {
 				oldProfessor = findProfessor(pClient.getId());
 			} else {
+				Date now = new Date();
+				Calendar calendar = Calendar.getInstance();
+				now = calendar.getTime();
 				saveUser(new Professor(pClient.getId(), pClient.getFirstName(),
 						pClient.getLastName(), pClient.getEmail(),
-						pClient.getPassword()));
+						pClient.getPassword(), now));
 				isNew = true;
 			}
 
@@ -286,9 +294,34 @@ public class GWTServiceImpl extends RemoteServiceServlet implements GWTService {
 		return ServiceManagerUtils.produceUserClient(list.get(0));
 	}
 
-	@Override
-	public UserClient loadUserByEmail(String email)
-			throws UserNotFoundException, GeneralException {
+	// @Override
+	// public UserClient loadUserByEmail(String email)
+	// throws UserNotFoundException, GeneralException {
+	// EntityManager entityManager = emf.createEntityManager();
+	// List<UserApp> list;
+	// String sql = "SELECT r FROM UserApp r WHERE r.email='" + email + "'";
+	// try {
+	// list = entityManager.createQuery(sql).getResultList();
+	// } catch (Exception e) {
+	// // logger.error ("Exception in method loadUserByEmail: ", e)
+	// throw new GeneralException("Exception in method loadUserByEmail:"
+	// + e.getMessage(), e.getStackTrace());
+	//
+	// }
+	// if (list == null || list.isEmpty()) {
+	// // logger.error ("Exception in method loadUserById: ", e)
+	// throw new UserNotFoundException(
+	// "User not found in method loadUserByEmail");
+	//
+	// }
+	// if (entityManager.isOpen()) {
+	// entityManager.close();
+	// }
+	// return ServiceManagerUtils.produceUserClient(list.get(0));
+	// }
+
+	private UserApp loadUserByEmail(String email) throws UserNotFoundException,
+			GeneralException {
 		EntityManager entityManager = emf.createEntityManager();
 		List<UserApp> list;
 		String sql = "SELECT r FROM UserApp r WHERE r.email='" + email + "'";
@@ -309,7 +342,7 @@ public class GWTServiceImpl extends RemoteServiceServlet implements GWTService {
 		if (entityManager.isOpen()) {
 			entityManager.close();
 		}
-		return ServiceManagerUtils.produceUserClient(list.get(0));
+		return list.get(0);
 	}
 
 	@Override
@@ -621,6 +654,18 @@ public class GWTServiceImpl extends RemoteServiceServlet implements GWTService {
 		if (a == null) {
 			throw new ProfessorNotFoundException(
 					"Professor not found in method loadProfessorById");
+		}
+		entityManager.close();
+		return a;
+	}
+
+	// TODO LANZAR EXCEPCIÓN
+	private Catalogo findCatalogo(Long id) throws CatalogoNotFoundException {
+		EntityManager entityManager = emf.createEntityManager();
+		Catalogo a = entityManager.find(Catalogo.class, id);
+		if (a == null) {
+			throw new CatalogoNotFoundException(
+					"Catalogo not found in method loadCatalogoById");
 		}
 		entityManager.close();
 		return a;
@@ -1335,8 +1380,18 @@ public class GWTServiceImpl extends RemoteServiceServlet implements GWTService {
 
 	@Override
 	public CatalogoClient loadCatalogById(Long catalogId) {
-		// TODO Auto-generated method stub
-		return null;
+		Catalogo catalogo;
+		try {
+			catalogo = findCatalogo(catalogId);
+			CatalogoClient cClient = ServiceManagerUtils
+					.produceCatalogoClient(catalogo);
+			CatalogoGenerator.Start(cClient,catalogo);
+			return cClient;
+		} catch (CatalogoNotFoundException e) {
+			
+			e.printStackTrace();
+		}
+		return new CatalogoClient();
 	}
 
 	@Override
@@ -1348,7 +1403,7 @@ public class GWTServiceImpl extends RemoteServiceServlet implements GWTService {
 	@Override
 	public List<CatalogoClient> getVisbibleCatalogsByProfessorId(
 			Long professorId) {
-		// TODO Auto-generated method stub
+		
 		return null;
 	}
 
@@ -1396,7 +1451,7 @@ public class GWTServiceImpl extends RemoteServiceServlet implements GWTService {
 			entityManager.close();
 		}
 
-		return ServiceManagerUtils.produceTypeClient(list.get(0));
+		return ServiceManagerUtils.produceTypeClientLazy(list.get(0));
 	}
 
 	@Override
@@ -1425,7 +1480,7 @@ public class GWTServiceImpl extends RemoteServiceServlet implements GWTService {
 			entityManager.close();
 		}
 
-		return ServiceManagerUtils.produceTypeClient(list.get(0));
+		return ServiceManagerUtils.produceTypeClientLazy(list.get(0));
 	}
 
 	@Override
@@ -1724,7 +1779,7 @@ public class GWTServiceImpl extends RemoteServiceServlet implements GWTService {
 					+ e.getMessage(), e.getStackTrace());
 
 		}
-		if (list == null || list.isEmpty()) {
+		if (list == null) {
 			// logger.error ("Exception in method loadGroupById: ", e)
 			throw new LanguageNotFoundException(
 					"Language not found in method getLanguages");
@@ -1752,7 +1807,7 @@ public class GWTServiceImpl extends RemoteServiceServlet implements GWTService {
 					+ e.getMessage(), e.getStackTrace());
 
 		}
-		if (list == null || list.isEmpty()) {
+		if (list == null) {
 			// logger.error ("Exception in method loadGroupById: ", e)
 			throw new LanguageNotFoundException(
 					"Language not found in method getLanguages");
@@ -1892,5 +1947,27 @@ public class GWTServiceImpl extends RemoteServiceServlet implements GWTService {
 			oldProfessor.setPassword(professorFromClient.getPassword());
 		}
 		return isThereAChange;
+	}
+	
+	private boolean isDescendant(Entry actDescentSource, FolderDB destiny)
+	{
+		if (actDescentSource instanceof Tag)
+			return false;
+		else 
+		{
+			FolderDB actDescendantSourceFolder=(FolderDB)actDescentSource;	
+			List<Relation> relacionesActDescendantSourceFolder=actDescendantSourceFolder.getRelations();
+			for (int i = 0; i < relacionesActDescendantSourceFolder.size(); i++) {
+				if (relacionesActDescendantSourceFolder.get(i).getChild().getId().equals(destiny.getId()))
+					return true;
+			}
+			boolean sons=false;
+			for (int i = 0; i < relacionesActDescendantSourceFolder.size(); i++) {
+					sons=sons||isDescendant(relacionesActDescendantSourceFolder.get(i).getChild(), destiny);
+				
+			}
+			return sons;
+		}
+		
 	}
 }

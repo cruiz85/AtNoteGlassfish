@@ -2,6 +2,7 @@ package lector.share.model.client;
 
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import com.google.gwt.user.client.rpc.IsSerializable;
@@ -22,10 +23,9 @@ public class ProfessorClient extends UserClient implements IsSerializable{
 
 	
 	public ProfessorClient(Long id, String firstName, String lastName,
-			String email, boolean loggedIn, String loginUrl, String logoutUrl,
-			boolean isAuthenticated, List<Long> readingActivities, List<Long> books, List<Long> templates, List<Long> groups) {
-		super(id, firstName, lastName, email, loggedIn, loginUrl, logoutUrl,
-				isAuthenticated);
+			String email, String password, Date createdDate,boolean isConfirmed,
+			List<Long> readingActivities, List<Long> books, List<Long> templates, List<Long> groups) {
+		super(id, firstName, lastName, email, password,createdDate,isConfirmed);
 		this.readingActivities = readingActivities;
 		this.books = books;
 		this.templates = templates;

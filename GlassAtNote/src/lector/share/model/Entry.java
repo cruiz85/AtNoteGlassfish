@@ -1,6 +1,5 @@
 package lector.share.model;
 
-
 import com.google.gwt.user.client.rpc.IsSerializable;
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -24,7 +23,7 @@ import javax.persistence.Table;
 @Entity
 @Table(name = "entry")
 @Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
-public class Entry implements Serializable{
+public class Entry implements Serializable {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -34,29 +33,22 @@ public class Entry implements Serializable{
 	@ManyToOne
 	@JoinColumn(name = "catalogId")
 	private Catalogo catalog;
-	@OneToMany
-	private List<Entry> parents = new ArrayList<Entry>();
+
 
 	public Entry() {
 
 	}
 
-
-	public Entry(List<Entry> parents, String name, Catalogo catalog,
-			String uppercaseName) {
+	public Entry(String name, Catalogo catalog) {
 		super();
-		this.parents = parents;
 		this.name = name;
 		this.catalog = catalog;
-		this.uppercaseName = uppercaseName;
 	}
-
 
 	public Entry(String name) {
 		this();
 		this.name = name;
 	}
-
 
 	public String getName() {
 		return name;
@@ -74,37 +66,12 @@ public class Entry implements Serializable{
 		this.id = id;
 	}
 
-
-	public List<Entry> getParents() {
-		return parents;
-	}
-
-
-	public void setParents(List<Entry> parents) {
-		this.parents = parents;
-	}
-
-
 	public Catalogo getCatalog() {
 		return catalog;
 	}
-
 
 	public void setCatalog(Catalogo catalog) {
 		this.catalog = catalog;
 	}
 
-
-
-	private String uppercaseName;
-
-	@PrePersist
-	@PreUpdate
-	public void prePersist() {
-		if (name != null) {
-			uppercaseName = name.toUpperCase();
-		} else {
-			uppercaseName = null;
-		}
-	}
 }

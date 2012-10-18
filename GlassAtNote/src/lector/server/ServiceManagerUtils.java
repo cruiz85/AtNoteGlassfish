@@ -8,9 +8,12 @@ import javax.persistence.EntityTransaction;
 import javax.transaction.SystemException;
 import javax.transaction.UserTransaction;
 
+import lector.client.catalogo.client.Catalog;
 import lector.share.model.Annotation;
 import lector.share.model.AnnotationThread;
 import lector.share.model.Book;
+import lector.share.model.Catalogo;
+import lector.share.model.FolderDB;
 import lector.share.model.Tag;
 import lector.share.model.GoogleBook;
 import lector.share.model.GroupApp;
@@ -25,6 +28,8 @@ import lector.share.model.UserApp;
 import lector.share.model.client.AnnotationClient;
 import lector.share.model.client.AnnotationThreadClient;
 import lector.share.model.client.BookClient;
+import lector.share.model.client.CatalogoClient;
+import lector.share.model.client.EntryClient;
 import lector.share.model.client.GoogleBookClient;
 import lector.share.model.client.GroupClient;
 import lector.share.model.client.LocalBookClient;
@@ -32,6 +37,7 @@ import lector.share.model.client.ProfessorClient;
 import lector.share.model.client.ReadingActivityClient;
 import lector.share.model.client.StudentClient;
 import lector.share.model.client.TextSelectorClient;
+import lector.share.model.client.TypeCategoryClient;
 import lector.share.model.client.TypeClient;
 import lector.share.model.client.UserClient;
 
@@ -71,6 +77,7 @@ public class ServiceManagerUtils {
 		return t;
 	}
 
+	/* Los tags son lazy */
 	public static AnnotationClient produceAnnotationClient(Annotation a) {
 		boolean visibility = false;
 		boolean updatability = false;
@@ -84,26 +91,42 @@ public class ServiceManagerUtils {
 				produceUserClient(a.getCreator()), a.getActivity().getId(),
 				produceTextSelectors(a.getTextSelectors()), a.getComment(),
 				a.getBookId(), visibility, updatability, a.getPageNumber(),
-				produceTypeClients(a.getTags()), a.isEditable());
+				produceTypeClientsLazy(a.getTags()), a.isEditable());
 	}
 
-	public static List<TypeClient> produceTypeClients(List<Tag> tags) {
+	public static List<TypeClient> produceTypeClientsLazy(List<Tag> tags) {
 		List<TypeClient> typeClients = new ArrayList<TypeClient>();
 		for (Tag tag : tags) {
-			typeClients.add(produceTypeClient(tag));
+			typeClients.add(produceTypeClientLazy(tag));
 		}
 		return typeClients;
 	}
 
-	public static TypeClient produceTypeClient(Tag t) {
-		return new TypeClient(null, t.getName(), null);
+	public static TypeClient produceTypeClientLazy(Tag t) {
+		return new TypeClient(t.getId(), null, t.getName(), null);
 	}
-
+	
+	public static CatalogoClient produceCatalogoClient(Catalogo catalog){
+		boolean isPrivate = catalog.getIsPrivate()>0;
+		return new CatalogoClient(catalog.getId(), isPrivate,catalog.getProfessorId(),catalog.getCatalogName());
+	}
+	
+	public static TypeClient produceTypeClientEager(Tag t,CatalogoClient catalogClient ) {
+		return new TypeClient(t.getId(), new ArrayList<EntryClient>() , t.getName(), catalogClient);
+	}
+	
+	public static TypeCategoryClient produceTypeCategoryClient(FolderDB fb,CatalogoClient catalogClient ) {
+		return new TypeCategoryClient(fb.getId(), new ArrayList<EntryClient>() , fb.getName(), catalogClient,  new ArrayList<EntryClient>());
+	}
+	
+	
 	public static ReadingActivityClient produceReadingActivityClient(
 			ReadingActivity t) {
 		return null;
 	}
 
+	
+	
 	public static List<ReadingActivityClient> produceReadingActivityClients(
 			List<ReadingActivity> a) {
 		return null;
@@ -157,9 +180,9 @@ public class ServiceManagerUtils {
 
 	public static ProfessorClient produceProfessorClient(Professor p) {
 
+		boolean confirmed= (p.getIsConfirmed()>0);
 		return new ProfessorClient(p.getId(), p.getFirstName(),
-				p.getLastName(), p.getEmail(), p.isLoggedIn(), p.getLoginUrl(),
-				p.getLogoutUrl(), p.isAuthenticated(),
+				p.getLastName(), p.getEmail(), p.getPassword(),p.getCreatedDate(),confirmed,
 				getReadingActivityIds(p.getReadingActivities()),
 				getBooksIds(p.getBooks()), getTemplatesIds(p.getTemplates()),
 				getGroupsIds(p.getGroups()));
@@ -215,10 +238,10 @@ public class ServiceManagerUtils {
 	}
 
 	public static StudentClient produceStudentClient(Student student) {
+		boolean confirmed= (student.getIsConfirmed()>0);
 		return new StudentClient(student.getId(), student.getFirstName(),
-				student.getLastName(), student.getEmail(),
-				student.isLoggedIn(), student.getLoginUrl(),
-				student.getLogoutUrl(), student.isAuthenticated());
+				student.getLastName(), student.getEmail(), student.getPassword(),
+				student.getCreatedDate(),confirmed);
 	}
 
 	public static GoogleBookClient produceGoogleBookClient(GoogleBook gb) {

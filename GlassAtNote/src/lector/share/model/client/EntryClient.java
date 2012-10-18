@@ -24,11 +24,12 @@ public class EntryClient implements IsSerializable{
 	}
 
 
-	public EntryClient(List<EntryClient> parents, String name, CatalogoClient catalog) {
+	public EntryClient(Long id,List<EntryClient> parents, String name, CatalogoClient catalog) {
 		super();
 		this.parents = parents;
 		this.name = name;
 		this.catalog = catalog;
+		this.id = id;
 		
 	}
 

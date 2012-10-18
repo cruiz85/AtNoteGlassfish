@@ -14,6 +14,13 @@ public class TypeCategoryClient extends EntryClient implements IsSerializable{
 	
 	}
 
+	public TypeCategoryClient(Long id, List<EntryClient> parents, String name,
+			CatalogoClient catalog, List<EntryClient> children) {
+		super(id, parents, name, catalog);
+		this.children=children;
+
+	}
+
 	public TypeCategoryClient(String name) {
 		super(name);
 	

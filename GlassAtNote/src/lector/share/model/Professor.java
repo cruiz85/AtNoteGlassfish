@@ -3,6 +3,7 @@ package lector.share.model;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
@@ -32,8 +33,8 @@ public class Professor extends UserApp implements Serializable {
 	}
 
 	public Professor(Long id, String firstName, String lastName, String email,
-			String password) {
-		super(id, firstName, lastName, email, password);
+			String password,Date createdDate) {
+		super(id, firstName, lastName, email, password,createdDate);
 		// TODO Auto-generated constructor stub
 	}
 

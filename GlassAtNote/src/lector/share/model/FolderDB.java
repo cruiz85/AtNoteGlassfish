@@ -12,7 +12,7 @@ import javax.persistence.Table;
 public class FolderDB extends Entry implements Serializable {
 
 	@OneToMany
-	private List<Entry> children = new ArrayList<Entry>();
+	private List<Relation> relations = new ArrayList<Relation>();
 
 	public FolderDB() {
 		super();
@@ -24,13 +24,14 @@ public class FolderDB extends Entry implements Serializable {
 	
 	}
 
-	public List<Entry> getChildren() {
-		return children;
+	public List<Relation> getRelations() {
+		return relations;
 	}
 
-	public void setChildren(List<Entry> children) {
-		this.children = children;
+	public void setRelations(List<Relation> relations) {
+		this.relations = relations;
 	}
+
 
 	
 

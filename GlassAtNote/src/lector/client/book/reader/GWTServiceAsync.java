@@ -148,7 +148,7 @@ public interface GWTServiceAsync {
 
 	void loadUserById(Long userId, AsyncCallback<UserClient> callback);
 
-	void loadUserByEmail(String email, AsyncCallback<UserClient> callback);
+//	void loadUserByEmail(String email, AsyncCallback<UserClient> callback);
 
 	void deleteStudentById(Long studentId, AsyncCallback<Void> callback);
 

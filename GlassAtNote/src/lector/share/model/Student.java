@@ -2,6 +2,7 @@ package lector.share.model;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import javax.persistence.Entity;
 import javax.persistence.ManyToMany;
@@ -21,8 +22,8 @@ public class Student extends UserApp implements Serializable {
 	}
 
 	public Student(Long id, String firstName, String lastName, String email,
-			String password) {
-		super(id, firstName, lastName, email, password);
+			String password,Date createdDate) {
+		super(id, firstName, lastName, email, password,createdDate);
 		// TODO Auto-generated constructor stub
 	}
 

@@ -5,9 +5,7 @@ import java.util.List;
 
 import com.google.gwt.user.client.rpc.IsSerializable;
 
-
-public class CatalogoClient implements IsSerializable{
-
+public class CatalogoClient implements IsSerializable {
 
 	private Long id;
 
@@ -19,6 +17,15 @@ public class CatalogoClient implements IsSerializable{
 
 	public CatalogoClient() {
 
+	}
+
+	public CatalogoClient(Long id, boolean isPrivate, Long professorId,
+			String catalogName) {
+		super();
+		this.id = id;
+		this.isPrivate = isPrivate;
+		this.professorId = professorId;
+		this.catalogName = catalogName;
 	}
 
 	public Long getId() {

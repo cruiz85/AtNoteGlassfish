@@ -2,6 +2,7 @@ package lector.share.model;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import javax.persistence.CascadeType;
@@ -9,6 +10,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.Temporal;
 
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
@@ -34,27 +36,23 @@ public class UserApp implements Serializable, IsSerializable {
 	private String password;
 	@OneToMany(mappedBy = "creator", cascade = CascadeType.ALL)
 	private List<Annotation> annotations = new ArrayList<Annotation>();
-
-	@Transient
-	private boolean loggedIn = false;
-	@Transient
-	private String loginUrl;
-	@Transient
-	private String logoutUrl;
-	@Transient
-	private boolean isAuthenticated = true;
+	@Temporal(javax.persistence.TemporalType.DATE)
+	private Date createdDate;
+	private short isConfirmed = 0;
 
 	public UserApp() {
 	}
 
 	public UserApp(Long id, String firstName, String lastName, String email,
-			String password) {
+			String password,Date createdDate) {
 		super();
 		this.id = id;
 		this.firstName = firstName;
 		this.lastName = lastName;
 		this.email = email;
 		this.password = password;
+		isConfirmed = 0;
+		this.createdDate=createdDate;
 	
 	}
 
@@ -79,30 +77,7 @@ public class UserApp implements Serializable, IsSerializable {
 		this.password = password;
 	}
 
-	public boolean isLoggedIn() {
-		return loggedIn;
-	}
-
-	public void setLoggedIn(boolean loggedIn) {
-		this.loggedIn = loggedIn;
-	}
-
-	public String getLoginUrl() {
-		return loginUrl;
-	}
-
-	public void setLoginUrl(String loginUrl) {
-		this.loginUrl = loginUrl;
-	}
-
-	public String getLogoutUrl() {
-		return logoutUrl;
-	}
-
-	public void setLogoutUrl(String logoutUrl) {
-		this.logoutUrl = logoutUrl;
-	}
-
+	
 	public String getEmail() {
 		return email;
 	}
@@ -111,14 +86,7 @@ public class UserApp implements Serializable, IsSerializable {
 		this.email = email;
 	}
 
-	public boolean isAuthenticated() {
-		return isAuthenticated;
-	}
-
-	public void setAuthenticated(boolean isAuthenticated) {
-		this.isAuthenticated = isAuthenticated;
-	}
-
+	
 	public String getLastName() {
 		return lastName;
 	}
@@ -148,4 +116,21 @@ public class UserApp implements Serializable, IsSerializable {
 		this.firstName = firstName;
 	}
 
+	public Date getCreatedDate() {
+		return createdDate;
+	}
+
+	public void setCreatedDate(Date createdDate) {
+		this.createdDate = createdDate;
+	}
+
+	public short getIsConfirmed() {
+		return isConfirmed;
+	}
+
+	public void setIsConfirmed(short isConfirmed) {
+		this.isConfirmed = isConfirmed;
+	}
+
+	
 }

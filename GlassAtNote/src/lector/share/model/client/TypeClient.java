@@ -14,9 +14,9 @@ public class TypeClient extends EntryClient implements IsSerializable {
 		super(name);
 	}
 
-	public TypeClient(List<EntryClient> parents, String name,
+	public TypeClient(Long id, List<EntryClient> parents, String name,
 			CatalogoClient catalog) {
-		super(parents, name, catalog);
+		super(id, parents, name, catalog);
 
 	}
 
