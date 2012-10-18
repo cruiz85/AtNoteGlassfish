@@ -103,6 +103,8 @@ public interface GWTService extends RemoteService {
 
 	public List<GroupClient> getGroupsByUserId(Long userId) throws GroupNotFoundException, GeneralException;  
 
+	public List<GroupClient> getGroupsByIds(List<Long> ids) throws GroupNotFoundException, GeneralException; 
+	
 	public void deleteGroup(Long groupId) throws GeneralException;
 
 	/* Metodo Nuevo, para añadir usuarios a un grupo, en la lista para validar */
@@ -161,8 +163,10 @@ public interface GWTService extends RemoteService {
 
 	// Books
 
-	public BookClient loadBookById(Long id) throws BookNotFoundException, GeneralException;
+	public BookClient loadBookClientById(Long id) throws BookNotFoundException, GeneralException;
 
+	public List<BookClient> getBookClientsByIds(List<Long> ids) throws BookNotFoundException, GeneralException;
+	
 	// Carga un libro desde la factoria.
 
 	public GoogleBookClient loadFullBookInGoogle(String query);
@@ -310,7 +314,7 @@ public interface GWTService extends RemoteService {
 
 
 
-	public void deleteBook(String bookId, Long userId) throws GeneralException;
+	public void deleteBookById(Long id) throws GeneralException;
 
 	//public ArrayList<String> getFileNamesByIds(ArrayList<Long> ids);
 

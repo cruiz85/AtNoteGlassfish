@@ -8,6 +8,8 @@ import javax.persistence.EntityTransaction;
 import javax.transaction.SystemException;
 import javax.transaction.UserTransaction;
 
+import com.google.gwt.dev.jjs.impl.Pruner;
+
 import lector.client.catalogo.client.Catalog;
 import lector.share.model.Annotation;
 import lector.share.model.AnnotationThread;
@@ -261,11 +263,23 @@ public class ServiceManagerUtils {
 	}
 
 	public static BookClient produceBookClient(Book b) {
-		return new BookClient(b.getProfessor().getId(), b.getAuthor(),
-				b.getISBN(), b.getPagesCount(), b.getPublishedYear(),
-				b.getTitle(), produceListString(b.getWebLinks()));
+		if(b instanceof GoogleBook){
+			return produceGoogleBookClient((GoogleBook)b);
+		}else{
+			return produceLocalBookClient((LocalBook)b);
+		}
+	
 	}
 
+	public static List<BookClient> produceBookClients(
+			List<Book> s) {
+		List<BookClient> bookClients = new ArrayList<BookClient>();
+		for (Book book : s) {
+			bookClients.add(produceBookClient(book));
+		}
+		return bookClients;
+	}
+	
 	private static List<String> produceListString(List<String> strings) {
 		List<String> cleanStrings = new ArrayList<String>();
 		for (String string : strings) {

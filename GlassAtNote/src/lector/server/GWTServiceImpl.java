@@ -10,6 +10,7 @@ import java.net.URLConnection;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashSet;
+import java.util.Iterator;
 
 import java.util.Date;
 
@@ -530,6 +531,7 @@ public class GWTServiceImpl extends RemoteServiceServlet implements GWTService {
 		return ServiceManagerUtils.produceGroupClient(list.get(0));
 	}
 
+	// TODO Maybe removed.
 	@Override
 	public List<GroupClient> getGroupsByUserId(Long userId)
 			throws GeneralException {
@@ -547,6 +549,36 @@ public class GWTServiceImpl extends RemoteServiceServlet implements GWTService {
 			throw new GeneralException("Exception in method getGroupsByUserId");
 		}
 
+	}
+	
+	@Override
+	public List<GroupClient> getGroupsByIds(List<Long> ids)
+			throws GroupNotFoundException, GeneralException {
+		EntityManager entityManager = emf.createEntityManager();
+		List<GroupApp> list;
+		String sql = "SELECT r FROM GroupApp r WHERE r.id=" + ids.get(0);
+		for (int i = 1; i < ids.size(); i++) {
+			sql += "OR r.id=" + ids.get(i);
+		}
+
+		try {
+			list = entityManager.createQuery(sql).getResultList();
+		} catch (Exception e) {
+			// logger.error ("Exception in method loadGroupAppById: ", e)
+			throw new GeneralException("Exception in method loadGroupAppById:"
+					+ e.getMessage(), e.getStackTrace());
+
+		}
+		if (list == null || list.isEmpty()) {
+			// logger.error ("Exception in method loadGroupAppById: ", e)
+			throw new GroupNotFoundException(
+					"GroupApp not found in method loadGroupAppById");
+
+		}
+		if (entityManager.isOpen()) {
+			entityManager.close();
+		}
+		return ServiceManagerUtils.produceGroupClients(list);
 	}
 
 	// TODO LANZAR EXCEPCIÓN
@@ -1153,34 +1185,6 @@ public class GWTServiceImpl extends RemoteServiceServlet implements GWTService {
 	}
 
 	@Override
-	public BookClient loadBookById(Long id) throws BookNotFoundException,
-			GeneralException {
-		EntityManager entityManager = emf.createEntityManager();
-		List<Book> list;
-
-		String sql = "SELECT r FROM Book r WHERE r.id=" + id;
-		try {
-			list = entityManager.createQuery(sql).getResultList();
-		} catch (Exception e) {
-			// logger.error ("Exception in method loadGroupById: ", e)
-			throw new GeneralException("Exception in method loadBookById:"
-					+ e.getMessage(), e.getStackTrace());
-
-		}
-		if (list == null || list.isEmpty()) {
-			// logger.error ("Exception in method loadGroupById: ", e)
-			throw new BookNotFoundException(
-					"Book not found in method loadBookById");
-
-		}
-		if (entityManager.isOpen()) {
-			entityManager.close();
-		}
-
-		return ServiceManagerUtils.produceBookClient(list.get(0));
-	}
-
-	@Override
 	public GoogleBookClient loadFullBookInGoogle(String query) {
 		GoogleBook googleBook = getBookInGoogleByISBN(query);
 		String cleanGoogleBookId = googleBook.getUrl().substring(33, 45);
@@ -1385,10 +1389,10 @@ public class GWTServiceImpl extends RemoteServiceServlet implements GWTService {
 			catalogo = findCatalogo(catalogId);
 			CatalogoClient cClient = ServiceManagerUtils
 					.produceCatalogoClient(catalogo);
-			CatalogoGenerator.Start(cClient,catalogo);
+			CatalogoGenerator.Start(cClient, catalogo);
 			return cClient;
 		} catch (CatalogoNotFoundException e) {
-			
+
 			e.printStackTrace();
 		}
 		return new CatalogoClient();
@@ -1403,7 +1407,7 @@ public class GWTServiceImpl extends RemoteServiceServlet implements GWTService {
 	@Override
 	public List<CatalogoClient> getVisbibleCatalogsByProfessorId(
 			Long professorId) {
-		
+
 		return null;
 	}
 
@@ -1862,20 +1866,76 @@ public class GWTServiceImpl extends RemoteServiceServlet implements GWTService {
 	}
 
 	@Override
-	public void deleteBook(String bookId, Long userId) throws GeneralException {
+	public void deleteBookById(Long id) throws GeneralException {
 		EntityManager entityManager = emf.createEntityManager();
 
 		try {
 			userTransaction.begin();
-			entityManager.createQuery(
-					"DELETE FROM Book s WHERE s.ISBN='" + bookId
-							+ "' AND s.professor.id=" + userId).executeUpdate();
+			entityManager.createQuery("DELETE FROM Book s WHERE s.id=" + id);
 			userTransaction.commit();
 		} catch (Exception e) {
 			ServiceManagerUtils.rollback(userTransaction);
 			throw new GeneralException("Exception in method deleteBookById"
 					+ e.getMessage(), e.getStackTrace());
 		}
+	}
+
+	@Override
+	public BookClient loadBookClientById(Long id) throws BookNotFoundException,
+			GeneralException {
+		EntityManager entityManager = emf.createEntityManager();
+		List<Book> list;
+
+		String sql = "SELECT r FROM Book r WHERE r.id=" + id;
+		try {
+			list = entityManager.createQuery(sql).getResultList();
+		} catch (Exception e) {
+			// logger.error ("Exception in method loadGroupById: ", e)
+			throw new GeneralException("Exception in method loadBookById:"
+					+ e.getMessage(), e.getStackTrace());
+
+		}
+		if (list == null || list.isEmpty()) {
+			// logger.error ("Exception in method loadGroupById: ", e)
+			throw new BookNotFoundException(
+					"Book not found in method loadBookById");
+
+		}
+		if (entityManager.isOpen()) {
+			entityManager.close();
+		}
+
+		return ServiceManagerUtils.produceBookClient(list.get(0));
+	}
+
+	@Override
+	public List<BookClient> getBookClientsByIds(List<Long> ids)
+			throws BookNotFoundException, GeneralException {
+		EntityManager entityManager = emf.createEntityManager();
+		List<Book> list;
+		String sql = "SELECT r FROM Book r WHERE r.id=" + ids.get(0);
+		for (int i = 1; i < ids.size(); i++) {
+			sql += "OR r.id=" + ids.get(i);
+		}
+
+		try {
+			list = entityManager.createQuery(sql).getResultList();
+		} catch (Exception e) {
+			// logger.error ("Exception in method loadBookById: ", e)
+			throw new GeneralException("Exception in method loadBookById:"
+					+ e.getMessage(), e.getStackTrace());
+
+		}
+		if (list == null || list.isEmpty()) {
+			// logger.error ("Exception in method loadBookById: ", e)
+			throw new BookNotFoundException(
+					"Book not found in method loadBookById");
+
+		}
+		if (entityManager.isOpen()) {
+			entityManager.close();
+		}
+		return ServiceManagerUtils.produceBookClients(list);
 	}
 
 	private boolean seeEditionOnRemainingStudents(
@@ -1948,26 +2008,30 @@ public class GWTServiceImpl extends RemoteServiceServlet implements GWTService {
 		}
 		return isThereAChange;
 	}
-	
-	private boolean isDescendant(Entry actDescentSource, FolderDB destiny)
-	{
+
+	private boolean isDescendant(Entry actDescentSource, FolderDB destiny) {
 		if (actDescentSource instanceof Tag)
 			return false;
-		else 
-		{
-			FolderDB actDescendantSourceFolder=(FolderDB)actDescentSource;	
-			List<Relation> relacionesActDescendantSourceFolder=actDescendantSourceFolder.getRelations();
+		else {
+			FolderDB actDescendantSourceFolder = (FolderDB) actDescentSource;
+			List<Relation> relacionesActDescendantSourceFolder = actDescendantSourceFolder
+					.getRelations();
 			for (int i = 0; i < relacionesActDescendantSourceFolder.size(); i++) {
-				if (relacionesActDescendantSourceFolder.get(i).getChild().getId().equals(destiny.getId()))
+				if (relacionesActDescendantSourceFolder.get(i).getChild()
+						.getId().equals(destiny.getId()))
 					return true;
 			}
-			boolean sons=false;
+			boolean sons = false;
 			for (int i = 0; i < relacionesActDescendantSourceFolder.size(); i++) {
-					sons=sons||isDescendant(relacionesActDescendantSourceFolder.get(i).getChild(), destiny);
-				
+				sons = sons
+						|| isDescendant(relacionesActDescendantSourceFolder
+								.get(i).getChild(), destiny);
+
 			}
 			return sons;
 		}
-		
+
 	}
+
+
 }

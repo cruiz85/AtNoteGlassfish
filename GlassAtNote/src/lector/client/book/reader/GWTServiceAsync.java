@@ -95,8 +95,6 @@ public interface GWTServiceAsync {
 	// void getSchemaByCatalogId(Long catalogId,
 	// AsyncCallback<AnnotationSchema> callback);
 
-	void deleteBook(String bookId, Long userId, AsyncCallback<Void> callback);
-
 	void updateReadingActivities(AsyncCallback<Void> callback);
 
 	void deleteProfessorById(Long professorId, AsyncCallback<Void> callback);
@@ -196,8 +194,6 @@ public interface GWTServiceAsync {
 	void getAnnotationThreadsByItsFather(Long threadFatherId,
 			AsyncCallback<List<AnnotationThreadClient>> callback);
 
-	void loadBookById(Long id, AsyncCallback<BookClient> callback);
-
 	void loadFullBookInGoogle(String query,
 			AsyncCallback<GoogleBookClient> callback);
 
@@ -253,6 +249,16 @@ public interface GWTServiceAsync {
 
 	void removeStudentToBeValidated(Long userId, Long groupId,
 			AsyncCallback<Void> callback);
+
+	void deleteBookById(Long id, AsyncCallback<Void> callback);
+
+	void loadBookClientById(Long id, AsyncCallback<BookClient> callback);
+
+	void getBookClientsByIds(List<Long> ids,
+			AsyncCallback<List<BookClient>> callback);
+
+	void getGroupsByIds(List<Long> ids,
+			AsyncCallback<List<GroupClient>> callback);
 
 	
 }
