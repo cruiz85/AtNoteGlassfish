@@ -84,14 +84,18 @@ public class NewAdminLangs implements EntryPoint {
 		
 		VerticalPanel verticalPanel = new VerticalPanel();
 		verticalPanel.setStyleName("fondoLogo");
-		verticalPanel.setVerticalAlignment(HasVerticalAlignment.ALIGN_MIDDLE);
-		RootTXOriginal.add(verticalPanel);
+		RootTXOriginal.add(verticalPanel,0,25);
 		verticalPanel.setSize("100%", "100%");
 		
+		VerticalPanel verticalPanel_1 = new VerticalPanel();
+		verticalPanel_1.setSpacing(20);
+		verticalPanel.add(verticalPanel_1);
+		
 		HorizontalPanel horizontalPanel = new HorizontalPanel();
+		verticalPanel_1.add(horizontalPanel);
+		horizontalPanel.setStyleName("AzulTransparente");
 		horizontalPanel.setSpacing(8);
-		verticalPanel.add(horizontalPanel);
-		horizontalPanel.setSize("", "100%");
+		horizontalPanel.setSize("", "");
 		
 		Actual = new VerticalPanel();
 		horizontalPanel.add(Actual);

@@ -140,6 +140,7 @@ public class BookAdministration implements EntryPoint {
 		menuBar.addItem(mntmNewItem_2);
 
 		SplitLayoutPanel splitLayoutPanel = new SplitLayoutPanel();
+		splitLayoutPanel.setStyleName("fondoLogo");
 		RootTXOriginal.add(splitLayoutPanel, 0, 25);
 		splitLayoutPanel.setSize("100%", "100%");
 
@@ -188,6 +189,7 @@ public class BookAdministration implements EntryPoint {
 //		});
 //		stackPanel_1.setStyleNameBotton("gwt-ButtonTOP");
 		List<Long> ListaIDsLibros = ((ProfessorClient)ActualUser.getUser()).getBooks();
+		if (!ListaIDsLibros.isEmpty())
 		bookReaderServiceHolder.getBookClientsByIds(ListaIDsLibros, new AsyncCallback<List<BookClient>>() {
 			
 			@Override

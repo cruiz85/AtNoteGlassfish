@@ -23,7 +23,7 @@ import lector.client.login.activitysel.MyActivities;
 //import lector.client.reader.MainEntryPoint;
 //import lector.client.reader.export.ExportResult;
 //import lector.client.reader.filter.advance.FilterAdvance;
-//import lector.client.search.Searcher;
+import lector.client.search.Searcher;
 import lector.client.welcome.Welcome;
 import lector.client.login.UserEdition;
 
@@ -37,7 +37,7 @@ public class Controlador implements EntryPoint {
 	private static Welcome WelcomePage = new Welcome();
 //    private static MainEntryPoint MEP = new MainEntryPoint();
     private static EntryPoint Actual = null;
-//    private static Searcher Search = new Searcher();
+    private static Searcher Search = new Searcher();
 //  //  private static ControladorEntrada controladorEntrada = new ControladorEntrada();
     private static Administrador Admin = new Administrador();
 //    private static EditorTagsAndTypes AdminTagsAndTypes = new EditorTagsAndTypes();
@@ -97,9 +97,9 @@ public class Controlador implements EntryPoint {
     }
 
     public static void change2Searcher() {
-//        clear();
-//        Actual = Search;
-//        Actual.onModuleLoad();
+        clear();
+        Actual = Search;
+        Actual.onModuleLoad();
     }
     
    
