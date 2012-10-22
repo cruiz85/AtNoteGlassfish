@@ -1506,12 +1506,18 @@ public class GWTServiceImpl extends RemoteServiceServlet implements GWTService {
 
 	@Override
 	public void saveType(TypeClient typesys) {
-		Tag folderDB = new Tag();
-		if (typesys.getId() != null) {
-			folderDB.setId(typesys.getId());
+		Tag tag = new Tag();
+		try {
+			Catalogo catalogo = findCatalogo(typesys.getCatalog()
+					.getId());
+			tag.setCatalog(catalogo);
+			tag.setName(typesys.getName());
+		} catch (CatalogoNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
-		folderDB.setName(typesys.getName());
-		saveTag(folderDB);
+		
+		saveTag(tag);
 
 	}
 
@@ -1676,7 +1682,16 @@ public class GWTServiceImpl extends RemoteServiceServlet implements GWTService {
 
 	@Override
 	public void renameTag(Long typeIds, String newTagName) {
-		// TODO Auto-generated method stub
+		Tag tag = null;
+		try {
+			tag = findTag(typeIds);
+			tag.setName(newTagName);
+		} catch (TagNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	
+		saveTag(tag);
 
 	}
 
@@ -1725,17 +1740,32 @@ public class GWTServiceImpl extends RemoteServiceServlet implements GWTService {
 
 	@Override
 	public void renameFolderDB(Long typeCategoryId, String newFolderDBName) {
-		// TODO Auto-generated method stub
+		FolderDB folderDB = null;
+		try {
+			folderDB = findFolderDB(typeCategoryId);
+			folderDB.setName(newFolderDBName);
+		} catch (FolderDBNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	
+		saveFolderDB(folderDB);
 
 	}
 
 	@Override
 	public void saveTypeCategory(TypeCategoryClient typeCategoryClient) {
 		FolderDB folderDB = new FolderDB();
-		if (typeCategoryClient.getId() != null) {
-			folderDB.setId(typeCategoryClient.getId());
+		try {
+			Catalogo catalogo = findCatalogo(typeCategoryClient.getCatalog()
+					.getId());
+			folderDB.setCatalog(catalogo);
+			folderDB.setName(typeCategoryClient.getName());
+		} catch (CatalogoNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
-		folderDB.setName(typeCategoryClient.getName());
+		
 		saveFolderDB(folderDB);
 
 	}
