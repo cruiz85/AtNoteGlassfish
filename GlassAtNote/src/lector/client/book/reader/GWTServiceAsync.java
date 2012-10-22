@@ -102,10 +102,7 @@ public interface GWTServiceAsync {
 	void getEntriesByIdsRecursiveIfFolder(ArrayList<Long> Ids,
 			AsyncCallback<List<Entry>> callback);
 
-	void saveTag(Tag typesys, Long typeCategoryId, AsyncCallback<Void> callback);
-
-	void deleteTag(Long typeId, Long typeCategoryId,
-			AsyncCallback<Long> callback);
+	void deleteTag(Long typeId, AsyncCallback<Void> callback);
 
 	void getAnnotationsNumberByTagName(String annotationTagName,
 			AsyncCallback<Integer> callback);
@@ -115,21 +112,15 @@ public interface GWTServiceAsync {
 	void moveTag(Long typeCategoryFromId, Long typeId, Long typeCategoryToId,
 			AsyncCallback<Void> callback);
 
-	void getTagNamesByIds(ArrayList<Long> typeIds,
+	void getTagNamesByIds(List<Long> typeIds,
 			AsyncCallback<List<String>> callback);
 
 	void renameTag(Long typeIds, String newTagName, AsyncCallback<Void> callback);
-
-	void addTagToFolderDB(Long typeIds, Long fatherFolderDBId,
-			AsyncCallback<Void> callback);
 
 	void deleteFolderDB(Long typeCategoryId, Long fatherFolderDBId,
 			AsyncCallback<Void> callback);
 
 	void renameFolderDB(Long typeCategoryId, String newFolderDBName,
-			AsyncCallback<Void> callback);
-
-	void saveFolderDB(FolderDB typeCategory, Long typeCategoryFatherId,
 			AsyncCallback<Void> callback);
 
 	void moveFolderDB(Long typeCategoryId, Long typeCategoryFromId,
@@ -209,10 +200,10 @@ public interface GWTServiceAsync {
 	void loadTagByNameAndCatalogId(String typeName, Long catalogId,
 			AsyncCallback<TypeClient> callback);
 
-	void getTagsByNameAndCatalogId(ArrayList<String> typeNames, Long catalogId,
+	void getTagsByNameAndCatalogId(List<String> typeNames, Long catalogId,
 			AsyncCallback<List<TypeClient>> callback);
 
-	void getTagsByIds(ArrayList<Long> typeIds,
+	void getTagsByIds(List<Long> typeIds,
 			AsyncCallback<List<TypeClient>> callback);
 
 	void loadFolderDBById(Long typeCategoryId,
@@ -259,6 +250,14 @@ public interface GWTServiceAsync {
 
 	void getGroupsByIds(List<Long> ids,
 			AsyncCallback<List<GroupClient>> callback);
+
+	void addChildEntry(Long entryId, Long fatherTypeCategory,
+			AsyncCallback<Void> callback);
+
+	void saveTypeCategory(TypeCategoryClient typeCategoryClient,
+			AsyncCallback<Void> callback);
+
+	void saveType(TypeClient typesys, AsyncCallback<Void> callback);
 
 	
 }

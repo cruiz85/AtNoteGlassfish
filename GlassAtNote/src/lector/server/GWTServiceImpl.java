@@ -48,12 +48,14 @@ import lector.share.model.LanguageNotFoundException;
 import lector.share.model.Catalogo;
 import lector.share.model.CatalogoNotFoundException;
 import lector.share.model.Entry;
+import lector.share.model.FolderDBNotFoundException;
 import lector.share.model.NotAuthenticatedException;
 import lector.share.model.NullParameterException;
 import lector.share.model.Professor;
 import lector.share.model.ProfessorNotFoundException;
 import lector.share.model.ReadingActivityNotFoundException;
 import lector.share.model.Relation;
+import lector.share.model.RelationNotFoundException;
 import lector.share.model.Student;
 import lector.share.model.StudentNotFoundException;
 import lector.share.model.Tag;
@@ -481,7 +483,7 @@ public class GWTServiceImpl extends RemoteServiceServlet implements GWTService {
 		saveGroup(oldGroup);
 	}
 
-	public void saveGroup(GroupApp group) {
+	private void saveGroup(GroupApp group) {
 		EntityManager entityManager = emf.createEntityManager();
 
 		try {
@@ -550,7 +552,7 @@ public class GWTServiceImpl extends RemoteServiceServlet implements GWTService {
 		}
 
 	}
-	
+
 	@Override
 	public List<GroupClient> getGroupsByIds(List<Long> ids)
 			throws GroupNotFoundException, GeneralException {
@@ -674,6 +676,17 @@ public class GWTServiceImpl extends RemoteServiceServlet implements GWTService {
 		Tag a = entityManager.find(Tag.class, id);
 		if (a == null) {
 			throw new TagNotFoundException("Tag not found in method findTag");
+		}
+		entityManager.close();
+		return a;
+	}
+
+	private FolderDB findFolderDB(Long id) throws FolderDBNotFoundException {
+		EntityManager entityManager = emf.createEntityManager();
+		FolderDB a = entityManager.find(FolderDB.class, id);
+		if (a == null) {
+			throw new FolderDBNotFoundException(
+					"FolderDB not found in method loadFolderDBById");
 		}
 		entityManager.close();
 		return a;
@@ -875,7 +888,7 @@ public class GWTServiceImpl extends RemoteServiceServlet implements GWTService {
 		}
 	}
 
-	public void saveAnnotation(Annotation annotation) {
+	private void saveAnnotation(Annotation annotation) {
 		EntityManager entityManager = emf.createEntityManager();
 
 		Date now = new Date();
@@ -1487,16 +1500,35 @@ public class GWTServiceImpl extends RemoteServiceServlet implements GWTService {
 		return ServiceManagerUtils.produceTypeClientLazy(list.get(0));
 	}
 
-	@Override
-	public void saveTag(Tag typesys, Long typeCategoryId) {
+	private void saveTag(Tag typesys) {
 
 	}
 
 	@Override
-	public Long deleteTag(Long typeId, Long typeCategoryId)
-			throws GeneralException {
-		// TODO Auto-generated method stub
-		return null;
+	public void saveType(TypeClient typesys) {
+		Tag folderDB = new Tag();
+		if (typesys.getId() != null) {
+			folderDB.setId(typesys.getId());
+		}
+		folderDB.setName(typesys.getName());
+		saveTag(folderDB);
+
+	}
+
+	@Override
+	public void deleteTag(Long tagId) throws GeneralException {
+		EntityManager entityManager = emf.createEntityManager();
+
+		try {
+			userTransaction.begin();
+			entityManager.createQuery("DELETE FROM Tag s WHERE s.id=" + tagId)
+					.executeUpdate();
+			userTransaction.commit();
+		} catch (Exception e) {
+			ServiceManagerUtils.rollback(userTransaction);
+			throw new GeneralException("Exception in method deleteTagById"
+					+ e.getMessage(), e.getStackTrace());
+		}
 	}
 
 	@Override
@@ -1517,25 +1549,127 @@ public class GWTServiceImpl extends RemoteServiceServlet implements GWTService {
 	@Override
 	public void moveTag(Long typeCategoryFromId, Long typeId,
 			Long typeCategoryToId) throws GeneralException {
-		// TODO Auto-generated method stub
+		try {
+			FolderDB typeCategoryTo = findFolderDB(typeCategoryToId);
+			Relation relation = loadRelationByFatherAndSonId(
+					typeCategoryFromId, typeId);
+			relation.setFather(typeCategoryTo);
+			saveRelation(relation);
+		} catch (FolderDBNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (RelationNotFoundException rnfe) {
+			rnfe.printStackTrace();
+		}
+
+	}
+
+	private void saveRelation(Relation relation) {
+		EntityManager entityManager = emf.createEntityManager();
+
+		try {
+			userTransaction.begin();
+			if (relation.getId() == null) {
+				entityManager.persist(relation);
+			} else {
+				entityManager.merge(relation);
+			}
+
+			userTransaction.commit();
+		} catch (Exception e) {
+			ServiceManagerUtils.rollback(userTransaction); // TODO utilizar
+															// método de
+															// logger
+		}
+		if (entityManager.isOpen()) {
+			entityManager.close();
+		}
+	}
+
+	private Relation loadRelationByFatherAndSonId(Long fatherId, Long sonId)
+			throws GeneralException, RelationNotFoundException {
+		EntityManager entityManager = emf.createEntityManager();
+		List<Relation> list;
+
+		String sql = "SELECT r FROM Relation r WHERE r.father.id=" + fatherId
+				+ " AND r.child.id=" + sonId;
+		try {
+			list = entityManager.createQuery(sql).getResultList();
+		} catch (Exception e) {
+			// logger.error ("Exception in method loadRelationById: ", e)
+			throw new GeneralException("Exception in method loadRelationById:"
+					+ e.getMessage(), e.getStackTrace());
+
+		}
+		if (list == null || list.isEmpty()) {
+			// logger.error ("Exception in method loadRelationById: ", e)
+			throw new RelationNotFoundException(
+					"Relation not found in method loadRelationById");
+
+		}
+		if (entityManager.isOpen()) {
+			entityManager.close();
+		}
+
+		return list.get(0);
 
 	}
 
 	@Override
-	public List<TypeClient> getTagsByNameAndCatalogId(
-			ArrayList<String> typeNames, Long catalogId) {
-		// TODO Auto-generated method stub
-		return null;
+	public List<TypeClient> getTagsByNameAndCatalogId(List<String> tagNames,
+			Long catalogId) throws GeneralException {
+
+		EntityManager entityManager = emf.createEntityManager();
+		List<Tag> list;
+		String sql = "SELECT r FROM Tag r WHERE r.name='" + tagNames.get(0)
+				+ "' ";
+		for (int i = 1; i < ids.size(); i++) {
+			sql += "OR r.name='" + ids.get(i) + "'";
+		}
+		sql += " AND r.catalogId=" + catalogId;
+		try {
+			list = entityManager.createQuery(sql).getResultList();
+		} catch (Exception e) {
+			// logger.error ("Exception in method loadTagById: ", e)
+			throw new GeneralException("Exception in method loadTagById:"
+					+ e.getMessage(), e.getStackTrace());
+
+		}
+
+		if (entityManager.isOpen()) {
+			entityManager.close();
+		}
+		return ServiceManagerUtils.produceTypeClientsLazy(list);
+
 	}
 
 	@Override
-	public List<TypeClient> getTagsByIds(ArrayList<Long> typeIds) {
-		// TODO Auto-generated method stub
-		return null;
+	public List<TypeClient> getTagsByIds(List<Long> typeIds)
+			throws GeneralException {
+		EntityManager entityManager = emf.createEntityManager();
+		List<Tag> list;
+		String sql = "SELECT r FROM Tag r WHERE r.id=" + typeIds.get(0);
+		for (int i = 1; i < typeIds.size(); i++) {
+			sql += "OR r.id=" + typeIds.get(i);
+		}
+
+		try {
+			list = entityManager.createQuery(sql).getResultList();
+		} catch (Exception e) {
+			// logger.error ("Exception in method loadTagById: ", e)
+			throw new GeneralException("Exception in method loadTagById:"
+					+ e.getMessage(), e.getStackTrace());
+
+		}
+
+		if (entityManager.isOpen()) {
+			entityManager.close();
+		}
+		return ServiceManagerUtils.produceTypeClientsLazy(list);
 	}
 
 	@Override
-	public List<String> getTagNamesByIds(ArrayList<Long> typeIds) {
+	public List<String> getTagNamesByIds(List<Long> typeIds) {
 		// TODO Auto-generated method stub
 		return null;
 	}
@@ -1547,8 +1681,19 @@ public class GWTServiceImpl extends RemoteServiceServlet implements GWTService {
 	}
 
 	@Override
-	public void addTagToFolderDB(Long typeIds, Long fatherFolderDBId) {
-		// TODO Auto-generated method stub
+	public void addChildEntry(Long entryId, Long fatherFolderDBId) {
+		try {
+			FolderDB father = findFolderDB(fatherFolderDBId);
+			Tag tag = findTag(entryId);
+			Relation relation = new Relation(father, tag);
+			saveRelation(relation);
+
+		} catch (FolderDBNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (TagNotFoundException tnfe) {
+			tnfe.printStackTrace();
+		}
 
 	}
 
@@ -1585,22 +1730,59 @@ public class GWTServiceImpl extends RemoteServiceServlet implements GWTService {
 	}
 
 	@Override
-	public void saveFolderDB(FolderDB typeCategory, Long typeCategoryFatherId) {
-		// TODO Auto-generated method stub
+	public void saveTypeCategory(TypeCategoryClient typeCategoryClient) {
+		FolderDB folderDB = new FolderDB();
+		if (typeCategoryClient.getId() != null) {
+			folderDB.setId(typeCategoryClient.getId());
+		}
+		folderDB.setName(typeCategoryClient.getName());
+		saveFolderDB(folderDB);
+
+	}
+
+	private void saveFolderDB(FolderDB folder) {
+		EntityManager entityManager = emf.createEntityManager();
+
+		try {
+			userTransaction.begin();
+			if (folder.getId() == null) {
+				entityManager.persist(folder);
+			} else {
+				entityManager.merge(folder);
+			}
+
+			userTransaction.commit();
+		} catch (Exception e) {
+			ServiceManagerUtils.rollback(userTransaction); // TODO utilizar
+															// método de
+															// logger
+		}
+		if (entityManager.isOpen()) {
+			entityManager.close();
+		}
 
 	}
 
 	@Override
 	public void moveFolderDB(Long typeCategoryId, Long typeCategoryFromId,
 			Long typeCategoryToId) throws GeneralException, DecendanceException {
-		// TODO Auto-generated method stub
-
+		try {
+			FolderDB typeCategoryTo = findFolderDB(typeCategoryToId);
+			Relation relation = loadRelationByFatherAndSonId(
+					typeCategoryFromId, typeCategoryId);
+			relation.setFather(typeCategoryTo);
+			saveRelation(relation);
+		} catch (FolderDBNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (RelationNotFoundException rnfe) {
+			rnfe.printStackTrace();
+		}
 	}
 
 	@Override
 	public void fusionFolder(Long typeCategoryFromId, Long typeCategoryToId)
 			throws IlegalFolderFusionException, GeneralException {
-		// TODO Auto-generated method stub
 
 	}
 
@@ -2032,6 +2214,5 @@ public class GWTServiceImpl extends RemoteServiceServlet implements GWTService {
 		}
 
 	}
-
 
 }

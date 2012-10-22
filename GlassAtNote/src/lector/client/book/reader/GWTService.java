@@ -208,9 +208,9 @@ public interface GWTService extends RemoteService {
 
 	public TypeClient loadTagByNameAndCatalogId(String typeName, Long catalogId) throws TagNotFoundException, GeneralException;
 
-	public void saveTag(Tag typesys, Long typeCategoryId); //TODO para que se quiere el padre?.
-
-	public Long deleteTag(Long typeId, Long typeCategoryId)
+	public void saveType(TypeClient typesys); //TODO para que se quiere el padre?.
+	
+	public void deleteTag(Long typeId)
 			throws GeneralException;;
 
 	public Integer getAnnotationsNumberByTagName(String annotationTagName)
@@ -223,16 +223,16 @@ public interface GWTService extends RemoteService {
 	public void moveTag(Long typeCategoryFromId, Long typeId,
 			Long typeCategoryToId) throws GeneralException;;
 
-	public List<TypeClient> getTagsByNameAndCatalogId(ArrayList<String> typeNames,
-			Long catalogId);
+	public List<TypeClient> getTagsByNameAndCatalogId(List<String> typeNames,
+			Long catalogId) throws GeneralException;
 
-	public List<TypeClient> getTagsByIds(ArrayList<Long> typeIds);
+	public List<TypeClient> getTagsByIds(List<Long> typeIds) throws GeneralException;
 
-	public List<String> getTagNamesByIds(ArrayList<Long> typeIds);
+	public List<String> getTagNamesByIds(List<Long> typeIds);
 
 	public void renameTag(Long typeIds, String newTagName);
 
-	public void addTagToFolderDB(Long typeIds, Long fatherFolderDBId);
+	public void addChildEntry(Long entryId, Long fatherTypeCategory);
 
 	// TypeCategory
 
@@ -248,7 +248,7 @@ public interface GWTService extends RemoteService {
 
 	public void renameFolderDB(Long typeCategoryId, String newFolderDBName);
 
-	public void saveFolderDB(FolderDB typeCategory, Long typeCategoryFatherId);
+	public void saveTypeCategory(TypeCategoryClient typeCategoryClient);
 
 	public void moveFolderDB(Long typeCategoryId, Long typeCategoryFromId,
 			Long typeCategoryToId) throws GeneralException, DecendanceException;;

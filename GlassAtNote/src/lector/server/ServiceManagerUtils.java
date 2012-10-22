@@ -7,10 +7,6 @@ import java.util.StringTokenizer;
 import javax.persistence.EntityTransaction;
 import javax.transaction.SystemException;
 import javax.transaction.UserTransaction;
-
-import com.google.gwt.dev.jjs.impl.Pruner;
-
-import lector.client.catalogo.client.Catalog;
 import lector.share.model.Annotation;
 import lector.share.model.AnnotationThread;
 import lector.share.model.Book;
