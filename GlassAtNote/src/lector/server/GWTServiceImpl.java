@@ -31,6 +31,7 @@ import javax.transaction.UserTransaction;
 import lector.client.book.reader.ExportService;
 import lector.client.book.reader.GWTService;
 
+import com.google.appengine.api.search.query.QueryParser.value_return;
 import com.google.gwt.user.server.rpc.RemoteServiceServlet;
 import lector.share.model.Annotation;
 import lector.share.model.AnnotationNotFoundException;
@@ -485,7 +486,6 @@ public class GWTServiceImpl extends RemoteServiceServlet implements GWTService {
 
 	private void saveGroup(GroupApp group) {
 		EntityManager entityManager = emf.createEntityManager();
-
 		try {
 			userTransaction.begin();
 			if (group.getId() == null) {
@@ -669,6 +669,18 @@ public class GWTServiceImpl extends RemoteServiceServlet implements GWTService {
 		}
 		entityManager.close();
 		return a;
+	}
+
+	private Book findBook(Long id) throws BookNotFoundException {
+		EntityManager entityManager = emf.createEntityManager();
+		Book a = entityManager.find(Book.class, id);
+		if (a == null) {
+			throw new BookNotFoundException(
+					"Book not found in method loadBookById");
+		}
+		entityManager.close();
+		return a;
+
 	}
 
 	private Tag findTag(Long id) throws TagNotFoundException {
@@ -1036,9 +1048,7 @@ public class GWTServiceImpl extends RemoteServiceServlet implements GWTService {
 			entityManager.close();
 		}
 
-		return ServiceManagerUtils.produceAnnotationClients(list); // método
-																	// esta
-		// retornando null
+		return ServiceManagerUtils.produceAnnotationClients(list); 
 	}
 
 	@Override
@@ -1051,9 +1061,7 @@ public class GWTServiceImpl extends RemoteServiceServlet implements GWTService {
 			}
 
 		}
-		return ServiceManagerUtils.produceAnnotationClients(annotations); // método
-																			// esta
-		// retornando null
+		return ServiceManagerUtils.produceAnnotationClients(annotations); 
 	}
 
 	private Annotation quickFind(Long id) {
@@ -1309,8 +1317,32 @@ public class GWTServiceImpl extends RemoteServiceServlet implements GWTService {
 
 	@Override
 	public void addBookToUser(BookClient bookClient, Long userId) {
-		// TODO Auto-generated method stub
+		Book book = reproduceBookFromClient(bookClient);
+		try {
+			Professor professor = findProfessor(bookClient.getProfessor());
+			professor.getBooks().add(book);
+			saveUser(professor);
+		} catch (ProfessorNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (GeneralException ge) {
+			ge.printStackTrace();
+		}
 
+	}
+
+	private Book reproduceBookFromClient(BookClient bookClient) {
+		Professor professor = null;
+		try {
+			professor = findProfessor(bookClient.getId());
+		} catch (ProfessorNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		Book book = new Book(professor, bookClient.getAuthor(),
+				bookClient.getISBN(), bookClient.getPagesCount(),
+				bookClient.getPublishedYear(), bookClient.getTitle());
+		return book;
 	}
 
 	public List<GoogleBook> getGoogleBooks(String query) {
@@ -1424,8 +1456,54 @@ public class GWTServiceImpl extends RemoteServiceServlet implements GWTService {
 
 	@Override
 	public void saveCatalog(CatalogoClient catalogClient) {
-		// TODO Auto-generated method stub
+		short isPrivate = (catalogClient.getIsPrivate() ? (short) 1 : 0);
+		Catalogo catalogo = new Catalogo(isPrivate,
+				catalogClient.getProfessorId(), catalogClient.getCatalogName());
+		saveCatalog(catalogo);
+	}
 
+	private void saveCatalog(Catalogo catalog) {
+		EntityManager entityManager = emf.createEntityManager();
+		try {
+			userTransaction.begin();
+			if (catalog.getId() == null) {
+				entityManager.persist(catalog);
+			} else {
+				entityManager.merge(catalog);
+			}
+
+			userTransaction.commit();
+		} catch (Exception e) {
+			ServiceManagerUtils.rollback(userTransaction); // TODO utilizar
+															// método de
+															// logger
+		}
+		if (entityManager.isOpen()) {
+			entityManager.close();
+		}
+	}
+
+	@Override
+	public void addChildToCatalog(EntryClient entryClient, Long catalogId) {
+		try {
+			Entry entry = null;
+			Catalogo catalogo = findCatalogo(catalogId);
+			if (entryClient instanceof TypeClient) {
+				entry = (Tag) reproduceEntryFromClient(entryClient);
+			} else {
+				entry = (FolderDB) reproduceEntryFromClient(entryClient);
+			}
+			catalogo.getEntries().add(entry);
+			saveCatalog(catalogo);
+		} catch (CatalogoNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+	}
+
+	private Entry reproduceEntryFromClient(EntryClient entryClient) {
+		return new Entry(entryClient.getName());
 	}
 
 	@Override

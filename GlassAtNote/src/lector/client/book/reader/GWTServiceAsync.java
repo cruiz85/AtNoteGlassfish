@@ -263,5 +263,8 @@ public interface GWTServiceAsync {
 	void deleteTypeCategory(Long typeCategoryId, Long fatherFolderDBId,
 			AsyncCallback<Void> callback);
 
+	void addChildToCatalog(EntryClient entryClient, Long catalogId,
+			AsyncCallback<Void> callback);
+
 	
 }

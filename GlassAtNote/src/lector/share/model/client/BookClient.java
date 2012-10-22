@@ -7,8 +7,6 @@ import com.google.gwt.user.client.rpc.IsSerializable;
 
 
 public class BookClient implements IsSerializable{
-	
-
 
 	private Long id;
 	private String author;

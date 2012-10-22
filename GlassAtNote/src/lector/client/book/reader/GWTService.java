@@ -195,7 +195,9 @@ public interface GWTService extends RemoteService {
 
 	public List<CatalogoClient> getVisbibleCatalogsByProfessorId(Long professorId);
 
-	void deleteCatalog(Long catalogId);
+	public void deleteCatalog(Long catalogId);
+	
+	public void addChildToCatalog(EntryClient entryClient, Long catalogId);
 
 	// Entity
 

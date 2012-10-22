@@ -31,6 +31,13 @@ public class Catalogo implements Serializable {
 
 	}
 
+	public Catalogo(short isPrivate, Long professorId, String catalogName) {
+		super();
+		this.isPrivate = isPrivate;
+		this.professorId = professorId;
+		this.catalogName = catalogName;
+	}
+
 	public Long getId() {
 		return id;
 	}
