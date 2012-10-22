@@ -251,10 +251,11 @@ public interface GWTServiceAsync {
 	void addChildEntry(Long entryId, Long fatherTypeCategory,
 			AsyncCallback<Void> callback);
 
-	void saveTypeCategory(TypeCategoryClient typeCategoryClient,
+	void saveTypeCategory(TypeCategoryClient typeCategoryClient, Long father,
 			AsyncCallback<Void> callback);
 
-	void saveType(TypeClient typesys, AsyncCallback<Void> callback);
+	void saveType(TypeClient typesys, Long fatherEntry,
+			AsyncCallback<Void> callback);
 
 	void addBookToUser(BookClient bookClient, Long userId,
 			AsyncCallback<Void> callback);

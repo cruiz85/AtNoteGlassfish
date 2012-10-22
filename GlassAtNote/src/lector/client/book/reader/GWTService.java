@@ -210,7 +210,7 @@ public interface GWTService extends RemoteService {
 
 	public TypeClient loadTagByNameAndCatalogId(String typeName, Long catalogId) throws TagNotFoundException, GeneralException;
 
-	public void saveType(TypeClient typesys); //TODO para que se quiere el padre?.
+	public void saveType(TypeClient typesys, Long fatherEntry);
 	
 	public void deleteTag(Long typeId)
 			throws GeneralException;;
@@ -248,7 +248,7 @@ public interface GWTService extends RemoteService {
 
 	public void renameTypeCategory(Long typeCategoryId, String newFolderDBName);
 
-	public void saveTypeCategory(TypeCategoryClient typeCategoryClient);
+	public void saveTypeCategory(TypeCategoryClient typeCategoryClient, Long fatherEntry);
 
 	public void moveFolderDB(Long typeCategoryId, Long typeCategoryFromId,
 			Long typeCategoryToId) throws GeneralException, DecendanceException;;

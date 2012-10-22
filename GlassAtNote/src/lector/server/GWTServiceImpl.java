@@ -1279,11 +1279,11 @@ public class GWTServiceImpl extends RemoteServiceServlet implements GWTService {
 		return ServiceManagerUtils
 				.produceGoogleBookClients(getGoogleBooks(query));
 	}
-	
+
 	@Override
 	public void addBookToUser(BookClient bookClient, Long userId) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	public List<GoogleBook> getGoogleBooks(String query) {
@@ -1506,24 +1506,47 @@ public class GWTServiceImpl extends RemoteServiceServlet implements GWTService {
 		return ServiceManagerUtils.produceTypeClientLazy(list.get(0));
 	}
 
-	private void saveTag(Tag typesys) {
+	private void saveTag(Tag tag) {
+		EntityManager entityManager = emf.createEntityManager();
 
+		try {
+			userTransaction.begin();
+			if (tag.getId() == null) {
+				entityManager.persist(tag);
+			} else {
+				entityManager.merge(tag);
+			}
+
+			userTransaction.commit();
+		} catch (Exception e) {
+			ServiceManagerUtils.rollback(userTransaction); // TODO utilizar
+															// método de
+															// logger
+		}
+		if (entityManager.isOpen()) {
+			entityManager.close();
+		}
 	}
 
 	@Override
-	public void saveType(TypeClient typesys) {
-		Tag tag = new Tag();
+	public void saveType(TypeClient typesys, Long fatherEntry) {
+		FolderDB father = null;
 		try {
-			Catalogo catalogo = findCatalogo(typesys.getCatalog()
-					.getId());
+			Tag tag = new Tag();
+			Catalogo catalogo = findCatalogo(typesys.getCatalog().getId());
+			father = findFolderDB(fatherEntry);
 			tag.setCatalog(catalogo);
 			tag.setName(typesys.getName());
+			Relation relation = new Relation(father, tag);
+			father.getRelations().add(relation);
 		} catch (CatalogoNotFoundException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+		} catch (FolderDBNotFoundException fnfe) {
+			fnfe.printStackTrace();
 		}
-		
-		saveTag(tag);
+
+		saveFolderDB(father);
 
 	}
 
@@ -1696,7 +1719,7 @@ public class GWTServiceImpl extends RemoteServiceServlet implements GWTService {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-	
+
 		saveTag(tag);
 
 	}
@@ -1754,25 +1777,32 @@ public class GWTServiceImpl extends RemoteServiceServlet implements GWTService {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-	
+
 		saveFolderDB(folderDB);
 
 	}
 
 	@Override
-	public void saveTypeCategory(TypeCategoryClient typeCategoryClient) {
-		FolderDB folderDB = new FolderDB();
+	public void saveTypeCategory(TypeCategoryClient typeCategoryClient,
+			Long fatherEntry) {
+		FolderDB father = null;
 		try {
+			FolderDB folderDB = new FolderDB();
 			Catalogo catalogo = findCatalogo(typeCategoryClient.getCatalog()
 					.getId());
+			father = findFolderDB(fatherEntry);
 			folderDB.setCatalog(catalogo);
 			folderDB.setName(typeCategoryClient.getName());
+			Relation relation = new Relation(father, folderDB);
+			father.getRelations().add(relation);
 		} catch (CatalogoNotFoundException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+		} catch (FolderDBNotFoundException fdne) {
+			fdne.printStackTrace();
 		}
-		
-		saveFolderDB(folderDB);
+
+		saveFolderDB(father);
 
 	}
 
