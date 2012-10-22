@@ -167,6 +167,8 @@ public interface GWTService extends RemoteService {
 
 	public List<BookClient> getBookClientsByIds(List<Long> ids) throws BookNotFoundException, GeneralException;
 	
+	public void addBookToUser(BookClient bookClient, Long userId);
+	
 	// Carga un libro desde la factoria.
 
 	public GoogleBookClient loadFullBookInGoogle(String query);
@@ -230,8 +232,6 @@ public interface GWTService extends RemoteService {
 
 	public List<String> getTagNamesByIds(List<Long> typeIds);
 
-	public void renameTag(Long typeIds, String newTagName);
-
 	public void addChildEntry(Long entryId, Long fatherTypeCategory);
 
 	// TypeCategory
@@ -246,7 +246,7 @@ public interface GWTService extends RemoteService {
 
 	public List<EntryClient> getSonsFromFolderDB(Long typeCategoryId);
 
-	public void renameFolderDB(Long typeCategoryId, String newFolderDBName);
+	public void renameTypeCategory(Long typeCategoryId, String newFolderDBName);
 
 	public void saveTypeCategory(TypeCategoryClient typeCategoryClient);
 
@@ -315,6 +315,8 @@ public interface GWTService extends RemoteService {
 
 
 	public void deleteBookById(Long id) throws GeneralException;
+
+	void renameType(Long typeIds, String newTagName);
 
 	//public ArrayList<String> getFileNamesByIds(ArrayList<Long> ids);
 

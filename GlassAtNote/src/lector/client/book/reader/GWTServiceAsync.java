@@ -115,12 +115,9 @@ public interface GWTServiceAsync {
 	void getTagNamesByIds(List<Long> typeIds,
 			AsyncCallback<List<String>> callback);
 
-	void renameTag(Long typeIds, String newTagName, AsyncCallback<Void> callback);
+	void renameType(Long typeIds, String newTagName, AsyncCallback<Void> callback);
 
 	void deleteFolderDB(Long typeCategoryId, Long fatherFolderDBId,
-			AsyncCallback<Void> callback);
-
-	void renameFolderDB(Long typeCategoryId, String newFolderDBName,
 			AsyncCallback<Void> callback);
 
 	void moveFolderDB(Long typeCategoryId, Long typeCategoryFromId,
@@ -258,6 +255,12 @@ public interface GWTServiceAsync {
 			AsyncCallback<Void> callback);
 
 	void saveType(TypeClient typesys, AsyncCallback<Void> callback);
+
+	void addBookToUser(BookClient bookClient, Long userId,
+			AsyncCallback<Void> callback);
+
+	void renameTypeCategory(Long typeCategoryId, String newFolderDBName,
+			AsyncCallback<Void> callback);
 
 	
 }

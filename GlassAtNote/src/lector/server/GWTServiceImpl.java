@@ -1279,6 +1279,12 @@ public class GWTServiceImpl extends RemoteServiceServlet implements GWTService {
 		return ServiceManagerUtils
 				.produceGoogleBookClients(getGoogleBooks(query));
 	}
+	
+	@Override
+	public void addBookToUser(BookClient bookClient, Long userId) {
+		// TODO Auto-generated method stub
+		
+	}
 
 	public List<GoogleBook> getGoogleBooks(String query) {
 		String cleanQuery = ServiceManagerUtils.removeSpaces(query);
@@ -1681,7 +1687,7 @@ public class GWTServiceImpl extends RemoteServiceServlet implements GWTService {
 	}
 
 	@Override
-	public void renameTag(Long typeIds, String newTagName) {
+	public void renameType(Long typeIds, String newTagName) {
 		Tag tag = null;
 		try {
 			tag = findTag(typeIds);
@@ -1739,7 +1745,7 @@ public class GWTServiceImpl extends RemoteServiceServlet implements GWTService {
 	}
 
 	@Override
-	public void renameFolderDB(Long typeCategoryId, String newFolderDBName) {
+	public void renameTypeCategory(Long typeCategoryId, String newFolderDBName) {
 		FolderDB folderDB = null;
 		try {
 			folderDB = findFolderDB(typeCategoryId);
