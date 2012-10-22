@@ -212,7 +212,7 @@ public interface GWTService extends RemoteService {
 
 	public void saveType(TypeClient typesys, Long fatherEntry);
 	
-	public void deleteTag(Long typeId)
+	public void deleteTag(Long typeId, Long fatherId)
 			throws GeneralException;;
 
 	public Integer getAnnotationsNumberByTagName(String annotationTagName)
@@ -241,7 +241,7 @@ public interface GWTService extends RemoteService {
 	public TypeCategoryClient loadFolderDBByNameAndCatalogId(String FolderDBName,
 			Long catalogId);
 
-	public void deleteFolderDB(Long typeCategoryId, Long fatherFolderDBId)
+	public void deleteTypeCategory(Long typeCategoryId, Long fatherFolderDBId)
 			throws GeneralException;;
 
 	public List<EntryClient> getSonsFromFolderDB(Long typeCategoryId);

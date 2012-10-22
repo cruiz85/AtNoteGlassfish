@@ -102,7 +102,7 @@ public interface GWTServiceAsync {
 	void getEntriesByIdsRecursiveIfFolder(ArrayList<Long> Ids,
 			AsyncCallback<List<Entry>> callback);
 
-	void deleteTag(Long typeId, AsyncCallback<Void> callback);
+	void deleteTag(Long typeId, Long fatherId, AsyncCallback<Void> callback);
 
 	void getAnnotationsNumberByTagName(String annotationTagName,
 			AsyncCallback<Integer> callback);
@@ -116,9 +116,6 @@ public interface GWTServiceAsync {
 			AsyncCallback<List<String>> callback);
 
 	void renameType(Long typeIds, String newTagName, AsyncCallback<Void> callback);
-
-	void deleteFolderDB(Long typeCategoryId, Long fatherFolderDBId,
-			AsyncCallback<Void> callback);
 
 	void moveFolderDB(Long typeCategoryId, Long typeCategoryFromId,
 			Long typeCategoryToId, AsyncCallback<Void> callback);
@@ -261,6 +258,9 @@ public interface GWTServiceAsync {
 			AsyncCallback<Void> callback);
 
 	void renameTypeCategory(Long typeCategoryId, String newFolderDBName,
+			AsyncCallback<Void> callback);
+
+	void deleteTypeCategory(Long typeCategoryId, Long fatherFolderDBId,
 			AsyncCallback<Void> callback);
 
 	

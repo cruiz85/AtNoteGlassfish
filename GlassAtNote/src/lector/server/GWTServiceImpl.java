@@ -692,6 +692,33 @@ public class GWTServiceImpl extends RemoteServiceServlet implements GWTService {
 		return a;
 	}
 
+	private Relation findRelation(Long fatherId, Long sonId)
+			throws RelationNotFoundException, GeneralException {
+		EntityManager entityManager = emf.createEntityManager();
+		List<Relation> list;
+		String sql = "SELECT r FROM Relation r WHERE r.father.id=" + fatherId
+				+ " AND r.child.id=" + sonId;
+		try {
+			list = entityManager.createQuery(sql).getResultList();
+		} catch (Exception e) {
+			// logger.error ("Exception in method loadRelationByName: ", e)
+			throw new GeneralException(
+					"Exception in method loadRelationByName:" + e.getMessage(),
+					e.getStackTrace());
+
+		}
+		if (list == null || list.isEmpty()) {
+			// logger.error ("Exception in method loadRelationById: ", e)
+			throw new RelationNotFoundException(
+					"Relation not found in method loadRelation");
+
+		}
+		if (entityManager.isOpen()) {
+			entityManager.close();
+		}
+		return list.get(0);
+	}
+
 	// TODO LANZAR EXCEPCIÓN
 	private Professor findProfessor(Long id) throws ProfessorNotFoundException {
 		EntityManager entityManager = emf.createEntityManager();
@@ -1551,19 +1578,21 @@ public class GWTServiceImpl extends RemoteServiceServlet implements GWTService {
 	}
 
 	@Override
-	public void deleteTag(Long tagId) throws GeneralException {
-		EntityManager entityManager = emf.createEntityManager();
-
+	public void deleteTag(Long tagId, Long fatherId) throws GeneralException {
 		try {
-			userTransaction.begin();
-			entityManager.createQuery("DELETE FROM Tag s WHERE s.id=" + tagId)
-					.executeUpdate();
-			userTransaction.commit();
-		} catch (Exception e) {
-			ServiceManagerUtils.rollback(userTransaction);
-			throw new GeneralException("Exception in method deleteTagById"
-					+ e.getMessage(), e.getStackTrace());
+			FolderDB folderDB = findFolderDB(fatherId);
+			Relation relation = findRelation(fatherId, tagId);
+			folderDB.getRelations().remove(relation);
+			saveFolderDB(folderDB);
+		} catch (FolderDBNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+
+		} catch (RelationNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
+
 	}
 
 	@Override
@@ -1755,10 +1784,21 @@ public class GWTServiceImpl extends RemoteServiceServlet implements GWTService {
 	}
 
 	@Override
-	public void deleteFolderDB(Long typeCategoryId, Long fatherFolderDBId)
+	public void deleteTypeCategory(Long typeCategoryId, Long fatherFolderDBId)
 			throws GeneralException {
-		// TODO Auto-generated method stub
+		try {
+			FolderDB folderDB = findFolderDB(fatherFolderDBId);
+			Relation relation = findRelation(fatherFolderDBId, typeCategoryId);
+			folderDB.getRelations().remove(relation);
+			saveFolderDB(folderDB);
+		} catch (FolderDBNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 
+		} catch (RelationNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 
 	@Override
