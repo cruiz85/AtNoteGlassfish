@@ -83,7 +83,7 @@ public class BookAdministration implements EntryPoint {
 				for (int i = 0; i < SelectedWidgetCount; i++) {
 					BotonesStackPanelAdministracionMio BDPM = (BotonesStackPanelAdministracionMio) Selected
 							.getWidget(i);
-					Aborrar.add(BDPM.getEntidad().getID());
+					Aborrar.add(((EntidadLibro)BDPM.getEntidad()).getBook().getId());
 //					ActualUser.getUser().getBookIds().remove(BDPM.getText());
 				}
 
@@ -196,13 +196,13 @@ public class BookAdministration implements EntryPoint {
 			public void onSuccess(List<BookClient> result) {
 				if (result.size() < 10) {
 				for (BookClient Book : result) {
-					EntidadLibro E = new EntidadLibro(Book.getTitle(), Book.getId());
+					EntidadLibro E = new EntidadLibro(Book);
 					stackPanel_1.addBotonLessTen(E);
 				}
 	
 			} else {
 				for (BookClient Book : result) {
-					EntidadLibro E = new EntidadLibro(Book.getTitle(), Book.getId());
+					EntidadLibro E = new EntidadLibro(Book);
 					stackPanel_1.addBoton(E);
 				}
 			}

@@ -43,5 +43,6 @@ public class ErrorConstants {
 	public static String ERROR_PASSWORDS_NOT_MATCH="The passwords not match";
 	public static String ERROR_IN_REGISTERATION="Error in the procces of the registration, try again";
 	public static String ERROR_RETRIVING_THE_BOOKS="Error retriving the books try again";
+	public static String ERROR_CHANGE_VISIVILITY_OF_CATALOG="Error Changing visivility of catalog";
 	
 }

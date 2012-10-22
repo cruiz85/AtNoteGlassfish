@@ -3,6 +3,7 @@ package lector.client.catalogo;
 import java.util.ArrayList;
 
 import lector.client.catalogo.client.Entity;
+import lector.client.catalogo.client.EntityCatalogElements;
 import lector.client.catalogo.client.File;
 import lector.client.catalogo.client.Folder;
 
@@ -38,7 +39,7 @@ import com.google.gwt.user.client.ui.DockPanel;
 
 public class ElementKey extends Composite{
 	
-	private Entity Entidad;
+	private EntityCatalogElements Entidad;
 	private String Text;
 	private ButtonKey Mas;
 	private ButtonKey Label;
@@ -60,7 +61,7 @@ public class ElementKey extends Composite{
 	private Image Large1;
 	private Image Large2;
 	
-	public ElementKey(Entity ent) {
+	public ElementKey(EntityCatalogElements ent) {
 		
 		Entidad=ent;
 		Selected=false;
@@ -319,7 +320,7 @@ Mas.addClickHandler(new ClickHandler() {
 		
 	}
 
-	public Entity getEntidad() {
+	public EntityCatalogElements getEntidad() {
 		return Entidad;
 	}
 

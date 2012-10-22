@@ -8,11 +8,11 @@ import lector.client.login.Login;
 //import lector.client.admin.admins.NewAdminAdministrator;
 import lector.client.admin.book.BookAdministration;
 //import lector.client.admin.bookblob.BookLoader;
-//import lector.client.admin.catalog.NewAdminCatalogs;
+import lector.client.admin.catalog.NewAdminCatalogs;
 //import lector.client.admin.export.NewAdminTemplate;
 //import lector.client.admin.export.admin.EditTemplate;
 //import lector.client.admin.group.Groupadministration;
-//import lector.client.admin.tagstypes.EditorTagsAndTypes;
+import lector.client.admin.tagstypes.EditorTagsAndTypes;
 //import lector.client.admin.users.NewUserAdministrator;
 //import lector.client.browser.Browser;
 //import lector.client.login.ActualUser;
@@ -40,7 +40,7 @@ public class Controlador implements EntryPoint {
     private static Searcher Search = new Searcher();
 //  //  private static ControladorEntrada controladorEntrada = new ControladorEntrada();
     private static Administrador Admin = new Administrador();
-//    private static EditorTagsAndTypes AdminTagsAndTypes = new EditorTagsAndTypes();
+    private static EditorTagsAndTypes AdminTagsAndTypes = new EditorTagsAndTypes();
     private static Login LoginPage=new Login();
     private static BookAdministration bookAdministrador=new BookAdministration();
 //    private static MyBooks MyBooksUser=new MyBooks();
@@ -49,7 +49,7 @@ public class Controlador implements EntryPoint {
 //    private static NewAdminAdministrator AdminAdmin = new NewAdminAdministrator();
     private static EditordeLenguajes EditorLenguaje = new EditordeLenguajes();
     private static NewAdminLangs AdminLenguaje = new NewAdminLangs();
-//    private static NewAdminCatalogs CatalogAdmin= new NewAdminCatalogs();
+    private static NewAdminCatalogs CatalogAdmin= new NewAdminCatalogs();
 //    private static NewAdminActivities Activitys= new NewAdminActivities();
     private static MyActivities MyActivities= new MyActivities();
 //    private static VisorEntry Visor=new VisorEntry();
@@ -123,10 +123,10 @@ public class Controlador implements EntryPoint {
     }
 
 	public static void change2EditorTagsAndTypes() {
-//		clear();
-//        Actual = AdminTagsAndTypes;
-//        Actual.onModuleLoad();
-//		
+		clear();
+        Actual = AdminTagsAndTypes;
+        Actual.onModuleLoad();
+		
 	}
 	
 	public static void change2BookAdminstrator() {
@@ -178,10 +178,10 @@ public class Controlador implements EntryPoint {
 	}
 	
 	public static void change2CatalogAdmin() {
-//		clear();
-//		Actual = CatalogAdmin;
-//		Actual.onModuleLoad();
-//		
+		clear();
+		Actual = CatalogAdmin;
+		Actual.onModuleLoad();
+		
 	}
 	
 	public static void change2ActivityAdmin() {

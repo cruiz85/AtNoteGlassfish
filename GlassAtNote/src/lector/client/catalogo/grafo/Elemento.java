@@ -35,14 +35,15 @@ public class Elemento {
 			{
 			encontrado=true;	
 			AnnotationSchema A=Lista.get(i);
-			if (A.getFile())
-				{
-				E=new File(A.getName(), A.getId(), Catalogo);
-				}
-			else
-			{
-				E=new Folder(A.getName(), A.getId(), Catalogo);
-			}
+			//TODO ????
+//			if (A.getFile())
+//				{
+//				E=new File(A.getName(), A.getId(), Catalogo);
+//				}
+//			else
+//			{
+//				E=new Folder(A.getName(), A.getId(), Catalogo);
+//			}
 			}
 			i++;
 		}

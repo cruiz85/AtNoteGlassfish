@@ -1,50 +1,24 @@
 package lector.client.admin.book;
 
-import java.util.ArrayList;
-
 import lector.client.catalogo.client.Entity;
-import lector.client.catalogo.client.FileException;
+import lector.share.model.client.BookClient;
 
 public class EntidadLibro extends Entity {
 
-	public EntidadLibro(String Namein, Long ID) {
-		super(Namein, ID, ID);
+	private BookClient book;
+	
+	public EntidadLibro(BookClient bookin) {
+		super(bookin.getTitle());
+		book=bookin;
 	}
 
-	@Override
-	public void addSon(Entity entity) throws FileException {
-
-
+	public BookClient getBook() {
+		return book;
 	}
 
-	@Override
-	public void removeSon(Entity entity) throws FileException {
-
-
+	public void setBook(BookClient book) {
+		this.book = book;
 	}
 
-	@Override
-	public ArrayList<Entity> getSons() throws FileException {
-
-		return new ArrayList<Entity>();
-	}
-
-	@Override
-	public void setSons(ArrayList<Entity> sons) throws FileException {
-
-
-	}
-
-	@Override
-	public boolean isFolder() {
-
-		return false;
-	}
-
-	@Override
-	public boolean isType() {
-
-		return false;
-	}
 
 }

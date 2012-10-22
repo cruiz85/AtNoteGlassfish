@@ -7,13 +7,15 @@ import lector.client.admin.tagstypes.ClickHandlerMio;
 import lector.client.book.reader.GWTService;
 import lector.client.book.reader.GWTServiceAsync;
 import lector.client.catalogo.Tree.Node;
-import lector.client.catalogo.client.Catalog;
 import lector.client.catalogo.client.Entity;
+import lector.client.catalogo.client.EntityCatalogElements;
 import lector.client.catalogo.client.File;
 import lector.client.catalogo.client.Folder;
 import lector.client.controler.Constants;
 import lector.client.login.ActualUser;
 import lector.client.reader.LoadingPanel;
+import lector.share.model.client.CatalogoClient;
+import lector.share.model.client.TypeCategoryClient;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
@@ -47,7 +49,7 @@ public class FinderKeys extends Finder {
 	
 	protected ElementKey ActualEle;
 	protected ArrayList<EstadoElementKey> Lista;
-	protected Catalog C;
+	protected CatalogoClient C;
 	static GWTServiceAsync bookReaderServiceHolder = GWT
 			.create(GWTService.class);
 	
@@ -68,110 +70,112 @@ public class FinderKeys extends Finder {
 		scrollPanel.setSize("100%", "100%");
 		
 		scrollPanel.add(EK);
-		EK=new ElementKey(new Folder("Cataolo", Constants.CATALOGID, Constants.CATALOGID));
+		TypeCategoryClient TCC=new TypeCategoryClient(C.getCatalogName());
+		TCC.setId(Constants.CATALOGID);
+		EK=new ElementKey(new Folder(TCC, C, Constants.CATALOGID));
 		Lista=new ArrayList<EstadoElementKey>();
 		
-		AddElementLista(new EstadoElementKey(EK,false));
-		CHM=new ClickHandler() {
-			
-			public void onClick(ClickEvent event) {
-			
-				ButtonKey B0=(ButtonKey)event.getSource();
-				B0.getPadreKey();
-				FinderKeysArbitro.getInstance().addfather(B0.getPadreKey());
-				cargaLaRama(B0.getPadreKey());
-				
-			}
-		};
-		
-		CHS=new ClickHandler() {
-			
-			public void onClick(ClickEvent event) {
-				ButtonKey Bk=(ButtonKey)event.getSource();
-				ElementKey ActualRamaNew = Bk.getPadreKey();
-				
-				Long acLong=System.currentTimeMillis();
-				Long Dist=acLong-NanotimeOld;
-				Boolean Seleccionador=(Dist<1000);
-				
-					if (ActualEle!=ActualRamaNew){
-						NanotimeOld=System.currentTimeMillis();
-						ActualEle.getLabel().setStyleName("gwt-ButtonIzquierdaMIN");
-						ActualEle.setSelected(false);
-						ActualEle=ActualRamaNew;
-						ActualEle.getLabel().setStyleName("gwt-ButtonIzquierdaSelectMIN");
-						ActualEle.setSelected(true);
-					}
-					else
-					{
-						if (Seleccionador)
-							if (ActualRamaNew.getEntidad().getID()!=Constants.CATALOGID)
-								{
-								Selecciona();
-								ActualEle.getLabel().setStyleName("gwt-ButtonIzquierdaSelectMIN");
-								//ActualEle.getLabel().setStyleName("gwt-ButtonIzquierdaMIN");
-								//ActualEle.setSelected(false);
-								}
-						
-							else {
-								ActualEle.getLabel().setStyleName("gwt-ButtonIzquierdaSelectMIN");
-							}
-						else{
-							NanotimeOld=System.currentTimeMillis();
-							ActualEle.getLabel().setStyleName("gwt-ButtonIzquierdaSelectMIN");
-						}
-					}
-					
+//		AddElementLista(new EstadoElementKey(EK,false));
+//		CHM=new ClickHandler() {
+//			
+//			public void onClick(ClickEvent event) {
+//			
+//				ButtonKey B0=(ButtonKey)event.getSource();
+//				B0.getPadreKey();
+//				FinderKeysArbitro.getInstance().addfather(B0.getPadreKey());
+//				cargaLaRama(B0.getPadreKey());
+//				
+//			}
+//		};
+//		
+//		CHS=new ClickHandler() {
+//			
+//			public void onClick(ClickEvent event) {
+//				ButtonKey Bk=(ButtonKey)event.getSource();
+//				ElementKey ActualRamaNew = Bk.getPadreKey();
+//				
+//				Long acLong=System.currentTimeMillis();
+//				Long Dist=acLong-NanotimeOld;
+//				Boolean Seleccionador=(Dist<1000);
+//				
+//					if (ActualEle!=ActualRamaNew){
+//						NanotimeOld=System.currentTimeMillis();
+//						ActualEle.getLabel().setStyleName("gwt-ButtonIzquierdaMIN");
+//						ActualEle.setSelected(false);
+//						ActualEle=ActualRamaNew;
+//						ActualEle.getLabel().setStyleName("gwt-ButtonIzquierdaSelectMIN");
+//						ActualEle.setSelected(true);
+//					}
+//					else
+//					{
+//						if (Seleccionador)
+//							if (ActualRamaNew.getEntidad().getID()!=Constants.CATALOGID)
+//								{
+//								Selecciona();
+//								ActualEle.getLabel().setStyleName("gwt-ButtonIzquierdaSelectMIN");
+//								//ActualEle.getLabel().setStyleName("gwt-ButtonIzquierdaMIN");
+//								//ActualEle.setSelected(false);
+//								}
+//						
+//							else {
+//								ActualEle.getLabel().setStyleName("gwt-ButtonIzquierdaSelectMIN");
+//							}
+//						else{
+//							NanotimeOld=System.currentTimeMillis();
+//							ActualEle.getLabel().setStyleName("gwt-ButtonIzquierdaSelectMIN");
+//						}
+//					}
+//					
 									
-			}
+//			}
 			
-			private void Selecciona() {
-				BotonesStackPanelMio B=buttonMio.Clone();
-				B.addClickHandler(clickHandler);
-				B.setStyleName("gwt-ButtonCenter");
-				B.setSize("100%", "100%");
-				if (ActualEle.getEntidad() instanceof File) B.setIcon("File.gif",ActualEle.getEntidad().getName());
-				else if (ActualEle.getEntidad() instanceof Folder)B.setIcon("Folder.gif",ActualEle.getEntidad().getName());
-				B.addClickHandler(new ClickHandler() {
-					
-					public void onClick(ClickEvent event) {
-						((Button)event.getSource()).setStyleName("gwt-ButtonCenter");
-						
-					}
-				});
-
-				B.addMouseDownHandler(new MouseDownHandler() {
-					public void onMouseDown(MouseDownEvent event) {
-						((Button)event.getSource()).setStyleName("gwt-ButtonCenterPush");
-					}
-				});
-				
-				B.addMouseOutHandler(new MouseOutHandler() {
-					public void onMouseOut(MouseOutEvent event) {
-						((Button)event.getSource()).setStyleName("gwt-ButtonCenter");
-				}
-				});
-				
-				B.addMouseOverHandler(new MouseOverHandler() {
-					public void onMouseOver(MouseOverEvent event) {
-						
-						((Button)event.getSource()).setStyleName("gwt-ButtonCenterOver");
-					
-				}
-			});
-				B.setEntidad(ActualEle.getEntidad());
-				if (clickHandler instanceof ClickHandlerMio )
-					((ClickHandlerMio)clickHandler).onClickMan(B);
-				else B.click();
-
-				
-			}
-		};
+//			private void Selecciona() {
+//				BotonesStackPanelMio B=buttonMio.Clone();
+//				B.addClickHandler(clickHandler);
+//				B.setStyleName("gwt-ButtonCenter");
+//				B.setSize("100%", "100%");
+//				if (ActualEle.getEntidad() instanceof File) B.setIcon("File.gif",ActualEle.getEntidad().getName());
+//				else if (ActualEle.getEntidad() instanceof Folder)B.setIcon("Folder.gif",ActualEle.getEntidad().getName());
+//				B.addClickHandler(new ClickHandler() {
+//					
+//					public void onClick(ClickEvent event) {
+//						((Button)event.getSource()).setStyleName("gwt-ButtonCenter");
+//						
+//					}
+//				});
+//
+//				B.addMouseDownHandler(new MouseDownHandler() {
+//					public void onMouseDown(MouseDownEvent event) {
+//						((Button)event.getSource()).setStyleName("gwt-ButtonCenterPush");
+//					}
+//				});
+//				
+//				B.addMouseOutHandler(new MouseOutHandler() {
+//					public void onMouseOut(MouseOutEvent event) {
+//						((Button)event.getSource()).setStyleName("gwt-ButtonCenter");
+//				}
+//				});
+//				
+//				B.addMouseOverHandler(new MouseOverHandler() {
+//					public void onMouseOver(MouseOverEvent event) {
+//						
+//						((Button)event.getSource()).setStyleName("gwt-ButtonCenterOver");
+//					
+//				}
+//			});
+//				B.setEntidad(ActualEle.getEntidad());
+//				if (clickHandler instanceof ClickHandlerMio )
+//					((ClickHandlerMio)clickHandler).onClickMan(B);
+//				else B.click();
+//
+//				
+//			}
+//		};
 
 		
-		EK.addClickButtonMas(CHM);
-		
-		EK.addClickButton(CHS);
+//		EK.addClickButtonMas(CHM);
+//		
+//		EK.addClickButton(CHS);
 		ActualEle=EK;
 		scrollPanel.add(EK);
 
@@ -186,165 +190,165 @@ public class FinderKeys extends Finder {
 
 
 
-	private void AddElementLista(EstadoElementKey estadoElementKey) {
-		
-		ElementKey EK=IsIn(estadoElementKey.getEK());
-		if (EK==null)
-		{
-			Lista.add(estadoElementKey);
-		}
-		else 
-		{
-			ElementKey eKNuevo=estadoElementKey.getEK();
-			EK.getOthers().setVisible(true);
-			eKNuevo.getOthers().setVisible(true);
-			EK.getOtros().add(eKNuevo);
-			ArrayList<ElementKey> ListaEK=EK.getOtros();
-			for (ElementKey elementKey : ListaEK) {
-				elementKey.setOtros(ListaEK);
-				elementKey.getOthers().setVisible(true);
-			}
-
-		}
-		
-	}
-
-
-
-	private ElementKey IsIn(ElementKey ek2) {
-		for (EstadoElementKey Element : Lista) {
-			if (Element.getEK().getEntidad().getID().equals(ek2.getEntidad().getID()))
-				return Element.getEK();
-		}
-		return null;
-	}
-
-
-
-	protected void cargaLaRama(ElementKey elementKeyllamada) {
-		AsyncCallback<ArrayList<Entity>> callback1 = new AsyncCallback<ArrayList<Entity>>() {
-
-			public void onFailure(Throwable caught) {
-				if (InReadingActivity)  Window.alert(ActualUser.getLanguage().getE_Types_refresh());
-				else Window.alert("Error : I can't refresh the types");
-				LoadingPanel.getInstance().hide();
-			}
-
-			public void onSuccess(ArrayList<Entity> result) {
-				
-				
-				sortStringExchange(result);
-				ArrayList<ElementKey> ListaTemp=new ArrayList<ElementKey>();
-				
-				ElementKey PadreEle = FinderKeysArbitro.getInstance().getPadre();
-				PadreEle.removeItems();
-				for (Entity entity : result) {
-					entity.setActualFather(PadreEle.getEntidad());
-				}
-				for (Entity entitynew : result) {
-					ElementKey A=new ElementKey(entitynew);
-					if (entitynew instanceof Folder) A.setHTML("Folder.gif",entitynew.getName());					
-					else {
-						A.setHTML("File.gif",entitynew.getName());
-						A.isAFile();
-					}
-					PadreEle.addItem(A);
-					A.addClickButtonMas(CHM);					
-					A.addClickButton(CHS);
-					ListaTemp.add(A);
-					AddElementLista(new EstadoElementKey(A,false));
-					}
-				FinderKeysArbitro.getInstance().setfalse();
-				for (ElementKey elementKey : ListaTemp) {
-					FinderKeysArbitro.getInstance().add(elementKey);
-				}
-				LoadingPanel.getInstance().hide();
-				
-			}
-			
-			  public void sortStringExchange( ArrayList<Entity>  x )
-		      {
-		            int i, j;
-		            Entity temp;
-
-		            for ( i = 0;  i < x.size() - 1;  i++ )
-		            {
-		                for ( j = i + 1;  j < x.size();  j++ )
-		                {  
-		                         if ( x.get(i).getName().compareToIgnoreCase( x.get(j).getName()) > 0 )
-		                          {                                             // ascending sort
-		                                      temp = x.get(i);
-		                                      x.set(i, x.get(j));    // swapping
-		                                      x.set(j, temp); 
-		                                      
-		                           } 
-		                   } 
-		             } 
-		      } 
-		};
-		LoadingPanel.getInstance().center();
-		if (InReadingActivity)  LoadingPanel.getInstance().setLabelTexto(ActualUser.getLanguage().getLoading());
-		else LoadingPanel.getInstance().setLabelTexto("Loading...");
-		Long IdPathActual = 0l;
-/*		if (ActualRama.getEntidad().getID())
-			IdPathActual = null;
-		else*/
-			IdPathActual = elementKeyllamada.getEntidad().getID();
-//TODO
-//		bookReaderServiceHolder.getSons(IdPathActual, C
-//				.getId(), callback1);
-		
-	}
-
-	
-	
-	public boolean isInReadingActivity() {
-		return InReadingActivity;
-	}
-	
-	public void setInReadingActivity(boolean inReadingActivity) {
-		InReadingActivity = inReadingActivity;
-	}
-	
-	public Catalog getCatalogo() {
-		return C;
-	}
-	
-	public void setCatalogo(Catalog c) {
-		C = c;
-		ActualEle=EK;
-		EK.setText(C.getCatalogName());
-		ActualEle.setSelected(true);
-		ActualEle.getLabel().setStyleName("gwt-ButtonIzquierdaSelectMIN");
-		ActualEle.setSelected(true);
-//		cargaLaRama();
-	}
-	
-	public static void setButtonTipo(BotonesStackPanelMio buttonMio) {
-		Finder.buttonMio=buttonMio;
-
-	}
-
-	public static void setBotonClick(ClickHandler clickHandler) {
-		Finder.clickHandler=clickHandler;
-	}
-
-	public Entity getTopPath() {
-				return ActualEle.getEntidad();
-	}
-	
-	public void RefrescaLosDatos()
-	{
-		Lista.clear();
-		ActualEle=EK;
-		ActualEle.getLabel().setStyleName("gwt-ButtonIzquierdaSelectMIN");
-		ActualEle.setSelected(true);
-		FinderKeysArbitro.getInstance().refresh();
-		FinderKeysArbitro.getInstance().addfather(EK);
-		cargaLaRama(EK);
-		//simplePanel.setHeight(Integer.toString(Window.getClientHeight())+"px");
-		//horizontalSplitPanel.setHeight(Integer.toString(Window.getClientHeight())+"px");
-	}
-
+//	private void AddElementLista(EstadoElementKey estadoElementKey) {
+//		
+//		ElementKey EK=IsIn(estadoElementKey.getEK());
+//		if (EK==null)
+//		{
+//			Lista.add(estadoElementKey);
+//		}
+//		else 
+//		{
+//			ElementKey eKNuevo=estadoElementKey.getEK();
+//			EK.getOthers().setVisible(true);
+//			eKNuevo.getOthers().setVisible(true);
+//			EK.getOtros().add(eKNuevo);
+//			ArrayList<ElementKey> ListaEK=EK.getOtros();
+//			for (ElementKey elementKey : ListaEK) {
+//				elementKey.setOtros(ListaEK);
+//				elementKey.getOthers().setVisible(true);
+//			}
+//
+//		}
+//		
+//	}
+//
+//
+//
+//	private ElementKey IsIn(ElementKey ek2) {
+//		for (EstadoElementKey Element : Lista) {
+//			if (Element.getEK().getEntidad().getID().equals(ek2.getEntidad().getID()))
+//				return Element.getEK();
+//		}
+//		return null;
+//	}
+//
+//
+//
+//	protected void cargaLaRama(ElementKey elementKeyllamada) {
+//		AsyncCallback<ArrayList<Entity>> callback1 = new AsyncCallback<ArrayList<Entity>>() {
+//
+//			public void onFailure(Throwable caught) {
+//				if (InReadingActivity)  Window.alert(ActualUser.getLanguage().getE_Types_refresh());
+//				else Window.alert("Error : I can't refresh the types");
+//				LoadingPanel.getInstance().hide();
+//			}
+//
+//			public void onSuccess(ArrayList<Entity> result) {
+//				
+//				
+//				sortStringExchange(result);
+//				ArrayList<ElementKey> ListaTemp=new ArrayList<ElementKey>();
+//				
+//				ElementKey PadreEle = FinderKeysArbitro.getInstance().getPadre();
+//				PadreEle.removeItems();
+//				for (Entity entity : result) {
+//					entity.setActualFather(PadreEle.getEntidad());
+//				}
+//				for (Entity entitynew : result) {
+//					ElementKey A=new ElementKey(entitynew);
+//					if (entitynew instanceof Folder) A.setHTML("Folder.gif",entitynew.getName());					
+//					else {
+//						A.setHTML("File.gif",entitynew.getName());
+//						A.isAFile();
+//					}
+//					PadreEle.addItem(A);
+//					A.addClickButtonMas(CHM);					
+//					A.addClickButton(CHS);
+//					ListaTemp.add(A);
+//					AddElementLista(new EstadoElementKey(A,false));
+//					}
+//				FinderKeysArbitro.getInstance().setfalse();
+//				for (ElementKey elementKey : ListaTemp) {
+//					FinderKeysArbitro.getInstance().add(elementKey);
+//				}
+//				LoadingPanel.getInstance().hide();
+//				
+//			}
+//			
+//			  public void sortStringExchange( ArrayList<Entity>  x )
+//		      {
+//		            int i, j;
+//		            Entity temp;
+//
+//		            for ( i = 0;  i < x.size() - 1;  i++ )
+//		            {
+//		                for ( j = i + 1;  j < x.size();  j++ )
+//		                {  
+//		                         if ( x.get(i).getName().compareToIgnoreCase( x.get(j).getName()) > 0 )
+//		                          {                                             // ascending sort
+//		                                      temp = x.get(i);
+//		                                      x.set(i, x.get(j));    // swapping
+//		                                      x.set(j, temp); 
+//		                                      
+//		                           } 
+//		                   } 
+//		             } 
+//		      } 
+//		};
+//		LoadingPanel.getInstance().center();
+//		if (InReadingActivity)  LoadingPanel.getInstance().setLabelTexto(ActualUser.getLanguage().getLoading());
+//		else LoadingPanel.getInstance().setLabelTexto("Loading...");
+//		Long IdPathActual = 0l;
+///*		if (ActualRama.getEntidad().getID())
+//			IdPathActual = null;
+//		else*/
+//			IdPathActual = elementKeyllamada.getEntidad().getID();
+////TODO
+////		bookReaderServiceHolder.getSons(IdPathActual, C
+////				.getId(), callback1);
+//		
+//	}
+//
+//	
+//	
+//	public boolean isInReadingActivity() {
+//		return InReadingActivity;
+//	}
+//	
+//	public void setInReadingActivity(boolean inReadingActivity) {
+//		InReadingActivity = inReadingActivity;
+//	}
+//	
+//	public CatalogoClient getCatalogo() {
+//		return C;
+//	}
+//	
+//	public void setCatalogo(CatalogoClient c) {
+//		C = c;
+//		ActualEle=EK;
+//		EK.setText(C.getCatalogName());
+//		ActualEle.setSelected(true);
+//		ActualEle.getLabel().setStyleName("gwt-ButtonIzquierdaSelectMIN");
+//		ActualEle.setSelected(true);
+////		cargaLaRama();
+//	}
+//	
+//	public static void setButtonTipo(BotonesStackPanelMio buttonMio) {
+//		Finder.buttonMio=buttonMio;
+//
+//	}
+//
+//	public static void setBotonClick(ClickHandler clickHandler) {
+//		Finder.clickHandler=clickHandler;
+//	}
+//
+//	public EntityCatalogElements getTopPath() {
+//				return ActualEle.getEntidad();
+//	}
+//	
+//	public void RefrescaLosDatos()
+//	{
+//		Lista.clear();
+//		ActualEle=EK;
+//		ActualEle.getLabel().setStyleName("gwt-ButtonIzquierdaSelectMIN");
+//		ActualEle.setSelected(true);
+//		FinderKeysArbitro.getInstance().refresh();
+//		FinderKeysArbitro.getInstance().addfather(EK);
+//		cargaLaRama(EK);
+//		//simplePanel.setHeight(Integer.toString(Window.getClientHeight())+"px");
+//		//horizontalSplitPanel.setHeight(Integer.toString(Window.getClientHeight())+"px");
+//	}
+//
 
 }

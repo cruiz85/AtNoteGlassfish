@@ -5,6 +5,7 @@ package lector.client.admin;
 import lector.client.catalogo.BotonesStackPanelMio;
 import lector.client.catalogo.Finder;
 import lector.client.catalogo.client.Entity;
+import lector.client.catalogo.client.EntityCatalogElements;
 
 import com.google.gwt.user.client.ui.VerticalPanel;
 
@@ -48,7 +49,7 @@ public class BotonesStackPanelAdministracionMio extends BotonesStackPanelMio{
 
 	private boolean checkFamilia() {
 		if (F==null) return true;
-		return F.getTopPath().equals(super.getEntidad().getActualFather());
+		return F.getTopPath().equals(((EntityCatalogElements)super.getEntidad()).getFatherIdCreador());
 	}
 
 	public BotonesStackPanelMio Clone()
@@ -86,7 +87,7 @@ public class BotonesStackPanelAdministracionMio extends BotonesStackPanelMio{
 	protected boolean EstainSelected() {
 		for (int i = 1; i < Selected.getWidgetCount(); i++) {
 			BotonesStackPanelAdministracionMio BSM= (BotonesStackPanelAdministracionMio)Selected.getWidget(i);
-			if (BSM.getEntidad().getID().intValue()==super.getEntidad().getID().intValue()) return true;
+			if (((EntityCatalogElements)BSM.getEntidad()).getEntry().getId().intValue()==((EntityCatalogElements)super.getEntidad()).getEntry().getId().intValue()) return true;
 		}
 		return false;
 	}

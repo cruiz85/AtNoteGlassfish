@@ -7,13 +7,15 @@ import lector.client.admin.tagstypes.ClickHandlerMio;
 import lector.client.book.reader.GWTService;
 import lector.client.book.reader.GWTServiceAsync;
 import lector.client.catalogo.Tree.Node;
-import lector.client.catalogo.client.Catalog;
 import lector.client.catalogo.client.Entity;
+import lector.client.catalogo.client.EntityCatalogElements;
 import lector.client.catalogo.client.File;
 import lector.client.catalogo.client.Folder;
 import lector.client.controler.Constants;
 import lector.client.login.ActualUser;
 import lector.client.reader.LoadingPanel;
+import lector.share.model.client.CatalogoClient;
+import lector.share.model.client.TypeCategoryClient;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
@@ -46,7 +48,7 @@ public class Finder extends Composite {
 
 	protected Node ActualRama;
 	protected Long NanotimeOld;
-	protected Catalog C;
+	protected CatalogoClient C;
 	static GWTServiceAsync bookReaderServiceHolder = GWT
 			.create(GWTService.class);
 	
@@ -91,12 +93,12 @@ public class Finder extends Composite {
 					if (ActualRama!=ActualRamaNew){
 						ActualRama=ActualRamaNew;
 						NanotimeOld=System.currentTimeMillis();
-						cargaLaRama();
+					//	cargaLaRama();
 					}
 					else
 					{
 						if (Seleccionador)
-							if (ActualRamaNew.getEntidad().getID()!=Constants.CATALOGID)
+							if ((ActualRamaNew.getEntidad()).getEntry().getId()!=Constants.CATALOGID)
 								if (buttonMio!=null)Selecciona();
 							else {}
 						else NanotimeOld=System.currentTimeMillis();
@@ -110,7 +112,7 @@ public class Finder extends Composite {
 					else
 					{
 						if (Seleccionador)
-							if (ActualRamaNew.getEntidad().getID()!=Constants.CATALOGID)
+							if (ActualRamaNew.getEntidad().getEntry().getId()!=Constants.CATALOGID)
 								Selecciona();
 							else {}
 						else NanotimeOld=System.currentTimeMillis();
@@ -161,14 +163,15 @@ public class Finder extends Composite {
 
 		ArbolDeNavegacion.addOpenHandler(new OpenHandler<TreeItem>() {
 			public void onOpen(OpenEvent<TreeItem> event) {
-				cargaLaRama();
+			//	cargaLaRama();
 			}
 		});
 
 		scrollPanel.setWidget(ArbolDeNavegacion);
 		ArbolDeNavegacion.setSize("100%", "100%");
-		
-		trtmNewItem = new Node(new Folder("Cataolo", Constants.CATALOGID, Constants.CATALOGID));
+		TypeCategoryClient TCC=new TypeCategoryClient(C.getCatalogName());
+		TCC.setId(Constants.CATALOGID);
+		trtmNewItem = new Node(new Folder(TCC, C, Constants.CATALOGID));
 		trtmNewItem.setText("//");
 		ArbolDeNavegacion.addItem(trtmNewItem);
 		ActualRama=trtmNewItem;
@@ -179,68 +182,68 @@ public class Finder extends Composite {
 
 
 
-	protected void cargaLaRama() {
-		AsyncCallback<ArrayList<Entity>> callback1 = new AsyncCallback<ArrayList<Entity>>() {
-
-			public void onFailure(Throwable caught) {
-				if (InReadingActivity)  Window.alert(ActualUser.getLanguage().getE_Types_refresh());
-				else Window.alert("Error : I can't refresh the types");
-				LoadingPanel.getInstance().hide();
-			}
-
-			public void onSuccess(ArrayList<Entity> result) {
-				
-				sortStringExchange(result);
-				
-				ActualRama.removeItems();
-				for (Entity entity : result) {
-					entity.setActualFather(ActualRama.getEntidad());
-				}
-				for (Entity entitynew : result) {
-					Node A=new Node(entitynew);
-					if (entitynew instanceof Folder) A.setHTML("Folder.gif",entitynew.getName());					
-					else A.setHTML("File.gif",entitynew.getName());
-					ActualRama.addItem(A);
-					ActualRama.setState(true,false);
-					}
-				LoadingPanel.getInstance().hide();
-			}
-			
-			  public void sortStringExchange( ArrayList<Entity>  x )
-		      {
-		            int i, j;
-		            Entity temp;
-
-		            for ( i = 0;  i < x.size() - 1;  i++ )
-		            {
-		                for ( j = i + 1;  j < x.size();  j++ )
-		                {  
-		                         if ( x.get(i).getName().compareToIgnoreCase( x.get(j).getName()) > 0 )
-		                          {                                             // ascending sort
-		                                      temp = x.get(i);
-		                                      x.set(i, x.get(j));    // swapping
-		                                      x.set(j, temp); 
-		                                      
-		                           } 
-		                   } 
-		             } 
-		      } 
-		};
-		LoadingPanel.getInstance().center();
-		if (InReadingActivity)  LoadingPanel.getInstance().setLabelTexto(ActualUser.getLanguage().getLoading());
-		else LoadingPanel.getInstance().setLabelTexto("Loading...");
-		Long IdPathActual = 0l;
-/*		if (ActualRama.getEntidad().getID())
-			IdPathActual = null;
-		else*/
-			IdPathActual = ActualRama.getEntidad().getID();
-		
-		
-			//TODO
-//		bookReaderServiceHolder.getSons(IdPathActual, C
-//				.getId(), callback1);
-		
-	}
+//	protected void cargaLaRama() {
+//		AsyncCallback<ArrayList<EntityCatalogElements>> callback1 = new AsyncCallback<ArrayList<EntityCatalogElements>>() {
+//
+//			public void onFailure(Throwable caught) {
+//				if (InReadingActivity)  Window.alert(ActualUser.getLanguage().getE_Types_refresh());
+//				else Window.alert("Error : I can't refresh the types");
+//				LoadingPanel.getInstance().hide();
+//			}
+//
+//			public void onSuccess(ArrayList<EntityCatalogElements> result) {
+//				
+//				sortStringExchange(result);
+//				
+//				ActualRama.removeItems();
+//				for (EntityCatalogElements entity : result) {
+//					entity.setActualFather(ActualRama.getEntidad());
+//				}
+//				for (EntityCatalogElements entitynew : result) {
+//					Node A=new Node(entitynew);
+//					if (entitynew instanceof Folder) A.setHTML("Folder.gif",entitynew.getName());					
+//					else A.setHTML("File.gif",entitynew.getName());
+//					ActualRama.addItem(A);
+//					ActualRama.setState(true,false);
+//					}
+//				LoadingPanel.getInstance().hide();
+//			}
+//			
+//			  public void sortStringExchange( ArrayList<EntityCatalogElements>  x )
+//		      {
+//		            int i, j;
+//		            EntityCatalogElements temp;
+//
+//		            for ( i = 0;  i < x.size() - 1;  i++ )
+//		            {
+//		                for ( j = i + 1;  j < x.size();  j++ )
+//		                {  
+//		                         if ( x.get(i).getName().compareToIgnoreCase( x.get(j).getName()) > 0 )
+//		                          {                                             // ascending sort
+//		                                      temp = x.get(i);
+//		                                      x.set(i, x.get(j));    // swapping
+//		                                      x.set(j, temp); 
+//		                                      
+//		                           } 
+//		                   } 
+//		             } 
+//		      } 
+//		};
+//		LoadingPanel.getInstance().center();
+//		if (InReadingActivity)  LoadingPanel.getInstance().setLabelTexto(ActualUser.getLanguage().getLoading());
+//		else LoadingPanel.getInstance().setLabelTexto("Loading...");
+//		Long IdPathActual = 0l;
+///*		if (ActualRama.getEntidad().getID())
+//			IdPathActual = null;
+//		else*/
+//			IdPathActual = ActualRama.getEntidad().getID();
+//		
+//		
+//			//TODO
+////		bookReaderServiceHolder.getSons(IdPathActual, C
+////				.getId(), callback1);
+//		
+//	}
 
 	
 	
@@ -252,15 +255,15 @@ public class Finder extends Composite {
 		InReadingActivity = inReadingActivity;
 	}
 	
-	public Catalog getCatalogo() {
+	public CatalogoClient getCatalogo() {
 		return C;
 	}
 	
-	public void setCatalogo(Catalog c) {
+	public void setCatalogo(CatalogoClient c) {
 		C = c;
 		ActualRama=trtmNewItem;
 		trtmNewItem.setText(C.getCatalogName());
-		cargaLaRama();
+		//cargaLaRama();
 	}
 	
 	public static void setButtonTipo(BotonesStackPanelMio buttonMio) {
@@ -272,14 +275,14 @@ public class Finder extends Composite {
 		Finder.clickHandler=clickHandler;
 	}
 
-	public Entity getTopPath() {
+	public EntityCatalogElements getTopPath() {
 				return ActualRama.getEntidad();
 	}
 	
 	public void RefrescaLosDatos()
 	{
 		ActualRama=trtmNewItem;
-		cargaLaRama();
+	//	cargaLaRama();
 		//simplePanel.setHeight(Integer.toString(Window.getClientHeight())+"px");
 		//horizontalSplitPanel.setHeight(Integer.toString(Window.getClientHeight())+"px");
 	}

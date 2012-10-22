@@ -9,8 +9,6 @@ import lector.client.admin.users.EntidadUser;
 import lector.client.catalogo.client.Entity;
 import lector.client.catalogo.client.File;
 import lector.client.catalogo.client.Folder;
-import lector.client.catalogo.client.TagEntity;
-
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.event.dom.client.MouseDownEvent;
@@ -364,7 +362,6 @@ public class StackPanelMio extends StackPanel {
 			if (S instanceof File) Act.setIcon("File.gif",S.getName());
 			else if (S instanceof Folder)Act.setIcon("Folder.gif",S.getName());
 			else if (S instanceof EntidadLibro) Act.setIcon("Book.gif",S.getName());
-			else if (S instanceof TagEntity) Act.setIcon("File2.gif",S.getName());
 			else if (S instanceof EntidadUser) Act.setIcon("Users.gif",S.getName());
 			else if (S instanceof EntidadAdmin) Act.setIcon("Admin.gif",S.getName());
 			
@@ -435,7 +432,6 @@ public class StackPanelMio extends StackPanel {
 				if (A instanceof File) Act.setIcon("File.gif",A.getName());
 				else if (A instanceof Folder)Act.setIcon("Folder.gif",A.getName());
 				else if (A instanceof EntidadLibro) Act.setIcon("Book.gif",A.getName());
-				else if (A instanceof TagEntity) Act.setIcon("File2.gif",A.getName());
 				else if (A instanceof EntidadUser) Act.setIcon("Users.gif",A.getName());
 				else if (A instanceof EntidadAdmin) Act.setIcon("Admin.gif",A.getName());
 				
@@ -523,7 +519,6 @@ public class StackPanelMio extends StackPanel {
 		if (S instanceof File) Act.setIcon("File.gif",S.getName());
 		else if (S instanceof Folder)Act.setIcon("Folder.gif",S.getName());
 		else if (S instanceof EntidadLibro) Act.setIcon("Book.gif",S.getName());
-		else if (S instanceof TagEntity) Act.setIcon("Tag.gif",S.getName());
 		else if (S instanceof EntidadUser) Act.setIcon("Users.gif",S.getName());
 		else if (S instanceof EntidadAdmin) Act.setIcon("Admin.gif",S.getName());
 		
