@@ -1551,9 +1551,30 @@ public class GWTServiceImpl extends RemoteServiceServlet implements GWTService {
 
 	@Override
 	public List<CatalogoClient> getVisbibleCatalogsByProfessorId(
-			Long professorId) {
+			Long professorId) throws GeneralException, CatalogoNotFoundException {
+		EntityManager entityManager = emf.createEntityManager();
+		List<Catalogo> list;
 
-		return null;
+		String sql = "SELECT r FROM Catalogo r WHERE r.professorId= " + professorId;
+		try {
+			list = entityManager.createQuery(sql).getResultList();
+		} catch (Exception e) {
+			// logger.error ("Exception in method loadGroupByEmail: ", e)
+			throw new GeneralException("Exception in method getCatalogos()"
+					+ e.getMessage(), e.getStackTrace());
+
+		}
+		if (list == null || list.isEmpty()) {
+			// logger.error ("Exception in method loadGroupById: ", e)
+			throw new CatalogoNotFoundException(
+					"Catalogo not found in method getVisibleCatslogs");
+
+		}
+		if (entityManager.isOpen()) {
+			entityManager.close();
+		}
+		return ServiceManagerUtils.produceCatalogoClients(list); 
+
 	}
 
 	@Override

@@ -194,7 +194,7 @@ public interface GWTService extends RemoteService {
 
 	public List<CatalogoClient> getCatalogs() throws GeneralException, CatalogoNotFoundException;
 
-	public List<CatalogoClient> getVisbibleCatalogsByProfessorId(Long professorId);
+	public List<CatalogoClient> getVisbibleCatalogsByProfessorId(Long professorId) throws GeneralException, CatalogoNotFoundException;
 
 	public void deleteCatalog(Long catalogId);
 	
