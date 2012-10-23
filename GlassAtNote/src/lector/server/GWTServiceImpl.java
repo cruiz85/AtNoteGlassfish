@@ -1560,7 +1560,7 @@ public class GWTServiceImpl extends RemoteServiceServlet implements GWTService {
 			list = entityManager.createQuery(sql).getResultList();
 		} catch (Exception e) {
 			// logger.error ("Exception in method loadGroupByEmail: ", e)
-			throw new GeneralException("Exception in method getCatalogos()"
+			throw new GeneralException("Exception in method getVisibleCatalogos()"
 					+ e.getMessage(), e.getStackTrace());
 
 		}
