@@ -20,6 +20,7 @@ import lector.share.model.AnnotationThreadNotFoundException;
 import lector.share.model.Book;
 import lector.share.model.BookNotFoundException;
 import lector.share.model.Catalogo;
+import lector.share.model.CatalogoNotFoundException;
 import lector.share.model.DecendanceException;
 import lector.share.model.Entry;
 import lector.share.model.FolderDB;
@@ -191,7 +192,7 @@ public interface GWTService extends RemoteService {
 
 	public CatalogoClient loadCatalogById(Long catalogId);
 
-	public List<CatalogoClient> getCatalogs();
+	public List<CatalogoClient> getCatalogs() throws GeneralException, CatalogoNotFoundException;
 
 	public List<CatalogoClient> getVisbibleCatalogsByProfessorId(Long professorId);
 

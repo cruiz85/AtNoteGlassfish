@@ -109,6 +109,15 @@ public class ServiceManagerUtils {
 		return new CatalogoClient(catalog.getId(), isPrivate,catalog.getProfessorId(),catalog.getCatalogName());
 	}
 	
+	public static List<CatalogoClient> produceCatalogoClients(
+			List<Catalogo> s) {
+		List<CatalogoClient> catalogoClients = new ArrayList<CatalogoClient>();
+		for (Catalogo catalogo : s) {
+			catalogoClients.add(produceCatalogoClient(catalogo));
+		}
+		return catalogoClients;
+	}
+	
 	public static TypeClient produceTypeClientEager(Tag t,CatalogoClient catalogClient ) {
 		return new TypeClient(t.getId(), new ArrayList<EntryClient>() , t.getName(), catalogClient);
 	}
