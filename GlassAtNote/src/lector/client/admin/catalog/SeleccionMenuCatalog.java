@@ -106,6 +106,8 @@ public class SeleccionMenuCatalog extends PopupPanel {
 		btnNewButton_2.addClickHandler(new ClickHandler() {
 			public void onClick(ClickEvent event) {
 				hide();
+				Logger.GetLogger().info(this.getClass().getName(), "Usuario: " + ActualUser.getUser().getEmail()
+						+ " edit a catalog " + BLan.getCatalog().getCatalogName() + " at " + CalendarNow.GetDateNow() );
 				EditorTagsAndTypes.setCatalogo(BLan.getCatalog());
 				Controlador.change2EditorTagsAndTypes();
 				

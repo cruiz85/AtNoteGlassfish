@@ -2,7 +2,9 @@ package lector.client.admin.catalog;
 
 import lector.client.book.reader.GWTService;
 import lector.client.book.reader.GWTServiceAsync;
+import lector.client.controler.CalendarNow;
 import lector.client.controler.ErrorConstants;
+import lector.client.logger.Logger;
 import lector.client.login.ActualUser;
 import lector.client.reader.LoadingPanel;
 import lector.share.model.client.CatalogoClient;
@@ -72,6 +74,8 @@ public class Change_Visivility extends PopupPanel {
 				LoadingPanel.getInstance().center();
 				LoadingPanel.getInstance().setLabelTexto("Loading...");
 				C.setIsPrivate(chckbxNewCheckBox.getValue());
+				Logger.GetLogger().info(this.getClass().getName(), "Usuario: " + ActualUser.getUser().getEmail()
+						+ " change visivility of catalog " + C.getCatalogName() + " to " + C.getIsPrivate() + " at "  + CalendarNow.GetDateNow() );
 				bookReaderServiceHolder.saveCatalog(C, new AsyncCallback<Void>() {
 					
 					@Override
