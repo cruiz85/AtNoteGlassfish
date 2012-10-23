@@ -1555,7 +1555,7 @@ public class GWTServiceImpl extends RemoteServiceServlet implements GWTService {
 		EntityManager entityManager = emf.createEntityManager();
 		List<Catalogo> list;
 
-		String sql = "SELECT r FROM Catalogo r WHERE r.professorId= " + professorId;
+		String sql = "SELECT r FROM Catalogo r WHERE r.professorId= " + professorId +" OR r.isPrivate=0";
 		try {
 			list = entityManager.createQuery(sql).getResultList();
 		} catch (Exception e) {
