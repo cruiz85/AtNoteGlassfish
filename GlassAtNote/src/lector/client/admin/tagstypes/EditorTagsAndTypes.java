@@ -37,6 +37,7 @@ import com.google.gwt.user.client.ui.MenuItemSeparator;
 import com.google.gwt.user.client.ui.SimplePanel;
 import com.google.gwt.user.client.ui.ScrollPanel;
 import com.google.gwt.user.client.ui.AbsolutePanel;
+import com.google.gwt.user.client.ui.HorizontalPanel;
 
 public class EditorTagsAndTypes implements EntryPoint {
 
@@ -124,11 +125,10 @@ public class EditorTagsAndTypes implements EntryPoint {
 					PopUpNewOSelect PPP = new PopUpNewOSelect(catalogo,
 							finder.getTopPath().getEntry());
 					PPP.center();
-					// SelectBetweenFileOrFolderInNew.setCatalog(catalogo);
-					// SelectBetweenFileOrFolderInNew SBFF=new
-					// SelectBetweenFileOrFolderInNew(finder.getTopPath());
-					// SBFF.center();
-					// SBFF.setModal(true);
+//					 SelectBetweenFileOrFolderInNew.setCatalog(catalogo);
+//					 SelectBetweenFileOrFolderInNew SBFF=new SelectBetweenFileOrFolderInNew(finder.getTopPath().getEntry());
+//					 SBFF.center();
+//					 SBFF.setModal(true);
 				} else
 					Window.alert("Type cannot have subtypes");
 			}
@@ -273,21 +273,21 @@ public class EditorTagsAndTypes implements EntryPoint {
 
 					}
 				};
-//				if (delete instanceof Folder)
-//					/*
-//					 * if(finder.getTopPath()== null)
-//					 * bookReaderServiceHolder.deleteFolder(delete.getID(),null,
-//					 * callback); else
-//					 */
-////					bookReaderServiceHolder.deleteFolderDB(delete.getEntry().getId(), delete.getFatherIdCreador(), callback);
-//				else
-//					/*
-//					 * if(finder.getTopPath()== null)
-//					 * bookReaderServiceHolder.deleteFile(delete.getID(),null,
-//					 * callback); else
-//					 */
-//					//TODO
-////					bookReaderServiceHolder.deleteTag(delete.getEntry().getId(), delete.getFatherIdCreador(), callback);
+				if (delete instanceof Folder)
+					/*
+					 * if(finder.getTopPath()== null)
+					 * bookReaderServiceHolder.deleteFolder(delete.getID(),null,
+					 * callback); else
+					 */
+					bookReaderServiceHolder.deleteTypeCategory(delete.getEntry().getId(), delete.getFatherIdCreador(), callback);
+				else
+					/*
+					 * if(finder.getTopPath()== null)
+					 * bookReaderServiceHolder.deleteFile(delete.getID(),null,
+					 * callback); else
+					 */
+					//TODO
+					bookReaderServiceHolder.deleteTag(delete.getEntry().getId(), delete.getFatherIdCreador(), callback);
 
 			}
 
@@ -334,19 +334,13 @@ public class EditorTagsAndTypes implements EntryPoint {
 
 			public void execute() {
 				Controlador.change2CatalogAdmin();
-				// if (BeforeBook == null) {
-				// Controlador.change2Searcher();
-				// } else {
-				// Controlador.change2Reader();
-				// MainEntryPoint.SetBook(BeforeBook);
-				// MainEntryPoint.getTechnicalSpecs().setBook(BeforeBook);
-				// }
 			}
 		});
 		mntmSearcher.setHTML("Back");
 		menuBar.addItem(mntmSearcher);
 
 		SimplePanel simplePanel_2 = new SimplePanel();
+		simplePanel_2.setStyleName("fondoLogo");
 		RootTXOriginal.add(simplePanel_2, 0, 20);
 		// RootTXOriginal.add(simplePanel_2);
 		simplePanel_2.setSize("100%", "97%");
@@ -357,16 +351,21 @@ public class EditorTagsAndTypes implements EntryPoint {
 
 		splitLayoutPanel.addWest(Actual, 700.0);
 
-		Actual.setStyleName("popup");
+		Actual.setStyleName("BlancoTransparente");
 		Actual.setSize("100%", "100%");
 
 		SimplePanel simplePanel_1 = new SimplePanel();
 		splitLayoutPanel.add(simplePanel_1);
 		simplePanel_1.setSize("100%", "100%");
-		simplePanel_1.setWidget(Selected);
-
-		Selected.setHorizontalAlignment(HasHorizontalAlignment.ALIGN_CENTER);
+		
+		HorizontalPanel horizontalPanel = new HorizontalPanel();
+		simplePanel_1.setWidget(horizontalPanel);
+		horizontalPanel.setSize("100%", "100%");
+		horizontalPanel.add(Selected);
 		Selected.setWidth("100%");
+		Selected.setStyleName("AzulTransparente");
+		
+				Selected.setHorizontalAlignment(HasHorizontalAlignment.ALIGN_CENTER);
 
 		LoadBasicTypes();
 
