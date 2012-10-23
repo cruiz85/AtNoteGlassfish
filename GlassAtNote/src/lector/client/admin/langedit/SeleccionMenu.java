@@ -2,8 +2,11 @@ package lector.client.admin.langedit;
 
 import lector.client.book.reader.GWTService;
 import lector.client.book.reader.GWTServiceAsync;
+import lector.client.controler.CalendarNow;
 import lector.client.controler.Controlador;
 import lector.client.controler.InformationConstants;
+import lector.client.logger.Logger;
+import lector.client.login.ActualUser;
 
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
@@ -55,6 +58,8 @@ public class SeleccionMenu extends PopupPanel {
 				bookReaderServiceHolder.deleteLanguage(BLan.getLanguage().getId(), new AsyncCallback<Void>() {
 					
 					public void onSuccess(Void result) {
+						Logger.GetLogger().info(this.getClass().getName(), "Usuario: " + ActualUser.getUser().getEmail()
+								+ " delete a language " + BLan.getLanguage().getName() + " at " + CalendarNow.GetDateNow() );
 						Father.refresh();
 						hide();
 						
@@ -90,6 +95,8 @@ public class SeleccionMenu extends PopupPanel {
 		Button btnNewButton_2 = new Button("Edit");
 		btnNewButton_2.addClickHandler(new ClickHandler() {
 			public void onClick(ClickEvent event) {
+				Logger.GetLogger().info(this.getClass().getName(), "Usuario: " + ActualUser.getUser().getEmail()
+						+ " start edit a language " + BLan.getLanguage().getName() + " at " + CalendarNow.GetDateNow() );
 				EditordeLenguajes.setLenguajeActual(BLan.getLanguage());
 				Controlador.change2EditorLenguaje();
 				hide();

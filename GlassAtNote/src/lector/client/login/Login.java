@@ -1,11 +1,16 @@
 package lector.client.login;
 
+import java.util.Calendar;
+import java.util.Date;
+
 import lector.client.book.reader.GWTService;
 import lector.client.book.reader.GWTServiceAsync;
+import lector.client.controler.CalendarNow;
 import lector.client.controler.Constants;
 import lector.client.controler.Controlador;
 import lector.client.controler.ErrorConstants;
 import lector.client.controler.InformationConstants;
+import lector.client.logger.Logger;
 import lector.share.model.UserApp;
 import lector.share.model.client.ProfessorClient;
 import lector.share.model.client.StudentClient;
@@ -446,16 +451,19 @@ horizontalPanel_4.add(verticalPanel_4);
 					}
 
 					public void onSuccess(UserClient result) {
-						ActualUser.setUser(result);
 
 						if (result == null) {
 							Window.alert("You are not authorized to view this application");
 							btnNewButton.setEnabled(true);
-						} else if (result instanceof StudentClient)
+						} else{ 
+						ActualUser.setUser(result);
+						Logger.GetLogger().info(this.getClass().getName(), "Usuario: " + result.getFirstName() + " " + result.getLastName() +
+								" - " + result.getEmail() + " at " + CalendarNow.GetDateNow() );
+						if (result instanceof StudentClient)
 							Controlador.change2MyActivities();
 						else if (result instanceof ProfessorClient)
 							Controlador.change2Administrator();
-
+						}
 					}
 
 				});

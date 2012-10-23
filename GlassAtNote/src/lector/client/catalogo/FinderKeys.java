@@ -70,9 +70,9 @@ public class FinderKeys extends Finder {
 		scrollPanel.setSize("100%", "100%");
 		
 		scrollPanel.add(EK);
-		TypeCategoryClient TCC=new TypeCategoryClient(C.getCatalogName());
+		TypeCategoryClient TCC=new TypeCategoryClient("NULL");
 		TCC.setId(Constants.CATALOGID);
-		EK=new ElementKey(new Folder(TCC, C, Constants.CATALOGID));
+		EK=new ElementKey(new Folder(TCC, null, Constants.CATALOGID));
 		Lista=new ArrayList<EstadoElementKey>();
 		
 //		AddElementLista(new EstadoElementKey(EK,false));

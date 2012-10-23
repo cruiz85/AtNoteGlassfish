@@ -169,9 +169,9 @@ public class Finder extends Composite {
 
 		scrollPanel.setWidget(ArbolDeNavegacion);
 		ArbolDeNavegacion.setSize("100%", "100%");
-		TypeCategoryClient TCC=new TypeCategoryClient(C.getCatalogName());
+		TypeCategoryClient TCC=new TypeCategoryClient("NULL");
 		TCC.setId(Constants.CATALOGID);
-		trtmNewItem = new Node(new Folder(TCC, C, Constants.CATALOGID));
+		trtmNewItem = new Node(new Folder(TCC, null, Constants.CATALOGID));
 		trtmNewItem.setText("//");
 		ArbolDeNavegacion.addItem(trtmNewItem);
 		ActualRama=trtmNewItem;

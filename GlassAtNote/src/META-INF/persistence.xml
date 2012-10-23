@@ -25,6 +25,7 @@
 		<class>lector.share.model.TemplateCategory</class>
 		<class>lector.share.model.GoogleBook</class>
 		<class>lector.share.model.RemoteBook</class>
+		<class>lector.share.model.Relation</class>
 	
 		<!-- 	<class>lector.client.reader.filter.FilterConfig</class>
 		<class>lector.client.service.AnnotationSchema</class>  -->
@@ -47,14 +48,21 @@
             <property name="eclipselink.logging.level" value="FINEST"/>
            turn off DDL generation after the model is stable             
             <property name="eclipselink.ddl-generation" value="create-tables"/>
-            <property name="eclipselink.ddl-generation.output-mode" value="database"/>  -->
-            <property name="eclipselink.jdbc.password" value="15148785"/>
-			<property name="eclipselink.jdbc.user" value="root"/>
-			<property name="eclipselink.jdbc.driver" value="com.mysql.jdbc.Driver"/>
-			<property name="eclipselink.jdbc.url" value="jdbc:mysql://localhost:3306/atnote"/>
-            <property name="eclipselink.logging.level" value="FINEST"/>
-          <!--     <property name="eclipselink.ddl-generation" value="drop-and-create-tables" /> -->
-          	<property name="eclipselink.ddl-generation" value="create-or-extend-tables" /> 
+            <property name="eclipselink.ddl-generation.output-mode" value="database"/>  
+            <property name="eclipselink.jdbc.password" value="root"/>
+			<property name="eclipselink.jdbc.user" value="root"/>-->
+            <property name="javax.persistence.jdbc.password" value="root"/>
+			<property name="javax.persistence.jdbc.user" value="root"/>
+			<property name="javax.persistence.jdbc.driver" value="com.mysql.jdbc.Driver"/>
+			<property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost:3306/atnote"/>
+          <!--     <property name="eclipselink.logging.level" value="FINEST"/> 
+          <property name="eclipselink.ddl-generation" value="create-or-extend-tables" /> 
+            	  <property name="eclipselink.ddl-generation" value="drop-and-create-tables" /> 
+            	    <property name="eclipselink.ddl-generation" value="create-tables" />
+            	     <property name="hibernate.hbm2ddl.auto" value="update" />
+            	  	<property name="eclipselink.ddl-generation" value="drop-tables" /> -->
+<property name="eclipselink.ddl-generation" value="create-tables" />
+
       		<property name="eclipselink.ddl-generation.output-mode" value="database" />
             
         </properties>

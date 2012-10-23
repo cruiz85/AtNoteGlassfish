@@ -92,6 +92,8 @@ public class EditorTagsAndTypes implements EntryPoint {
 		RootTXOriginal.setStyleName("Root");
 
 		finder.setCatalogo(catalogo);
+		
+		
 		MenuBar menuBar = new MenuBar(false);
 		RootMenu.add(menuBar);
 

@@ -5,6 +5,9 @@ import java.util.List;
 
 import lector.client.book.reader.GWTService;
 import lector.client.book.reader.GWTServiceAsync;
+import lector.client.controler.CalendarNow;
+import lector.client.logger.Logger;
+import lector.client.login.ActualUser;
 import lector.client.reader.LoadingPanel;
 import lector.share.model.Language;
 
@@ -34,6 +37,7 @@ public class newLang extends PopupPanel {
 	private TextBox textBox;
 	static GWTServiceAsync bookReaderServiceHolder = GWT
 	.create(GWTService.class);
+	private Language LSave;
 	
 	public newLang(NewAdminLangs Fatherin) {
 		super(true);
@@ -105,6 +109,7 @@ public class newLang extends PopupPanel {
 								{
 								LoadingPanel.getInstance().center();
 								LoadingPanel.getInstance().setLabelTexto("Saving...");
+								LSave=L;
 								bookReaderServiceHolder.saveLanguage(L, new AsyncCallback<Void>(){
 								
 
@@ -115,6 +120,8 @@ public class newLang extends PopupPanel {
 								}
 
 								public void onSuccess(Void result) {
+									Logger.GetLogger().info(this.getClass().getName(), "Usuario: " + ActualUser.getUser().getEmail()
+											+ " make a language " + LSave.getName() + " at " + CalendarNow.GetDateNow() );
 									LoadingPanel.getInstance().hide();
 									Father.refresh();
 									Me.hide();

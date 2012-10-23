@@ -2,6 +2,8 @@ package lector.client.admin.catalog;
 
 import lector.client.book.reader.GWTService;
 import lector.client.book.reader.GWTServiceAsync;
+import lector.client.controler.CalendarNow;
+import lector.client.logger.Logger;
 import lector.client.login.ActualUser;
 import lector.client.reader.LoadingPanel;
 import lector.share.model.Catalogo;
@@ -35,6 +37,7 @@ public class newCatalog extends PopupPanel {
 	private CheckBox chckbxNewCheckBox;
 	static GWTServiceAsync bookReaderServiceHolder = GWT
 			.create(GWTService.class);
+	private CatalogoClient NuevoC;
 
 	public newCatalog(NewAdminCatalogs Fatherin) {
 		super(true);
@@ -96,10 +99,13 @@ public class newCatalog extends PopupPanel {
 					C.setIsPrivate(chckbxNewCheckBox.getValue());
 					LoadingPanel.getInstance().center();
 					LoadingPanel.getInstance().setLabelTexto("Saving...");
+					NuevoC=C;
 					bookReaderServiceHolder.saveCatalog(C,
 							new AsyncCallback<Void>() {
 
 								public void onSuccess(Void result) {
+									Logger.GetLogger().info(this.getClass().getName(), "Usuario: " + ActualUser.getUser().getEmail()
+											+ " create a catalog " + NuevoC.getCatalogName() + " at " + CalendarNow.GetDateNow() );
 									Father.refresh();
 									LoadingPanel.getInstance().hide();
 
