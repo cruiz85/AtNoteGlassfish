@@ -24,6 +24,7 @@ import lector.share.model.CatalogoNotFoundException;
 import lector.share.model.DecendanceException;
 import lector.share.model.Entry;
 import lector.share.model.FolderDB;
+import lector.share.model.FolderDBNotFoundException;
 import lector.share.model.GeneralException;
 import lector.share.model.GoogleBook;
 import lector.share.model.GroupNotFoundException;
@@ -196,7 +197,7 @@ public interface GWTService extends RemoteService {
 
 	public List<CatalogoClient> getVisbibleCatalogsByProfessorId(Long professorId) throws GeneralException, CatalogoNotFoundException;
 
-	public void deleteCatalog(Long catalogId);
+	public void deleteCatalog(Long catalogId) throws GeneralException;
 	
 	public void addChildToCatalog(EntryClient entryClient, Long catalogId);
 
@@ -209,9 +210,9 @@ public interface GWTService extends RemoteService {
 
 	// Type
 
-	public TypeClient loadTagById(Long typeId) throws TagNotFoundException, GeneralException;
+	public TypeClient loadTypeById(Long typeId) throws TagNotFoundException, GeneralException;
 
-	public TypeClient loadTagByNameAndCatalogId(String typeName, Long catalogId) throws TagNotFoundException, GeneralException;
+	public TypeClient loadTypeByNameAndCatalogId(String typeName, Long catalogId) throws TagNotFoundException, GeneralException;
 
 	public void saveType(TypeClient typesys, Long fatherEntry);
 	
@@ -239,10 +240,9 @@ public interface GWTService extends RemoteService {
 
 	// TypeCategory
 
-	public TypeCategoryClient loadFolderDBById(Long typeCategoryId);
+	public TypeCategoryClient loadTypeCategoryById(Long typeCategoryId) throws GeneralException, FolderDBNotFoundException;
 
-	public TypeCategoryClient loadFolderDBByNameAndCatalogId(String FolderDBName,
-			Long catalogId);
+	public TypeCategoryClient loadTypeCategoryByNameAndCatalogId(String typeCategoryName, Long catalogId)throws GeneralException, FolderDBNotFoundException;
 
 	public void deleteTypeCategory(Long typeCategoryId, Long fatherFolderDBId)
 			throws GeneralException;;

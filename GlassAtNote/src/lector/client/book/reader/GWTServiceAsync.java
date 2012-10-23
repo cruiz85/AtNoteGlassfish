@@ -189,22 +189,11 @@ public interface GWTServiceAsync {
 	void getVisbibleCatalogsByProfessorId(Long professorId,
 			AsyncCallback<List<CatalogoClient>> callback);
 
-	void loadTagById(Long typeId, AsyncCallback<TypeClient> callback);
-
-	void loadTagByNameAndCatalogId(String typeName, Long catalogId,
-			AsyncCallback<TypeClient> callback);
-
 	void getTagsByNameAndCatalogId(List<String> typeNames, Long catalogId,
 			AsyncCallback<List<TypeClient>> callback);
 
 	void getTagsByIds(List<Long> typeIds,
 			AsyncCallback<List<TypeClient>> callback);
-
-	void loadFolderDBById(Long typeCategoryId,
-			AsyncCallback<TypeCategoryClient> callback);
-
-	void loadFolderDBByNameAndCatalogId(String FolderDBName, Long catalogId,
-			AsyncCallback<TypeCategoryClient> callback);
 
 	void getSonsFromFolderDB(Long typeCategoryId,
 			AsyncCallback<List<EntryClient>> callback);
@@ -265,6 +254,17 @@ public interface GWTServiceAsync {
 
 	void addChildToCatalog(EntryClient entryClient, Long catalogId,
 			AsyncCallback<Void> callback);
+
+	void loadTypeCategoryById(Long typeCategoryId,
+			AsyncCallback<TypeCategoryClient> callback);
+
+	void loadTypeCategoryByNameAndCatalogId(String FolderDBName,
+			Long catalogId, AsyncCallback<TypeCategoryClient> callback);
+
+	void loadTypeById(Long typeId, AsyncCallback<TypeClient> callback);
+
+	void loadTypeByNameAndCatalogId(String typeName, Long catalogId,
+			AsyncCallback<TypeClient> callback);
 
 	
 }

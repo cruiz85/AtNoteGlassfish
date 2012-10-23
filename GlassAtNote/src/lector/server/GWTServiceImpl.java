@@ -1048,7 +1048,7 @@ public class GWTServiceImpl extends RemoteServiceServlet implements GWTService {
 			entityManager.close();
 		}
 
-		return ServiceManagerUtils.produceAnnotationClients(list); 
+		return ServiceManagerUtils.produceAnnotationClients(list);
 	}
 
 	@Override
@@ -1061,7 +1061,7 @@ public class GWTServiceImpl extends RemoteServiceServlet implements GWTService {
 			}
 
 		}
-		return ServiceManagerUtils.produceAnnotationClients(annotations); 
+		return ServiceManagerUtils.produceAnnotationClients(annotations);
 	}
 
 	private Annotation quickFind(Long id) {
@@ -1523,7 +1523,8 @@ public class GWTServiceImpl extends RemoteServiceServlet implements GWTService {
 	}
 
 	@Override
-	public List<CatalogoClient> getCatalogs() throws GeneralException, CatalogoNotFoundException {
+	public List<CatalogoClient> getCatalogs() throws GeneralException,
+			CatalogoNotFoundException {
 		EntityManager entityManager = emf.createEntityManager();
 		List<Catalogo> list;
 
@@ -1545,23 +1546,26 @@ public class GWTServiceImpl extends RemoteServiceServlet implements GWTService {
 		if (entityManager.isOpen()) {
 			entityManager.close();
 		}
-		return ServiceManagerUtils.produceCatalogoClients(list); 
+		return ServiceManagerUtils.produceCatalogoClients(list);
 
 	}
 
 	@Override
 	public List<CatalogoClient> getVisbibleCatalogsByProfessorId(
-			Long professorId) throws GeneralException, CatalogoNotFoundException {
+			Long professorId) throws GeneralException,
+			CatalogoNotFoundException {
 		EntityManager entityManager = emf.createEntityManager();
 		List<Catalogo> list;
 
-		String sql = "SELECT r FROM Catalogo r WHERE r.professorId= " + professorId +" OR r.isPrivate=0";
+		String sql = "SELECT r FROM Catalogo r WHERE r.professorId= "
+				+ professorId + " OR r.isPrivate=0";
 		try {
 			list = entityManager.createQuery(sql).getResultList();
 		} catch (Exception e) {
 			// logger.error ("Exception in method loadGroupByEmail: ", e)
-			throw new GeneralException("Exception in method getVisibleCatalogos()"
-					+ e.getMessage(), e.getStackTrace());
+			throw new GeneralException(
+					"Exception in method getVisibleCatalogos()"
+							+ e.getMessage(), e.getStackTrace());
 
 		}
 		if (list == null || list.isEmpty()) {
@@ -1573,13 +1577,25 @@ public class GWTServiceImpl extends RemoteServiceServlet implements GWTService {
 		if (entityManager.isOpen()) {
 			entityManager.close();
 		}
-		return ServiceManagerUtils.produceCatalogoClients(list); 
+		return ServiceManagerUtils.produceCatalogoClients(list);
 
 	}
 
 	@Override
-	public void deleteCatalog(Long catalogId) {
-		// TODO Auto-generated method stub
+	public void deleteCatalog(Long catalogId) throws GeneralException {
+		EntityManager entityManager = emf.createEntityManager();
+
+		try {
+			userTransaction.begin();
+			entityManager.createQuery(
+					"DELETE FROM Catalogo s WHERE s.id=" + catalogId)
+					.executeUpdate();
+			userTransaction.commit();
+		} catch (Exception e) {
+			ServiceManagerUtils.rollback(userTransaction);
+			throw new GeneralException("Exception in method deleteCatalogoById"
+					+ e.getMessage(), e.getStackTrace());
+		}
 
 	}
 
@@ -1597,7 +1613,7 @@ public class GWTServiceImpl extends RemoteServiceServlet implements GWTService {
 	}
 
 	@Override
-	public TypeClient loadTagById(Long tagId) throws TagNotFoundException,
+	public TypeClient loadTypeById(Long tagId) throws TagNotFoundException,
 			GeneralException {
 		EntityManager entityManager = emf.createEntityManager();
 		List<Tag> list;
@@ -1625,7 +1641,7 @@ public class GWTServiceImpl extends RemoteServiceServlet implements GWTService {
 	}
 
 	@Override
-	public TypeClient loadTagByNameAndCatalogId(String tagName, Long catalogId)
+	public TypeClient loadTypeByNameAndCatalogId(String tagName, Long catalogId)
 			throws TagNotFoundException, GeneralException {
 		EntityManager entityManager = emf.createEntityManager();
 		List<Tag> list;
@@ -1891,16 +1907,65 @@ public class GWTServiceImpl extends RemoteServiceServlet implements GWTService {
 	}
 
 	@Override
-	public TypeCategoryClient loadFolderDBById(Long typeCategoryId) {
-		// TODO Auto-generated method stub
-		return null;
+	public TypeCategoryClient loadTypeCategoryById(Long typeCategoryId)
+			throws GeneralException, FolderDBNotFoundException {
+		EntityManager entityManager = emf.createEntityManager();
+		List<FolderDB> list;
+
+		String sql = "SELECT r FROM FolderDB r WHERE r.id=" + typeCategoryId;
+		try {
+			list = entityManager.createQuery(sql).getResultList();
+		} catch (Exception e) {
+			// logger.error ("Exception in method loadFolderDBById: ", e)
+			throw new GeneralException("Exception in method loadFolderDBById:"
+					+ e.getMessage(), e.getStackTrace());
+
+		}
+		if (list == null || list.isEmpty()) {
+			// logger.error ("Exception in method loadFolderDBById: ", e)
+			throw new FolderDBNotFoundException(
+					"FolderDB not found in method loadFolderDBById");
+
+		}
+		if (entityManager.isOpen()) {
+			entityManager.close();
+		}
+		CatalogoClient catalogoClient = ServiceManagerUtils
+				.produceCatalogoClient(list.get(0).getCatalog());
+		return ServiceManagerUtils.produceTypeCategoryClient(list.get(0),
+				catalogoClient);
 	}
 
 	@Override
-	public TypeCategoryClient loadFolderDBByNameAndCatalogId(
-			String FolderDBName, Long catalogId) {
-		// TODO Auto-generated method stub
-		return null;
+	public TypeCategoryClient loadTypeCategoryByNameAndCatalogId(
+			String folderDBName, Long catalogId) throws GeneralException, FolderDBNotFoundException {
+		EntityManager entityManager = emf.createEntityManager();
+		List<FolderDB> list;
+
+		String sql = "SELECT r FROM FolderDB r WHERE r.name='" + folderDBName
+				+ "' AND r.catalog.id=" + catalogId;
+		try {
+			list = entityManager.createQuery(sql).getResultList();
+		} catch (Exception e) {
+			// logger.error ("Exception in method loadFolderDBById: ", e)
+			throw new GeneralException("Exception in method loadFolderDBById:"
+					+ e.getMessage(), e.getStackTrace());
+
+		}
+		if (list == null || list.isEmpty()) {
+			// logger.error ("Exception in method loadFolderDBById: ", e)
+			throw new FolderDBNotFoundException(
+					"FolderDB not found in method loadFolderDBById");
+
+		}
+		if (entityManager.isOpen()) {
+			entityManager.close();
+		}
+
+		CatalogoClient catalogoClient = ServiceManagerUtils
+				.produceCatalogoClient(list.get(0).getCatalog());
+		return ServiceManagerUtils.produceTypeCategoryClient(list.get(0),
+				catalogoClient);
 	}
 
 	@Override
