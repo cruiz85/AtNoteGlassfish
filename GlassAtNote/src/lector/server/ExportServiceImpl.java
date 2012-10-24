@@ -12,9 +12,14 @@ import javax.transaction.UserTransaction;
 import lector.client.book.reader.ExportService;
 import lector.share.model.ExportObject;
 import lector.share.model.GeneralException;
+import lector.share.model.Professor;
+import lector.share.model.ProfessorNotFoundException;
 import lector.share.model.Template;
 import lector.share.model.TemplateCategory;
+import lector.share.model.TemplateCategoryNotFoundException;
 import lector.share.model.TemplateNotFoundException;
+import lector.share.model.client.TemplateCategoryClient;
+import lector.share.model.client.TemplateClient;
 
 import com.google.gwt.user.server.rpc.RemoteServiceServlet;
 
@@ -31,7 +36,55 @@ public class ExportServiceImpl extends RemoteServiceServlet implements
 	UserTransaction userTransaction;
 
 	@Override
-	public Long saveTemplate(Template template) throws GeneralException {
+	public void saveTemplate(TemplateClient templateClient)
+			throws GeneralException {
+		try {
+			saveTemplate(new Template(templateClient.getName(),
+					templateClient.getModifyable() ? (short) 1 : 0,
+					findProfessor(templateClient.getProfessor())));
+
+		} catch (ProfessorNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+	}
+
+	private Professor findProfessor(Long id) throws ProfessorNotFoundException {
+		EntityManager entityManager = emf.createEntityManager();
+		Professor a = entityManager.find(Professor.class, id);
+		if (a == null) {
+			throw new ProfessorNotFoundException(
+					"Professor not found in method loadProfessorById");
+		}
+		entityManager.close();
+		return a;
+	}
+
+	private TemplateCategory findTemplateCategory(Long id)
+			throws TemplateCategoryNotFoundException {
+		EntityManager entityManager = emf.createEntityManager();
+		TemplateCategory a = entityManager.find(TemplateCategory.class, id);
+		if (a == null) {
+			throw new TemplateCategoryNotFoundException(
+					"TemplateCategory not found in method loadTemplateCategoryById");
+		}
+		entityManager.close();
+		return a;
+	}
+
+	private Template findTemplate(Long id) throws TemplateNotFoundException {
+		EntityManager entityManager = emf.createEntityManager();
+		Template a = entityManager.find(Template.class, id);
+		if (a == null) {
+			throw new TemplateNotFoundException(
+					"Template not found in method loadTemplateById");
+		}
+		entityManager.close();
+		return a;
+	}
+
+	private void saveTemplate(Template template) throws GeneralException {
 		EntityManager entityManager = emf.createEntityManager();
 
 		try {
@@ -51,12 +104,11 @@ public class ExportServiceImpl extends RemoteServiceServlet implements
 		if (entityManager.isOpen()) {
 			entityManager.close();
 		}
-		return template.getId();
 	}
 
 	@Override
-	public Template loadTemplateById(Long id) throws TemplateNotFoundException,
-			GeneralException {
+	public TemplateClient loadTemplateById(Long id)
+			throws TemplateNotFoundException, GeneralException {
 		EntityManager entityManager = emf.createEntityManager();
 		List<Template> list;
 
@@ -78,12 +130,15 @@ public class ExportServiceImpl extends RemoteServiceServlet implements
 		if (entityManager.isOpen()) {
 			entityManager.close();
 		}
-		ServiceManagerUtils.cleanTemplate(list.get(0));
-		return list.get(0);
+		Template template = list.get(0);
+		TemplateClient tClient = ServiceManagerUtils
+				.produceTemplateClient(template);
+		TemplateGenerator.Start(tClient, template);
+		return tClient;
 	}
 
 	@Override
-	public List<Template> getTemplates() throws GeneralException,
+	public List<TemplateClient> getTemplates() throws GeneralException,
 			TemplateNotFoundException {
 		EntityManager entityManager = emf.createEntityManager();
 		List<Template> list;
@@ -106,8 +161,16 @@ public class ExportServiceImpl extends RemoteServiceServlet implements
 		if (entityManager.isOpen()) {
 			entityManager.close();
 		}
+		List<TemplateClient> templateClients = new ArrayList<TemplateClient>();
+		for (int i = 0; i < list.size(); i++) {
+			Template template = list.get(i);
+			TemplateClient tClient = ServiceManagerUtils
+					.produceTemplateClient(template);
+			TemplateGenerator.Start(tClient, template);
+			templateClients.add(tClient);
+		}
 
-		return list;
+		return templateClients;
 	}
 
 	@Override
@@ -128,6 +191,32 @@ public class ExportServiceImpl extends RemoteServiceServlet implements
 	}
 
 	@Override
+	public void saveTemplateCategory(
+			TemplateCategoryClient templateCategoryClient)
+			throws GeneralException {
+		TemplateCategory father = null;
+		Template template;
+		try {
+			template = findTemplate(templateCategoryClient.getTemplate()
+					.getId());
+
+			if (templateCategoryClient.getFather() != null) {
+				father = findTemplateCategory(templateCategoryClient
+						.getFather().getId());
+			}
+			TemplateCategory templateCategory = new TemplateCategory(
+					templateCategoryClient.getName(),
+					templateCategoryClient.getOrder(), father, template);
+			saveTemplateCategory(templateCategory);
+		} catch (TemplateNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (TemplateCategoryNotFoundException tcnfe) {
+			tcnfe.printStackTrace();
+		}
+
+	}
+
 	public void saveTemplateCategory(TemplateCategory templateCategory)
 			throws GeneralException {
 		EntityManager entityManager = emf.createEntityManager();
@@ -142,9 +231,7 @@ public class ExportServiceImpl extends RemoteServiceServlet implements
 
 			userTransaction.commit();
 		} catch (Exception e) {
-			ServiceManagerUtils.rollback(userTransaction); // TODO utilizar
-															// método de
-															// logger
+			ServiceManagerUtils.rollback(userTransaction);
 		}
 		if (entityManager.isOpen()) {
 			entityManager.close();
@@ -199,22 +286,24 @@ public class ExportServiceImpl extends RemoteServiceServlet implements
 	}
 
 	@Override
-	public List<Template> getTemplatesByIds(ArrayList<Long> ids) {
-		List<Template> templates = new ArrayList<Template>();
+	public List<TemplateClient> getTemplatesByIds(List<Long> ids) {
+		List<TemplateClient> templateClients = new ArrayList<TemplateClient>();
 		for (int i = 0; i < ids.size(); i++) {
-			Template template = quickFindTemplate(ids.get(i));
-			if (template != null) {
-				templates.add(template);
+			Template template;
+			try {
+				template = findTemplate(ids.get(i));
+				TemplateClient tClient = ServiceManagerUtils
+						.produceTemplateClient(template);
+				TemplateGenerator.Start(tClient, template);
+				templateClients.add(tClient);
+			} catch (TemplateNotFoundException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
 			}
-
+			
 		}
-		return templates;
-	}
 
-	private Template quickFindTemplate(Long id) {
-		EntityManager entityManager = emf.createEntityManager();
-		Template a = entityManager.find(Template.class, id);
-		return a;
+		return templateClients;
 	}
 
 	@Override

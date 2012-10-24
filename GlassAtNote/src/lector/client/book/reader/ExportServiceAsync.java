@@ -6,24 +6,25 @@ import java.util.List;
 import lector.share.model.ExportObject;
 import lector.share.model.Template;
 import lector.share.model.TemplateCategory;
+import lector.share.model.client.TemplateCategoryClient;
+import lector.share.model.client.TemplateClient;
 
 import com.google.gwt.user.client.rpc.AsyncCallback;
 
 public interface ExportServiceAsync {
 
-	void saveTemplate(Template template, AsyncCallback<Long> callback);
-
-	void saveTemplateCategory(TemplateCategory templateCategory,
+	void saveTemplate(TemplateClient templateClient,
 			AsyncCallback<Void> callback);
 
-	void deleteTemplate(Long templateId, AsyncCallback<Void> callback);
+	void saveTemplateCategory(TemplateCategoryClient templateCategoryClient,
+			AsyncCallback<Void> callback);
 
 	void deleteTemplateCategory(Long templateCategoryId,
 			AsyncCallback<Long> callback);
 
-	void getTemplates(AsyncCallback<List<Template>> callback);
+	void getTemplates(AsyncCallback<List<TemplateClient>> callback);
 
-	void loadTemplateById(Long Id, AsyncCallback<Template> callback);
+	void loadTemplateById(Long Id, AsyncCallback<TemplateClient> callback);
 
 	void removeCategoriesFromTemplate(Long templateId,
 			List<Long> categoriesIds, AsyncCallback<Template> callback);
@@ -31,8 +32,8 @@ public interface ExportServiceAsync {
 	void getTemplateCategoriesByIds(ArrayList<Long> categoriesIds,
 			AsyncCallback<List<TemplateCategory>> callback);
 
-	void getTemplatesByIds(ArrayList<Long> ids,
-			AsyncCallback<List<Template>> callback);
+	void getTemplatesByIds(List<Long> ids,
+			AsyncCallback<List<TemplateClient>> callback);
 
 	void moveCategory(Long fromFatherId, Long toFatherId, Long categoryId,
 			Long templateId, AsyncCallback<Void> callback);
@@ -49,6 +50,8 @@ public interface ExportServiceAsync {
 
 	void loadRTFStringForExportUni(ExportObject exportObject,
 			AsyncCallback<String> callback);
+
+	void deleteTemplate(Long templateId, AsyncCallback<Void> callback);
 
 
 

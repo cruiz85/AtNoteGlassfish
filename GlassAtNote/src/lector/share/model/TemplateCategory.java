@@ -53,12 +53,13 @@ public class TemplateCategory implements Serializable {
 		this.template = template;
 	}
 
-	public TemplateCategory(String name, TemplateCategory father,
+	public TemplateCategory(String name, Integer order, TemplateCategory father,
 			Template template) {
 		super();
 		this.name = name;
 		this.father = father;
 		this.template = template;
+		this.order = order;
 	}
 
 	public ArrayList<Long> getAnnotationsIds() {

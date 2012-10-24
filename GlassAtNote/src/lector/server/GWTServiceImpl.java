@@ -3,35 +3,22 @@ package lector.server;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.io.OutputStreamWriter;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLConnection;
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.HashSet;
-import java.util.Iterator;
-
 import java.util.Date;
-
 import java.util.List;
-
 import java.util.logging.Level;
 import java.util.logging.Logger;
-
 import javax.annotation.Resource;
-
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
-
 import javax.persistence.Persistence;
-
 import javax.transaction.UserTransaction;
-
 import lector.client.book.reader.ExportService;
 import lector.client.book.reader.GWTService;
-
-import com.google.appengine.api.search.query.QueryParser.value_return;
 import com.google.gwt.user.server.rpc.RemoteServiceServlet;
 import lector.share.model.Annotation;
 import lector.share.model.AnnotationNotFoundException;
@@ -45,7 +32,6 @@ import lector.share.model.GoogleBook;
 import lector.share.model.GroupNotFoundException;
 import lector.share.model.IlegalFolderFusionException;
 import lector.share.model.LanguageNotFoundException;
-
 import lector.share.model.Catalogo;
 import lector.share.model.CatalogoNotFoundException;
 import lector.share.model.Entry;
@@ -65,7 +51,6 @@ import lector.share.model.GroupApp;
 import lector.share.model.Language;
 import lector.share.model.ReadingActivity;
 import lector.share.model.TagNotFoundException;
-
 import lector.share.model.UserApp;
 import lector.share.model.UserNotFoundException;
 import lector.share.model.client.AnnotationClient;
@@ -1693,23 +1678,27 @@ public class GWTServiceImpl extends RemoteServiceServlet implements GWTService {
 
 	@Override
 	public void saveType(TypeClient typesys, Long fatherEntry) {
-		FolderDB father = null;
+		Tag tag = new Tag();
 		try {
-			Tag tag = new Tag();
 			Catalogo catalogo = findCatalogo(typesys.getCatalog().getId());
-			father = findFolderDB(fatherEntry);
 			tag.setCatalog(catalogo);
 			tag.setName(typesys.getName());
-			Relation relation = new Relation(father, tag);
-			father.getRelations().add(relation);
+			if (fatherEntry != -1l) {
+				FolderDB father = findFolderDB(fatherEntry);
+				Relation relation = new Relation(father, tag);
+				father.getRelations().add(relation);
+				saveFolderDB(father);
+			} else {
+				catalogo.getEntries().add(tag);
+				saveCatalog(catalogo);
+			}
+
 		} catch (CatalogoNotFoundException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (FolderDBNotFoundException fnfe) {
 			fnfe.printStackTrace();
 		}
-
-		saveFolderDB(father);
 
 	}
 
@@ -1938,7 +1927,8 @@ public class GWTServiceImpl extends RemoteServiceServlet implements GWTService {
 
 	@Override
 	public TypeCategoryClient loadTypeCategoryByNameAndCatalogId(
-			String folderDBName, Long catalogId) throws GeneralException, FolderDBNotFoundException {
+			String folderDBName, Long catalogId) throws GeneralException,
+			FolderDBNotFoundException {
 		EntityManager entityManager = emf.createEntityManager();
 		List<FolderDB> list;
 
@@ -2010,24 +2000,31 @@ public class GWTServiceImpl extends RemoteServiceServlet implements GWTService {
 	@Override
 	public void saveTypeCategory(TypeCategoryClient typeCategoryClient,
 			Long fatherEntry) {
-		FolderDB father = null;
+		FolderDB folderDB = new FolderDB();
 		try {
-			FolderDB folderDB = new FolderDB();
+
 			Catalogo catalogo = findCatalogo(typeCategoryClient.getCatalog()
 					.getId());
-			father = findFolderDB(fatherEntry);
 			folderDB.setCatalog(catalogo);
 			folderDB.setName(typeCategoryClient.getName());
-			Relation relation = new Relation(father, folderDB);
-			father.getRelations().add(relation);
+			if (fatherEntry != -1) {
+				FolderDB father = findFolderDB(fatherEntry);
+
+				Relation relation = new Relation(father, folderDB);
+				father.getRelations().add(relation);
+				saveFolderDB(father);
+
+			} else {
+				catalogo.getEntries().add(folderDB);
+				saveCatalog(catalogo);
+			}
+
 		} catch (CatalogoNotFoundException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (FolderDBNotFoundException fdne) {
 			fdne.printStackTrace();
 		}
-
-		saveFolderDB(father);
 
 	}
 
@@ -2127,7 +2124,10 @@ public class GWTServiceImpl extends RemoteServiceServlet implements GWTService {
 	}
 
 	@Override
-	public Integer removeReadingActivityAnnotations(Long readingActivity) {
+	public Integer removeReadingActivityAnnotations(Long readingActivity) { // NO
+																			// DEBERIA
+																			// SER
+																			// NECESARIA
 		// TODO Auto-generated method stub
 		return null;
 	}

@@ -13,6 +13,8 @@ import lector.share.model.GeneralException;
 import lector.share.model.Template;
 import lector.share.model.TemplateCategory;
 import lector.share.model.TemplateNotFoundException;
+import lector.share.model.client.TemplateCategoryClient;
+import lector.share.model.client.TemplateClient;
 
 import com.google.gwt.user.client.rpc.RemoteService;
 import com.google.gwt.user.client.rpc.RemoteServiceRelativePath;
@@ -26,17 +28,17 @@ public interface ExportService extends RemoteService {
 
 	// Templates
 
-	public Long saveTemplate(Template template) throws GeneralException;
+	public void saveTemplate(TemplateClient templateClient) throws GeneralException;
 
-	public Template loadTemplateById(Long Id) throws TemplateNotFoundException, GeneralException;
+	public TemplateClient loadTemplateById(Long Id) throws TemplateNotFoundException, GeneralException;
 
-	public List<Template> getTemplates() throws GeneralException, TemplateNotFoundException;
+	public List<TemplateClient> getTemplates() throws TemplateNotFoundException, GeneralException;
 
 	public void deleteTemplate(Long templateId) throws GeneralException;
 
 	// Template Category
 
-	public void saveTemplateCategory(TemplateCategory templateCategory) throws GeneralException;
+	public void saveTemplateCategory(TemplateCategoryClient templateCategoryClient) throws GeneralException;
 
 	public List<TemplateCategory> getTemplateCategoriesByIds(
 			ArrayList<Long> categoriesIds);
@@ -52,7 +54,7 @@ public interface ExportService extends RemoteService {
 
 	public void swapCategoryWeight(Long movingCategoryId, Long staticCategoryId);
 
-	public List<Template> getTemplatesByIds(ArrayList<Long> ids);
+	public List<TemplateClient> getTemplatesByIds(List<Long> ids);
 	//Exportacion 	
 	
 	public String loadHTMLStringForExport(List<ExportObject> exportObjects);

@@ -34,6 +34,8 @@ import lector.share.model.client.LocalBookClient;
 import lector.share.model.client.ProfessorClient;
 import lector.share.model.client.ReadingActivityClient;
 import lector.share.model.client.StudentClient;
+import lector.share.model.client.TemplateCategoryClient;
+import lector.share.model.client.TemplateClient;
 import lector.share.model.client.TextSelectorClient;
 import lector.share.model.client.TypeCategoryClient;
 import lector.share.model.client.TypeClient;
@@ -103,37 +105,38 @@ public class ServiceManagerUtils {
 	public static TypeClient produceTypeClientLazy(Tag t) {
 		return new TypeClient(t.getId(), null, t.getName(), null);
 	}
-	
-	public static CatalogoClient produceCatalogoClient(Catalogo catalog){
-		boolean isPrivate = catalog.getIsPrivate()>0;
-		return new CatalogoClient(catalog.getId(), isPrivate,catalog.getProfessorId(),catalog.getCatalogName());
+
+	public static CatalogoClient produceCatalogoClient(Catalogo catalog) {
+		boolean isPrivate = catalog.getIsPrivate() > 0;
+		return new CatalogoClient(catalog.getId(), isPrivate,
+				catalog.getProfessorId(), catalog.getCatalogName());
 	}
-	
-	public static List<CatalogoClient> produceCatalogoClients(
-			List<Catalogo> s) {
+
+	public static List<CatalogoClient> produceCatalogoClients(List<Catalogo> s) {
 		List<CatalogoClient> catalogoClients = new ArrayList<CatalogoClient>();
 		for (Catalogo catalogo : s) {
 			catalogoClients.add(produceCatalogoClient(catalogo));
 		}
 		return catalogoClients;
 	}
-	
-	public static TypeClient produceTypeClientEager(Tag t,CatalogoClient catalogClient ) {
-		return new TypeClient(t.getId(), new ArrayList<EntryClient>() , t.getName(), catalogClient);
+
+	public static TypeClient produceTypeClientEager(Tag t,
+			CatalogoClient catalogClient) {
+		return new TypeClient(t.getId(), new ArrayList<EntryClient>(),
+				t.getName(), catalogClient);
 	}
-	
-	public static TypeCategoryClient produceTypeCategoryClient(FolderDB fb,CatalogoClient catalogClient ) {
-		return new TypeCategoryClient(fb.getId(), new ArrayList<EntryClient>() , fb.getName(), catalogClient,  new ArrayList<EntryClient>());
+
+	public static TypeCategoryClient produceTypeCategoryClient(FolderDB fb,
+			CatalogoClient catalogClient) {
+		return new TypeCategoryClient(fb.getId(), new ArrayList<EntryClient>(),
+				fb.getName(), catalogClient, new ArrayList<EntryClient>());
 	}
-	
-	
+
 	public static ReadingActivityClient produceReadingActivityClient(
 			ReadingActivity t) {
 		return null;
 	}
 
-	
-	
 	public static List<ReadingActivityClient> produceReadingActivityClients(
 			List<ReadingActivity> a) {
 		return null;
@@ -187,9 +190,10 @@ public class ServiceManagerUtils {
 
 	public static ProfessorClient produceProfessorClient(Professor p) {
 
-		boolean confirmed= (p.getIsConfirmed()>0);
+		boolean confirmed = (p.getIsConfirmed() > 0);
 		return new ProfessorClient(p.getId(), p.getFirstName(),
-				p.getLastName(), p.getEmail(), p.getPassword(),p.getCreatedDate(),confirmed,
+				p.getLastName(), p.getEmail(), p.getPassword(),
+				p.getCreatedDate(), confirmed,
 				getReadingActivityIds(p.getReadingActivities()),
 				getBooksIds(p.getBooks()), getTemplatesIds(p.getTemplates()),
 				getGroupsIds(p.getGroups()));
@@ -245,10 +249,10 @@ public class ServiceManagerUtils {
 	}
 
 	public static StudentClient produceStudentClient(Student student) {
-		boolean confirmed= (student.getIsConfirmed()>0);
+		boolean confirmed = (student.getIsConfirmed() > 0);
 		return new StudentClient(student.getId(), student.getFirstName(),
-				student.getLastName(), student.getEmail(), student.getPassword(),
-				student.getCreatedDate(),confirmed);
+				student.getLastName(), student.getEmail(),
+				student.getPassword(), student.getCreatedDate(), confirmed);
 	}
 
 	public static GoogleBookClient produceGoogleBookClient(GoogleBook gb) {
@@ -268,23 +272,22 @@ public class ServiceManagerUtils {
 	}
 
 	public static BookClient produceBookClient(Book b) {
-		if(b instanceof GoogleBook){
-			return produceGoogleBookClient((GoogleBook)b);
-		}else{
-			return produceLocalBookClient((LocalBook)b);
+		if (b instanceof GoogleBook) {
+			return produceGoogleBookClient((GoogleBook) b);
+		} else {
+			return produceLocalBookClient((LocalBook) b);
 		}
-	
+
 	}
 
-	public static List<BookClient> produceBookClients(
-			List<Book> s) {
+	public static List<BookClient> produceBookClients(List<Book> s) {
 		List<BookClient> bookClients = new ArrayList<BookClient>();
 		for (Book book : s) {
 			bookClients.add(produceBookClient(book));
 		}
 		return bookClients;
 	}
-	
+
 	private static List<String> produceListString(List<String> strings) {
 		List<String> cleanStrings = new ArrayList<String>();
 		for (String string : strings) {
@@ -316,92 +319,29 @@ public class ServiceManagerUtils {
 
 	}
 
-	public static void cleanTemplate(Template template) {
-		List<TemplateCategory> templateCategories = new ArrayList<TemplateCategory>();
-		for (TemplateCategory templateCategory : template.getCategories()) {
-			templateCategories.add(templateCategory);
-		}
-		template.setCategories(templateCategories);
-	}
+	// EXPORTSERVICE - HANDLER
 
-	public static void cleanBook(Book book) {
-		if (book instanceof GoogleBook) {
-			cleanGoogleBook((GoogleBook) book);
+	public static TemplateClient produceTemplateClient(Template template) {
+		boolean modifyable = true;
+		if (template.getModifyable() == 0) {
+			modifyable = false;
 		}
+		return new TemplateClient(template.getName(), modifyable, template
+				.getProfessor().getId());
 
 	}
 
-	private static void cleanGoogleBook(GoogleBook googleBook) {
-		List<Annotation> annotations = new ArrayList<Annotation>();
-		for (Annotation annotation : googleBook.getAnnotations()) {
-			annotations.add(annotation);
-		}
-		googleBook.setAnnotations(annotations);
-		List<String> webLinks = new ArrayList<String>();
-		for (String googleBookApp : googleBook.getWebLinks()) {
-			webLinks.add(googleBookApp);
-		}
-		googleBook.setWebLinks(webLinks);
-	}
+	public static TemplateCategoryClient produceTemplateCategoryClient(
+			TemplateCategory templateCategory, TemplateClient templateClient,
+			TemplateCategoryClient father) {
 
-	// public static void cleanGroup(GroupApp group) {
-	//
-	// List<Student> participatingStudents = new ArrayList<Student>();
-	// for (Student groupApp : group.getParticipatingStudents()) {
-	// participatingStudents.add(groupApp);
-	// }
-	// group.setParticipatingStudents(participatingStudents);
-	// List<Student> remainingStudents = new ArrayList<Student>();
-	// for (Student groupApp : group.getParticipatingStudents()) {
-	// remainingStudents.add(groupApp);
-	// }
-	// group.setParticipatingStudents(remainingStudents);
-	// }
-	//
-	// public static void cleanUser(UserApp user) {
-	// if (user instanceof Professor) {
-	// cleanProfessor((Professor) user);
-	// } else {
-	// cleanStudent((Student) user);
-	// }
-	// }
-	//
-	// private static void cleanStudent(Student student) {
-	// List<GroupApp> groupApps = new ArrayList<GroupApp>();
-	// for (GroupApp groupApp : student.getParticipatingGroups()) {
-	// groupApps.add(groupApp);
-	// }
-	// student.setParticipatingGroups(groupApps);
-	// }
-	//
-	// private static void cleanProfessor(Professor professor) {
-	// List<Annotation> annotations = new ArrayList<Annotation>();
-	// for (Annotation annotation : professor.getAnnotations()) {
-	// annotations.add(annotation);
-	// }
-	// professor.setAnnotations(annotations);
-	// List<Book> books = new ArrayList<Book>();
-	// for (Book book : professor.getBooks()) {
-	// books.add(book);
-	// }
-	// professor.setBooks(books);
-	// List<ReadingActivity> readingActivitys = new
-	// ArrayList<ReadingActivity>();
-	// for (ReadingActivity readingActivity : professor.getReadingActivities())
-	// {
-	// readingActivitys.add(readingActivity);
-	// }
-	// professor.setReadingActivities(readingActivitys);
-	// List<GroupApp> groupApps = new ArrayList<GroupApp>();
-	// for (GroupApp groupApp : professor.getGroups()) {
-	// groupApps.add(groupApp);
-	// }
-	// professor.setGroups(groupApps);
-	// List<Template> templates = new ArrayList<Template>();
-	// for (Template template : professor.getTemplates()) {
-	// templates.add(template);
-	// }
-	// professor.setTemplates(templates);
-	// }
+		TemplateCategoryClient templateCategoryClient = new TemplateCategoryClient(
+				templateCategory.getId(), templateCategory.getName(),
+				templateCategory.getAnnotationsIds(), templateClient,
+				templateCategory.getOrder());
+		templateCategoryClient.setFather(father);
+
+		return null;
+	}
 
 }
