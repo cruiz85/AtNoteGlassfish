@@ -32,6 +32,17 @@ public class TemplateCategoryClient implements IsSerializable{
 		this.template = template;
 	}
 
+	public TemplateCategoryClient(Long id, String name,
+			ArrayList<Long> annotationsIds, TemplateClient template,
+			Integer order) {
+		super();
+		this.id = id;
+		this.name = name;
+		this.annotationsIds = annotationsIds;
+		this.template = template;
+		this.order = order;
+	}
+
 	public TemplateCategoryClient(String name, TemplateCategoryClient father,
 			TemplateClient template) {
 		super();
