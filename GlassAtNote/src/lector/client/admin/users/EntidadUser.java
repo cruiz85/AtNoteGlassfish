@@ -7,7 +7,7 @@ import lector.share.model.FileException;
 
 public class EntidadUser extends Entity {
 
-	public EntidadUser(String Namein, Long ID) {
+	public EntidadUser(String Namein) {
 		super(Namein);
 	}
 

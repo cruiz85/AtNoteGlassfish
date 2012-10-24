@@ -9,7 +9,6 @@ import lector.client.controler.Controlador;
 
 import lector.client.login.ActualUser;
 import lector.client.reader.LoadingPanel;
-import lector.share.model.Catalogo;
 import lector.share.model.client.CatalogoClient;
 
 import com.google.gwt.core.client.EntryPoint;
@@ -55,7 +54,7 @@ public class NewAdminCatalogs implements EntryPoint {
 		
 		MenuBar menuBar = new MenuBar(false);
 		RootMenu.add(menuBar);
-		menuBar.setWidth("99%");
+		menuBar.setWidth("100%");
 		
 		MenuItem menuItem = new MenuItem("Catalogue", false, (Command) null);
 		menuItem.setHTML("Catalogue Administration");
@@ -86,33 +85,28 @@ public class NewAdminCatalogs implements EntryPoint {
 		menuBar.addItem(mntmBack);
 		
 		VerticalPanel verticalPanel = new VerticalPanel();
-		verticalPanel.setVerticalAlignment(HasVerticalAlignment.ALIGN_MIDDLE);
+		verticalPanel.setStyleName("fondoLogo");
 		verticalPanel.setHorizontalAlignment(HasHorizontalAlignment.ALIGN_CENTER);
-		RootTXOriginal.add(verticalPanel);
-		verticalPanel.setSize("100%", "100%");
+		RootTXOriginal.add(verticalPanel,0,25);
+		verticalPanel.setSize("100%", "96%");
 		
 		HorizontalPanel horizontalPanel = new HorizontalPanel();
-		horizontalPanel.setHorizontalAlignment(HasHorizontalAlignment.ALIGN_CENTER);
+		horizontalPanel.setSpacing(15);
 		verticalPanel.add(horizontalPanel);
 		horizontalPanel.setWidth("100%");
 		
+		HorizontalPanel horizontalPanel_1 = new HorizontalPanel();
+		horizontalPanel_1.setSpacing(10);
+		horizontalPanel_1.setHorizontalAlignment(HasHorizontalAlignment.ALIGN_CENTER);
+		horizontalPanel_1.setStyleName("AzulTransparente");
+		horizontalPanel.add(horizontalPanel_1);
+		horizontalPanel_1.setWidth("420px");
+		
 		Actual = new VerticalPanel();
-		horizontalPanel.add(Actual);
+		Actual.setStyleName("BlancoTransparente");
+		horizontalPanel_1.add(Actual);
 		Actual.setWidth("400px");
 		Actual.setHorizontalAlignment(HasHorizontalAlignment.ALIGN_CENTER);
-		
-		VerticalPanel verticalPanel_1 = new VerticalPanel();
-		verticalPanel_1.setVerticalAlignment(HasVerticalAlignment.ALIGN_MIDDLE);
-		verticalPanel_1.setHorizontalAlignment(HasHorizontalAlignment.ALIGN_CENTER);
-		horizontalPanel.add(verticalPanel_1);
-		
-		HorizontalPanel horizontalPanel_1 = new HorizontalPanel();
-		horizontalPanel_1.setVerticalAlignment(HasVerticalAlignment.ALIGN_MIDDLE);
-		horizontalPanel_1.setHorizontalAlignment(HasHorizontalAlignment.ALIGN_CENTER);
-		verticalPanel_1.add(horizontalPanel_1);
-		
-		Image image = new Image("Logo.jpg");
-		horizontalPanel_1.add(image);
 		
 //		HorizontalPanel horizontalPanel = new HorizontalPanel();
 //		Actual.add(horizontalPanel);

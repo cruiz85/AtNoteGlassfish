@@ -2,6 +2,7 @@ package lector.client.catalogo;
 
 
 import java.util.ArrayList;
+import java.util.List;
 
 import lector.client.admin.tagstypes.ClickHandlerMio;
 import lector.client.book.reader.GWTService;
@@ -12,10 +13,14 @@ import lector.client.catalogo.client.EntityCatalogElements;
 import lector.client.catalogo.client.File;
 import lector.client.catalogo.client.Folder;
 import lector.client.controler.Constants;
+import lector.client.controler.ErrorConstants;
+import lector.client.logger.Logger;
 import lector.client.login.ActualUser;
 import lector.client.reader.LoadingPanel;
 import lector.share.model.client.CatalogoClient;
+import lector.share.model.client.EntryClient;
 import lector.share.model.client.TypeCategoryClient;
+import lector.share.model.client.TypeClient;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
@@ -60,13 +65,14 @@ public class Finder extends Composite {
 	protected static ClickHandler clickHandler;
 	protected static BotonesStackPanelMio buttonMio;
 	private Tree ArbolDeNavegacion;
+	private Finder Yo;
 	
 	public Finder() {
 		
 		NanotimeOld=0l;
 		simplePanel = new SimplePanel();
 		initWidget(simplePanel);
-		
+		Yo=this;
 //		horizontalSplitPanel = new SplitLayoutPanel();
 //		simplePanel.add(horizontalSplitPanel);
 		simplePanel.setSize("100%", "100%");
@@ -161,17 +167,17 @@ public class Finder extends Composite {
 			}
 		});
 
-		ArbolDeNavegacion.addOpenHandler(new OpenHandler<TreeItem>() {
-			public void onOpen(OpenEvent<TreeItem> event) {
-			//	cargaLaRama();
-			}
-		});
+//		ArbolDeNavegacion.addOpenHandler(new OpenHandler<TreeItem>() {
+//			public void onOpen(OpenEvent<TreeItem> event) {
+//			//	cargaLaRama();
+//			}
+//		});
 
 		scrollPanel.setWidget(ArbolDeNavegacion);
 		ArbolDeNavegacion.setSize("100%", "100%");
-		TypeCategoryClient TCC=new TypeCategoryClient(C.getCatalogName());
+		TypeCategoryClient TCC=new TypeCategoryClient("NULL");
 		TCC.setId(Constants.CATALOGID);
-		trtmNewItem = new Node(new Folder(TCC, C, Constants.CATALOGID));
+		trtmNewItem = new Node(new Folder(TCC, null, Constants.CATALOGID));
 		trtmNewItem.setText("//");
 		ArbolDeNavegacion.addItem(trtmNewItem);
 		ActualRama=trtmNewItem;
@@ -182,7 +188,98 @@ public class Finder extends Composite {
 
 
 
-//	protected void cargaLaRama() {
+	protected void cargaLaRama() {
+		
+		LoadingPanel.getInstance().center();
+		if (InReadingActivity)  LoadingPanel.getInstance().setLabelTexto(ActualUser.getLanguage().getLoading());
+		else LoadingPanel.getInstance().setLabelTexto("Loading...");
+		bookReaderServiceHolder.loadCatalogById(C.getId(),new AsyncCallback<CatalogoClient>(){
+
+			@Override
+			public void onFailure(Throwable caught) {
+				Window.alert(ErrorConstants.ERROR_LOADING_CATALOG);
+				Logger.GetLogger().severe(Yo.getClass().toString(), ErrorConstants.ERROR_LOADING_CATALOG);
+				LoadingPanel.getInstance().hide();
+			}
+
+			@Override
+			public void onSuccess(CatalogoClient result) {
+				EvaluaCatalogo(result);
+				LoadingPanel.getInstance().hide();
+				
+			}
+
+			private void EvaluaCatalogo(CatalogoClient result) {
+				List<EntryClient> Lista = result.getEntries();
+				sortStringExchange(Lista);
+				for (EntryClient Hijo : Lista) {
+					if (Hijo instanceof TypeClient)
+					{
+						EntityCatalogElements entitynew=new File((TypeClient)Hijo, C, Constants.CATALOGID);	
+						Node A=new Node(entitynew);
+						A.setHTML("File.gif",entitynew.getName());
+						trtmNewItem.addItem(A);
+						trtmNewItem.setState(true,false);
+					}
+					else {
+						EntityCatalogElements entitynew=new Folder((TypeCategoryClient)Hijo, C, Constants.CATALOGID);	
+						Node A=new Node(entitynew);
+						A.setHTML("Folder.gif",entitynew.getName());					
+						trtmNewItem.addItem(A);
+						trtmNewItem.setState(true,false);
+						EvaluaCarpeta((TypeCategoryClient)Hijo,A);
+					}
+				}
+				
+			}
+			
+			private void EvaluaCarpeta(TypeCategoryClient hijo, Node Padre) {
+				List<EntryClient> Lista = hijo.getChildren();
+				sortStringExchange(Lista);
+				for (EntryClient Hijo : Lista) {
+					if (Hijo instanceof TypeClient)
+					{
+						EntityCatalogElements entitynew=new File((TypeClient)Hijo, C, Padre.getEntidad().getEntry().getId());	
+						Node A=new Node(entitynew);
+						A.setHTML("File.gif",entitynew.getName());
+						Padre.addItem(A);
+						Padre.setState(true,false);
+					}
+					else {
+						EntityCatalogElements entitynew=new Folder((TypeCategoryClient)Hijo, C, Padre.getEntidad().getEntry().getId());	
+						Node A=new Node(entitynew);
+						A.setHTML("Folder.gif",entitynew.getName());					
+						Padre.addItem(A);
+						Padre.setState(true,false);
+						EvaluaCarpeta((TypeCategoryClient)Hijo,A);
+					}
+				}
+				
+			}
+
+			public void sortStringExchange( List<EntryClient>  lista )
+		      {
+		            int i, j;
+		            EntryClient temp;
+
+		            for ( i = 0;  i < lista.size() - 1;  i++ )
+		            {
+		                for ( j = i + 1;  j < lista.size();  j++ )
+		                {  
+		                         if ( lista.get(i).getName().compareToIgnoreCase( lista.get(j).getName()) > 0 )
+		                          {                                             // ascending sort
+		                                      temp = lista.get(i);
+		                                      lista.set(i, lista.get(j));    // swapping
+		                                      lista.set(j, temp); 
+		                                      
+		                           } 
+		                   } 
+		             } 
+		      } 	
+		});
+		
+		
+		
 //		AsyncCallback<ArrayList<EntityCatalogElements>> callback1 = new AsyncCallback<ArrayList<EntityCatalogElements>>() {
 //
 //			public void onFailure(Throwable caught) {
@@ -209,25 +306,7 @@ public class Finder extends Composite {
 //				LoadingPanel.getInstance().hide();
 //			}
 //			
-//			  public void sortStringExchange( ArrayList<EntityCatalogElements>  x )
-//		      {
-//		            int i, j;
-//		            EntityCatalogElements temp;
-//
-//		            for ( i = 0;  i < x.size() - 1;  i++ )
-//		            {
-//		                for ( j = i + 1;  j < x.size();  j++ )
-//		                {  
-//		                         if ( x.get(i).getName().compareToIgnoreCase( x.get(j).getName()) > 0 )
-//		                          {                                             // ascending sort
-//		                                      temp = x.get(i);
-//		                                      x.set(i, x.get(j));    // swapping
-//		                                      x.set(j, temp); 
-//		                                      
-//		                           } 
-//		                   } 
-//		             } 
-//		      } 
+//			  
 //		};
 //		LoadingPanel.getInstance().center();
 //		if (InReadingActivity)  LoadingPanel.getInstance().setLabelTexto(ActualUser.getLanguage().getLoading());
@@ -239,11 +318,11 @@ public class Finder extends Composite {
 //			IdPathActual = ActualRama.getEntidad().getID();
 //		
 //		
-//			//TODO
+//			
 ////		bookReaderServiceHolder.getSons(IdPathActual, C
 ////				.getId(), callback1);
 //		
-//	}
+	}
 
 	
 	
@@ -263,7 +342,7 @@ public class Finder extends Composite {
 		C = c;
 		ActualRama=trtmNewItem;
 		trtmNewItem.setText(C.getCatalogName());
-		//cargaLaRama();
+		cargaLaRama();
 	}
 	
 	public static void setButtonTipo(BotonesStackPanelMio buttonMio) {
@@ -282,9 +361,9 @@ public class Finder extends Composite {
 	public void RefrescaLosDatos()
 	{
 		ActualRama=trtmNewItem;
-	//	cargaLaRama();
-		//simplePanel.setHeight(Integer.toString(Window.getClientHeight())+"px");
-		//horizontalSplitPanel.setHeight(Integer.toString(Window.getClientHeight())+"px");
+		cargaLaRama();
+//		simplePanel.setHeight(Integer.toString(Window.getClientHeight())+"px");
+//		horizontalSplitPanel.setHeight(Integer.toString(Window.getClientHeight())+"px");
 	}
 
 

@@ -13,10 +13,11 @@ public abstract class EntityCatalogElements extends Entity implements Serializab
 	private EntryClient Entry;
 	private Long FatherIdCreador;
 
-	public EntityCatalogElements(String Namein, EntryClient ID, CatalogoClient catalogClient,Long FatherIdCreador) {
+	public EntityCatalogElements(String Namein, EntryClient Entry, CatalogoClient catalogClient,Long FatherIdCreador) {
 		super(Namein);
 		this.catalogId = catalogClient;
 		this.FatherIdCreador=FatherIdCreador;
+		this.Entry=Entry;
 	}
 
 	public CatalogoClient getCatalogId() {

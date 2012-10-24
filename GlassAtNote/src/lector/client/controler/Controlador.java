@@ -11,7 +11,7 @@ import lector.client.admin.book.BookAdministration;
 import lector.client.admin.catalog.NewAdminCatalogs;
 //import lector.client.admin.export.NewAdminTemplate;
 //import lector.client.admin.export.admin.EditTemplate;
-//import lector.client.admin.group.Groupadministration;
+import lector.client.admin.group.Groupadministration;
 import lector.client.admin.tagstypes.EditorTagsAndTypes;
 //import lector.client.admin.users.NewUserAdministrator;
 //import lector.client.browser.Browser;
@@ -44,7 +44,7 @@ public class Controlador implements EntryPoint {
     private static Login LoginPage=new Login();
     private static BookAdministration bookAdministrador=new BookAdministration();
 //    private static MyBooks MyBooksUser=new MyBooks();
-//    private static Groupadministration GroupAdmin = new Groupadministration();
+    private static Groupadministration GroupAdmin = new Groupadministration();
 //    private static NewUserAdministrator UserAdmin = new NewUserAdministrator();
 //    private static NewAdminAdministrator AdminAdmin = new NewAdminAdministrator();
     private static EditordeLenguajes EditorLenguaje = new EditordeLenguajes();
@@ -143,9 +143,9 @@ public class Controlador implements EntryPoint {
 	}
 	
 	public static void change2GroupAdministration() {
-//		clear();
-//		Actual = GroupAdmin;
-//		Actual.onModuleLoad();
+		clear();
+		Actual = GroupAdmin;
+		Actual.onModuleLoad();
 		
 	}
 	

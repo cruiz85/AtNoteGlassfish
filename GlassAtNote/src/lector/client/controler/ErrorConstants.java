@@ -44,5 +44,9 @@ public class ErrorConstants {
 	public static String ERROR_IN_REGISTERATION="Error in the procces of the registration, try again";
 	public static String ERROR_RETRIVING_THE_BOOKS="Error retriving the books try again";
 	public static String ERROR_CHANGE_VISIVILITY_OF_CATALOG="Error Changing visivility of catalog";
+	public static String ERROR_LOADING_CATALOG="Error Loading Catalog";
+	public static String THE_GROUP_COULD_NOT_BE_SAVED="The group could not be saved, try again later";
+	public static String ERROR_DELETING_GROUP="Error deleting group";
+	public static String ERROR_REFRESH_GROUP="Error retriving group information for group ";
 	
 }
