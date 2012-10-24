@@ -440,6 +440,7 @@ public class FinderKeys extends Finder {
 	{
 		Lista.clear();
 		ActualEle=EK;
+		EK.removeItems();
 		ActualEle.getLabel().setStyleName("gwt-ButtonIzquierdaSelectMIN");
 		ActualEle.setSelected(true);
 		cargaLaRama(EK);
