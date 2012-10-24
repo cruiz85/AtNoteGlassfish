@@ -9,6 +9,7 @@ import com.google.gwt.user.client.rpc.AsyncCallback;
 
 public class Logger {
 
+	private String PREFIX_CONSTANT_LOG= "LOG : " ;
 	private static AsyncCallback<Void> callback= new AsyncCallback<Void>() {
 
 		public void onFailure(Throwable caught) {
@@ -40,7 +41,7 @@ public class Logger {
 
 	public void info(String className, String text) {
 		//Window.alert("info");
-		loggerServiceHolder.info(className, text, callback);
+		loggerServiceHolder.info(PREFIX_CONSTANT_LOG+className, text, callback);
 
 	}
 

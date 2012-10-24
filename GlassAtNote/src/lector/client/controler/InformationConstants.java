@@ -15,4 +15,5 @@ public class InformationConstants {
 	public static String ARE_YOU_SURE_DELETE_USER2=" groups.";
 	public static String ARE_YOU_SURE_DELETE_LANGUAGE="Are you sure you want to delete the language? Language : ";
 	public static String A_EMAIL_BE_SEND_TO_YOUR_EMAIL_FOR_CONFIRM_THE_REGISTRATION="A mail be send to your email for confirm the registration";
+	public static String ARE_YOU_SURE_DELETE_GROUP="Are you sure you want to delete this group?";
 }

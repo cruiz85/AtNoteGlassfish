@@ -25,7 +25,10 @@ import lector.client.book.reader.GWTServiceAsync;
 import lector.client.catalogo.client.Entity;
 import lector.client.catalogo.client.File;
 import lector.client.catalogo.client.Folder;
+import lector.client.controler.CalendarNow;
 import lector.client.controler.Constants;
+import lector.client.logger.Logger;
+import lector.client.login.ActualUser;
 import lector.client.reader.LoadingPanel;
 import lector.share.model.FileException;
 import lector.share.model.FolderException;
@@ -43,6 +46,7 @@ public class NewTyperAdmin extends PopupPanel {
 	private String WN;
 	private whatsthenew WNCopy;
 	private static CatalogoClient catalog;
+	private EntryClient Saved;
 
 	public NewTyperAdmin(EntryClient father, whatsthenew WNin) {
 		super(false);
@@ -127,7 +131,9 @@ public class NewTyperAdmin extends PopupPanel {
 						}
 
 						public void onSuccess(Void result) {
-							LoadingPanel.getInstance().hide();
+							Logger.GetLogger().info(this.getClass().getName(), "Usuario: " + ActualUser.getUser().getEmail()
+									+ " Create a "+ Saved.getClass().toString() + " named " + Saved.getName() + " at " + CalendarNow.GetDateNow() );
+							LoadingPanel.getInstance().hide(); 
 							EditorTagsAndTypes.LoadBasicTypes();
 							Yo.hide();
 						}
@@ -138,7 +144,7 @@ public class NewTyperAdmin extends PopupPanel {
 						
 						TypeClient T = new TypeClient(textBox.getText());
 						T.setCatalog(catalog);
-						
+						Saved=T;
 						bookReaderServiceHolder.saveType(T,Father.getId(),callback);
 
 					} else {
@@ -149,6 +155,7 @@ public class NewTyperAdmin extends PopupPanel {
 						 * bookReaderServiceHolder.saveFolder(F,
 						 * Constants.CATALOGID, callback); else
 						 */
+						Saved=TC;
 						bookReaderServiceHolder.saveTypeCategory(TC,Father.getId(), callback);
 
 					}
