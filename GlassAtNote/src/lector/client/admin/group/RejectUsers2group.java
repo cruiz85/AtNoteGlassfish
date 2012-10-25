@@ -7,6 +7,7 @@ import lector.client.admin.users.EntidadUser;
 import lector.client.book.reader.GWTService;
 import lector.client.book.reader.GWTServiceAsync;
 import lector.client.controler.ErrorConstants;
+import lector.client.controler.InformationConstants;
 import lector.client.logger.Logger;
 import lector.client.login.ActualUser;
 import lector.client.reader.LoadingPanel;
@@ -114,6 +115,8 @@ public class RejectUsers2group extends PopupPanel {
 					if (SCE.getCheckBox().getValue())
 						userIds.add(SCE.getStudentClient().getId());
 				}
+				LoadingPanel.getInstance().center();
+				LoadingPanel.getInstance().setLabelTexto(InformationConstants.REJECTING);
 				bookReaderServiceHolder.removeStudentsToBeValidated(userIds, GAUP.getMygroup().getId(), new AsyncCallback<Void>() {
 					
 					@Override

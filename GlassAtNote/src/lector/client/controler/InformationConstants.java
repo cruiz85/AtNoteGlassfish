@@ -22,4 +22,8 @@ public class InformationConstants {
 	public static String LOADING="Loading";
 	public static String YOUR_ADD_WAS_CORRECT_WAIT_FOR_TEACHER="Your add was correct, wait for teacher validation for acces to the activity";
 	public static String ADDING_TO_GROUP="Adding to group...";
+	public static String DO_YOU_WANT_SURE_DELETE_USER="Are you sure to delete your user?";
+	public static String VALIDATING="Validating...";
+	public static String REJECTING="Rejecting...";
+	public static String GOODBYE="Goodbye!!";
 }

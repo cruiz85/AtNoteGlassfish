@@ -59,6 +59,7 @@ public class ErrorConstants {
 	public static String ERROR_DELETING_USER2=" from group ";
 	public static String ERROR_IN_VALIDATION="Error in validation of users";
 	public static String ERROR_IN_REJECTION="Error in rejection of users";
+	public static String ERROR_DELETING_USER="Error deleting user";
 	
 	
 }

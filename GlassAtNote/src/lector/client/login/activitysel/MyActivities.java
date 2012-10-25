@@ -6,9 +6,14 @@ import lector.client.book.reader.GWTService;
 import lector.client.book.reader.GWTServiceAsync;
 import lector.client.book.reader.ImageService;
 import lector.client.book.reader.ImageServiceAsync;
+import lector.client.controler.CalendarNow;
 import lector.client.controler.Controlador;
+import lector.client.controler.ErrorConstants;
+import lector.client.controler.InformationConstants;
+import lector.client.logger.Logger;
 import lector.client.login.ActualUser;
 import lector.client.login.bookselec.ButtonActivityReader;
+import lector.client.reader.LoadingPanel;
 import lector.share.model.Language;
 import lector.share.model.ReadingActivity;
 import lector.share.model.client.CatalogoClient;
@@ -40,12 +45,13 @@ public class MyActivities implements EntryPoint {
 	private ReadingActivity RA;
 	private static int retryCounter=0;
 	private static String RAtemp=null;
+	private MyActivities Yo;
 
 	public void onModuleLoad() {
 		
 		BooksIDs = new ArrayList<ReadingActivity>();
 		RootPanel RootMenu = RootPanel.get("Menu");
-		
+		Yo=this;
 		RootPanel RootTXOriginal = RootPanel.get();
 		RootTXOriginal.setStyleName("Root2");
 		generaBookIds();
@@ -96,6 +102,36 @@ public class MyActivities implements EntryPoint {
 			}
 		});
 		
+		MenuItem menuItem_4 = new MenuItem("Delete My User", false, new Command() {
+			public void execute() {
+				//TODO Pedir Contrasena
+				if (Window.confirm(InformationConstants.DO_YOU_WANT_SURE_DELETE_USER))
+				{
+					LoadingPanel.getInstance().center();
+					LoadingPanel.getInstance().setLabelTexto(InformationConstants.VALIDATING);
+					bookReaderServiceHolder.deleteStudentById(ActualUser.getUser().getId(), new AsyncCallback<Void>() {
+						
+						@Override
+						public void onSuccess(Void result) {
+							LoadingPanel.getInstance().hide();
+							Window.alert(InformationConstants.GOODBYE);
+							Logger.GetLogger().info(Yo.getClass().toString(), "Delete:  "+
+							"First Name: " + ActualUser.getUser().getFirstName() + " Last Name: " + ActualUser.getUser().getLastName() +
+							" Email: " + ActualUser.getUser().getEmail());
+							Window.Location.reload();
+						}
+						
+						@Override
+						public void onFailure(Throwable caught) {
+							LoadingPanel.getInstance().hide();
+							Window.alert(ErrorConstants.ERROR_DELETING_USER);
+							Logger.GetLogger().severe(Yo.getClass().toString(), ErrorConstants.ERROR_DELETING_USER + " " + ActualUser.getUser().getEmail() + " at " + CalendarNow.GetDateNow() );
+						}
+					});
+				}
+			}
+		});
+		
 		if (ActualUser.getUser() instanceof ProfessorClient)
 			menuBar.addItem(menuItem_1);
 		else if (ActualUser.getUser() instanceof StudentClient)
@@ -103,6 +139,7 @@ public class MyActivities implements EntryPoint {
 			menuBar.addItem(mntmNewItem);
 			menuBar.addItem(menuItem_2);
 			menuBar.addItem(menuItem_3);
+			menuBar.addItem(menuItem_4);
 			}
 
 		HorizontalPanel horizontalPanel = new HorizontalPanel();
