@@ -160,7 +160,7 @@ public class Groupadministration implements EntryPoint {
 				
 			if (!result.isEmpty())
 			{
-				Button btnNewButton = new Button(result.get(result.size()-1).getName());
+				ButtonGroupClient btnNewButton = new ButtonGroupClient(result.get(result.size()-1));
 				btnNewButton.addClickHandler(new ClickHandler() {
 					public void onClick(ClickEvent event) {
 						
@@ -235,7 +235,7 @@ bookReaderServiceHolder.getGroupsByUserId(ActualUser.getUser().getId(), new Asyn
 	public void onSuccess(List<GroupClient> result) {
 			
 					for (int i = 0; i < result.size()-1; i++){
-					Button btnNewButton = new Button(result.get(i).getName());
+						ButtonGroupClient btnNewButton = new ButtonGroupClient(result.get(i));
 					btnNewButton.addClickHandler(new ClickHandler() {
 
 
@@ -295,7 +295,7 @@ bookReaderServiceHolder.getGroupsByUserId(ActualUser.getUser().getId(), new Asyn
 				
 			if (!result.isEmpty())
 			{
-				Button btnNewButton = new Button(result.get(result.size()-1).getName());
+				ButtonGroupClient btnNewButton = new ButtonGroupClient(result.get(result.size()-1));
 				btnNewButton.addClickHandler(new ClickHandler() {
 					public void onClick(ClickEvent event) {
 						

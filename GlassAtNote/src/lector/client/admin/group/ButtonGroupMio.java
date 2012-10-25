@@ -9,6 +9,7 @@ public class ButtonGroupMio extends Button {
 
 	
 	private StudentClient Usuario;
+	
 	public ButtonGroupMio(StudentClient userApp) {
 		super();
 		Usuario=userApp;

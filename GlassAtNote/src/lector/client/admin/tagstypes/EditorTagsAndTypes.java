@@ -13,6 +13,9 @@ import lector.client.catalogo.client.EntityCatalogElements;
 import lector.client.catalogo.client.File;
 import lector.client.catalogo.client.Folder;
 import lector.client.controler.Controlador;
+import lector.client.controler.ErrorConstants;
+import lector.client.controler.InformationConstants;
+import lector.client.reader.LoadingPanel;
 import lector.share.model.DecendanceException;
 import lector.share.model.FileException;
 import lector.share.model.GeneralException;
@@ -130,7 +133,7 @@ public class EditorTagsAndTypes implements EntryPoint {
 //					 SBFF.center();
 //					 SBFF.setModal(true);
 				} else
-					Window.alert("Type cannot have subtypes");
+					Window.alert(ErrorConstants.TYPES_CANNOT_HAVE_SUBTYPES);
 			}
 
 		});
@@ -263,12 +266,13 @@ public class EditorTagsAndTypes implements EntryPoint {
 				AsyncCallback<Void> callback = new AsyncCallback<Void>() {
 
 					public void onFailure(Throwable caught) {
-						Window.alert("Error in Delete");
+						LoadingPanel.getInstance().hide();
+						Window.alert(ErrorConstants.ERROR_DELETING_TYPE);
 
 					}
 
 					public void onSuccess(Void result) {
-
+						LoadingPanel.getInstance().hide();
 						LoadBasicTypes();
 
 					}
@@ -279,16 +283,21 @@ public class EditorTagsAndTypes implements EntryPoint {
 					 * bookReaderServiceHolder.deleteFolder(delete.getID(),null,
 					 * callback); else
 					 */
+				{
+					LoadingPanel.getInstance().center();
+				LoadingPanel.getInstance().setLabelTexto(InformationConstants.DELETING);
+				
 					bookReaderServiceHolder.deleteTypeCategory(delete.getEntry().getId(), delete.getFatherIdCreador(), callback);
-				else
+				}else{
 					/*
 					 * if(finder.getTopPath()== null)
 					 * bookReaderServiceHolder.deleteFile(delete.getID(),null,
 					 * callback); else
 					 */
-					//TODO
+					LoadingPanel.getInstance().center();
+				LoadingPanel.getInstance().setLabelTexto(InformationConstants.DELETING);
 					bookReaderServiceHolder.deleteTag(delete.getEntry().getId(), delete.getFatherIdCreador(), callback);
-
+				}
 			}
 
 		});
