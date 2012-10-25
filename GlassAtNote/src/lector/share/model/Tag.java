@@ -5,7 +5,9 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.Entity;
+import javax.persistence.JoinColumn;
 import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 @Entity
@@ -15,6 +17,10 @@ public class Tag extends Entry implements Serializable, IsSerializable {
 	@ManyToMany(mappedBy = "tags")
 	private List<Annotation> annotations = new ArrayList<Annotation>();
 
+	@ManyToOne
+	@JoinColumn(name = "catalogId")
+	private Catalogo catalog;
+	
 	public Tag() {
 		super();
 	}

@@ -266,5 +266,8 @@ public interface GWTServiceAsync {
 	void loadTypeByNameAndCatalogId(String typeName, Long catalogId,
 			AsyncCallback<TypeClient> callback);
 
+	void validateStudentsToBeInGroup(List<Long> userIds, Long groupId,
+			AsyncCallback<Void> callback);
+
 	
 }

@@ -120,6 +120,7 @@ public interface GWTService extends RemoteService {
 	 */
 	public void validStudentToBeInGroup(Long userId, Long groupId) throws GeneralException;
 
+	public void validateStudentsToBeInGroup(List<Long> userIds, Long groupId) throws GeneralException;
 	// Annotations
 
 	public void saveAnnotation(AnnotationClient annotationClient);

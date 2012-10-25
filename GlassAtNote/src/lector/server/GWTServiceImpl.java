@@ -9,6 +9,7 @@ import java.net.URLConnection;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.Iterator;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -789,6 +790,29 @@ public class GWTServiceImpl extends RemoteServiceServlet implements GWTService {
 					"Error in method addStudentToBeValidated");
 		}
 
+	}
+	
+	@Override
+	public void validateStudentsToBeInGroup(List<Long> userIds, Long groupId)
+			throws GeneralException {
+		try {
+			GroupApp group = findGroup(groupId);
+			
+			for (int i = 0; i < group.getRemainingStudents().size(); i++) {
+				Student remaining = group.getRemainingStudents().get(i);
+				if(userIds.contains(remaining.getId())){
+					group.getRemainingStudents().remove(remaining);
+					group.getParticipatingStudents().add(remaining);
+				}
+				
+				saveGroup(group);
+			}
+			
+		} catch (GroupNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
 	}
 
 	@Override
