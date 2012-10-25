@@ -18,7 +18,8 @@ import javax.persistence.Transient;
 
 @Entity
 @Table(name = "template_category")
-public class TemplateCategory implements Serializable {
+public class TemplateCategory implements Serializable,
+		Comparable<TemplateCategory> {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -53,8 +54,8 @@ public class TemplateCategory implements Serializable {
 		this.template = template;
 	}
 
-	public TemplateCategory(String name, Integer order, TemplateCategory father,
-			Template template) {
+	public TemplateCategory(String name, Integer order,
+			TemplateCategory father, Template template) {
 		super();
 		this.name = name;
 		this.father = father;
@@ -118,4 +119,7 @@ public class TemplateCategory implements Serializable {
 		this.subCategories = subCategories;
 	}
 
+	public int compareTo(TemplateCategory anotherInstance) {
+		return this.order - anotherInstance.order;
+	}
 }

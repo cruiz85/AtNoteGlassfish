@@ -1,6 +1,7 @@
 package lector.server;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import javax.annotation.Resource;
@@ -272,25 +273,54 @@ public class ExportServiceImpl extends RemoteServiceServlet implements
 			if (newFather == null) {
 				if (!template.getCategories().contains(templateCategory)) {
 					template.getCategories().add(templateCategory);
-					templateCategory
-							.setOrder(template.getCategories().size() + 1);
 
-					templateCategory.getFather().getSubCategories()
-							.remove(templateCategory);
-					templateCategory.setFather(newFather);
-					persistObjectsForCategoryMove(template, null,
-							templateCategory.getFather());
-				} else {
-					templateCategory.setOrder(newFather.getSubCategories()
-							.size() + 1);
+				}
+				TemplateCategory fromFather = templateCategory.getFather();
+				fromFather.getSubCategories().remove(templateCategory);
+				updateOrderToLeftBrothers(fromFather.getSubCategories(),
+						templateCategory.getOrder());
+				templateCategory.setOrder(template.getCategories().size() + 1);
+				templateCategory.setFather(newFather);
+				persistObjectsForCategoryMove(template, null, fromFather);
+			} else {
+				if (!newFather.getSubCategories().contains(templateCategory)) {
 					newFather.getSubCategories().add(templateCategory);
 				}
+				TemplateCategory fromFather = templateCategory.getFather();
+				if (fromFather == null) {
+					updateOrderToLeftBrothers(template.getCategories(),
+							templateCategory.getOrder());
+					
+				}else{
+					updateOrderToLeftBrothers(fromFather.getSubCategories(),
+							templateCategory.getOrder());
+				}
+				templateCategory
+						.setOrder(newFather.getSubCategories().size() + 1);
+				templateCategory.setFather(newFather);
+				persistObjectsForCategoryMove(template, newFather, fromFather);
 			}
+
 		} catch (TemplateNotFoundException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (TemplateCategoryNotFoundException tcnfe) {
 			tcnfe.printStackTrace();
+		}
+
+	}
+
+	private void updateOrderToLeftBrothers(List<TemplateCategory> categories,
+			int leavingWeight) {
+		Collections.sort(categories);
+		updateOrder(categories, leavingWeight);
+	}
+
+	private void updateOrder(List<TemplateCategory> categories, int weight) {
+
+		for (int i = weight - 1; i < categories.size(); i++) {
+			categories.get(i).setOrder(categories.get(i).getOrder() - 1);
+
 		}
 
 	}
