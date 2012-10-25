@@ -11,6 +11,7 @@ import lector.client.controler.Controlador;
 import lector.client.controler.ErrorConstants;
 import lector.client.controler.InformationConstants;
 import lector.client.logger.Logger;
+import lector.client.reader.LoadingPanel;
 import lector.share.model.UserApp;
 import lector.share.model.client.ProfessorClient;
 import lector.share.model.client.StudentClient;
@@ -64,12 +65,15 @@ public class Login implements EntryPoint {
 	private TextBox lastName;
 	private TextBox email;
 	private TextBox FirstName;
+	private Login Yo;
+	private StudentClient newStudent;
 
 	public void onModuleLoad() {
 
 		RootPanel rootPanel = RootPanel.get();
 		rootPanel.setStyleName("Root");
-
+		Yo=this;
+		
 		DockPanel dockPanel = new DockPanel();
 		dockPanel.setStyleName("fondoLogo");
 		rootPanel.add(dockPanel,0,0);
@@ -375,30 +379,54 @@ horizontalPanel_4.add(verticalPanel_4);
 					PasswordB.setText("");
 					Window.alert(ErrorConstants.ERROR_PASSWORDS_NOT_MATCH);
 					}
-				else
+				else if(FirstName.getText().isEmpty())
+				{
+					Window.alert(ErrorConstants.FIRST_NAME_IS_EMPTY);
+				}else if (lastName.getText().isEmpty())
+				{
+					Window.alert(ErrorConstants.LAST_NAME_IS_EMPTY);
+				} else if (!isValidEmail(email.getText()))
+				{
+					Window.alert(ErrorConstants.IT_IS_NOT_A_EMAIL);
+				} 
+				else 
 				{
 					StudentClient UC=new StudentClient();
 					UC.setFirstName(FirstName.getText());
 					UC.setLastName(lastName.getText());
 					UC.setEmail(email.getText());
 					UC.setPassword(PaswordA.getText());
+					LoadingPanel.getInstance().center();
+					LoadingPanel.getInstance().setLabelTexto(InformationConstants.SAVING);
 					bookReaderServiceHolder.saveUser(UC, new AsyncCallback<Void>() {
 						
 						@Override
 						public void onSuccess(Void result) {
-							
+							LoadingPanel.getInstance().hide();
 							Window.alert(InformationConstants.A_EMAIL_BE_SEND_TO_YOUR_EMAIL_FOR_CONFIRM_THE_REGISTRATION);
+							Logger.GetLogger().info(Yo.getClass().toString(), "New User created:  "+
+							"First Name: " + newStudent.getFirstName() + " Last Name: " + newStudent.getLastName() +
+							" Email: " + newStudent.getEmail());
 							Window.Location.reload();
 						}
 						
 						@Override
 						public void onFailure(Throwable caught) {
+							LoadingPanel.getInstance().hide();
 							Window.alert(ErrorConstants.ERROR_IN_REGISTERATION);
-							
+							Logger.GetLogger().severe(Yo.getClass().toString(), ErrorConstants.ERROR_IN_REGISTERATION);
 						}
 					});
 				}
 			}
+			
+			private native boolean isValidEmail(String email) /*-{ 
+	        var reg1 = /(@.*@)|(\.\.)|(@\.)|(\.@)|(^\.)/; // not valid 
+	        var reg2 = /^.+\@(\[?)[a-zA-Z0-9\-\.]+\.([a-zA-Z]{2,3}|[0-9]{1,3})(\]?)$/; // valid 
+	        	return !reg1.test(email) && reg2.test(email); 
+			}-*/; 
+			
+			
 		});
 		buttonRegister.setText("Register");
 		buttonRegister.addMouseDownHandler(new MouseDownHandler() {
@@ -441,19 +469,23 @@ horizontalPanel_4.add(verticalPanel_4);
 			btnNewButton.setEnabled(true);
 		}		
 		else{
-		
+			LoadingPanel.getInstance().center();
+			LoadingPanel.getInstance().setLabelTexto(InformationConstants.LOGGING);
 		bookReaderServiceHolder.login(nombre,contrasena,
 				new AsyncCallback<UserClient>() {
 
 					public void onFailure(Throwable caught) {
-						Window.alert("You are not authorized to view this application");
+						LoadingPanel.getInstance().hide();
+						Window.alert(ErrorConstants.YOU_ARE_NO_AUTORIZED);
+						Logger.GetLogger().severe(Yo.getClass().toString(), ErrorConstants.YOU_ARE_NO_AUTORIZED);
 						btnNewButton.setEnabled(true);
 					}
 
 					public void onSuccess(UserClient result) {
-
+						LoadingPanel.getInstance().hide();
 						if (result == null) {
-							Window.alert("You are not authorized to view this application");
+							Window.alert(ErrorConstants.YOU_ARE_NO_AUTORIZED);
+							Logger.GetLogger().severe(Yo.getClass().toString(), ErrorConstants.YOU_ARE_NO_AUTORIZED);
 							btnNewButton.setEnabled(true);
 						} else{ 
 						ActualUser.setUser(result);

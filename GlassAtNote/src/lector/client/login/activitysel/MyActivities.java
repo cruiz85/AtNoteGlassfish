@@ -89,12 +89,20 @@ public class MyActivities implements EntryPoint {
 			}
 		});
 
+		MenuItem menuItem_3 = new MenuItem("Add to group", false, new Command() {
+			public void execute() {
+				AddGroupPanel AD=new AddGroupPanel();
+				AD.center();
+			}
+		});
+		
 		if (ActualUser.getUser() instanceof ProfessorClient)
 			menuBar.addItem(menuItem_1);
 		else if (ActualUser.getUser() instanceof StudentClient)
 			{
 			menuBar.addItem(mntmNewItem);
 			menuBar.addItem(menuItem_2);
+			menuBar.addItem(menuItem_3);
 			}
 
 		HorizontalPanel horizontalPanel = new HorizontalPanel();

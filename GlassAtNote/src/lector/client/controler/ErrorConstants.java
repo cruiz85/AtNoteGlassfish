@@ -3,6 +3,7 @@ package lector.client.controler;
 public class ErrorConstants {
 
 
+	public static String ERROR_IN_ADDITION_TO_A_GROUP = "Error additing user to a group ";
 	public static String ERROR_NO_EMAIL_VALIDO = "Error in email, it should be look like 'example@server.com' but looks like ";
 	public static String ERROR_LOAD_IMAGE = "Error retriving graph refresh the page";
 	public static String ERROR_LOAD_FORCE_LOGIN ="Error Loadig the User, reload the web to view the changes";
@@ -48,5 +49,14 @@ public class ErrorConstants {
 	public static String THE_GROUP_COULD_NOT_BE_SAVED="The group could not be saved, try again later";
 	public static String ERROR_DELETING_GROUP="Error deleting group";
 	public static String ERROR_REFRESH_GROUP="Error retriving group information for group ";
+	public static String YOU_ARE_NO_AUTORIZED="You are not authorized to view this application";
+	public static String FIRST_NAME_IS_EMPTY="Error: First Name can't be empty";
+	public static String LAST_NAME_IS_EMPTY="Error: Last Name can't be empty";
+	public static String IT_IS_NOT_A_EMAIL="Error: The email not match with email format";
+	public static String ERROR_DELETING_TYPE="Error Deleting type";
+	public static String TYPES_CANNOT_HAVE_SUBTYPES="Types cannot have subtypes";
+	public static String ERROR_DELETING_USER1="Error deleting user ";
+	public static String ERROR_DELETING_USER2=" from group ";
+	
 	
 }

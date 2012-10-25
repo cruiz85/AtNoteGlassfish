@@ -101,15 +101,15 @@ public class GroupAndUserPanel extends Composite {
 		mntmNewItem_2.setHTML("Delete Group");
 		menuBar_2.addItem(mntmNewItem_2);
 
-//		MenuItem mntmNewItem = new MenuItem("Add a User", false, new Command() {
-//			public void execute() {
-//				NewUser2group NU = new NewUser2group(Yo);
-//				NU.center();
-//				NU.setModal(true);
-//			}
-//		});
-//		menuBar_2.addItem(mntmNewItem);
-		// mntmNewItem.setHTML("Add a User");
+		MenuItem mntmNewItem = new MenuItem("Confirm Pendent users", false, new Command() {
+			public void execute() {
+				AcceptUsers2group NU = new AcceptUsers2group(Yo);
+				NU.center();
+				NU.setModal(true);
+			}
+		});
+		menuBar_2.addItem(mntmNewItem);
+		 mntmNewItem.setHTML("Confirm Pendent users");
 
 		Panel_Usuarios = new VerticalPanel();
 		flowPanel.add(Panel_Usuarios);
@@ -149,6 +149,8 @@ public class GroupAndUserPanel extends Composite {
 			User.setStyleName("gwt-ButtonTOP");
 			User.addClickHandler(new ClickHandler() {
 
+				private StudentClient Borrar;
+
 				public void onClick(ClickEvent event) {
 					if (Window
 							.confirm("Are you sure to remove the user from the list")) {
@@ -156,6 +158,28 @@ public class GroupAndUserPanel extends Composite {
 
 						ButtonGroupMio BGM = ((ButtonGroupMio) event
 								.getSource());
+						Borrar=(StudentClient)BGM.getUsuario();
+						LoadingPanel.getInstance().center();
+						LoadingPanel.getInstance().setLabelTexto("Deleting...");
+						bookReaderServiceHolder.removeStudentToBeValidated(BGM.getUsuario().getId(), Mygroup.getId(),new AsyncCallback<Void>() {
+
+							public void onFailure(Throwable caught) {
+								LoadingPanel.getInstance().hide();
+								Window.alert(ErrorConstants.ERROR_DELETING_USER1  + Borrar + ErrorConstants.ERROR_DELETING_USER2 + Mygroup.getName() );
+								Logger.GetLogger().severe(this.getClass().getName(), "Usuario: " + ActualUser.getUser().getEmail()
+										+ " "+ ErrorConstants.ERROR_DELETING_USER1  + Borrar + ErrorConstants.ERROR_DELETING_USER2 + Mygroup.getName() + " at " + CalendarNow.GetDateNow() );
+								
+							}
+
+							public void onSuccess(Void result) {
+								Logger.GetLogger().info(this.getClass().getName(), "Usuario: " + ActualUser.getUser().getEmail()
+										+ " delete a user "+ Borrar + " from " + Mygroup.getName() + " at " + CalendarNow.GetDateNow() );
+								LoadingPanel.getInstance().hide();
+								Panel_Usuarios.clear();
+								refrescaElGrupo();
+								
+							}
+						} );
 						
 						//TODO CESAR
 //						bookReaderServiceHolder.removeUserAndGroupRelation(BGM
@@ -251,7 +275,7 @@ public class GroupAndUserPanel extends Composite {
 		Panel_Usuarios.clear();
 		
 		LoadingPanel.getInstance().center();
-		LoadingPanel.getInstance().setLabelTexto("Loading...");
+		LoadingPanel.getInstance().setLabelTexto(InformationConstants.LOADING);
 		bookReaderServiceHolder.loadGroupById(Mygroup.getId(),
 				new AsyncCallback<GroupClient>() {
 

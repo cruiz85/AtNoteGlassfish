@@ -3,6 +3,7 @@ package lector.client.admin.catalog;
 import lector.client.book.reader.GWTService;
 import lector.client.book.reader.GWTServiceAsync;
 import lector.client.controler.CalendarNow;
+import lector.client.controler.InformationConstants;
 import lector.client.logger.Logger;
 import lector.client.login.ActualUser;
 import lector.client.reader.LoadingPanel;
@@ -98,7 +99,7 @@ public class newCatalog extends PopupPanel {
 					C.setProfessorId(ActualUser.getUser().getId());
 					C.setIsPrivate(chckbxNewCheckBox.getValue());
 					LoadingPanel.getInstance().center();
-					LoadingPanel.getInstance().setLabelTexto("Saving...");
+					LoadingPanel.getInstance().setLabelTexto(InformationConstants.SAVING);
 					NuevoC=C;
 					bookReaderServiceHolder.saveCatalog(C,
 							new AsyncCallback<Void>() {
