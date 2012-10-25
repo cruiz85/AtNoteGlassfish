@@ -456,18 +456,30 @@ public class GWTServiceImpl extends RemoteServiceServlet implements GWTService {
 	}
 
 	@Override
-	public void saveGroup(GroupClient groupClient) {
-		GroupApp oldGroup = new GroupApp();
-		if (groupClient.getId() != null) {
-			try {
+	public void saveGroup(GroupClient groupClient) throws GeneralException {
+		GroupApp oldGroup;
+
+		try {
+			if (groupClient.getId() != null) {
 				oldGroup = findGroup(groupClient.getId());
-			} catch (GroupNotFoundException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+				oldGroup.setName(groupClient.getName());
+				saveGroup(oldGroup);
+			} else {
+				Professor professor;
+				oldGroup = new GroupApp();
+				professor = findProfessor(groupClient.getProfessor().getId());
+				oldGroup.setProfessor(professor);
+				oldGroup.setName(groupClient.getName());
+				professor.getGroups().add(oldGroup);
+				saveUser(professor);
 			}
+		} catch (GroupNotFoundException e) {
+
+			throw new GeneralException("GroupeNotFound");
+		} catch (ProfessorNotFoundException e) {
+			throw new GeneralException("GroupeNotFound");
 		}
-		oldGroup.setName(groupClient.getName());
-		saveGroup(oldGroup);
+
 	}
 
 	private void saveGroup(GroupApp group) {
@@ -791,28 +803,28 @@ public class GWTServiceImpl extends RemoteServiceServlet implements GWTService {
 		}
 
 	}
-	
+
 	@Override
 	public void validateStudentsToBeInGroup(List<Long> userIds, Long groupId)
 			throws GeneralException {
 		try {
 			GroupApp group = findGroup(groupId);
-			
+
 			for (int i = 0; i < group.getRemainingStudents().size(); i++) {
 				Student remaining = group.getRemainingStudents().get(i);
-				if(userIds.contains(remaining.getId())){
+				if (userIds.contains(remaining.getId())) {
 					group.getRemainingStudents().remove(remaining);
 					group.getParticipatingStudents().add(remaining);
 				}
-				
+
 				saveGroup(group);
 			}
-			
+
 		} catch (GroupNotFoundException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
+
 	}
 
 	@Override
@@ -1714,7 +1726,7 @@ public class GWTServiceImpl extends RemoteServiceServlet implements GWTService {
 				saveFolderDB(father);
 			} else {
 				catalogo.getEntries().add(tag);
-				saveCatalog(catalogo);
+				saveTag(tag);
 			}
 
 		} catch (CatalogoNotFoundException e) {

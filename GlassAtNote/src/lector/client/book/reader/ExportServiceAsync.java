@@ -29,14 +29,11 @@ public interface ExportServiceAsync {
 	void removeCategoriesFromTemplate(Long templateId,
 			List<Long> categoriesIds, AsyncCallback<Template> callback);
 
-	void getTemplateCategoriesByIds(ArrayList<Long> categoriesIds,
-			AsyncCallback<List<TemplateCategory>> callback);
-
 	void getTemplatesByIds(List<Long> ids,
 			AsyncCallback<List<TemplateClient>> callback);
 
-	void moveCategory(Long fromFatherId, Long toFatherId, Long categoryId,
-			Long templateId, AsyncCallback<Void> callback);
+	void moveCategory(Long toFatherId, Long categoryId, Long templateId,
+			AsyncCallback<Void> callback);
 
 	void swapCategoryWeight(Long movingCategoryId, Long staticCategoryId,
 			AsyncCallback<Void> callback);

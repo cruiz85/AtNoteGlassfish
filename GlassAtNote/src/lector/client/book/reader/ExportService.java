@@ -40,11 +40,8 @@ public interface ExportService extends RemoteService {
 
 	public void saveTemplateCategory(TemplateCategoryClient templateCategoryClient) throws GeneralException;
 
-	public List<TemplateCategory> getTemplateCategoriesByIds(
-			ArrayList<Long> categoriesIds);
-
 	/* mueve alguna categoria */
-	public void moveCategory(Long fromFatherId, Long toFatherId,
+	public void moveCategory(Long toFatherId,
 			Long categoryId, Long templateId);
 
 	public Long deleteTemplateCategory(Long templateCategoryId);

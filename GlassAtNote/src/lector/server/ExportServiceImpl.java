@@ -10,6 +10,7 @@ import javax.persistence.Persistence;
 import javax.transaction.UserTransaction;
 
 import lector.client.book.reader.ExportService;
+import lector.client.controler.Constants;
 import lector.share.model.ExportObject;
 import lector.share.model.GeneralException;
 import lector.share.model.Professor;
@@ -65,10 +66,6 @@ public class ExportServiceImpl extends RemoteServiceServlet implements
 			throws TemplateCategoryNotFoundException {
 		EntityManager entityManager = emf.createEntityManager();
 		TemplateCategory a = entityManager.find(TemplateCategory.class, id);
-		if (a == null) {
-			throw new TemplateCategoryNotFoundException(
-					"TemplateCategory not found in method loadTemplateCategoryById");
-		}
 		entityManager.close();
 		return a;
 	}
@@ -239,30 +236,62 @@ public class ExportServiceImpl extends RemoteServiceServlet implements
 
 	}
 
+	//
+	// Template template = loadTemplateById(templateId);
+	// TemplateCategory category = loadTemplateCategoryById(categoryId);
+	// removeCategoryFromParent(fromFatherId, categoryId, templateId);
+	// addNewFatherToCategory(toFatherId, categoryId);
+	//
+	// if (fromFatherId.equals(Constants.TEMPLATEID)) {
+	// template = loadTemplateById(templateId);
+	// updateOrderToLeftBrothers(template.getCategories(), category.getOrder());
+	// } else {
+	// TemplateCategory fromFatherCategory =
+	// loadTemplateCategoryById(fromFatherId);
+	// updateOrderToLeftBrothers(fromFatherCategory.getSubCategories(),
+	// category.getOrder());
+	// }
+	// if (toFatherId.equals(Constants.TEMPLATEID)) {
+	// updateSelfOrder(template.getCategories().size(), categoryId);
+	// addChildToTemplate(categoryId, templateId);
+	// } else {
+	// TemplateCategory fatherCategory = loadTemplateCategoryById(toFatherId);
+	// updateSelfOrder(fatherCategory.getSubCategories().size(),
+	// categoryId);
+	// addChildToCategory(categoryId, toFatherId);
+	// }
+
 	@Override
-	public List<TemplateCategory> getTemplateCategoriesByIds(
-			ArrayList<Long> categoriesIds) {
-		List<TemplateCategory> templateCategorys = new ArrayList<TemplateCategory>();
-		for (int i = 0; i < categoriesIds.size(); i++) {
-			TemplateCategory templateCategory = quickFind(categoriesIds.get(i));
-			if (templateCategory != null) {
-				templateCategorys.add(templateCategory);
+	public void moveCategory(Long toFatherId, Long categoryId, Long templateId) {
+		Template template;
+		try {
+			template = findTemplate(templateId);
+			TemplateCategory templateCategory = findTemplateCategory(categoryId);
+			TemplateCategory newFather = findTemplateCategory(toFatherId);
+
+			if (newFather == null) {
+				if (!template.getCategories().contains(templateCategory)) {
+					template.getCategories().add(templateCategory);
+					templateCategory
+							.setOrder(template.getCategories().size() + 1);
+
+					templateCategory.getFather().getSubCategories()
+							.remove(templateCategory);
+					templateCategory.setFather(newFather);
+					persistObjectsForCategoryMove(template, null,
+							templateCategory.getFather());
+				} else {
+					templateCategory.setOrder(newFather.getSubCategories()
+							.size() + 1);
+					newFather.getSubCategories().add(templateCategory);
+				}
 			}
-
+		} catch (TemplateNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (TemplateCategoryNotFoundException tcnfe) {
+			tcnfe.printStackTrace();
 		}
-		return templateCategorys;
-	}
-
-	private TemplateCategory quickFind(Long id) {
-		EntityManager entityManager = emf.createEntityManager();
-		TemplateCategory a = entityManager.find(TemplateCategory.class, id);
-		return a;
-	}
-
-	@Override
-	public void moveCategory(Long fromFatherId, Long toFatherId,
-			Long categoryId, Long templateId) {
-		// TODO Auto-generated method stub
 
 	}
 
@@ -300,7 +329,7 @@ public class ExportServiceImpl extends RemoteServiceServlet implements
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-			
+
 		}
 
 		return templateClients;
@@ -322,6 +351,46 @@ public class ExportServiceImpl extends RemoteServiceServlet implements
 	public String loadRTFStringForExportUni(ExportObject exportObject) {
 		// TODO Auto-generated method stub
 		return null;
+	}
+
+	private void persistObjectsForCategoryMove(Template template,
+			TemplateCategory toCategory, TemplateCategory fromCategory) {
+		int flag = 1;
+		if (toCategory == null) {
+			flag = 2;
+		}
+		if (fromCategory == null) {
+			flag = 3;
+		}
+		EntityManager entityManager = emf.createEntityManager();
+
+		try {
+			userTransaction.begin();
+
+			switch (flag) {
+			case 1:
+				entityManager.merge(toCategory);
+				entityManager.merge(fromCategory);
+				break;
+			case 2:
+				entityManager.merge(template);
+				entityManager.merge(fromCategory);
+				break;
+			default:
+				entityManager.merge(template);
+				entityManager.merge(toCategory);
+				break;
+			}
+
+			userTransaction.commit();
+		} catch (Exception e) {
+			ServiceManagerUtils.rollback(userTransaction); // TODO utilizar
+															// método de
+															// logger
+		}
+		if (entityManager.isOpen()) {
+			entityManager.close();
+		}
 	}
 
 }
