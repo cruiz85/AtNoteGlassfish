@@ -269,5 +269,8 @@ public interface GWTServiceAsync {
 	void validateStudentsToBeInGroup(List<Long> userIds, Long groupId,
 			AsyncCallback<Void> callback);
 
+	void removeStudentParticipatingInGroup(Long userId, Long groupId,
+			AsyncCallback<Void> callback);
+
 	
 }

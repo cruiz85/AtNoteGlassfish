@@ -803,6 +803,23 @@ public class GWTServiceImpl extends RemoteServiceServlet implements GWTService {
 		}
 
 	}
+	
+	@Override
+	public void removeStudentParticipatingInGroup(Long userId, Long groupId)
+			throws GeneralException {
+		try {
+			GroupApp group = findGroup(groupId);
+			Student student = findStudent(userId);
+			if (group.getParticipatingStudents().contains(student)) {
+				group.getParticipatingStudents().remove(student);
+			}
+			saveGroup(group);
+		} catch (Exception e) {
+			throw new GeneralException(
+					"Error in method addStudentToBeValidated");
+		}
+
+	}
 
 	@Override
 	public void validateStudentsToBeInGroup(List<Long> userIds, Long groupId)

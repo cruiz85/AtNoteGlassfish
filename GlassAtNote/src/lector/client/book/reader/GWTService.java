@@ -114,6 +114,8 @@ public interface GWTService extends RemoteService {
 	
 	public void removeStudentToBeValidated(Long userId, Long groupId) throws GeneralException;
 
+	public void removeStudentParticipatingInGroup(Long userId, Long groupId) throws GeneralException;
+
 	/*
 	 * Valida al usuario en el grupo pasandolo de la lista de en espera a
 	 * validos
