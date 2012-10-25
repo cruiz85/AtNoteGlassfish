@@ -36,16 +36,16 @@ import com.google.gwt.user.client.ui.Widget;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.event.dom.client.ClickEvent;
 
-public class AcceptUsers2group extends PopupPanel {
+public class RejectUsers2group extends PopupPanel {
 
 	private GroupAndUserPanel GAUP;
 	private ScrollPanel InsertionPanel;
 //	private StackPanelMio stackPanel_1;
 	static GWTServiceAsync bookReaderServiceHolder = GWT
 	.create(GWTService.class);
-	private AcceptUsers2group Yo;
+	private RejectUsers2group Yo;
 	
-	public AcceptUsers2group(GroupAndUserPanel GAUPin) {
+	public RejectUsers2group(GroupAndUserPanel GAUPin) {
 		super(true);
 		setGlassEnabled(true);
 		GAUP=GAUPin;
@@ -105,7 +105,7 @@ public class AcceptUsers2group extends PopupPanel {
 		VerticalPanel verticalPanel_1 = new VerticalPanel();
 		horizontalPanel.add(verticalPanel_1);
 		
-		Button Acept = new Button("Acept");
+		Button Acept = new Button("Reject");
 		Acept.addClickHandler(new ClickHandler() {
 			public void onClick(ClickEvent event) {
 				List<Long> userIds=new ArrayList<Long>();
@@ -114,7 +114,7 @@ public class AcceptUsers2group extends PopupPanel {
 					if (SCE.getCheckBox().getValue())
 						userIds.add(SCE.getStudentClient().getId());
 				}
-				bookReaderServiceHolder.validateStudentsToBeInGroup(userIds, GAUP.getMygroup().getId(), new AsyncCallback<Void>() {
+				bookReaderServiceHolder.removeStudentsToBeValidated(userIds, GAUP.getMygroup().getId(), new AsyncCallback<Void>() {
 					
 					@Override
 					public void onSuccess(Void result) {
@@ -126,9 +126,9 @@ public class AcceptUsers2group extends PopupPanel {
 					@Override
 					public void onFailure(Throwable caught) {
 						LoadingPanel.getInstance().hide();
-						Window.alert(ErrorConstants.ERROR_IN_VALIDATION);
-						Logger.GetLogger().severe(Yo.getClass().toString(), ErrorConstants.ERROR_IN_VALIDATION + " " + GAUP.getMygroup().getName() + " User : " +ActualUser.getUser());
-						hide();	
+						Window.alert(ErrorConstants.ERROR_IN_REJECTION);
+						Logger.GetLogger().severe(Yo.getClass().toString(), ErrorConstants.ERROR_IN_REJECTION + " " + GAUP.getMygroup().getName() + " User : " +ActualUser.getUser());
+						
 					}
 				});
 			}

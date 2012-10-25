@@ -101,7 +101,7 @@ public class GroupAndUserPanel extends Composite {
 		mntmNewItem_2.setHTML("Delete Group");
 		menuBar_2.addItem(mntmNewItem_2);
 
-		MenuItem mntmNewItem = new MenuItem("Confirm Pendent users", false, new Command() {
+		MenuItem mntmNewItem = new MenuItem("Confirm Pendent Users", false, new Command() {
 			public void execute() {
 				AcceptUsers2group NU = new AcceptUsers2group(Yo);
 				NU.center();
@@ -109,7 +109,17 @@ public class GroupAndUserPanel extends Composite {
 			}
 		});
 		menuBar_2.addItem(mntmNewItem);
-		 mntmNewItem.setHTML("Confirm Pendent users");
+		 mntmNewItem.setHTML("Confirm Pendent Users");
+		 
+		 MenuItem mntmNewItem_3 = new MenuItem("Reject Pendent Users", false, new Command() {
+				public void execute() {
+					AcceptUsers2group NU = new AcceptUsers2group(Yo);
+					NU.center();
+					NU.setModal(true);
+				}
+			});
+			menuBar_2.addItem(mntmNewItem_3);
+			mntmNewItem_3.setHTML("Remove Pendent Users");
 
 		Panel_Usuarios = new VerticalPanel();
 		flowPanel.add(Panel_Usuarios);
@@ -161,7 +171,7 @@ public class GroupAndUserPanel extends Composite {
 						Borrar=(StudentClient)BGM.getUsuario();
 						LoadingPanel.getInstance().center();
 						LoadingPanel.getInstance().setLabelTexto("Deleting...");
-						bookReaderServiceHolder.removeStudentToBeValidated(BGM.getUsuario().getId(), Mygroup.getId(),new AsyncCallback<Void>() {
+						bookReaderServiceHolder.removeStudentParticipatingInGroup(BGM.getUsuario().getId(), Mygroup.getId(),new AsyncCallback<Void>() {
 
 							public void onFailure(Throwable caught) {
 								LoadingPanel.getInstance().hide();

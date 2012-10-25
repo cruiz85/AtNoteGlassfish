@@ -17,7 +17,7 @@ public class SelectionCheckboxElement extends Composite {
 		HorizontalPanel horizontalPanel = new HorizontalPanel();
 		initWidget(horizontalPanel);
 		horizontalPanel.setSize("100%", "");
-		
+		UserCheck=user1;
 		CheckBox = new SimpleCheckBox();
 		horizontalPanel.add(CheckBox);
 		

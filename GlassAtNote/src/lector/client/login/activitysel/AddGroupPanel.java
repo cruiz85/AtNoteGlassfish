@@ -29,58 +29,64 @@ import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.user.client.ui.LongBox;
 
 public class AddGroupPanel extends PopupPanel {
-	
+
 	static GWTServiceAsync bookReaderServiceHolder = GWT
 			.create(GWTService.class);
 	private LongBox textBox;
 	private AddGroupPanel Yo;
-	
+
 	public AddGroupPanel() {
-		Yo=this;
+		Yo = this;
 		setGlassEnabled(true);
 		setAnimationEnabled(true);
 		setAutoHideEnabled(true);
-		
+
 		VerticalPanel verticalPanel = new VerticalPanel();
-		verticalPanel.setHorizontalAlignment(HasHorizontalAlignment.ALIGN_CENTER);
+		verticalPanel
+				.setHorizontalAlignment(HasHorizontalAlignment.ALIGN_CENTER);
 		verticalPanel.setSpacing(9);
 		setWidget(verticalPanel);
 		verticalPanel.setSize("100%", "100%");
-		
-		Label lblNewLabel = new Label(InformationConstants.INSERT_ID_OF_THE_GROUP);
+
+		Label lblNewLabel = new Label(
+				InformationConstants.INSERT_ID_OF_THE_GROUP);
 		verticalPanel.add(lblNewLabel);
-		
+
 		textBox = new LongBox();
 		verticalPanel.add(textBox);
-		
-		
+
 		HorizontalPanel horizontalPanel = new HorizontalPanel();
 		verticalPanel.add(horizontalPanel);
-		
+
 		Button btnNewButton = new Button("Add");
 		btnNewButton.addClickHandler(new ClickHandler() {
 			public void onClick(ClickEvent event) {
-				Long I=textBox.getValue();
+				Long I = textBox.getValue();
 				LoadingPanel.getInstance().center();
-				LoadingPanel.getInstance().setLabelTexto(InformationConstants.ADDING_TO_GROUP);
-				bookReaderServiceHolder.addStudentToBeValidated(ActualUser.getUser().getId(), I, new AsyncCallback<Void>() {
-					
+				LoadingPanel.getInstance().setLabelTexto(
+						InformationConstants.ADDING_TO_GROUP);
+				bookReaderServiceHolder.addStudentToBeValidated(ActualUser
+						.getUser().getId(), I, new AsyncCallback<Void>() {
+
 					@Override
 					public void onSuccess(Void result) {
 						LoadingPanel.getInstance().hide();
 						Window.alert(InformationConstants.YOUR_ADD_WAS_CORRECT_WAIT_FOR_TEACHER);
 						hide();
-						
+
 					}
-					
+
 					@Override
 					public void onFailure(Throwable caught) {
 						LoadingPanel.getInstance().hide();
 						Window.alert(ErrorConstants.ERROR_IN_ADDITION_TO_A_GROUP);
-						Logger.GetLogger().severe(Yo.getClass().toString(), ErrorConstants.ERROR_IN_ADDITION_TO_A_GROUP + textBox.getValue());
+						Logger.GetLogger().severe(
+								Yo.getClass().toString(),
+								ErrorConstants.ERROR_IN_ADDITION_TO_A_GROUP
+										+ textBox.getValue());
 						hide();
 					}
-				} );
+				});
 			}
 		});
 		horizontalPanel.add(btnNewButton);
@@ -91,15 +97,13 @@ public class AddGroupPanel extends PopupPanel {
 			}
 		});
 
-btnNewButton.addMouseOutHandler(new MouseOutHandler() {
-	public void onMouseOut(MouseOutEvent event) {
-		((Button) event.getSource())
-				.setStyleName("gwt-ButtonCenter");
-	}
-});
+		btnNewButton.addMouseOutHandler(new MouseOutHandler() {
+			public void onMouseOut(MouseOutEvent event) {
+				((Button) event.getSource()).setStyleName("gwt-ButtonCenter");
+			}
+		});
 
-btnNewButton
-		.addMouseOverHandler(new MouseOverHandler() {
+		btnNewButton.addMouseOverHandler(new MouseOverHandler() {
 			public void onMouseOver(MouseOverEvent event) {
 
 				((Button) event.getSource())
@@ -108,7 +112,38 @@ btnNewButton
 			}
 		});
 
-btnNewButton.setStyleName("gwt-ButtonCenter");
+		btnNewButton.setStyleName("gwt-ButtonCenter");
+		Button Cancel = new Button("Cancel");
+		Cancel.addClickHandler(new ClickHandler() {
+			public void onClick(ClickEvent event) {
+				hide();
+			}
+		});
+		Cancel.addMouseDownHandler(new MouseDownHandler() {
+			public void onMouseDown(MouseDownEvent event) {
+				((Button) event.getSource())
+						.setStyleName("gwt-ButtonCenterPush");
+			}
+		});
+
+		Cancel.addMouseOutHandler(new MouseOutHandler() {
+			public void onMouseOut(MouseOutEvent event) {
+				((Button) event.getSource()).setStyleName("gwt-ButtonCenter");
+			}
+		});
+
+		Cancel.addMouseOverHandler(new MouseOverHandler() {
+			public void onMouseOver(MouseOverEvent event) {
+
+				((Button) event.getSource())
+						.setStyleName("gwt-ButtonCenterOver");
+
+			}
+		});
+
+		Cancel.setStyleName("gwt-ButtonCenter");
+		horizontalPanel.add(Cancel);
+
 	}
 
 }

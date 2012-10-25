@@ -57,6 +57,8 @@ public class ErrorConstants {
 	public static String TYPES_CANNOT_HAVE_SUBTYPES="Types cannot have subtypes";
 	public static String ERROR_DELETING_USER1="Error deleting user ";
 	public static String ERROR_DELETING_USER2=" from group ";
+	public static String ERROR_IN_VALIDATION="Error in validation of users";
+	public static String ERROR_IN_REJECTION="Error in rejection of users";
 	
 	
 }
