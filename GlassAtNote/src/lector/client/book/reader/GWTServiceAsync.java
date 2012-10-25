@@ -221,9 +221,6 @@ public interface GWTServiceAsync {
 	void getBookClients(String query, int start,
 			AsyncCallback<List<GoogleBookClient>> callback);
 
-	void removeStudentToBeValidated(Long userId, Long groupId,
-			AsyncCallback<Void> callback);
-
 	void deleteBookById(Long id, AsyncCallback<Void> callback);
 
 	void loadBookClientById(Long id, AsyncCallback<BookClient> callback);
@@ -270,6 +267,9 @@ public interface GWTServiceAsync {
 			AsyncCallback<Void> callback);
 
 	void removeStudentParticipatingInGroup(Long userId, Long groupId,
+			AsyncCallback<Void> callback);
+
+	void removeStudentsToBeValidated(List<Long> userIds, Long groupId,
 			AsyncCallback<Void> callback);
 
 	

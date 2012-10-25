@@ -788,14 +788,20 @@ public class GWTServiceImpl extends RemoteServiceServlet implements GWTService {
 	}
 
 	@Override
-	public void removeStudentToBeValidated(Long userId, Long groupId)
+	public void removeStudentsToBeValidated(List<Long> ids, Long groupId)
 			throws GeneralException {
 		try {
 			GroupApp group = findGroup(groupId);
-			Student student = findStudent(userId);
-			if (group.getRemainingStudents().contains(student)) {
-				group.getRemainingStudents().remove(student);
+			for (int i = 0; i < group.getRemainingStudents().size(); i++) {
+				Student remaining = group.getRemainingStudents().get(i);
+				if (ids.contains(remaining.getId())) {
+					group.getRemainingStudents().remove(remaining);
+
+				}
+
+				saveGroup(group);
 			}
+
 			saveGroup(group);
 		} catch (Exception e) {
 			throw new GeneralException(
@@ -803,7 +809,7 @@ public class GWTServiceImpl extends RemoteServiceServlet implements GWTService {
 		}
 
 	}
-	
+
 	@Override
 	public void removeStudentParticipatingInGroup(Long userId, Long groupId)
 			throws GeneralException {

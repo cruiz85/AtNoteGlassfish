@@ -112,7 +112,7 @@ public interface GWTService extends RemoteService {
 	/* Metodo Nuevo, para añadir usuarios a un grupo, en la lista para validar */
 	public void addStudentToBeValidated(Long userId, Long groupId) throws GeneralException;
 	
-	public void removeStudentToBeValidated(Long userId, Long groupId) throws GeneralException;
+	public void removeStudentsToBeValidated(List<Long> userIds, Long groupId) throws GeneralException;
 
 	public void removeStudentParticipatingInGroup(Long userId, Long groupId) throws GeneralException;
 
