@@ -37,7 +37,6 @@ public class EditordeLenguajes implements EntryPoint {
 	private static Language LenguajeActual;
 	private DecoratedTabPanel decoratedTabPanel;
 	private MenuItem mntmNewItem;
-	private String tamano="875px";
 	
 	
 	public void onModuleLoad() {
@@ -58,7 +57,7 @@ public class EditordeLenguajes implements EntryPoint {
 								MenuItemSeparator separator = new MenuItemSeparator();
 								menuBar.addSeparator(separator);
 								
-								MenuItem mntmNewItem_2 = new MenuItem("New item", false, new Command() {
+								MenuItem mntmNewItem_2 = new MenuItem("Main Window", false, new Command() {
 									public void execute() {
 										int actual_widget=decoratedTabPanel.getDeckPanel().getVisibleWidget();
 										Widget WidgetActual=decoratedTabPanel.getDeckPanel().getWidget(actual_widget);
@@ -129,7 +128,7 @@ public class EditordeLenguajes implements EntryPoint {
 													HorizontalPanel horizontalPanel = new HorizontalPanel();
 													horizontalPanel.setSpacing(10);
 													horizontalPanel.setStyleName("AzulTransparente");
-													decoratedTabPanel.add(horizontalPanel, "New tab", false);
+													decoratedTabPanel.add(horizontalPanel, "Main Window", false);
 													horizontalPanel.setSize("100%", "");
 													
 													//Esta encima porque sino salta error al setear la tab del decorador.

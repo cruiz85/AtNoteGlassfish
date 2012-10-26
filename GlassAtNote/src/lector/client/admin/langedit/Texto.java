@@ -22,15 +22,16 @@ public class Texto extends Composite {
 		horizontalPanel.setVerticalAlignment(HasVerticalAlignment.ALIGN_MIDDLE);
 		horizontalPanel.setHorizontalAlignment(HasHorizontalAlignment.ALIGN_CENTER);
 		initWidget(horizontalPanel);
-		horizontalPanel.setSize("100%", "100%");
+		horizontalPanel.setSize("200px", "100%");
 		
 		lblNewLabel = new Label("New label");
 		horizontalPanel.add(lblNewLabel);
+		lblNewLabel.setWidth("300px");
 		
 		textBox = new TextBox();
 		textBox.setVisibleLength(30);
 		horizontalPanel.add(textBox);
-		textBox.setWidth("100%");
+		textBox.setWidth("100px");
 	}
 
 	public Texto(String lblNewLabelt) {
