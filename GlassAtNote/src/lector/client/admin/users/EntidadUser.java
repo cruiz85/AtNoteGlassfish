@@ -1,14 +1,23 @@
 package lector.client.admin.users;
 
-import java.util.ArrayList;
-
 import lector.client.catalogo.client.Entity;
-import lector.share.model.FileException;
+import lector.share.model.client.StudentClient;
 
 public class EntidadUser extends Entity {
 
-	public EntidadUser(String Namein) {
-		super(Namein);
+private StudentClient Admin;
+	
+	public EntidadUser(StudentClient Admin) {
+		super(Admin.getFirstName() + " "+ Admin.getLastName()+ " : " +Admin.getEmail());
+		this.Admin=Admin;
+	}
+
+	public StudentClient getStudent() {
+		return Admin;
+	}
+	
+	public void setAdmin(StudentClient admin) {
+		Admin = admin;
 	}
 
 

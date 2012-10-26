@@ -10,15 +10,22 @@ public class BotonesStackPanelUsersMio extends BotonesStackPanelMio {
 
 	private UserClient User;
 
-	public BotonesStackPanelUsersMio(String HTML, VerticalPanel verticalPanel,UserClient User) {
-		super(HTML);
+//	public BotonesStackPanelUsersMio(String HTML, VerticalPanel verticalPanel,UserClient User) {
+//		super(HTML);
+//		super.setActual(verticalPanel);
+//		this.User=User;
+//	}
+	
+	
+	public BotonesStackPanelUsersMio(EntidadUser E, VerticalPanel verticalPanel) {
+		super(E);
 		super.setActual(verticalPanel);
-		this.User=User;
+		this.User=E.getStudent();
 	}
 
 	@Override
 	public BotonesStackPanelMio Clone() {
-		BotonesStackPanelUsersMio New=new BotonesStackPanelUsersMio(getHTML(), super.getActual(),User);	
+		BotonesStackPanelUsersMio New=new BotonesStackPanelUsersMio((EntidadUser)super.getEntidad(), super.getActual());	
 		New.setActual(getActual());
 		return New;
 	}

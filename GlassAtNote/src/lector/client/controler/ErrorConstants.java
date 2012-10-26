@@ -60,6 +60,8 @@ public class ErrorConstants {
 	public static String ERROR_IN_VALIDATION="Error in validation of users";
 	public static String ERROR_IN_REJECTION="Error in rejection of users";
 	public static String ERROR_DELETING_USER="Error deleting user";
+	public static String ERROR_USER_CAN_NOT_BE_REMOVED="Sorry but the user could not be removed, try again later";
+	public static String ERROR_LOADING_USERS="Error Loading all aplication users";
 	
 	
 }

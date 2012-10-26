@@ -12,8 +12,8 @@ public class InformationConstants {
 	public static String RENAME_TEMPLATE_CATEGORY="Insert the new name for the Template category  ";
 	public static String WAIT_RESULTS ="Export results will be opened in a new window please wait to load completly";
 	public static String ARE_YOU_SURE_DELETE_CATALOG="Are you sure you want to delete the catalog? Catalog : ";
-	public static String ARE_YOU_SURE_DELETE_USER="Are you sure you want to delete this user?, he is a member to a ";
-	public static String ARE_YOU_SURE_DELETE_USER2=" groups.";
+	public static String ARE_YOU_SURE_DELETE_USER="Are you sure you want to delete this User: ";
+	public static String ARE_YOU_SURE_DELETE_USER2=" ? maybe he/his participate in another groups";
 	public static String ARE_YOU_SURE_DELETE_LANGUAGE="Are you sure you want to delete the language? Language : ";
 	public static String A_EMAIL_BE_SEND_TO_YOUR_EMAIL_FOR_CONFIRM_THE_REGISTRATION="A mail be send to your email for confirm the registration";
 	public static String ARE_YOU_SURE_DELETE_GROUP="Are you sure you want to delete this group?";
@@ -26,4 +26,6 @@ public class InformationConstants {
 	public static String VALIDATING="Validating...";
 	public static String REJECTING="Rejecting...";
 	public static String GOODBYE="Goodbye!!";
+	public static String ARE_YOU_SURE_DELETE_ADMIN="Are you sure you want to delete this Admin: ";
+	public static String ARE_YOU_SURE_DELETE_ADMIN2=" ?, His/her activities, annotations and book will be deleted";
 }

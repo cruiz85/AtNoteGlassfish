@@ -12,12 +12,16 @@ public abstract class BotonesStackPanelMio extends Button {
 	protected Entity Entidad;
 	protected String Text;
 	
+	public BotonesStackPanelMio(Entity Entidad) {
+		super(Entidad.getName());
+		Text=Entidad.getName();
+		this.Entidad=Entidad;
+	}
+	
 	public BotonesStackPanelMio(String HTML) {
 		super(HTML);
 		Text=HTML;
 	}
-	
-
 
 	public abstract BotonesStackPanelMio Clone();
 	

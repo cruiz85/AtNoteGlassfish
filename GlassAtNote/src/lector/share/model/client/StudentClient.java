@@ -16,4 +16,9 @@ public class StudentClient extends UserClient implements IsSerializable{
 		// TODO Auto-generated constructor stub
 	}
 
+	public StudentClient(String email) {
+		super(email);
+	}
+
+	
 }
