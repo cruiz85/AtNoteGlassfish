@@ -76,7 +76,7 @@ public interface GWTService extends RemoteService {
 
 	// Usuarios
 
-	public void saveUser(UserClient userClient) throws GeneralException;
+	public void saveUser(UserClient userClient) throws GeneralException, UserNotFoundException;
 
 	public UserClient loadUserById(Long userId) throws UserNotFoundException, GeneralException;
 
@@ -226,10 +226,10 @@ public interface GWTService extends RemoteService {
 			throws GeneralException, NullParameterException,
 			AnnotationNotFoundException;
 
-	public Long fusionTags(Long typeFromId, Long typeToId)
+	public Long fusionTypes(Long typeFromId, Long typeToId)
 			throws GeneralException, NullParameterException;
 
-	public void moveTag(Long typeCategoryFromId, Long typeId,
+	public void moveType(Long typeCategoryFromId, Long typeId,
 			Long typeCategoryToId) throws GeneralException;;
 
 	public List<TypeClient> getTagsByNameAndCatalogId(List<String> typeNames,
@@ -272,7 +272,7 @@ public interface GWTService extends RemoteService {
 
 	public Integer removeReadingActivityAnnotations(Long readingActivity);
 
-	public List<ReadingActivityClient> getReadingActivitiesByStudentId(Long studentId);
+	public List<ReadingActivityClient> getReadingActivitiesByStudentId(Long studentId)throws GeneralException, UserNotFoundException, GroupNotFoundException;
 
 	public List<ReadingActivityClient> getReadingActivitiesByProfessorId(
 			Long professorId) throws GeneralException, ReadingActivityNotFoundException;

@@ -134,17 +134,34 @@ public class ServiceManagerUtils {
 
 	public static ReadingActivityClient produceReadingActivityClient(
 			ReadingActivity t) {
-		return null;
+		boolean isFreeTemplateAllowed = t.getIsFreeTemplateAllowed() == 0;
+		return new ReadingActivityClient(t.getName(),
+				produceProfessorClient(t.getProfessor()), t.getLanguage(),
+				produceBookClient(t.getBook()),
+				produceGroupClient(t.getGroup()),
+				produceCatalogoClient(t.getCloseCatalogo()),
+				produceCatalogoClient(t.getOpenCatalogo()),
+				t.getVisualization(), produceTemplateClient(t.getTemplate()),
+				isFreeTemplateAllowed);
 	}
 
 	public static List<ReadingActivityClient> produceReadingActivityClients(
 			List<ReadingActivity> a) {
-		return null;
+		List<ReadingActivityClient> readingActivityClients = new ArrayList<ReadingActivityClient>();
+		for (ReadingActivity readingActivity : a) {
+			readingActivityClients
+					.add(produceReadingActivityClient(readingActivity));
+		}
+		return readingActivityClients;
 	}
 
 	public static List<AnnotationClient> produceAnnotationClients(
 			List<Annotation> a) {
-		return null;
+		List<AnnotationClient> annotationClients = new ArrayList<AnnotationClient>();
+		for (Annotation annotation : a) {
+			annotationClients.add(produceAnnotationClient(annotation));
+		}
+		return annotationClients;
 	}
 
 	public static List<AnnotationThreadClient> produceAnnotationThreadClients(

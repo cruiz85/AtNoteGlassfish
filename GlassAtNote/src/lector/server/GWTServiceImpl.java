@@ -18,6 +18,9 @@ import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 import javax.transaction.UserTransaction;
+
+import org.apache.tools.ant.taskdefs.LoadProperties;
+
 import lector.client.book.reader.ExportService;
 import lector.client.book.reader.GWTService;
 import com.google.gwt.user.server.rpc.RemoteServiceServlet;
@@ -119,6 +122,11 @@ public class GWTServiceImpl extends RemoteServiceServlet implements GWTService {
 
 		UserApp user = loadUserByEmail(userName);
 
+		if (user == null) {
+			throw new UserNotFoundException(
+					"The email address provided does not correspond to any of our records, please verify it");
+		}
+
 		if (!user.getPassword().equals(password)) {
 			throw new NotAuthenticatedException(
 					"Error in Login: User not Authenticated, please verify your login input");
@@ -152,7 +160,9 @@ public class GWTServiceImpl extends RemoteServiceServlet implements GWTService {
 	}
 
 	@Override
-	public void saveUser(UserClient userClient) throws GeneralException {
+	public void saveUser(UserClient userClient) throws GeneralException,
+			UserNotFoundException {
+
 		if (userClient instanceof ProfessorClient) {
 			saveProfessor((ProfessorClient) userClient);
 		} else {
@@ -161,13 +171,19 @@ public class GWTServiceImpl extends RemoteServiceServlet implements GWTService {
 
 	}
 
-	private void saveStudent(StudentClient pClient) {
+	private void saveStudent(StudentClient pClient)
+			throws UserNotFoundException {
 		boolean isNew = false;
 		Student oldStudent = null;
 		try {
 			if (pClient.getId() != null) {
 				oldStudent = findStudent(pClient.getId());
 			} else {
+				UserApp user = loadUserByEmail(pClient.getEmail());
+				if (user != null) {
+					throw new GeneralException(
+							"Email already registered in the application");
+				}
 				Date now = new Date();
 				Calendar calendar = Calendar.getInstance();
 				now = calendar.getTime();
@@ -197,13 +213,19 @@ public class GWTServiceImpl extends RemoteServiceServlet implements GWTService {
 		}
 	}
 
-	private void saveProfessor(ProfessorClient pClient) {
+	private void saveProfessor(ProfessorClient pClient)
+			throws UserNotFoundException {
 		boolean isNew = false;
 		Professor oldProfessor = null;
 		try {
 			if (pClient.getId() != null) {
 				oldProfessor = findProfessor(pClient.getId());
 			} else {
+				UserApp user = loadUserByEmail(pClient.getEmail());
+				if (user != null) {
+					throw new GeneralException(
+							"Email already registered in the application");
+				}
 				Date now = new Date();
 				Calendar calendar = Calendar.getInstance();
 				now = calendar.getTime();
@@ -1023,9 +1045,7 @@ public class GWTServiceImpl extends RemoteServiceServlet implements GWTService {
 		if (entityManager.isOpen()) {
 			entityManager.close();
 		}
-		return ServiceManagerUtils.produceAnnotationClients(list); // método
-																	// esta
-		// retornando null
+		return ServiceManagerUtils.produceAnnotationClients(list);
 
 	}
 
@@ -1781,6 +1801,7 @@ public class GWTServiceImpl extends RemoteServiceServlet implements GWTService {
 
 	@Override
 	public Integer getAnnotationsNumberByTagName(String annotationTagName)
+			// puede haber dos tagNames iuales en actividades diferentes.
 			throws GeneralException, NullParameterException,
 			AnnotationNotFoundException {
 		// TODO Auto-generated method stub
@@ -1788,14 +1809,14 @@ public class GWTServiceImpl extends RemoteServiceServlet implements GWTService {
 	}
 
 	@Override
-	public Long fusionTags(Long typeFromId, Long typeToId)
+	public Long fusionTypes(Long typeFromId, Long typeToId)
 			throws GeneralException, NullParameterException {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public void moveTag(Long typeCategoryFromId, Long typeId,
+	public void moveType(Long typeCategoryFromId, Long typeId,
 			Long typeCategoryToId) throws GeneralException {
 		try {
 			FolderDB typeCategoryTo = findFolderDB(typeCategoryToId);
@@ -2183,20 +2204,98 @@ public class GWTServiceImpl extends RemoteServiceServlet implements GWTService {
 	}
 
 	@Override
-	public Integer removeReadingActivityAnnotations(Long readingActivity) { // NO
-																			// DEBERIA
-																			// SER
-																			// NECESARIA
+	public Integer removeReadingActivityAnnotations(Long readingActivity) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
 	public List<ReadingActivityClient> getReadingActivitiesByStudentId(
-			Long userId) {
-		// TODO Auto-generated method stub
-		return null;
+			Long userId) throws GeneralException, UserNotFoundException, GroupNotFoundException {
+		List<Long> groups = getGroupIds(getGroupsOfStudent(userId));
+
+		return ServiceManagerUtils.produceReadingActivityClients(getReadingActivitiesByGroupIds(groups));
 	}
+
+	
+	private List<ReadingActivity> getReadingActivitiesByGroupIds(List<Long> ids)
+			throws GroupNotFoundException, GeneralException {
+		EntityManager entityManager = emf.createEntityManager();
+		List<ReadingActivity> list;
+		String sql = "SELECT r FROM ReadingActivity r WHERE r.group=" + ids.get(0);
+		for (int i = 1; i < ids.size(); i++) {
+			sql += "OR r.group=" + ids.get(i);
+		}
+
+		try {
+			list = entityManager.createQuery(sql).getResultList();
+		} catch (Exception e) {
+			// logger.error ("Exception in method loadReadingActivityById: ", e)
+			throw new GeneralException("Exception in method loadReadingActivityById:"
+					+ e.getMessage(), e.getStackTrace());
+
+		}
+		if (list == null || list.isEmpty()) {
+			// logger.error ("Exception in method loadReadingActivityById: ", e)
+			throw new GroupNotFoundException(
+					"ReadingActivity not found in method loadReadingActivityById");
+
+		}
+		if (entityManager.isOpen()) {
+			entityManager.close();
+		}
+		return list;
+	}
+	
+	private List<GroupApp> getGroupsOfStudent(Long userId)
+			throws GeneralException, UserNotFoundException {
+		EntityManager entityManager = emf.createEntityManager();
+		List<GroupApp> list;
+
+		String sql = "SELECT r FROM GroupApp r WHERE r.participatingStudents="
+				+ userId + " OR r.remainingStudents=" + userId;
+		try {
+			list = entityManager.createQuery(sql).getResultList();
+		} catch (Exception e) {
+			// logger.error ("Exception in method loadUserByName: ", e)
+			throw new GeneralException("Exception in method loadUserByName:"
+					+ e.getMessage(), e.getStackTrace());
+
+		}
+		if (list == null || list.isEmpty()) {
+			// logger.error ("Exception in method loadUserById: ", e)
+			throw new UserNotFoundException(
+					"User not found in method loadUserByName");
+
+		}
+		if (entityManager.isOpen()) {
+			entityManager.close();
+		}
+		return list;
+
+	}
+
+	private List<Long> getGroupIds(List<GroupApp> groups) {
+
+		List<Long> ids = new ArrayList<Long>();
+		for (GroupApp group : groups) {
+			ids.add(group.getId());
+		}
+		return ids;
+	}
+
+	// private List<Long> getParticipatingGroupsOfStudent(Long userId)
+	// throws StudentNotFoundException {
+	// Student student = findStudent(userId);
+	// if (student == null) {
+	// throw new StudentNotFoundException("The student does not exist");
+	// }
+	// List<Long> userIds = new ArrayList<Long>();
+	// for (GroupApp group : student.getParticipatingGroups()) {
+	// userIds.add(group.getId());
+	// }
+	// return userIds;
+	// }
 
 	@Override
 	public List<ReadingActivityClient> getReadingActivitiesByProfessorId(

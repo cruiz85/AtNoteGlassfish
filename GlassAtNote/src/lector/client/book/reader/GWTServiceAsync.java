@@ -107,11 +107,6 @@ public interface GWTServiceAsync {
 	void getAnnotationsNumberByTagName(String annotationTagName,
 			AsyncCallback<Integer> callback);
 
-	void fusionTags(Long typeFromId, Long typeToId, AsyncCallback<Long> callback);
-
-	void moveTag(Long typeCategoryFromId, Long typeId, Long typeCategoryToId,
-			AsyncCallback<Void> callback);
-
 	void getTagNamesByIds(List<Long> typeIds,
 			AsyncCallback<List<String>> callback);
 
@@ -270,6 +265,12 @@ public interface GWTServiceAsync {
 			AsyncCallback<Void> callback);
 
 	void removeStudentsToBeValidated(List<Long> userIds, Long groupId,
+			AsyncCallback<Void> callback);
+
+	void fusionTypes(Long typeFromId, Long typeToId,
+			AsyncCallback<Long> callback);
+
+	void moveType(Long typeCategoryFromId, Long typeId, Long typeCategoryToId,
 			AsyncCallback<Void> callback);
 
 	
