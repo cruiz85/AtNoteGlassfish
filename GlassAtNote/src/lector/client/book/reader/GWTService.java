@@ -265,7 +265,8 @@ public interface GWTService extends RemoteService {
 	public List<TypeClient> getTagsByIds(List<Long> typeIds)
 			throws GeneralException;
 
-	public List<String> getTagNamesByIds(List<Long> typeIds);
+	public List<String> getTagNamesByIds(List<Long> typeIds)
+			throws GeneralException, TagNotFoundException;
 
 	public void addChildEntry(Long entryId, Long fatherTypeCategory);
 
@@ -303,8 +304,6 @@ public interface GWTService extends RemoteService {
 			throws GeneralException, NullParameterException,
 			AnnotationNotFoundException;
 
-	public Integer removeReadingActivityAnnotations(Long readingActivity);
-
 	public List<ReadingActivityClient> getReadingActivitiesByStudentId(
 			Long studentId) throws GeneralException, UserNotFoundException,
 			GroupNotFoundException;
@@ -315,9 +314,6 @@ public interface GWTService extends RemoteService {
 
 	public void saveReadingActivity(ReadingActivityClient readingActivityClient)
 			throws GeneralException;
-
-	public void updateReadingActivities();
-
 	// Language
 
 	public void saveLanguage(Language language) throws GeneralException;
@@ -351,9 +347,6 @@ public interface GWTService extends RemoteService {
 	// public ArrayList<Entity> getSons(Long fatherId, Long catalogId);
 
 	// TODO: RETIRAR CUANDO SE HAGA EL LOGIN CON GOOGLE
-	public UserClient loginAuxiliar(String userEmail)
-			throws UserNotFoundException;
-
 	public void deleteBookById(Long id) throws GeneralException;
 
 	void renameType(Long typeIds, String newTagName);

@@ -1116,7 +1116,8 @@ public class GWTServiceImpl extends RemoteServiceServlet implements GWTService {
 	}
 
 	@Override
-	public List<AnnotationClient> getAnnotationsByIds(List<Long> ids) throws GeneralException, GroupNotFoundException {
+	public List<AnnotationClient> getAnnotationsByIds(List<Long> ids)
+			throws GeneralException, GroupNotFoundException {
 		EntityManager entityManager = emf.createEntityManager();
 		List<Annotation> list;
 		String sql = "SELECT r FROM Annotation r WHERE r.id=" + ids.get(0);
@@ -1948,9 +1949,42 @@ public class GWTServiceImpl extends RemoteServiceServlet implements GWTService {
 	}
 
 	@Override
-	public List<String> getTagNamesByIds(List<Long> typeIds) {
-		// TODO Auto-generated method stub
-		return null;
+	public List<String> getTagNamesByIds(List<Long> typeIds)
+			throws TagNotFoundException, GeneralException {
+		EntityManager entityManager = emf.createEntityManager();
+		List<Tag> list;
+		String sql = "SELECT r FROM Tag r WHERE r.id=" + typeIds.get(0);
+		for (int i = 1; i < typeIds.size(); i++) {
+			sql += "OR r.id=" + typeIds.get(i);
+		}
+
+		try {
+			list = entityManager.createQuery(sql).getResultList();
+		} catch (Exception e) {
+			// logger.error ("Exception in method loadTagById: ", e)
+			throw new GeneralException("Exception in method loadTagById:"
+					+ e.getMessage(), e.getStackTrace());
+
+		}
+		if (list == null || list.isEmpty()) {
+			// logger.error ("Exception in method loadTagById: ", e)
+			throw new TagNotFoundException(
+					"Tag not found in method loadTagById");
+
+		}
+		if (entityManager.isOpen()) {
+			entityManager.close();
+		}
+		return getStringFromTags(list);
+	}
+
+	private List<String> getStringFromTags(List<Tag> tags) {
+		List<String> names = new ArrayList<String>();
+		for (Tag tag : tags) {
+			names.add(tag.getName());
+
+		}
+		return names;
 	}
 
 	@Override
@@ -2214,12 +2248,6 @@ public class GWTServiceImpl extends RemoteServiceServlet implements GWTService {
 	}
 
 	@Override
-	public Integer removeReadingActivityAnnotations(Long readingActivity) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
 	public List<ReadingActivityClient> getReadingActivitiesByStudentId(
 			Long userId) throws GeneralException, UserNotFoundException,
 			GroupNotFoundException {
@@ -2366,12 +2394,6 @@ public class GWTServiceImpl extends RemoteServiceServlet implements GWTService {
 	}
 
 	@Override
-	public void updateReadingActivities() { // TODO que hace esto?.
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
 	public void saveLanguage(Language language) throws GeneralException {
 		EntityManager entityManager = emf.createEntityManager();
 
@@ -2502,12 +2524,6 @@ public class GWTServiceImpl extends RemoteServiceServlet implements GWTService {
 		return null;
 	}
 
-	@Override
-	public UserClient loginAuxiliar(String userEmail)
-			throws UserNotFoundException {
-		// TODO Auto-generated method stub
-		return null;
-	}
 
 	@Override
 	public void deleteBookById(Long id) throws GeneralException {

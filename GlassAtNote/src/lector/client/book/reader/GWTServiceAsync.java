@@ -95,8 +95,6 @@ public interface GWTServiceAsync {
 	// void getSchemaByCatalogId(Long catalogId,
 	// AsyncCallback<AnnotationSchema> callback);
 
-	void updateReadingActivities(AsyncCallback<Void> callback);
-
 	void deleteProfessorById(Long professorId, AsyncCallback<Void> callback);
 
 	void getEntriesByIdsRecursiveIfFolder(ArrayList<Long> Ids,
@@ -114,9 +112,6 @@ public interface GWTServiceAsync {
 
 	void moveFolderDB(Long typeCategoryId, Long typeCategoryFromId,
 			Long typeCategoryToId, AsyncCallback<Void> callback);
-
-	void removeReadingActivityAnnotations(Long readingActivity,
-			AsyncCallback<Integer> callback);
 
 	void addStudentToBeValidated(Long userId, Long groupId,
 			AsyncCallback<Void> callback);
@@ -207,8 +202,6 @@ public interface GWTServiceAsync {
 	void getLanguages(AsyncCallback<List<Language>> callback);
 
 	void loadLanguageById(Long languageId, AsyncCallback<Language> callback);
-
-	void loginAuxiliar(String userEmail, AsyncCallback<UserClient> callback);
 
 	void getGoogleBookClients(String query,
 			AsyncCallback<List<GoogleBookClient>> callback);
