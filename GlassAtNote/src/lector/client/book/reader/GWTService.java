@@ -7,9 +7,6 @@ package lector.client.book.reader;
 import java.util.ArrayList;
 import java.util.List;
 
-
-
-
 import com.google.gwt.user.client.rpc.RemoteService;
 import com.google.gwt.user.client.rpc.RemoteServiceRelativePath;
 
@@ -67,80 +64,101 @@ public interface GWTService extends RemoteService {
 
 	/**
 	 * 
-	 * @throws GeneralException 
+	 * @throws GeneralException
 	 * @gwt.typeArgs bookId <java.lang.String>
 	 * @gwt.typeArgs <org.yournamehere.client.Annotation>
 	 */
 
-	public UserClient login(String userName, String password) throws UserNotFoundException, NotAuthenticatedException, GeneralException;
+	public UserClient login(String userName, String password)
+			throws UserNotFoundException, NotAuthenticatedException,
+			GeneralException;
 
 	// Usuarios
 
-	public void saveUser(UserClient userClient) throws GeneralException, UserNotFoundException;
+	public void saveUser(UserClient userClient) throws GeneralException,
+			UserNotFoundException;
 
-	public UserClient loadUserById(Long userId) throws UserNotFoundException, GeneralException;
+	public UserClient loadUserById(Long userId) throws UserNotFoundException,
+			GeneralException;
 
-//	public UserClient loadUserByEmail(String email) throws UserNotFoundException, GeneralException;
+	// public UserClient loadUserByEmail(String email) throws
+	// UserNotFoundException, GeneralException;
 
 	// Student
 
-	public List<StudentClient> getStudentsByGroupId(Long groupId) throws GeneralException, GroupNotFoundException;
+	public List<StudentClient> getStudentsByGroupId(Long groupId)
+			throws GeneralException, GroupNotFoundException;
 
-	public List<StudentClient> getStudents() throws GeneralException, StudentNotFoundException;
+	public List<StudentClient> getStudents() throws GeneralException,
+			StudentNotFoundException;
 
 	public void deleteStudentById(Long studentId) throws GeneralException;
 
 	// Professor
 
-	public List<ProfessorClient> getProfessors() throws GeneralException, ProfessorNotFoundException;
+	public List<ProfessorClient> getProfessors() throws GeneralException,
+			ProfessorNotFoundException;
 
 	public void deleteProfessorById(Long professorId) throws GeneralException;
 
-//	void deleteBookFromUser(String bookId, Long userId);  no debe ser necesario, eliminarlo de la lista y save
+	// void deleteBookFromUser(String bookId, Long userId); no debe ser
+	// necesario, eliminarlo de la lista y save
 
 	// Groups
 	public void saveGroup(GroupClient groupClient) throws GeneralException;
 
-	public GroupClient loadGroupById(Long groupId) throws GroupNotFoundException, GeneralException;
+	public GroupClient loadGroupById(Long groupId)
+			throws GroupNotFoundException, GeneralException;
 
-	public List<GroupClient> getGroupsByUserId(Long userId) throws GroupNotFoundException, GeneralException;  
+	public List<GroupClient> getGroupsByUserId(Long userId)
+			throws GroupNotFoundException, GeneralException;
 
-	public List<GroupClient> getGroupsByIds(List<Long> ids) throws GroupNotFoundException, GeneralException; 
-	
+	public List<GroupClient> getGroupsByIds(List<Long> ids)
+			throws GroupNotFoundException, GeneralException;
+
 	public void deleteGroup(Long groupId) throws GeneralException;
 
 	/* Metodo Nuevo, para añadir usuarios a un grupo, en la lista para validar */
-	public void addStudentToBeValidated(Long userId, Long groupId) throws GeneralException;
-	
-	public void removeStudentsToBeValidated(List<Long> userIds, Long groupId) throws GeneralException;
+	public void addStudentToBeValidated(Long userId, Long groupId)
+			throws GeneralException;
 
-	public void removeStudentParticipatingInGroup(Long userId, Long groupId) throws GeneralException;
+	public void removeStudentsToBeValidated(List<Long> userIds, Long groupId)
+			throws GeneralException;
+
+	public void removeStudentParticipatingInGroup(Long userId, Long groupId)
+			throws GeneralException;
 
 	/*
 	 * Valida al usuario en el grupo pasandolo de la lista de en espera a
 	 * validos
 	 */
-	public void validStudentToBeInGroup(Long userId, Long groupId) throws GeneralException;
+	public void validStudentToBeInGroup(Long userId, Long groupId)
+			throws GeneralException;
 
-	public void validateStudentsToBeInGroup(List<Long> userIds, Long groupId) throws GeneralException;
+	public void validateStudentsToBeInGroup(List<Long> userIds, Long groupId)
+			throws GeneralException;
+
 	// Annotations
 
 	public void saveAnnotation(AnnotationClient annotationClient);
 
-	public List<AnnotationClient> getAnnotationsByBookId(Long activityId, String bookId) 
-			throws GeneralException, AnnotationNotFoundException,
-			NullParameterException, BookNotFoundException;
+	public List<AnnotationClient> getAnnotationsByBookId(Long activityId,
+			String bookId) throws GeneralException,
+			AnnotationNotFoundException, NullParameterException,
+			BookNotFoundException;
 
 	public List<AnnotationClient> getAnnotationsByPageNumbertAndUserId(
 			Integer pageNumber, String bookId, Long studentId,
-			Long readingActivityId) throws GeneralException, AnnotationNotFoundException;
+			Long readingActivityId) throws GeneralException,
+			AnnotationNotFoundException;
 
-	public List<AnnotationClient> getAnnotationsByPageNumber(Integer pageNumber,
-			String bookId, Long readingActivityId) throws GeneralException,
-			AnnotationNotFoundException, NullParameterException,
-			BookNotFoundException;;
+	public List<AnnotationClient> getAnnotationsByPageNumber(
+			Integer pageNumber, String bookId, Long readingActivityId)
+			throws GeneralException, AnnotationNotFoundException,
+			NullParameterException, BookNotFoundException;;
 
-	public List<AnnotationClient> getAnnotationsByIds(List<Long> ids);
+	public List<AnnotationClient> getAnnotationsByIds(List<Long> ids)
+			throws GeneralException, GroupNotFoundException;
 
 	public List<AnnotationClient> getAnnotationsByIdsAndAuthorsTeacher(
 			List<Long> ids, List<Long> authorIds, Long Activity);
@@ -154,26 +172,31 @@ public interface GWTService extends RemoteService {
 	public List<AnnotationClient> getAnnotationsByIdsAndAuthorsStudent(
 			List<Long> ids, List<Long> authorIds, Long Activity, Long Student);
 
-	public void deleteAnnotation(Long annotationId)
-			throws GeneralException, AnnotationNotFoundException;
+	public void deleteAnnotation(Long annotationId) throws GeneralException,
+			AnnotationNotFoundException;
 
 	// Annotations Threads
 
-	public void saveAnnotationThread(AnnotationThreadClient annotationThreadClient);
+	public void saveAnnotationThread(
+			AnnotationThreadClient annotationThreadClient);
 
 	public void deleteAnnotationThread(Long annotationThreadId)
 			throws GeneralException;
 
-	public List<AnnotationThreadClient> getAnnotationThreadsByItsFather(Long threadFatherId) throws GeneralException, AnnotationThreadNotFoundException;
+	public List<AnnotationThreadClient> getAnnotationThreadsByItsFather(
+			Long threadFatherId) throws GeneralException,
+			AnnotationThreadNotFoundException;
 
 	// Books
 
-	public BookClient loadBookClientById(Long id) throws BookNotFoundException, GeneralException;
+	public BookClient loadBookClientById(Long id) throws BookNotFoundException,
+			GeneralException;
 
-	public List<BookClient> getBookClientsByIds(List<Long> ids) throws BookNotFoundException, GeneralException;
-	
+	public List<BookClient> getBookClientsByIds(List<Long> ids)
+			throws BookNotFoundException, GeneralException;
+
 	public void addBookToUser(BookClient bookClient, Long userId);
-	
+
 	// Carga un libro desde la factoria.
 
 	public GoogleBookClient loadFullBookInGoogle(String query);
@@ -196,12 +219,15 @@ public interface GWTService extends RemoteService {
 
 	public CatalogoClient loadCatalogById(Long catalogId);
 
-	public List<CatalogoClient> getCatalogs() throws GeneralException, CatalogoNotFoundException;
+	public List<CatalogoClient> getCatalogs() throws GeneralException,
+			CatalogoNotFoundException;
 
-	public List<CatalogoClient> getVisbibleCatalogsByProfessorId(Long professorId) throws GeneralException, CatalogoNotFoundException;
+	public List<CatalogoClient> getVisbibleCatalogsByProfessorId(
+			Long professorId) throws GeneralException,
+			CatalogoNotFoundException;
 
 	public void deleteCatalog(Long catalogId) throws GeneralException;
-	
+
 	public void addChildToCatalog(EntryClient entryClient, Long catalogId);
 
 	// Entity
@@ -213,14 +239,15 @@ public interface GWTService extends RemoteService {
 
 	// Type
 
-	public TypeClient loadTypeById(Long typeId) throws TagNotFoundException, GeneralException;
+	public TypeClient loadTypeById(Long typeId) throws TagNotFoundException,
+			GeneralException;
 
-	public TypeClient loadTypeByNameAndCatalogId(String typeName, Long catalogId) throws TagNotFoundException, GeneralException;
+	public TypeClient loadTypeByNameAndCatalogId(String typeName, Long catalogId)
+			throws TagNotFoundException, GeneralException;
 
 	public void saveType(TypeClient typesys, Long fatherEntry);
-	
-	public void deleteTag(Long typeId, Long fatherId)
-			throws GeneralException;;
+
+	public void deleteTag(Long typeId, Long fatherId) throws GeneralException;;
 
 	public Integer getAnnotationsNumberByTagName(String annotationTagName)
 			throws GeneralException, NullParameterException,
@@ -235,7 +262,8 @@ public interface GWTService extends RemoteService {
 	public List<TypeClient> getTagsByNameAndCatalogId(List<String> typeNames,
 			Long catalogId) throws GeneralException;
 
-	public List<TypeClient> getTagsByIds(List<Long> typeIds) throws GeneralException;
+	public List<TypeClient> getTagsByIds(List<Long> typeIds)
+			throws GeneralException;
 
 	public List<String> getTagNamesByIds(List<Long> typeIds);
 
@@ -243,9 +271,12 @@ public interface GWTService extends RemoteService {
 
 	// TypeCategory
 
-	public TypeCategoryClient loadTypeCategoryById(Long typeCategoryId) throws GeneralException, FolderDBNotFoundException;
+	public TypeCategoryClient loadTypeCategoryById(Long typeCategoryId)
+			throws GeneralException, FolderDBNotFoundException;
 
-	public TypeCategoryClient loadTypeCategoryByNameAndCatalogId(String typeCategoryName, Long catalogId)throws GeneralException, FolderDBNotFoundException;
+	public TypeCategoryClient loadTypeCategoryByNameAndCatalogId(
+			String typeCategoryName, Long catalogId) throws GeneralException,
+			FolderDBNotFoundException;
 
 	public void deleteTypeCategory(Long typeCategoryId, Long fatherFolderDBId)
 			throws GeneralException;;
@@ -254,7 +285,8 @@ public interface GWTService extends RemoteService {
 
 	public void renameTypeCategory(Long typeCategoryId, String newFolderDBName);
 
-	public void saveTypeCategory(TypeCategoryClient typeCategoryClient, Long fatherEntry);
+	public void saveTypeCategory(TypeCategoryClient typeCategoryClient,
+			Long fatherEntry);
 
 	public void moveFolderDB(Long typeCategoryId, Long typeCategoryFromId,
 			Long typeCategoryToId) throws GeneralException, DecendanceException;;
@@ -264,7 +296,8 @@ public interface GWTService extends RemoteService {
 
 	// ReadingActivity
 
-	public ReadingActivityClient loadReadingActivityById(Long readingActivityId) throws ReadingActivityNotFoundException, GeneralException;  
+	public ReadingActivityClient loadReadingActivityById(Long readingActivityId)
+			throws ReadingActivityNotFoundException, GeneralException;
 
 	public void deleteReadingActivity(Long readingActivityId)
 			throws GeneralException, NullParameterException,
@@ -272,12 +305,16 @@ public interface GWTService extends RemoteService {
 
 	public Integer removeReadingActivityAnnotations(Long readingActivity);
 
-	public List<ReadingActivityClient> getReadingActivitiesByStudentId(Long studentId)throws GeneralException, UserNotFoundException, GroupNotFoundException;
+	public List<ReadingActivityClient> getReadingActivitiesByStudentId(
+			Long studentId) throws GeneralException, UserNotFoundException,
+			GroupNotFoundException;
 
 	public List<ReadingActivityClient> getReadingActivitiesByProfessorId(
-			Long professorId) throws GeneralException, ReadingActivityNotFoundException;
+			Long professorId) throws GeneralException,
+			ReadingActivityNotFoundException;
 
-	public void saveReadingActivity(ReadingActivityClient readingActivityClient) throws GeneralException;
+	public void saveReadingActivity(ReadingActivityClient readingActivityClient)
+			throws GeneralException;
 
 	public void updateReadingActivities();
 
@@ -293,38 +330,34 @@ public interface GWTService extends RemoteService {
 	public List<Language> getLanguages() throws GeneralException,
 			LanguageNotFoundException, NullParameterException;
 
-	public Language loadLanguageById(Long languageId) throws LanguageNotFoundException, GeneralException;
-	
-	//Procesos Internos
-	
-			//Generacion del Grafo // Se debe de implementar internamente
-		
-	String getJSONServiceTODrawGraph(String url,String body);
+	public Language loadLanguageById(Long languageId)
+			throws LanguageNotFoundException, GeneralException;
 
-//	AnnotationSchema getSchemaByCatalogId(Long catalogId);
+	// Procesos Internos
 
+	// Generacion del Grafo // Se debe de implementar internamente
 
-//	public ArrayList<Tag> getEntriesIdsByIdsRec(ArrayList<Long> Ids);
+	String getJSONServiceTODrawGraph(String url, String body);
 
-//	public Long saveFile(File filesys, Long fatherId) throws FileException;
-//
-//	public Long saveFolder(Folder folderSys, Long fatherId)
-//			throws FolderException;
-//
-//	public ArrayList<Entity> getSons(Long fatherId, Long catalogId);
+	// AnnotationSchema getSchemaByCatalogId(Long catalogId);
 
+	// public ArrayList<Tag> getEntriesIdsByIdsRec(ArrayList<Long> Ids);
+
+	// public Long saveFile(File filesys, Long fatherId) throws FileException;
+	//
+	// public Long saveFolder(Folder folderSys, Long fatherId)
+	// throws FolderException;
+	//
+	// public ArrayList<Entity> getSons(Long fatherId, Long catalogId);
 
 	// TODO: RETIRAR CUANDO SE HAGA EL LOGIN CON GOOGLE
-	public UserClient loginAuxiliar(String userEmail) throws UserNotFoundException;
-
-
-
+	public UserClient loginAuxiliar(String userEmail)
+			throws UserNotFoundException;
 
 	public void deleteBookById(Long id) throws GeneralException;
 
 	void renameType(Long typeIds, String newTagName);
 
-	//public ArrayList<String> getFileNamesByIds(ArrayList<Long> ids);
+	// public ArrayList<String> getFileNamesByIds(ArrayList<Long> ids);
 
-	
 }
