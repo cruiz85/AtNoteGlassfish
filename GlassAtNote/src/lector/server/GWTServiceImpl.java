@@ -1564,9 +1564,9 @@ public class GWTServiceImpl extends RemoteServiceServlet implements GWTService {
 			Entry entry = null;
 			Catalogo catalogo = findCatalogo(catalogId);
 			if (entryClient instanceof TypeClient) {
-				entry = (Tag) reproduceEntryFromClient(entryClient);
+				entry = reproduceTagFromClient((TypeClient)entryClient);
 			} else {
-				entry = (FolderDB) reproduceEntryFromClient(entryClient);
+				entry = reproduceFolderFromClient((TypeCategoryClient)entryClient);
 			}
 			catalogo.getEntries().add(entry);
 			saveCatalog(catalogo);
@@ -1577,8 +1577,12 @@ public class GWTServiceImpl extends RemoteServiceServlet implements GWTService {
 
 	}
 
-	private Entry reproduceEntryFromClient(EntryClient entryClient) {
-		return new Entry(entryClient.getName());
+	private Tag reproduceTagFromClient(TypeClient typeClient){
+		return new Tag(typeClient.getName());
+	}
+	
+	private FolderDB reproduceFolderFromClient(TypeCategoryClient typeCategoryClient){
+		return new FolderDB(typeCategoryClient.getName());
 	}
 
 	@Override

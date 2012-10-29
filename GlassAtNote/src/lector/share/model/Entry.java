@@ -1,10 +1,10 @@
 package lector.share.model;
 
-import com.google.gwt.user.client.rpc.IsSerializable;
-import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.List;
 
+import java.io.Serializable;
+
+
+import javax.persistence.DiscriminatorColumn;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -12,18 +12,16 @@ import javax.persistence.Id;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
 import javax.persistence.JoinColumn;
-import javax.persistence.ManyToMany;
+
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
-import javax.persistence.PrePersist;
-import javax.persistence.PreUpdate;
 
 import javax.persistence.Table;
 
 @Entity
 @Table(name = "entry")
-@Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
-public class Entry implements Serializable {
+@Inheritance(strategy = InheritanceType.SINGLE_TABLE)
+@DiscriminatorColumn(name="ENTRY_TYPE")
+public abstract class Entry implements Serializable {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)

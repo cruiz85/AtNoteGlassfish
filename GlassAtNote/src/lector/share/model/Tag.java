@@ -4,6 +4,8 @@ import com.google.gwt.user.client.rpc.IsSerializable;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
+
+import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToMany;
@@ -12,6 +14,7 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "file")
+@DiscriminatorValue("TAG")
 public class Tag extends Entry implements Serializable, IsSerializable {
 
 	@ManyToMany(mappedBy = "tags")
