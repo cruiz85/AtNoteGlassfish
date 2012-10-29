@@ -4,7 +4,7 @@ import lector.client.admin.Administrador;
 import lector.client.admin.langedit.EditordeLenguajes;
 import lector.client.admin.langedit.NewAdminLangs;
 import lector.client.login.Login;
-//import lector.client.admin.activity.NewAdminActivities;
+import lector.client.admin.activity.NewAdminActivities;
 import lector.client.admin.admins.NewAdminAdministrator;
 import lector.client.admin.book.BookAdministration;
 //import lector.client.admin.bookblob.BookLoader;
@@ -49,7 +49,7 @@ public class Controlador implements EntryPoint {
     private static EditordeLenguajes EditorLenguaje = new EditordeLenguajes();
     private static NewAdminLangs AdminLenguaje = new NewAdminLangs();
     private static NewAdminCatalogs CatalogAdmin= new NewAdminCatalogs();
-//    private static NewAdminActivities Activitys= new NewAdminActivities();
+    private static NewAdminActivities Activitys= new NewAdminActivities();
     private static MyActivities MyActivities= new MyActivities();
 //    private static VisorEntry Visor=new VisorEntry();
 //    private static Browser Browser=new Browser();
@@ -178,10 +178,10 @@ public class Controlador implements EntryPoint {
 	}
 	
 	public static void change2ActivityAdmin() {
-//		clear();
-//		Actual = Activitys;
-//		Actual.onModuleLoad();
-//		
+		clear();
+		Actual = Activitys;
+		Actual.onModuleLoad();
+		
 	}
 
 	public static void change2MyActivities() {

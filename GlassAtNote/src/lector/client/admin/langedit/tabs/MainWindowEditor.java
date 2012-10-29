@@ -37,10 +37,9 @@ public class MainWindowEditor extends PanelDecorador {
 		};
 		
 		LenguajeActual=LenguajeActualin;
-		setSpacing(6);
+		setSpacing(10);
 		saved=true;
 		setVerticalAlignment(HasVerticalAlignment.ALIGN_MIDDLE);
-		setHorizontalAlignment(HasHorizontalAlignment.ALIGN_CENTER);
 		setSize("100%", "600px");
 		
 		NamePage = new Texto(LenguajeActual.getNamePage());

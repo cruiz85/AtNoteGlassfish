@@ -1,3 +1,4 @@
 revisar duplicidad de correos y comprobar que siempre se guardan en minuscula
 al borrar un usuario las anotaciones huerfanas pasan a un usuario null y se reprentaran como unuser hasta borrar la actividad
 cambios de clave, necesito un metodo que me lo permita o no.
+Falta el metodo de borrar anotaciones de una catividad.
