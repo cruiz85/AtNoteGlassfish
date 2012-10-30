@@ -175,11 +175,18 @@ public class GWTServiceImpl extends RemoteServiceServlet implements GWTService {
 			throws UserNotFoundException {
 		boolean isNew = false;
 		Student oldStudent = null;
+		UserApp user = null;
 		try {
 			if (pClient.getId() != null) {
 				oldStudent = findStudent(pClient.getId());
 			} else {
-				UserApp user = loadUserByEmail(pClient.getEmail());
+
+				try {
+					user = loadUserByEmail(pClient.getEmail());
+				} catch (UserNotFoundException e) {
+					user = null;
+				}
+
 				if (user != null) {
 					throw new GeneralException(
 							"Email already registered in the application");
@@ -217,11 +224,16 @@ public class GWTServiceImpl extends RemoteServiceServlet implements GWTService {
 			throws UserNotFoundException {
 		boolean isNew = false;
 		Professor oldProfessor = null;
+		UserApp user = null;
 		try {
 			if (pClient.getId() != null) {
 				oldProfessor = findProfessor(pClient.getId());
 			} else {
-				UserApp user = loadUserByEmail(pClient.getEmail());
+				try {
+					user = loadUserByEmail(pClient.getEmail());
+				} catch (UserNotFoundException e) {
+					user = null;
+				}
 				if (user != null) {
 					throw new GeneralException(
 							"Email already registered in the application");
@@ -1564,9 +1576,9 @@ public class GWTServiceImpl extends RemoteServiceServlet implements GWTService {
 			Entry entry = null;
 			Catalogo catalogo = findCatalogo(catalogId);
 			if (entryClient instanceof TypeClient) {
-				entry = reproduceTagFromClient((TypeClient)entryClient);
+				entry = reproduceTagFromClient((TypeClient) entryClient);
 			} else {
-				entry = reproduceFolderFromClient((TypeCategoryClient)entryClient);
+				entry = reproduceFolderFromClient((TypeCategoryClient) entryClient);
 			}
 			catalogo.getEntries().add(entry);
 			saveCatalog(catalogo);
@@ -1577,11 +1589,12 @@ public class GWTServiceImpl extends RemoteServiceServlet implements GWTService {
 
 	}
 
-	private Tag reproduceTagFromClient(TypeClient typeClient){
+	private Tag reproduceTagFromClient(TypeClient typeClient) {
 		return new Tag(typeClient.getName());
 	}
-	
-	private FolderDB reproduceFolderFromClient(TypeCategoryClient typeCategoryClient){
+
+	private FolderDB reproduceFolderFromClient(
+			TypeCategoryClient typeCategoryClient) {
 		return new FolderDB(typeCategoryClient.getName());
 	}
 
@@ -2527,7 +2540,6 @@ public class GWTServiceImpl extends RemoteServiceServlet implements GWTService {
 		// TODO Auto-generated method stub
 		return null;
 	}
-
 
 	@Override
 	public void deleteBookById(Long id) throws GeneralException {
