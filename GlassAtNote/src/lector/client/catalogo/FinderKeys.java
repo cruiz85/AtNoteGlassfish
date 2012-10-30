@@ -289,6 +289,8 @@ public class FinderKeys extends Finder {
 						EntityCatalogElements entitynew=new File((TypeClient)Hijo, C, Padre.getEntidad().getEntry().getId());	
 						ElementKey A=new ElementKey(entitynew);
 						A.setHTML("File.gif",entitynew.getName());
+						A.addClickButtonMas(CHM);					
+						A.addClickButton(CHS);
 						Padre.addItem(A);
 
 					}
@@ -297,6 +299,8 @@ public class FinderKeys extends Finder {
 						ElementKey A=new ElementKey(entitynew);
 						A.setHTML("Folder.gif",entitynew.getName());					
 						Padre.addItem(A);
+						A.addClickButtonMas(CHM);					
+						A.addClickButton(CHS);
 						EvaluaCarpeta((TypeCategoryClient)Hijo,A);
 					}
 				}

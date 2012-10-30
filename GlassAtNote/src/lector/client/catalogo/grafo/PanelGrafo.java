@@ -441,7 +441,7 @@ public class PanelGrafo extends Composite {
 //						LlamadaServicio(
 ////								0, 0, false
 //								);
-//						LoadingPanel.getInstance().hide();
+						LoadingPanel.getInstance().hide();
 //
 //					}
 //

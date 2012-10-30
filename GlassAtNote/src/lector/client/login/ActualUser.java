@@ -40,6 +40,7 @@ public class ActualUser {
 
 	
 	public static BookClient getBook() {
+		if (readingactivity==null) return null;
 		return readingactivity.getBook();
 	}
 	
@@ -49,10 +50,12 @@ public class ActualUser {
 	}
 	
 	public static CatalogoClient getCatalogo() {
+		if (readingactivity==null) return null;
 		return readingactivity.getCloseCatalogo();
 	}
 	
 	public static Language getLanguage() {
+		if (readingactivity==null) return null;
 		return readingactivity.getLanguage();
 	}
 	
@@ -65,6 +68,7 @@ public class ActualUser {
 	}
 	
 	public static ReadingActivityClient getReadingactivity() {
+		if (readingactivity==null) return null;
 		return readingactivity;
 	}
 	
@@ -73,6 +77,7 @@ public class ActualUser {
 	}
 	
 	public static CatalogoClient getOpenCatalog() {
+		if (readingactivity==null) return null;
 		return readingactivity.getOpenCatalogo();
 	}
 	
