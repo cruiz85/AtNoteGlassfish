@@ -26,6 +26,7 @@ import lector.client.book.reader.GWTService;
 import com.google.gwt.user.server.rpc.RemoteServiceServlet;
 import lector.share.model.Annotation;
 import lector.share.model.AnnotationNotFoundException;
+import lector.share.model.AnnotationSchema;
 import lector.share.model.AnnotationThread;
 import lector.share.model.AnnotationThreadNotFoundException;
 import lector.share.model.Book;
@@ -924,6 +925,99 @@ public class GWTServiceImpl extends RemoteServiceServlet implements GWTService {
 			}
 
 		}
+	}
+
+	@Override
+	public List<AnnotationSchema> getAnnotationSchemaByCatalogId(Long catalogId) {
+
+		List<AnnotationSchema> annotationSchemas = new ArrayList<AnnotationSchema>();
+		try {
+			List<FolderDB> folders = getFolderIdsByCatalogId(catalogId);
+			List<Tag> tags = getTagIdsByCatalogId(catalogId);
+
+			if (folders != null) {
+				for (FolderDB folder : folders) {
+					annotationSchemas.add(new AnnotationSchema(folder.getId(),
+							folder.getName(), getSons(folder), false));
+				}
+			}
+			if(tags != null){
+				for (Tag tag : tags) {
+					annotationSchemas.add(new AnnotationSchema(tag.getId(),
+							tag.getName(), null, true));
+				}
+			}
+		} catch (GeneralException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return annotationSchemas;
+	}
+
+	private List<Long> getSons(FolderDB folder) {
+		List<Long> children = new ArrayList<Long>();
+		for (Relation relation : folder.getRelations()) {
+			children.add(relation.getChild().getId());
+		}
+		return children;
+	}
+
+	private List<Tag> getTagIdsByCatalogId(Long catalogId)
+			throws GeneralException {
+		EntityManager entityManager = emf.createEntityManager();
+		List<Tag> list;
+		String sql = "SELECT r FROM Tag r WHERE r.catalog.id=" + catalogId;
+		try {
+			list = entityManager.createQuery(sql).getResultList();
+		} catch (Exception e) {
+			// logger.error ("Exception in method loadUserByEmail: ", e)
+			throw new GeneralException("Exception in method loadUserByEmail:"
+					+ e.getMessage(), e.getStackTrace());
+
+		}
+
+		if (entityManager.isOpen()) {
+			entityManager.close();
+		}
+
+		return list;
+	}
+
+	private List<Long> getTagIds(List<Tag> tags) {
+		List<Long> ids = new ArrayList<Long>();
+		for (Entry folder : tags) {
+			ids.add(folder.getId());
+		}
+		return ids;
+	}
+
+	private List<Long> getFolderIds(List<FolderDB> folders) {
+		List<Long> ids = new ArrayList<Long>();
+		for (Entry folder : folders) {
+			ids.add(folder.getId());
+		}
+		return ids;
+	}
+
+	private List<FolderDB> getFolderIdsByCatalogId(Long catalogId)
+			throws GeneralException {
+		EntityManager entityManager = emf.createEntityManager();
+		List<FolderDB> list;
+		String sql = "SELECT r FROM FolderDB r WHERE r.catalog.id=" + catalogId;
+		try {
+			list = entityManager.createQuery(sql).getResultList();
+		} catch (Exception e) {
+			// logger.error ("Exception in method loadUserByEmail: ", e)
+			throw new GeneralException("Exception in method loadUserByEmail:"
+					+ e.getMessage(), e.getStackTrace());
+
+		}
+
+		if (entityManager.isOpen()) {
+			entityManager.close();
+		}
+
+		return list;
 	}
 
 	private void seeEditionOnAnnotation(Annotation annotation,
