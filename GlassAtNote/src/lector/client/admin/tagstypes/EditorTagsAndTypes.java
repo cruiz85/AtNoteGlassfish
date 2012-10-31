@@ -357,24 +357,24 @@ public class EditorTagsAndTypes implements EntryPoint {
 		SplitLayoutPanel splitLayoutPanel = new SplitLayoutPanel();
 		simplePanel_2.setWidget(splitLayoutPanel);
 		splitLayoutPanel.setSize("100%", "100%");
+		
+				SimplePanel simplePanel_1 = new SimplePanel();
+				splitLayoutPanel.addEast(simplePanel_1, 300.0);
+				simplePanel_1.setSize("100%", "100%");
+				
+				HorizontalPanel horizontalPanel = new HorizontalPanel();
+				simplePanel_1.setWidget(horizontalPanel);
+				horizontalPanel.setSize("100%", "100%");
+				horizontalPanel.add(Selected);
+				Selected.setWidth("100%");
+				Selected.setStyleName("AzulTransparente");
+				
+						Selected.setHorizontalAlignment(HasHorizontalAlignment.ALIGN_CENTER);
 
-		splitLayoutPanel.addWest(Actual, 700.0);
+		splitLayoutPanel.add(Actual);
 
 		Actual.setStyleName("BlancoTransparente");
 		Actual.setSize("100%", "100%");
-
-		SimplePanel simplePanel_1 = new SimplePanel();
-		splitLayoutPanel.add(simplePanel_1);
-		simplePanel_1.setSize("100%", "100%");
-		
-		HorizontalPanel horizontalPanel = new HorizontalPanel();
-		simplePanel_1.setWidget(horizontalPanel);
-		horizontalPanel.setSize("100%", "100%");
-		horizontalPanel.add(Selected);
-		Selected.setWidth("100%");
-		Selected.setStyleName("AzulTransparente");
-		
-				Selected.setHorizontalAlignment(HasHorizontalAlignment.ALIGN_CENTER);
 
 		LoadBasicTypes();
 

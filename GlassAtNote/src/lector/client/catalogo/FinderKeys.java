@@ -263,6 +263,7 @@ public class FinderKeys extends Finder {
 						EK.addItem(A);
 						A.addClickButtonMas(CHM);					
 						A.addClickButton(CHS);
+						A.isAFile();
 						AddElementLista(new EstadoElementKey(A,false));
 
 					}
@@ -291,6 +292,8 @@ public class FinderKeys extends Finder {
 						A.setHTML("File.gif",entitynew.getName());
 						A.addClickButtonMas(CHM);					
 						A.addClickButton(CHS);
+						A.isAFile();
+						AddElementLista(new EstadoElementKey(A,false));
 						Padre.addItem(A);
 
 					}
@@ -301,6 +304,7 @@ public class FinderKeys extends Finder {
 						Padre.addItem(A);
 						A.addClickButtonMas(CHM);					
 						A.addClickButton(CHS);
+						AddElementLista(new EstadoElementKey(A,false));
 						EvaluaCarpeta((TypeCategoryClient)Hijo,A);
 					}
 				}
