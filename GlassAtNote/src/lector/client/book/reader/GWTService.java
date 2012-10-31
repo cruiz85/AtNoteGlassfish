@@ -39,6 +39,7 @@ import lector.share.model.GroupApp;
 import lector.share.model.Language;
 import lector.share.model.ReadingActivity;
 import lector.share.model.TagNotFoundException;
+import lector.share.model.TwinBrotherException;
 import lector.share.model.UserApp;
 import lector.share.model.UserNotFoundException;
 import lector.share.model.client.AnnotationClient;
@@ -228,7 +229,7 @@ public interface GWTService extends RemoteService {
 
 	public void deleteCatalog(Long catalogId) throws GeneralException;
 
-	public void addChildToCatalog(EntryClient entryClient, Long catalogId);
+	public void addChildToCatalog(EntryClient entryClient, Long catalogId) throws TwinBrotherException;
 
 	// Entity
 
@@ -268,7 +269,7 @@ public interface GWTService extends RemoteService {
 	public List<String> getTagNamesByIds(List<Long> typeIds)
 			throws GeneralException, TagNotFoundException;
 
-	public void addChildEntry(Long entryId, Long fatherTypeCategory);
+	public void addChildEntry(Long entryId, Long fatherTypeCategory)throws TwinBrotherException;
 
 	// TypeCategory
 

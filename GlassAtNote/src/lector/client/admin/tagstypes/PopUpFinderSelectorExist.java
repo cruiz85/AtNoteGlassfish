@@ -44,7 +44,7 @@ public class PopUpFinderSelectorExist extends PopupPanel {
 		FinderKeys.setButtonTipo(new BotonesStackPanelAdministracionMio(
 				"prototipo", new VerticalPanel(), new VerticalPanel(),finder));
 		
-		FinderKeys.setBotonClick(new ClickHandlerMioSeleccion(this)
+		FinderKeys.setBotonClick(new ClickHandlerMioSeleccion(this
 				
 //				new ClickHandler() {
 //
@@ -70,8 +70,8 @@ public class PopUpFinderSelectorExist extends PopupPanel {
 //				
 //			}
 //		}
-//				
-				);
+				
+				));
 
 		
 		

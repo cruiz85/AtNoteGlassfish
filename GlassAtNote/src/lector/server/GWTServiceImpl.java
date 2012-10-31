@@ -31,6 +31,7 @@ import lector.share.model.AnnotationThreadNotFoundException;
 import lector.share.model.Book;
 import lector.share.model.BookNotFoundException;
 import lector.share.model.DecendanceException;
+import lector.share.model.EntryNotFoundException;
 import lector.share.model.GeneralException;
 import lector.share.model.GoogleBook;
 import lector.share.model.GroupNotFoundException;
@@ -55,6 +56,7 @@ import lector.share.model.GroupApp;
 import lector.share.model.Language;
 import lector.share.model.ReadingActivity;
 import lector.share.model.TagNotFoundException;
+import lector.share.model.TwinBrotherException;
 import lector.share.model.UserApp;
 import lector.share.model.UserNotFoundException;
 import lector.share.model.client.AnnotationClient;
@@ -1370,10 +1372,8 @@ public class GWTServiceImpl extends RemoteServiceServlet implements GWTService {
 		StringBuilder builder = new StringBuilder();
 		BufferedReader reader;
 		try {
-			url = new URL(
-					"http://books.google.com/ebooks/reader?id="
-							+ id
-							+ "&pg=PP0&key=ABQIAAAAgGfd0Syld4wI6M_8-PchExQ_l6-Ytnm_KJl3gFahMrxfvqMmehRrB92flZ-iJptRd3l62UsasikVhg");
+			url = new URL("http://a-note.appspot.com/rs/AtNote/google/book/"
+					+ id);
 			connection = url.openConnection();
 			connection.addRequestProperty("Referer",
 					"http://kido180020783.appspot.com/");
@@ -1571,7 +1571,8 @@ public class GWTServiceImpl extends RemoteServiceServlet implements GWTService {
 	}
 
 	@Override
-	public void addChildToCatalog(EntryClient entryClient, Long catalogId) {
+	public void addChildToCatalog(EntryClient entryClient, Long catalogId)
+			throws TwinBrotherException {
 		try {
 			Entry entry = null;
 			Catalogo catalogo = findCatalogo(catalogId);
@@ -1580,10 +1581,13 @@ public class GWTServiceImpl extends RemoteServiceServlet implements GWTService {
 			} else {
 				entry = reproduceFolderFromClient((TypeCategoryClient) entryClient);
 			}
+			if (catalogo.getEntries().contains(entry)) {
+				throw new TwinBrotherException(
+						"This element has a twin brother in DB");
+			}
 			catalogo.getEntries().add(entry);
 			saveCatalog(catalogo);
 		} catch (CatalogoNotFoundException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 
@@ -1797,7 +1801,7 @@ public class GWTServiceImpl extends RemoteServiceServlet implements GWTService {
 				saveFolderDB(father);
 			} else {
 				catalogo.getEntries().add(tag);
-				saveTag(tag);
+				saveCatalog(catalogo);
 			}
 
 		} catch (CatalogoNotFoundException e) {
@@ -2020,18 +2024,52 @@ public class GWTServiceImpl extends RemoteServiceServlet implements GWTService {
 	}
 
 	@Override
-	public void addChildEntry(Long entryId, Long fatherFolderDBId) {
+	public void addChildEntry(Long entryId, Long fatherFolderDBId)
+			throws TwinBrotherException {
 		try {
 			FolderDB father = findFolderDB(fatherFolderDBId);
-			Tag tag = findTag(entryId);
-			Relation relation = new Relation(father, tag);
-			saveRelation(relation);
+			Entry entry = findEntry(entryId);
+			if (isThereTwinBrother(father, entry)) {
+				throw new TwinBrotherException(
+						"This element has a twin brother in DB");
+			}
+			Relation relation = new Relation(father, entry);
+			father.getRelations().add(relation);
+			saveFolderDB(father);
 
 		} catch (FolderDBNotFoundException e) {
-			// TODO Auto-generated catch block
+
 			e.printStackTrace();
-		} catch (TagNotFoundException tnfe) {
-			tnfe.printStackTrace();
+		} catch (EntryNotFoundException e) {
+
+			e.printStackTrace();
+		}
+
+	}
+
+	private boolean isThereTwinBrother(FolderDB father, Entry entry) {
+		for (Relation relation : father.getRelations()) {
+			if (relation.getChild().getId().equals(entry.getId())) {
+				return true;
+			}
+
+		}
+		return false;
+	}
+
+	private Entry findEntry(Long entryId) throws EntryNotFoundException {
+		try {
+			FolderDB folderDB = findFolderDB(entryId);
+			return folderDB;
+
+		} catch (FolderDBNotFoundException e) {
+
+		}
+		try {
+			Tag tag = findTag(entryId);
+			return tag;
+		} catch (TagNotFoundException e) {
+			throw new EntryNotFoundException("Entry not found");
 		}
 
 	}
@@ -2293,7 +2331,7 @@ public class GWTServiceImpl extends RemoteServiceServlet implements GWTService {
 							+ e.getMessage(), e.getStackTrace());
 
 		}
-		if (list == null || list.isEmpty()) {
+		if (list == null) {
 			// logger.error ("Exception in method loadReadingActivityById: ", e)
 			throw new GroupNotFoundException(
 					"ReadingActivity not found in method loadReadingActivityById");
@@ -2373,7 +2411,7 @@ public class GWTServiceImpl extends RemoteServiceServlet implements GWTService {
 							+ e.getMessage(), e.getStackTrace());
 
 		}
-		if (list == null || list.isEmpty()) {
+		if (list == null) {
 			// logger.error ("Exception in method loadUserById: ", e)
 			throw new ReadingActivityNotFoundException(
 					"ReadingActivity not found in method getReadingActivitysByItsFather");

@@ -29,7 +29,7 @@ public abstract class Entry implements Serializable {
 
 	private String name;
 	@ManyToOne
-	@JoinColumn(name = "catalogId")
+//	@JoinColumn(name = "catalogId")
 	private Catalogo catalog;
 
 
@@ -40,7 +40,7 @@ public abstract class Entry implements Serializable {
 	public Entry(String name, Catalogo catalog) {
 		super();
 		this.name = name;
-		this.catalog = catalog;
+//		this.catalog = catalog;
 	}
 
 	public Entry(String name) {
