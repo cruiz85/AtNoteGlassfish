@@ -434,25 +434,25 @@ public class PanelGrafo extends Composite {
 		}
 
 		//TODO
-//		bookReaderServiceHolder.getSchemaByCatalogId(Catalogo,
-//				new AsyncCallback<ArrayList<AnnotationSchema>>() {
-//
-//					public void onSuccess(ArrayList<AnnotationSchema> result) {
-//						compare = result;
-//						ContadorErrores=0;
-//						LlamadaServicio(
-////								0, 0, false
-//								);
+		bookReaderServiceHolder.getAnnotationSchemaByCatalogId(Catalogo.getId(), 
+				new AsyncCallback<List<AnnotationSchema>>() {
+
+					public void onSuccess(List<AnnotationSchema> result) {
+						compare = result;
+						ContadorErrores=0;
+						LlamadaServicio(
+//								0, 0, false
+								);
 						LoadingPanel.getInstance().hide();
-//
-//					}
-//
-//					public void onFailure(Throwable caught) {
-//						Window.alert("Error Retriving Catalog");
-//						LoadingPanel.getInstance().hide();
-//
-//					}
-//				});
+
+					}
+
+					public void onFailure(Throwable caught) {
+						Window.alert("Error Retriving Catalog");
+						LoadingPanel.getInstance().hide();
+
+					}
+				});
 
 	}
 
