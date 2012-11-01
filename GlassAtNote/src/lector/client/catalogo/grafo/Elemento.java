@@ -1,11 +1,16 @@
 package lector.client.catalogo.grafo;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import lector.client.catalogo.client.Entity;
 import lector.client.catalogo.client.File;
 import lector.client.catalogo.client.Folder;
-import lector.client.service.AnnotationSchema;
+import lector.share.model.AnnotationSchema;
+import lector.share.model.client.CatalogoClient;
+import lector.share.model.client.EntryClient;
+import lector.share.model.client.TypeCategoryClient;
+import lector.share.model.client.TypeClient;
 
 public class Elemento {
 
@@ -13,8 +18,8 @@ public class Elemento {
 	private Entity E;
 	private String name;
 	private String Coordenadas;
-	private static ArrayList<AnnotationSchema> Lista;
-	private static Long Catalogo;
+	private static List<AnnotationSchema> Lista;
+	private static CatalogoClient Catalogo;
 	
 	public Elemento(String Entrada) {
 		
@@ -36,17 +41,57 @@ public class Elemento {
 			encontrado=true;	
 			AnnotationSchema A=Lista.get(i);
 			//TODO ????
-//			if (A.getFile())
-//				{
-//				E=new File(A.getName(), A.getId(), Catalogo);
-//				}
-//			else
-//			{
-//				E=new Folder(A.getName(), A.getId(), Catalogo);
-//			}
+			if (A.getFile())
+				{
+				TypeClient T=findT(A.getId(),Catalogo);
+				E=new File(T, Catalogo, null);
+				}
+			else
+			{
+				TypeCategoryClient TC=findTC(A.getId(),Catalogo);
+				E=new Folder(TC, Catalogo, null);
+			}
 			}
 			i++;
 		}
+	}
+
+	private TypeCategoryClient findTC(Long id, CatalogoClient catalogo2) {
+		return (TypeCategoryClient) find(id,catalogo2);
+	}
+
+	private EntryClient find(Long id, CatalogoClient catalogo2) {
+		for (EntryClient EE : catalogo2.getEntries()) {
+			if (EE.getId().equals(id))
+				return EE;
+			else 
+				if (EE instanceof TypeCategoryClient)
+				{
+					EntryClient EEE= finddeep(id, (TypeCategoryClient)EE);
+					if ( EEE != null)
+						return EEE;
+				}
+		}
+		return null;
+	}
+
+	private EntryClient finddeep(Long id, TypeCategoryClient eE) {
+		for (EntryClient EE : eE.getChildren()) {
+			if (EE.getId().equals(id))
+				return EE;
+			else 
+				if (EE instanceof TypeCategoryClient)
+				{
+					EntryClient EEE= finddeep(id, (TypeCategoryClient)EE);
+					if ( EEE != null)
+						return EEE;
+				}
+		}
+		return null;
+	}
+
+	private TypeClient findT(Long id, CatalogoClient catalogo2) {
+		return (TypeClient) find(id,catalogo2);
 	}
 
 	private void generacoordenadas(String string) {
@@ -110,11 +155,11 @@ public class Elemento {
 	
 	
 
-	public static void setLista(ArrayList<AnnotationSchema> lista) {
-		Lista = lista;
+	public static void setLista(List<AnnotationSchema> compare) {
+		Lista = compare;
 	}
 	
-	public static void setCatalogo(Long catalogo) {
-		Catalogo = catalogo;
+	public static void setCatalogo(CatalogoClient catalogo2) {
+		Catalogo = catalogo2;
 	}
 }

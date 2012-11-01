@@ -22,7 +22,7 @@ public class FinderGrafo extends Finder {
 		simplePanel.clear();
 		ScrollPanel SP=new ScrollPanel();
 		SP.setSize("100%", "100%");
-		panelDelGrafo = new PanelGrafo(C.getId());
+		panelDelGrafo = new PanelGrafo(C);
 		simplePanel.setWidget(SP);
 		SP.setWidget(panelDelGrafo);
 		

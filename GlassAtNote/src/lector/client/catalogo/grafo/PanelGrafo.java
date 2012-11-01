@@ -3,6 +3,7 @@ package lector.client.catalogo.grafo;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.util.ArrayList;
+import java.util.List;
 
 import lector.client.book.reader.GWTService;
 import lector.client.book.reader.GWTServiceAsync;
@@ -14,7 +15,8 @@ import lector.client.catalogo.client.Folder;
 import lector.client.controler.ErrorConstants;
 import lector.client.login.ActualUser;
 import lector.client.reader.LoadingPanel;
-import lector.client.service.AnnotationSchema;
+import lector.share.model.AnnotationSchema;
+import lector.share.model.client.CatalogoClient;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
@@ -46,10 +48,10 @@ public class PanelGrafo extends Composite {
 	private SimplePanel sPanel;
 	static GWTServiceAsync bookReaderServiceHolder = GWT
 			.create(GWTService.class);
-	private ArrayList<AnnotationSchema> compare;
+	private List<AnnotationSchema> compare;
 	private static ClickHandler AccionAsociada;
 	private static Button ButonTipo;
-	private Long Catalogo;
+	private CatalogoClient Catalogo;
 	private VerticalPanel zoomPanel;
 	private Button btnNewButton;
 	private Button btnNewButton_1;
@@ -69,9 +71,9 @@ public class PanelGrafo extends Composite {
 	
 	
 	
-	public PanelGrafo(Long Catalog) {
+	public PanelGrafo(CatalogoClient C) {
+		Catalogo =C;
 
-		Catalogo = Catalog;
 		if (multiplicador<=0.0f) multiplicador=1.0f;
 		Result=null;
 		Visualize=TipeGraph.dot;
@@ -480,25 +482,25 @@ public class PanelGrafo extends Composite {
 
 		}
 		//TODO
-//		bookReaderServiceHolder.getSchemaByCatalogId(Catalog,
-//				new AsyncCallback<ArrayList<AnnotationSchema>>() {
-//
-//					public void onSuccess(ArrayList<AnnotationSchema> result) {
-//						compare = result;
-//						ContadorErrores=0;
-//						LlamadaServicio(
-////								0, 0, false
-//								);
-//						LoadingPanel.getInstance().hide();
-//
-//					}
-//
-//					public void onFailure(Throwable caught) {
-//						Window.alert("Error Retriving Catalog");
-//						LoadingPanel.getInstance().hide();
-//
-//					}
-//				});
+		bookReaderServiceHolder.getAnnotationSchemaByCatalogId(Catalog, 
+				new AsyncCallback<List<AnnotationSchema>>() {
+
+					public void onSuccess(List<AnnotationSchema> result) {
+						compare = result;
+						ContadorErrores=0;
+						LlamadaServicio(
+//								0, 0, false
+								);
+						LoadingPanel.getInstance().hide();
+
+					}
+
+					public void onFailure(Throwable caught) {
+						Window.alert("Error Retriving Catalog");
+						LoadingPanel.getInstance().hide();
+
+					}
+				});
 
 	}
 

@@ -1,6 +1,7 @@
 package lector.client.admin.tagstypes;
 
 import lector.client.catalogo.grafo.PanelGrafo;
+import lector.share.model.client.CatalogoClient;
 
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.DialogBox;
@@ -18,7 +19,7 @@ import com.google.gwt.user.client.Command;
 
 public class VisualizeGraph extends DialogBox {
 
-	public VisualizeGraph(Long long1) {
+	public VisualizeGraph(CatalogoClient long1) {
 		super(true);
 		setSize("100%", "100%");
 		setHTML("Graph");
