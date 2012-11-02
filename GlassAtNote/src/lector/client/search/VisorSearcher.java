@@ -3,10 +3,16 @@ package lector.client.search;
 
 import lector.client.book.reader.GWTService;
 import lector.client.book.reader.GWTServiceAsync;
+import lector.client.controler.CalendarNow;
 import lector.client.controler.Constants;
 import lector.client.controler.Controlador;
+import lector.client.controler.ErrorConstants;
+import lector.client.controler.InformationConstants;
+import lector.client.logger.Logger;
 import lector.client.login.ActualUser;
+import lector.client.login.UserEdition;
 import lector.share.model.client.GoogleBookClient;
+import lector.share.model.client.ProfessorClient;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.user.client.rpc.AsyncCallback;
@@ -29,9 +35,10 @@ public class VisorSearcher extends PopupPanel {
 			.create(GWTService.class);
 	public GoogleBookClient Entrada;
 	
-	public VisorSearcher(String Bookin,GoogleBookClient entrada) {
+	public VisorSearcher(GoogleBookClient entrada) {
 		super(false);
-		BookId=Bookin;
+		BookId=entrada.getWebLinks().get(0);
+		entrada.setImagesPath(BookId);
 		Yo=this;
 		Entrada=entrada;
 		String[] Booksplit=BookId.split("&");
@@ -62,7 +69,28 @@ public class VisorSearcher extends PopupPanel {
 		MenuItem mntmSave = new MenuItem("Add to My Books", false, new Command() {
 			public void execute() {
 				
-				Window.alert("Works");
+				//Window.alert("Works");
+				ProfessorClient PC=(ProfessorClient) ActualUser.getUser();
+				bookReaderServiceHolder.addBookToUser(Entrada,PC.getId(), new AsyncCallback<Void>() {
+					
+					@Override
+					public void onSuccess(Void result) {
+						Controlador.change2BookAdminstrator();
+						Yo.hide();
+						Logger.GetLogger()
+						.info(Yo.getClass().toString(),
+								InformationConstants.ADDED_BOOK1+Entrada.getTitle()+InformationConstants.ADDED_BOOK1+ActualUser.getUser().getEmail() + " at " + CalendarNow.GetDateNow());
+						
+					}
+					
+					@Override
+					public void onFailure(Throwable caught) {
+						Window.alert(ErrorConstants.ERROR_SAVING_BOOK1+Entrada.getTitle()+ErrorConstants.ERROR_SAVING_BOOK2+ActualUser.getUser().getEmail());
+						Logger.GetLogger()
+						.severe(Yo.getClass().toString(),
+								ErrorConstants.ERROR_SAVING_BOOK1+Entrada.getTitle()+ErrorConstants.ERROR_SAVING_BOOK2+ActualUser.getUser().getEmail() + " at " + CalendarNow.GetDateNow());
+					}
+				});
 //				ActualUser.getUser().getBookIds().add(Entrada.getTitle()+" "+Constants.BREAKER+" "+Entrada.getId());
 //				bookReaderServiceHolder.saveUser(ActualUser.getUser(),
 //						new AsyncCallback<Boolean>() {

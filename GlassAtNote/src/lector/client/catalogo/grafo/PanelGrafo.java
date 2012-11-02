@@ -576,6 +576,9 @@ public class PanelGrafo extends Composite {
 		for (AnnotationSchema AS : compare) {
 			String Pa = AS.getId().toString();
 			String Name = AS.getName();
+			//TODO PARCHE A CESAR
+			if (AS.getSons()==null)
+				AS.setSons(new ArrayList<Long>());
 			for (Long LL : AS.getSons()) {
 				
 				AnnotationSchema AST = getannotationSchema(LL);

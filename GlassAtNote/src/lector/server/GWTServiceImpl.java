@@ -49,6 +49,7 @@ import lector.share.model.ProfessorNotFoundException;
 import lector.share.model.ReadingActivityNotFoundException;
 import lector.share.model.Relation;
 import lector.share.model.RelationNotFoundException;
+import lector.share.model.RemoteBook;
 import lector.share.model.Student;
 import lector.share.model.StudentNotFoundException;
 import lector.share.model.Tag;
@@ -69,6 +70,7 @@ import lector.share.model.client.GoogleBookClient;
 import lector.share.model.client.GroupClient;
 import lector.share.model.client.ProfessorClient;
 import lector.share.model.client.ReadingActivityClient;
+import lector.share.model.client.RemoteBookClient;
 import lector.share.model.client.StudentClient;
 import lector.share.model.client.TypeCategoryClient;
 import lector.share.model.client.TypeClient;
@@ -1498,32 +1500,51 @@ public class GWTServiceImpl extends RemoteServiceServlet implements GWTService {
 
 	@Override
 	public void addBookToUser(BookClient bookClient, Long userId) {
-		Book book = reproduceBookFromClient(bookClient);
-		try {
-			Professor professor = findProfessor(bookClient.getProfessor());
+		Book book = reproduceBookFromClient(bookClient,userId);
+		Professor professor = book.getProfessor();
 			professor.getBooks().add(book);
-			saveUser(professor);
-		} catch (ProfessorNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (GeneralException ge) {
-			ge.printStackTrace();
-		}
+			try {
+				saveUser(professor);
+			} catch (GeneralException e) {
+				e.printStackTrace();
+			}
+
 
 	}
 
-	private Book reproduceBookFromClient(BookClient bookClient) {
+	private Book reproduceBookFromClient(BookClient bookClient, Long userId) {
 		Professor professor = null;
 		try {
-			professor = findProfessor(bookClient.getId());
+			professor = findProfessor(userId);
 		} catch (ProfessorNotFoundException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		Book book = new Book(professor, bookClient.getAuthor(),
-				bookClient.getISBN(), bookClient.getPagesCount(),
-				bookClient.getPublishedYear(), bookClient.getTitle());
+		if (bookClient instanceof RemoteBookClient)
+			return ProcessRemotebook(bookClient,professor);
+		else return ProcessLocalbook(bookClient,professor);
+
+	}
+
+	private Book ProcessRemotebook(BookClient bookClient, Professor professor) {
+		if (bookClient instanceof GoogleBookClient)
+			return processGoogleBook(bookClient,professor);
+		
+		return null;
+	}
+
+	private Book processGoogleBook(BookClient bookClient, Professor professor) {
+		GoogleBookClient entrada=(GoogleBookClient)bookClient;
+		
+		GoogleBook book = new GoogleBook(entrada.getAuthor(), entrada.getISBN(),
+				Integer.toString(entrada.getWebLinks().size()),entrada.getPublishedYear(), entrada.getTitle(), entrada.getTbURL(), entrada.getUrl());
+		book.setProfessor(professor);
+		book.setWebLinks(entrada.getWebLinks());
 		return book;
+	}
+
+	private Book ProcessLocalbook(BookClient bookClient, Professor professor) {
+		// TODO Realizar cuando este el sistema de carga
+		return null;
 	}
 
 	public List<GoogleBook> getGoogleBooks(String query) {

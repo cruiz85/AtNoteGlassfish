@@ -28,4 +28,8 @@ public class InformationConstants {
 	public static String GOODBYE="Goodbye!!";
 	public static String ARE_YOU_SURE_DELETE_ADMIN="Are you sure you want to delete this Admin: ";
 	public static String ARE_YOU_SURE_DELETE_ADMIN2=" ?, His/her activities, annotations and book will be deleted";
+	public static String NO_MORE_RESULTS="No more results found";
+	public static String NO_RESULTS="There are not result with this words";
+	public static String ADDED_BOOK1="Added book ";
+	public static String ADDED_BOOK2=" to user ";
 }

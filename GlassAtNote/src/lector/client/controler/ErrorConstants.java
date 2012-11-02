@@ -62,6 +62,11 @@ public class ErrorConstants {
 	public static String ERROR_DELETING_USER="Error deleting user";
 	public static String ERROR_USER_CAN_NOT_BE_REMOVED="Sorry but the user could not be removed, try again later";
 	public static String ERROR_LOADING_USERS="Error Loading all aplication users";
-	
+	public static String ERROR_SAVING_BOOK1="Error adding book: ";
+	public static String ERROR_SAVING_BOOK2=" to User: ";
+	public static String ERROR_RETRIVING_NEW_BOOKS="Error retriving new books from the search.";
+	public static String ERROR_RETRIVING_OLD_BOOKS="Error retriving the previous books";
+	public static String ERROR_SEARCHING_BOOKS="Error searching books";
+	public static String NOT_SUPPORTED="Book not supported by @note";
 	
 }

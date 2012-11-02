@@ -6,6 +6,9 @@ import java.util.List;
 import lector.client.book.reader.GWTService;
 import lector.client.book.reader.GWTServiceAsync;
 import lector.client.controler.Controlador;
+import lector.client.controler.ErrorConstants;
+import lector.client.controler.InformationConstants;
+import lector.client.reader.LoadingPanel;
 import lector.share.model.Book;
 import lector.share.model.client.BookClient;
 import lector.share.model.client.GoogleBookClient;
@@ -97,16 +100,17 @@ public class Searcher implements EntryPoint, HistoryListener {
 				AsyncCallback<List<GoogleBookClient>> callback = new AsyncCallback<List<GoogleBookClient>>() {
 
 					public void onFailure(Throwable caught) {
+						LoadingPanel.getInstance().hide();
 						throw new UnsupportedOperationException(
-								"Not supported yet.");
+								ErrorConstants.ERROR_RETRIVING_NEW_BOOKS);
 					}
 
 					public void onSuccess(List<GoogleBookClient> result) {
-
+						LoadingPanel.getInstance().hide();
 						String bookLinkString = "";
 						cleanHyperLinks();
 						if (result.size() == 0) {
-							lblNewLabel.setText("No more results found");
+							lblNewLabel.setText(InformationConstants.NO_MORE_RESULTS);
 							searchNext.setVisible(false);
 						}
 						for (int i = 0; i < result.size(); i++) {
@@ -116,7 +120,9 @@ public class Searcher implements EntryPoint, HistoryListener {
 							bookLinks[i].setTargetHistoryToken(result.get(i)
 									.getId().toString());
 							Image image = new Image(result.get(i).getTbURL());
-							bookLinks[i].getElement().appendChild(
+//							bookLinks[i].getElement().appendChild(
+//									image.getElement());
+							bookLinks[i].getElement().insertFirst(
 									image.getElement());
 							hyperlinksPanel.add(bookLinks[i]);
 							bookLinkString = "";
@@ -134,6 +140,9 @@ public class Searcher implements EntryPoint, HistoryListener {
 						}
 					}
 				};
+				LoadingPanel.getInstance().center();
+				LoadingPanel.getInstance().setLabelTexto(
+						InformationConstants.LOADING);
 				bookReaderServiceHolder.getBookClients(searcherField.getText(), pos,
 						callback);
 			}
@@ -167,12 +176,13 @@ public class Searcher implements EntryPoint, HistoryListener {
 				AsyncCallback<List<GoogleBookClient>> callback = new AsyncCallback<List<GoogleBookClient>>() {
 
 					public void onFailure(Throwable caught) {
+						LoadingPanel.getInstance().hide();
 						throw new UnsupportedOperationException(
-								"Not supported yet.");
+								ErrorConstants.ERROR_RETRIVING_OLD_BOOKS);
 					}
 
 					public void onSuccess(List<GoogleBookClient> result) {
-
+						LoadingPanel.getInstance().hide();
 						String bookLinkString = "";
 						cleanHyperLinks();
 						lblNewLabel.setText("");
@@ -183,8 +193,10 @@ public class Searcher implements EntryPoint, HistoryListener {
 							bookLinks[i].setTargetHistoryToken(result.get(i)
 									.getISBN().toString());
 							Image image = new Image(result.get(i).getTbURL());
-							bookLinks[i].getElement().appendChild(
-									image.getElement());
+//							bookLinks[i].getElement().appendChild(
+//							image.getElement());
+					bookLinks[i].getElement().insertFirst(
+							image.getElement());
 							hyperlinksPanel.add(bookLinks[i]);
 							bookLinkString = "";
 							bookLinks[i].addClickListener(new ClickListener() {
@@ -202,7 +214,8 @@ public class Searcher implements EntryPoint, HistoryListener {
 
 					}
 				};
-
+				LoadingPanel.getInstance().setLabelTexto(
+						InformationConstants.LOADING);
 				bookReaderServiceHolder.getBookClients(searcherField.getText(), pos,
 						callback);
 			}
@@ -234,18 +247,20 @@ public class Searcher implements EntryPoint, HistoryListener {
 				AsyncCallback<List<GoogleBookClient>> callback = new AsyncCallback<List<GoogleBookClient>>() {
 
 					public void onFailure(Throwable caught) {
+						LoadingPanel.getInstance().hide();
 						throw new UnsupportedOperationException(
-								"Not supported yet.");
+								ErrorConstants.ERROR_SEARCHING_BOOKS);
 					}
 
 					public void onSuccess(List<GoogleBookClient> result) {
+						LoadingPanel.getInstance().hide();
 						String bookLinkString = "";
 						cleanHyperLinks();
 						hyperlinksPanel.clear();
 						searchNext.setVisible(true);
 						searchPrevious.setVisible(false);
 						if (result.size() == 0) {
-							lblNewLabel.setText("No results found");
+							lblNewLabel.setText(InformationConstants.NO_RESULTS);
 							searchNext.setVisible(false);
 						}
 						for (int i = 0; i < result.size(); i++) {
@@ -255,8 +270,10 @@ public class Searcher implements EntryPoint, HistoryListener {
 							bookLinks[i].setTargetHistoryToken(result.get(i)
 									.getISBN().toString());
 							Image image = new Image(result.get(i).getTbURL());
-							bookLinks[i].getElement().appendChild(
-									image.getElement());
+//							bookLinks[i].getElement().appendChild(
+//							image.getElement());
+					bookLinks[i].getElement().insertFirst(
+							image.getElement());
 							hyperlinksPanel.add(bookLinks[i]);
 							bookLinkString = "";
 							bookLinks[i].addClickListener(new ClickListener() {
@@ -273,6 +290,8 @@ public class Searcher implements EntryPoint, HistoryListener {
 						}
 					}
 				};
+				LoadingPanel.getInstance().setLabelTexto(
+						InformationConstants.LOADING);
 				bookReaderServiceHolder.getGoogleBookClients(searcherField.getText(),
 						callback);
 			}
@@ -289,11 +308,13 @@ public class Searcher implements EntryPoint, HistoryListener {
 					AsyncCallback<List<GoogleBookClient>> callback = new AsyncCallback<List<GoogleBookClient>>() {
 
 						public void onFailure(Throwable caught) {
+							LoadingPanel.getInstance().hide();
 							throw new UnsupportedOperationException(
 									"Not supported yet.");
 						}
 
 						public void onSuccess(List<GoogleBookClient> result) {
+							LoadingPanel.getInstance().hide();
 							String bookLinkString = "";
 							cleanHyperLinks();
 							hyperlinksPanel.clear();
@@ -308,7 +329,7 @@ public class Searcher implements EntryPoint, HistoryListener {
 								bookLinkString += result.get(i).getTitle();
 								bookLinks[i].setHTML(bookLinkString);
 								bookLinks[i].setTargetHistoryToken(result
-										.get(i).getId().toString());
+										.get(i).getISBN());
 								Image image = new Image(result.get(i)
 										.getTbURL());
 								bookLinks[i].getElement().appendChild(
@@ -329,6 +350,8 @@ public class Searcher implements EntryPoint, HistoryListener {
 							}
 						}
 					};
+					LoadingPanel.getInstance().setLabelTexto(
+							InformationConstants.LOADING);
 					bookReaderServiceHolder.getGoogleBookClients(searcherField.getText(),
 							callback);
 				}
@@ -431,12 +454,14 @@ public class Searcher implements EntryPoint, HistoryListener {
 		 AsyncCallback<GoogleBookClient> callback = new AsyncCallback<GoogleBookClient>() {
 		
 		 public void onFailure(Throwable caught) {
-		 Window.alert("Book not supported yet");
+			 LoadingPanel.getInstance().hide();
+		 Window.alert(ErrorConstants.NOT_SUPPORTED);
 		 //throw new UnsupportedOperationException("Not supported yet.");
 		
 		 }
 		
 		 public void onSuccess(GoogleBookClient result) {
+			 LoadingPanel.getInstance().hide();
 		/* ActualUser.setBookActual(result);
 		 Controlador.change2Reader();
 		 // MainEntryPoint.SetBook(result);
@@ -444,7 +469,7 @@ public class Searcher implements EntryPoint, HistoryListener {
 		 // MainEntryPoint.getTechnicalSpecs().setBook(result);
 */		 
 
-			 VisorSearcher VS = new VisorSearcher(result.getImagesPath(), result);
+			 VisorSearcher VS = new VisorSearcher(result);
 			 VS.center();
 			
 		
@@ -454,6 +479,8 @@ public class Searcher implements EntryPoint, HistoryListener {
 		if (linkTrigger) {
 			// bookReaderServiceHolder.getBookImageInHathiByISBN(historyToken,
 			// callback);
+			LoadingPanel.getInstance().setLabelTexto(
+					InformationConstants.LOADING);
 			 bookReaderServiceHolder.loadFullBookInGoogle(historyToken,
 			 callback);
 			// MainEntryPoint.setCurrentPageNumber(0);
