@@ -14,7 +14,6 @@ public class TemplateGenerator {
 	public static void Start(TemplateClient tClient, Template template) {
 
 		List<TemplateCategory> children = template.getCategories();
-
 		for (TemplateCategory templateCategory : children) {
 			TemplateCategoryClient templateCategoryClient = ServiceManagerUtils
 					.produceTemplateCategoryClient(templateCategory, tClient,
