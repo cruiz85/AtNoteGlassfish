@@ -113,7 +113,7 @@ public class EditorTagsAndTypes implements EntryPoint {
 		
 		MenuItem mntmNewItem_1 = new MenuItem("New item", false, new Command() {
 			public void execute() {
-				VisualizeGraph VG=new VisualizeGraph(catalogo);
+				VisualizeGraph VG=new VisualizeGraph(finder.getCatalogo());
 				VG.center();
 			}
 		});

@@ -6,6 +6,7 @@ import java.util.List;
 import lector.client.catalogo.client.Entity;
 import lector.client.catalogo.client.File;
 import lector.client.catalogo.client.Folder;
+import lector.client.controler.Constants;
 import lector.share.model.AnnotationSchema;
 import lector.share.model.client.CatalogoClient;
 import lector.share.model.client.EntryClient;
@@ -34,14 +35,20 @@ public class Elemento {
 	private void findentidad(String name2) {
 		boolean encontrado=false;
 		int i=0;
+		if (name2.equals("0"))
+			name2=Constants.CATALOGID.toString();
 		while ((!encontrado)&&(i<Lista.size()))
 		{
 			if (name2.equals(Lista.get(i).getId().toString()))
 			{
 			encontrado=true;	
 			AnnotationSchema A=Lista.get(i);
-			//TODO ????
-			if (A.getFile())
+			if (A.getId()==Constants.CATALOGID){
+				TypeCategoryClient catalogo=new TypeCategoryClient(A.getName());
+				catalogo.setId(Constants.CATALOGID);
+				E=new Folder(catalogo, Catalogo, null);
+			}
+			else if (A.getFile())
 				{
 				TypeClient T=findT(A.getId(),Catalogo);
 				E=new File(T, Catalogo, null);

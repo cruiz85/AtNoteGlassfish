@@ -90,7 +90,7 @@ public interface GWTServiceAsync {
 			AsyncCallback<Void> callback);
 
 	
-	void getJSONServiceTODrawGraph(String url, String body,
+	void getJSONServiceTODrawGraph(String query, String data,
 			AsyncCallback<String> callback);
 
 	// void getSchemaByCatalogId(Long catalogId,

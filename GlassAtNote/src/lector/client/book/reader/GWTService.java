@@ -339,7 +339,7 @@ public interface GWTService extends RemoteService {
 
 	// Generacion del Grafo // Se debe de implementar internamente
 
-	String getJSONServiceTODrawGraph(String url, String body);
+	String getJSONServiceTODrawGraph(String query, String data);
 
 	// AnnotationSchema getSchemaByCatalogId(Long catalogId);
 

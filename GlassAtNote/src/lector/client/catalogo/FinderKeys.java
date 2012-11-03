@@ -246,6 +246,7 @@ public class FinderKeys extends Finder {
 
 			@Override
 			public void onSuccess(CatalogoClient result) {
+				C=result;
 				EvaluaCatalogo(result);
 				LoadingPanel.getInstance().hide();
 				

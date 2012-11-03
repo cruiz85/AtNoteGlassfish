@@ -12,6 +12,7 @@ import lector.client.catalogo.BotonesStackPanelMioGrafo;
 import lector.client.catalogo.client.Entity;
 import lector.client.catalogo.client.File;
 import lector.client.catalogo.client.Folder;
+import lector.client.controler.Constants;
 import lector.client.controler.ErrorConstants;
 import lector.client.login.ActualUser;
 import lector.client.reader.LoadingPanel;
@@ -582,10 +583,14 @@ public class PanelGrafo extends Composite {
 			for (Long LL : AS.getSons()) {
 				
 				AnnotationSchema AST = getannotationSchema(LL);
+				if (AS.getId()==Constants.CATALOGID)
+					Pa="0";
 				for (int i = 0; i < Name.length() - Pa.length(); i++) {
 					SB.append(0);
 				}
-				SB.append("000"); // icono
+				
+						SB.append("000"); // icono
+				
 				SB.append(Pa);
 				SB.append("->");
 				
@@ -688,8 +693,8 @@ public class PanelGrafo extends Composite {
 					else if (S instanceof Folder)
 						sal.setIcon("Folder.gif", S.getName());
 					}
-					if (AccionAsociada != null)
-						sal.addClickHandler(AccionAsociada);
+					if (AccionAsociada != null )
+						 sal.addClickHandler(AccionAsociada);
 
 					sal.addClickHandler(new ClickHandler() {
 
@@ -746,8 +751,10 @@ public class PanelGrafo extends Composite {
 				}
 			}
 		} catch (Exception e) {
-			Window.alert("Error Mostrando el Grafo");
-			LlamadaServicio(
+			ContadorErrores++;
+				Window.alert("Error Mostrando el Grafo");
+			if (ContadorErrores<5)
+				LlamadaServicio(
 //					0, 0, false
 					);
 		}

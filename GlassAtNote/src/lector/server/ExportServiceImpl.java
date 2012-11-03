@@ -151,7 +151,7 @@ public class ExportServiceImpl extends RemoteServiceServlet implements
 					+ e.getMessage(), e.getStackTrace());
 
 		}
-		if (list == null || list.isEmpty()) {
+		if (list == null) {
 			// logger.error ("Exception in method loadGroupById: ", e)
 			throw new TemplateNotFoundException(
 					"Template not found in method getTemplates");

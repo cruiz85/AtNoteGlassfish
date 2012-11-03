@@ -3,6 +3,7 @@ package lector.server;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLConnection;
@@ -23,6 +24,8 @@ import org.apache.tools.ant.taskdefs.LoadProperties;
 
 import lector.client.book.reader.ExportService;
 import lector.client.book.reader.GWTService;
+import lector.client.controler.Constants;
+
 import com.google.gwt.user.server.rpc.RemoteServiceServlet;
 import lector.share.model.Annotation;
 import lector.share.model.AnnotationNotFoundException;
@@ -58,6 +61,8 @@ import lector.share.model.GroupApp;
 import lector.share.model.Language;
 import lector.share.model.ReadingActivity;
 import lector.share.model.TagNotFoundException;
+import lector.share.model.Template;
+import lector.share.model.TemplateNotFoundException;
 import lector.share.model.TwinBrotherException;
 import lector.share.model.UserApp;
 import lector.share.model.UserNotFoundException;
@@ -936,24 +941,40 @@ public class GWTServiceImpl extends RemoteServiceServlet implements GWTService {
 		try {
 			List<FolderDB> folders = getFolderIdsByCatalogId(catalogId);
 			List<Tag> tags = getTagIdsByCatalogId(catalogId);
+			
+			Catalogo Cata=findCatalogo(catalogId);
+			
+			annotationSchemas.add(new AnnotationSchema(Constants.CATALOGID,
+					Cata.getCatalogName(), getSonsCatalog(Cata), true));
 
 			if (folders != null) {
 				for (FolderDB folder : folders) {
 					annotationSchemas.add(new AnnotationSchema(folder.getId(),
-							folder.getName(), getSons(folder), false));
+							folder.getName(), getSons(folder), true));
 				}
 			}
 			if(tags != null){
 				for (Tag tag : tags) {
 					annotationSchemas.add(new AnnotationSchema(tag.getId(),
-							tag.getName(), null, true));
+							tag.getName(), null, false));
 				}
 			}
 		} catch (GeneralException e) {
-			// TODO Auto-generated catch block
+
+			e.printStackTrace();
+		} catch (CatalogoNotFoundException e) {
+			
 			e.printStackTrace();
 		}
 		return annotationSchemas;
+	}
+
+	private List<Long> getSonsCatalog(Catalogo cata) {
+		List<Long> children = new ArrayList<Long>();
+		for (Entry relation : cata.getEntries()) {
+			children.add(relation.getId());
+		}
+		return children;
 	}
 
 	private List<Long> getSons(FolderDB folder) {
@@ -2539,34 +2560,213 @@ public class GWTServiceImpl extends RemoteServiceServlet implements GWTService {
 		return ServiceManagerUtils.produceReadingActivityClients(list);
 	}
 
-	// TODO HACER ESTE MÉTODO CUANDO SE HAGA EL CATÁLOGO
+	// TODO Hecho por Joaquin
 	@Override
 	public void saveReadingActivity(ReadingActivityClient readingActivityClient)
 			throws GeneralException {
-		// EntityManager entityManager = emf.createEntityManager();
-		//
-		// try {
-		// userTransaction.begin();
-		// if (readingActivity.getId() == null) {
-		// entityManager.persist(readingActivity);
-		// } else {
-		// entityManager.merge(readingActivity);
-		// }
-		//
-		// userTransaction.commit();
-		// } catch (Exception e) {
-		// ServiceManagerUtils.rollback(userTransaction);
-		// }
-		// if (entityManager.isOpen()) {
-		// entityManager.close();
-		// }
+		
+		
+		 ReadingActivity R=null;
+		try {
+			if (readingActivityClient.getId()!=null){
+				  R=findReadingActivity(readingActivityClient.getId());
+				  R=UpdateReadingActivity(readingActivityClient,R);
+				  saveReadingActivity(R);
+			}
+			else
+			{
+				
+				Professor Owner=findProfessor(readingActivityClient.getProfessor().getId());	
+				ReadingActivity New=new ReadingActivity(readingActivityClient.getName(),
+						Owner, null,
+						null, null,
+						null, null,
+						Constants.VISUAL_KEY,
+						null, (short)1);
+				Owner.getReadingActivities().add(New);
+				saveUser(Owner);
+			}
+		} catch (ReadingActivityNotFoundException e) {
+			e.printStackTrace();
+		} catch (BookNotFoundException e) {
+			e.printStackTrace();
+		} catch (CatalogoNotFoundException e) {
+			e.printStackTrace();
+		} catch (GroupNotFoundException e) {
+			e.printStackTrace();
+		} catch (TemplateNotFoundException e) {
+			e.printStackTrace();
+		} catch (ProfessorNotFoundException e) {
+			e.printStackTrace();
+		}
+		 
+		
+		
 
 	}
+
+	private void saveReadingActivity(ReadingActivity readingActivity) {
+		 EntityManager entityManager = emf.createEntityManager();
+		 try {
+		 userTransaction.begin();
+		 if (readingActivity.getId() == null) {
+		 entityManager.persist(readingActivity);
+		 } else {
+		 entityManager.merge(readingActivity);
+		 }
+		
+		 userTransaction.commit();
+		 } catch (Exception e) {
+		 ServiceManagerUtils.rollback(userTransaction);
+		 }
+		 if (entityManager.isOpen()) {
+		 entityManager.close();
+		 }		
+	}
+
+	private ReadingActivity UpdateReadingActivity(
+			ReadingActivityClient readingActivityClientEntrada, ReadingActivity readingActivitySalida) throws BookNotFoundException, CatalogoNotFoundException, GroupNotFoundException, TemplateNotFoundException {
+		
+		//Lenguaje
+		readingActivitySalida.setLanguage(readingActivityClientEntrada.getLanguage());
+		
+		//Capacidad de template vacio 
+		if (readingActivityClientEntrada.getIsFreeTemplateAllowed())					
+			readingActivitySalida.setIsFreeTemplateAllowed((short)1);
+		else readingActivitySalida.setIsFreeTemplateAllowed((short)0);
+		
+		//Libro = Si Cambia Borrar las anotaciones asociadas a la actividad.
+		if (
+		   (readingActivityClientEntrada.getBook()!=null)&&
+		   ((readingActivitySalida.getBook()==null)||
+		   (readingActivityClientEntrada.getBook().getId().equals(readingActivitySalida.getBook().getId()))
+		   )
+		   )
+		   readingActivitySalida.setBook(findBook(readingActivityClientEntrada.getBook().getId()));
+		
+		//Catalogo Cerrado = Si Cambia Borrar las anotaciones asociadas a la actividad.
+		if (
+			(readingActivityClientEntrada.getCloseCatalogo()!=null)&&
+			((readingActivitySalida.getCloseCatalogo()==null)||
+			(readingActivityClientEntrada.getCloseCatalogo().getId().equals(readingActivitySalida.getCloseCatalogo().getId()))
+			)
+			)
+			readingActivitySalida.setCloseCatalogo(findCatalogo(readingActivityClientEntrada.getCloseCatalogo().getId()));	
+		
+		//Group= si cambia el grupo las anotaciones pasan a ser del usuario nulo, o del profesor, hay que mirarlo,
+		//lo que es seguro es que se borran las privadas.
+		if (
+			(readingActivityClientEntrada.getGroup()!=null)&&
+			((readingActivitySalida.getGroup()==null)||
+			(readingActivityClientEntrada.getGroup().getId().equals(readingActivitySalida.getGroup().getId()))
+			)
+			)
+			readingActivitySalida.setGroup(findGroup(readingActivityClientEntrada.getGroup().getId()));	
+		
+		//Nombre
+		readingActivitySalida.setName(readingActivityClientEntrada.getName());	
+		
+		//Catalogo Abierto = Si Cambia Borrar las anotaciones asociadas a la actividad.
+		if (
+		   (readingActivityClientEntrada.getOpenCatalogo()!=null)&&
+		   ((readingActivitySalida.getOpenCatalogo()==null)||
+		   (readingActivityClientEntrada.getOpenCatalogo().getId().equals(readingActivitySalida.getOpenCatalogo().getId()))
+		   )
+		   )
+		   readingActivitySalida.setOpenCatalogo(findCatalogo(readingActivityClientEntrada.getOpenCatalogo().getId()));	
+			
+		//Template
+		if (
+		   (readingActivityClientEntrada.getTemplate()!=null)&&
+		   ((readingActivitySalida.getTemplate()==null)||
+		   (readingActivityClientEntrada.getTemplate().getId().equals(readingActivitySalida.getTemplate().getId()))
+		   )
+		   )
+		   readingActivitySalida.setTemplate(findTemplate(readingActivityClientEntrada.getTemplate().getId()));	
+						 
+		//Visualizacion
+			readingActivitySalida.setVisualization(readingActivityClientEntrada.getVisualization());	
+		
+		
+		return readingActivitySalida;
+	}
+
+	private ReadingActivity findReadingActivity(Long id) throws ReadingActivityNotFoundException {
+		EntityManager entityManager = emf.createEntityManager();
+		ReadingActivity a = entityManager.find(ReadingActivity.class, id);
+		if (a == null) {
+			throw new ReadingActivityNotFoundException(
+					"Student not found in method loadStudentById");
+		}
+		entityManager.close();
+		return a;
+	}
+	
+	private Template findTemplate(Long id) throws TemplateNotFoundException {
+		EntityManager entityManager = emf.createEntityManager();
+		Template a = entityManager.find(Template.class, id);
+		if (a == null) {
+			throw new TemplateNotFoundException(
+					"Template not found in method loadTemplateById");
+		}
+		entityManager.close();
+		return a;
+	}
+	
+//	private void saveStudent(StudentClient pClient)
+//			throws UserNotFoundException {
+//		boolean isNew = false;
+//		Student oldStudent = null;
+//		UserApp user = null;
+//		try {
+//			if (pClient.getId() != null) {
+//				oldStudent = findStudent(pClient.getId());
+//			} else {
+//
+//				try {
+//					user = loadUserByEmail(pClient.getEmail());
+//				} catch (UserNotFoundException e) {
+//					user = null;
+//				}
+//
+//				if (user != null) {
+//					throw new GeneralException(
+//							"Email already registered in the application");
+//				}
+//				Date now = new Date();
+//				Calendar calendar = Calendar.getInstance();
+//				now = calendar.getTime();
+//				saveUser(new Student(pClient.getId(), pClient.getFirstName(),
+//						pClient.getLastName(), pClient.getEmail(),
+//						pClient.getPassword(), now));
+//				isNew = true;
+//			}
+//
+//		} catch (StudentNotFoundException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		} catch (GeneralException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		}
+//		if (!isNew) {
+//			boolean isThereAChange = comparareStudents(oldStudent, pClient);
+//			if (isThereAChange) {
+//				try {
+//					saveUser(oldStudent);
+//				} catch (GeneralException e) {
+//					// TODO Auto-generated catch block
+//					e.printStackTrace();
+//				}
+//			}
+//		}
+//	}
 
 	@Override
 	public void saveLanguage(Language language) throws GeneralException {
 		EntityManager entityManager = emf.createEntityManager();
 
+		
 		try {
 			userTransaction.begin();
 			if (language.getId() == null) {
@@ -2587,6 +2787,8 @@ public class GWTServiceImpl extends RemoteServiceServlet implements GWTService {
 
 	}
 
+	
+	
 	@Override
 	public void deleteLanguage(Long languageId) throws GeneralException {
 		EntityManager entityManager = emf.createEntityManager();
@@ -2689,9 +2891,37 @@ public class GWTServiceImpl extends RemoteServiceServlet implements GWTService {
 	}
 
 	@Override
-	public String getJSONServiceTODrawGraph(String url, String body) {
-		// TODO Auto-generated method stub
-		return null;
+	public String getJSONServiceTODrawGraph(String query, String data) {
+		URL url;
+		URLConnection connection;
+		String line;
+		StringBuilder builder = new StringBuilder();
+		BufferedReader reader;
+		try {
+			url = new URL(query);
+			connection = url.openConnection();
+			connection.addRequestProperty("Referer",
+					"http://a-note.appspot.com/");
+			connection.setDoOutput(true);
+			OutputStreamWriter wr = new OutputStreamWriter(
+					connection.getOutputStream());
+			wr.write(data);
+			wr.flush();
+			reader = new BufferedReader(new InputStreamReader(
+					connection.getInputStream()));
+			while ((line = reader.readLine()) != null) {
+				builder.append(line);
+			}
+			wr.close();
+			reader.close();
+		} catch (MalformedURLException ex) {
+			Logger.getLogger(GWTServiceImpl.class.getName()).log(Level.SEVERE,
+					null, ex);
+		} catch (IOException ex) {
+			Logger.getLogger(GWTServiceImpl.class.getName()).log(Level.SEVERE,
+					null, ex);
+		}
+		return builder.toString();
 	}
 
 	@Override
