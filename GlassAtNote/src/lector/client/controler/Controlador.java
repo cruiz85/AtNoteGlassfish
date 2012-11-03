@@ -9,8 +9,8 @@ import lector.client.admin.admins.NewAdminAdministrator;
 import lector.client.admin.book.BookAdministration;
 //import lector.client.admin.bookblob.BookLoader;
 import lector.client.admin.catalog.NewAdminCatalogs;
-//import lector.client.admin.export.NewAdminTemplate;
-//import lector.client.admin.export.admin.EditTemplate;
+import lector.client.admin.export.NewAdminTemplate;
+import lector.client.admin.export.admin.EditTemplate;
 import lector.client.admin.group.Groupadministration;
 import lector.client.admin.tagstypes.EditorTagsAndTypes;
 import lector.client.admin.users.NewUserAdministrator;
@@ -56,9 +56,9 @@ public class Controlador implements EntryPoint {
 //    private static FilterAdvance FilterAdvance=new FilterAdvance();
     private static UserEdition UserEdition = new UserEdition();
 //	private static BookLoader BooKLoader=new BookLoader();
-//	private static NewAdminTemplate AdminTemplate=new NewAdminTemplate();
+	private static NewAdminTemplate AdminTemplate=new NewAdminTemplate();
 //	private static ExportResult ExportResultado=new ExportResult();
-//	private static EditTemplate EditTemplateE=new EditTemplate();
+	private static EditTemplate EditTemplateE=new EditTemplate();
 
     /**
      * @wbp.parser.entryPoint
@@ -227,10 +227,10 @@ public class Controlador implements EntryPoint {
 	}
 	
 	public static void change2AdminTemplate() {
-//		clear();
-//		Actual = AdminTemplate;
-//		Actual.onModuleLoad();
-//		
+		clear();
+		Actual = AdminTemplate;
+		Actual.onModuleLoad();
+		
 	}
 
 	public static void change2ExportResult() {
@@ -241,9 +241,9 @@ public class Controlador implements EntryPoint {
 	}
 
 	public static void change2EditTemplate() {
-//		clear();
-//		Actual = EditTemplateE;
-//		Actual.onModuleLoad();
+		clear();
+		Actual = EditTemplateE;
+		Actual.onModuleLoad();
 		
 	}
 }

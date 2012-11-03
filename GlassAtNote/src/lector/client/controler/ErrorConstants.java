@@ -68,5 +68,6 @@ public class ErrorConstants {
 	public static String ERROR_RETRIVING_OLD_BOOKS="Error retriving the previous books";
 	public static String ERROR_SEARCHING_BOOKS="Error searching books";
 	public static String NOT_SUPPORTED="Book not supported by @note";
+	public static String ERROR_REMOVING_BOOK="Error deleting Book from user";
 	
 }

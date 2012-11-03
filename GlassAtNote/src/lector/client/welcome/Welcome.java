@@ -9,7 +9,6 @@ import lector.client.controler.Controlador;
 import lector.client.controler.LogMessageConstants;
 import lector.client.logger.Logger;
 import lector.client.login.ActualUser;
-import lector.client.reader.About;
 import lector.share.model.LocalBook;
 import lector.share.model.Professor;
 import lector.share.model.Student;

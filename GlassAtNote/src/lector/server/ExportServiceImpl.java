@@ -88,7 +88,8 @@ public class ExportServiceImpl extends RemoteServiceServlet implements
 		try {
 			userTransaction.begin();
 			if (template.getId() == null) {
-				entityManager.persist(template);
+				template.getProfessor().getTemplates().add(template);
+				entityManager.persist(template.getProfessor());
 			} else {
 				entityManager.merge(template);
 			}

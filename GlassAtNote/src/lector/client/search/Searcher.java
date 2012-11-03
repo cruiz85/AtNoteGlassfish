@@ -118,7 +118,7 @@ public class Searcher implements EntryPoint, HistoryListener {
 							bookLinkString += result.get(i).getTitle();
 							bookLinks[i].setHTML(bookLinkString);
 							bookLinks[i].setTargetHistoryToken(result.get(i)
-									.getId().toString());
+									.getISBN().toString());
 							Image image = new Image(result.get(i).getTbURL());
 //							bookLinks[i].getElement().appendChild(
 //									image.getElement());
@@ -332,8 +332,10 @@ public class Searcher implements EntryPoint, HistoryListener {
 										.get(i).getISBN());
 								Image image = new Image(result.get(i)
 										.getTbURL());
-								bookLinks[i].getElement().appendChild(
-										image.getElement());
+//								bookLinks[i].getElement().appendChild(
+//								image.getElement());
+						bookLinks[i].getElement().insertFirst(
+								image.getElement());
 								hyperlinksPanel.add(bookLinks[i]);
 								bookLinkString = "";
 								bookLinks[i]

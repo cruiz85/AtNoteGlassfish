@@ -1,4 +1,4 @@
-package lector.client.reader;
+package lector.client.welcome;
 
 import com.google.gwt.user.client.ui.PopupPanel;
 import com.google.gwt.user.client.ui.SimplePanel;

@@ -8,8 +8,10 @@ import lector.client.admin.BotonesStackPanelAdministracionMio;
 import lector.client.book.reader.GWTService;
 import lector.client.book.reader.GWTServiceAsync;
 import lector.client.catalogo.StackPanelMio;
+import lector.client.controler.CalendarNow;
 import lector.client.controler.Controlador;
 import lector.client.controler.ErrorConstants;
+import lector.client.logger.Logger;
 import lector.client.login.ActualUser;
 import lector.share.model.client.BookClient;
 import lector.share.model.client.ProfessorClient;
@@ -36,16 +38,22 @@ import com.google.gwt.user.client.ui.SplitLayoutPanel;
 import com.google.gwt.user.client.ui.SimplePanel;
 import com.google.gwt.user.client.ui.VerticalPanel;
 import com.google.gwt.user.client.ui.ScrollPanel;
+import com.google.gwt.user.client.ui.Label;
+import com.google.gwt.user.client.ui.HorizontalPanel;
 
 public class BookAdministration implements EntryPoint {
 
 	private StackPanelMio stackPanel_1;
 	private VerticalPanel Selected;
+	private VerticalPanel simplePanel;
 	static GWTServiceAsync bookReaderServiceHolder = GWT
 			.create(GWTService.class);
 	private static Stack<Long> Aborrar;
 	private static Long bookToBeRemoved = null;
+	private BookAdministration Yo;
+
 	public void onModuleLoad() {
+		Yo=this;
 		RootPanel RootTXOriginal = RootPanel.get();
 		RootPanel RootMenu = RootPanel.get("Menu");
 		RootTXOriginal.setSize("100%", "100%");
@@ -71,59 +79,66 @@ public class BookAdministration implements EntryPoint {
 		});
 		menuBar.addItem(mntmAddbook);
 
-		
-		
 		MenuItem mntmNewItem_1 = new MenuItem("New item", false, new Command() {
-			
+
 			private AsyncCallback<Void> callback;
 
 			public void execute() {
 				int SelectedWidgetCount = Selected.getWidgetCount();
-				Aborrar=new Stack<Long>();
+				Aborrar = new Stack<Long>();
 				for (int i = 0; i < SelectedWidgetCount; i++) {
 					BotonesStackPanelAdministracionMio BDPM = (BotonesStackPanelAdministracionMio) Selected
 							.getWidget(i);
-					Aborrar.add(((EntidadLibro)BDPM.getEntidad()).getBook().getId());
-//					ActualUser.getUser().getBookIds().remove(BDPM.getText());
+					Aborrar.add(((EntidadLibro) BDPM.getEntidad()).getBook()
+							.getId());
+					// ActualUser.getUser().getBookIds().remove(BDPM.getText());
 				}
 
 				Selected.clear();
-				
-				callback=new AsyncCallback<Void>() {
-					
+
+				callback = new AsyncCallback<Void>() {
+
 					public void onSuccess(Void result) {
-						if (!Aborrar.isEmpty()){
-						    bookToBeRemoved = Aborrar.pop();
-							bookReaderServiceHolder.deleteBookById(bookToBeRemoved, callback);
-						} 
-							
-						else Selected.clear();
+						if (!Aborrar.isEmpty()) {
+							bookToBeRemoved = Aborrar.pop();
+							bookReaderServiceHolder.deleteBookById(
+									bookToBeRemoved, callback);
+						}
+
+						else
+							Selected.clear();
 					}
-					
+
 					public void onFailure(Throwable caught) {
-						Window.alert("There has been an erron when trying to remove the books of the user");
-						
+						Window.alert(ErrorConstants.ERROR_REMOVING_BOOK);
+						Logger.GetLogger()
+						.severe(Yo.getClass().toString(),
+								ErrorConstants.ERROR_REMOVING_BOOK + " at " + CalendarNow.GetDateNow() + 
+								" by User " + ActualUser.getUser().getEmail());
+
 					}
 				};
-				
-				if (!Aborrar.isEmpty()){
+
+				if (!Aborrar.isEmpty()) {
 					bookToBeRemoved = Aborrar.pop();
-					((ProfessorClient)ActualUser.getUser()).getBooks().remove(bookToBeRemoved);
-					bookReaderServiceHolder.deleteBookById(bookToBeRemoved, callback);
-				} 
-					
-//				bookReaderServiceHolder.saveUser(ActualUser.getUser(),
-//						new AsyncCallback<Boolean>() {
-//
-//							public void onSuccess(Boolean result) {
-//								Selected.clear();
-//
-//							}
-//
-//							public void onFailure(Throwable caught) {
-//								Window.alert("There has been an erron when trying to remove the books of the user");
-//							}
-//						});
+					((ProfessorClient) ActualUser.getUser()).getBooks().remove(
+							bookToBeRemoved);
+					bookReaderServiceHolder.deleteBookById(bookToBeRemoved,
+							callback);
+				}
+
+				// bookReaderServiceHolder.saveUser(ActualUser.getUser(),
+				// new AsyncCallback<Boolean>() {
+				//
+				// public void onSuccess(Boolean result) {
+				// Selected.clear();
+				//
+				// }
+				//
+				// public void onFailure(Throwable caught) {
+				// Window.alert("There has been an erron when trying to remove the books of the user");
+				// }
+				// });
 			}
 		});
 		mntmNewItem_1.setHTML("Remove");
@@ -144,13 +159,36 @@ public class BookAdministration implements EntryPoint {
 		RootTXOriginal.add(splitLayoutPanel, 0, 25);
 		splitLayoutPanel.setSize("100%", "100%");
 
-		VerticalPanel simplePanel = new VerticalPanel();
+		simplePanel = new VerticalPanel();
 		splitLayoutPanel.addWest(simplePanel, 500.0);
 		simplePanel.setWidth("100%");
 
-		ScrollPanel scrollPanel = new ScrollPanel();
-		simplePanel.add(scrollPanel);
-		scrollPanel.setSize("100%", "100%");
+		HorizontalPanel horizontalPanel = new HorizontalPanel();
+		horizontalPanel.setStyleName("AzulTransparente");
+		horizontalPanel.setSpacing(10);
+		simplePanel.add(horizontalPanel);
+		horizontalPanel.setSize("100%", "");
+		
+		HorizontalPanel horizontalPanel_1 = new HorizontalPanel();
+		horizontalPanel_1.setStyleName("BlancoTransparente");
+		horizontalPanel.add(horizontalPanel_1);
+		horizontalPanel_1.setSpacing(7);
+		horizontalPanel_1.setSize("100%", "100%");
+
+		stackPanel_1 = new StackPanelMio();
+		horizontalPanel_1.add(stackPanel_1);
+		
+				
+				stackPanel_1.setBotonTipo(new BotonesStackPanelAdministracionSimple(
+						"prototipo", new VerticalPanel(), Selected));
+				stackPanel_1.setBotonClick(new ClickHandler() {
+
+					public void onClick(ClickEvent event) {
+						((BotonesStackPanelAdministracionMio) event.getSource()).Swap();
+					}
+				});
+				
+						
 
 		SimplePanel simplePanel_1 = new SimplePanel();
 		splitLayoutPanel.add(simplePanel_1);
@@ -159,82 +197,42 @@ public class BookAdministration implements EntryPoint {
 		Selected = new VerticalPanel();
 		simplePanel_1.setWidget(Selected);
 		Selected.setWidth("100%");
-
-		stackPanel_1 = new StackPanelMio();
-		scrollPanel.setWidget(stackPanel_1);
-		// simplePanel.add(stackPanel_1);
-
-		stackPanel_1.setBotonTipo(new BotonesStackPanelAdministracionSimple(
-				"prototipo", new VerticalPanel(), Selected));
-		stackPanel_1.setBotonClick(new ClickHandler() {
-
-			public void onClick(ClickEvent event) {
-				((BotonesStackPanelAdministracionMio) event.getSource()).Swap();
-			}
-		});
-//		stackPanel_1.setMouseDownHandler(new MouseDownHandler() {
-//			public void onMouseDown(MouseDownEvent event) {
-//				((Button)event.getSource()).setStyleName("gwt-ButtonPush");
-//			}
-//		});
-//		stackPanel_1.setMouseOutHandler(new MouseOutHandler() {
-//			public void onMouseOut(MouseOutEvent event) {
-//				((Button)event.getSource()).setStyleName("gwt-ButtonTOP");
-//			}
-//		});
-//		stackPanel_1.setMouseOverHandler(new MouseOverHandler() {
-//			public void onMouseOver(MouseOverEvent event) {
-//				((Button)event.getSource()).setStyleName("gwt-ButtonTOPOver");
-//			}
-//		});
-//		stackPanel_1.setStyleNameBotton("gwt-ButtonTOP");
-		List<Long> ListaIDsLibros = ((ProfessorClient)ActualUser.getUser()).getBooks();
-		if (!ListaIDsLibros.isEmpty())
-		bookReaderServiceHolder.getBookClientsByIds(ListaIDsLibros, new AsyncCallback<List<BookClient>>() {
-			
-			@Override
-			public void onSuccess(List<BookClient> result) {
-				if (result.size() < 10) {
-				for (BookClient Book : result) {
-					EntidadLibro E = new EntidadLibro(Book);
-					stackPanel_1.addBotonLessTen(E);
-				}
-	
-			} else {
-				for (BookClient Book : result) {
-					EntidadLibro E = new EntidadLibro(Book);
-					stackPanel_1.addBoton(E);
-				}
-			}
-				
-			}
-			
-			@Override
-			public void onFailure(Throwable caught) {
-				Window.alert(ErrorConstants.ERROR_RETRIVING_THE_BOOKS);
-				
-			}
-		});
 		
-//		ArrayList<String> ListaBooks = ;
-//		if (ListaBooks.size() < 10) {
-//			Long IDi = 0l;
-//			for (String string : ListaBooks) {
-//				EntidadLibro E = new EntidadLibro(string, IDi);
-//				stackPanel_1.addBotonLessTen(E);
-//				IDi++;
-//			}
-//
-//		} else {
-//			Long IDi = 0l;
-//			for (String string : ListaBooks) {
-//				EntidadLibro E = new EntidadLibro(string, IDi);
-//				stackPanel_1.addBoton(E);
-//				IDi++;
-//			}
-//		}
+		List<Long> ListaIDsLibros = ((ProfessorClient) ActualUser.getUser())
+				.getBooks();
+		if (!ListaIDsLibros.isEmpty())
+			bookReaderServiceHolder.getBookClientsByIds(ListaIDsLibros,
+					new AsyncCallback<List<BookClient>>() {
+
+						@Override
+						public void onSuccess(List<BookClient> result) {
+							if (result.size() < 10) {
+								for (BookClient Book : result) {
+									EntidadLibro E = new EntidadLibro(Book);
+									stackPanel_1.addBotonLessTen(E);
+								}
+
+							} else {
+								for (BookClient Book : result) {
+									EntidadLibro E = new EntidadLibro(Book);
+									stackPanel_1.addBoton(E);
+								}
+							}
+
+						}
+
+						@Override
+						public void onFailure(Throwable caught) {
+							Window.alert(ErrorConstants.ERROR_RETRIVING_THE_BOOKS);
+							Logger.GetLogger()
+							.severe(Yo.getClass().toString(),
+									ErrorConstants.ERROR_RETRIVING_THE_BOOKS + " at " + CalendarNow.GetDateNow() + 
+									" by User " + ActualUser.getUser().getEmail());
+
+						}
+					});
+		
 		stackPanel_1.setSize("100%", "100%");
 		stackPanel_1.ClearEmpty();
-
 	}
 }
