@@ -836,7 +836,7 @@ bookReaderServiceHolder.getBookClientsByIds(result, new AsyncCallback<List<BookC
 
 						public void onClick(ClickEvent event) {
 							Botonbooks BCE = (Botonbooks) event.getSource();
-							BooksLabel.setText("Book : " + BCE.getBook());
+							BooksLabel.setText("Book : " + BCE.getBook().getTitle());
 							SelectedBook = BCE.getBook();
 
 						}
