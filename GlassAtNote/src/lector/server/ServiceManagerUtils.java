@@ -134,7 +134,7 @@ public class ServiceManagerUtils {
 
 	public static ReadingActivityClient produceReadingActivityClient(
 			ReadingActivity t) {
-		boolean isFreeTemplateAllowed = t.getIsFreeTemplateAllowed() == 0;
+		boolean isFreeTemplateAllowed = t.getIsFreeTemplateAllowed() == 1;
 		BookClient Book=null;
 		GroupClient Group=null;
 		CatalogoClient CloseCatalog=null;
@@ -156,8 +156,7 @@ public class ServiceManagerUtils {
 		
 		if (t.getTemplate()!=null)
 			Template= produceTemplateClient(t.getTemplate());
-		
-		return new ReadingActivityClient(t.getName(),
+		ReadingActivityClient Salida= new ReadingActivityClient(t.getName(),
 				produceProfessorClient(t.getProfessor()), t.getLanguage(),
 				Book,
 				Group,
@@ -165,6 +164,8 @@ public class ServiceManagerUtils {
 				OpenCatalog,
 				t.getVisualization(),Template,
 				isFreeTemplateAllowed);
+		Salida.setId(t.getId());
+		return Salida;
 	}
 
 	public static List<ReadingActivityClient> produceReadingActivityClients(
