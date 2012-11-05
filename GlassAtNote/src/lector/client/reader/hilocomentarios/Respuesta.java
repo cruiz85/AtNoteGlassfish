@@ -2,6 +2,7 @@ package lector.client.reader.hilocomentarios;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.List;
 
 import lector.client.book.reader.GWTService;
 import lector.client.book.reader.GWTServiceAsync;
@@ -10,6 +11,8 @@ import lector.client.reader.MainEntryPoint;
 import lector.client.reader.SelectorPanel;
 import lector.share.model.AnnotationThread;
 import lector.share.model.TextSelector;
+import lector.share.model.client.AnnotationThreadClient;
+import lector.share.model.client.TextSelectorClient;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
@@ -43,7 +46,7 @@ public class Respuesta extends Composite {
 
 	
 //	private RichTextArea richTextArea = new RichTextArea();
-    private AnnotationThread annotation;
+    private AnnotationThreadClient annotation;
     private VerticalPanel verticalPanel = new VerticalPanel();
     private Button button_1 = new Button("+");
 //    private RichTextArea richTextAreaBoton = new RichTextArea();
@@ -54,7 +57,7 @@ public class Respuesta extends Composite {
     private MenuItem mntmNewItem_1;
     private final MenuItemSeparator separator = new MenuItemSeparator();
     private MenuItem mntmNewItem_2;
-    private ArrayList<TextSelector> TextSelectores;
+    private List<TextSelectorClient> TextSelectores;
     private ArrayList<SelectorPanel> SE;
     static GWTServiceAsync bookReaderServiceHolder = GWT
 			.create(GWTService.class);
@@ -63,7 +66,7 @@ public class Respuesta extends Composite {
     private DecoratorPanel decoratorPanel_1;
     
     
-	public Respuesta(AnnotationThread annotationin, ArrayList<TextSelector> Selectoresin) {
+	public Respuesta(AnnotationThreadClient annotationin, List<TextSelectorClient> Selectoresin) {
 		 annotation = annotationin;
 		 TextSelectores=Selectoresin;
 	        SimplePanel decoratorPanel = new SimplePanel();
@@ -105,7 +108,7 @@ public class Respuesta extends Composite {
 				public void onMouseOver(MouseOverEvent event) {
 					((Button)event.getSource()).setStyleName("gwt-ButtonIzquierdaOver");
 					SE=new ArrayList<SelectorPanel>();
-					for(TextSelector Select: TextSelectores)
+					for(TextSelectorClient Select: TextSelectores)
 					{
 
 		            		 SelectorPanel SEE = new SelectorPanel(Select.getX().intValue(),
@@ -243,7 +246,7 @@ public class Respuesta extends Composite {
 	        
 	        mntmNewItem = new MenuItem("New item", false, new Command() {
 	        	public void execute() {
-	        	ReplyDialog RD=new ReplyDialog(annotation.getId(), annotation.getAnnotationId());
+	        	ReplyDialog RD=new ReplyDialog(annotation, annotation.getAnnotation());
 	        	RD.center();
 	        	}
 	        });

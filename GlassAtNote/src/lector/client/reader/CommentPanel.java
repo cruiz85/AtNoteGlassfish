@@ -348,7 +348,7 @@ public enum CatalogTipo {
         
         mntmNewItem = new MenuItem("New item", false, new Command() {
         	public void execute() {
-        	ReplyDialog RD=new ReplyDialog(Constants.THREADFATHERNULLID, annotation.getId());
+        	ReplyDialog RD=new ReplyDialog(null, annotation);
         	RD.center();
         	}
         });

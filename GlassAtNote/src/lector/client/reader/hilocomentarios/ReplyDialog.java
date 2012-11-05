@@ -7,6 +7,8 @@ import lector.client.reader.MainEntryPoint;
 import lector.client.reader.RichTextToolbar;
 import lector.share.model.AnnotationThread;
 import lector.share.model.Language;
+import lector.share.model.client.AnnotationClient;
+import lector.share.model.client.AnnotationThreadClient;
 
 import com.google.appengine.api.datastore.Text;
 import com.google.gwt.core.client.GWT;
@@ -32,20 +34,19 @@ public class ReplyDialog extends DialogBox {
 	private MenuItem Guardar;
 	private MenuItem Clear;
 	private MenuItem Cancel;
-	private Long Padre;
-	private Long AnotPadre;
+	private AnnotationThreadClient Padre;
+	private AnnotationClient AnotPadre;
 	static GWTServiceAsync bookReaderServiceHolder = GWT
 			.create(GWTService.class);
 
-	public ReplyDialog(Long Padrein, Long AnotPadrein) {
+	public ReplyDialog(AnnotationThreadClient Padrein, AnnotationClient AnotPadrein) {
 		super(false);
 		Padre = Padrein;
 		AnotPadre = AnotPadrein;
 		setAnimationEnabled(true);
 		Date now = new Date();
-		if ((ActualUser.getUser().getName()!=null)&&(!ActualUser.getUser().getName().isEmpty()))
-			 setHTML(ActualUser.getUser().getName() + "  -  " + now.toGMTString());
-			else  setHTML(ActualUser.getUser().getEmail() + "  -  " + now.toGMTString());
+		setHTML(ActualUser.getUser().getFirstName()
+				+ " " + ActualUser.getUser().getLastName().charAt(0)+ ".  -  " + now.toGMTString());
 		richTextArea = new RichTextArea();
 		toolbar = new RichTextToolbar(richTextArea);
 		verticalPanel = new VerticalPanel();
@@ -57,18 +58,15 @@ public class ReplyDialog extends DialogBox {
 
 		Guardar = new MenuItem(ActualLang.getSave(), false, new Command() {
 			public void execute() {
-				String Nombre;
-				if ((ActualUser.getUser().getName()!=null)&&(!ActualUser.getUser().getName().isEmpty()))
-					Nombre=ActualUser.getUser().getName();
-					else Nombre=ActualUser.getUser().getEmail();
-				AnnotationThread AT = new AnnotationThread(Padre, AnotPadre,
-						new ArrayList<Long>(),
-						new Text(richTextArea.getHTML()), ActualUser.getUser()
-								.getId(), Nombre);
+				Date now = new Date();
+				AnnotationThreadClient AT = new AnnotationThreadClient(Padre, new ArrayList<AnnotationThreadClient>(),AnotPadre,
+						richTextArea.getHTML(), ActualUser.getUser()
+								.getId(), ActualUser.getUser().getFirstName()
+								+ " " + ActualUser.getUser().getLastName().charAt(0)+ ".",now);
 				bookReaderServiceHolder.saveAnnotationThread(AT,
-						new AsyncCallback<Long>() {
+						new AsyncCallback<Void>() {
 
-							public void onSuccess(Long result) {
+							public void onSuccess(Void result) {
 								MainEntryPoint.refreshP();
 								hide();
 

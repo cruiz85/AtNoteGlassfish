@@ -1,30 +1,23 @@
 package lector.client.reader.hilocomentarios;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import lector.share.model.TextSelector;
-import lector.share.model.client.TextSelectorClient;
-
+import lector.share.model.client.AnnotationClient;
 import com.google.gwt.user.client.ui.VerticalPanel;
 
 public class ParesLlamada {
 
 	private VerticalPanel VP;
-	private Long IDPadre;
-	private Long IDThread;
-	private List<TextSelectorClient> Selectores;
+	private Long Threads;
+	private AnnotationClient IDPadre;
 	
 	
-	public ParesLlamada(VerticalPanel vP, Long iDPadre,Long IDThreadin,List<TextSelectorClient> Selectoresin) {
+	public ParesLlamada(VerticalPanel vP, AnnotationClient annotationClient, Long threads) {
 		super();
 		VP = vP;
-		IDPadre = iDPadre;
-		IDThread = IDThreadin;
-		Selectores=Selectoresin;
+		IDPadre = annotationClient;
+		Threads=threads;
 	}
 	
-	public Long getIDPadre() {
+	public AnnotationClient getIDPadre() {
 		return IDPadre;
 	}
 	
@@ -32,7 +25,7 @@ public class ParesLlamada {
 		return VP;
 	}
 	
-	public void setIDPadre(Long iDPadre) {
+	public void setIDPadre(AnnotationClient iDPadre) {
 		IDPadre = iDPadre;
 	}
 	
@@ -40,19 +33,13 @@ public class ParesLlamada {
 		VP = vP;
 	}
 	
-	public Long getIDThread() {
-		return IDThread;
+
+	public Long getThread() {
+		return Threads;
 	}
 	
-	public void setIDThread(Long iDThread) {
-		IDThread = iDThread;
+	public void setThread(Long threads) {
+		Threads = threads;
 	}
 	
-	public List<TextSelectorClient> getSelectores() {
-		return Selectores;
-	}
-	
-	public void setSelectores(ArrayList<TextSelectorClient> selectores) {
-		Selectores = selectores;
-	}
 }

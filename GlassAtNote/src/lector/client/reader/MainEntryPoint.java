@@ -43,6 +43,7 @@ import lector.client.controler.Controlador;
 import lector.client.controler.ErrorConstants;
 import lector.client.controler.HelpMessage;
 import lector.client.login.ActualUser;
+import lector.client.reader.hilocomentarios.ArbitroThreads;
 //import lector.client.reader.filter.FilterBasicPopUp;
 import lector.client.reader.hilocomentarios.JeraquiaSimulada;
 import lector.client.reader.hilocomentarios.ParesLlamada;
@@ -830,14 +831,19 @@ pageBack.addMouseDownHandler(new MouseDownHandler() {
 
 	protected static void insertrefreshedAnot(List<AnnotationClient> List) {
 		if (List != null) {
+			ArbitroThreads AT=new ArbitroThreads();
 			for (int i = 0; i < List.size(); i++) {
 				CommentPanel commentPanel = new CommentPanel(List.get(i),
 						originalBook);
 				JeraquiaSimulada JS=new JeraquiaSimulada();
-				Arbitro.getInstance().addLlamada(new ParesLlamada(JS.getVerticalPanel(), List.get(i).getId(),Constants.THREADFATHERNULLID,List.get(i).getTextSelectors()));
+				for (Long Thread : List.get(i).getThreads()) {
+					AT.addLlamada(new ParesLlamada(JS.getVerticalPanel(), List.get(i),Thread));
+				} 
 				verticalAnnotationsPanel.add(commentPanel);
 				verticalAnnotationsPanel.add(JS);
 			}
+			AT.Start();
+		
 		}
 	}
 

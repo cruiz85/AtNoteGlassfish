@@ -69,5 +69,7 @@ public class ErrorConstants {
 	public static String ERROR_SEARCHING_BOOKS="Error searching books";
 	public static String NOT_SUPPORTED="Book not supported by @note";
 	public static String ERROR_REMOVING_BOOK="Error deleting Book from user";
+	public static String ERROR_LOADING_THREAD1 = "Error loading Thread for annotation : ";
+	public static String ERROR_LOADING_THREAD2 = " for Thread : ";
 	
 }
