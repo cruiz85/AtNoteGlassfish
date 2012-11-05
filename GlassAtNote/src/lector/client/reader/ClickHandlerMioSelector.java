@@ -14,7 +14,7 @@ import com.google.gwt.user.client.ui.HorizontalPanel;
 
 import lector.client.admin.tagstypes.ClickHandlerMio;
 import lector.client.catalogo.BotonesStackPanelMio;
-import lector.client.catalogo.client.Entity;
+import lector.client.catalogo.client.EntityCatalogElements;
 import lector.client.catalogo.client.File;
 import lector.client.login.ActualUser;
 import lector.client.reader.PanelTextComent.CatalogTipo;
@@ -32,7 +32,7 @@ public class ClickHandlerMioSelector extends ClickHandlerMio {
 	public void onClickMan(BotonesStackPanelMio event) {
 		
      	BotonesStackPanelReaderSelectMio BS=(BotonesStackPanelReaderSelectMio) event;
-     Entity Act=BS.getEntidad();
+     EntityCatalogElements Act=(EntityCatalogElements) BS.getEntidad();
      
      if (Act instanceof File)
      {
@@ -83,10 +83,10 @@ public class ClickHandlerMioSelector extends ClickHandlerMio {
      }
      }
 
-		private boolean ExistPreview(HorizontalPanel labeltypo, Entity act) {
+		private boolean ExistPreview(HorizontalPanel labeltypo, EntityCatalogElements act) {
 			for (int i = 0; i < labeltypo.getWidgetCount(); i++) {
-				Entity temp = ((ButtonTipo)labeltypo.getWidget(i)).getEntidad();
-				if (temp.getID()==act.getID()) return true;
+				EntityCatalogElements temp = ((ButtonTipo)labeltypo.getWidget(i)).getEntidad();
+				if (temp.getEntry().getId()==act.getEntry().getId()) return true;
 				
 			}
 			return false;

@@ -1,6 +1,7 @@
 package lector.client.reader;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import lector.client.book.reader.GWTService;
 import lector.client.book.reader.GWTServiceAsync;
@@ -9,9 +10,9 @@ import lector.client.controler.Constants;
 import lector.client.login.ActualUser;
 import lector.client.reader.PanelTextComent.CatalogTipo;
 import lector.share.model.Annotation;
-import lector.share.model.FileDB;
 import lector.share.model.Language;
 import lector.share.model.client.AnnotationClient;
+import lector.share.model.client.TypeClient;
 
 import com.google.appengine.api.datastore.Text;
 import com.google.gwt.core.client.GWT;
@@ -47,7 +48,6 @@ public class TextComentNoEdit extends DialogBox {
 	private AnnotationClient annotation;
 	private MenuItemSeparator separator;
 	private Language ActualLang;
-	private ArrayList<Long> Antiguos;
 	private ArrayList<SelectorPanel> SE;
 	//private TextArea AnotArea;
 	private HorizontalPanel horizontalPanel;
@@ -61,7 +61,8 @@ public class TextComentNoEdit extends DialogBox {
 		setAnimationEnabled(true);
 		annotation = annotation2;
 		SE=sE;
-		setHTML(annotation.getUserName()+ "  -  " + annotation.getCreatedDate().toGMTString());
+		setHTML(annotation.getCreator().getFirstName()
+				+ " " + +annotation.getCreator().getLastName().charAt(0)+ ".  -  " + annotation.getCreatedDate().toGMTString());
 		CommentPanel.setEstado(true);
 		ActualLang = ActualUser.getLanguage();
 		VerticalPanel verticalPanel = new VerticalPanel();
@@ -116,21 +117,11 @@ public class TextComentNoEdit extends DialogBox {
 		horizontalPanel_1.setSize("", "100%");
 		
 
-		bookReaderServiceHolder.getFilesByIds(annotation.getFileIds(),
-				new AsyncCallback<ArrayList<FileDB>>() {
-
-					public void onFailure(Throwable caught) {
-
-					}
-
-					public void onSuccess(ArrayList<FileDB> result) {
-						Antiguos=new ArrayList<Long>();
+List<TypeClient> result = annotation.getTags();
 						for (int i = 0; i < result.size(); i++) {
-						FileDB resulttmp=result.get(i);
-						Antiguos.add(resulttmp.getId());
-						File F=new File(resulttmp.getName(), resulttmp.getId(), resulttmp.getCatalogId());
-						F.setFathers(null);
-						if (F.getCatalogId().equals(ActualUser.getReadingactivity().getCatalogId()))
+						TypeClient resulttmp=result.get(i);
+						File F=new File(resulttmp, resulttmp.getCatalog(),null);
+						if (F.getCatalogo().getId().equals(ActualUser.getReadingactivity().getCloseCatalogo().getId()))
 						{
 							ButtonTipo B=new ButtonTipo(F,CatalogTipo.Catalog1.getTexto(),horizontalPanel_1);
 							B.addClickHandler(new ClickHandler() {
@@ -205,28 +196,6 @@ public class TextComentNoEdit extends DialogBox {
 								horizontalPanel_1.add(B);
 							}
 						}
-					}
-				});
-
-
-
-
-	
-
-//		if (!annotation.isEditable()) {
-//			mntmGuardar.setVisible(false);
-//			mntmDeleteAnnootation.setVisible(false);
-//			PanelTexto.getRichTextArea().setEnabled(false);
-//			PanelTexto.getComboBox().setVisible(false);
-//			PanelTexto.getToolbar().setVisible(false);
-//			PanelTexto.getChckbxNewCheckBox().setVisible(false);
-//			PanelTexto.getBotonSelectType().setVisible(false);
-//			PanelTexto.getLabelPrivPub().setVisible(false);
-//			PanelTexto.getBotonSelectTypePublic().setVisible(false);
-//			PanelTexto.getRichTextArea().setEnabled(false);
-//			mntmClear.setVisible(false);
-//
-//		}
 		
 
 	}

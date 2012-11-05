@@ -1,6 +1,7 @@
 package lector.client.reader;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import lector.client.book.reader.GWTService;
 import lector.client.book.reader.GWTServiceAsync;
@@ -44,10 +45,7 @@ public class TextComentEdit extends DialogBox {
 	private MenuItem mntmDeleteAnnootation;
 	private Language ActualLang;
 	private PanelTextComent PanelTexto;
-	private ArrayList<TypeClient> Antiguos;
-	private ArrayList<TypeClient> PilaABorrar;
 	private ArrayList<TypeClient> ListaASalvar;
-	private ArrayList<TypeClient> Resultado;
 	private ArrayList<SelectorPanel> SE;
 
 	public TextComentEdit(AnnotationClient E, ArrayList<SelectorPanel> sE) {
@@ -84,7 +82,11 @@ public class TextComentEdit extends DialogBox {
 				LoadingPanel.getInstance().setLabelTexto(ActualLang.getSaving());
 				LoadingPanel.getInstance().center();
 
-				if (!moreThanone()) Window.alert(ActualLang.getE_Need_to_select_a_type()+ActualUser.getCatalogo().getCatalogName()+" : " + ActualLang.getSetTypes()+"("+(PanelTexto.getPenelBotonesTipo().getWidgetCount())+")"); 	
+				if (!moreThanone())
+					{
+					LoadingPanel.getInstance().hide();
+					Window.alert(ActualLang.getE_Need_to_select_a_type()+ActualUser.getCatalogo().getCatalogName()+" : " + ActualLang.getSetTypes()+"("+(PanelTexto.getPenelBotonesTipo().getWidgetCount())+")"); 	
+					}
 				else {
 					ListaASalvar=new ArrayList<TypeClient>();
 					for (int i = 0; i < PanelTexto.getPenelBotonesTipo().getWidgetCount(); i++) {
@@ -99,114 +101,46 @@ public class TextComentEdit extends DialogBox {
 			}
 
 			private void checkAndSave() {
-				calcular_a_borrar(ListaASalvar);
-//				LoadingPanel.getInstance().setLabelTexto(ActualLang.getLoading());
-//				LoadingPanel.getInstance().center();
-//				bookReaderServiceHolder.getFilesByIds(ListaASalvar,
-//						new AsyncCallback<ArrayList<FileDB>>() {
-//
-//							public void onFailure(Throwable caught) {
-//								LoadingPanel.getInstance().hide();
-//							}
-//
-//							public void onSuccess(ArrayList<FileDB> result) {
-								LoadingPanel.getInstance().hide();
-								Resultado=new ArrayList<Long>();
-								boolean IsInCatalog = false;
-								Long CataPrincipal=ActualUser.getCatalogo().getId();
-								for (int i = 0; i < result.size(); i++) {
-									if (CataPrincipal.equals(result.get(i).getCatalogId())) IsInCatalog=true;
-									Resultado.add(result.get(i).getId());
-								}
-								if (IsInCatalog){
-									
-									borrarTipoDeAnnotacion();
-							
-								}
-								else {
-									Window.alert(ActualLang.getE_Need_to_select_a_type()+ActualUser.getCatalogo().getCatalogName()+" : " + ActualLang.getSetTypes());
-								}
-								
-								
-							}
-						});
-				
-				
-			}
 
-			private void borrarTipoDeAnnotacion() {
-				if (!PilaABorrar.isEmpty())
-					{
-					Long L=PilaABorrar.get(0);
-					PilaABorrar.remove(0);
-					LoadingPanel.getInstance().setLabelTexto(ActualLang.getDeleting());
-					LoadingPanel.getInstance().center();
-					bookReaderServiceHolder.removeFileFromAnnotation(annotation.getId(), L, new AsyncCallback<Void>() {
-						
-						public void onSuccess(Void result) {
-							borrarTipoDeAnnotacion();
-							LoadingPanel.getInstance().hide();
-							
-						}
-						
-						public void onFailure(Throwable caught) {
-							Window.alert(ActualUser.getLanguage().getE_deleting());
-							hide();
-							for (SelectorPanel SP : SE) {
-								SP.hide();
-							}
-							CommentPanel.setEstado(false);
-							LoadingPanel.getInstance().hide();
-						}
-					});
-					}
-				else SalvadoGeneral();
-				
-			}
-
-			private void SalvadoGeneral() {
-				LoadingPanel.getInstance().setLabelTexto(ActualLang.getSaving());
-				LoadingPanel.getInstance().center();
-				
-								annotation.setFileIds(Resultado);
-								annotation.setVisibility(false);
-								annotation.setReadingActivity(ActualUser.getReadingactivity().getId());
-								if (PanelTexto.getComboBox().getItemText(
-										PanelTexto.getComboBox().getSelectedIndex()).equals(
-										Constants.ANNOTATION_PUBLIC)) {
-									annotation.setVisibility(true);
-									annotation
-											.setUpdatability(PanelTexto.getChckbxNewCheckBox()
-													.getValue());
-								}
-
-								saveAnnotacion();
-								hide();
-								for (SelectorPanel SP : SE) {
-									SP.hide();
-								}
-								CommentPanel.setEstado(false);
-								LoadingPanel.getInstance().hide();
-
-				
-			}
-
-			private void calcular_a_borrar(ArrayList<Long> listaASalvar) {
-				PilaABorrar=new ArrayList<Long>();
-				for (int i = 0; i < Antiguos.size(); i++) {
-					Long L = Antiguos.get(i);
-					boolean found=false;
-					for (int j = 0; j < listaASalvar.size(); j++) {
-						if (L==listaASalvar.get(j)) 
-						{
-						found=true;
-						break;
-						}	
-					}
-					if (!found) PilaABorrar.add(L);
+				annotation.setTags(ListaASalvar);
+				annotation.setVisibility(false);
+				annotation.setActivity(ActualUser.getReadingactivity().getId());
+				if (PanelTexto
+						.getComboBox()
+						.getItemText(
+								PanelTexto.getComboBox().getSelectedIndex())
+						.equals(Constants.ANNOTATION_PUBLIC)) {
+					annotation.setVisibility(true);
+					annotation.setUpdatability(PanelTexto
+							.getChckbxNewCheckBox().getValue());
 				}
-				
+
+				boolean IsInCatalog = false;
+				for (int i = 0; i < ListaASalvar.size(); i++)
+
+					if ((ActualUser.getReadingactivity().getId()
+							.equals(ListaASalvar.get(i).getCatalog().getId())))
+						IsInCatalog = true;
+
+				if (IsInCatalog) {
+					saveAnnotacion();
+					hide();
+				} else {
+
+					Window.alert(ActualLang.getE_Need_to_select_a_type()
+							+ ActualUser.getCatalogo().getCatalogName() + " : "
+							+ ActualLang.getSetTypes());
+				}
+				hide();
+				for (SelectorPanel SP : SE) {
+					SP.hide();
+				}
+				CommentPanel.setEstado(false);
+				LoadingPanel.getInstance().hide();
+
 			}
+
+			
 
 			private boolean moreThanone() {
 				return ((PanelTexto.getPenelBotonesTipo().getWidgetCount())>0);
@@ -214,44 +148,22 @@ public class TextComentEdit extends DialogBox {
 
 			private void saveAnnotacion() {
 
-				AsyncCallback<Boolean> callback = new AsyncCallback<Boolean>() {
+				AsyncCallback<Void> callback2 = new AsyncCallback<Void>() {
+					//
+					public void onSuccess(Void result) {
+						LoadingPanel.getInstance().hide();
+						MainEntryPoint.refreshP();
+
+					}
 
 					public void onFailure(Throwable caught) {
-						Window.alert(ActualLang.getE_loading() + "Annotation Updated");
-						LoadingPanel.getInstance().hide();
-					}
+						Window.alert(ActualLang.getE_Saving() + "Annotation");
 
-					public void onSuccess(Boolean result) {
-
-						AsyncCallback<Long> callback2 = new AsyncCallback<Long>() {
-
-							public void onSuccess(Long result) {
-								LoadingPanel.getInstance().hide();
-								MainEntryPoint.refreshP();
-
-							}
-
-							public void onFailure(Throwable caught) {
-								Window.alert(ActualLang.getE_saving() + "Annotation");
-
-							}
-						};
-						if (!result)
-							if (Window
-									.confirm(ActualLang.getW_Newer_version_of_anotation()))
-								bookReaderServiceHolder.saveAnnotation(
-										annotation, callback2);
-							else {
-								LoadingPanel.getInstance().hide();
-								MainEntryPoint.refreshP();
-							}
-						else {
-							LoadingPanel.getInstance().hide();
-							MainEntryPoint.refreshP();
-						}
 					}
 				};
-				bookReaderServiceHolder.isRecentToSave(annotation, callback);
+				//TODO Falta test reciente.
+						bookReaderServiceHolder.saveAnnotation(annotation,
+								callback2);
 
 			}
 
@@ -293,20 +205,20 @@ public class TextComentEdit extends DialogBox {
 
 						LoadingPanel.getInstance().setLabelTexto(ActualLang.getDeleting());
 						LoadingPanel.getInstance().center();
-						AsyncCallback<Integer> callback = new AsyncCallback<Integer>() {
+						AsyncCallback<Void> callback = new AsyncCallback<Void>() {
 
 							public void onFailure(Throwable caught) {
 								Window.alert(ActualLang.getE_deleting()+ " Annotation");
 								LoadingPanel.getInstance().hide();
 							}
 
-							public void onSuccess(Integer result) {
+							public void onSuccess(Void result) {
 
 								LoadingPanel.getInstance().hide();
 								MainEntryPoint.refreshP();
 							}
 						};
-						bookReaderServiceHolder.deleteAnnotation(annotation,
+						bookReaderServiceHolder.deleteAnnotation(annotation.getId(),
 								callback);
 						CommentPanel.setEstado(false);
 						hide();
@@ -324,22 +236,20 @@ public class TextComentEdit extends DialogBox {
 		
 		PanelTexto.getRichTextArea().setHTML(annotation.getComment().toString());
 		
-
-		bookReaderServiceHolder.getFilesByIds(annotation.getFileIds(),
-				new AsyncCallback<ArrayList<FileDB>>() {
-
-					public void onFailure(Throwable caught) {
-
-					}
-
-					public void onSuccess(ArrayList<FileDB> result) {
-						Antiguos=new ArrayList<Long>();
-						for (int i = 0; i < result.size(); i++) {
-						FileDB resulttmp=result.get(i);
-						Antiguos.add(resulttmp.getId());
-						File F=new File(resulttmp.getName(), resulttmp.getId(), resulttmp.getCatalogId());
-						F.setFathers(null);
-						if (F.getCatalogId().equals(ActualUser.getReadingactivity().getCatalogId()))
+//
+//		bookReaderServiceHolder.getFilesByIds(annotation.getFileIds(),
+//				new AsyncCallback<ArrayList<FileDB>>() {
+//
+//					public void onFailure(Throwable caught) {
+//
+//					}
+//
+//					public void onSuccess(ArrayList<FileDB> result) {
+		List<TypeClient> result =annotation.getTags();
+		for (int i = 0; i < result.size(); i++) {
+			TypeClient resulttmp=result.get(i);
+			File F=new File(resulttmp, resulttmp.getCatalog(),null);
+			if (F.getCatalogo().getId().equals(ActualUser.getReadingactivity().getCloseCatalogo().getId()))
 						{
 							ButtonTipo B=new ButtonTipo(F,CatalogTipo.Catalog1.getTexto(),PanelTexto.getPenelBotonesTipo());
 							B.addClickHandler(new ClickHandler() {
@@ -433,20 +343,20 @@ public class TextComentEdit extends DialogBox {
 								PanelTexto.getPenelBotonesTipo().add(B);
 							}
 						}
-					}
-				});
+//					}
+//				});
 
 
 
-		if (annotation.getUpdatability())
+		if (annotation.isUpdatability())
 			PanelTexto.getChckbxNewCheckBox().setValue(true);
 		else
 			PanelTexto.getChckbxNewCheckBox().setValue(false);
 
-		if (!annotation.getVisibility()) {
+		if (!annotation.isVisibility()) {
 			PanelTexto.getComboBox().setSelectedIndex(1);
 			PanelTexto.getChckbxNewCheckBox().setVisible(false);
-		} else if (annotation.getVisibility()) {
+		} else if (annotation.isVisibility()) {
 			PanelTexto.getComboBox().setSelectedIndex(0);
 			PanelTexto.getChckbxNewCheckBox().setVisible(true);
 		} 

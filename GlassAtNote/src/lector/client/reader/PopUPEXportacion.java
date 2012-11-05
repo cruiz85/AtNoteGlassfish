@@ -1,6 +1,7 @@
 package lector.client.reader;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import lector.client.book.reader.ExportService;
 import lector.client.book.reader.ExportServiceAsync;
@@ -15,6 +16,7 @@ import lector.client.reader.export.EnvioExportacion;
 import lector.client.reader.export.ExportResult;
 import lector.client.reader.export.PanelSeleccionExportacion;
 import lector.client.reader.export.arbitroLlamadas;
+import lector.share.model.client.TemplateCategoryClient;
 import lector.share.model.client.TemplateClient;
 
 import com.google.gwt.user.client.Window;
@@ -49,7 +51,7 @@ public class PopUPEXportacion extends PopupPanel {
 			.create(GWTService.class);
 	static ExportServiceAsync exportServiceHolder = GWT
 			.create(ExportService.class);
-	private TemplateClient Asociado;
+	private TemplateClient Template;
 	private static VerticalPanel Actual;
 	private static ElementoExportacionTemplate EET;
 
@@ -100,42 +102,12 @@ public class PopUPEXportacion extends PopupPanel {
 														 EE.getAnnotation().getCreatedDate().toGMTString()));
 							}
 						
-//						ElementoExportacion EE = (ElementoExportacion) widget;
-//						//TODO separar en funcion de la clase
-//						list.add(new ExportObject(EE.getAnnotation(), EE
-//								.getImagen().getUrl(),EE.getImagen().getWidth(),EE.getImagen().getHeight(),EE.getAnnotation().getUserName(),EE.getAnnotation().getCreatedDate().toGMTString()));
-//						// EnvioExportacion EnEx=new
-//						// EnvioExportacion(EE.getAnnotation(), EE.getImagen());
-//						// ExportResult.addResult(EnEx);
+
 					}
 					PanelSeleccionExportacion PSE=new PanelSeleccionExportacion(list);
 					PSE.center();
 					
-										
-					/*imageServiceHolder.loadHTMLStringForExport(list,
-							new AsyncCallback<String>() {
 
-								public void onSuccess(String result) {
-									FormPanel formPanel = new FormPanel();
-									formPanel
-											.setEncoding(FormPanel.ENCODING_URLENCODED);
-									formPanel.setMethod(FormPanel.METHOD_POST);
-									TextArea textArea = new TextArea();
-									textArea.setText(result);
-									textArea.setName("html");
-									formPanel.add(textArea);
-									formPanel
-											.setAction("../rs/AtNote/html/produce");
-									formPanel.submit();
-
-								}
-
-								public void onFailure(Throwable caught) {
-								
-
-								}
-							});
-*/
 				}
 			}
 		});
@@ -146,112 +118,96 @@ public class PopUPEXportacion extends PopupPanel {
 		scrollPanel.setSize(Longitud + "px", Window.getClientHeight() - 48
 				+ "px");
 		dockLayoutPanel.add(scrollPanel);
-		
+
 		VerticalPanel verticalPanel_1 = new VerticalPanel();
 		scrollPanel.setWidget(verticalPanel_1);
 		verticalPanel_1.setSize("100%", "100%");
-				
-				HorizontalPanel horizontalPanel = new HorizontalPanel();
-				verticalPanel_1.add(horizontalPanel);
-				
-				if (ActualUser.getReadingactivity().getIsFreeTemplateAllowed()&&ActualUser.getReadingactivity().getTemplate()!=null)
-				{
-					comboBox = new ListBox();
-				TemplateClient IDTemplate=ActualUser.getReadingactivity().getTemplate();
-				if (ActualUser.getReadingactivity().getIsFreeTemplateAllowed())
-					comboBox.addItem("Blank Template");
-				
-//				if (IDTemplate!=null)
-//					exportServiceHolder.loadTemplateById(IDTemplate, new AsyncCallback<Template>() {
-//						
-//						public void onSuccess(Template result) {
-							comboBox.addItem(IDTemplate.getName());
-							Asociado=IDTemplate;
-//						}
-//						
-//						public void onFailure(Throwable caught) {
-//							
-//							Window.alert(ErrorConstants.ERROR_RETRIVING_TEMPLATE_MASTER_EXPORT_PANEL);
-//						}
-//				});
-								comboBox.setSelectedIndex(0);
-				comboBox.addChangeHandler(new ChangeHandler() {
-					public void onChange(ChangeEvent event) {
-						verticalPanel.clear();
-						ListBox CB=(ListBox) event.getSource();
-						if (CB.getSelectedIndex()!=0)
-							LoadTemplate();
-						else {
-							Actual=verticalPanel;
-							if (EET!=null) 
-								EET.ResetButton();
-						}
-					}
 
-				
-				});
-				horizontalPanel.add(comboBox);
-				comboBox.setWidth("245px");
+		HorizontalPanel horizontalPanel = new HorizontalPanel();
+		verticalPanel_1.add(horizontalPanel);
+
+		if (ActualUser.getReadingactivity().getIsFreeTemplateAllowed()
+				&& ActualUser.getReadingactivity().getTemplate() != null) {
+			comboBox = new ListBox();
+			TemplateClient IDTemplate = ActualUser.getReadingactivity()
+					.getTemplate();
+			if (ActualUser.getReadingactivity().getIsFreeTemplateAllowed())
+				comboBox.addItem("Blank Template");
+
+			comboBox.addItem(IDTemplate.getName());
+			Template = IDTemplate;
+			comboBox.setSelectedIndex(0);
+			comboBox.addChangeHandler(new ChangeHandler() {
+				public void onChange(ChangeEvent event) {
+					verticalPanel.clear();
+					ListBox CB = (ListBox) event.getSource();
+					if (CB.getSelectedIndex() != 0)
+						LoadTemplate();
+					else {
+						Actual = verticalPanel;
+						if (EET != null)
+							EET.ResetButton();
+					}
 				}
-				else if (ActualUser.getReadingactivity().getTemplate()!=null)
-				{
-//					exportServiceHolder.loadTemplateById(ActualUser.getReadingactivity().getTemplate(), new AsyncCallback<Template>() {
-//						
-//						public void onSuccess(Template result) {
-//							Window.alert("Load: " + result.getName());
-							Asociado=ActualUser.getReadingactivity().getTemplate();
-							verticalPanel.clear();	
-							if (EET!=null) 
-								EET.ResetButton();
-							Actual=verticalPanel;
-							LoadTemplate();
-//						}
-//						
-//						public void onFailure(Throwable caught) {
-//							
-//							Window.alert(ErrorConstants.ERROR_RETRIVING_TEMPLATE_MASTER_EXPORT_PANEL);
-//						}
-//					});
-				}
-				
-				
-				verticalPanel = new VerticalPanel();
-				verticalPanel_1.add(verticalPanel);
-				Actual=verticalPanel;
-				if (EET!=null) 
-					EET.ResetButton();
+
+			});
+			horizontalPanel.add(comboBox);
+			comboBox.setWidth("245px");
+		} else if (ActualUser.getReadingactivity().getTemplate() != null) {
+
+			Template = ActualUser.getReadingactivity().getTemplate();
+			verticalPanel.clear();
+			if (EET != null)
+				EET.ResetButton();
+			Actual = verticalPanel;
+			LoadTemplate();
+			// }
+			//
+			// public void onFailure(Throwable caught) {
+			//
+			// Window.alert(ErrorConstants.ERROR_RETRIVING_TEMPLATE_MASTER_EXPORT_PANEL);
+			// }
+			// });
+		}
+
+		verticalPanel = new VerticalPanel();
+		verticalPanel_1.add(verticalPanel);
+		Actual = verticalPanel;
+		if (EET != null)
+			EET.ResetButton();
 
 	}
 
 	protected void LoadTemplate() {
-		if (!Asociado.getCategories().isEmpty())
-		exportServiceHolder.getTemplateCategoriesByIds(Asociado.getCategories(), new AsyncCallback<ArrayList<TemplateCategory>>() {
-			
-			public void onSuccess(ArrayList<TemplateCategory> result) {
-				ArrayList<ElementoExportacionTemplate> AEx=new ArrayList<ElementoExportacionTemplate>();
-				for (TemplateCategory templateCategory : result) {
-					ElementoExportacionTemplate E=new ElementoExportacionTemplate(templateCategory, 1, Asociado.isModificable());
-					AEx.add(E);
-					Actual.add(E);
-					E.addCliker(Actual);
-				}
-				
-				for (ElementoExportacionTemplate elementoExportacionTemplate : AEx) {
-					ArbitroLlamadasTemplatesExport.getInstance().addElement(elementoExportacionTemplate);
-				}
-				
-				if (!AEx.isEmpty())
-					{
-					setActual(AEx.get(0));
-					}
-				
+		if (!Template.getCategories().isEmpty())
+		{
+			List<TemplateCategoryClient> Lista=Template.getCategories();
+			for (TemplateCategoryClient templateCategory : Lista) {
+				ElementoExportacionTemplate E=new ElementoExportacionTemplate(templateCategory, 1, Template.getModifyable());
+				Actual.add(E);
+				E.addCliker(Actual);
+				procesaHijo(templateCategory,E);
 			}
 			
-			public void onFailure(Throwable caught) {
-				Window.alert(ErrorConstants.ERROR_RETRIVING_TEMPLATE_THREAD_REFRESH);
-				
+			setActual((ElementoExportacionTemplate) Actual.getWidget(0));
+			
+		}
+	
+		
+	}
+
+	private void procesaHijo(TemplateCategoryClient templateCategory, ElementoExportacionTemplate ElementoExportPadre) {
+		if (!templateCategory.getSubCategories().isEmpty())
+		{
+			List<TemplateCategoryClient> Lista=templateCategory.getSubCategories();
+			for (TemplateCategoryClient templateSubCategory : Lista) {
+				ElementoExportacionTemplate E=new ElementoExportacionTemplate(templateSubCategory, 1, Template.getModifyable());
+				ElementoExportPadre.getFondo().add(E);
+				E.addCliker(ElementoExportPadre.getFondo());
+				procesaHijo(templateSubCategory,E);
 			}
-		});
+			
+		}
 		
 	}
 
@@ -275,7 +231,7 @@ public class PopUPEXportacion extends PopupPanel {
 
 	public void Refresh() {
 		verticalPanel.clear();
-		if (Asociado!=null&&(comboBox==null||comboBox.getSelectedIndex()!=0))
+		if (Template!=null&&(comboBox==null||comboBox.getSelectedIndex()!=0))
 			LoadTemplate();
 		
 	}

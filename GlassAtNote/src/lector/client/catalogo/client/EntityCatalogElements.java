@@ -20,7 +20,7 @@ public abstract class EntityCatalogElements extends Entity implements Serializab
 		this.Entry=Entry;
 	}
 
-	public CatalogoClient getCatalogId() {
+	public CatalogoClient getCatalogo() {
 		return catalogId;
 	}
 

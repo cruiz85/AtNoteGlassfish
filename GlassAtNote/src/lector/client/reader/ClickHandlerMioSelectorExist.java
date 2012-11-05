@@ -6,7 +6,7 @@ import lector.client.book.reader.GWTService;
 import lector.client.book.reader.GWTServiceAsync;
 import lector.client.catalogo.BotonesStackPanelMio;
 import lector.client.catalogo.Finder;
-import lector.client.catalogo.client.Entity;
+import lector.client.catalogo.client.EntityCatalogElements;
 import lector.client.controler.Constants;
 import lector.client.login.ActualUser;
 
@@ -21,12 +21,12 @@ public class ClickHandlerMioSelectorExist extends ClickHandlerMio implements
 	
 	private PopUpFinderSelectorExistAnnotation popUpFinderSelectorExistAnnotation;
 	private Finder finderrefresh;
-	private Entity father;
+	private EntityCatalogElements father;
 	static GWTServiceAsync bookReaderServiceHolder = GWT
 			.create(GWTService.class);
 	
 	public ClickHandlerMioSelectorExist(PopUpFinderSelectorExistAnnotation popUpFinderSelectorExistAnnotation, Finder finderrefresh,
-			Entity father) {
+			EntityCatalogElements father) {
 		 this.popUpFinderSelectorExistAnnotation=popUpFinderSelectorExistAnnotation;
 		this.finderrefresh=finderrefresh;
 		this.father=father;
@@ -35,7 +35,7 @@ public class ClickHandlerMioSelectorExist extends ClickHandlerMio implements
 	@Override
 	public void onClickMan(BotonesStackPanelMio event) {
 	
-				Entity E=((BotonesStackPanelAdministracionMio)event).getEntidad();
+				EntityCatalogElements E=(EntityCatalogElements) ((BotonesStackPanelAdministracionMio)event).getEntidad();
 				AsyncCallback<Void> LLamada=new AsyncCallback<Void>() {
 					
 					public void onSuccess(Void result) {
@@ -56,9 +56,9 @@ public class ClickHandlerMioSelectorExist extends ClickHandlerMio implements
 					}
 				};
 				if (father==null)
-				bookReaderServiceHolder.addFather(E.getID(), Constants.CATALOGID, LLamada);
+				bookReaderServiceHolder.addChildEntry(E.getEntry().getId(), Constants.CATALOGID, LLamada);
 				else 
-					bookReaderServiceHolder.addFather(E.getID(), father.getID(), LLamada);
+					bookReaderServiceHolder.addChildEntry(E.getEntry().getId(), father.getEntry().getId(), LLamada);
 				
 			}
 

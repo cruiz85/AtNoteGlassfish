@@ -3,6 +3,7 @@ package lector.client.reader;
 import java.util.ArrayList;
 
 import lector.share.model.TemplateCategory;
+import lector.share.model.client.TemplateCategoryClient;
 
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
@@ -27,7 +28,7 @@ import com.google.gwt.user.client.ui.Widget;
 
 public class ElementoExportacionTemplate extends Composite{
 
-	private TemplateCategory Template;
+	private TemplateCategoryClient Template;
 	private int Profundidad;
 	private Button button;
 	private Button UP;
@@ -41,7 +42,7 @@ public class ElementoExportacionTemplate extends Composite{
 	private Button Glue;
 	private boolean Seleccionado;
 	
-	public ElementoExportacionTemplate(TemplateCategory Templatein, int Profundidadin,boolean isEtiable) {
+	public ElementoExportacionTemplate(TemplateCategoryClient Templatein, int Profundidadin,boolean isEtiable) {
 		Template=Templatein;
 		Profundidad=Profundidadin;
 		yo=this;
@@ -240,7 +241,7 @@ public int getProfundidad() {
 	return Profundidad;
 }
 
-public TemplateCategory getTemplate() {
+public TemplateCategoryClient getTemplate() {
 	return Template;
 }
 

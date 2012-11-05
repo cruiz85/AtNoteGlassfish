@@ -54,19 +54,20 @@ public class arbitroLlamadas {
 		if (!pendientes.isEmpty())
 		{
 			ExportObject E=pendientes.pop();
-			imageServiceHolder.loadHTMLStringForExportUni(E,
-					new AsyncCallback<String>() {
-
-						public void onSuccess(String result) {
-							Result.append(result);
-							llamadaBucle();
-						}
-
-						public void onFailure(Throwable caught) {
-							llamadaBucle();
-
-						}
-					});
+			//TODO FAlta codigo Cesar
+//			imageServiceHolder.loadHTMLStringForExportUni(E,
+//					new AsyncCallback<String>() {
+//
+//						public void onSuccess(String result) {
+//							Result.append(result);
+//							llamadaBucle();
+//						}
+//
+//						public void onFailure(Throwable caught) {
+//							llamadaBucle();
+//
+//						}
+//					});
 
 		}else
 		{

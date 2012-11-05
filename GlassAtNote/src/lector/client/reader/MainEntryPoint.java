@@ -44,7 +44,6 @@ import lector.client.controler.ErrorConstants;
 import lector.client.controler.HelpMessage;
 import lector.client.login.ActualUser;
 //import lector.client.reader.filter.FilterBasicPopUp;
-import lector.client.reader.hilocomentarios.Arbitro;
 import lector.client.reader.hilocomentarios.JeraquiaSimulada;
 import lector.client.reader.hilocomentarios.ParesLlamada;
 import lector.client.welcome.About;

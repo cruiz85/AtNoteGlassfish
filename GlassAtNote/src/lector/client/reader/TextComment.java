@@ -3,6 +3,7 @@ package lector.client.reader;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
 
 import lector.client.book.reader.GWTService;
 import lector.client.book.reader.GWTServiceAsync;
@@ -10,11 +11,12 @@ import lector.client.catalogo.client.Entity;
 import lector.client.controler.Constants;
 import lector.client.login.ActualUser;
 import lector.share.model.Annotation;
-import lector.share.model.FileDB;
 import lector.share.model.Language;
 import lector.share.model.TextSelector;
+import lector.share.model.client.AnnotationClient;
 import lector.share.model.client.BookClient;
 import lector.share.model.client.TextSelectorClient;
+import lector.share.model.client.TypeClient;
 
 import com.google.appengine.api.datastore.Text;
 import com.google.gwt.core.client.GWT;
@@ -30,26 +32,14 @@ public class TextComment extends DialogBox {
 
 	private GWTServiceAsync bookReaderServiceHolder = GWT
 			.create(GWTService.class);
-	private ArrayList<TextSelector> textSelector;
+	private ArrayList<TextSelectorClient> textSelector;
 	private MenuItem mntmGuardar;
 	private MenuItem mntmClear;
 	private MenuItem mntmCancelar;
-//	private RichTextArea richTextArea;
-//	private HorizontalPanel horizontalPanel;
-//	private HorizontalPanel horizontalPanel_2;
-//	private Button btnNewButton_1;
-//	private Label lblNewLabel;
-//	private Label TypoLabel;
-//	private SelectorTypePopUpAnnotacion finder;
-//	private HorizontalPanel horizontalPanel_3;
-//	private Label label;
-//	private ListBox listBox;
-//	private CheckBox chckbxNewCheckBox;
-//	private HorizontalPanel horizontalPanel_4;
-//	private VerticalPanel verticalPanel_3;
 	private Language ActualLang;
-	private Annotation annotation;
+	private AnnotationClient annotation;
 	private PanelTextComent PanelTexto;
+	private BookClient bookRef;
 	
 	
 	public TextComment(ArrayList<TextSelectorClient> textSelectorin, BookClient book) {
@@ -58,11 +48,10 @@ public class TextComment extends DialogBox {
 		setAnimationEnabled(true);
 		CommentPanel.setEstado(true);
 		Date now = new Date();
-		if ((ActualUser.getUser().getName()!=null)&&(!ActualUser.getUser().getName().isEmpty()))
-			 setHTML(ActualUser.getUser().getName() + "  -  " + now.toGMTString());
-			else  setHTML(ActualUser.getUser().getEmail() + "  -  " + now.toGMTString());
+		setHTML(ActualUser.getUser().getFirstName()
+				+ " " + ActualUser.getUser().getLastName().charAt(0)+ ".  -  " + now.toGMTString());
 		setSize("100%", "100%");
-		final Book bookRef = book;
+		bookRef = book;
 		this.textSelector = textSelectorin;
 		ActualLang=ActualUser.getLanguage();
 		VerticalPanel verticalPanel = new VerticalPanel();
@@ -75,92 +64,92 @@ public class TextComment extends DialogBox {
 
 			public void execute() {
 				
+				LoadingPanel.getInstance().setLabelTexto(ActualLang.getSaving());
+				LoadingPanel.getInstance().center();
 				if (moreThanone()) {
-					//
-					ArrayList<Long> ListaASalvar=new ArrayList<Long>();
+					
+					List<TypeClient> ListaASalvar=new ArrayList<TypeClient>();
 					for (int i = 0; i < PanelTexto.getPenelBotonesTipo().getWidgetCount(); i++) {
-						ListaASalvar.add(((ButtonTipo)PanelTexto.getPenelBotonesTipo().getWidget(i)).getEntidad().getID());
+						ListaASalvar.add((TypeClient) ((ButtonTipo)PanelTexto.getPenelBotonesTipo().getWidget(i)).getEntidad().getEntry());
 					}
 					Text comment = new Text(PanelTexto.getRichTextArea().getHTML());
 					LoadingPanel.getInstance().setLabelTexto(ActualLang.getSaving());
 					LoadingPanel.getInstance().center();
+					boolean visivility;
+					boolean update;
+					if (PanelTexto.getComboBox().getItemText(
+							PanelTexto.getComboBox().getSelectedIndex()).equals(
+							Constants.ANNOTATION_PUBLIC)) {
+						visivility=true;
+						update=PanelTexto.getChckbxNewCheckBox()
+								.getValue();
+					}else
+					{
+						visivility=false;
+						update=false;
+					}
 
-					annotation = new Annotation(bookRef.getId(),
-							MainEntryPoint.getCurrentPageNumber(),
-							textSelector, comment);
-					annotation.setUserId(ActualUser.getUser().getId());
-					
-					if ((ActualUser.getUser().getName()!=null)&&(!ActualUser.getUser().getName().isEmpty()))
-						annotation.setUserName(ActualUser.getUser().getName());
-						else annotation.setUserName(ActualUser.getUser().getEmail());
-					annotation.setReadingActivity(ActualUser.getReadingactivity().getId());
-					
-					
-					
-					bookReaderServiceHolder.getFilesByIds(ListaASalvar,new AsyncCallback<ArrayList<FileDB>>()
-							{
+					annotation = new AnnotationClient();
+					annotation.setCreator(ActualUser.getUser());
+					annotation.setActivity(ActualUser.getReadingactivity()
+							.getId());
+					annotation.setTextSelectors(textSelector);
+					annotation.setComment(comment.toString());
+					annotation.setBookId(bookRef.getId());
+					annotation.setVisibility(visivility);
+					annotation.setUpdatability(update);
+					annotation.setPageNumber(MainEntryPoint
+							.getCurrentPageNumber());
+					annotation.setTags(ListaASalvar);
+					boolean IsInCatalog = false;
+					for (int i = 0; i < ListaASalvar.size(); i++)
 
-								public void onFailure(Throwable caught) {
-									Window.alert(ActualLang.getE_loading()+" File");
-								}
+						if ((ActualUser.getReadingactivity().getId()
+								.equals(ListaASalvar.get(i).getCatalog()
+										.getId())))
+							IsInCatalog = true;
 
-								public void onSuccess(ArrayList<FileDB> result) {
-									LoadingPanel.getInstance().hide();
-									ArrayList<Long> L= new ArrayList<Long>();
-									boolean IsInCatalog = false;
-									Long CataPrincipal=ActualUser.getCatalogo().getId();
-									for (int i = 0; i < result.size(); i++) {
-										if (CataPrincipal.equals(result.get(i).getCatalogId())) IsInCatalog=true;
-										L.add(result.get(i).getId());
-									}
-									annotation.setFileIds(L);
-									annotation.setVisibility(false);
-									if (PanelTexto.getComboBox().getItemText(
-											PanelTexto.getComboBox().getSelectedIndex()).equals(
-											Constants.ANNOTATION_PUBLIC)) {
-										annotation.setVisibility(true);
-										annotation
-												.setUpdatability(PanelTexto.getChckbxNewCheckBox()
-														.getValue());
-									}
-										if (IsInCatalog){
-											saveAnnotacion(annotation);
-											hide();
-										}
-										else{
-											//Window.alert("Error aqui");
-											Window.alert(ActualLang.getE_Need_to_select_a_type()+ActualUser.getCatalogo().getCatalogName()+" : " + ActualLang.getSetTypes());
-										}
-										
-									
-								}
-									
-								
-							});
+					if (IsInCatalog) {
+						saveAnnotacion();
+						hide();
+					} else {
+
+						Window.alert(ActualLang.getE_Need_to_select_a_type()
+								+ ActualUser.getCatalogo().getCatalogName()
+								+ " : " + ActualLang.getSetTypes());
+						LoadingPanel.getInstance().hide();
+					}
+
+				} else {
+					Window.alert(ActualLang.getE_Need_to_select_a_type()
+							+ ActualUser.getCatalogo().getCatalogName()
+							+ " : "
+							+ ActualLang.getSetTypes()
+							+ "("
+							+ (PanelTexto.getPenelBotonesTipo()
+									.getWidgetCount()) + ")");
+					LoadingPanel.getInstance().hide();
 					
-							} else {
-								Window.alert(ActualLang.getE_Need_to_select_a_type()+ActualUser.getCatalogo().getCatalogName()+" : " + ActualLang.getSetTypes()+"("+(PanelTexto.getPenelBotonesTipo().getWidgetCount())+")");
-								LoadingPanel.getInstance().hide();
-							}
+				}
 
-					
-
+				
 			}
 
 			private boolean moreThanone() {
 				return ((PanelTexto.getPenelBotonesTipo().getWidgetCount())>0);
 			}
 
-			private void saveAnnotacion(Annotation annotation) {
-				AsyncCallback<Long> callback = new AsyncCallback<Long>() {
+
+			private void saveAnnotacion() {
+				AsyncCallback<Void> callback = new AsyncCallback<Void>() {
 
 					public void onFailure(Throwable caught) {
-						Window.alert(ActualLang.getE_saving()+ " Annotation");
+						Window.alert(ActualLang.getE_Saving()+ " Annotation");
 						MainEntryPoint.hidePopUpSelector();
 						LoadingPanel.getInstance().hide();
 					}
 
-					public void onSuccess(Long result) {
+					public void onSuccess(Void result) {
 						LoadingPanel.getInstance().hide();
 						MainEntryPoint.hidePopUpSelector();
 						MainEntryPoint.refreshP();
