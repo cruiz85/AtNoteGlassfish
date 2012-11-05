@@ -3,6 +3,7 @@ package lector.client.controler;
 import lector.client.admin.Administrador;
 import lector.client.admin.langedit.EditordeLenguajes;
 import lector.client.admin.langedit.NewAdminLangs;
+import lector.client.login.ActualUser;
 import lector.client.login.Login;
 import lector.client.admin.activity.NewAdminActivities;
 import lector.client.admin.admins.NewAdminAdministrator;
@@ -20,12 +21,13 @@ import lector.client.login.activitysel.MyActivities;
 //import lector.client.login.activitysel.VisorEntry;
 //import lector.client.login.bookselec.MyBooks;
 //import lector.client.reader.Book;
-//import lector.client.reader.MainEntryPoint;
+import lector.client.reader.MainEntryPoint;
 //import lector.client.reader.export.ExportResult;
 //import lector.client.reader.filter.advance.FilterAdvance;
 import lector.client.search.Searcher;
 import lector.client.welcome.Welcome;
 import lector.client.login.UserEdition;
+import lector.share.model.client.BookClient;
 
 import com.google.gwt.core.client.EntryPoint;
 import com.google.gwt.user.client.ui.RootPanel;
@@ -35,7 +37,7 @@ public class Controlador implements EntryPoint {
 
 	
 	private static Welcome WelcomePage = new Welcome();
-//    private static MainEntryPoint MEP = new MainEntryPoint();
+    private static MainEntryPoint MEP = new MainEntryPoint();
     private static EntryPoint Actual = null;
     private static Searcher Search = new Searcher();
     private static Administrador Admin = new Administrador();
@@ -85,14 +87,14 @@ public class Controlador implements EntryPoint {
 
     
     public static void change2Reader() {
-//        
-//    	clear();
-//        Actual = MEP;
-//        Actual.onModuleLoad();
-//        Book book = ActualUser.getBook();
-//        
-//        MainEntryPoint.SetBook(book);
-//        MainEntryPoint.getTechnicalSpecs().setBook(book);
+        
+    	clear();
+        Actual = MEP;
+        Actual.onModuleLoad();
+        BookClient book = ActualUser.getReadingactivity().getBook();
+        
+        MainEntryPoint.SetBook(book);
+        MainEntryPoint.getTechnicalSpecs().setBook(book);
     }
 
     public static void change2Searcher() {

@@ -89,7 +89,7 @@ public class NewAdminActivities implements EntryPoint {
 		verticalPanel.setSpacing(10);
 		verticalPanel.setStyleName("fondoLogo");
 		verticalPanel.setHorizontalAlignment(HasHorizontalAlignment.ALIGN_CENTER);
-		RootTXOriginal.add(verticalPanel);
+		RootTXOriginal.add(verticalPanel,0,27);
 		verticalPanel.setSize("100%", "100%");
 		
 		HorizontalPanel horizontalPanel = new HorizontalPanel();

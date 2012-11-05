@@ -10,6 +10,7 @@ public class Constants {
 	public static final Long CATALOGID = -1l;
 	public static final Long THREADFATHERNULLID = -1l;
 	public static final Long TEMPLATEID=-1l;
+	public static String LOCAL_BOOK_PATH="LocalBooks.jpg";
 	// USERS
 	public static String PROFESSOR = "Professor";
 	public static String STUDENT = "Student";
@@ -31,5 +32,6 @@ public class Constants {
 	// VISUALIZACION
 	public static String VISUAL_ARBOL ="Visualization in Tree";
 	public static String VISUAL_KEY="Visualization in Keys";
+
 	
 }

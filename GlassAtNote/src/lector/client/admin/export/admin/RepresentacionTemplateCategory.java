@@ -60,7 +60,7 @@ public class RepresentacionTemplateCategory extends Composite {
 		horizontalPanel.add(horizontalPanel_1);
 		horizontalPanel_1.setSize("100%", "100%");
 		
-		Button btnNewButton_1 = new Button("<img src=\"/BotonesTemplate/Izquierda.gif\" alt=\"<-\">");
+		Button btnNewButton_1 = new Button("<img src=\"BotonesTemplate/Izquierda.gif\" alt=\"<-\">");
 		horizontalPanel_1.add(btnNewButton_1);
 		btnNewButton_1.setSize("100%", "100%");
 		btnNewButton_1.setStyleName("gwt-ButtonCenterContinuoIzqEnd");
@@ -124,7 +124,7 @@ public class RepresentacionTemplateCategory extends Composite {
 		});
         
 		
-		Button btnNewButton_2 = new Button("<img src=\"/BotonesTemplate/Derecha.gif\" alt=\"<-\">");
+		Button btnNewButton_2 = new Button("<img src=\"BotonesTemplate/Derecha.gif\" alt=\"<-\">");
 		horizontalPanel_1.add(btnNewButton_2);
 		btnNewButton_2.setSize("100%", "100%");
 		btnNewButton_2.setStyleName("gwt-ButtonCenterContinuoIzq");
@@ -239,7 +239,7 @@ public class RepresentacionTemplateCategory extends Composite {
 		horizontalPanel.add(horizontalPanel_2);
 		horizontalPanel_2.setHeight("100%");
 		
-		Button btnNewButton_3 = new Button("<img src=\"/BotonesTemplate/Arriba.gif\" alt=\"<-\">");
+		Button btnNewButton_3 = new Button("<img src=\"BotonesTemplate/Arriba.gif\" alt=\"<-\">");
 		horizontalPanel_2.add(btnNewButton_3);
 		btnNewButton_3.setSize("100%", "100%");
 		btnNewButton_3.setStyleName("gwt-ButtonCenterContinuo");
@@ -320,7 +320,7 @@ public class RepresentacionTemplateCategory extends Composite {
 		});
 		
 		
-		Button btnNewButton_4 = new Button("<img src=\"/BotonesTemplate/Abajo.gif\" alt=\"<-\">");
+		Button btnNewButton_4 = new Button("<img src=\"BotonesTemplate/Abajo.gif\" alt=\"<-\">");
 		horizontalPanel_2.add(btnNewButton_4);
 		btnNewButton_4.setSize("100%", "100%");
 		btnNewButton_4.setStyleName("gwt-ButtonCenterContinuoEnd");
