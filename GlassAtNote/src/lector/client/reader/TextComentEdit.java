@@ -118,7 +118,7 @@ public class TextComentEdit extends DialogBox {
 				boolean IsInCatalog = false;
 				for (int i = 0; i < ListaASalvar.size(); i++)
 
-					if ((ActualUser.getReadingactivity().getId()
+					if ((ActualUser.getReadingactivity().getCloseCatalogo().getId()
 							.equals(ListaASalvar.get(i).getCatalog().getId())))
 						IsInCatalog = true;
 

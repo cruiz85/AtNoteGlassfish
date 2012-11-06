@@ -73,8 +73,8 @@ public class TextComment extends DialogBox {
 						ListaASalvar.add((TypeClient) ((ButtonTipo)PanelTexto.getPenelBotonesTipo().getWidget(i)).getEntidad().getEntry());
 					}
 					Text comment = new Text(PanelTexto.getRichTextArea().getHTML());
-					LoadingPanel.getInstance().setLabelTexto(ActualLang.getSaving());
-					LoadingPanel.getInstance().center();
+//					LoadingPanel.getInstance().setLabelTexto(ActualLang.getSaving());
+//					LoadingPanel.getInstance().center();
 					boolean visivility;
 					boolean update;
 					if (PanelTexto.getComboBox().getItemText(
@@ -104,7 +104,7 @@ public class TextComment extends DialogBox {
 					boolean IsInCatalog = false;
 					for (int i = 0; i < ListaASalvar.size(); i++)
 
-						if ((ActualUser.getReadingactivity().getId()
+						if ((ActualUser.getReadingactivity().getCloseCatalogo().getId()
 								.equals(ListaASalvar.get(i).getCatalog()
 										.getId())))
 							IsInCatalog = true;

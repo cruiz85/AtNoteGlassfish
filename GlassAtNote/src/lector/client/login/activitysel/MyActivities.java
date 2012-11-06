@@ -161,14 +161,23 @@ public class MyActivities implements EntryPoint {
 		horizontalPanel.setStyleName("fondoLogo");
 		RootTXOriginal.add(horizontalPanel, 0, 24);
 		horizontalPanel.setSize("100%", "100%");
-		verticalPanel = new VerticalPanel();
-		verticalPanel.setSpacing(12);
-		horizontalPanel.add(verticalPanel);
-		verticalPanel.setHorizontalAlignment(HasHorizontalAlignment.ALIGN_CENTER);
 		
-		HorizontalPanel Glue = new HorizontalPanel();
-		verticalPanel.add(Glue);
-		Glue.setSize("272px", "20px");
+		HorizontalPanel horizontalPanel_3 = new HorizontalPanel();
+		horizontalPanel_3.setSpacing(6);
+		horizontalPanel.add(horizontalPanel_3);
+		
+		HorizontalPanel horizontalPanel_1 = new HorizontalPanel();
+		horizontalPanel_3.add(horizontalPanel_1);
+		horizontalPanel_1.setStyleName("AzulTransparente");
+		horizontalPanel_1.setSpacing(10);
+		
+		HorizontalPanel horizontalPanel_2 = new HorizontalPanel();
+		horizontalPanel_2.setStyleName("BlancoTransparente");
+		horizontalPanel_1.add(horizontalPanel_2);
+		verticalPanel = new VerticalPanel();
+		horizontalPanel_2.add(verticalPanel);
+		verticalPanel.setWidth("272px");
+		verticalPanel.setHorizontalAlignment(HasHorizontalAlignment.ALIGN_CENTER);
 		BooksIDs = new ArrayList<ReadingActivityClient>();
 
 	}
