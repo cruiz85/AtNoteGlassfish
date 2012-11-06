@@ -95,6 +95,7 @@ public class Controlador implements EntryPoint {
         
         MainEntryPoint.SetBook(book);
         MainEntryPoint.getTechnicalSpecs().setBook(book);
+        
     }
 
     public static void change2Searcher() {

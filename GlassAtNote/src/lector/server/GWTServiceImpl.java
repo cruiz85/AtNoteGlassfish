@@ -1200,7 +1200,7 @@ public class GWTServiceImpl extends RemoteServiceServlet implements GWTService {
 					+ e.getMessage(), e.getStackTrace());
 
 		}
-		if (list == null || list.isEmpty()) {
+		if (list == null) {
 			// logger.error ("Exception in method loadGroupById: ", e)
 			throw new AnnotationNotFoundException(
 					"Group not found in method loadGroupByEmail");
@@ -1233,7 +1233,7 @@ public class GWTServiceImpl extends RemoteServiceServlet implements GWTService {
 					+ e.getMessage(), e.getStackTrace());
 
 		}
-		if (list == null || list.isEmpty()) {
+		if (list == null) {
 			// logger.error ("Exception in method loadGroupById: ", e)
 			throw new AnnotationNotFoundException(
 					"Group not found in method loadGroupByEmail");

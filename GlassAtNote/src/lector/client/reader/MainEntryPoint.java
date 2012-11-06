@@ -1075,15 +1075,16 @@ pageBack.addMouseDownHandler(new MouseDownHandler() {
 
 	public static void setCurrentPageNumber(int currentPageNumber) {
 		MainEntryPoint.currentPageNumber = currentPageNumber;
-		if (currentPageNumber < book.getWebLinks().size() - 1) {
+		if (book!=null){
+			if (currentPageNumber < book.getWebLinks().size() - 1) {
 				pageForward.setVisible(true);
-		}
-		else pageForward.setVisible(false);
-		if (currentPageNumber > 0) {
+			}
+			else pageForward.setVisible(false);
+			if (currentPageNumber > 0) {
 			pageBack.setVisible(true);
+			}
+			else pageBack.setVisible(false);
 		}
-		else pageBack.setVisible(false);
-		
 		
 	}
 

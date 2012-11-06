@@ -296,10 +296,11 @@ public class ServiceManagerUtils {
 	}
 
 	public static GoogleBookClient produceGoogleBookClient(GoogleBook gb) {
-
-		return new GoogleBookClient(gb.getAuthor(), gb.getISBN(),
+		GoogleBookClient G=new GoogleBookClient(gb.getAuthor(), gb.getISBN(),
 				gb.getPagesCount(), gb.getPublishedYear(), gb.getTitle(),
 				gb.getTbURL(), gb.getUrl(), gb.getWebLinks());
+		G.setId(gb.getId());
+		return G;
 	}
 
 	public static List<GoogleBookClient> produceGoogleBookClients(
