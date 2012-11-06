@@ -2,6 +2,7 @@ package lector.share.model;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 
 import javax.persistence.Basic;
@@ -26,11 +27,13 @@ public class TemplateCategory implements Serializable,
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	private String name;
-	@ManyToOne
-	@JoinColumn(name = "fathertId")
+	@ManyToOne(fetch= FetchType.LAZY)
+	@JoinColumn(name = "fathertId",insertable=false, updatable=false)
 	private TemplateCategory father;
-	@OneToMany(mappedBy = "father", cascade = CascadeType.ALL, fetch= FetchType.LAZY)
-	private List<TemplateCategory> subCategories = new ArrayList<TemplateCategory>();
+	//@OneToMany(mappedBy = "father", cascade = CascadeType.ALL)
+	@OneToMany
+	@JoinColumn(name="fatherId")
+	private List<TemplateCategory> subCategories = new LinkedList<TemplateCategory>();
 	@Transient
 	private ArrayList<Long> annotationsIds = new ArrayList<Long>();
 
