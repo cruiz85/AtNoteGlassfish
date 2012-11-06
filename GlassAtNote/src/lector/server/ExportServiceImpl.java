@@ -41,17 +41,17 @@ public class ExportServiceImpl extends RemoteServiceServlet implements
 	public void saveTemplate(TemplateClient templateClient)
 			throws GeneralException {
 		try {
-			Template T;
-			if (templateClient.getId()!=null){
-				T=findTemplate(templateClient.getId());
-				RemplaceCamps(templateClient,T);
-				
-			}else{
-				T=new Template(templateClient.getName(),
-				templateClient.getModifyable() ? (short) 1 : 0,
-				findProfessor(templateClient.getProfessor()));
+			Template template;
+			if (templateClient.getId() != null) {
+				template = findTemplate(templateClient.getId());
+				RemplaceCamps(templateClient, template);
+
+			} else {
+				template = new Template(templateClient.getName(),
+						templateClient.getModifyable() ? (short) 1 : 0,
+						findProfessor(templateClient.getProfessor()));
 			}
-			saveTemplate(T);
+			saveTemplate(template);
 
 		} catch (ProfessorNotFoundException | TemplateNotFoundException e) {
 			e.printStackTrace();
@@ -62,10 +62,10 @@ public class ExportServiceImpl extends RemoteServiceServlet implements
 	private void RemplaceCamps(TemplateClient templateClient, Template t) {
 		t.setName(templateClient.getName());
 		if (templateClient.getModifyable())
-			t.setModifyable((short)1);
-		else t.setModifyable((short)0);
-		
-		
+			t.setModifyable((short) 1);
+		else
+			t.setModifyable((short) 0);
+
 	}
 
 	private Professor findProfessor(Long id) throws ProfessorNotFoundException {
@@ -104,7 +104,7 @@ public class ExportServiceImpl extends RemoteServiceServlet implements
 		try {
 			userTransaction.begin();
 			if (template.getId() == null) {
-				template.getProfessor().getTemplates().add(template);				
+				template.getProfessor().getTemplates().add(template);
 				entityManager.merge(template.getProfessor());
 			} else {
 				entityManager.merge(template);
@@ -173,7 +173,7 @@ public class ExportServiceImpl extends RemoteServiceServlet implements
 					"Template not found in method getTemplates");
 
 		}
-		
+
 		List<TemplateClient> templateClients = new ArrayList<TemplateClient>();
 		for (int i = 0; i < list.size(); i++) {
 			Template template = list.get(i);
@@ -308,8 +308,8 @@ public class ExportServiceImpl extends RemoteServiceServlet implements
 				if (fromFather == null) {
 					updateOrderToLeftBrothers(template.getCategories(),
 							templateCategory.getOrder());
-					
-				}else{
+
+				} else {
 					updateOrderToLeftBrothers(fromFather.getSubCategories(),
 							templateCategory.getOrder());
 				}

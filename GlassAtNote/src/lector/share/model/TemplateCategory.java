@@ -7,6 +7,7 @@ import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -28,7 +29,7 @@ public class TemplateCategory implements Serializable,
 	@ManyToOne
 	@JoinColumn(name = "fathertId")
 	private TemplateCategory father;
-	@OneToMany(mappedBy = "father", cascade = CascadeType.ALL)
+	@OneToMany(mappedBy = "father", cascade = CascadeType.ALL, fetch= FetchType.LAZY)
 	private List<TemplateCategory> subCategories = new ArrayList<TemplateCategory>();
 	@Transient
 	private ArrayList<Long> annotationsIds = new ArrayList<Long>();

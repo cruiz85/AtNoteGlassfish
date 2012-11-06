@@ -1157,8 +1157,8 @@ public class GWTServiceImpl extends RemoteServiceServlet implements GWTService {
 		EntityManager entityManager = emf.createEntityManager();
 		List<Annotation> list;
 
-		String sql = "SELECT r FROM Annotation r WHERE r.r.readinActivity.id="
-				+ activityId + " AND r.book.ISBN='" + bookId + "'";
+		String sql = "SELECT r FROM Annotation r WHERE r.activity.id="
+				+ activityId + " AND r.activity.book.ISBN='" + bookId + "'";
 		try {
 			list = entityManager.createQuery(sql).getResultList();
 		} catch (Exception e) {
@@ -1188,8 +1188,8 @@ public class GWTServiceImpl extends RemoteServiceServlet implements GWTService {
 		EntityManager entityManager = emf.createEntityManager();
 		List<Annotation> list;
 
-		String sql = "SELECT r FROM Annotation r WHERE r.readinActivity.id="
-				+ readingActivityId + " AND r.book.ISBN='" + bookId
+		String sql = "SELECT r FROM Annotation r WHERE r.activity.id="
+				+ readingActivityId + " AND r.activity.book.ISBN='" + bookId
 				+ "' AND r.pageNumber=" + pageNumber + " AND r.creator.id="
 				+ studentId;
 		try {
@@ -1222,8 +1222,8 @@ public class GWTServiceImpl extends RemoteServiceServlet implements GWTService {
 		EntityManager entityManager = emf.createEntityManager();
 		List<Annotation> list;
 
-		String sql = "SELECT r FROM Annotation r WHERE r.readinActivity.id="
-				+ readingActivityId + " AND r.book.ISBN='" + bookId
+		String sql = "SELECT r FROM Annotation r WHERE r.activity.id="
+				+ readingActivityId + " AND r.activity.book.ISBN='" + bookId
 				+ "' AND r.pageNumber=" + pageNumber;
 		try {
 			list = entityManager.createQuery(sql).getResultList();
