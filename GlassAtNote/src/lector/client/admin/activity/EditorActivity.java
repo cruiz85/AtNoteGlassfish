@@ -495,7 +495,7 @@ public class EditorActivity extends PopupPanel {
 		if (ActualActivity.getBook() != null) {
 			SelectedBook = ActualActivity.getBook();
 			SelectedBookOld=SelectedBook;
-			BooksLabel.setText("Book : " + SelectedBook);
+			BooksLabel.setText("Book : " + SelectedBook.getTitle());
 			generagroupOld();
 		} else
 			generagroupOld();

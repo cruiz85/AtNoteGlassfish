@@ -365,9 +365,20 @@ public class EditorTagsAndTypes implements EntryPoint {
 				HorizontalPanel horizontalPanel = new HorizontalPanel();
 				simplePanel_1.setWidget(horizontalPanel);
 				horizontalPanel.setSize("100%", "100%");
-				horizontalPanel.add(Selected);
+				
+				HorizontalPanel horizontalPanel_1 = new HorizontalPanel();
+				horizontalPanel_1.setSpacing(10);
+				horizontalPanel_1.setStyleName("AzulTransparente");
+				horizontalPanel.add(horizontalPanel_1);
+				horizontalPanel_1.setWidth("100%");
+				
+				HorizontalPanel horizontalPanel_2 = new HorizontalPanel();
+				horizontalPanel_2.setStyleName("BlancoTransparente");
+				horizontalPanel_2.setSpacing(6);
+				horizontalPanel_1.add(horizontalPanel_2);
+				horizontalPanel_2.setWidth("100%");
+				horizontalPanel_2.add(Selected);
 				Selected.setWidth("100%");
-				Selected.setStyleName("AzulTransparente");
 				
 						Selected.setHorizontalAlignment(HasHorizontalAlignment.ALIGN_CENTER);
 

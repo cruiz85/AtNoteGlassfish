@@ -60,6 +60,7 @@ public class PopUPEXportacion extends PopupPanel {
 		super(false);
 
 		DockLayoutPanel dockLayoutPanel = new DockLayoutPanel(Unit.EM);
+		dockLayoutPanel.setStyleName("BlancoTransparente");
 		setWidget(dockLayoutPanel);
 		dockLayoutPanel.setSize(Longitud + "px", Window.getClientHeight() - 48
 				+ "px");

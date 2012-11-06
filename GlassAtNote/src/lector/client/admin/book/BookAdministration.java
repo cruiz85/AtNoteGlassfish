@@ -1,6 +1,5 @@
 package lector.client.admin.book;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Stack;
 
@@ -20,25 +19,16 @@ import com.google.gwt.core.client.EntryPoint;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
-import com.google.gwt.event.dom.client.MouseDownEvent;
-import com.google.gwt.event.dom.client.MouseDownHandler;
-import com.google.gwt.event.dom.client.MouseOutEvent;
-import com.google.gwt.event.dom.client.MouseOutHandler;
-import com.google.gwt.event.dom.client.MouseOverEvent;
-import com.google.gwt.event.dom.client.MouseOverHandler;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.RootPanel;
 import com.google.gwt.user.client.ui.MenuBar;
 import com.google.gwt.user.client.ui.MenuItem;
 import com.google.gwt.user.client.Command;
 import com.google.gwt.user.client.Window;
-import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.MenuItemSeparator;
 import com.google.gwt.user.client.ui.SplitLayoutPanel;
 import com.google.gwt.user.client.ui.SimplePanel;
 import com.google.gwt.user.client.ui.VerticalPanel;
-import com.google.gwt.user.client.ui.ScrollPanel;
-import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.HorizontalPanel;
 
 public class BookAdministration implements EntryPoint {
@@ -162,12 +152,17 @@ public class BookAdministration implements EntryPoint {
 		simplePanel = new VerticalPanel();
 		splitLayoutPanel.addWest(simplePanel, 500.0);
 		simplePanel.setWidth("100%");
+		
+		HorizontalPanel horizontalPanel_2 = new HorizontalPanel();
+		horizontalPanel_2.setSpacing(5);
+		simplePanel.add(horizontalPanel_2);
+		horizontalPanel_2.setSize("100%", "100%");
 
 		HorizontalPanel horizontalPanel = new HorizontalPanel();
+		horizontalPanel_2.add(horizontalPanel);
 		horizontalPanel.setStyleName("AzulTransparente");
 		horizontalPanel.setSpacing(10);
-		simplePanel.add(horizontalPanel);
-		horizontalPanel.setSize("100%", "");
+		horizontalPanel.setSize("100%", "100%");
 		
 		HorizontalPanel horizontalPanel_1 = new HorizontalPanel();
 		horizontalPanel_1.setStyleName("BlancoTransparente");
@@ -178,18 +173,6 @@ public class BookAdministration implements EntryPoint {
 		stackPanel_1 = new StackPanelMio();
 		horizontalPanel_1.add(stackPanel_1);
 		
-				
-				stackPanel_1.setBotonTipo(new BotonesStackPanelAdministracionSimple(
-						"prototipo", new VerticalPanel(), Selected));
-				stackPanel_1.setBotonClick(new ClickHandler() {
-
-					public void onClick(ClickEvent event) {
-						((BotonesStackPanelAdministracionMio) event.getSource()).Swap();
-					}
-				});
-				
-						
-
 		SimplePanel simplePanel_1 = new SimplePanel();
 		splitLayoutPanel.add(simplePanel_1);
 		simplePanel_1.setSize("100%", "100%");
@@ -197,6 +180,16 @@ public class BookAdministration implements EntryPoint {
 		Selected = new VerticalPanel();
 		simplePanel_1.setWidget(Selected);
 		Selected.setWidth("100%");
+		
+		stackPanel_1.setBotonTipo(new BotonesStackPanelAdministracionSimple(
+				"prototipo", new VerticalPanel(), Selected));
+		stackPanel_1.setBotonClick(new ClickHandler() {
+
+			public void onClick(ClickEvent event) {
+				((BotonesStackPanelAdministracionMio) event.getSource()).Swap();
+			}
+		});
+		
 		
 		List<Long> ListaIDsLibros = ((ProfessorClient) ActualUser.getUser())
 				.getBooks();
@@ -218,6 +211,7 @@ public class BookAdministration implements EntryPoint {
 									stackPanel_1.addBoton(E);
 								}
 							}
+							stackPanel_1.ClearEmpty();
 
 						}
 
@@ -234,5 +228,6 @@ public class BookAdministration implements EntryPoint {
 		
 		stackPanel_1.setSize("100%", "100%");
 		stackPanel_1.ClearEmpty();
+		
 	}
 }

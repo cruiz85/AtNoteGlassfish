@@ -58,6 +58,7 @@ public class GroupAndUserPanel extends Composite {
 		
 		Father = Fatherin;	
 		FlowPanel flowPanel = new FlowPanel();
+		flowPanel.setStyleName("BlancoTransparente");
 		initWidget(flowPanel);
 		flowPanel.setSize("100%", "100%");
 		

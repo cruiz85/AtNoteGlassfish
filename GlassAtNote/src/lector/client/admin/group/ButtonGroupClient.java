@@ -9,7 +9,7 @@ public class ButtonGroupClient extends Button {
 	private GroupClient groupClient;
 	
 	public ButtonGroupClient(GroupClient groupClient) {
-		super(groupClient.getName());
+		super(groupClient.getName() +" - ID : " + groupClient.getId());
 		this.groupClient=groupClient;
 	}
 	

@@ -98,8 +98,14 @@ public class Administrador implements EntryPoint {
 							verticalPanel.add(horizontalPanel_2);
 							horizontalPanel_2.setWidth("100%");
 							
+							HorizontalPanel horizontalPanel_1 = new HorizontalPanel();
+							horizontalPanel_1.setStyleName("BlancoTransparente");
+							horizontalPanel_1.setSpacing(6);
+							horizontalPanel_2.add(horizontalPanel_1);
+							horizontalPanel_1.setSize("100%", "100%");
+							
 							VerticalPanel verticalPanel_1 = new VerticalPanel();
-							horizontalPanel_2.add(verticalPanel_1);
+							horizontalPanel_1.add(verticalPanel_1);
 							verticalPanel_1.setWidth("100%");
 							
 							Button btnNewButton = new Button("Catalogue");

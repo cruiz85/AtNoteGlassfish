@@ -79,33 +79,30 @@ public class NewAdminTemplate implements EntryPoint  {
 		menuBar.addItem(mntmBack);
 		
 		VerticalPanel verticalPanel = new VerticalPanel();
-		verticalPanel.setVerticalAlignment(HasVerticalAlignment.ALIGN_MIDDLE);
-		verticalPanel.setHorizontalAlignment(HasHorizontalAlignment.ALIGN_CENTER);
-		RootTXOriginal.add(verticalPanel);
+		verticalPanel.setStyleName("fondoLogo");
+		RootTXOriginal.add(verticalPanel,0,25);
 		verticalPanel.setSize("100%", "100%");
 		
 		HorizontalPanel horizontalPanel = new HorizontalPanel();
 		horizontalPanel.setSpacing(6);
 		horizontalPanel.setHorizontalAlignment(HasHorizontalAlignment.ALIGN_CENTER);
 		verticalPanel.add(horizontalPanel);
-		horizontalPanel.setWidth("100%");
-		
-				Actual = new VerticalPanel();
-				horizontalPanel.add(Actual);
-				Actual.setWidth("400px");
-				
-				VerticalPanel verticalPanel_1 = new VerticalPanel();
-				verticalPanel_1.setVerticalAlignment(HasVerticalAlignment.ALIGN_MIDDLE);
-				verticalPanel_1.setHorizontalAlignment(HasHorizontalAlignment.ALIGN_CENTER);
-				horizontalPanel.add(verticalPanel_1);
+		horizontalPanel.setWidth("");
 				
 				HorizontalPanel horizontalPanel_1 = new HorizontalPanel();
-				horizontalPanel_1.setVerticalAlignment(HasVerticalAlignment.ALIGN_MIDDLE);
+				horizontalPanel_1.setStyleName("AzulTransparente");
+				horizontalPanel_1.setSpacing(10);
 				horizontalPanel_1.setHorizontalAlignment(HasHorizontalAlignment.ALIGN_CENTER);
-				verticalPanel_1.add(horizontalPanel_1);
+				horizontalPanel.add(horizontalPanel_1);
 				
-				Image image = new Image("Logo.jpg");
-				horizontalPanel_1.add(image);
+				HorizontalPanel horizontalPanel_2 = new HorizontalPanel();
+				horizontalPanel_2.setStyleName("BlancoTransparente");
+				horizontalPanel_2.setSpacing(6);
+				horizontalPanel_1.add(horizontalPanel_2);
+				
+						Actual = new VerticalPanel();
+						horizontalPanel_2.add(Actual);
+						Actual.setWidth("400px");
 
 		RecargaLosTEmplates();
 

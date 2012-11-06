@@ -96,10 +96,19 @@ public class NewAdminActivities implements EntryPoint {
 		horizontalPanel.setSpacing(6);
 		verticalPanel.add(horizontalPanel);
 		horizontalPanel.setWidth("100%");
+				
+				HorizontalPanel horizontalPanel_1 = new HorizontalPanel();
+				horizontalPanel_1.setSpacing(10);
+				horizontalPanel_1.setStyleName("AzulTransparente");
+				horizontalPanel.add(horizontalPanel_1);
+				
+				HorizontalPanel horizontalPanel_2 = new HorizontalPanel();
+				horizontalPanel_2.setStyleName("BlancoTransparente");
+				horizontalPanel_2.setSpacing(6);
+				horizontalPanel_1.add(horizontalPanel_2);
 		
 				Actual = new VerticalPanel();
-				Actual.setStyleName("AzulTransparente");
-				horizontalPanel.add(Actual);
+				horizontalPanel_2.add(Actual);
 				Actual.setWidth("400px");
 
 		LoadingPanel.getInstance().center();

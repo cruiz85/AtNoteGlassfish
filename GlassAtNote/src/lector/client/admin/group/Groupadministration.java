@@ -31,6 +31,7 @@ import com.google.gwt.event.dom.client.MouseOutEvent;
 import com.google.gwt.event.dom.client.MouseOutHandler;
 import com.google.gwt.event.dom.client.MouseOverEvent;
 import com.google.gwt.event.dom.client.MouseOverHandler;
+import com.google.gwt.user.client.ui.HorizontalPanel;
 
 public class Groupadministration implements EntryPoint {
 
@@ -80,6 +81,7 @@ public class Groupadministration implements EntryPoint {
 		menuBar.addItem(mntmNewItem_2);
 		
 		SimplePanel simplePanel = new SimplePanel();
+		simplePanel.setStyleName("fondoLogo");
 		RootTXOriginal.add(simplePanel,0,25);
 		simplePanel.setSize("100%", "100%");
 		
@@ -87,12 +89,34 @@ public class Groupadministration implements EntryPoint {
 		simplePanel.setWidget(horizontalSplitPanel);
 		horizontalSplitPanel.setSize("100%", "100%");
 		
+		VerticalPanel verticalPanel = new VerticalPanel();
+		verticalPanel.setSpacing(6);
+		horizontalSplitPanel.setLeftWidget(verticalPanel);
+		verticalPanel.setSize("100%", "");
+		
+		HorizontalPanel horizontalPanel_1 = new HorizontalPanel();
+		horizontalPanel_1.setStyleName("AzulTransparente");
+		horizontalPanel_1.setSpacing(10);
+		verticalPanel.add(horizontalPanel_1);
+		horizontalPanel_1.setWidth("100%");
+		
+		VerticalPanel verticalPanel_1 = new VerticalPanel();
+		verticalPanel_1.setSpacing(6);
+		verticalPanel_1.setStyleName("BlancoTransparente");
+		horizontalPanel_1.add(verticalPanel_1);
+		verticalPanel_1.setWidth("100%");
+		
 		Panel_de_grupos = new VerticalPanel();
-		horizontalSplitPanel.setLeftWidget(Panel_de_grupos);
-		Panel_de_grupos.setSize("100%", "");
-				
+		verticalPanel_1.add(Panel_de_grupos);
+		Panel_de_grupos.setWidth("100%");
+		
+		HorizontalPanel horizontalPanel = new HorizontalPanel();
+		horizontalPanel.setStyleName("BlancoTransparente");
+		horizontalSplitPanel.setRightWidget(horizontalPanel);
+		horizontalPanel.setSize("100%", "100%");
+		
 		Panel_grupo_seleccionado = new SimplePanel();
-		horizontalSplitPanel.setRightWidget(Panel_grupo_seleccionado);
+		horizontalPanel.add(Panel_grupo_seleccionado);
 		Panel_grupo_seleccionado.setSize("100%", "100%");
 		
 		bookReaderServiceHolder.getGroupsByUserId(ActualUser.getUser().getId(), new AsyncCallback<List<GroupClient>>() {

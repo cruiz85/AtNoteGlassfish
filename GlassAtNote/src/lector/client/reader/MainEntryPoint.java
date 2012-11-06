@@ -655,6 +655,7 @@ pageBack.addMouseDownHandler(new MouseDownHandler() {
 		
 		
 		PanelBaseCentrado = new HorizontalPanel();
+		PanelBaseCentrado.setStyleName("fondoLogo");
 		PanelBaseCentrado.setHorizontalAlignment(HasHorizontalAlignment.ALIGN_CENTER);
 		
 		RootTXOriginal.add(PanelBaseCentrado,0,36);
@@ -686,6 +687,7 @@ pageBack.addMouseDownHandler(new MouseDownHandler() {
 		
 		
 		VerticalPanel SP=new VerticalPanel();
+		SP.setStyleName("BlancoTransparente");
 		panelbase.add(SP);
 		SP.setHeight("875px");
 		//SP.setSize("1000px", "875px");

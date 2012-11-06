@@ -94,11 +94,16 @@ public class NewAdminLangs implements EntryPoint {
 		HorizontalPanel horizontalPanel = new HorizontalPanel();
 		verticalPanel_1.add(horizontalPanel);
 		horizontalPanel.setStyleName("AzulTransparente");
-		horizontalPanel.setSpacing(8);
+		horizontalPanel.setSpacing(10);
 		horizontalPanel.setSize("", "");
 		
+		VerticalPanel verticalPanel_2 = new VerticalPanel();
+		verticalPanel_2.setStyleName("BlancoTransparente");
+		verticalPanel_2.setSpacing(6);
+		horizontalPanel.add(verticalPanel_2);
+		
 		Actual = new VerticalPanel();
-		horizontalPanel.add(Actual);
+		verticalPanel_2.add(Actual);
 		Actual.setSize("400px", "");
 		Actual.setHorizontalAlignment(HasHorizontalAlignment.ALIGN_CENTER);
 		
