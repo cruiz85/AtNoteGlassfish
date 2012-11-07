@@ -1,26 +1,20 @@
-CREATE  TABLE `atnote`.`template` (
-
-  `id` INT(11) NOT NULL AUTO_INCREMENT ,
-
-  `name` VARCHAR(45) NULL ,
-
-  `modifyable` SMALLINT NULL ,
-
-  `userId` INT(11) NOT NULL ,
-
-  PRIMARY KEY (`id`) );
-
-CREATE  TABLE `atnote`.`template_category` (
-
-  `id` INT(11) NOT NULL AUTO_INCREMENT ,
-
-  `name` VARCHAR(45) NULL ,
-
-  `order` INT NOT NULL ,
-
-  `fathertId` INT NULL ,
-
-  `templateId` INT NOT NULL ,
-
-  PRIMARY KEY (`id`) );
+drop table `atnote`.`group_user`;
+drop table `atnote`.`group_app_user_app`;
+drop table `atnote`.`entry_relation`;
+drop table `atnote`.`catalogo_entry`;
+drop table `atnote`.`book_annotation`;
+drop table `atnote`.`annotation_thread`;
+drop table `atnote`.`annotation_text_selector`;
+drop table `atnote`.`ann_file`;
+drop table `atnote`.`text_selector`;
+drop table `atnote`.`relation`;
+drop table `atnote`.`annotation`;
+drop table `atnote`.`reading_activity`;
+drop table `atnote`.`book`;
+drop table `atnote`.`group_app`;
+drop table `atnote`.`template`;
+drop table `atnote`.`language`;
+drop table `atnote`.`entry`;
+drop table `atnote`.`catalogo`;
+drop table `atnote`.`user_app`;
 

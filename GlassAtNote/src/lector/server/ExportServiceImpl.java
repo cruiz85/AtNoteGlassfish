@@ -330,7 +330,7 @@ public class ExportServiceImpl extends RemoteServiceServlet implements
 
 	private void updateOrderToLeftBrothers(List<TemplateCategory> categories,
 			int leavingWeight) {
-		Collections.sort(categories);
+	//	Collections.sort(categories);
 		updateOrder(categories, leavingWeight);
 	}
 

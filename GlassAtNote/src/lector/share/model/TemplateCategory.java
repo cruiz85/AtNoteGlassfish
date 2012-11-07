@@ -20,18 +20,18 @@ import javax.persistence.Transient;
 
 @Entity
 @Table(name = "template_category")
-public class TemplateCategory implements Serializable,
-		Comparable<TemplateCategory> {
+public class TemplateCategory implements Serializable//, Comparable<TemplateCategory>
+{
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	private String name;
 	@ManyToOne(fetch= FetchType.LAZY)
-	@JoinColumn(name = "fathertId",insertable=false, updatable=false)
+	@JoinColumn(name = "fatherId",insertable=false, updatable=false)
 	private TemplateCategory father;
-	//@OneToMany(mappedBy = "father", cascade = CascadeType.ALL)
-	@OneToMany
+	@OneToMany(mappedBy = "father", cascade = CascadeType.ALL)
+	//@OneToMany
 	@JoinColumn(name="fatherId")
 	private List<TemplateCategory> subCategories = new LinkedList<TemplateCategory>();
 	@Transient
