@@ -32,7 +32,7 @@ public class TemplateCategory implements Serializable//, Comparable<TemplateCate
 	private TemplateCategory father;
 	@OneToMany(mappedBy = "father", cascade = CascadeType.ALL)
 	//@OneToMany
-	@JoinColumn(name="fatherId")
+//	@JoinColumn(name="fatherId")
 	private List<TemplateCategory> subCategories = new LinkedList<TemplateCategory>();
 	@Transient
 	private ArrayList<Long> annotationsIds = new ArrayList<Long>();
