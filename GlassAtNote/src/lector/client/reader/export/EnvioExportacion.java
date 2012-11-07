@@ -1,6 +1,7 @@
 package lector.client.reader.export;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import lector.share.model.Annotation;
 import lector.share.model.TextSelector;
@@ -49,7 +50,7 @@ public class EnvioExportacion extends Composite {
 		
 		
 		
-		ArrayList<TextSelector> TS=Annotation.getTextSelectors();
+		List<TextSelector> TS=Annotation.getTextSelectors();
 		for (TextSelector textSelector : TS) {
 			String url=Imagen.getUrl();
 			if (url.contains("serve?blob"))
