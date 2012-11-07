@@ -63,6 +63,7 @@ import lector.share.model.ReadingActivity;
 import lector.share.model.TagNotFoundException;
 import lector.share.model.Template;
 import lector.share.model.TemplateNotFoundException;
+import lector.share.model.TextSelector;
 import lector.share.model.TwinBrotherException;
 import lector.share.model.UserApp;
 import lector.share.model.UserNotFoundException;
@@ -77,6 +78,7 @@ import lector.share.model.client.ProfessorClient;
 import lector.share.model.client.ReadingActivityClient;
 import lector.share.model.client.RemoteBookClient;
 import lector.share.model.client.StudentClient;
+import lector.share.model.client.TextSelectorClient;
 import lector.share.model.client.TypeCategoryClient;
 import lector.share.model.client.TypeClient;
 import lector.share.model.client.UserClient;
@@ -931,7 +933,71 @@ public class GWTServiceImpl extends RemoteServiceServlet implements GWTService {
 				e.printStackTrace();
 			}
 
+		} else {
+			UserApp creator;
+			try {
+				creator = findUser(annotationClient.getCreator().getId());
+				ReadingActivity activity = findReadingActivity(annotationClient
+						.getActivity());
+				List<TextSelector> textSelectors = reproduceTextSelectorsFromClient(annotationClient
+						.getTextSelectors());
+				short visibility = (annotationClient.isVisibility() ? (short) 1
+						: 0);
+				short updatability = (annotationClient.isUpdatability() ? (short) 1
+						: 0);
+				List<Tag> tags = getTagsByTypes(annotationClient.getTags());
+				oldAnnotation = new Annotation(creator, activity,
+						textSelectors, annotationClient.getComment(),
+						annotationClient.getBookId(), visibility, updatability,
+						annotationClient.getPageNumber(), tags,
+						annotationClient.isEditable());
+			} catch (UserNotFoundException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (ReadingActivityNotFoundException e) {
+				e.printStackTrace();
+			} catch (GeneralException e) {
+				e.printStackTrace();
+			}
+
 		}
+	}
+
+	private List<Tag> getTagsByTypes(List<TypeClient> typeClients)
+			throws GeneralException {
+		EntityManager entityManager = emf.createEntityManager();
+		List<Tag> list;
+		String sql = "SELECT r FROM Tag r WHERE r.id="
+				+ typeClients.get(0).getId();
+		for (int i = 1; i < typeClients.size(); i++) {
+			sql += "OR r.id=" + typeClients.get(i).getId();
+		}
+
+		try {
+			list = entityManager.createQuery(sql).getResultList();
+		} catch (Exception e) {
+			// logger.error ("Exception in method loadTagById: ", e)
+			throw new GeneralException("Exception in method loadTagById:"
+					+ e.getMessage(), e.getStackTrace());
+
+		}
+
+		if (entityManager.isOpen()) {
+			entityManager.close();
+		}
+		return list;
+	}
+
+	private List<TextSelector> reproduceTextSelectorsFromClient(
+			List<TextSelectorClient> t) {
+		List<TextSelector> textSelectors = new ArrayList<TextSelector>();
+		for (TextSelectorClient textSelectorClient : t) {
+			textSelectors.add(new TextSelector(textSelectorClient.getX(),
+					textSelectorClient.getY(), textSelectorClient.getWidth(),
+					textSelectorClient.getHeight()));
+		}
+
+		return null;
 	}
 
 	@Override
@@ -941,9 +1007,9 @@ public class GWTServiceImpl extends RemoteServiceServlet implements GWTService {
 		try {
 			List<FolderDB> folders = getFolderIdsByCatalogId(catalogId);
 			List<Tag> tags = getTagIdsByCatalogId(catalogId);
-			
-			Catalogo Cata=findCatalogo(catalogId);
-			
+
+			Catalogo Cata = findCatalogo(catalogId);
+
 			annotationSchemas.add(new AnnotationSchema(Constants.CATALOGID,
 					Cata.getCatalogName(), getSonsCatalog(Cata), true));
 
@@ -953,17 +1019,17 @@ public class GWTServiceImpl extends RemoteServiceServlet implements GWTService {
 							folder.getName(), getSons(folder), true));
 				}
 			}
-			if(tags != null){
+			if (tags != null) {
 				for (Tag tag : tags) {
-					annotationSchemas.add(new AnnotationSchema(tag.getId(),
-							tag.getName(), null, false));
+					annotationSchemas.add(new AnnotationSchema(tag.getId(), tag
+							.getName(), null, false));
 				}
 			}
 		} catch (GeneralException e) {
 
 			e.printStackTrace();
 		} catch (CatalogoNotFoundException e) {
-			
+
 			e.printStackTrace();
 		}
 		return annotationSchemas;
@@ -1521,15 +1587,14 @@ public class GWTServiceImpl extends RemoteServiceServlet implements GWTService {
 
 	@Override
 	public void addBookToUser(BookClient bookClient, Long userId) {
-		Book book = reproduceBookFromClient(bookClient,userId);
+		Book book = reproduceBookFromClient(bookClient, userId);
 		Professor professor = book.getProfessor();
-			professor.getBooks().add(book);
-			try {
-				saveUser(professor);
-			} catch (GeneralException e) {
-				e.printStackTrace();
-			}
-
+		professor.getBooks().add(book);
+		try {
+			saveUser(professor);
+		} catch (GeneralException e) {
+			e.printStackTrace();
+		}
 
 	}
 
@@ -1541,23 +1606,26 @@ public class GWTServiceImpl extends RemoteServiceServlet implements GWTService {
 			e.printStackTrace();
 		}
 		if (bookClient instanceof RemoteBookClient)
-			return ProcessRemotebook(bookClient,professor);
-		else return ProcessLocalbook(bookClient,professor);
+			return ProcessRemotebook(bookClient, professor);
+		else
+			return ProcessLocalbook(bookClient, professor);
 
 	}
 
 	private Book ProcessRemotebook(BookClient bookClient, Professor professor) {
 		if (bookClient instanceof GoogleBookClient)
-			return processGoogleBook(bookClient,professor);
-		
+			return processGoogleBook(bookClient, professor);
+
 		return null;
 	}
 
 	private Book processGoogleBook(BookClient bookClient, Professor professor) {
-		GoogleBookClient entrada=(GoogleBookClient)bookClient;
-		
-		GoogleBook book = new GoogleBook(entrada.getAuthor(), entrada.getISBN(),
-				Integer.toString(entrada.getWebLinks().size()),entrada.getPublishedYear(), entrada.getTitle(), entrada.getTbURL(), entrada.getUrl());
+		GoogleBookClient entrada = (GoogleBookClient) bookClient;
+
+		GoogleBook book = new GoogleBook(entrada.getAuthor(),
+				entrada.getISBN(), Integer.toString(entrada.getWebLinks()
+						.size()), entrada.getPublishedYear(),
+				entrada.getTitle(), entrada.getTbURL(), entrada.getUrl());
 		book.setProfessor(professor);
 		book.setWebLinks(entrada.getWebLinks());
 		return book;
@@ -2053,7 +2121,7 @@ public class GWTServiceImpl extends RemoteServiceServlet implements GWTService {
 	}
 
 	@Override
-	public List<TypeClient> getTagsByNameAndCatalogId(List<String> tagNames,
+	public List<TypeClient> getTypesByNameAndCatalogId(List<String> tagNames,
 			Long catalogId) throws GeneralException {
 
 		EntityManager entityManager = emf.createEntityManager();
@@ -2081,7 +2149,7 @@ public class GWTServiceImpl extends RemoteServiceServlet implements GWTService {
 	}
 
 	@Override
-	public List<TypeClient> getTagsByIds(List<Long> typeIds)
+	public List<TypeClient> getTypesByIds(List<Long> typeIds)
 			throws GeneralException {
 		EntityManager entityManager = emf.createEntityManager();
 		List<Tag> list;
@@ -2106,7 +2174,7 @@ public class GWTServiceImpl extends RemoteServiceServlet implements GWTService {
 	}
 
 	@Override
-	public List<String> getTagNamesByIds(List<Long> typeIds)
+	public List<String> getTypesNamesByIds(List<Long> typeIds)
 			throws TagNotFoundException, GeneralException {
 		EntityManager entityManager = emf.createEntityManager();
 		List<Tag> list;
@@ -2564,25 +2632,20 @@ public class GWTServiceImpl extends RemoteServiceServlet implements GWTService {
 	@Override
 	public void saveReadingActivity(ReadingActivityClient readingActivityClient)
 			throws GeneralException {
-		
-		
-		 ReadingActivity R=null;
+
+		ReadingActivity R = null;
 		try {
-			if (readingActivityClient.getId()!=null){
-				  R=findReadingActivity(readingActivityClient.getId());
-				  R=UpdateReadingActivity(readingActivityClient,R);
-				  saveReadingActivity(R);
-			}
-			else
-			{
-				
-				Professor Owner=findProfessor(readingActivityClient.getProfessor().getId());	
-				ReadingActivity New=new ReadingActivity(readingActivityClient.getName(),
-						Owner, null,
-						null, null,
-						null, null,
-						Constants.VISUAL_KEY,
-						null, (short)1);
+			if (readingActivityClient.getId() != null) {
+				R = findReadingActivity(readingActivityClient.getId());
+				R = UpdateReadingActivity(readingActivityClient, R);
+				saveReadingActivity(R);
+			} else {
+
+				Professor Owner = findProfessor(readingActivityClient
+						.getProfessor().getId());
+				ReadingActivity New = new ReadingActivity(
+						readingActivityClient.getName(), Owner, null, null,
+						null, null, null, Constants.VISUAL_KEY, null, (short) 1);
 				Owner.getReadingActivities().add(New);
 				saveUser(Owner);
 			}
@@ -2599,99 +2662,105 @@ public class GWTServiceImpl extends RemoteServiceServlet implements GWTService {
 		} catch (ProfessorNotFoundException e) {
 			e.printStackTrace();
 		}
-		 
-		
-		
 
 	}
 
 	private void saveReadingActivity(ReadingActivity readingActivity) {
-		 EntityManager entityManager = emf.createEntityManager();
-		 try {
-		 userTransaction.begin();
-		 if (readingActivity.getId() == null) {
-		 entityManager.persist(readingActivity);
-		 } else {
-		 entityManager.merge(readingActivity);
-		 }
-		
-		 userTransaction.commit();
-		 } catch (Exception e) {
-		 ServiceManagerUtils.rollback(userTransaction);
-		 }
-		 if (entityManager.isOpen()) {
-		 entityManager.close();
-		 }		
+		EntityManager entityManager = emf.createEntityManager();
+		try {
+			userTransaction.begin();
+			if (readingActivity.getId() == null) {
+				entityManager.persist(readingActivity);
+			} else {
+				entityManager.merge(readingActivity);
+			}
+
+			userTransaction.commit();
+		} catch (Exception e) {
+			ServiceManagerUtils.rollback(userTransaction);
+		}
+		if (entityManager.isOpen()) {
+			entityManager.close();
+		}
 	}
 
 	private ReadingActivity UpdateReadingActivity(
-			ReadingActivityClient readingActivityClientEntrada, ReadingActivity readingActivitySalida) throws BookNotFoundException, CatalogoNotFoundException, GroupNotFoundException, TemplateNotFoundException {
-		
-		//Lenguaje
-		readingActivitySalida.setLanguage(readingActivityClientEntrada.getLanguage());
-		
-		//Capacidad de template vacio 
-		if (readingActivityClientEntrada.getIsFreeTemplateAllowed())					
-			readingActivitySalida.setIsFreeTemplateAllowed((short)1);
-		else readingActivitySalida.setIsFreeTemplateAllowed((short)0);
-		
-		//Libro = Si Cambia Borrar las anotaciones asociadas a la actividad.
-		if (
-		   (readingActivityClientEntrada.getBook()!=null)&&
-		   ((readingActivitySalida.getBook()==null)||
-		   (readingActivityClientEntrada.getBook().getId().equals(readingActivitySalida.getBook().getId()))
-		   )
-		   )
-		   readingActivitySalida.setBook(findBook(readingActivityClientEntrada.getBook().getId()));
-		
-		//Catalogo Cerrado = Si Cambia Borrar las anotaciones asociadas a la actividad.
-		if (
-			(readingActivityClientEntrada.getCloseCatalogo()!=null)&&
-			((readingActivitySalida.getCloseCatalogo()==null)||
-			(readingActivityClientEntrada.getCloseCatalogo().getId().equals(readingActivitySalida.getCloseCatalogo().getId()))
-			)
-			)
-			readingActivitySalida.setCloseCatalogo(findCatalogo(readingActivityClientEntrada.getCloseCatalogo().getId()));	
-		
-		//Group= si cambia el grupo las anotaciones pasan a ser del usuario nulo, o del profesor, hay que mirarlo,
-		//lo que es seguro es que se borran las privadas.
-		if (
-			(readingActivityClientEntrada.getGroup()!=null)&&
-			((readingActivitySalida.getGroup()==null)||
-			(readingActivityClientEntrada.getGroup().getId().equals(readingActivitySalida.getGroup().getId()))
-			)
-			)
-			readingActivitySalida.setGroup(findGroup(readingActivityClientEntrada.getGroup().getId()));	
-		
-		//Nombre
-		readingActivitySalida.setName(readingActivityClientEntrada.getName());	
-		
-		//Catalogo Abierto = Si Cambia Borrar las anotaciones asociadas a la actividad.
-		if (
-		   (readingActivityClientEntrada.getOpenCatalogo()!=null)&&
-		   ((readingActivitySalida.getOpenCatalogo()==null)||
-		   (readingActivityClientEntrada.getOpenCatalogo().getId().equals(readingActivitySalida.getOpenCatalogo().getId()))
-		   )
-		   )
-		   readingActivitySalida.setOpenCatalogo(findCatalogo(readingActivityClientEntrada.getOpenCatalogo().getId()));	
-			
-		//Template
-		if (
-		   (readingActivityClientEntrada.getTemplate()!=null)&&
-		   ((readingActivitySalida.getTemplate()==null)||
-		   (readingActivityClientEntrada.getTemplate().getId().equals(readingActivitySalida.getTemplate().getId()))
-		   )
-		   )
-		   readingActivitySalida.setTemplate(findTemplate(readingActivityClientEntrada.getTemplate().getId()));	
-						 
-		//Visualizacion
-			readingActivitySalida.setVisualization(readingActivityClientEntrada.getVisualization());	
-		
-		
+			ReadingActivityClient readingActivityClientEntrada,
+			ReadingActivity readingActivitySalida)
+			throws BookNotFoundException, CatalogoNotFoundException,
+			GroupNotFoundException, TemplateNotFoundException {
+
+		// Lenguaje
+		readingActivitySalida.setLanguage(readingActivityClientEntrada
+				.getLanguage());
+
+		// Capacidad de template vacio
+		if (readingActivityClientEntrada.getIsFreeTemplateAllowed())
+			readingActivitySalida.setIsFreeTemplateAllowed((short) 1);
+		else
+			readingActivitySalida.setIsFreeTemplateAllowed((short) 0);
+
+		// Libro = Si Cambia Borrar las anotaciones asociadas a la actividad.
+		if ((readingActivityClientEntrada.getBook() != null)
+				&& ((readingActivitySalida.getBook() == null) || (readingActivityClientEntrada
+						.getBook().getId().equals(readingActivitySalida
+						.getBook().getId()))))
+			readingActivitySalida.setBook(findBook(readingActivityClientEntrada
+					.getBook().getId()));
+
+		// Catalogo Cerrado = Si Cambia Borrar las anotaciones asociadas a la
+		// actividad.
+		if ((readingActivityClientEntrada.getCloseCatalogo() != null)
+				&& ((readingActivitySalida.getCloseCatalogo() == null) || (readingActivityClientEntrada
+						.getCloseCatalogo().getId()
+						.equals(readingActivitySalida.getCloseCatalogo()
+								.getId()))))
+			readingActivitySalida
+					.setCloseCatalogo(findCatalogo(readingActivityClientEntrada
+							.getCloseCatalogo().getId()));
+
+		// Group= si cambia el grupo las anotaciones pasan a ser del usuario
+		// nulo, o del profesor, hay que mirarlo,
+		// lo que es seguro es que se borran las privadas.
+		if ((readingActivityClientEntrada.getGroup() != null)
+				&& ((readingActivitySalida.getGroup() == null) || (readingActivityClientEntrada
+						.getGroup().getId().equals(readingActivitySalida
+						.getGroup().getId()))))
+			readingActivitySalida
+					.setGroup(findGroup(readingActivityClientEntrada.getGroup()
+							.getId()));
+
+		// Nombre
+		readingActivitySalida.setName(readingActivityClientEntrada.getName());
+
+		// Catalogo Abierto = Si Cambia Borrar las anotaciones asociadas a la
+		// actividad.
+		if ((readingActivityClientEntrada.getOpenCatalogo() != null)
+				&& ((readingActivitySalida.getOpenCatalogo() == null) || (readingActivityClientEntrada
+						.getOpenCatalogo().getId().equals(readingActivitySalida
+						.getOpenCatalogo().getId()))))
+			readingActivitySalida
+					.setOpenCatalogo(findCatalogo(readingActivityClientEntrada
+							.getOpenCatalogo().getId()));
+
+		// Template
+		if ((readingActivityClientEntrada.getTemplate() != null)
+				&& ((readingActivitySalida.getTemplate() == null) || (readingActivityClientEntrada
+						.getTemplate().getId().equals(readingActivitySalida
+						.getTemplate().getId()))))
+			readingActivitySalida
+					.setTemplate(findTemplate(readingActivityClientEntrada
+							.getTemplate().getId()));
+
+		// Visualizacion
+		readingActivitySalida.setVisualization(readingActivityClientEntrada
+				.getVisualization());
+
 		return readingActivitySalida;
 	}
 
-	private ReadingActivity findReadingActivity(Long id) throws ReadingActivityNotFoundException {
+	private ReadingActivity findReadingActivity(Long id)
+			throws ReadingActivityNotFoundException {
 		EntityManager entityManager = emf.createEntityManager();
 		ReadingActivity a = entityManager.find(ReadingActivity.class, id);
 		if (a == null) {
@@ -2701,7 +2770,7 @@ public class GWTServiceImpl extends RemoteServiceServlet implements GWTService {
 		entityManager.close();
 		return a;
 	}
-	
+
 	private Template findTemplate(Long id) throws TemplateNotFoundException {
 		EntityManager entityManager = emf.createEntityManager();
 		Template a = entityManager.find(Template.class, id);
@@ -2712,61 +2781,60 @@ public class GWTServiceImpl extends RemoteServiceServlet implements GWTService {
 		entityManager.close();
 		return a;
 	}
-	
-//	private void saveStudent(StudentClient pClient)
-//			throws UserNotFoundException {
-//		boolean isNew = false;
-//		Student oldStudent = null;
-//		UserApp user = null;
-//		try {
-//			if (pClient.getId() != null) {
-//				oldStudent = findStudent(pClient.getId());
-//			} else {
-//
-//				try {
-//					user = loadUserByEmail(pClient.getEmail());
-//				} catch (UserNotFoundException e) {
-//					user = null;
-//				}
-//
-//				if (user != null) {
-//					throw new GeneralException(
-//							"Email already registered in the application");
-//				}
-//				Date now = new Date();
-//				Calendar calendar = Calendar.getInstance();
-//				now = calendar.getTime();
-//				saveUser(new Student(pClient.getId(), pClient.getFirstName(),
-//						pClient.getLastName(), pClient.getEmail(),
-//						pClient.getPassword(), now));
-//				isNew = true;
-//			}
-//
-//		} catch (StudentNotFoundException e) {
-//			// TODO Auto-generated catch block
-//			e.printStackTrace();
-//		} catch (GeneralException e) {
-//			// TODO Auto-generated catch block
-//			e.printStackTrace();
-//		}
-//		if (!isNew) {
-//			boolean isThereAChange = comparareStudents(oldStudent, pClient);
-//			if (isThereAChange) {
-//				try {
-//					saveUser(oldStudent);
-//				} catch (GeneralException e) {
-//					// TODO Auto-generated catch block
-//					e.printStackTrace();
-//				}
-//			}
-//		}
-//	}
+
+	// private void saveStudent(StudentClient pClient)
+	// throws UserNotFoundException {
+	// boolean isNew = false;
+	// Student oldStudent = null;
+	// UserApp user = null;
+	// try {
+	// if (pClient.getId() != null) {
+	// oldStudent = findStudent(pClient.getId());
+	// } else {
+	//
+	// try {
+	// user = loadUserByEmail(pClient.getEmail());
+	// } catch (UserNotFoundException e) {
+	// user = null;
+	// }
+	//
+	// if (user != null) {
+	// throw new GeneralException(
+	// "Email already registered in the application");
+	// }
+	// Date now = new Date();
+	// Calendar calendar = Calendar.getInstance();
+	// now = calendar.getTime();
+	// saveUser(new Student(pClient.getId(), pClient.getFirstName(),
+	// pClient.getLastName(), pClient.getEmail(),
+	// pClient.getPassword(), now));
+	// isNew = true;
+	// }
+	//
+	// } catch (StudentNotFoundException e) {
+	// // TODO Auto-generated catch block
+	// e.printStackTrace();
+	// } catch (GeneralException e) {
+	// // TODO Auto-generated catch block
+	// e.printStackTrace();
+	// }
+	// if (!isNew) {
+	// boolean isThereAChange = comparareStudents(oldStudent, pClient);
+	// if (isThereAChange) {
+	// try {
+	// saveUser(oldStudent);
+	// } catch (GeneralException e) {
+	// // TODO Auto-generated catch block
+	// e.printStackTrace();
+	// }
+	// }
+	// }
+	// }
 
 	@Override
 	public void saveLanguage(Language language) throws GeneralException {
 		EntityManager entityManager = emf.createEntityManager();
 
-		
 		try {
 			userTransaction.begin();
 			if (language.getId() == null) {
@@ -2787,8 +2855,6 @@ public class GWTServiceImpl extends RemoteServiceServlet implements GWTService {
 
 	}
 
-	
-	
 	@Override
 	public void deleteLanguage(Long languageId) throws GeneralException {
 		EntityManager entityManager = emf.createEntityManager();

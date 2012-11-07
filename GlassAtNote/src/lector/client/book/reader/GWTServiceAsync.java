@@ -106,9 +106,6 @@ public interface GWTServiceAsync {
 	void getAnnotationsNumberByTagName(String annotationTagName,
 			AsyncCallback<Integer> callback);
 
-	void getTagNamesByIds(List<Long> typeIds,
-			AsyncCallback<List<String>> callback);
-
 	void renameType(Long typeIds, String newTagName, AsyncCallback<Void> callback);
 
 	void moveFolderDB(Long typeCategoryId, Long typeCategoryFromId,
@@ -180,11 +177,6 @@ public interface GWTServiceAsync {
 	void getVisbibleCatalogsByProfessorId(Long professorId,
 			AsyncCallback<List<CatalogoClient>> callback);
 
-	void getTagsByNameAndCatalogId(List<String> typeNames, Long catalogId,
-			AsyncCallback<List<TypeClient>> callback);
-
-	void getTagsByIds(List<Long> typeIds,
-			AsyncCallback<List<TypeClient>> callback);
 
 	void getSonsFromFolderDB(Long typeCategoryId,
 			AsyncCallback<List<EntryClient>> callback);
@@ -269,6 +261,15 @@ public interface GWTServiceAsync {
 
 	void getAnnotationSchemaByCatalogId(Long catalogId,
 			AsyncCallback<List<AnnotationSchema>> callback);
+
+	void getTypesByNameAndCatalogId(List<String> typeNames, Long catalogId,
+			AsyncCallback<List<TypeClient>> callback);
+
+	void getTypesByIds(List<Long> typeIds,
+			AsyncCallback<List<TypeClient>> callback);
+
+	void getTypesNamesByIds(List<Long> typeIds,
+			AsyncCallback<List<String>> callback);
 
 	
 }

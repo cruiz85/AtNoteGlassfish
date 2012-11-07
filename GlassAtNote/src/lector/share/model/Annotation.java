@@ -33,7 +33,7 @@ public class Annotation implements Serializable {
 	@OneToMany(mappedBy = "annotation", cascade = CascadeType.ALL)
 	private List<AnnotationThread> threads = new ArrayList<AnnotationThread>();
 	@OneToMany(cascade = CascadeType.ALL)
-	private ArrayList<TextSelector> textSelectors;
+	private List<TextSelector> textSelectors;
 	private String comment;
 	private Long bookId;
 
@@ -56,7 +56,7 @@ public class Annotation implements Serializable {
 	}
 
 	public Annotation(UserApp creator, ReadingActivity activity,
-			ArrayList<TextSelector> textSelectors, String comment, Long bookId,
+			List<TextSelector> textSelectors, String comment, Long bookId,
 			short visibility, short updatability, Integer pageNumber,
 			List<Tag> tags, boolean isEditable) {
 		super();
@@ -96,11 +96,11 @@ public class Annotation implements Serializable {
 		this.pageNumber = pageNumber;
 	}
 
-	public ArrayList<TextSelector> getTextSelectors() {
+	public List<TextSelector> getTextSelectors() {
 		return textSelectors;
 	}
 
-	public void setTextSelectors(ArrayList<TextSelector> textSelectors) {
+	public void setTextSelectors(List<TextSelector> textSelectors) {
 		this.textSelectors = textSelectors;
 	}
 
