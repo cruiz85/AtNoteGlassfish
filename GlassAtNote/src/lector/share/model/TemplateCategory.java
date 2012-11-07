@@ -28,7 +28,7 @@ public class TemplateCategory implements Serializable//, Comparable<TemplateCate
 	private Long id;
 	private String name;
 	@ManyToOne(fetch= FetchType.LAZY)
-	@JoinColumn(name = "fatherId",insertable=false, updatable=false)
+	//@JoinColumn(name = "fatherId",insertable=false, updatable=false)
 	private TemplateCategory father;
 	@OneToMany(mappedBy = "father", cascade = CascadeType.ALL)
 	//@OneToMany

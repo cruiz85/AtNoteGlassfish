@@ -91,7 +91,7 @@ public class ServiceManagerUtils {
 				produceUserClient(a.getCreator()), a.getActivity().getId(),
 				produceTextSelectors(a.getTextSelectors()), a.getComment(),
 				a.getBookId(), visibility, updatability, a.getPageNumber(),
-				produceTypeClientsLazy(a.getTags()), a.isEditable());
+				produceTypeClientsLazy(a.getTags()), a.isEditable(), a.getCreatedDate());
 	}
 
 	public static List<TypeClient> produceTypeClientsLazy(List<Tag> tags) {

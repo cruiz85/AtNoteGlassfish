@@ -3038,7 +3038,7 @@ public class GWTServiceImpl extends RemoteServiceServlet implements GWTService {
 	public List<BookClient> getBookClientsByIds(List<Long> ids)
 			throws BookNotFoundException, GeneralException {
 		EntityManager entityManager = emf.createEntityManager();
-		List<Book> list;
+		List<Book> list = new ArrayList<Book>();
 		String sql = "SELECT r FROM Book r WHERE r.id=" + ids.get(0);
 		for (int i = 1; i < ids.size(); i++) {
 			sql += "OR r.id=" + ids.get(i);
@@ -3052,7 +3052,7 @@ public class GWTServiceImpl extends RemoteServiceServlet implements GWTService {
 					+ e.getMessage(), e.getStackTrace());
 
 		}
-		if (list == null || list.isEmpty()) {
+		if (list == null) {
 			// logger.error ("Exception in method loadBookById: ", e)
 			throw new BookNotFoundException(
 					"Book not found in method loadBookById");
