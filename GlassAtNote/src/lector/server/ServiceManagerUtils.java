@@ -103,7 +103,8 @@ public class ServiceManagerUtils {
 	}
 
 	public static TypeClient produceTypeClientLazy(Tag t) {
-		return new TypeClient(t.getId(), null, t.getName(), null);
+		return new TypeClient(t.getId(), null, t.getName(),
+				new CatalogoClient(t.getCatalog().getId(), true, null, "Catalog"));
 	}
 
 	public static CatalogoClient produceCatalogoClient(Catalogo catalog) {

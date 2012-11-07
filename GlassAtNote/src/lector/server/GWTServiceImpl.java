@@ -9,9 +9,11 @@ import java.net.URL;
 import java.net.URLConnection;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Collection;
 import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
+import java.util.ListIterator;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.annotation.Resource;
@@ -1398,21 +1400,39 @@ public class GWTServiceImpl extends RemoteServiceServlet implements GWTService {
 	@Override
 	public void saveAnnotationThread(
 			AnnotationThreadClient annotationThreadClient) {
-		AnnotationThread oldAnnotationThread = new AnnotationThread();
+		AnnotationThread oldAnnotationThread;
 		if (annotationThreadClient.getId() != null) {
 			try {
 				oldAnnotationThread = findAnnotationThread(annotationThreadClient
 						.getId());
+				seeChangesInAnnotationThread(oldAnnotationThread,
+						annotationThreadClient);
+				saveAnnotationThread(oldAnnotationThread);
 
 			} catch (AnnotationThreadNotFoundException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 
-		}
-		seeChangesInAnnotationThread(oldAnnotationThread,
-				annotationThreadClient);
-		saveAnnotationThread(oldAnnotationThread);
+		}else 
+		{
+			try {
+			Date now = new Date();
+			Calendar calendar = Calendar.getInstance();
+			now = calendar.getTime();
+			Annotation Anot;
+			Anot = findAnnotation(annotationThreadClient.getAnnotation().getId());
+			oldAnnotationThread=new AnnotationThread(null,
+					new ArrayList<AnnotationThread>(),Anot ,
+					annotationThreadClient.getComment(), annotationThreadClient.getUserId(), annotationThreadClient.getUserName(), now);
+			Anot.getThreads().add(oldAnnotationThread);
+			saveAnnotation(Anot);
+			} catch (AnnotationNotFoundException e) {
+				e.printStackTrace();
+			}
+			
+	}
+		
 	}
 
 	private void seeChangesInAnnotationThread(

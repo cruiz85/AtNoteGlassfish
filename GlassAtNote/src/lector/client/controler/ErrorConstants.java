@@ -71,5 +71,6 @@ public class ErrorConstants {
 	public static String ERROR_REMOVING_BOOK="Error deleting Book from user";
 	public static String ERROR_LOADING_THREAD1 = "Error loading Thread for annotation : ";
 	public static String ERROR_LOADING_THREAD2 = " for Thread : ";
+	public static String ERROR_RELOADING_USER_REFRESH="Error reloading user changes, window will be refresh for update the user ";
 	
 }

@@ -52,6 +52,7 @@ public class EditorTagsAndTypes implements EntryPoint {
 	private static MenuBar menuBar_2;
 	private static FinderKeys finder;
 	private static CatalogoClient catalogo;
+	private VerticalPanel label = new VerticalPanel();;
 
 	public EditorTagsAndTypes() {
 		menuBar_2 = new MenuBar(false);
@@ -65,7 +66,7 @@ public class EditorTagsAndTypes implements EntryPoint {
 		menuBar_2.addItem(mntmNewItem_2);
 
 		menuBar_3 = new MenuBar(false);
-		Selected.add(menuBar_3);
+		label.add(menuBar_3);
 		menuBar_3.setWidth("100%");
 
 		MenuItem mntmSelected = new MenuItem("Selected", false, (Command) null);
@@ -148,7 +149,7 @@ public class EditorTagsAndTypes implements EntryPoint {
 				if (Unir >= 3) {
 
 					ArrayList<BotonesStackPanelAdministracionMio> ListaUnir = new ArrayList<BotonesStackPanelAdministracionMio>();
-					for (int i = 1; i < Unir; i++) {
+					for (int i = 0; i < Unir; i++) {
 						ListaUnir
 								.add(((BotonesStackPanelAdministracionMio) Selected
 										.getWidget(i)));
@@ -174,7 +175,7 @@ public class EditorTagsAndTypes implements EntryPoint {
 				if (!(finder.getTopPath() instanceof File))
 				{
 				int mover = Selected.getWidgetCount();
-				for (int i = 1; i < mover; i++) {
+				for (int i = 0; i < mover; i++) {
 
 					BotonesStackPanelAdministracionMio Delete = ((BotonesStackPanelAdministracionMio) Selected
 							.getWidget(i));
@@ -227,7 +228,7 @@ public class EditorTagsAndTypes implements EntryPoint {
 
 			public void execute() {
 				int renombrar = Selected.getWidgetCount();
-				for (int i = 1; i < renombrar; i++) {
+				for (int i = 0; i < renombrar; i++) {
 
 					BotonesStackPanelAdministracionMio Renombrar = ((BotonesStackPanelAdministracionMio) Selected
 							.getWidget(i));
@@ -251,7 +252,7 @@ public class EditorTagsAndTypes implements EntryPoint {
 
 			public void execute() {
 				int Borrar = Selected.getWidgetCount();
-				for (int i = 1; i < Borrar; i++) {
+				for (int i = 0; i < Borrar; i++) {
 
 					BotonesStackPanelAdministracionMio Delete = ((BotonesStackPanelAdministracionMio) Selected
 							.getWidget(i));
@@ -362,25 +363,29 @@ public class EditorTagsAndTypes implements EntryPoint {
 				splitLayoutPanel.addEast(simplePanel_1, 300.0);
 				simplePanel_1.setSize("100%", "100%");
 				
-				HorizontalPanel horizontalPanel = new HorizontalPanel();
-				simplePanel_1.setWidget(horizontalPanel);
-				horizontalPanel.setSize("100%", "100%");
-				
-				HorizontalPanel horizontalPanel_1 = new HorizontalPanel();
-				horizontalPanel_1.setSpacing(10);
-				horizontalPanel_1.setStyleName("AzulTransparente");
-				horizontalPanel.add(horizontalPanel_1);
-				horizontalPanel_1.setWidth("100%");
-				
-				HorizontalPanel horizontalPanel_2 = new HorizontalPanel();
-				horizontalPanel_2.setStyleName("BlancoTransparente");
-				horizontalPanel_2.setSpacing(6);
-				horizontalPanel_1.add(horizontalPanel_2);
-				horizontalPanel_2.setWidth("100%");
-				horizontalPanel_2.add(Selected);
-				Selected.setWidth("100%");
-				
-						Selected.setHorizontalAlignment(HasHorizontalAlignment.ALIGN_CENTER);
+				HorizontalPanel inicial = new HorizontalPanel();
+				simplePanel_1.setWidget(inicial);
+				inicial.setSize("100%", "100%");
+						
+						
+						inicial.add(label);
+						label.setWidth("100%");
+						
+						HorizontalPanel horizontalPanel_1 = new HorizontalPanel();
+						label.add(horizontalPanel_1);
+						horizontalPanel_1.setSpacing(10);
+						horizontalPanel_1.setStyleName("AzulTransparente");
+						horizontalPanel_1.setWidth("100%");
+						
+						HorizontalPanel horizontalPanel_2 = new HorizontalPanel();
+						horizontalPanel_2.setStyleName("BlancoTransparente");
+						horizontalPanel_2.setSpacing(6);
+						horizontalPanel_1.add(horizontalPanel_2);
+						horizontalPanel_2.setWidth("100%");
+						horizontalPanel_2.add(Selected);
+						Selected.setWidth("100%");
+						
+								Selected.setHorizontalAlignment(HasHorizontalAlignment.ALIGN_CENTER);
 
 		splitLayoutPanel.add(Actual);
 
@@ -395,7 +400,7 @@ public class EditorTagsAndTypes implements EntryPoint {
 		//
 		// Asincronino
 		Selected.clear();
-		Selected.add(menuBar_3);
+	//	Selected.add(menuBar_3);
 		FinderKeys.setButtonTipo(new BotonesStackPanelAdministracionMio(
 				"prototipo", new VerticalPanel(), Selected, finder));
 		

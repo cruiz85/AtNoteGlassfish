@@ -102,9 +102,14 @@ public class NewAdminCatalogs implements EntryPoint {
 		horizontalPanel.add(horizontalPanel_1);
 		horizontalPanel_1.setWidth("420px");
 		
+		HorizontalPanel horizontalPanel_2 = new HorizontalPanel();
+		horizontalPanel_2.setSpacing(6);
+		horizontalPanel_2.setStyleName("BlancoTransparente");
+		horizontalPanel_1.add(horizontalPanel_2);
+		
 		Actual = new VerticalPanel();
+		horizontalPanel_2.add(Actual);
 		Actual.setStyleName("BlancoTransparente");
-		horizontalPanel_1.add(Actual);
 		Actual.setWidth("400px");
 		Actual.setHorizontalAlignment(HasHorizontalAlignment.ALIGN_CENTER);
 		

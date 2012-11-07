@@ -11,8 +11,10 @@ import lector.client.controler.InformationConstants;
 import lector.client.logger.Logger;
 import lector.client.login.ActualUser;
 import lector.client.login.UserEdition;
+import lector.client.reader.LoadingPanel;
 import lector.share.model.client.GoogleBookClient;
 import lector.share.model.client.ProfessorClient;
+import lector.share.model.client.UserClient;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.user.client.rpc.AsyncCallback;
@@ -71,11 +73,14 @@ public class VisorSearcher extends PopupPanel {
 				
 				//Window.alert("Works");
 				ProfessorClient PC=(ProfessorClient) ActualUser.getUser();
+				LoadingPanel.getInstance().center();
+				LoadingPanel.getInstance().setLabelTexto(InformationConstants.SAVING);
 				bookReaderServiceHolder.addBookToUser(Entrada,PC.getId(), new AsyncCallback<Void>() {
 					
 					@Override
 					public void onSuccess(Void result) {
-						Controlador.change2BookAdminstrator();
+						realoadUser();
+						
 						Yo.hide();
 						Logger.GetLogger()
 						.info(Yo.getClass().toString(),
@@ -83,8 +88,33 @@ public class VisorSearcher extends PopupPanel {
 						
 					}
 					
+					private void realoadUser() {
+						
+						bookReaderServiceHolder.loadUserById(ActualUser.getUser().getId(), new AsyncCallback<UserClient>() {
+							
+							@Override
+							public void onSuccess(UserClient result) {
+								LoadingPanel.getInstance().hide();
+								ActualUser.setUser(result);
+								Controlador.change2BookAdminstrator();
+
+								
+							}
+							
+							@Override
+							public void onFailure(Throwable caught) {
+								LoadingPanel.getInstance().hide();
+								Window.alert(ErrorConstants.ERROR_RELOADING_USER_REFRESH);
+								Window.Location.reload();
+								
+							}
+						});
+						
+					}
+
 					@Override
 					public void onFailure(Throwable caught) {
+						LoadingPanel.getInstance().hide();
 						Window.alert(ErrorConstants.ERROR_SAVING_BOOK1+Entrada.getTitle()+ErrorConstants.ERROR_SAVING_BOOK2+ActualUser.getUser().getEmail());
 						Logger.GetLogger()
 						.severe(Yo.getClass().toString(),
