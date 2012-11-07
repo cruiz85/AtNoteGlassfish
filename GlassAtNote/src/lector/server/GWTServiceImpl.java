@@ -951,6 +951,7 @@ public class GWTServiceImpl extends RemoteServiceServlet implements GWTService {
 						annotationClient.getBookId(), visibility, updatability,
 						annotationClient.getPageNumber(), tags,
 						annotationClient.isEditable());
+				saveAnnotation(oldAnnotation);
 			} catch (UserNotFoundException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
