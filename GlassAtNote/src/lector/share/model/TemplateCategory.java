@@ -20,19 +20,15 @@ import javax.persistence.Transient;
 
 @Entity
 @Table(name = "template_category")
-public class TemplateCategory implements Serializable//, Comparable<TemplateCategory>
-{
+public class TemplateCategory implements Serializable{
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	private String name;
-	@ManyToOne(fetch= FetchType.LAZY)
-	//@JoinColumn(name = "fatherId",insertable=false, updatable=false)
+	@ManyToOne
 	private TemplateCategory father;
 	@OneToMany(mappedBy = "father", cascade = CascadeType.ALL)
-	//@OneToMany
-//	@JoinColumn(name="fatherId")
 	private List<TemplateCategory> subCategories = new LinkedList<TemplateCategory>();
 	@Transient
 	private ArrayList<Long> annotationsIds = new ArrayList<Long>();
@@ -40,7 +36,7 @@ public class TemplateCategory implements Serializable//, Comparable<TemplateCate
 	@ManyToOne
 	@JoinColumn
 	private Template template;
-	private Integer order = 0;
+
 
 	public TemplateCategory() {
 		annotationsIds = new ArrayList<Long>();
@@ -58,13 +54,12 @@ public class TemplateCategory implements Serializable//, Comparable<TemplateCate
 		this.template = template;
 	}
 
-	public TemplateCategory(String name, Integer order,
-			TemplateCategory father, Template template) {
+	public TemplateCategory(String name,TemplateCategory father, Template template) {
 		super();
 		this.name = name;
 		this.father = father;
 		this.template = template;
-		this.order = order;
+
 	}
 
 	public ArrayList<Long> getAnnotationsIds() {
@@ -91,14 +86,6 @@ public class TemplateCategory implements Serializable//, Comparable<TemplateCate
 		this.name = name;
 	}
 
-	public Integer getOrder() {
-		return order;
-	}
-
-	public void setOrder(Integer order) {
-		this.order = order;
-	}
-
 	public Long getId() {
 		return id;
 	}
@@ -123,7 +110,4 @@ public class TemplateCategory implements Serializable//, Comparable<TemplateCate
 		this.subCategories = subCategories;
 	}
 
-	public int compareTo(TemplateCategory anotherInstance) {
-		return this.order - anotherInstance.order;
-	}
 }

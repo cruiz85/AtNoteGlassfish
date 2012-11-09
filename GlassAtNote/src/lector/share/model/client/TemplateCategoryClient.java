@@ -14,8 +14,7 @@ public class TemplateCategoryClient implements IsSerializable{
 	private ArrayList<Long> annotationsIds = new ArrayList<Long>();
 
 	private TemplateClient template;
-	private Integer order = 0;
-
+	
 	public TemplateCategoryClient() {
 		annotationsIds = new ArrayList<Long>();
 	}
@@ -33,14 +32,13 @@ public class TemplateCategoryClient implements IsSerializable{
 	}
 
 	public TemplateCategoryClient(Long id, String name,
-			ArrayList<Long> annotationsIds, TemplateClient template,
-			Integer order) {
+			ArrayList<Long> annotationsIds, TemplateClient template) {
 		super();
 		this.id = id;
 		this.name = name;
 		this.annotationsIds = annotationsIds;
 		this.template = template;
-		this.order = order;
+	
 	}
 
 	public TemplateCategoryClient(String name, TemplateCategoryClient father,
@@ -73,14 +71,6 @@ public class TemplateCategoryClient implements IsSerializable{
 
 	public void setName(String name) {
 		this.name = name;
-	}
-
-	public Integer getOrder() {
-		return order;
-	}
-
-	public void setOrder(Integer order) {
-		this.order = order;
 	}
 
 	public Long getId() {

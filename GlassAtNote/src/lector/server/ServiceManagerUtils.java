@@ -379,8 +379,7 @@ public class ServiceManagerUtils {
 
 		TemplateCategoryClient templateCategoryClient = new TemplateCategoryClient(
 				templateCategory.getId(), templateCategory.getName(),
-				templateCategory.getAnnotationsIds(), templateClient,
-				templateCategory.getOrder());
+				templateCategory.getAnnotationsIds(), templateClient);
 		templateCategoryClient.setFather(father);
 
 		return null;

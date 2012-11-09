@@ -221,8 +221,7 @@ public class ExportServiceImpl extends RemoteServiceServlet implements
 						.getFather().getId());
 			}
 			TemplateCategory templateCategory = new TemplateCategory(
-					templateCategoryClient.getName(),
-					templateCategoryClient.getOrder(), father, template);
+					templateCategoryClient.getName(), father, template);
 			saveTemplateCategory(templateCategory);
 		} catch (TemplateNotFoundException e) {
 			// TODO Auto-generated catch block
@@ -295,9 +294,6 @@ public class ExportServiceImpl extends RemoteServiceServlet implements
 				}
 				TemplateCategory fromFather = templateCategory.getFather();
 				fromFather.getSubCategories().remove(templateCategory);
-				updateOrderToLeftBrothers(fromFather.getSubCategories(),
-						templateCategory.getOrder());
-				templateCategory.setOrder(template.getCategories().size() + 1);
 				templateCategory.setFather(newFather);
 				persistObjectsForCategoryMove(template, null, fromFather);
 			} else {
@@ -305,16 +301,6 @@ public class ExportServiceImpl extends RemoteServiceServlet implements
 					newFather.getSubCategories().add(templateCategory);
 				}
 				TemplateCategory fromFather = templateCategory.getFather();
-				if (fromFather == null) {
-					updateOrderToLeftBrothers(template.getCategories(),
-							templateCategory.getOrder());
-
-				} else {
-					updateOrderToLeftBrothers(fromFather.getSubCategories(),
-							templateCategory.getOrder());
-				}
-				templateCategory
-						.setOrder(newFather.getSubCategories().size() + 1);
 				templateCategory.setFather(newFather);
 				persistObjectsForCategoryMove(template, newFather, fromFather);
 			}
@@ -328,20 +314,20 @@ public class ExportServiceImpl extends RemoteServiceServlet implements
 
 	}
 
-	private void updateOrderToLeftBrothers(List<TemplateCategory> categories,
-			int leavingWeight) {
-	//	Collections.sort(categories);
-		updateOrder(categories, leavingWeight);
-	}
+//	private void updateOrderToLeftBrothers(List<TemplateCategory> categories,
+//			int leavingWeight) {
+//	//	Collections.sort(categories);
+//		updateOrder(categories, leavingWeight);
+//	}
 
-	private void updateOrder(List<TemplateCategory> categories, int weight) {
-
-		for (int i = weight - 1; i < categories.size(); i++) {
-			categories.get(i).setOrder(categories.get(i).getOrder() - 1);
-
-		}
-
-	}
+//	private void updateOrder(List<TemplateCategory> categories, int weight) {
+//
+//		for (int i = weight - 1; i < categories.size(); i++) {
+//			categories.get(i).setOrder(categories.get(i).getOrder() - 1);
+//
+//		}
+//
+//	}
 
 	@Override
 	public Long deleteTemplateCategory(Long templateCategoryId) {
