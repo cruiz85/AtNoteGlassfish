@@ -330,9 +330,20 @@ public class ExportServiceImpl extends RemoteServiceServlet implements
 //	}
 
 	@Override
-	public Long deleteTemplateCategory(Long templateCategoryId) {
-		// TODO Auto-generated method stub
-		return null;
+	public void deleteTemplateCategory(Long templateCategoryId) throws GeneralException {
+		EntityManager entityManager = emf.createEntityManager();
+
+		try {
+			userTransaction.begin();
+			entityManager.createQuery(
+					"DELETE FROM TemplateCategory s WHERE s.id=" + templateCategoryId)
+					.executeUpdate();
+			userTransaction.commit();
+		} catch (Exception e) {
+			ServiceManagerUtils.rollback(userTransaction);
+			throw new GeneralException("Exception in method deleteTemplateCategoryById"
+					+ e.getMessage(), e.getStackTrace());
+		}
 	}
 
 	@Override

@@ -24,6 +24,13 @@
 		<servlet-name>Upload</servlet-name>
 		<servlet-class>lector.server.Upload</servlet-class>
 	</servlet>
+	<!-- nuevo upload -->
+	<servlet>
+        <description></description>
+        <display-name>UploadServlet</display-name>
+        <servlet-name>UploadServlet</servlet-name>
+        <servlet-class>lector.server.UploadServlet</servlet-class>
+    </servlet>
 	<servlet>
 		<servlet-name>Serve</servlet-name>
 		<servlet-class>lector.server.Serve</servlet-class>
@@ -32,6 +39,10 @@
 		<servlet-name>Upload</servlet-name>
 		<url-pattern>/upload</url-pattern>
 	</servlet-mapping>
+	<servlet-mapping>
+        <servlet-name>UploadServlet</servlet-name>
+        <url-pattern>/UploadServlet</url-pattern>
+    </servlet-mapping>
 	<servlet-mapping>
 		<servlet-name>Serve</servlet-name>
 		<url-pattern>/serve</url-pattern>
