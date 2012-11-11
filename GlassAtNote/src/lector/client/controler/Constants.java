@@ -28,6 +28,8 @@ public class Constants {
 	public static String BLOB_AUTHOR = "author";
 	public static String BLOB_PUBLISHED_YEAR = "publishedyear";
 	public static String BLOB_TITLE = "title";
+	public static String ISBN = "ISBN";
+	public static String PAGES_COUNT = "pagesCount";
 	
 	// VISUALIZACION
 	public static String VISUAL_ARBOL ="Visualization in Tree";

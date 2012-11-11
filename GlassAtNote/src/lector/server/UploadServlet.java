@@ -1,12 +1,18 @@
 package lector.server;
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
  
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
+import lector.client.controler.Constants;
+import lector.share.model.LocalBook;
+import lector.share.model.Professor;
+import lector.share.model.ProfessorNotFoundException;
  
 import org.apache.commons.fileupload.FileItem;
 import org.apache.commons.fileupload.FileUploadException;
@@ -20,9 +26,10 @@ public class UploadServlet extends javax.servlet.http.HttpServlet implements
     private static final String DATA_DIRECTORY = "data";
     private static final int MAX_MEMORY_SIZE = 1024 * 1024 * 2;
     private static final int MAX_REQUEST_SIZE = 1024 * 1024;
- 
+    private GWTServiceImpl gwtServiceImpl = new GWTServiceImpl();
     protected void doPost(HttpServletRequest request,
             HttpServletResponse response) throws ServletException, IOException {
+    	
         // Check that we have a file upload request
         boolean isMultipart = ServletFileUpload.isMultipartContent(request);
  
@@ -49,7 +56,7 @@ public class UploadServlet extends javax.servlet.http.HttpServlet implements
  
         // Set overall request size constraint
         upload.setSizeMax(MAX_REQUEST_SIZE);
-        
+        List<String> webLinks = new ArrayList<String>();
         try {
             // Parse the request
             List items = upload.parseRequest(request);
@@ -64,15 +71,28 @@ public class UploadServlet extends javax.servlet.http.HttpServlet implements
                     
                     // saves the file to upload directory
                     item.write(uploadedFile);
+                    webLinks.add(filePath);
                 }
             }
-            
+            String publishedYear = request.getParameter(Constants.BLOB_PUBLISHED_YEAR);
+    		String title = request.getParameter(Constants.BLOB_TITLE);
+    		String isbn = request.getParameter(Constants.ISBN);
+    		String pagesCount = request.getParameter(Constants.PAGES_COUNT);
+    		String author = request.getParameter(Constants.BLOB_AUTHOR);
+    		Long userAppId = Long.parseLong(request
+    				.getParameter(Constants.BLOB_UPLOADER));
+    		Professor professor = gwtServiceImpl.findProfessor(userAppId);
+    		LocalBook localBook = new LocalBook(professor, author, isbn, pagesCount, publishedYear, title);
+    		professor.getBooks().add(localBook);
+    		gwtServiceImpl.saveUser((Professor)professor);
             // displays done.jsp page after upload finished
         //    getServletContext().getRequestDispatcher("/done.jsp").forward(request, response);
             
         } catch (FileUploadException ex) {
             throw new ServletException(ex);
-        } catch (Exception ex) {
+        } catch(ProfessorNotFoundException pnfe){
+        	
+        }catch (Exception ex) {
             throw new ServletException(ex);
         }       
     }

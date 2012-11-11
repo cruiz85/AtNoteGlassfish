@@ -281,7 +281,7 @@ public class GWTServiceImpl extends RemoteServiceServlet implements GWTService {
 		}
 	}
 
-	private void saveUser(UserApp user) throws GeneralException {
+	public void saveUser(UserApp user) throws GeneralException {
 		EntityManager entityManager = emf.createEntityManager();
 
 		try {
@@ -778,7 +778,7 @@ public class GWTServiceImpl extends RemoteServiceServlet implements GWTService {
 	}
 
 	// TODO LANZAR EXCEPCIÓN
-	private Professor findProfessor(Long id) throws ProfessorNotFoundException {
+	public Professor findProfessor(Long id) throws ProfessorNotFoundException {
 		EntityManager entityManager = emf.createEntityManager();
 		Professor a = entityManager.find(Professor.class, id);
 		if (a == null) {
