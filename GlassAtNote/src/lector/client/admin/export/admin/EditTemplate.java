@@ -204,7 +204,7 @@ public class EditTemplate implements EntryPoint {
 						{
 							LoadingPanel.getInstance().center();
 							LoadingPanel.getInstance().setLabelTexto(InformationConstants.SAVING);
-							exportServiceHolder.deleteTemplateCategory(TC.getT().getId(), new AsyncCallback<Long>() {
+							exportServiceHolder.deleteTemplateCategory(TC.getT().getId(), new AsyncCallback<Void>() {
 
 								public void onFailure(Throwable caught) {
 									LoadingPanel.getInstance().hide();
@@ -212,7 +212,7 @@ public class EditTemplate implements EntryPoint {
 									
 								}
 
-								public void onSuccess(Long result) {
+								public void onSuccess(Void result) {
 									
 									LoadingPanel.getInstance().hide();
 									PGT.refresh();
