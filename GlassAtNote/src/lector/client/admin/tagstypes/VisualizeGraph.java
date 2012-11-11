@@ -2,36 +2,37 @@ package lector.client.admin.tagstypes;
 
 import lector.client.book.reader.GWTService;
 import lector.client.book.reader.GWTServiceAsync;
-import lector.client.catalogo.grafo.PanelGrafo;
-import lector.client.controler.ErrorConstants;
-import lector.client.logger.Logger;
-import lector.client.reader.LoadingPanel;
+import lector.client.catalogo.OwnGraph.PanelGrafo;
 import lector.share.model.client.CatalogoClient;
 
 import com.google.gwt.user.client.Window;
-import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.DialogBox;
-import com.google.gwt.user.client.ui.HasHorizontalAlignment;
-import com.google.gwt.user.client.ui.HasVerticalAlignment;
-import com.google.gwt.user.client.ui.HorizontalPanel;
-import com.google.gwt.user.client.ui.PopupPanel;
-import com.google.gwt.user.client.ui.SimplePanel;
+import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.ScrollPanel;
 import com.google.gwt.user.client.ui.DockLayoutPanel;
+import com.google.gwt.user.client.ui.VerticalPanel;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.dom.client.Style.Unit;
 import com.google.gwt.user.client.ui.MenuBar;
 import com.google.gwt.user.client.ui.MenuItem;
 import com.google.gwt.user.client.Command;
+import com.google.gwt.user.client.ui.HorizontalPanel;
+import com.google.gwt.user.client.ui.HasHorizontalAlignment;
+import com.google.gwt.user.client.ui.HasVerticalAlignment;
 
 public class VisualizeGraph extends DialogBox {
 	
 	static GWTServiceAsync bookReaderServiceHolder = GWT
 			.create(GWTService.class);
 	private ScrollPanel simplePanel;
+	private PanelGrafo PG;
+	private VerticalPanel VP;
+	private CatalogoClient Catalog;
 	
 	public VisualizeGraph(CatalogoClient long1) {
+
 		super(true);
+		Catalog=long1;
 		setSize("100%", "100%");
 		setHTML("Graph");
 		DockLayoutPanel dockLayoutPanel = new DockLayoutPanel(Unit.EM);
@@ -51,8 +52,17 @@ public class VisualizeGraph extends DialogBox {
 		simplePanel = new ScrollPanel();
 		dockLayoutPanel.add(simplePanel);
 		simplePanel.setSize(Window.getClientWidth()-100+"px", Window.getClientHeight()-124+"px");
-		PanelGrafo PG=new PanelGrafo(long1);
-		simplePanel.add(PG);
+		
+		HorizontalPanel horizontalPanel = new HorizontalPanel();
+		horizontalPanel.setVerticalAlignment(HasVerticalAlignment.ALIGN_MIDDLE);
+		horizontalPanel.setHorizontalAlignment(HasHorizontalAlignment.ALIGN_CENTER);
+		simplePanel.setWidget(horizontalPanel);
+		horizontalPanel.setSize("100%", "100%");
+		PG=new PanelGrafo();
+		horizontalPanel.add(PG);
+
+
+		
 		
 //		bookReaderServiceHolder.loadCatalogById(long1.getId(), new AsyncCallback<CatalogoClient>() {
 //			
@@ -75,6 +85,13 @@ public class VisualizeGraph extends DialogBox {
 //		PanelFinderKey PFK=new PanelFinderKey(long1);
 //		simplePanel.add(PFK);
 		
+		
+	}
+
+	public void Lanza() {
+		
+		PG.Go(Catalog);
+		PG.Pinta();
 		
 	}
 

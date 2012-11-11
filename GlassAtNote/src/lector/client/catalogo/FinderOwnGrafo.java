@@ -1,28 +1,31 @@
 package lector.client.catalogo;
 
 
+import lector.client.catalogo.OwnGraph.PanelGrafo;
 import lector.client.catalogo.client.EntityCatalogElements;
-import lector.client.catalogo.grafo.PanelGrafo;
+
 import lector.client.reader.LoadingPanel;
 import lector.share.model.client.CatalogoClient;
 
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.user.client.ui.ScrollPanel;
 
-public class FinderGrafo extends Finder {
+public class FinderOwnGrafo extends Finder {
 
 
 	
 	//el finder del reading activity tiene lenguaje asociado
 	private PanelGrafo panelDelGrafo;
 	
-	public FinderGrafo(CatalogoClient C) {
+	public FinderOwnGrafo(CatalogoClient C) {
 		
 		this.C=C;
 		simplePanel.clear();
 		ScrollPanel SP=new ScrollPanel();
 		SP.setSize("100%", "100%");
-		panelDelGrafo = new PanelGrafo(C);
+		panelDelGrafo = new PanelGrafo();
+		panelDelGrafo.Go(C);
+		panelDelGrafo.Pinta();
 		simplePanel.setWidget(SP);
 		SP.setWidget(panelDelGrafo);
 		
@@ -30,15 +33,6 @@ public class FinderGrafo extends Finder {
 		
 	}
 
-	protected void SeleccionaLaRama() {
-		
-		panelDelGrafo.refresca(C.getId());
-
-		LoadingPanel.getInstance().hide();
-		
-	}
-
-	
 	
 	public boolean isInReadingActivity() {
 		return InReadingActivity;
@@ -74,7 +68,8 @@ public class FinderGrafo extends Finder {
 	
 @Override
 public void RefrescaLosDatos() {
-	SeleccionaLaRama();
+	panelDelGrafo.Go(C);
+	panelDelGrafo.Pinta();
 }
 
 

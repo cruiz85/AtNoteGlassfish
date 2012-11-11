@@ -177,7 +177,9 @@ public class Finder extends Composite {
 		ArbolDeNavegacion.setSize("100%", "100%");
 		TypeCategoryClient TCC=new TypeCategoryClient("NULL");
 		TCC.setId(Constants.CATALOGID);
-		trtmNewItem = new Node(new Folder(TCC, null, Constants.CATALOGID));
+		TypeCategoryClient T=new TypeCategoryClient(Constants.CATALOGID,new ArrayList<EntryClient>(), "NULL",
+				C, new ArrayList<EntryClient>());
+		trtmNewItem = new Node(new Folder(TCC, null,T));
 		trtmNewItem.setText("//");
 		ArbolDeNavegacion.addItem(trtmNewItem);
 		ActualRama=trtmNewItem;
@@ -215,14 +217,18 @@ public class Finder extends Composite {
 				for (EntryClient Hijo : Lista) {
 					if (Hijo instanceof TypeClient)
 					{
-						EntityCatalogElements entitynew=new File((TypeClient)Hijo, C, Constants.CATALOGID);	
+						TypeCategoryClient T=new TypeCategoryClient(Constants.CATALOGID,new ArrayList<EntryClient>(), C.getCatalogName(),
+								C, new ArrayList<EntryClient>());
+						EntityCatalogElements entitynew=new File((TypeClient)Hijo, C,T);	
 						Node A=new Node(entitynew);
 						A.setHTML("File.gif",entitynew.getName());
 						trtmNewItem.addItem(A);
 						trtmNewItem.setState(true,false);
 					}
 					else {
-						EntityCatalogElements entitynew=new Folder((TypeCategoryClient)Hijo, C, Constants.CATALOGID);	
+						TypeCategoryClient T=new TypeCategoryClient(Constants.CATALOGID,new ArrayList<EntryClient>(), C.getCatalogName(),
+								C, new ArrayList<EntryClient>());
+						EntityCatalogElements entitynew=new Folder((TypeCategoryClient)Hijo, C,T);	
 						Node A=new Node(entitynew);
 						A.setHTML("Folder.gif",entitynew.getName());					
 						trtmNewItem.addItem(A);
@@ -239,14 +245,14 @@ public class Finder extends Composite {
 				for (EntryClient Hijo : Lista) {
 					if (Hijo instanceof TypeClient)
 					{
-						EntityCatalogElements entitynew=new File((TypeClient)Hijo, C, Padre.getEntidad().getEntry().getId());	
+						EntityCatalogElements entitynew=new File((TypeClient)Hijo, C, Padre.getEntidad().getEntry());	
 						Node A=new Node(entitynew);
 						A.setHTML("File.gif",entitynew.getName());
 						Padre.addItem(A);
 						Padre.setState(true,false);
 					}
 					else {
-						EntityCatalogElements entitynew=new Folder((TypeCategoryClient)Hijo, C, Padre.getEntidad().getEntry().getId());	
+						EntityCatalogElements entitynew=new Folder((TypeCategoryClient)Hijo, C, Padre.getEntidad().getEntry());	
 						Node A=new Node(entitynew);
 						A.setHTML("Folder.gif",entitynew.getName());					
 						Padre.addItem(A);

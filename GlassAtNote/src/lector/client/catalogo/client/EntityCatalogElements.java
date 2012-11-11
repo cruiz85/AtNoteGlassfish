@@ -11,9 +11,9 @@ public abstract class EntityCatalogElements extends Entity implements Serializab
 
 	private CatalogoClient catalogId;
 	private EntryClient Entry;
-	private Long FatherIdCreador;
+	private EntryClient FatherIdCreador;
 
-	public EntityCatalogElements(String Namein, EntryClient Entry, CatalogoClient catalogClient,Long FatherIdCreador) {
+	public EntityCatalogElements(String Namein, EntryClient Entry, CatalogoClient catalogClient,EntryClient FatherIdCreador) {
 		super(Namein);
 		this.catalogId = catalogClient;
 		this.FatherIdCreador=FatherIdCreador;
@@ -36,11 +36,11 @@ public abstract class EntityCatalogElements extends Entity implements Serializab
 		Entry = entry;
 	}
 
-	public Long getFatherIdCreador() {
+	public EntryClient getFatherIdCreador() {
 		return FatherIdCreador;
 	}
 
-	public void setFatherIdCreador(Long fatherIdCreador) {
+	public void setFatherIdCreador(EntryClient fatherIdCreador) {
 		FatherIdCreador = fatherIdCreador;
 	}
 

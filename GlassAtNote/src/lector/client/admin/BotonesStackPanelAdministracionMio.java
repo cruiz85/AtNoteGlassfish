@@ -95,5 +95,9 @@ public class BotonesStackPanelAdministracionMio extends BotonesStackPanelMio{
 	public Finder getF() {
 		return F;
 	}
+	
+	public void setF(Finder f) {
+		F = f;
+	}
 
 }

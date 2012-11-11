@@ -1,12 +1,12 @@
 package lector.client.reader;
 
 
-import lector.client.admin.BotonesStackPanelAdministracionMio;
 import lector.client.book.reader.GWTService;
 import lector.client.book.reader.GWTServiceAsync;
 import lector.client.catalogo.Finder;
-import lector.client.catalogo.FinderGrafo;
 import lector.client.catalogo.FinderKeys;
+import lector.client.catalogo.FinderOwnGrafo;
+import lector.client.catalogo.OwnGraph.BotonGrafo;
 import lector.client.catalogo.client.Entity;
 import lector.client.catalogo.client.EntityCatalogElements;
 import lector.client.controler.Constants;
@@ -21,6 +21,7 @@ import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.DockLayoutPanel;
+import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.PopupPanel;
 import com.google.gwt.user.client.ui.SimplePanel;
 import com.google.gwt.user.client.ui.VerticalPanel;
@@ -42,12 +43,12 @@ public class PopUpFinderSelectorExistAnnotation extends PopupPanel {
 		setModal(true);
 		setGlassEnabled(true);
 		father=entity;
-		FinderGrafo.setButtonTipoGrafo(new BotonesStackPanelAdministracionMio(
-				"prototipo", new VerticalPanel(), new VerticalPanel(),finder));
-		FinderGrafo.setBotonClickGrafo(new ClickHandler() {
+		FinderOwnGrafo.setButtonTipoGrafo(new BotonGrafo(
+				"prototipo", new VerticalPanel(), new HorizontalPanel(),finder));
+		FinderOwnGrafo.setBotonClickGrafo(new ClickHandler() {
 
 			public void onClick(ClickEvent event) {
-				EntityCatalogElements E=(EntityCatalogElements) ((BotonesStackPanelAdministracionMio)event.getSource()).getEntidad();
+				EntityCatalogElements E=(EntityCatalogElements) ((BotonGrafo)event.getSource()).getEntidad();
 				AsyncCallback<Void> LLamada=new AsyncCallback<Void>() {
 					
 					public void onSuccess(Void result) {
@@ -79,13 +80,13 @@ public class PopUpFinderSelectorExistAnnotation extends PopupPanel {
 		
 		if (ActualUser.getReadingactivity().getVisualization()==null||ActualUser.getReadingactivity().getVisualization().equals(Constants.VISUAL_ARBOL))
         {
-		finder = new FinderGrafo(CatalogoIn);
-		FinderGrafo.setButtonTipoGrafo(new BotonesStackPanelAdministracionMio(
-				"prototipo", new VerticalPanel(), new VerticalPanel(),finder));
-		FinderGrafo.setBotonClickGrafo(new ClickHandler() {
+		finder = new FinderOwnGrafo(CatalogoIn);
+		FinderOwnGrafo.setButtonTipoGrafo(new BotonGrafo(
+				"prototipo", new VerticalPanel(), new HorizontalPanel(),finder));
+		FinderOwnGrafo.setBotonClickGrafo(new ClickHandler() {
 
 			public void onClick(ClickEvent event) {
-				EntityCatalogElements E=(EntityCatalogElements) ((BotonesStackPanelAdministracionMio)event.getSource()).getEntidad();
+				EntityCatalogElements E=(EntityCatalogElements) ((BotonGrafo)event.getSource()).getEntidad();
 				AsyncCallback<Void> LLamada=new AsyncCallback<Void>() {
 					
 					public void onSuccess(Void result) {
@@ -119,8 +120,8 @@ public class PopUpFinderSelectorExistAnnotation extends PopupPanel {
         	 finder= new FinderKeys();
         	 finder.setCatalogo(CatalogoIn);
              finder.RefrescaLosDatos();
-             FinderKeys.setButtonTipo(new BotonesStackPanelAdministracionMio(
-     				"prototipo", new VerticalPanel(), new VerticalPanel(),finder));
+             FinderKeys.setButtonTipo(new BotonGrafo(
+     				"prototipo", new VerticalPanel(), new HorizontalPanel(),finder));
              FinderKeys.setBotonClick(new ClickHandlerMioSelectorExist(this,finderrefresh,father));
         }
 		

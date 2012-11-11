@@ -114,7 +114,6 @@ public class PanelNewTemplateCategory extends PopupPanel {
 			public void onClick(ClickEvent event) {
 				if (!textBox.getText().isEmpty()){
 					T=new TemplateCategoryClient(textBox.getText(), new ArrayList<TemplateCategoryClient>(), new ArrayList<Long>(), TC, TC.getTemplate());
-					T.setOrder(TC.getSubCategories().size()+1);
 					LoadingPanel.getInstance().center();
 					LoadingPanel.getInstance().setLabelTexto(InformationConstants.SAVING);
 					exportServiceHolder.saveTemplateCategory(T , new AsyncCallback<Void>() {

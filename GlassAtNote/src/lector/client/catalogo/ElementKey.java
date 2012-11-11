@@ -6,6 +6,9 @@ import lector.client.catalogo.client.Entity;
 import lector.client.catalogo.client.EntityCatalogElements;
 import lector.client.catalogo.client.File;
 import lector.client.catalogo.client.Folder;
+import lector.share.model.client.EntryClient;
+import lector.share.model.client.TypeCategoryClient;
+import lector.share.model.client.TypeClient;
 
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
@@ -18,6 +21,7 @@ import com.google.gwt.event.dom.client.MouseOverHandler;
 import com.google.gwt.event.dom.client.MouseUpEvent;
 import com.google.gwt.event.dom.client.MouseUpHandler;
 import com.google.gwt.event.logical.shared.SelectionHandler;
+import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.TreeItem;
@@ -40,7 +44,6 @@ import com.google.gwt.user.client.ui.DockPanel;
 public class ElementKey extends Composite{
 	
 	private EntityCatalogElements Entidad;
-	private String Text;
 	private ButtonKey Mas;
 	private ButtonKey Label;
 	private VerticalPanelEspacial NextBotones;
@@ -60,11 +63,16 @@ public class ElementKey extends Composite{
 	private HorizontalPanel horizontalPanel_1;
 	private Image Large1;
 	private Image Large2;
+	private VerticalPanel verticalPanel_2;
+	private Button btnNewButton;
+	private Button btnNewButton_1;
+	private ElementKey Yo;
 	
 	public ElementKey(EntityCatalogElements ent) {
 		
 		Entidad=ent;
 		Selected=false;
+		Yo=this;
 		HorizontalPanel horizontalPanel = new HorizontalPanel();
 		horizontalPanel.setVerticalAlignment(HasVerticalAlignment.ALIGN_MIDDLE);
 		horizontalPanel.setHorizontalAlignment(HasHorizontalAlignment.ALIGN_CENTER);
@@ -84,6 +92,45 @@ public class ElementKey extends Composite{
 		BotonT.setVerticalAlignment(HasVerticalAlignment.ALIGN_MIDDLE);
 		BotonT.setHorizontalAlignment(HasHorizontalAlignment.ALIGN_CENTER);
 		BotonT.setSize("100%", "100%");
+		
+		verticalPanel_2 = new VerticalPanel();
+		BotonT.add(verticalPanel_2);
+		verticalPanel_2.setSize("100%", "43px");
+		
+		btnNewButton = new Button("Up");
+		btnNewButton.addClickHandler(new ClickHandler() {
+			public void onClick(ClickEvent event) {
+				VerticalPanelEspacial Padre=(VerticalPanelEspacial)Yo.getParent();
+				TypeCategoryClient EC=(TypeCategoryClient)Entidad.getFatherIdCreador();
+				EntryClient TC;
+				int i=0;
+				int resultado=0;
+				for (EntryClient hijos : EC.getChildren()) {
+					if (hijos.getId().equals(Entidad.getEntry().getId()))
+					{
+						TC=hijos;
+						resultado=i;
+					}
+					i++;
+				}
+				if (resultado==0)
+					{
+					Window.alert("Top");
+					}
+				else
+				{
+					EntryClient Aux=EC.getChildren().get(resultado-1);
+					EC.getChildren().set(resultado-1, EC.getChildren().get(resultado));
+					EC.getChildren().set(resultado, Aux);
+				}
+			}
+		});
+		verticalPanel_2.add(btnNewButton);
+		btnNewButton.setHeight("21px");
+		
+		btnNewButton_1 = new Button("Down");
+		verticalPanel_2.add(btnNewButton_1);
+		btnNewButton_1.setHeight("22px");
 		
 		Label = new ButtonKey("New button",this);
 		//Label = new ButtonKey("New button",null);
@@ -112,41 +159,41 @@ public class ElementKey extends Composite{
 				((Button)event.getSource()).setStyleName("gwt-ButtonIzquierdaMIN");
 			}
 		});
-        
+		
 		Mas = new ButtonKey("-",this);
 		//Mas = new ButtonKey("+",null);
 		BotonT.add(Mas);
 		Mas.setSize("48px", "43px");
 		Mas.setStyleName("gwt-ButtonDerechaMIN");
-Mas.addClickHandler(new ClickHandler() {
-			
-			public void onClick(ClickEvent event) {
-				if (Actual==State.Close)
-				{
-			//	LargeP.setVisible(true);
-				LargeN.setVisible(true);
-				Large1.setVisible(true);
-				Large2.setVisible(true);
-				NextBotones.setVisible(true);
-				Mas.setText("-");
-				Actual=State.Open;
-				Compact.setVisible(false);			
-				}else 
-				{
-				//	LargeP.setVisible(false);
-					LargeN.setVisible(false);
-					Large1.setVisible(false);
-					Large2.setVisible(false);
-					NextBotones.setVisible(false);
-					Mas.setText("+");
-					Actual=State.Close;
-					Compact.setVisible(true);	
-				}
-				if (Entidad instanceof File)
-					isAFile();
-				
-			}
-		});
+		Mas.addClickHandler(new ClickHandler() {
+					
+					public void onClick(ClickEvent event) {
+						if (Actual==State.Close)
+						{
+					//	LargeP.setVisible(true);
+						LargeN.setVisible(true);
+						Large1.setVisible(true);
+						Large2.setVisible(true);
+						NextBotones.setVisible(true);
+						Mas.setText("-");
+						Actual=State.Open;
+						Compact.setVisible(false);			
+						}else 
+						{
+						//	LargeP.setVisible(false);
+							LargeN.setVisible(false);
+							Large1.setVisible(false);
+							Large2.setVisible(false);
+							NextBotones.setVisible(false);
+							Mas.setText("+");
+							Actual=State.Close;
+							Compact.setVisible(true);	
+						}
+						if (Entidad instanceof File)
+							isAFile();
+						
+					}
+				});
 		
 		
 		Mas.addMouseOutHandler(new MouseOutHandler() {
@@ -177,6 +224,8 @@ Mas.addClickHandler(new ClickHandler() {
 		BotonT.add(NoSOns);
 		NoSOns.setSize("48px", "43px");
 		NoSOns.setStyleName("gwt-ButtonDerecha");
+		
+		NoSOns.setVisible(false);
 		
 		Others = new Label("Press to show others");
 		Others.addMouseOutHandler(new MouseOutHandler() {
@@ -221,8 +270,6 @@ Mas.addClickHandler(new ClickHandler() {
 
 		verticalPanel.add(Actulizador);
 		Actulizador.setVisible(false);
-		
-		NoSOns.setVisible(false);
 		Actual=State.Open;
 		
 		verticalPanel_1 = new VerticalPanel();
@@ -330,7 +377,6 @@ Mas.addClickHandler(new ClickHandler() {
 	}
 	
 	public void setHTML(String S,String Text) {
-		this.Text=Text;
 		Label.setHTML("<img src=\""+ S +"\">"+ Text);
 	}
 

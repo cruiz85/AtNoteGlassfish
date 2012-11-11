@@ -1,8 +1,9 @@
 package lector.client.reader;
 
 import lector.client.catalogo.Finder;
-import lector.client.catalogo.FinderGrafo;
 import lector.client.catalogo.FinderKeys;
+import lector.client.catalogo.FinderOwnGrafo;
+import lector.client.catalogo.OwnGraph.BotonGrafo;
 import lector.client.catalogo.client.Entity;
 import lector.client.catalogo.client.EntityCatalogElements;
 import lector.client.catalogo.client.File;
@@ -123,7 +124,7 @@ public class SelectorTypePopUpAnnotacion extends PopupPanel {
         
         if (ActualUser.getReadingactivity().getVisualization()==null||ActualUser.getReadingactivity().getVisualization().equals(Constants.VISUAL_ARBOL))
         {
-        finder= new FinderGrafo(Cata);
+        finder= new FinderOwnGrafo(Cata);
         scrollPanel.setWidget(finder);
         finder.setSize("100%", "100%");
         finder.RefrescaLosDatos();
@@ -144,16 +145,16 @@ public class SelectorTypePopUpAnnotacion extends PopupPanel {
 	}
 	
 	public static void RestoreFinderButtonActio(){
-		FinderGrafo.setButtonTipoGrafo(new BotonesStackPanelReaderSelectMio("prototipo", new VerticalPanel(),HP));
-		 FinderGrafo.setBotonClickGrafo(new ClickHandler() {
+		FinderOwnGrafo.setButtonTipoGrafo(new BotonGrafo("prototipo", new VerticalPanel(),HP,finder));
+		 FinderOwnGrafo.setBotonClickGrafo(new ClickHandler() {
 
 		        public void onClick(ClickEvent event) {
-		        	BotonesStackPanelReaderSelectMio BS=((BotonesStackPanelReaderSelectMio) event.getSource());
+		        	BotonGrafo BS=((BotonGrafo) event.getSource());
 		        EntityCatalogElements Act=(EntityCatalogElements) BS.getEntidad();
 		        
 		        if (Act instanceof File)
 		        {
-		        	ButtonTipo nuevo=new ButtonTipo(((File) Act),CT.getTexto(),BS.getLabeltypo());
+		        	ButtonTipo nuevo=new ButtonTipo(((File) Act),CT.getTexto(),BS.getSelectionPanel());
 		        	nuevo.addClickHandler(new ClickHandler() {
 						
 						public void onClick(ClickEvent event) {
@@ -194,8 +195,8 @@ public class SelectorTypePopUpAnnotacion extends PopupPanel {
 							
 						}
 					});
-		        	if (!ExistPreview(BS.getLabeltypo(),Act))
-		        			BS.getLabeltypo().add(nuevo);
+		        	if (!ExistPreview(BS.getSelectionPanel(),Act))
+		        			BS.getSelectionPanel().add(nuevo);
 		        	else Window.alert(ActualUser.getLanguage().getE_ExistBefore());
 		        }
 		        }

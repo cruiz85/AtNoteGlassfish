@@ -52,7 +52,7 @@ public class EditorTagsAndTypes implements EntryPoint {
 	private static MenuBar menuBar_2;
 	private static FinderKeys finder;
 	private static CatalogoClient catalogo;
-	private VerticalPanel label = new VerticalPanel();;
+	private VerticalPanel label = new VerticalPanel();
 
 	public EditorTagsAndTypes() {
 		menuBar_2 = new MenuBar(false);
@@ -73,6 +73,24 @@ public class EditorTagsAndTypes implements EntryPoint {
 		mntmSelected.setHTML("Selected");
 		mntmSelected.setEnabled(false);
 		menuBar_3.addItem(mntmSelected);
+		
+		label.setWidth("100%");
+		
+		HorizontalPanel horizontalPanel_1 = new HorizontalPanel();
+		label.add(horizontalPanel_1);
+		horizontalPanel_1.setSpacing(10);
+		horizontalPanel_1.setStyleName("AzulTransparente");
+		horizontalPanel_1.setWidth("100%");
+		
+		HorizontalPanel horizontalPanel_2 = new HorizontalPanel();
+		horizontalPanel_2.setStyleName("BlancoTransparente");
+		horizontalPanel_2.setSpacing(6);
+		horizontalPanel_1.add(horizontalPanel_2);
+		horizontalPanel_2.setWidth("100%");
+		horizontalPanel_2.add(Selected);
+		Selected.setWidth("100%");
+		
+				Selected.setHorizontalAlignment(HasHorizontalAlignment.ALIGN_CENTER);
 
 		finder = new FinderKeys();
 		SimplePanel S = new SimplePanel();
@@ -97,7 +115,7 @@ public class EditorTagsAndTypes implements EntryPoint {
 		RootTXOriginal.setStyleName("Root");
 
 		finder.setCatalogo(catalogo);
-		
+		Selected.clear();
 		
 		MenuBar menuBar = new MenuBar(false);
 		RootMenu.add(menuBar);
@@ -116,6 +134,7 @@ public class EditorTagsAndTypes implements EntryPoint {
 			public void execute() {
 				VisualizeGraph VG=new VisualizeGraph(finder.getCatalogo());
 				VG.center();
+				VG.Lanza();
 			}
 		});
 		mntmNewItem_1.setHTML("Show Graph");
@@ -288,7 +307,7 @@ public class EditorTagsAndTypes implements EntryPoint {
 					LoadingPanel.getInstance().center();
 				LoadingPanel.getInstance().setLabelTexto(InformationConstants.DELETING);
 				
-					bookReaderServiceHolder.deleteTypeCategory(delete.getEntry().getId(), delete.getFatherIdCreador(), callback);
+					bookReaderServiceHolder.deleteTypeCategory(delete.getEntry().getId(), delete.getFatherIdCreador().getId(), callback);
 				}else{
 					/*
 					 * if(finder.getTopPath()== null)
@@ -297,7 +316,7 @@ public class EditorTagsAndTypes implements EntryPoint {
 					 */
 					LoadingPanel.getInstance().center();
 				LoadingPanel.getInstance().setLabelTexto(InformationConstants.DELETING);
-					bookReaderServiceHolder.deleteTag(delete.getEntry().getId(), delete.getFatherIdCreador(), callback);
+					bookReaderServiceHolder.deleteTag(delete.getEntry().getId(), delete.getFatherIdCreador().getId(), callback);
 				}
 			}
 
@@ -369,23 +388,7 @@ public class EditorTagsAndTypes implements EntryPoint {
 						
 						
 						inicial.add(label);
-						label.setWidth("100%");
 						
-						HorizontalPanel horizontalPanel_1 = new HorizontalPanel();
-						label.add(horizontalPanel_1);
-						horizontalPanel_1.setSpacing(10);
-						horizontalPanel_1.setStyleName("AzulTransparente");
-						horizontalPanel_1.setWidth("100%");
-						
-						HorizontalPanel horizontalPanel_2 = new HorizontalPanel();
-						horizontalPanel_2.setStyleName("BlancoTransparente");
-						horizontalPanel_2.setSpacing(6);
-						horizontalPanel_1.add(horizontalPanel_2);
-						horizontalPanel_2.setWidth("100%");
-						horizontalPanel_2.add(Selected);
-						Selected.setWidth("100%");
-						
-								Selected.setHorizontalAlignment(HasHorizontalAlignment.ALIGN_CENTER);
 
 		splitLayoutPanel.add(Actual);
 

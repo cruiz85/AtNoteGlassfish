@@ -78,7 +78,9 @@ public class FinderKeys extends Finder {
 		scrollPanel.add(EK);
 		TypeCategoryClient TCC=new TypeCategoryClient("NULL");
 		TCC.setId(Constants.CATALOGID);
-		EK=new ElementKey(new Folder(TCC, null, Constants.CATALOGID));
+		TypeCategoryClient T=new TypeCategoryClient(Constants.CATALOGID,new ArrayList<EntryClient>(), "NULL",
+				C, new ArrayList<EntryClient>());
+		EK=new ElementKey(new Folder(TCC, null,T));
 		Lista=new ArrayList<EstadoElementKey>();
 		
 		AddElementLista(new EstadoElementKey(EK,false));
@@ -254,11 +256,14 @@ public class FinderKeys extends Finder {
 
 			private void EvaluaCatalogo(CatalogoClient result) {
 				List<EntryClient> Lista = result.getEntries();
-				sortStringExchange(Lista);
+//				sortStringExchange(Lista);
 				for (EntryClient Hijo : Lista) {
 					if (Hijo instanceof TypeClient)
 					{
-						EntityCatalogElements entitynew=new File((TypeClient)Hijo, C, Constants.CATALOGID);	
+						TypeCategoryClient T=new TypeCategoryClient(Constants.CATALOGID,new ArrayList<EntryClient>(), C.getCatalogName(),
+								C, new ArrayList<EntryClient>());
+						
+						EntityCatalogElements entitynew=new File((TypeClient)Hijo, C, T);	
 						ElementKey A=new ElementKey(entitynew);
 						A.setHTML("File.gif",entitynew.getName());
 						EK.addItem(A);
@@ -269,7 +274,9 @@ public class FinderKeys extends Finder {
 
 					}
 					else {
-						EntityCatalogElements entitynew=new Folder((TypeCategoryClient)Hijo, C, Constants.CATALOGID);	
+						TypeCategoryClient T=new TypeCategoryClient(Constants.CATALOGID,new ArrayList<EntryClient>(), C.getCatalogName(),
+								C, new ArrayList<EntryClient>());
+						EntityCatalogElements entitynew=new Folder((TypeCategoryClient)Hijo, C,T);	
 						ElementKey A=new ElementKey(entitynew);
 						A.setHTML("Folder.gif",entitynew.getName());					
 						EK.addItem(A);
@@ -288,7 +295,7 @@ public class FinderKeys extends Finder {
 				for (EntryClient Hijo : Lista) {
 					if (Hijo instanceof TypeClient)
 					{
-						EntityCatalogElements entitynew=new File((TypeClient)Hijo, C, Padre.getEntidad().getEntry().getId());	
+						EntityCatalogElements entitynew=new File((TypeClient)Hijo, C, Padre.getEntidad().getEntry());	
 						ElementKey A=new ElementKey(entitynew);
 						A.setHTML("File.gif",entitynew.getName());
 						A.addClickButtonMas(CHM);					
@@ -299,7 +306,7 @@ public class FinderKeys extends Finder {
 
 					}
 					else {
-						EntityCatalogElements entitynew=new Folder((TypeCategoryClient)Hijo, C, Padre.getEntidad().getEntry().getId());	
+						EntityCatalogElements entitynew=new Folder((TypeCategoryClient)Hijo, C, Padre.getEntidad().getEntry());	
 						ElementKey A=new ElementKey(entitynew);
 						A.setHTML("Folder.gif",entitynew.getName());					
 						Padre.addItem(A);
