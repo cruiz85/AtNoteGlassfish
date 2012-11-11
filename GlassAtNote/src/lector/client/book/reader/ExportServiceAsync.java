@@ -20,7 +20,7 @@ public interface ExportServiceAsync {
 			AsyncCallback<Void> callback);
 
 	void deleteTemplateCategory(Long templateCategoryId,
-			AsyncCallback<Long> callback);
+			AsyncCallback<Void> callback);
 
 	void getTemplates(AsyncCallback<List<TemplateClient>> callback);
 

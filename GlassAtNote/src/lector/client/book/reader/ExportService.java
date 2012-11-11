@@ -44,7 +44,7 @@ public interface ExportService extends RemoteService {
 	public void moveCategory(Long toFatherId,
 			Long categoryId, Long templateId);
 
-	public Long deleteTemplateCategory(Long templateCategoryId);
+	public void deleteTemplateCategory(Long templateCategoryId)throws GeneralException;
 
 	public Template removeCategoriesFromTemplate(Long templateId,
 			List<Long> categoriesIds);
