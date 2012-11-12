@@ -271,5 +271,14 @@ public interface GWTServiceAsync {
 	void getTypesNamesByIds(List<Long> typeIds,
 			AsyncCallback<List<String>> callback);
 
+	void updateCatalog(CatalogoClient catalogClient,
+			AsyncCallback<Void> callback);
+
+	void updateType(TypeClient typesys,
+			AsyncCallback<Void> callback);
+
+	void updateTypeCategory(TypeCategoryClient typeCategoryClient,
+			AsyncCallback<Void> callback);
+
 	
 }

@@ -2,10 +2,15 @@ package lector.client.catalogo;
 
 import java.util.ArrayList;
 
+import lector.client.book.reader.GWTService;
+import lector.client.book.reader.GWTServiceAsync;
 import lector.client.catalogo.client.Entity;
 import lector.client.catalogo.client.EntityCatalogElements;
 import lector.client.catalogo.client.File;
 import lector.client.catalogo.client.Folder;
+import lector.client.controler.Constants;
+import lector.client.controler.ErrorConstants;
+import lector.share.model.client.CatalogoClient;
 import lector.share.model.client.EntryClient;
 import lector.share.model.client.TypeCategoryClient;
 import lector.share.model.client.TypeClient;
@@ -22,6 +27,7 @@ import com.google.gwt.event.dom.client.MouseUpEvent;
 import com.google.gwt.event.dom.client.MouseUpHandler;
 import com.google.gwt.event.logical.shared.SelectionHandler;
 import com.google.gwt.user.client.Window;
+import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.TreeItem;
@@ -36,6 +42,7 @@ import com.google.gwt.user.client.ui.Widget;
 import com.google.gwt.i18n.client.HasDirection.Direction;
 import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.DockLayoutPanel;
+import com.google.gwt.core.client.GWT;
 import com.google.gwt.dom.client.Style.Unit;
 import com.google.gwt.user.client.ui.LayoutPanel;
 import com.google.gwt.user.client.ui.DockPanel;
@@ -67,6 +74,9 @@ public class ElementKey extends Composite{
 	private Button btnNewButton;
 	private Button btnNewButton_1;
 	private ElementKey Yo;
+	static GWTServiceAsync bookReaderServiceHolder = GWT
+			.create(GWTService.class);
+	public static Finder finderAct;
 	
 	public ElementKey(EntityCatalogElements ent) {
 		
@@ -119,11 +129,58 @@ public class ElementKey extends Composite{
 					}
 				else
 				{
+					if (EC.getId().equals(Constants.CATALOGID))
+					{
+						EntryClient Aux	= EC.getCatalog().getEntries().get(resultado-1);
+						EC.getCatalog().getEntries().set(resultado-1, EC.getCatalog().getEntries().get(resultado));
+						EC.getCatalog().getEntries().set(resultado, Aux);
+						saveCatalog(EC.getCatalog());
+					}else{
 					EntryClient Aux=EC.getChildren().get(resultado-1);
 					EC.getChildren().set(resultado-1, EC.getChildren().get(resultado));
 					EC.getChildren().set(resultado, Aux);
+					saveEntry(Aux);
+					}
 				}
 			}
+
+			private void saveEntry(EntryClient entrysave) {
+				if (entrysave instanceof TypeCategoryClient)
+				bookReaderServiceHolder.updateTypeCategory((TypeCategoryClient)entrysave, new AsyncCallback<Void>() {
+					
+					@Override
+					public void onSuccess(Void result) {
+						finderAct.RefrescaLosDatos();
+						
+					}
+					
+					@Override
+					public void onFailure(Throwable caught) {
+						Window.alert(ErrorConstants.ERROR_ON_MOVE);
+						finderAct.RefrescaLosDatos();
+					}
+				});
+				
+			}
+
+			private void saveCatalog(CatalogoClient catalog) {
+bookReaderServiceHolder.updateCatalog(catalog, new AsyncCallback<Void>() {
+					
+					@Override
+					public void onSuccess(Void result) {
+						finderAct.RefrescaLosDatos();
+						
+					}
+					
+					@Override
+					public void onFailure(Throwable caught) {
+						Window.alert(ErrorConstants.ERROR_ON_MOVE);
+						finderAct.RefrescaLosDatos();
+					}
+				});
+			}
+
+
 		});
 		verticalPanel_2.add(btnNewButton);
 		btnNewButton.setHeight("21px");
@@ -439,5 +496,13 @@ public class ElementKey extends Composite{
 	
 	public void setOtros(ArrayList<ElementKey> otros) {
 		Otros = otros;
+	}
+	
+	public static void setFinderAct(Finder finderAct) {
+		ElementKey.finderAct = finderAct;
+	}
+	
+	public static Finder getFinderAct() {
+		return finderAct;
 	}
 }

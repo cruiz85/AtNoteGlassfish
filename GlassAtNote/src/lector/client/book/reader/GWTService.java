@@ -222,7 +222,9 @@ public interface GWTService extends RemoteService {
 	// Catalog
 
 	public void saveCatalog(CatalogoClient catalogClient);
-
+	
+	public void updateCatalog(CatalogoClient catalogClient) throws CatalogoNotFoundException;
+	
 	public CatalogoClient loadCatalogById(Long catalogId);
 
 	public List<CatalogoClient> getCatalogs() throws GeneralException,
@@ -253,6 +255,8 @@ public interface GWTService extends RemoteService {
 
 	public void saveType(TypeClient typesys, Long fatherEntry);
 
+	public void updateType(TypeClient typesys) throws TagNotFoundException;
+	
 	public void deleteTag(Long typeId, Long fatherId) throws GeneralException;;
 
 	public Integer getAnnotationsNumberByTagName(String annotationTagName)
@@ -294,6 +298,8 @@ public interface GWTService extends RemoteService {
 
 	public void saveTypeCategory(TypeCategoryClient typeCategoryClient,
 			Long fatherEntry);
+	
+	public void updateTypeCategory(TypeCategoryClient typeCategoryClient) throws FolderDBNotFoundException;
 
 	public void moveFolderDB(Long typeCategoryId, Long typeCategoryFromId,
 			Long typeCategoryToId) throws GeneralException, DecendanceException;;

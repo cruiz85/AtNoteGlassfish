@@ -64,6 +64,7 @@ public class FinderKeys extends Finder {
 	private ClickHandler CHM;
 	private ClickHandler CHS;
 	private FinderKeys Yo;
+	private TypeCategoryClient T;
 	
 	public FinderKeys() {
 		Yo=this;
@@ -75,12 +76,11 @@ public class FinderKeys extends Finder {
 		simplePanel.add(scrollPanel);
 		scrollPanel.setSize("100%", "100%");
 		
+		ElementKey.setFinderAct(Yo);
 		scrollPanel.add(EK);
-		TypeCategoryClient TCC=new TypeCategoryClient("NULL");
-		TCC.setId(Constants.CATALOGID);
-		TypeCategoryClient T=new TypeCategoryClient(Constants.CATALOGID,new ArrayList<EntryClient>(), "NULL",
+		T=new TypeCategoryClient(Constants.CATALOGID,new ArrayList<EntryClient>(), "NULL",
 				C, new ArrayList<EntryClient>());
-		EK=new ElementKey(new Folder(TCC, null,T));
+		EK=new ElementKey(new Folder(T, null,T));
 		Lista=new ArrayList<EstadoElementKey>();
 		
 		AddElementLista(new EstadoElementKey(EK,false));
@@ -248,7 +248,9 @@ public class FinderKeys extends Finder {
 
 			@Override
 			public void onSuccess(CatalogoClient result) {
+				T.getChildren().clear();
 				C=result;
+				T.setCatalog(result);
 				EvaluaCatalogo(result);
 				LoadingPanel.getInstance().hide();
 				
@@ -260,9 +262,7 @@ public class FinderKeys extends Finder {
 				for (EntryClient Hijo : Lista) {
 					if (Hijo instanceof TypeClient)
 					{
-						TypeCategoryClient T=new TypeCategoryClient(Constants.CATALOGID,new ArrayList<EntryClient>(), C.getCatalogName(),
-								C, new ArrayList<EntryClient>());
-						
+						T.getChildren().add(Hijo);
 						EntityCatalogElements entitynew=new File((TypeClient)Hijo, C, T);	
 						ElementKey A=new ElementKey(entitynew);
 						A.setHTML("File.gif",entitynew.getName());
@@ -274,8 +274,7 @@ public class FinderKeys extends Finder {
 
 					}
 					else {
-						TypeCategoryClient T=new TypeCategoryClient(Constants.CATALOGID,new ArrayList<EntryClient>(), C.getCatalogName(),
-								C, new ArrayList<EntryClient>());
+						T.getChildren().add(Hijo);
 						EntityCatalogElements entitynew=new Folder((TypeCategoryClient)Hijo, C,T);	
 						ElementKey A=new ElementKey(entitynew);
 						A.setHTML("Folder.gif",entitynew.getName());					
@@ -291,7 +290,6 @@ public class FinderKeys extends Finder {
 			
 			private void EvaluaCarpeta(TypeCategoryClient hijo, ElementKey Padre) {
 				List<EntryClient> Lista = hijo.getChildren();
-				sortStringExchange(Lista);
 				for (EntryClient Hijo : Lista) {
 					if (Hijo instanceof TypeClient)
 					{
@@ -340,79 +338,6 @@ public class FinderKeys extends Finder {
 		      } 	
 		});
 		
-		
-//		AsyncCallback<ArrayList<Entity>> callback1 = new AsyncCallback<ArrayList<Entity>>() {
-//
-//			public void onFailure(Throwable caught) {
-//				if (InReadingActivity)  Window.alert(ActualUser.getLanguage().getE_Types_refresh());
-//				else Window.alert("Error : I can't refresh the types");
-//				LoadingPanel.getInstance().hide();
-//			}
-//
-//			public void onSuccess(ArrayList<Entity> result) {
-//				
-//				
-//				sortStringExchange(result);
-//				ArrayList<ElementKey> ListaTemp=new ArrayList<ElementKey>();
-//				
-//				ElementKey PadreEle = FinderKeysArbitro.getInstance().getPadre();
-//				PadreEle.removeItems();
-//				for (Entity entity : result) {
-//					entity.setActualFather(PadreEle.getEntidad());
-//				}
-//				for (Entity entitynew : result) {
-//					ElementKey A=new ElementKey(entitynew);
-//					if (entitynew instanceof Folder) A.setHTML("Folder.gif",entitynew.getName());					
-//					else {
-//						A.setHTML("File.gif",entitynew.getName());
-//						A.isAFile();
-//					}
-//					PadreEle.addItem(A);
-//					A.addClickButtonMas(CHM);					
-//					A.addClickButton(CHS);
-//					ListaTemp.add(A);
-//					AddElementLista(new EstadoElementKey(A,false));
-//					}
-//				FinderKeysArbitro.getInstance().setfalse();
-//				for (ElementKey elementKey : ListaTemp) {
-//					FinderKeysArbitro.getInstance().add(elementKey);
-//				}
-//				LoadingPanel.getInstance().hide();
-//				
-//			}
-//			
-//			  public void sortStringExchange( ArrayList<Entity>  x )
-//		      {
-//		            int i, j;
-//		            Entity temp;
-//
-//		            for ( i = 0;  i < x.size() - 1;  i++ )
-//		            {
-//		                for ( j = i + 1;  j < x.size();  j++ )
-//		                {  
-//		                         if ( x.get(i).getName().compareToIgnoreCase( x.get(j).getName()) > 0 )
-//		                          {                                             // ascending sort
-//		                                      temp = x.get(i);
-//		                                      x.set(i, x.get(j));    // swapping
-//		                                      x.set(j, temp); 
-//		                                      
-//		                           } 
-//		                   } 
-//		             } 
-//		      } 
-//		};
-//		LoadingPanel.getInstance().center();
-//		if (InReadingActivity)  LoadingPanel.getInstance().setLabelTexto(ActualUser.getLanguage().getLoading());
-//		else LoadingPanel.getInstance().setLabelTexto("Loading...");
-//		Long IdPathActual = 0l;
-///*		if (ActualRama.getEntidad().getID())
-//			IdPathActual = null;
-//		else*/
-//			IdPathActual = elementKeyllamada.getEntidad().getID();
-////TODO
-////		bookReaderServiceHolder.getSons(IdPathActual, C
-////				.getId(), callback1);
-		
 	}
 
 	
@@ -433,6 +358,7 @@ public class FinderKeys extends Finder {
 		C = c;
 		ActualEle=EK;
 		EK.setText(C.getCatalogName());
+		T.setCatalog(C);
 		ActualEle.setSelected(true);
 		ActualEle.getLabel().setStyleName("gwt-ButtonIzquierdaSelectMIN");
 		ActualEle.setSelected(true);

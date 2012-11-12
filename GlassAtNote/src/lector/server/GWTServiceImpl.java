@@ -1766,12 +1766,37 @@ public class GWTServiceImpl extends RemoteServiceServlet implements GWTService {
 		return googleBooks;
 	}
 
+	
 	@Override
 	public void saveCatalog(CatalogoClient catalogClient) {
 		short isPrivate = (catalogClient.getIsPrivate() ? (short) 1 : 0);
 		Catalogo catalogo = new Catalogo(isPrivate,
 				catalogClient.getProfessorId(), catalogClient.getCatalogName());
 		saveCatalog(catalogo);
+	}
+	
+	public void updateCatalog(CatalogoClient catalogClient) throws CatalogoNotFoundException
+	{
+		Catalogo Catalog=findCatalogo(catalogClient.getId());
+		Catalog.setEntries(reorderrelationsCatalog(catalogClient.getEntries(), Catalog.getEntries()));
+		saveCatalog(Catalog);
+	}
+
+	private List<Entry> reorderrelationsCatalog(List<EntryClient> entries,
+			List<Entry> entries2) {
+		ArrayList<Entry> Salida=new ArrayList<Entry>();
+		for (EntryClient entry : entries) {
+			Salida.add(findentry(entry,entries2));
+		}
+		return Salida;
+	}
+
+	private Entry findentry(EntryClient entry, List<Entry> entries2) {
+		for (Entry entry2 : entries2) {
+			if (entry2.getId().equals(entry.getId()))
+				return entry2;
+		}
+		return null;
 	}
 
 	private void saveCatalog(Catalogo catalog) {
@@ -2038,6 +2063,13 @@ public class GWTServiceImpl extends RemoteServiceServlet implements GWTService {
 
 	}
 
+	public void updateType(TypeClient typesys) throws TagNotFoundException
+	{
+		Tag Type=findTag(typesys.getId());
+		//TODO Actualizar
+		
+	}
+	
 	@Override
 	public void deleteTag(Long tagId, Long fatherId) throws GeneralException {
 		try {
@@ -2430,6 +2462,32 @@ public class GWTServiceImpl extends RemoteServiceServlet implements GWTService {
 			fdne.printStackTrace();
 		}
 
+	}
+
+	public void updateTypeCategory(TypeCategoryClient typeCategoryClient) throws FolderDBNotFoundException
+	{
+		FolderDB FDB=findFolderDB(typeCategoryClient.getId());
+		FDB.setRelations(reorderrelations(typeCategoryClient.getChildren(),FDB.getRelations()));
+		saveFolderDB(FDB);
+	}
+
+	
+	private List<Relation> reorderrelations(List<EntryClient> children,
+			List<Relation> relations) {
+		ArrayList<Relation> Rel=new ArrayList<Relation>();
+		for (EntryClient entryRel : children) {
+			Relation R=findrelation(relations,entryRel);
+			Rel.add(R);
+		}
+		return Rel;
+	}
+
+	private Relation findrelation(List<Relation> relations, EntryClient entryRel) {
+		for (Relation relation : relations) {
+			if (relation.getChild().getId().equals(entryRel.getId()))
+				return relation;
+		}
+		return null;
 	}
 
 	private void saveFolderDB(FolderDB folder) {

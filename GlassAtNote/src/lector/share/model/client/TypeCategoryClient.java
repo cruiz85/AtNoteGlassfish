@@ -23,6 +23,7 @@ public class TypeCategoryClient extends EntryClient implements IsSerializable{
 
 	public TypeCategoryClient(String name) {
 		super(name);
+		children = new ArrayList<EntryClient>();
 	
 	}
 
