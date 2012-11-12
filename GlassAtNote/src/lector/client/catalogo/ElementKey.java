@@ -110,15 +110,12 @@ public class ElementKey extends Composite{
 		btnNewButton = new Button("Up");
 		btnNewButton.addClickHandler(new ClickHandler() {
 			public void onClick(ClickEvent event) {
-				VerticalPanelEspacial Padre=(VerticalPanelEspacial)Yo.getParent();
 				TypeCategoryClient EC=(TypeCategoryClient)Entidad.getFatherIdCreador();
-				EntryClient TC;
 				int i=0;
 				int resultado=0;
 				for (EntryClient hijos : EC.getChildren()) {
 					if (hijos.getId().equals(Entidad.getEntry().getId()))
 					{
-						TC=hijos;
 						resultado=i;
 					}
 					i++;
@@ -186,6 +183,77 @@ bookReaderServiceHolder.updateCatalog(catalog, new AsyncCallback<Void>() {
 		btnNewButton.setHeight("21px");
 		
 		btnNewButton_1 = new Button("Down");
+		btnNewButton_1.addClickHandler(new ClickHandler() {
+			public void onClick(ClickEvent event) {
+				TypeCategoryClient EC=(TypeCategoryClient)Entidad.getFatherIdCreador();
+				int i=0;
+				int resultado=0;
+				for (EntryClient hijos : EC.getChildren()) {
+					if (hijos.getId().equals(Entidad.getEntry().getId()))
+					{
+						resultado=i;
+					}
+					i++;
+				}
+				if (resultado==EC.getChildren().size())
+					{
+					Window.alert("Botton");
+					}
+				else
+				{
+					if (EC.getId().equals(Constants.CATALOGID))
+					{
+						EntryClient Aux	= EC.getCatalog().getEntries().get(resultado+1);
+						EC.getCatalog().getEntries().set(resultado+1, EC.getCatalog().getEntries().get(resultado));
+						EC.getCatalog().getEntries().set(resultado, Aux);
+						saveCatalog(EC.getCatalog());
+					}else{
+					EntryClient Aux=EC.getChildren().get(resultado+1);
+					EC.getChildren().set(resultado+1, EC.getChildren().get(resultado));
+					EC.getChildren().set(resultado, Aux);
+					saveEntry(Aux);
+					}
+				}
+			}
+
+			private void saveEntry(EntryClient entrysave) {
+				if (entrysave instanceof TypeCategoryClient)
+				bookReaderServiceHolder.updateTypeCategory((TypeCategoryClient)entrysave, new AsyncCallback<Void>() {
+					
+					@Override
+					public void onSuccess(Void result) {
+						finderAct.RefrescaLosDatos();
+						
+					}
+					
+					@Override
+					public void onFailure(Throwable caught) {
+						Window.alert(ErrorConstants.ERROR_ON_MOVE);
+						finderAct.RefrescaLosDatos();
+					}
+				});
+				
+			}
+
+			private void saveCatalog(CatalogoClient catalog) {
+bookReaderServiceHolder.updateCatalog(catalog, new AsyncCallback<Void>() {
+					
+					@Override
+					public void onSuccess(Void result) {
+						finderAct.RefrescaLosDatos();
+						
+					}
+					
+					@Override
+					public void onFailure(Throwable caught) {
+						Window.alert(ErrorConstants.ERROR_ON_MOVE);
+						finderAct.RefrescaLosDatos();
+					}
+				});
+			}
+
+
+		});
 		verticalPanel_2.add(btnNewButton_1);
 		btnNewButton_1.setHeight("22px");
 		

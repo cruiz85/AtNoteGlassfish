@@ -316,7 +316,7 @@ public class Administrador implements EntryPoint {
 							});
 							btnNewButton_2.setSize("100%", "100%");
 							//
-							Button LoadABook = new Button("Load a Book");
+							Button LoadABook = new Button("Upload a Text");
 							verticalPanel_1.add(LoadABook);
 							LoadABook.addMouseOutHandler(new MouseOutHandler() {
 								public void onMouseOut(MouseOutEvent event) {
@@ -342,7 +342,7 @@ public class Administrador implements EntryPoint {
 							LoadABook.setSize("100%", "100%");
 							//
 							
-							Button btnNewButton_3 = new Button("My Books");
+							Button btnNewButton_3 = new Button("My Library");
 							verticalPanel_1.add(btnNewButton_3);
 							btnNewButton_3.addMouseOutHandler(new MouseOutHandler() {
 								public void onMouseOut(MouseOutEvent event) {
