@@ -12,6 +12,7 @@ drop table `atnote`.`annotation`;
 drop table `atnote`.`reading_activity`;
 drop table `atnote`.`book`;
 drop table `atnote`.`group_app`;
+drop table `atnote`.`template_category`;
 drop table `atnote`.`template`;
 drop table `atnote`.`language`;
 drop table `atnote`.`entry`;
