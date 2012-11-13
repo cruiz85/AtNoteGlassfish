@@ -44,7 +44,7 @@ public class ExportServiceImpl extends RemoteServiceServlet implements
 			Template template;
 			if (templateClient.getId() != null) {
 				template = findTemplate(templateClient.getId());
-				RemplaceCamps(templateClient, template);
+				remplaceCamps(templateClient, template);
 
 			} else {
 				template = new Template(templateClient.getName(),
@@ -59,7 +59,7 @@ public class ExportServiceImpl extends RemoteServiceServlet implements
 
 	}
 
-	private void RemplaceCamps(TemplateClient templateClient, Template t) {
+	private void remplaceCamps(TemplateClient templateClient, Template t) {
 		t.setName(templateClient.getName());
 		if (templateClient.getModifyable())
 			t.setModifyable((short) 1);

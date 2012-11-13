@@ -1779,24 +1779,24 @@ public class GWTServiceImpl extends RemoteServiceServlet implements GWTService {
 	public void updateCatalog(CatalogoClient catalogClient)
 			throws CatalogoNotFoundException {
 		Catalogo catalog = findCatalogo(catalogClient.getId());
-		catalog.setEntries(reorderrelationsCatalog(catalogClient.getEntries(),
-				catalog.getEntries(), catalog.getOrders()));
+		catalog.setOrders(reorderrelationsCatalog(catalogClient.getEntries(), catalog.getOrders()));
 		saveCatalog(catalog);
 	}
 
-	private List<Entry> reorderrelationsCatalog(
-			List<EntryClient> entriesClient, List<Entry> entries, List<Long> orders) {
-		List<Entry> entriesReOrdered = new ArrayList<Entry>();
+	private List<Long> reorderrelationsCatalog(
+			List<EntryClient> entriesClient, List<Long> orders) {
+		List<Long> orderList = new ArrayList<Long>();
+		
 		for (EntryClient entryClient : entriesClient) {
-			entriesReOrdered.add(findentry(entryClient, entries, orders));
+			orderList.add(findId(entryClient, orders));
 		}
-		return entriesReOrdered;
+		return orderList;
 	}
 
-	private Entry findentry(EntryClient entryClient,List<Entry> entries, List<Long> ids) {
+	private Long findId(EntryClient entryClient, List<Long> ids) {
 		for (Long id : ids) {
 			if (id.equals(entryClient.getId())){
-				return getEntryById(id, entries);
+				return id;
 			}
 				
 		}
@@ -2479,30 +2479,41 @@ public class GWTServiceImpl extends RemoteServiceServlet implements GWTService {
 
 	public void updateTypeCategory(TypeCategoryClient typeCategoryClient)
 			throws FolderDBNotFoundException {
-		FolderDB FDB = findFolderDB(typeCategoryClient.getId());
-		FDB.setRelations(reorderrelations(typeCategoryClient.getChildren(),
-				FDB.getRelations()));
-		saveFolderDB(FDB);
+		FolderDB folder = findFolderDB(typeCategoryClient.getId());
+		folder.setRelations(reorderrelations(typeCategoryClient.getChildren(),
+				folder.getRelations(), folder.getOrders()));
+		saveFolderDB(folder);
 	}
 
 	private List<Relation> reorderrelations(List<EntryClient> children,
-			List<Relation> relations) {
-		ArrayList<Relation> Rel = new ArrayList<Relation>();
+			List<Relation> relations, List<Long> orders) {
+		List<Relation> relationsOrdered = new ArrayList<Relation>();
 		for (EntryClient entryRel : children) {
-			Relation R = findrelation(relations, entryRel);
-			Rel.add(R);
+			Relation r = findrelation(entryRel,relations, orders);
+			relationsOrdered.add(r);
 		}
-		return Rel;
+		return relationsOrdered;
 	}
 
-	private Relation findrelation(List<Relation> relations, EntryClient entryRel) {
-		for (Relation relation : relations) {
-			if (relation.getChild().getId().equals(entryRel.getId()))
-				return relation;
+	private Relation findrelation(EntryClient entryRel, List<Relation> relations, List<Long> orders) {
+		for (Long id : orders) {
+			if (getRelationById(id,relations).getChild().getId().equals(entryRel.getId()))
+				return getRelationById(id,relations);
 		}
 		return null;
 	}
 
+	private Relation getRelationById(Long id, List<Relation> relations){
+		for (Relation relation: relations) {
+			if (relation.getChild().getId().equals(id)){
+				return relation;
+			}
+				
+		}
+		return null;
+		
+	}
+	
 	private void saveFolderDB(FolderDB folder) {
 		EntityManager entityManager = emf.createEntityManager();
 
