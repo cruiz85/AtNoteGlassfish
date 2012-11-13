@@ -483,6 +483,7 @@ public class Searcher implements EntryPoint, HistoryListener {
 			// callback);
 			LoadingPanel.getInstance().setLabelTexto(
 					InformationConstants.LOADING);
+			LoadingPanel.getInstance().center();
 			 bookReaderServiceHolder.loadFullBookInGoogle(historyToken,
 			 callback);
 			// MainEntryPoint.setCurrentPageNumber(0);

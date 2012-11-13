@@ -8,6 +8,7 @@ import lector.client.book.reader.GWTServiceAsync;
 import lector.client.book.reader.ImageService;
 import lector.client.book.reader.ImageServiceAsync;
 import lector.client.controler.CalendarNow;
+import lector.client.controler.Constants;
 import lector.client.controler.Controlador;
 import lector.client.controler.ErrorConstants;
 import lector.client.controler.InformationConstants;
@@ -45,6 +46,7 @@ import com.google.gwt.user.client.ui.VerticalPanel;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.MenuItem;
 import com.google.gwt.user.client.Command;
+import com.google.gwt.user.client.Cookies;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.MenuItemSeparator;
 import com.google.gwt.user.client.ui.HasHorizontalAlignment;
@@ -57,8 +59,6 @@ public class MyActivities implements EntryPoint {
 			.create(GWTService.class);
 	static ImageServiceAsync userImageService = GWT.create(ImageService.class);
 	private ReadingActivityClient RA;
-	private static int retryCounter=0;
-	private static String RAtemp=null;
 	private MyActivities Yo;
 
 	public void onModuleLoad() {
@@ -102,6 +102,7 @@ public class MyActivities implements EntryPoint {
 		MenuItem menuItem_2 = new MenuItem("Sign out", false, new Command() {
 			public void execute() {
 				Controlador.change2Welcome();
+				Cookies.removeCookie(Constants.COOKIE_NAME);
 			//	 Window.open(ActualUser.getUser().getLogoutUrl(), "_self", "");
 				ActualUser.setUser(null);
 				ActualUser.setBook(null);

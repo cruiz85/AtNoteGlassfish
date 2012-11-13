@@ -1,6 +1,5 @@
 package lector.client.login;
 
-import java.util.Calendar;
 import java.util.Date;
 
 import lector.client.book.reader.GWTService;
@@ -12,13 +11,13 @@ import lector.client.controler.ErrorConstants;
 import lector.client.controler.InformationConstants;
 import lector.client.logger.Logger;
 import lector.client.reader.LoadingPanel;
-import lector.share.model.UserApp;
 import lector.share.model.client.ProfessorClient;
 import lector.share.model.client.StudentClient;
 import lector.share.model.client.UserClient;
 
 import com.google.gwt.core.client.EntryPoint;
 import com.google.gwt.core.client.GWT;
+import com.google.gwt.user.client.Cookies;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.RootPanel;
@@ -42,14 +41,12 @@ import com.google.gwt.event.dom.client.MouseOverHandler;
 import com.google.gwt.user.client.ui.HasVerticalAlignment;
 import com.google.gwt.user.client.ui.DockPanel;
 import com.google.gwt.user.client.ui.MenuBar;
-import com.google.gwt.user.client.ui.MenuItem;
-import com.google.gwt.user.client.Command;
 import com.google.gwt.user.client.ui.PasswordTextBox;
-import com.google.gwt.user.client.ui.DecoratorPanel;
 import com.google.gwt.user.client.ui.SimplePanel;
 import com.google.gwt.user.client.ui.Image;
 import com.google.gwt.event.dom.client.ChangeHandler;
 import com.google.gwt.event.dom.client.ChangeEvent;
+import com.google.gwt.user.client.ui.CheckBox;
 
 public class Login implements EntryPoint {
 
@@ -67,9 +64,49 @@ public class Login implements EntryPoint {
 	private TextBox FirstName;
 	private Login Yo;
 	private StudentClient newStudent;
+	private CheckBox KeepConected;
 
 	public void onModuleLoad() {
 
+		String UserCookie=Cookies.getCookie(Constants.COOKIE_NAME);
+		if (UserCookie!=null)
+			{
+			Long L=Long.valueOf(UserCookie);
+			LoadingPanel.getInstance().setLabelTexto(
+					InformationConstants.LOADING);
+			LoadingPanel.getInstance().center();
+			bookReaderServiceHolder.loadUserById(L, new AsyncCallback<UserClient>() {
+				
+				@Override
+				public void onSuccess(UserClient result) {
+					LoadingPanel.getInstance().hide();
+					ActualUser.setUser(result);
+					Logger.GetLogger().info(
+							this.getClass().getName(),
+							"Usuario: " + result.getFirstName()
+									+ " " + result.getLastName()
+									+ " - " + result.getEmail()
+									+ " at "
+									+ CalendarNow.GetDateNow());
+					if (result instanceof StudentClient)
+						Controlador.change2MyActivities();
+					else if (result instanceof ProfessorClient)
+						Controlador.change2Administrator();
+					
+				}
+				
+				@Override
+				public void onFailure(Throwable caught) {
+					LoadingPanel.getInstance().hide();
+					Window.alert(ErrorConstants.YOU_ARE_NO_AUTORIZED);
+					Logger.GetLogger().severe(
+							Yo.getClass().toString(),
+							ErrorConstants.YOU_ARE_NO_AUTORIZED + " at " + CalendarNow.GetDateNow());
+					
+				}
+			});
+			}
+		
 		RootPanel rootPanel = RootPanel.get();
 		rootPanel.setStyleName("Root");
 		Yo = this;
@@ -155,6 +192,17 @@ public class Login implements EntryPoint {
 
 		passwordLogin = new PasswordTextBox();
 		horizontalPanel_2.add(passwordLogin);
+		
+		HorizontalPanel horizontalPanel_13 = new HorizontalPanel();
+		horizontalPanel_13.setSpacing(10);
+		verticalPanel_1.add(horizontalPanel_13);
+		
+		HorizontalPanel horizontalPanel_14 = new HorizontalPanel();
+		horizontalPanel_14.setStyleName("BlancoTransparente");
+		horizontalPanel_13.add(horizontalPanel_14);
+		
+		KeepConected = new CheckBox("Stay signed in");
+		horizontalPanel_14.add(KeepConected);
 
 		HorizontalPanel horizontalPanel_4 = new HorizontalPanel();
 		horizontalPanel_4
@@ -167,13 +215,14 @@ public class Login implements EntryPoint {
 		horizontalPanel_4.add(verticalPanel_4);
 
 		HorizontalPanel horizontalPanel_5 = new HorizontalPanel();
+		horizontalPanel_5.setSpacing(6);
 		horizontalPanel_5.setStyleName("BlancoTransparente");
 		horizontalPanel_5
 				.setVerticalAlignment(HasVerticalAlignment.ALIGN_MIDDLE);
 		horizontalPanel_5
 				.setHorizontalAlignment(HasHorizontalAlignment.ALIGN_CENTER);
 		verticalPanel_4.add(horizontalPanel_5);
-		horizontalPanel_5.setWidth("88px");
+		horizontalPanel_5.setWidth("");
 
 		VerticalPanel verticalPanel_7 = new VerticalPanel();
 		horizontalPanel_5.add(verticalPanel_7);
@@ -183,7 +232,7 @@ public class Login implements EntryPoint {
 		verticalPanel_7.setStyleName("BlancoTransparente");
 		verticalPanel_7.setWidth("");
 
-		btnNewButton = new Button("Enter");
+		btnNewButton = new Button("Sign in");
 		verticalPanel_7.add(btnNewButton);
 		btnNewButton.addClickHandler(new ClickHandler() {
 			public void onClick(ClickEvent event) {
@@ -376,13 +425,14 @@ public class Login implements EntryPoint {
 		horizontalPanel_10.add(verticalPanel_12);
 
 		HorizontalPanel horizontalPanel_11 = new HorizontalPanel();
+		horizontalPanel_11.setSpacing(6);
 		horizontalPanel_11
 				.setVerticalAlignment(HasVerticalAlignment.ALIGN_MIDDLE);
 		horizontalPanel_11.setStyleName("BlancoTransparente");
 		horizontalPanel_11
 				.setHorizontalAlignment(HasHorizontalAlignment.ALIGN_CENTER);
 		verticalPanel_12.add(horizontalPanel_11);
-		horizontalPanel_11.setWidth("135px");
+		horizontalPanel_11.setWidth("");
 
 		VerticalPanel verticalPanel_13 = new VerticalPanel();
 		verticalPanel_13
@@ -517,6 +567,12 @@ public class Login implements EntryPoint {
 								btnNewButton.setEnabled(true);
 							} else {
 								ActualUser.setUser(result);
+								if (KeepConected.getValue())
+									{
+									 int caduca = 1000*60*60*24;
+									 Date expira = new Date(new Date().getTime() + caduca);
+									 Cookies.setCookie(Constants.COOKIE_NAME, Long.toString(result.getId()), expira);
+									}
 								Logger.GetLogger().info(
 										this.getClass().getName(),
 										"Usuario: " + result.getFirstName()

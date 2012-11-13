@@ -22,6 +22,7 @@ public class Constants {
 	public static String ANNOTATION_UPDATE_PUBLIC = "Public";
 	public static String ANNOTATION_UPDATE_RESTRICTED = "Restricted";
 	public static String BREAKER = "-";
+	public static String COOKIE_NAME="User";
 	
 	// BOOK_BLOBS PARAMETERS
 	public static String BLOB_UPLOADER = "uploader";
@@ -34,6 +35,7 @@ public class Constants {
 	// VISUALIZACION
 	public static String VISUAL_ARBOL ="Visualization in Tree";
 	public static String VISUAL_KEY="Visualization in Keys";
+	
 
 	
 }

@@ -51,6 +51,7 @@ public class PanelNewTemplateCategory extends PopupPanel {
 		TC=tC;
 		PadreLLamada=yO;
 		Yo=this;
+		setGlassEnabled(true);
 		VerticalPanel verticalPanel = new VerticalPanel();
 		verticalPanel.setVerticalAlignment(HasVerticalAlignment.ALIGN_MIDDLE);
 		verticalPanel.setHorizontalAlignment(HasHorizontalAlignment.ALIGN_CENTER);

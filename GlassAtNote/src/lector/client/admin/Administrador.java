@@ -2,6 +2,7 @@ package lector.client.admin;
 
 import lector.client.book.reader.GWTService;
 import lector.client.book.reader.GWTServiceAsync;
+import lector.client.controler.Constants;
 import lector.client.controler.Controlador;
 import lector.client.login.ActualUser;
 import lector.share.model.ReadingActivity;
@@ -14,6 +15,7 @@ import com.google.gwt.user.client.ui.RootPanel;
 import com.google.gwt.user.client.ui.MenuBar;
 import com.google.gwt.user.client.ui.MenuItem;
 import com.google.gwt.user.client.Command;
+import com.google.gwt.user.client.Cookies;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.VerticalPanel;
 import com.google.gwt.user.client.ui.HorizontalPanel;
@@ -73,6 +75,7 @@ public class Administrador implements EntryPoint {
 						MenuItem mntmNewItem = new MenuItem("Close Session", false, new Command() {
 							public void execute() {
 								Controlador.change2Welcome();
+								Cookies.removeCookie(Constants.COOKIE_NAME);
 //				Window.open(ActualUser.getUser().getLogoutUrl(), "_self", "");
 								ActualUser.setUser(null);
 								ActualUser.setBook(null);
