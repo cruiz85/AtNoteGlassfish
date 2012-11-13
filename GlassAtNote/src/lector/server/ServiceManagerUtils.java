@@ -368,7 +368,7 @@ public class ServiceManagerUtils {
 		if (template.getModifyable() == 0) {
 			modifyable = false;
 		}
-		return new TemplateClient(template.getName(), modifyable, template
+		return new TemplateClient(template.getId(), template.getName(), modifyable, template
 				.getProfessor().getId());
 
 	}

@@ -26,7 +26,7 @@ public class TemplateClient implements IsSerializable{
 		this.professor = professor;
 	}
 
-	public TemplateClient(String name, boolean modifyable, Long professor) {
+	public TemplateClient(Long id, String name, boolean modifyable, Long professor) {
 		super();
 		this.name = name;
 		this.modifyable = modifyable;
