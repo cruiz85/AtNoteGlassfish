@@ -1788,29 +1788,9 @@ public class GWTServiceImpl extends RemoteServiceServlet implements GWTService {
 		List<Long> orderList = new ArrayList<Long>();
 		
 		for (EntryClient entryClient : entriesClient) {
-			orderList.add(findId(entryClient, orders));
+			orderList.add(entryClient.getId());
 		}
 		return orderList;
-	}
-
-	private Long findId(EntryClient entryClient, List<Long> ids) {
-		for (Long id : ids) {
-			if (id.equals(entryClient.getId())){
-				return id;
-			}
-				
-		}
-		return null;
-	}
-	
-	private Entry getEntryById(Long id,List<Entry> entries) {
-		for (Entry entry: entries) {
-			if (entry.getId().equals(id)){
-				return entry;
-			}
-				
-		}
-		return null;
 	}
 
 	private void saveCatalog(Catalogo catalog) {

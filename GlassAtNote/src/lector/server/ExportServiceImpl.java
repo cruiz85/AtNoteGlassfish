@@ -20,6 +20,7 @@ import lector.share.model.Template;
 import lector.share.model.TemplateCategory;
 import lector.share.model.TemplateCategoryNotFoundException;
 import lector.share.model.TemplateNotFoundException;
+import lector.share.model.TwinBrotherException;
 import lector.share.model.client.TemplateCategoryClient;
 import lector.share.model.client.TemplateClient;
 
@@ -215,20 +216,38 @@ public class ExportServiceImpl extends RemoteServiceServlet implements
 		try {
 			template = findTemplate(templateCategoryClient.getTemplate()
 					.getId());
+			TemplateCategory templateCategory = findTemplateCategory(templateCategoryClient
+					.getId());
+			if (templateCategory == null) {
+				templateCategory = new TemplateCategory(
+						templateCategoryClient.getName(), father, template);
+			} else {
+				updateTemplateCategory(templateCategoryClient, templateCategory);
+			}
 
 			if (templateCategoryClient.getFather() != null) {
 				father = findTemplateCategory(templateCategoryClient
 						.getFather().getId());
+				father.getSubCategories().add(templateCategory);
+				saveTemplateCategory(father);
+			} else {
+				template.getCategories().add(templateCategory);
+				saveTemplate(template);
 			}
-			TemplateCategory templateCategory = new TemplateCategory(
-					templateCategoryClient.getName(), father, template);
-			saveTemplateCategory(templateCategory);
+
 		} catch (TemplateNotFoundException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (TemplateCategoryNotFoundException tcnfe) {
 			tcnfe.printStackTrace();
 		}
+
+	}
+
+	private void updateTemplateCategory(
+			TemplateCategoryClient templateCategoryClient,
+			TemplateCategory templateCategory) {
+		templateCategory.setName(templateCategoryClient.getName());
 
 	}
 
@@ -314,35 +333,37 @@ public class ExportServiceImpl extends RemoteServiceServlet implements
 
 	}
 
-//	private void updateOrderToLeftBrothers(List<TemplateCategory> categories,
-//			int leavingWeight) {
-//	//	Collections.sort(categories);
-//		updateOrder(categories, leavingWeight);
-//	}
+	// private void updateOrderToLeftBrothers(List<TemplateCategory> categories,
+	// int leavingWeight) {
+	// // Collections.sort(categories);
+	// updateOrder(categories, leavingWeight);
+	// }
 
-//	private void updateOrder(List<TemplateCategory> categories, int weight) {
-//
-//		for (int i = weight - 1; i < categories.size(); i++) {
-//			categories.get(i).setOrder(categories.get(i).getOrder() - 1);
-//
-//		}
-//
-//	}
+	// private void updateOrder(List<TemplateCategory> categories, int weight) {
+	//
+	// for (int i = weight - 1; i < categories.size(); i++) {
+	// categories.get(i).setOrder(categories.get(i).getOrder() - 1);
+	//
+	// }
+	//
+	// }
 
 	@Override
-	public void deleteTemplateCategory(Long templateCategoryId) throws GeneralException {
+	public void deleteTemplateCategory(Long templateCategoryId)
+			throws GeneralException {
 		EntityManager entityManager = emf.createEntityManager();
 
 		try {
 			userTransaction.begin();
 			entityManager.createQuery(
-					"DELETE FROM TemplateCategory s WHERE s.id=" + templateCategoryId)
-					.executeUpdate();
+					"DELETE FROM TemplateCategory s WHERE s.id="
+							+ templateCategoryId).executeUpdate();
 			userTransaction.commit();
 		} catch (Exception e) {
 			ServiceManagerUtils.rollback(userTransaction);
-			throw new GeneralException("Exception in method deleteTemplateCategoryById"
-					+ e.getMessage(), e.getStackTrace());
+			throw new GeneralException(
+					"Exception in method deleteTemplateCategoryById"
+							+ e.getMessage(), e.getStackTrace());
 		}
 	}
 
