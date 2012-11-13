@@ -21,8 +21,9 @@ public class Catalogo implements Serializable {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	@OneToMany
-//	(mappedBy = "catalog", cascade = CascadeType.ALL)
+	// (mappedBy = "catalog", cascade = CascadeType.ALL)
 	private List<Entry> entries = new ArrayList<Entry>();
+	private List<Long> orders = new ArrayList<Long>();
 	// NUEVO
 	private short isPrivate = 1;
 	private Long professorId;
@@ -78,4 +79,13 @@ public class Catalogo implements Serializable {
 	public void setProfessorId(Long professorId) {
 		this.professorId = professorId;
 	}
+
+	public List<Long> getOrders() {
+		return orders;
+	}
+
+	public void setOrders(List<Long> orders) {
+		this.orders = orders;
+	}
+
 }

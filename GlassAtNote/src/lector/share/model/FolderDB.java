@@ -18,15 +18,16 @@ public class FolderDB extends Entry implements Serializable {
 
 	@OneToMany
 	private List<Relation> relations = new ArrayList<Relation>();
+	private List<Long> orders = new ArrayList<Long>();
 
 	public FolderDB() {
 		super();
-	
+
 	}
 
 	public FolderDB(String name) {
 		super(name);
-	
+
 	}
 
 	public List<Relation> getRelations() {
@@ -37,7 +38,12 @@ public class FolderDB extends Entry implements Serializable {
 		this.relations = relations;
 	}
 
+	public List<Long> getOrders() {
+		return orders;
+	}
 
-	
+	public void setOrders(List<Long> orders) {
+		this.orders = orders;
+	}
 
 }

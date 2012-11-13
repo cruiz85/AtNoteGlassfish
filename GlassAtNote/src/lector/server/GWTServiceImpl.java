@@ -1414,25 +1414,27 @@ public class GWTServiceImpl extends RemoteServiceServlet implements GWTService {
 				e.printStackTrace();
 			}
 
-		}else 
-		{
+		} else {
 			try {
-			Date now = new Date();
-			Calendar calendar = Calendar.getInstance();
-			now = calendar.getTime();
-			Annotation Anot;
-			Anot = findAnnotation(annotationThreadClient.getAnnotation().getId());
-			oldAnnotationThread=new AnnotationThread(null,
-					new ArrayList<AnnotationThread>(),Anot ,
-					annotationThreadClient.getComment(), annotationThreadClient.getUserId(), annotationThreadClient.getUserName(), now);
-			Anot.getThreads().add(oldAnnotationThread);
-			saveAnnotation(Anot);
+				Date now = new Date();
+				Calendar calendar = Calendar.getInstance();
+				now = calendar.getTime();
+				Annotation Anot;
+				Anot = findAnnotation(annotationThreadClient.getAnnotation()
+						.getId());
+				oldAnnotationThread = new AnnotationThread(null,
+						new ArrayList<AnnotationThread>(), Anot,
+						annotationThreadClient.getComment(),
+						annotationThreadClient.getUserId(),
+						annotationThreadClient.getUserName(), now);
+				Anot.getThreads().add(oldAnnotationThread);
+				saveAnnotation(Anot);
 			} catch (AnnotationNotFoundException e) {
 				e.printStackTrace();
 			}
-			
-	}
-		
+
+		}
+
 	}
 
 	private void seeChangesInAnnotationThread(
@@ -1766,7 +1768,6 @@ public class GWTServiceImpl extends RemoteServiceServlet implements GWTService {
 		return googleBooks;
 	}
 
-	
 	@Override
 	public void saveCatalog(CatalogoClient catalogClient) {
 		short isPrivate = (catalogClient.getIsPrivate() ? (short) 1 : 0);
@@ -1774,27 +1775,40 @@ public class GWTServiceImpl extends RemoteServiceServlet implements GWTService {
 				catalogClient.getProfessorId(), catalogClient.getCatalogName());
 		saveCatalog(catalogo);
 	}
-	
-	public void updateCatalog(CatalogoClient catalogClient) throws CatalogoNotFoundException
-	{
-		Catalogo Catalog=findCatalogo(catalogClient.getId());
-		Catalog.setEntries(reorderrelationsCatalog(catalogClient.getEntries(), Catalog.getEntries()));
-		saveCatalog(Catalog);
+
+	public void updateCatalog(CatalogoClient catalogClient)
+			throws CatalogoNotFoundException {
+		Catalogo catalog = findCatalogo(catalogClient.getId());
+		catalog.setEntries(reorderrelationsCatalog(catalogClient.getEntries(),
+				catalog.getEntries(), catalog.getOrders()));
+		saveCatalog(catalog);
 	}
 
-	private List<Entry> reorderrelationsCatalog(List<EntryClient> entries,
-			List<Entry> entries2) {
-		ArrayList<Entry> Salida=new ArrayList<Entry>();
-		for (EntryClient entry : entries) {
-			Salida.add(findentry(entry,entries2));
+	private List<Entry> reorderrelationsCatalog(
+			List<EntryClient> entriesClient, List<Entry> entries, List<Long> orders) {
+		List<Entry> entriesReOrdered = new ArrayList<Entry>();
+		for (EntryClient entryClient : entriesClient) {
+			entriesReOrdered.add(findentry(entryClient, entries, orders));
 		}
-		return Salida;
+		return entriesReOrdered;
 	}
 
-	private Entry findentry(EntryClient entry, List<Entry> entries2) {
-		for (Entry entry2 : entries2) {
-			if (entry2.getId().equals(entry.getId()))
-				return entry2;
+	private Entry findentry(EntryClient entryClient,List<Entry> entries, List<Long> ids) {
+		for (Long id : ids) {
+			if (id.equals(entryClient.getId())){
+				return getEntryById(id, entries);
+			}
+				
+		}
+		return null;
+	}
+	
+	private Entry getEntryById(Long id,List<Entry> entries) {
+		for (Entry entry: entries) {
+			if (entry.getId().equals(id)){
+				return entry;
+			}
+				
 		}
 		return null;
 	}
@@ -2063,13 +2077,12 @@ public class GWTServiceImpl extends RemoteServiceServlet implements GWTService {
 
 	}
 
-	public void updateType(TypeClient typesys) throws TagNotFoundException
-	{
-		Tag Type=findTag(typesys.getId());
-		//TODO Actualizar
-		
+	public void updateType(TypeClient typesys) throws TagNotFoundException {
+		Tag Type = findTag(typesys.getId());
+		// TODO Actualizar
+
 	}
-	
+
 	@Override
 	public void deleteTag(Long tagId, Long fatherId) throws GeneralException {
 		try {
@@ -2464,19 +2477,19 @@ public class GWTServiceImpl extends RemoteServiceServlet implements GWTService {
 
 	}
 
-	public void updateTypeCategory(TypeCategoryClient typeCategoryClient) throws FolderDBNotFoundException
-	{
-		FolderDB FDB=findFolderDB(typeCategoryClient.getId());
-		FDB.setRelations(reorderrelations(typeCategoryClient.getChildren(),FDB.getRelations()));
+	public void updateTypeCategory(TypeCategoryClient typeCategoryClient)
+			throws FolderDBNotFoundException {
+		FolderDB FDB = findFolderDB(typeCategoryClient.getId());
+		FDB.setRelations(reorderrelations(typeCategoryClient.getChildren(),
+				FDB.getRelations()));
 		saveFolderDB(FDB);
 	}
 
-	
 	private List<Relation> reorderrelations(List<EntryClient> children,
 			List<Relation> relations) {
-		ArrayList<Relation> Rel=new ArrayList<Relation>();
+		ArrayList<Relation> Rel = new ArrayList<Relation>();
 		for (EntryClient entryRel : children) {
-			Relation R=findrelation(relations,entryRel);
+			Relation R = findrelation(relations, entryRel);
 			Rel.add(R);
 		}
 		return Rel;
