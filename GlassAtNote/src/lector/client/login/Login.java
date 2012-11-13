@@ -98,7 +98,6 @@ public class Login implements EntryPoint {
 				@Override
 				public void onFailure(Throwable caught) {
 					LoadingPanel.getInstance().hide();
-					Window.alert(ErrorConstants.YOU_ARE_NO_AUTORIZED);
 					Logger.GetLogger().severe(
 							Yo.getClass().toString(),
 							ErrorConstants.YOU_ARE_NO_AUTORIZED + " at " + CalendarNow.GetDateNow());
