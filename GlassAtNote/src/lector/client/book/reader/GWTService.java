@@ -12,7 +12,6 @@ import com.google.gwt.user.client.rpc.RemoteServiceRelativePath;
 
 import lector.share.model.Annotation;
 import lector.share.model.AnnotationNotFoundException;
-import lector.share.model.AnnotationSchema;
 import lector.share.model.AnnotationThread;
 import lector.share.model.AnnotationThreadNotFoundException;
 import lector.share.model.Book;
@@ -177,11 +176,7 @@ public interface GWTService extends RemoteService {
 	public void deleteAnnotation(Long annotationId) throws GeneralException,
 			AnnotationNotFoundException;
 
-	// AnnotationSchema
-	
-	public List<AnnotationSchema> getAnnotationSchemaByCatalogId(Long catalogId);
-	
-	// Annotations Threads
+		// Annotations Threads
 
 	public void saveAnnotationThread(
 			AnnotationThreadClient annotationThreadClient);

@@ -9,7 +9,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import lector.share.model.Annotation;
-import lector.share.model.AnnotationSchema;
 import lector.share.model.AnnotationThread;
 import lector.share.model.Book;
 import lector.share.model.Catalogo;
@@ -258,9 +257,6 @@ public interface GWTServiceAsync {
 
 	void moveType(Long typeCategoryFromId, Long typeId, Long typeCategoryToId,
 			AsyncCallback<Void> callback);
-
-	void getAnnotationSchemaByCatalogId(Long catalogId,
-			AsyncCallback<List<AnnotationSchema>> callback);
 
 	void getTypesByNameAndCatalogId(List<String> typeNames, Long catalogId,
 			AsyncCallback<List<TypeClient>> callback);
