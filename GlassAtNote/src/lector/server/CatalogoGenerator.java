@@ -43,14 +43,21 @@ public class CatalogoGenerator {
 			List<Long> orderEntries) {
 		List<Entry> orderListEntries = new ArrayList<Entry>();
 		for (Long id : orderEntries) {
-			orderListEntries.add(getOrderedEntry(entries,id));
+			if(getOrderedEntry(entries,id) != null){
+				orderListEntries.add(getOrderedEntry(entries,id));	
+			}
+			
 		}
-		return null;
+		for (Entry entry : entries) {
+			orderListEntries.add(entry);
+		}
+		return orderListEntries;
 	}
 
 	private static Entry getOrderedEntry(List<Entry> entries, Long id) {
 		for (Entry entry : entries) {
 			if(entry.getId().equals(id)){
+				entries.remove(entry);
 				return entry;
 			}
 		}
