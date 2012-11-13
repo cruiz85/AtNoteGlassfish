@@ -31,7 +31,6 @@ import lector.client.controler.Constants;
 import com.google.gwt.user.server.rpc.RemoteServiceServlet;
 import lector.share.model.Annotation;
 import lector.share.model.AnnotationNotFoundException;
-import lector.share.model.AnnotationSchema;
 import lector.share.model.AnnotationThread;
 import lector.share.model.AnnotationThreadNotFoundException;
 import lector.share.model.Book;
@@ -1003,41 +1002,7 @@ public class GWTServiceImpl extends RemoteServiceServlet implements GWTService {
 		return null;
 	}
 
-	@Override
-	public List<AnnotationSchema> getAnnotationSchemaByCatalogId(Long catalogId) {
-
-		List<AnnotationSchema> annotationSchemas = new ArrayList<AnnotationSchema>();
-		try {
-			List<FolderDB> folders = getFolderIdsByCatalogId(catalogId);
-			List<Tag> tags = getTagIdsByCatalogId(catalogId);
-
-			Catalogo Cata = findCatalogo(catalogId);
-
-			annotationSchemas.add(new AnnotationSchema(Constants.CATALOGID,
-					Cata.getCatalogName(), getSonsCatalog(Cata), true));
-
-			if (folders != null) {
-				for (FolderDB folder : folders) {
-					annotationSchemas.add(new AnnotationSchema(folder.getId(),
-							folder.getName(), getSons(folder), true));
-				}
-			}
-			if (tags != null) {
-				for (Tag tag : tags) {
-					annotationSchemas.add(new AnnotationSchema(tag.getId(), tag
-							.getName(), null, false));
-				}
-			}
-		} catch (GeneralException e) {
-
-			e.printStackTrace();
-		} catch (CatalogoNotFoundException e) {
-
-			e.printStackTrace();
-		}
-		return annotationSchemas;
-	}
-
+	
 	private List<Long> getSonsCatalog(Catalogo cata) {
 		List<Long> children = new ArrayList<Long>();
 		for (Entry relation : cata.getEntries()) {
