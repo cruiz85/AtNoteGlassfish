@@ -596,6 +596,7 @@ max-height:400px;
 	font-style: normal;
 	font-family: arial, sans-serif;
 	text-decoration: none;
+	font-size: 150%;  !important;
 }
 .gwt-ButtonCenterGraphOver {
  background: transparent url('BotonesSueltos/Boton.jpg') no-repeat  center center;
@@ -608,6 +609,7 @@ max-height:400px;
 	font-style: normal;
 	font-family: arial, sans-serif;
 	text-decoration: none;
+	font-size: 150%;  !important;
 }
 
 .gwt-ButtonCenterGraphSelect {
@@ -621,6 +623,7 @@ background: transparent url('BotonesSueltos/Boton.jpg') no-repeat center center;
 	font-style: normal;
 	font-family: arial, sans-serif;
 	text-decoration: none;
+	font-size: 150%;  !important;
 }
 
 .gwt-ButtonCenterGraphPush {
@@ -634,6 +637,7 @@ background: transparent url('BotonesSueltos/Boton.jpg') no-repeat center center;
 			font-style: normal;
 	font-family: arial, sans-serif;
 	text-decoration: none;
+	font-size: 150%;  !important;
 }
 
 .gwt-ButtonCenterMoreLess {

@@ -43,8 +43,9 @@ public class CatalogoGenerator {
 			List<Long> orderEntries) {
 		List<Entry> orderListEntries = new ArrayList<Entry>();
 		for (Long id : orderEntries) {
-			if(getOrderedEntry(entries,id) != null){
-				orderListEntries.add(getOrderedEntry(entries,id));	
+			Entry E=getOrderedEntry(entries,id);
+			if(E != null){
+				orderListEntries.add(E);	
 			}
 			
 		}
@@ -90,14 +91,20 @@ public class CatalogoGenerator {
 
 		List<Relation> orderListRelations = new ArrayList<Relation>();
 		for (Long id : orderRelations) {
-			orderListRelations.add(getOrderedRelation(relations,id));
+			Relation R=getOrderedRelation(relations,id);
+			if (R!=null)
+				orderListRelations.add(R);
 		}
-		return null;
+		for (Relation relation : relations) {
+			orderListRelations.add(relation);
+		}
+		return orderListRelations;
 	}
 
 	private static Relation getOrderedRelation(List<Relation> entries, Long id) {
 		for (Relation relation : entries) {
 			if(relation.getId().equals(id)){
+				entries.remove(relation);
 				return relation;
 			}
 		}

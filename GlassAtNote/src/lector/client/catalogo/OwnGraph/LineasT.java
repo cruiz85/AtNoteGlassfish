@@ -8,11 +8,13 @@ public class LineasT implements Linea{
 
 	private SimplePanel SP;
 	private HorizontalPanel paneLHijos;
+	private SimplePanel PanelBoton;
 		
-	public LineasT(SimplePanel sP, HorizontalPanel paneLHijos) {
+	public LineasT(SimplePanel sP, HorizontalPanel paneLHijos, SimplePanel panelEnlaceNodo) {
 		super();
 		SP = sP;
 		this.paneLHijos = paneLHijos;
+		PanelBoton=panelEnlaceNodo;
 	}
 
 	public int getStartX()
@@ -90,6 +92,11 @@ public class LineasT implements Linea{
 	
 	public int getXCenterOfSimplePanel()
 	{
-		return SP.getAbsoluteLeft()+(SP.getOffsetWidth()/2);	
+		return PanelBoton.getAbsoluteLeft()+(PanelBoton.getOffsetWidth()/2);	
+	}
+	
+	public int getYBotonOfSimplePanel()
+	{
+		return PanelBoton.getAbsoluteTop()+PanelBoton.getOffsetHeight();	
 	}
 }

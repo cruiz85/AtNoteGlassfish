@@ -92,6 +92,7 @@ public class VisualizeGraph extends DialogBox {
 		
 		PG.Go(Catalog);
 		PG.Pinta();
+		PG.refreshsize();
 		
 	}
 

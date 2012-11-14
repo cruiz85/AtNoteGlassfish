@@ -70,13 +70,13 @@ public class ElementKey extends Composite{
 	private HorizontalPanel horizontalPanel_1;
 	private Image Large1;
 	private Image Large2;
-	private VerticalPanel verticalPanel_2;
 	private Button btnNewButton;
 	private Button btnNewButton_1;
 	private ElementKey Yo;
 	static GWTServiceAsync bookReaderServiceHolder = GWT
 			.create(GWTService.class);
 	public static Finder finderAct;
+	private HorizontalPanel horizontalPanel_2;
 	
 	public ElementKey(EntityCatalogElements ent) {
 		
@@ -103,11 +103,12 @@ public class ElementKey extends Composite{
 		BotonT.setHorizontalAlignment(HasHorizontalAlignment.ALIGN_CENTER);
 		BotonT.setSize("100%", "100%");
 		
-		verticalPanel_2 = new VerticalPanel();
-		BotonT.add(verticalPanel_2);
-		verticalPanel_2.setSize("100%", "43px");
+		horizontalPanel_2 = new HorizontalPanel();
+		BotonT.add(horizontalPanel_2);
+		horizontalPanel_2.setHeight("100%");
 		
-		btnNewButton = new Button("Up");
+		btnNewButton = new Button("<img src=\"BotonesTemplate/Arriba.gif\" alt=\"<-\">");
+		horizontalPanel_2.add(btnNewButton);
 		btnNewButton.addClickHandler(new ClickHandler() {
 			public void onClick(ClickEvent event) {
 				TypeCategoryClient EC=(TypeCategoryClient)Entidad.getFatherIdCreador();
@@ -136,7 +137,7 @@ public class ElementKey extends Composite{
 					EntryClient Aux=EC.getChildren().get(resultado-1);
 					EC.getChildren().set(resultado-1, EC.getChildren().get(resultado));
 					EC.getChildren().set(resultado, Aux);
-					saveEntry(Aux);
+					saveEntry(EC);
 					}
 				}
 			}
@@ -179,10 +180,32 @@ bookReaderServiceHolder.updateCatalog(catalog, new AsyncCallback<Void>() {
 
 
 		});
-		verticalPanel_2.add(btnNewButton);
-		btnNewButton.setHeight("21px");
+		btnNewButton.setSize("100%", "43px");
 		
-		btnNewButton_1 = new Button("Down");
+		btnNewButton.setStyleName("gwt-ButtonCenterContinuoIzqEnd");
+		btnNewButton.addMouseOutHandler(new MouseOutHandler() {
+			public void onMouseOut(MouseOutEvent event) {
+				((Button)event.getSource()).setStyleName("gwt-ButtonCenterContinuoIzqEnd");
+			}
+		});
+		btnNewButton.addMouseOverHandler(new MouseOverHandler() {
+			public void onMouseOver(MouseOverEvent event) {
+				((Button)event.getSource()).setStyleName("gwt-ButtonCenterContinuoIzqEndOver");
+			}
+		});
+		btnNewButton.addMouseDownHandler(new MouseDownHandler() {
+			public void onMouseDown(MouseDownEvent event) {
+				((Button)event.getSource()).setStyleName("gwt-ButtonCenterContinuoIzqEndPush");
+			}
+		});
+		btnNewButton.addMouseUpHandler(new MouseUpHandler() {
+			public void onMouseUp(MouseUpEvent event) {
+				((Button)event.getSource()).setStyleName("gwt-ButtonCenterContinuoIzqEnd");
+			}
+		});
+		
+		btnNewButton_1 = new Button("<img src=\"BotonesTemplate/Abajo.gif\" alt=\"<-\">");
+		horizontalPanel_2.add(btnNewButton_1);
 		btnNewButton_1.addClickHandler(new ClickHandler() {
 			public void onClick(ClickEvent event) {
 				TypeCategoryClient EC=(TypeCategoryClient)Entidad.getFatherIdCreador();
@@ -195,7 +218,7 @@ bookReaderServiceHolder.updateCatalog(catalog, new AsyncCallback<Void>() {
 					}
 					i++;
 				}
-				if (resultado==EC.getChildren().size())
+				if (resultado==EC.getChildren().size()-1)
 					{
 					Window.alert("Botton");
 					}
@@ -211,7 +234,7 @@ bookReaderServiceHolder.updateCatalog(catalog, new AsyncCallback<Void>() {
 					EntryClient Aux=EC.getChildren().get(resultado+1);
 					EC.getChildren().set(resultado+1, EC.getChildren().get(resultado));
 					EC.getChildren().set(resultado, Aux);
-					saveEntry(Aux);
+					saveEntry(EC);
 					}
 				}
 			}
@@ -254,36 +277,85 @@ bookReaderServiceHolder.updateCatalog(catalog, new AsyncCallback<Void>() {
 
 
 		});
-		verticalPanel_2.add(btnNewButton_1);
-		btnNewButton_1.setHeight("22px");
+		btnNewButton_1.setSize("100%", "43px");
+		btnNewButton_1.setStyleName("gwt-ButtonCenterContinuoIzq");
+		btnNewButton_1.addMouseOutHandler(new MouseOutHandler() {
+			public void onMouseOut(MouseOutEvent event) {
+				((Button)event.getSource()).setStyleName("gwt-ButtonCenterContinuoIzq");
+			}
+		});
+		btnNewButton_1.addMouseOverHandler(new MouseOverHandler() {
+			public void onMouseOver(MouseOverEvent event) {
+				((Button)event.getSource()).setStyleName("gwt-ButtonCenterContinuoIzqOver");
+			}
+		});
+		btnNewButton_1.addMouseDownHandler(new MouseDownHandler() {
+			public void onMouseDown(MouseDownEvent event) {
+				((Button)event.getSource()).setStyleName("gwt-ButtonCenterContinuoIzqPush");
+			}
+		});
+		btnNewButton_1.addMouseUpHandler(new MouseUpHandler() {
+			public void onMouseUp(MouseUpEvent event) {
+				((Button)event.getSource()).setStyleName("gwt-ButtonCenterContinuoIzq");
+			}
+		});
 		
 		Label = new ButtonKey("New button",this);
 		//Label = new ButtonKey("New button",null);
 		BotonT.add(Label);
 		Label.setSize("100%", "43px");
-		Label.setStyleName("gwt-ButtonIzquierdaMIN");
+//		Label.setStyleName("gwt-ButtonIzquierdaMIN");
+//		Label.addMouseOutHandler(new MouseOutHandler() {
+//			public void onMouseOut(MouseOutEvent event) {
+//				if (!Selected)
+//				((Button)event.getSource()).setStyleName("gwt-ButtonIzquierdaMIN");
+//			}
+//		});
+//		Label.addMouseOverHandler(new MouseOverHandler() {
+//			public void onMouseOver(MouseOverEvent event) {
+//				if (!Selected)
+//				((Button)event.getSource()).setStyleName("gwt-ButtonIzquierdaOverMIN");
+//			}
+//		});
+//		Label.addMouseDownHandler(new MouseDownHandler() {
+//			public void onMouseDown(MouseDownEvent event) {
+//				((Button)event.getSource()).setStyleName("gwt-ButtonIzquierdaPushMIN");
+//			}
+//		});
+//		Label.addMouseUpHandler(new MouseUpHandler() {
+//			public void onMouseUp(MouseUpEvent event) {
+//				((Button)event.getSource()).setStyleName("gwt-ButtonIzquierdaMIN");
+//			}
+//		});
+		
+		Label.setStyleName("gwt-ButtonCenterContinuoDoble");
+
+		Label.addMouseDownHandler(new MouseDownHandler() {
+			public void onMouseDown(MouseDownEvent event) {
+					((Button)event.getSource()).setStyleName("gwt-ButtonCenterContinuoDoblePush");
+			}
+		});
+		
 		Label.addMouseOutHandler(new MouseOutHandler() {
 			public void onMouseOut(MouseOutEvent event) {
 				if (!Selected)
-				((Button)event.getSource()).setStyleName("gwt-ButtonIzquierdaMIN");
-			}
+					((Button)event.getSource()).setStyleName("gwt-ButtonCenterContinuoDoble");
+		}
 		});
+		
 		Label.addMouseOverHandler(new MouseOverHandler() {
 			public void onMouseOver(MouseOverEvent event) {
 				if (!Selected)
-				((Button)event.getSource()).setStyleName("gwt-ButtonIzquierdaOverMIN");
-			}
-		});
-		Label.addMouseDownHandler(new MouseDownHandler() {
-			public void onMouseDown(MouseDownEvent event) {
-				((Button)event.getSource()).setStyleName("gwt-ButtonIzquierdaPushMIN");
-			}
-		});
+					((Button)event.getSource()).setStyleName("gwt-ButtonCenterContinuoDobleOver");
+			
+		}
+	});
+		
 		Label.addMouseUpHandler(new MouseUpHandler() {
-			public void onMouseUp(MouseUpEvent event) {
-				((Button)event.getSource()).setStyleName("gwt-ButtonIzquierdaMIN");
-			}
-		});
+		public void onMouseUp(MouseUpEvent event) {
+			((Button)event.getSource()).setStyleName("gwt-ButtonCenterContinuoDoble");
+		}
+	});
 		
 		Mas = new ButtonKey("-",this);
 		//Mas = new ButtonKey("+",null);

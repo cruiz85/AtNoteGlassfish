@@ -3,11 +3,16 @@ package lector.client.catalogo.OwnGraph;
 import java.util.ArrayList;
 
 import lector.client.catalogo.BotonesStackPanelMio;
+import lector.client.catalogo.client.File;
+import lector.client.catalogo.client.Folder;
 import lector.share.model.client.CatalogoClient;
 import lector.share.model.client.EntryClient;
 import lector.share.model.client.TypeCategoryClient;
+import lector.share.model.client.TypeClient;
 
 
+import com.google.gwt.dom.client.Style;
+import com.google.gwt.dom.client.Style.Unit;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.event.dom.client.MouseDownEvent;
@@ -18,11 +23,13 @@ import com.google.gwt.event.dom.client.MouseOverEvent;
 import com.google.gwt.event.dom.client.MouseOverHandler;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.Composite;
+import com.google.gwt.user.client.ui.UIObject;
 import com.google.gwt.user.client.ui.VerticalPanel;
 import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.HasHorizontalAlignment;
 import com.google.gwt.user.client.ui.HasVerticalAlignment;
 import com.google.gwt.user.client.ui.SimplePanel;
+import com.google.gwt.user.client.ui.Widget;
 
 
 
@@ -43,6 +50,12 @@ public class Arbolgrafo extends Composite implements ElementoGrafo{
 	
 	private static ClickHandler AccionAsociada;
 	private static BotonesStackPanelMio ButonTipo;
+	private static String AnclajeFinalLineaAncho= "10px";
+	private int BGWOriginal;
+	private int BGHOriginal;
+	private HorizontalPanel horizontalPanel;
+	private SimplePanel PanelEnlaceNodo;
+	private String TextSize;
 	
 
 public Arbolgrafo() {
@@ -90,7 +103,11 @@ public Arbolgrafo() {
 		
 		//BG=new BotonGrafo(entrada);
 		PanelNodo.add(BG);
-		LineasT LT=new LineasT(Linea,PaneLHijos);
+		BG.setSize("100%", "100%");
+//		if((PanelGrafo.getMultiplicador()>=1.0))
+			BG.setIcon("Folder.gif", entrada.getCatalogName());
+	//	PanelNodo.setHeight(50*PanelGrafo.getMultiplicador()+"px");
+		LineasT LT=new LineasT(Linea,PaneLHijos,PanelEnlaceNodo);
 		Lineas.add(LT);
 		
 		for (EntryClient hijoEntry : entrada.getEntries()) {
@@ -145,14 +162,21 @@ public Arbolgrafo() {
 		verticalPanel_1.add(horizontalPanel_2);
 		horizontalPanel_2.setHeight("10px");
 		
+		PanelEnlaceNodo = new SimplePanel();
+		verticalPanel_1.add(PanelEnlaceNodo);
+		
 		PanelNodo = new HorizontalPanel();
+		PanelEnlaceNodo.setWidget(PanelNodo);
 		PanelNodo.setVerticalAlignment(HasVerticalAlignment.ALIGN_MIDDLE);
-		verticalPanel_1.add(PanelNodo);
-		PanelNodo.setHeight("24px");
+		PanelNodo.setSize("100%", "100%");
+		
+		horizontalPanel = new HorizontalPanel();
+		verticalPanel_1.add(horizontalPanel);
+		horizontalPanel.setHeight("10px");
 		
 		Linea = new SimplePanel();
 		verticalPanel.add(Linea);
-		Linea.setSize("100%", "10px");
+		Linea.setSize("100%", "");
 		
 		PaneLHijos = new HorizontalPanel();
 		PaneLHijos.setSpacing(5);
@@ -173,14 +197,14 @@ public Arbolgrafo() {
 		for (int i = 0; i < aumentarhermanos; i++) {
 			VerticalPanel V=Next.getPanelLineasHorizontales();
 			SimplePanel SP=new SimplePanel();
-			SP.setSize("10px", "10px");
+			SP.setSize(Arbolgrafo.AnclajeFinalLineaAncho, "10px");
 			V.add(SP);
 		}
 		boolean A=false;
 		SimplePanel SP=new SimplePanel();
 		for (Connect2vs3 lineasunion : futuro.getLineasAConectar()) {
 			VerticalPanel V=Next.getPanelLineasHorizontales();
-			SP.setSize("10px", "10px");
+			SP.setSize(Arbolgrafo.AnclajeFinalLineaAncho, "10px");
 			V.add(SP);
 			Lineas.add(new LineasUTP(lineasunion, SP));
 			A=true;
@@ -237,40 +261,50 @@ public Arbolgrafo() {
 		else 
 			BG=new BotonGrafo("vacio", new VerticalPanel(), new HorizontalPanel(), null);
 		BG.setEntry(entryClient);
-		BG.setStyleName("gwt-ButtonCenter");
+		BG.setStyleName("gwt-ButtonCenterGraph");
 		PanelNodo.add(BG);
+		BG.setSize("100%", "100%");
+		//BG.setSize((BG.getOffsetWidth()*PanelGrafo.getMultiplicador())+"px",(BG.getOffsetHeight()*PanelGrafo.getMultiplicador())+"px");
+	//	PanelNodo.setHeight(50*PanelGrafo.getMultiplicador()+"px");
+		if ((entryClient instanceof TypeClient)&&(PanelGrafo.getMultiplicador()>=1.0))
+			BG.setIcon("File.gif", entryClient.getName());
+		else if ((entryClient instanceof TypeCategoryClient)&&(PanelGrafo.getMultiplicador()>=1.0))
+			BG.setIcon("Folder.gif", entryClient.getName());
+//		BG.setWidth(BG.getOffsetWidth()*PanelGrafo.getMultiplicador()+"px");
+//		BG.setHeight(BG.getOffsetHeight()*PanelGrafo.getMultiplicador()+"px");
 		
 BG.addClickHandler(new ClickHandler() {
 			
 			public void onClick(ClickEvent event) {
-				((Button)event.getSource()).setStyleName("gwt-ButtonCenter");
+				((Button)event.getSource()).setStyleName("gwt-ButtonCenterGraph");
 				
 			}
 		});
 
 		BG.addMouseDownHandler(new MouseDownHandler() {
 			public void onMouseDown(MouseDownEvent event) {
-				((Button)event.getSource()).setStyleName("gwt-ButtonCenterPush");
+				((Button)event.getSource()).setStyleName("gwt-ButtonCenterGraphPush");
 			}
 		});
 		
 		BG.addMouseOutHandler(new MouseOutHandler() {
 			public void onMouseOut(MouseOutEvent event) {
-				((Button)event.getSource()).setStyleName("gwt-ButtonCenter");
+				((Button)event.getSource()).setStyleName("gwt-ButtonCenterGraph");
 		}
 		});
 		
 		BG.addMouseOverHandler(new MouseOverHandler() {
 			public void onMouseOver(MouseOverEvent event) {
 				
-				((Button)event.getSource()).setStyleName("gwt-ButtonCenterOver");
+				((Button)event.getSource()).setStyleName("gwt-ButtonCenterGraphOver");
 			
 		}
 		});
 		
 		if (entryClient instanceof TypeCategoryClient){
 			if (!((TypeCategoryClient)entryClient).getChildren().isEmpty()){
-				LineasT LT=new LineasT(Linea,PaneLHijos);
+			//	LineasT LT=new LineasT(PanelEnlaceNodo,PaneLHijos);
+				LineasT LT=new LineasT(Linea,PaneLHijos,PanelEnlaceNodo);
 				Lineas.add(LT);
 			
 			for (EntryClient hijoEntry : ((TypeCategoryClient)entryClient).getChildren()) {
@@ -331,5 +365,26 @@ BG.addClickHandler(new ClickHandler() {
 		ButonTipo = butonTipo;
 	}
 	
+	public void changeMultiplicador()
+	{
+		PanelNodo.setSize((BGWOriginal*PanelGrafo.getMultiplicador())+"px",(BGHOriginal*PanelGrafo.getMultiplicador())+"px");
+//		BG.getElement().getStyle().setFontSize(Integer.parseInt(TextSize)*PanelGrafo.getMultiplicador(),Unit.PX);
+		for (Widget W : PaneLHijos) {
+			if (W instanceof Arbolgrafo)
+				((Arbolgrafo) W).changeMultiplicador();
+		}
+	}
+	
+	public void storeBGSize()
+	{
+		BGWOriginal=PanelNodo.getOffsetWidth();
+		BGHOriginal=PanelNodo.getOffsetHeight();
+//		Style Style = BG.getElement().getStyle();
+//		TextSize=BG.getElement().getStyle().getFontSize();
+		for (Widget W : PaneLHijos) {
+			if (W instanceof Arbolgrafo)
+				((Arbolgrafo) W).storeBGSize();
+		}
+	}
 	
 }

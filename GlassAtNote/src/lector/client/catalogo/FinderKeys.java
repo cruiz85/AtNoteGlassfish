@@ -7,8 +7,6 @@ import java.util.List;
 import lector.client.admin.tagstypes.ClickHandlerMio;
 import lector.client.book.reader.GWTService;
 import lector.client.book.reader.GWTServiceAsync;
-import lector.client.catalogo.Tree.Node;
-import lector.client.catalogo.client.Entity;
 import lector.client.catalogo.client.EntityCatalogElements;
 import lector.client.catalogo.client.File;
 import lector.client.catalogo.client.Folder;
@@ -31,23 +29,10 @@ import com.google.gwt.event.dom.client.MouseOutEvent;
 import com.google.gwt.event.dom.client.MouseOutHandler;
 import com.google.gwt.event.dom.client.MouseOverEvent;
 import com.google.gwt.event.dom.client.MouseOverHandler;
-import com.google.gwt.event.logical.shared.OpenEvent;
-import com.google.gwt.event.logical.shared.OpenHandler;
-import com.google.gwt.event.logical.shared.SelectionEvent;
-import com.google.gwt.event.logical.shared.SelectionHandler;
-import com.google.gwt.user.client.Event;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Button;
-import com.google.gwt.user.client.ui.Composite;
-import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.ScrollPanel;
-import com.google.gwt.user.client.ui.SimplePanel;
-import com.google.gwt.user.client.ui.SplitLayoutPanel;
-import com.google.gwt.user.client.ui.VerticalPanel;
-import com.google.gwt.user.client.ui.Tree;
-import com.google.gwt.user.client.ui.TreeItem;
-import com.google.gwt.user.client.ui.AbsolutePanel;
 
 public class FinderKeys extends Finder {
 
@@ -108,10 +93,10 @@ public class FinderKeys extends Finder {
 				
 					if (ActualEle!=ActualRamaNew){
 						NanotimeOld=System.currentTimeMillis();
-						ActualEle.getLabel().setStyleName("gwt-ButtonIzquierdaMIN");
+						ActualEle.getLabel().setStyleName("gwt-ButtonCenterContinuoDoble");
 						ActualEle.setSelected(false);
 						ActualEle=ActualRamaNew;
-						ActualEle.getLabel().setStyleName("gwt-ButtonIzquierdaSelectMIN");
+						ActualEle.getLabel().setStyleName("gwt-ButtonCenterContinuoDobleSelect");
 						ActualEle.setSelected(true);
 					}
 					else
@@ -120,15 +105,15 @@ public class FinderKeys extends Finder {
 							if (ActualRamaNew.getEntidad().getEntry().getId()!=Constants.CATALOGID)
 								{
 								Selecciona();
-								ActualEle.getLabel().setStyleName("gwt-ButtonIzquierdaSelectMIN");
+								ActualEle.getLabel().setStyleName("gwt-ButtonCenterContinuoDobleSelect");
 								}
 						
 							else {
-								ActualEle.getLabel().setStyleName("gwt-ButtonIzquierdaSelectMIN");
+								ActualEle.getLabel().setStyleName("gwt-ButtonCenterContinuoDobleSelect");
 							}
 						else{
 							NanotimeOld=System.currentTimeMillis();
-							ActualEle.getLabel().setStyleName("gwt-ButtonIzquierdaSelectMIN");
+							ActualEle.getLabel().setStyleName("gwt-ButtonCenterContinuoDobleSelect");
 						}
 					}
 					
@@ -360,7 +345,7 @@ public class FinderKeys extends Finder {
 		EK.setText(C.getCatalogName());
 		T.setCatalog(C);
 		ActualEle.setSelected(true);
-		ActualEle.getLabel().setStyleName("gwt-ButtonIzquierdaSelectMIN");
+		ActualEle.getLabel().setStyleName("gwt-ButtonCenterContinuoDobleSelect");
 		ActualEle.setSelected(true);
 //		cargaLaRama();
 	}
@@ -383,7 +368,7 @@ public class FinderKeys extends Finder {
 		Lista.clear();
 		ActualEle=EK;
 		EK.removeItems();
-		ActualEle.getLabel().setStyleName("gwt-ButtonIzquierdaSelectMIN");
+		ActualEle.getLabel().setStyleName("gwt-ButtonCenterContinuoDobleSelect");
 		ActualEle.setSelected(true);
 		cargaLaRama(EK);
 		//simplePanel.setHeight(Integer.toString(Window.getClientHeight())+"px");
