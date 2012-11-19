@@ -260,6 +260,8 @@ public Arbolgrafo() {
 			BG=(BotonGrafo) ButonTipo.Clone();
 		else 
 			BG=new BotonGrafo("vacio", new VerticalPanel(), new HorizontalPanel(), null);
+		if (AccionAsociada!=null)
+			BG.addClickHandler(AccionAsociada);
 		BG.setEntry(entryClient);
 		BG.setStyleName("gwt-ButtonCenterGraph");
 		PanelNodo.add(BG);

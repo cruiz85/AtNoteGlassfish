@@ -66,6 +66,8 @@ public class FinderKeys extends Finder {
 		T=new TypeCategoryClient(Constants.CATALOGID,new ArrayList<EntryClient>(), "NULL",
 				C, new ArrayList<EntryClient>());
 		EK=new ElementKey(new Folder(T, null,T));
+		EK.setBotonDownState(false);
+		EK.setBotonUpState(false);
 		Lista=new ArrayList<EstadoElementKey>();
 		
 		AddElementLista(new EstadoElementKey(EK,false));

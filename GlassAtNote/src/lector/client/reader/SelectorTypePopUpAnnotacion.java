@@ -127,7 +127,6 @@ public class SelectorTypePopUpAnnotacion extends PopupPanel {
         finder= new FinderOwnGrafo(Cata);
         scrollPanel.setWidget(finder);
         finder.setSize("100%", "100%");
-        finder.RefrescaLosDatos();
         }
         else 
         {
@@ -135,7 +134,6 @@ public class SelectorTypePopUpAnnotacion extends PopupPanel {
         	 finder.setCatalogo(Cata);
              scrollPanel.setWidget(finder);
              finder.setSize("100%", "100%");
-             finder.RefrescaLosDatos();
         }
 	}
 
@@ -213,5 +211,9 @@ public class SelectorTypePopUpAnnotacion extends PopupPanel {
 		 
 		 FinderKeys.setButtonTipo(new BotonesStackPanelReaderSelectMio("prototipo", new VerticalPanel(),HP));
 		 FinderKeys.setBotonClick(new ClickHandlerMioSelector(CT));
+	}
+	
+	public void RefrescaLosDatos() {
+        finder.RefrescaLosDatos();
 	}
 }

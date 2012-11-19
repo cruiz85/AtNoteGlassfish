@@ -69,7 +69,7 @@ public class FinderOwnGrafo extends Finder {
 @Override
 public void RefrescaLosDatos() {
 	panelDelGrafo.Go(C);
-	panelDelGrafo.Pinta();
+	panelDelGrafo.refreshsize();
 }
 
 
