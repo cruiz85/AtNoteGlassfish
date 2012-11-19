@@ -840,9 +840,7 @@ pageBack.addMouseDownHandler(new MouseDownHandler() {
 				CommentPanel commentPanel = new CommentPanel(List.get(i),
 						originalBook);
 				JeraquiaSimulada JS=new JeraquiaSimulada();
-				for (Long Thread : List.get(i).getThreads()) {
-					AT.addLlamada(new ParesLlamada(JS.getVerticalPanel(), List.get(i),Thread));
-				} 
+					AT.addLlamada(new ParesLlamada(JS.getVerticalPanel(), List.get(i)));
 				verticalAnnotationsPanel.add(commentPanel);
 				verticalAnnotationsPanel.add(JS);
 			}

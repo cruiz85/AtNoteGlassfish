@@ -35,7 +35,7 @@ public class ArbitroThreads {
 	public void Start() {
 		if (!Llamadas.isEmpty())
 		{
-			bookReaderServiceHolder.getAnnotationThreadsByItsFather(Llamadas.peek().getThread(), new AsyncCallback<List<AnnotationThreadClient>>() {
+			bookReaderServiceHolder.getAnnotationThreadsByItsAnnotation(Llamadas.peek().getIDPadre().getId(), new AsyncCallback<List<AnnotationThreadClient>>() {
 				
 				@Override
 				public void onSuccess(List<AnnotationThreadClient> result) {
@@ -76,7 +76,7 @@ public class ArbitroThreads {
 				@Override
 				public void onFailure(Throwable caught) {
 					ParesLlamada error=Llamadas.pop();
-					Window.alert(ErrorConstants.ERROR_LOADING_THREAD1 + error.getIDPadre().getId() + ErrorConstants.ERROR_LOADING_THREAD2 + error.getThread());
+					Window.alert(ErrorConstants.ERROR_LOADING_THREAD1 + error.getIDPadre().getId() + ErrorConstants.ERROR_LOADING_THREAD2 + error.getIDPadre());
 					
 				}
 			});
