@@ -1461,13 +1461,13 @@ Annotation a;
 	}
 
 	@Override
-	public List<AnnotationThreadClient> getAnnotationThreadsByItsFather(
+	public List<AnnotationThreadClient> getAnnotationThreadsByItsAnnotation(
 			Long threadFatherId) throws GeneralException,
 			AnnotationThreadNotFoundException {
 		EntityManager entityManager = emf.createEntityManager();
 		List<AnnotationThread> list;
 
-		String sql = "SELECT r FROM AnnotationThread r WHERE r.father.id="
+		String sql = "SELECT r FROM AnnotationThread r WHERE r.annotation.id="
 				+ threadFatherId;
 		try {
 			list = entityManager.createQuery(sql).getResultList();
