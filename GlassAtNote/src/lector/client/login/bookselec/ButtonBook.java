@@ -10,6 +10,7 @@ public class ButtonBook extends Button{
 	
 	public ButtonBook(BookClient bookClient) {
 		super(bookClient.getTitle());
+		Libro=bookClient;
 	}
 	
 	public BookClient getLibro() {

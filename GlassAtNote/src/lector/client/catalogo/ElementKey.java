@@ -70,8 +70,8 @@ public class ElementKey extends Composite{
 	private HorizontalPanel horizontalPanel_1;
 	private Image Large1;
 	private Image Large2;
-	private Button btnNewButton;
-	private Button btnNewButton_1;
+	private Button BotonUp;
+	private Button BotonDown;
 	private ElementKey Yo;
 	static GWTServiceAsync bookReaderServiceHolder = GWT
 			.create(GWTService.class);
@@ -107,9 +107,9 @@ public class ElementKey extends Composite{
 		BotonT.add(horizontalPanel_2);
 		horizontalPanel_2.setHeight("100%");
 		
-		btnNewButton = new Button("<img src=\"BotonesTemplate/Arriba.gif\" alt=\"<-\">");
-		horizontalPanel_2.add(btnNewButton);
-		btnNewButton.addClickHandler(new ClickHandler() {
+		BotonUp = new Button("<img src=\"BotonesTemplate/Arriba.gif\" alt=\"<-\">");
+		horizontalPanel_2.add(BotonUp);
+		BotonUp.addClickHandler(new ClickHandler() {
 			public void onClick(ClickEvent event) {
 				TypeCategoryClient EC=(TypeCategoryClient)Entidad.getFatherIdCreador();
 				int i=0;
@@ -180,33 +180,33 @@ bookReaderServiceHolder.updateCatalog(catalog, new AsyncCallback<Void>() {
 
 
 		});
-		btnNewButton.setSize("100%", "43px");
+		BotonUp.setSize("100%", "43px");
 		
-		btnNewButton.setStyleName("gwt-ButtonCenterContinuoIzqEnd");
-		btnNewButton.addMouseOutHandler(new MouseOutHandler() {
+		BotonUp.setStyleName("gwt-ButtonCenterContinuoIzqEnd");
+		BotonUp.addMouseOutHandler(new MouseOutHandler() {
 			public void onMouseOut(MouseOutEvent event) {
 				((Button)event.getSource()).setStyleName("gwt-ButtonCenterContinuoIzqEnd");
 			}
 		});
-		btnNewButton.addMouseOverHandler(new MouseOverHandler() {
+		BotonUp.addMouseOverHandler(new MouseOverHandler() {
 			public void onMouseOver(MouseOverEvent event) {
 				((Button)event.getSource()).setStyleName("gwt-ButtonCenterContinuoIzqEndOver");
 			}
 		});
-		btnNewButton.addMouseDownHandler(new MouseDownHandler() {
+		BotonUp.addMouseDownHandler(new MouseDownHandler() {
 			public void onMouseDown(MouseDownEvent event) {
 				((Button)event.getSource()).setStyleName("gwt-ButtonCenterContinuoIzqEndPush");
 			}
 		});
-		btnNewButton.addMouseUpHandler(new MouseUpHandler() {
+		BotonUp.addMouseUpHandler(new MouseUpHandler() {
 			public void onMouseUp(MouseUpEvent event) {
 				((Button)event.getSource()).setStyleName("gwt-ButtonCenterContinuoIzqEnd");
 			}
 		});
 		
-		btnNewButton_1 = new Button("<img src=\"BotonesTemplate/Abajo.gif\" alt=\"<-\">");
-		horizontalPanel_2.add(btnNewButton_1);
-		btnNewButton_1.addClickHandler(new ClickHandler() {
+		BotonDown = new Button("<img src=\"BotonesTemplate/Abajo.gif\" alt=\"<-\">");
+		horizontalPanel_2.add(BotonDown);
+		BotonDown.addClickHandler(new ClickHandler() {
 			public void onClick(ClickEvent event) {
 				TypeCategoryClient EC=(TypeCategoryClient)Entidad.getFatherIdCreador();
 				int i=0;
@@ -277,24 +277,24 @@ bookReaderServiceHolder.updateCatalog(catalog, new AsyncCallback<Void>() {
 
 
 		});
-		btnNewButton_1.setSize("100%", "43px");
-		btnNewButton_1.setStyleName("gwt-ButtonCenterContinuoIzq");
-		btnNewButton_1.addMouseOutHandler(new MouseOutHandler() {
+		BotonDown.setSize("100%", "43px");
+		BotonDown.setStyleName("gwt-ButtonCenterContinuoIzq");
+		BotonDown.addMouseOutHandler(new MouseOutHandler() {
 			public void onMouseOut(MouseOutEvent event) {
 				((Button)event.getSource()).setStyleName("gwt-ButtonCenterContinuoIzq");
 			}
 		});
-		btnNewButton_1.addMouseOverHandler(new MouseOverHandler() {
+		BotonDown.addMouseOverHandler(new MouseOverHandler() {
 			public void onMouseOver(MouseOverEvent event) {
 				((Button)event.getSource()).setStyleName("gwt-ButtonCenterContinuoIzqOver");
 			}
 		});
-		btnNewButton_1.addMouseDownHandler(new MouseDownHandler() {
+		BotonDown.addMouseDownHandler(new MouseDownHandler() {
 			public void onMouseDown(MouseDownEvent event) {
 				((Button)event.getSource()).setStyleName("gwt-ButtonCenterContinuoIzqPush");
 			}
 		});
-		btnNewButton_1.addMouseUpHandler(new MouseUpHandler() {
+		BotonDown.addMouseUpHandler(new MouseUpHandler() {
 			public void onMouseUp(MouseUpEvent event) {
 				((Button)event.getSource()).setStyleName("gwt-ButtonCenterContinuoIzq");
 			}
@@ -644,5 +644,16 @@ bookReaderServiceHolder.updateCatalog(catalog, new AsyncCallback<Void>() {
 	
 	public static Finder getFinderAct() {
 		return finderAct;
+	}
+	
+	public void setBotonUpState(boolean botonUp) {
+		BotonUp.setEnabled(botonUp);
+		BotonUp.setVisible(botonUp);
+		
+	}
+	
+	public void setBotonDownState(boolean botonDown) {
+		BotonDown.setEnabled(botonDown);
+		BotonDown.setVisible(botonDown);
 	}
 }

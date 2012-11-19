@@ -959,7 +959,7 @@ pageBack.addMouseDownHandler(new MouseDownHandler() {
 			List<AnnotationClient> result) {
 		
 		ArrayList<AnnotationRanked> resultout = new ArrayList<AnnotationRanked>();
-		if ((filtroTypes.size() == 1 && filtroTypes.get(0).equals(Constants.ALL))||(filtroTypes.isEmpty()))
+		if (filtroTypes.isEmpty())
 			{
 			for (AnnotationClient annotationRanked : result) {
 				resultout.add(new AnnotationRanked(annotationRanked));

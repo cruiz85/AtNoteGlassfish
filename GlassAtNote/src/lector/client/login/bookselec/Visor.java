@@ -87,7 +87,7 @@ public class Visor extends PopupPanel {
 		HorizontalPanel horizontalPanel_3 = new HorizontalPanel();
 		horizontalPanel_2.add(horizontalPanel_3);
 		
-		Atras = new Button("<img src=\\\"BotonesTemplate/Izquierda.gif\\\" alt=\\\"<-\\\">");
+		Atras = new Button("<img src=\"BotonesTemplate/Izquierda.gif\" alt=\"<-\">");
 		Atras.setStyleName("gwt-ButtonCenter");
 		Atras.addMouseOutHandler(new MouseOutHandler() {
 			public void onMouseOut(MouseOutEvent event) {
@@ -118,13 +118,13 @@ public class Visor extends PopupPanel {
 					Atras.setEnabled(false);
 				}
 				Adelante.setEnabled(true);	
-				Pagina1.setUrl(Book.getWebLinks().get(actualpagina-1));
-				Pagina2.setUrl(Book.getWebLinks().get(actualpagina));
+				Pagina1.setUrl(Book.getWebLinks().get(actualpagina-2));
+				Pagina2.setUrl(Book.getWebLinks().get(actualpagina-1));
 			}
 		});
 		horizontalPanel_3.add(Atras);
 		
-		Adelante = new Button("<img src=\\\"BotonesTemplate/Derecha.gif\\\" alt=\\\"<-\\\">");
+		Adelante = new Button("<img src=\"BotonesTemplate/Derecha.gif\" alt=\"<-\">");
 		Adelante.setStyleName("gwt-ButtonCenter");
 		Adelante.addMouseOutHandler(new MouseOutHandler() {
 			public void onMouseOut(MouseOutEvent event) {
@@ -155,8 +155,8 @@ public class Visor extends PopupPanel {
 					Adelante.setEnabled(false);	
 				}
 				Atras.setEnabled(true);
-				Pagina1.setUrl(Book.getWebLinks().get(actualpagina-1));
-				Pagina2.setUrl(Book.getWebLinks().get(actualpagina));
+				Pagina1.setUrl(Book.getWebLinks().get(actualpagina-2));
+				Pagina2.setUrl(Book.getWebLinks().get(actualpagina-1));
 			}
 		});
 		
@@ -184,16 +184,16 @@ public class Visor extends PopupPanel {
 			horizontalPanel_1.add(decoratorPanel);
 			Pagina1 = new Image(Book.getWebLinks().get(0));
 			decoratorPanel.setWidget(Pagina1);
-			Pagina1.setHeight("548px");
+			Pagina1.setHeight("528px");
 			actualpagina=1;
 			Pagina1.addLoadHandler(new LoadHandler() {
 				public void onLoad(LoadEvent event) {
 					Image I = (Image) event.getSource();
 					float He = I.getHeight();
 					float Wi = I.getWidth();
-					float prop = He / 548;
+					float prop = He / 528;
 					float Winew = (Wi / prop);
-					Pagina1.setSize(Winew + "px", "548px");
+					Pagina1.setSize(Winew + "px", "528px");
 					// Window.alert("Altura: " + He + "Ancho: " + Wi );
 				}
 			});
@@ -206,18 +206,18 @@ public class Visor extends PopupPanel {
 			DecoratorPanel decoratorPanel_1 = new DecoratorPanel();
 			horizontalPanel_1.add(decoratorPanel_1);
 		
-			Pagina2 = new Image(Book.getWebLinks().get(0));
+			Pagina2 = new Image(Book.getWebLinks().get(1));
 			decoratorPanel_1.setWidget(Pagina2);
-			Pagina2.setHeight("548px");
+			Pagina2.setHeight("528px");
 			actualpagina=2;
 			Pagina2.addLoadHandler(new LoadHandler() {
 				public void onLoad(LoadEvent event) {
 					Image I = (Image) event.getSource();
 					float He = I.getHeight();
 					float Wi = I.getWidth();
-					float prop = He / 548;
+					float prop = He / 528;
 					float Winew = (Wi / prop);
-					Pagina2.setSize(Winew + "px", "548px");				
+					Pagina2.setSize(Winew + "px", "528px");				
 				}
 				
 		});
