@@ -44,7 +44,7 @@ import lector.client.controler.ErrorConstants;
 import lector.client.controler.HelpMessage;
 import lector.client.login.ActualUser;
 import lector.client.reader.hilocomentarios.ArbitroThreads;
-//import lector.client.reader.filter.FilterBasicPopUp;
+import lector.client.reader.filter.FilterBasicPopUp;
 import lector.client.reader.hilocomentarios.JeraquiaSimulada;
 import lector.client.reader.hilocomentarios.ParesLlamada;
 import lector.client.welcome.About;
@@ -115,10 +115,11 @@ public class MainEntryPoint implements EntryPoint {
 	private final MenuItemSeparator separator = new MenuItemSeparator();
 	private final MenuItemSeparator separator_1 = new MenuItemSeparator();
 	private static MenuItem mntmFilter;
-//	private static FilterBasicPopUp TyposFilter;
+	private static FilterBasicPopUp TyposFilter;
 	private final MenuItemSeparator separator_2 = new MenuItemSeparator();
 	private static ArrayList<TypeClient> filtroTypes;
-	private static ArrayList<Long> filtroUsers;
+	private static ArrayList<UserClient> filtroUsers;
+	private static ArrayList<String> filtroWords;
 	private static ArrayList<Long> filtroAnotPar;
 	private final MenuItemSeparator separator_3 = new MenuItemSeparator();
 	private static Language ActualLang;
@@ -285,7 +286,8 @@ pageBack.addMouseDownHandler(new MouseDownHandler() {
 		
 		
 		filtroTypes=new ArrayList<TypeClient>();
-		filtroUsers=new ArrayList<Long>();
+		filtroUsers=new ArrayList<UserClient>();
+		filtroWords=new ArrayList<String>();
 		filtroAnotPar=new ArrayList<Long>();
 		originalBook=new Image();
 		
@@ -557,9 +559,9 @@ pageBack.addMouseDownHandler(new MouseDownHandler() {
 			public void execute() {
 				hidePopUpSelector();
 				hideDENSelector();
-			//TODO Filtro
-				Window.alert("Under Development");
-			//	TyposFilter.showRelativeTo(mntmFilter);
+//			//TODO Filtro
+//				Window.alert("Under Development");
+				TyposFilter.showRelativeTo(mntmFilter);
 
 			}
 		});
@@ -725,7 +727,7 @@ pageBack.addMouseDownHandler(new MouseDownHandler() {
 		}
 		
 		if (filtroUsers == null ) {
-			filtroUsers = new ArrayList<Long>();
+			filtroUsers = new ArrayList<UserClient>();
 		}
 		
 		setCurrentPageNumber(currentPageNumber);
@@ -993,7 +995,7 @@ pageBack.addMouseDownHandler(new MouseDownHandler() {
 		for (int pos = 0; pos < filtroTypes.size(); pos++){ 
 			
 			for (int pos2 = 0; pos2 < a.size();pos2++){
-				if (a.get(pos2).equals(filtroTypes.get(pos)))
+				if (a.get(pos2).getId().equals(filtroTypes.get(pos).getId()))
 				points++;
 			}
 		}
@@ -1002,8 +1004,8 @@ pageBack.addMouseDownHandler(new MouseDownHandler() {
 
 	
 	private static void RefresCoDeTypesYTags() {
-		//TODO FILTRO
-		//TyposFilter = new FilterBasicPopUp();	
+//		TODO FILTRO
+		TyposFilter = new FilterBasicPopUp();	
 	}
 
 	protected static void refreshLoadComments() {
@@ -1117,7 +1119,8 @@ pageBack.addMouseDownHandler(new MouseDownHandler() {
 		else setfilterinfo(true);
 		MainEntryPoint.filtroTypes = filtroTypes;
 		filtroAnotPar=new ArrayList<Long>();
-		filtroUsers=new ArrayList<Long>();
+		filtroUsers=new ArrayList<UserClient>();
+		filtroWords=new ArrayList<String>();
 		if (state == State.AllAnnotations) {
 			verticalAnnotationsPanel.clear();
 			List<AnnotationClient> Result = anotaciones_Actuales;
@@ -1151,12 +1154,13 @@ pageBack.addMouseDownHandler(new MouseDownHandler() {
 		
 	}
 	
-	public static void setFiltroTypesAndUser(ArrayList<TypeClient> filtroTypes, ArrayList<Long> User) {
+	public static void setFiltroTypesAndUser(ArrayList<TypeClient> filtroTypes, ArrayList<UserClient> User, ArrayList<String> Words) {
 		if (filtroTypes.size()==0 && User.isEmpty())
 			setfilterinfo(false);
 		else setfilterinfo(true);
 		MainEntryPoint.filtroTypes = filtroTypes;
 		MainEntryPoint.filtroUsers=User;
+		MainEntryPoint.filtroWords=Words;
 		filtroAnotPar=new ArrayList<Long>();
 		if (state == State.AllAnnotations) {
 			verticalAnnotationsPanel.clear();
@@ -1227,7 +1231,8 @@ pageBack.addMouseDownHandler(new MouseDownHandler() {
 	public static void setFiltroAnotPar(ArrayList<Long> filtroAnotPar) {
 		MainEntryPoint.filtroAnotPar = filtroAnotPar;
 		filtroTypes=new ArrayList<TypeClient>();
-		filtroUsers=new ArrayList<Long>();
+		filtroUsers=new ArrayList<UserClient>();
+		filtroWords=new ArrayList<String>();
 		
 	}
 	

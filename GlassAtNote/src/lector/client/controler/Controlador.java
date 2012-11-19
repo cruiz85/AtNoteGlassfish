@@ -19,8 +19,7 @@ import lector.client.admin.users.NewUserAdministrator;
 //import lector.client.login.ActualUser;
 import lector.client.login.activitysel.MyActivities;
 //import lector.client.login.activitysel.VisorEntry;
-//import lector.client.login.bookselec.MyBooks;
-//import lector.client.reader.Book;
+import lector.client.login.bookselec.MyBooks;
 import lector.client.reader.MainEntryPoint;
 //import lector.client.reader.export.ExportResult;
 //import lector.client.reader.filter.advance.FilterAdvance;
@@ -44,7 +43,7 @@ public class Controlador implements EntryPoint {
     private static EditorTagsAndTypes AdminTagsAndTypes = new EditorTagsAndTypes();
     private static Login LoginPage=new Login();
     private static BookAdministration bookAdministrador=new BookAdministration();
-//    private static MyBooks MyBooksUser=new MyBooks();
+    private static MyBooks MyBooksUser=new MyBooks();
     private static Groupadministration GroupAdmin = new Groupadministration();
     private static NewUserAdministrator UserAdmin = new NewUserAdministrator();
     private static NewAdminAdministrator AdminAdmin = new NewAdminAdministrator();
@@ -133,9 +132,9 @@ public class Controlador implements EntryPoint {
 	}
 	
 	public static void change2MyBooks(){
-//		clear();
-//		Actual = MyBooksUser;
-//		Actual.onModuleLoad();
+		clear();
+		Actual = MyBooksUser;
+		Actual.onModuleLoad();
 	}
 	
 	public static void change2GroupAdministration() {
