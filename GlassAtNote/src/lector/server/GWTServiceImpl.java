@@ -999,7 +999,7 @@ public class GWTServiceImpl extends RemoteServiceServlet implements GWTService {
 					textSelectorClient.getHeight()));
 		}
 
-		return textSelectors;
+		return null;
 	}
 
 	
@@ -1123,7 +1123,7 @@ public class GWTServiceImpl extends RemoteServiceServlet implements GWTService {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-	//	saveAnnotation(annotation);
+		saveAnnotation(annotation);
 	}
 
 	private List<Long> getTagIdsFromAnnotation(Annotation a) {
@@ -1428,7 +1428,7 @@ public class GWTServiceImpl extends RemoteServiceServlet implements GWTService {
 			} else {
 				entityManager.merge(annotationThread);
 			}
-
+Annotation a;
 			userTransaction.commit();
 		} catch (Exception e) {
 			ServiceManagerUtils.rollback(userTransaction); // TODO utilizar
@@ -1461,14 +1461,14 @@ public class GWTServiceImpl extends RemoteServiceServlet implements GWTService {
 	}
 
 	@Override
-	public List<AnnotationThreadClient> getAnnotationThreadsByItsAnnotation(
-			Long annotationId) throws GeneralException,
+	public List<AnnotationThreadClient> getAnnotationThreadsByItsFather(
+			Long threadFatherId) throws GeneralException,
 			AnnotationThreadNotFoundException {
 		EntityManager entityManager = emf.createEntityManager();
 		List<AnnotationThread> list;
 
-		String sql = "SELECT r FROM AnnotationThread r WHERE r.annotation.id="
-				+ annotationId;
+		String sql = "SELECT r FROM AnnotationThread r WHERE r.father.id="
+				+ threadFatherId;
 		try {
 			list = entityManager.createQuery(sql).getResultList();
 		} catch (Exception e) {
