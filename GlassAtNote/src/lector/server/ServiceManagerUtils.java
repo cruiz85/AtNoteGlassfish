@@ -91,7 +91,15 @@ public class ServiceManagerUtils {
 				produceUserClient(a.getCreator()), a.getActivity().getId(),
 				produceTextSelectors(a.getTextSelectors()), a.getComment(),
 				a.getBookId(), visibility, updatability, a.getPageNumber(),
-				produceTypeClientsLazy(a.getTags()), a.isEditable(), a.getCreatedDate());
+				produceTypeClientsLazy(a.getTags()), a.isEditable(), a.getCreatedDate(), getIdsOfThreds(a));
+	}
+
+	private static List<Long> getIdsOfThreds(Annotation a) {
+		List<Long> ids = new ArrayList<Long>();
+		for (AnnotationThread thread : a.getThreads()) {
+			ids.add(thread.getId());
+		}
+		return ids;
 	}
 
 	public static List<TypeClient> produceTypeClientsLazy(List<Tag> tags) {

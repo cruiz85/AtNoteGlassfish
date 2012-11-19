@@ -163,9 +163,6 @@ public interface GWTServiceAsync {
 			Long readingActivityId,
 			AsyncCallback<List<AnnotationClient>> callback);
 
-	void getAnnotationThreadsByItsFather(Long threadFatherId,
-			AsyncCallback<List<AnnotationThreadClient>> callback);
-
 	void loadFullBookInGoogle(String query,
 			AsyncCallback<GoogleBookClient> callback);
 
@@ -275,6 +272,9 @@ public interface GWTServiceAsync {
 
 	void updateTypeCategory(TypeCategoryClient typeCategoryClient,
 			AsyncCallback<Void> callback);
+
+	void getAnnotationThreadsByItsAnnotation(Long annotationId,
+			AsyncCallback<List<AnnotationThreadClient>> callback);
 
 	
 }

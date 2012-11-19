@@ -33,7 +33,7 @@ public class AnnotationClient implements IsSerializable{
 	public AnnotationClient(Long id, UserClient creator, Long activity,
 			List<TextSelectorClient> textSelectors, String comment,
 			Long bookId, boolean visibility, boolean updatability,
-			Integer pageNumber, List<TypeClient> tags, boolean isEditable, Date createdDate) {
+			Integer pageNumber, List<TypeClient> tags, boolean isEditable, Date createdDate, List<Long> annotationThreads) {
 		super();
 		this.id = id;
 		this.creator = creator;
@@ -47,6 +47,7 @@ public class AnnotationClient implements IsSerializable{
 		this.tags = tags;
 		this.isEditable = isEditable;
 		this.createdDate = createdDate;
+		this.threads = annotationThreads;
 	}
 
 	public Long getId() {

@@ -184,10 +184,10 @@ public interface GWTService extends RemoteService {
 	public void deleteAnnotationThread(Long annotationThreadId)
 			throws GeneralException;
 
-	public List<AnnotationThreadClient> getAnnotationThreadsByItsFather(
-			Long threadFatherId) throws GeneralException,
+	public List<AnnotationThreadClient> getAnnotationThreadsByItsAnnotation(
+			Long annotationId) throws GeneralException,
 			AnnotationThreadNotFoundException;
-
+	
 	// Books
 
 	public BookClient loadBookClientById(Long id) throws BookNotFoundException,
