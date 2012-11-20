@@ -59,6 +59,7 @@ public class PanelSeleccionCatalogo extends PopupPanel {
 				LPrivate.setText("Teacher Catalog :"
 						+ Catalogo.getCatalogName());
 				Father.setSelectedCatalog(Catalogo);
+				Father.setPanel_Selecion_Default_Visibility(true);
 				hide();
 			}
 		});

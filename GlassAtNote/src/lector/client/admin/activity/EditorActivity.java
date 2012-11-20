@@ -1,6 +1,5 @@
 package lector.client.admin.activity;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import lector.client.admin.activity.buttons.BotonTemplates;
@@ -8,7 +7,6 @@ import lector.client.admin.activity.buttons.Botonbooks;
 import lector.client.admin.activity.buttons.Botoncatalogo;
 import lector.client.admin.activity.buttons.Botongroups;
 import lector.client.admin.activity.buttons.Botonlanguage;
-import lector.client.admin.book.EntidadLibro;
 import lector.client.book.reader.ExportService;
 import lector.client.book.reader.ExportServiceAsync;
 import lector.client.book.reader.GWTService;
@@ -49,7 +47,6 @@ import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.ScrollPanel;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.HasVerticalAlignment;
-import com.google.gwt.user.client.ui.DockPanel;
 import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.SimplePanel;
 import com.google.gwt.user.client.ui.HasHorizontalAlignment;
@@ -94,6 +91,10 @@ public class EditorActivity extends PopupPanel {
 	private VerticalPanel TemplatePanel;
 	private Label VisualizacionLabel;
 	private Image image;
+	private CheckBox AllowDefaulType;
+	private Label DefaultTypeLabel;
+	private ListBox ComboTypes;
+	private HorizontalPanel Panel_Selecion_Default;
 
 	public EditorActivity(ReadingActivityClient RA) {
 		
@@ -286,10 +287,54 @@ public class EditorActivity extends PopupPanel {
 		ScrollPanel CatalogSP = new ScrollPanel();
 		tabPanel.add(CatalogSP, "Catalog", false);
 		CatalogSP.setSize("100%", "226px");
-
-		CatalogPanel = new VerticalPanel();
-		CatalogSP.setWidget(CatalogPanel);
-		CatalogPanel.setSize("100%", "100%");
+		
+		HorizontalPanel horizontalPanel_4 = new HorizontalPanel();
+		horizontalPanel_4.setHorizontalAlignment(HasHorizontalAlignment.ALIGN_CENTER);
+		CatalogSP.setWidget(horizontalPanel_4);
+		horizontalPanel_4.setSize("100%", "100%");
+		
+				CatalogPanel = new VerticalPanel();
+				horizontalPanel_4.add(CatalogPanel);
+				CatalogPanel.setWidth("400px");
+				
+				Panel_Selecion_Default = new HorizontalPanel();
+				horizontalPanel_4.add(Panel_Selecion_Default);
+				Panel_Selecion_Default.setSpacing(10);
+				Panel_Selecion_Default.setHorizontalAlignment(HasHorizontalAlignment.ALIGN_CENTER);
+				Panel_Selecion_Default.setSize("280px", "");
+				Panel_Selecion_Default.setVisible(false);
+				
+				AllowDefaulType = new CheckBox("Allow Default Type");
+				AllowDefaulType.addValueChangeHandler(new ValueChangeHandler<Boolean>() {
+					public void onValueChange(ValueChangeEvent<Boolean> event) {
+						if (AllowDefaulType.getValue())
+						{
+							//TODO Falta Asignar el tipo
+							DefaultTypeLabel.setText("Default Type : " + ComboTypes.getValue(ComboTypes.getSelectedIndex()) );
+						}
+						else 
+						{
+							//TODO Falta Asignar el tipo
+							DefaultTypeLabel.setText("Default Type : ");
+						}
+					}
+				});
+				Panel_Selecion_Default.add(AllowDefaulType);
+				
+				ComboTypes = new ListBox();
+				//TODO Falta Asignar el tipo
+				ComboTypes.addItem("Alement 1", "1l");
+				ComboTypes.addItem("Alement 2", "2l");
+				ComboTypes.addItem("Alement 3", "3l");
+				Panel_Selecion_Default.add(ComboTypes);
+				ComboTypes.setWidth("119px");
+				ComboTypes.addChangeHandler(new ChangeHandler() {
+					public void onChange(ChangeEvent event) {
+						
+						DefaultTypeLabel.setText("Default Type :" + ComboTypes.getValue(ComboTypes.getSelectedIndex()));
+							//TODO Falta Asignar el tipo
+					}
+				});
 
 		ScrollPanel BooksSP = new ScrollPanel();
 		tabPanel.add(BooksSP, "Books", false);
@@ -365,12 +410,12 @@ public class EditorActivity extends PopupPanel {
 			public void onChange(ChangeEvent event) {
 				if (comboBox.getItemText(comboBox.getSelectedIndex()).equals(Constants.VISUAL_ARBOL))
 					{
-					VisualizacionLabel.setText("Visualizacion:" + Constants.VISUAL_ARBOL);
+					VisualizacionLabel.setText("Visualizacion :" + Constants.VISUAL_ARBOL);
 					image.setUrl("EditImages/Arbol.jpg");
 					}
 				else 
 				{
-					VisualizacionLabel.setText("Visualizacion:" + Constants.VISUAL_KEY);
+					VisualizacionLabel.setText("Visualizacion :" + Constants.VISUAL_KEY);
 					image.setUrl("EditImages/Key.jpg");
 				}
 			}
@@ -407,6 +452,9 @@ public class EditorActivity extends PopupPanel {
 		OpenCatalogLabel =new Label("Open Catalog :");
 		verticalPanel_2.add(OpenCatalogLabel);
 		
+		DefaultTypeLabel = new Label("Default Type : ");
+		verticalPanel_2.add(DefaultTypeLabel);
+		
 		BooksLabel = new Label("Book : ");
 		verticalPanel_2.add(BooksLabel);
 
@@ -416,7 +464,7 @@ public class EditorActivity extends PopupPanel {
 		VerticalPanel verticalPanel_4 = new VerticalPanel();
 		verticalPanel_2.add(verticalPanel_4);
 		
-		TemplateLabel = new Label("Template:");
+		TemplateLabel = new Label("Template :");
 		verticalPanel_4.add(TemplateLabel);
 		
 		HorizontalPanel horizontalPanel_2 = new HorizontalPanel();
@@ -431,7 +479,7 @@ public class EditorActivity extends PopupPanel {
 		horizontalPanel_2.add(BlankTemplateBox);
 		BlankTemplateBox.setStyleName("gwt-LabelRedactivity");
 		
-		VisualizacionLabel = new Label("Visualizacion:" + Constants.VISUAL_ARBOL);
+		VisualizacionLabel = new Label("Visualizacion :" + Constants.VISUAL_ARBOL);
 		verticalPanel_2.add(VisualizacionLabel);
 
 		generateOldCampsAndPanels();
@@ -442,24 +490,14 @@ public class EditorActivity extends PopupPanel {
 
 	private void generateOldCampsAndPanels() {
 		if (ActualActivity.getCloseCatalogo() != null) {
-//			bookReaderServiceHolder.loadCatalogById(
-//					ActualActivity.getCatalogId(),
-//					new AsyncCallback<Catalogo>() {
-//
-//						public void onFailure(Throwable caught) {
-//							Window.alert("The catalog could not be loaded");
-//							generalangaugeOld();
-//
-//						}
-//
-//						public void onSuccess(Catalogo result) {
+
 							SelectedCatalog = ActualActivity.getCloseCatalogo();
 							SelectedCatalogOld = ActualActivity.getCloseCatalogo();
 							CatalogLabel.setText("Teacher Catalog :"
 									+ SelectedCatalog.getCatalogName());
 							generalangaugeOld();
-//						}
-//					});
+							Panel_Selecion_Default.setVisible(true);
+
 
 		} else
 			generalangaugeOld();
@@ -468,23 +506,12 @@ public class EditorActivity extends PopupPanel {
 
 	private void generalangaugeOld() {
 		if (ActualActivity.getLanguage() != null) {
-//			bookReaderServiceHolder.loadLanguageByName(
-//					ActualActivity.getLanguageName(),
-//					new AsyncCallback<Language>() {
-//
-//						public void onFailure(Throwable caught) {
-//							Window.alert("The Language could not be loaded");
-//							generabookOld();
-//
-//						}
-//
-//						public void onSuccess(Language result) {
+
 							SelectedLanguage = ActualActivity.getLanguage();
 							LanguageLabel.setText("Language : "
 									+ SelectedLanguage.getName());
 							generabookOld();
-//						}
-//					});
+
 
 		} else
 			generabookOld();
@@ -504,22 +531,9 @@ public class EditorActivity extends PopupPanel {
 
 	private void generagroupOld() {
 		if (ActualActivity.getGroup() != null) {
-//			bookReaderServiceHolder.loadGroupById(ActualActivity.getGroupId(),
-//					new AsyncCallback<GroupApp>() {
-//
-//						public void onSuccess(GroupApp result) {
 							GroupsLabel.setText("Groups : " + ActualActivity.getGroup().getName());
 							SelectedGroup = ActualActivity.getGroup();
 							generatecatalogPublicOld();
-
-//						}
-//
-//						public void onFailure(Throwable caught) {
-//							Window.alert("I could not refresh the old group in the Activity");
-//							generatecatalogPublicOld();
-//
-//						}
-//					});
 
 		} else
 			generatecatalogPublicOld();
@@ -530,29 +544,11 @@ public class EditorActivity extends PopupPanel {
 	private void generatecatalogPublicOld()
 	{
 		if (ActualActivity.getOpenCatalogo() != null) {
-//			bookReaderServiceHolder.loadCatalogById(
-//					ActualActivity.getOpenCatalogId(),
-//					new AsyncCallback<Catalogo>() {
-//
-//						public void onFailure(Throwable caught) {
-//							Window.alert("The catalog could not be loaded");
-//							Generatepanels();
-//
-//						}
-//
-//						public void onSuccess(Catalogo result) {
-//							Catalog catalog = new Catalog();
-//							catalog.setId(result.getId());
-//							catalog.setPrivate(result.isIsPrivate());
-//							catalog.setProfessorId(result.getProfessorId());
-//							catalog.setCatalogName(result.getCatalogName());
 							SelectedCatalogPublic = ActualActivity.getOpenCatalogo();
 							SelectedCatalogOldPublic = ActualActivity.getOpenCatalogo();
 							OpenCatalogLabel.setText("Open Catalog :"
 									+ SelectedCatalogPublic.getCatalogName());
 							generateTemplateOld();
-//						}
-//					});
 
 		} else
 			generateTemplateOld();
@@ -562,23 +558,11 @@ public class EditorActivity extends PopupPanel {
 	{
 		if (ActualActivity.getTemplate() != null) {
 			
-//			exportServiceHolder.loadTemplateById(ActualActivity.getTemplateId(), new AsyncCallback<Template>() {
-//				
-//				public void onSuccess(Template result) {
 					Template=ActualActivity.getTemplate();
-//					if (result!=null)
 						TemplateLabel.setText("Template: "
 							+ Template.getName());
 					generateBlancTemplateOld();
 					
-//				}
-//				
-//				public void onFailure(Throwable caught) {
-//					Window.alert(ErrorConstants.ERROR_LOADING_TEMPLATE);
-//					generateBlancTemplateOld();
-//					
-//				}
-//			});
 
 		} else
 			generateBlancTemplateOld();
@@ -587,8 +571,6 @@ public class EditorActivity extends PopupPanel {
 	
 	private void generateBlancTemplateOld()
 	{
-//		if (ActualActivity.getIsFreeTemplateAllowed() == null) {
-//			
 			if (ActualActivity.getIsFreeTemplateAllowed()){
 				BlankTemplateBox.setVisible(true);
 				CheckBoxFree.setValue(true, false);
@@ -599,12 +581,6 @@ public class EditorActivity extends PopupPanel {
 			}
 			
 			generateFinderOld();
-
-
-//		} else{
-//			generateFinderOld();
-//		}
-			
 		
 	}
 	private void generateFinderOld()
@@ -613,7 +589,7 @@ public class EditorActivity extends PopupPanel {
 			if (ActualActivity.getVisualization().equals(Constants.VISUAL_ARBOL))
 					{
 					comboBox.setSelectedIndex(0);
-					VisualizacionLabel.setText("Visualizacion:" + Constants.VISUAL_ARBOL);
+					VisualizacionLabel.setText("Visualizacion :" + Constants.VISUAL_ARBOL);
 					image.setUrl("EditImages/Arbol.jpg");
 				
 					
@@ -621,32 +597,10 @@ public class EditorActivity extends PopupPanel {
 			else 
 			{
 				comboBox.setSelectedIndex(1);	
-				VisualizacionLabel.setText("Visualizacion:" + Constants.VISUAL_KEY);
+				VisualizacionLabel.setText("Visualizacion :" + Constants.VISUAL_KEY);
 				image.setUrl("EditImages/Key.jpg");
 			}
-//			bookReaderServiceHolder.loadCatalogById(
-//					ActualActivity.getOpenCatalogId(),
-//					new AsyncCallback<Catalogo>() {
-//
-//						public void onFailure(Throwable caught) {
-//							Window.alert("The catalog could not be loaded");
-//							Generatepanels();
-//
-//						}
-//
-//						public void onSuccess(Catalogo result) {
-//							Catalog catalog = new Catalog();
-//							catalog.setId(result.getId());
-//							catalog.setPrivate(result.isIsPrivate());
-//							catalog.setProfessorId(result.getProfessorId());
-//							catalog.setCatalogName(result.getCatalogName());
-//							SelectedCatalogPublic = catalog;
-//							SelectedCatalogOldPublic = catalog;
-//							OpenCatalogLabel.setText("Open Catalog :"
-//									+ catalog.getCatalogName());
 				Generatepanels();
-//						}
-//					});
 
 		} else
 			Generatepanels();
@@ -1030,7 +984,7 @@ bookReaderServiceHolder.getBookClientsByIds(result, new AsyncCallback<List<BookC
 							BotonTemplates BCE = (BotonTemplates) event
 									.getSource();
 							Template=BCE.getTemplate();
-							TemplateLabel.setText("Template: "
+							TemplateLabel.setText("Template : "
 									+ Template.getName());
 						}
 					});
@@ -1078,6 +1032,10 @@ bookReaderServiceHolder.getBookClientsByIds(result, new AsyncCallback<List<BookC
 	
 	public void setSelectedCatalogPublic(CatalogoClient selectedCatalogPublic) {
 		SelectedCatalogPublic = selectedCatalogPublic;
+	}
+	
+	public void setPanel_Selecion_Default_Visibility(boolean State) {
+		Panel_Selecion_Default.setVisible(State);
 	}
 	
 }

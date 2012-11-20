@@ -75,5 +75,6 @@ public class ErrorConstants {
 	public static String ERROR_ON_MOVE ="Error on move, try again";
 	public static String ERROR_LOADING_BOOKS="Error loading books for user: ";
 	public static String ERROR_BOOK_EMPTY="Error: Book is empty";
+	public static String ERROR_RETRIVING_ACTIVITIES="There was an error encounter while retrieving the activities, please try again later";
 	
 }

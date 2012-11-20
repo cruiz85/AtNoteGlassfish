@@ -1,14 +1,13 @@
 package lector.client.admin.activity;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import lector.client.book.reader.GWTService;
 import lector.client.book.reader.GWTServiceAsync;
 import lector.client.controler.Controlador;
+import lector.client.controler.ErrorConstants;
 import lector.client.login.ActualUser;
 import lector.client.reader.LoadingPanel;
-import lector.share.model.ReadingActivity;
 import lector.share.model.client.ReadingActivityClient;
 
 import com.google.gwt.core.client.EntryPoint;
@@ -25,7 +24,6 @@ import com.google.gwt.user.client.Command;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Button;
-import com.google.gwt.user.client.ui.HorizontalSplitPanel;
 import com.google.gwt.user.client.ui.MenuBar;
 import com.google.gwt.user.client.ui.MenuItem;
 import com.google.gwt.user.client.ui.MenuItemSeparator;
@@ -33,8 +31,6 @@ import com.google.gwt.user.client.ui.RootPanel;
 import com.google.gwt.user.client.ui.VerticalPanel;
 import com.google.gwt.user.client.ui.HasHorizontalAlignment;
 import com.google.gwt.user.client.ui.HorizontalPanel;
-import com.google.gwt.user.client.ui.HasVerticalAlignment;
-import com.google.gwt.user.client.ui.Image;
 
 public class NewAdminActivities implements EntryPoint {
 
@@ -118,7 +114,7 @@ public class NewAdminActivities implements EntryPoint {
 				new AsyncCallback<List<ReadingActivityClient>>() {
 
 					public void onFailure(Throwable caught) {
-						Window.alert("There was an error encounter while retrieving the activities, please try again later");
+						Window.alert(ErrorConstants.ERROR_RETRIVING_ACTIVITIES);
 						LoadingPanel.getInstance().hide();
 
 					}

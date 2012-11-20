@@ -186,6 +186,8 @@ public class MyActivities implements EntryPoint {
 	private void generaBookIds() {
 
 		UserClient User = ActualUser.getUser();
+		LoadingPanel.getInstance().center();
+		LoadingPanel.getInstance().setLabelTexto("Loading...");
 		if (ActualUser.getUser() instanceof ProfessorClient) {
 			bookReaderServiceHolder.getReadingActivitiesByProfessorId(
 					User.getId(),
@@ -194,13 +196,15 @@ public class MyActivities implements EntryPoint {
 					{
 
 						public void onSuccess(List<ReadingActivityClient> result) {
+							LoadingPanel.getInstance().hide();
 							BooksIDs = result;
 							setealibros();
 
 						}
 
 						public void onFailure(Throwable caught) {
-							Window.alert("The Activities could not be retrived, try again later");
+							LoadingPanel.getInstance().hide();
+							Window.alert(ErrorConstants.ERROR_RETRIVING_ACTIVITIES);
 
 						}
 					});
@@ -213,13 +217,15 @@ public class MyActivities implements EntryPoint {
 					{
 
 						public void onSuccess(List<ReadingActivityClient> result) {
+							LoadingPanel.getInstance().hide();
 							BooksIDs = result;
 							setealibros();
 
 						}
 
 						public void onFailure(Throwable caught) {
-							Window.alert("The Activities could not be retrived, try again later");
+							LoadingPanel.getInstance().hide();
+							Window.alert(ErrorConstants.ERROR_RETRIVING_ACTIVITIES);
 
 						}
 					});

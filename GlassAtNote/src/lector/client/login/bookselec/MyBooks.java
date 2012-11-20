@@ -55,12 +55,11 @@ public class MyBooks implements EntryPoint {
 	public void onModuleLoad() {
 		Yo=this;
 		BooksIDs = new ArrayList<Long>();
-		RootPanel RootMenu = RootPanel.get("Menu");
-		RootPanel RootTXOriginal = RootPanel.get("Original");
+		RootPanel RootTXOriginal = RootPanel.get();
 		
 
 		MenuBar menuBar = new MenuBar(false);
-		RootMenu.add(menuBar);
+		RootTXOriginal.add(menuBar);
 
 			
 		MenuItem TextoBienvenida = new MenuItem(
@@ -83,39 +82,21 @@ public class MyBooks implements EntryPoint {
 
 
 		HorizontalPanel PanelGeneral = new HorizontalPanel();
+		PanelGeneral.setSpacing(13);
+		PanelGeneral.setStyleName("fondoLogo");
 		
 		RootTXOriginal.add(PanelGeneral);
-		PanelGeneral.setSize("100%", "100%");
+		PanelGeneral.setSize("100%", "97%");
 		
 		VerticalPanel PanelLibrosGeneral = new VerticalPanel();
+		PanelLibrosGeneral.setStyleName("AzulTransparente");
+		PanelLibrosGeneral.setSpacing(10);
 		PanelGeneral.add(PanelLibrosGeneral);
-		
-		VerticalPanel Glue40px = new VerticalPanel();
-		PanelLibrosGeneral.add(Glue40px);
-		Glue40px.setHeight("40px");
 		PanelBotones = new VerticalPanel();
+		PanelBotones.setStyleName("BlancoTransparente");
+		PanelBotones.setSpacing(6);
 		PanelLibrosGeneral.add(PanelBotones);
 		PanelBotones.setSize("500px", "");
-
-		
-
-		SimplePanel PanelIconoGeneral = new SimplePanel();
-		PanelGeneral.add(PanelIconoGeneral);
-		PanelIconoGeneral.setSize("655px", "655px");
-		
-		VerticalPanel CentaradorVertical = new VerticalPanel();
-		CentaradorVertical.setVerticalAlignment(HasVerticalAlignment.ALIGN_MIDDLE);
-		CentaradorVertical.setHorizontalAlignment(HasHorizontalAlignment.ALIGN_CENTER);
-		PanelIconoGeneral.setWidget(CentaradorVertical);
-		CentaradorVertical.setSize("100%", "100%");
-				
-				HorizontalPanel CentradorHorizontal = new HorizontalPanel();
-				CentradorHorizontal.setVerticalAlignment(HasVerticalAlignment.ALIGN_MIDDLE);
-				CentradorHorizontal.setHorizontalAlignment(HasHorizontalAlignment.ALIGN_CENTER);
-				CentaradorVertical.add(CentradorHorizontal);
-		
-				Image Logo = new Image("Logo.jpg");
-				CentradorHorizontal.add(Logo);
 		BooksIDs = new ArrayList<Long>();
 		
 		generaBookIds();
