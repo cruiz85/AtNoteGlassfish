@@ -31,7 +31,7 @@ public class ReadingActivity implements Serializable, IsSerializable {
 
 	private Language language;
 	private Book book;
-	
+
 	private GroupApp group;
 	private Catalogo closeCatalogo;
 	private Catalogo openCatalogo;
@@ -41,6 +41,8 @@ public class ReadingActivity implements Serializable, IsSerializable {
 	private short isFreeTemplateAllowed = 0;
 	@OneToMany(mappedBy = "activity", cascade = CascadeType.ALL)
 	private List<Annotation> annotations = new ArrayList<Annotation>();
+
+	private Tag defultTag;
 
 	public ReadingActivity() {
 	}
@@ -72,6 +74,14 @@ public class ReadingActivity implements Serializable, IsSerializable {
 
 	public String getName() {
 		return name;
+	}
+
+	public Tag getDefultTag() {
+		return defultTag;
+	}
+
+	public void setDefultTag(Tag defultTag) {
+		this.defultTag = defultTag;
 	}
 
 	public void setName(String name) {

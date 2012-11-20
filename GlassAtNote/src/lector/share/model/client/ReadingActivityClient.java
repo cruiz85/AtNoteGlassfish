@@ -4,7 +4,7 @@ import com.google.gwt.user.client.rpc.IsSerializable;
 
 import lector.share.model.Language;
 
-public class ReadingActivityClient implements IsSerializable{
+public class ReadingActivityClient implements IsSerializable {
 
 	private Long id;
 	private String name;
@@ -13,7 +13,7 @@ public class ReadingActivityClient implements IsSerializable{
 
 	private Language language;
 	private BookClient book;
-	
+
 	private GroupClient group;
 	private CatalogoClient closeCatalogo;
 	private CatalogoClient openCatalogo;
@@ -21,14 +21,15 @@ public class ReadingActivityClient implements IsSerializable{
 	private String Visualization;
 	private TemplateClient template;
 	private boolean isFreeTemplateAllowed = false;
-
+	private Long defaultType;
 
 	public ReadingActivityClient() {
 	}
 
-	public ReadingActivityClient(String name, ProfessorClient professor, Language language,
-			BookClient book, GroupClient group, CatalogoClient closeCatalogo,
-			CatalogoClient openCatalogo, String visualization, TemplateClient template,
+	public ReadingActivityClient(String name, ProfessorClient professor,
+			Language language, BookClient book, GroupClient group,
+			CatalogoClient closeCatalogo, CatalogoClient openCatalogo,
+			String visualization, TemplateClient template,
 			boolean isFreeTemplateAllowed) {
 		super();
 		this.name = name;
@@ -59,7 +60,6 @@ public class ReadingActivityClient implements IsSerializable{
 		this.name = name;
 	}
 
-
 	public ProfessorClient getProfessor() {
 		return professor;
 	}
@@ -78,6 +78,14 @@ public class ReadingActivityClient implements IsSerializable{
 
 	public void setFreeTemplateAllowed(boolean isFreeTemplateAllowed) {
 		this.isFreeTemplateAllowed = isFreeTemplateAllowed;
+	}
+
+	public Long getDefaultType() {
+		return defaultType;
+	}
+
+	public void setDefaultType(Long defaultType) {
+		this.defaultType = defaultType;
 	}
 
 	public BookClient getBook() {

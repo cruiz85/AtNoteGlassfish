@@ -8,9 +8,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 import lector.share.model.Book;
+import lector.share.model.BookNotFoundException;
 import lector.share.model.ExportObject;
 import lector.share.model.LocalBook;
 import lector.share.model.TextSelector;
+import lector.share.model.client.BookClient;
 
 import com.google.gwt.user.client.rpc.RemoteService;
 import com.google.gwt.user.client.rpc.RemoteServiceRelativePath;
@@ -24,13 +26,9 @@ public interface ImageService extends RemoteService {
 
 	//Carga de Libros en Blob  // Se modificara completamente
 	
-	public Book loadBookById(Long id);
+	public BookClient loadBookById(Long id) throws BookNotFoundException;
 
-	public void saveBook(Book book);
-
-	public String getBlobstoreUploadUrl();
-
-	public List<Book> getBookByUserId(Long userAppId);
+	public List<BookClient> getBookByUserId(Long userAppId);
 
 
 //	public LocalBook loadBookBlobById(Long id);

@@ -12,6 +12,7 @@ import lector.share.model.AnnotationThread;
 import lector.share.model.Book;
 import lector.share.model.Catalogo;
 import lector.share.model.FolderDB;
+import lector.share.model.RemoteBook;
 import lector.share.model.Tag;
 import lector.share.model.GoogleBook;
 import lector.share.model.GroupApp;
@@ -33,6 +34,7 @@ import lector.share.model.client.GroupClient;
 import lector.share.model.client.LocalBookClient;
 import lector.share.model.client.ProfessorClient;
 import lector.share.model.client.ReadingActivityClient;
+import lector.share.model.client.RemoteBookClient;
 import lector.share.model.client.StudentClient;
 import lector.share.model.client.TemplateCategoryClient;
 import lector.share.model.client.TemplateClient;
@@ -91,7 +93,8 @@ public class ServiceManagerUtils {
 				produceUserClient(a.getCreator()), a.getActivity().getId(),
 				produceTextSelectors(a.getTextSelectors()), a.getComment(),
 				a.getBookId(), visibility, updatability, a.getPageNumber(),
-				produceTypeClientsLazy(a.getTags()), a.isEditable(), a.getCreatedDate(), getIdsOfThreds(a));
+				produceTypeClientsLazy(a.getTags()), a.isEditable(),
+				a.getCreatedDate(), getIdsOfThreds(a));
 	}
 
 	private static List<Long> getIdsOfThreds(Annotation a) {
@@ -111,8 +114,8 @@ public class ServiceManagerUtils {
 	}
 
 	public static TypeClient produceTypeClientLazy(Tag t) {
-		return new TypeClient(t.getId(), null, t.getName(),
-				new CatalogoClient(t.getCatalog().getId(), true, null, "Catalog"));
+		return new TypeClient(t.getId(), null, t.getName(), new CatalogoClient(
+				t.getCatalog().getId(), true, null, "Catalog"));
 	}
 
 	public static CatalogoClient produceCatalogoClient(Catalogo catalog) {
@@ -144,37 +147,33 @@ public class ServiceManagerUtils {
 	public static ReadingActivityClient produceReadingActivityClient(
 			ReadingActivity t) {
 		boolean isFreeTemplateAllowed = t.getIsFreeTemplateAllowed() == 1;
-		BookClient Book=null;
-		GroupClient Group=null;
-		CatalogoClient CloseCatalog=null;
-		CatalogoClient OpenCatalog=null;	
-		TemplateClient Template=null;
-		
-		if (t.getBook()!=null)
-			Book=produceBookClient(t.getBook());
-		
-		if (t.getGroup()!=null)
-			Group=produceGroupClient(t.getGroup());
-		
-		
-		if (t.getCloseCatalogo()!=null)
-			CloseCatalog=produceCatalogoClient(t.getCloseCatalogo());
-		
-		if (t.getOpenCatalogo()!=null)
-			OpenCatalog=produceCatalogoClient(t.getOpenCatalogo());
-		
-		if (t.getTemplate()!=null)
-			Template= produceTemplateClient(t.getTemplate());
-		ReadingActivityClient Salida= new ReadingActivityClient(t.getName(),
+		BookClient Book = null;
+		GroupClient Group = null;
+		CatalogoClient CloseCatalog = null;
+		CatalogoClient OpenCatalog = null;
+		TemplateClient Template = null;
+
+		if (t.getBook() != null)
+			Book = produceBookClient(t.getBook());
+
+		if (t.getGroup() != null)
+			Group = produceGroupClient(t.getGroup());
+
+		if (t.getCloseCatalogo() != null)
+			CloseCatalog = produceCatalogoClient(t.getCloseCatalogo());
+
+		if (t.getOpenCatalogo() != null)
+			OpenCatalog = produceCatalogoClient(t.getOpenCatalogo());
+
+		if (t.getTemplate() != null)
+			Template = produceTemplateClient(t.getTemplate());
+		ReadingActivityClient readingActivityClient = new ReadingActivityClient(t.getName(),
 				produceProfessorClient(t.getProfessor()), t.getLanguage(),
-				Book,
-				Group,
-				CloseCatalog,
-				OpenCatalog,
-				t.getVisualization(),Template,
-				isFreeTemplateAllowed);
-		Salida.setId(t.getId());
-		return Salida;
+				Book, Group, CloseCatalog, OpenCatalog, t.getVisualization(),
+				Template, isFreeTemplateAllowed);
+		readingActivityClient.setId(t.getId());
+		readingActivityClient.setDefaultType(t.getDefultTag().getId());
+		return readingActivityClient;
 	}
 
 	public static List<ReadingActivityClient> produceReadingActivityClients(
@@ -305,11 +304,11 @@ public class ServiceManagerUtils {
 	}
 
 	public static GoogleBookClient produceGoogleBookClient(GoogleBook gb) {
-		GoogleBookClient G=new GoogleBookClient(gb.getAuthor(), gb.getISBN(),
+		GoogleBookClient g = new GoogleBookClient(gb.getAuthor(), gb.getISBN(),
 				gb.getPagesCount(), gb.getPublishedYear(), gb.getTitle(),
 				gb.getTbURL(), gb.getUrl(), gb.getWebLinks());
-		G.setId(gb.getId());
-		return G;
+		g.setId(gb.getId());
+		return g;
 	}
 
 	public static List<GoogleBookClient> produceGoogleBookClients(
@@ -376,8 +375,8 @@ public class ServiceManagerUtils {
 		if (template.getModifyable() == 0) {
 			modifyable = false;
 		}
-		return new TemplateClient(template.getId(), template.getName(), modifyable, template
-				.getProfessor().getId());
+		return new TemplateClient(template.getId(), template.getName(),
+				modifyable, template.getProfessor().getId());
 
 	}
 

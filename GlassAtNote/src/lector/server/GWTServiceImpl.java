@@ -999,10 +999,9 @@ public class GWTServiceImpl extends RemoteServiceServlet implements GWTService {
 					textSelectorClient.getHeight()));
 		}
 
-		return null;
+		return textSelectors;
 	}
 
-	
 	private List<Long> getSonsCatalog(Catalogo cata) {
 		List<Long> children = new ArrayList<Long>();
 		for (Entry relation : cata.getEntries()) {
@@ -1040,42 +1039,43 @@ public class GWTServiceImpl extends RemoteServiceServlet implements GWTService {
 		return list;
 	}
 
-	private List<Long> getTagIds(List<Tag> tags) {
-		List<Long> ids = new ArrayList<Long>();
-		for (Entry folder : tags) {
-			ids.add(folder.getId());
-		}
-		return ids;
-	}
-
-	private List<Long> getFolderIds(List<FolderDB> folders) {
-		List<Long> ids = new ArrayList<Long>();
-		for (Entry folder : folders) {
-			ids.add(folder.getId());
-		}
-		return ids;
-	}
-
-	private List<FolderDB> getFolderIdsByCatalogId(Long catalogId)
-			throws GeneralException {
-		EntityManager entityManager = emf.createEntityManager();
-		List<FolderDB> list;
-		String sql = "SELECT r FROM FolderDB r WHERE r.catalog.id=" + catalogId;
-		try {
-			list = entityManager.createQuery(sql).getResultList();
-		} catch (Exception e) {
-			// logger.error ("Exception in method loadUserByEmail: ", e)
-			throw new GeneralException("Exception in method loadUserByEmail:"
-					+ e.getMessage(), e.getStackTrace());
-
-		}
-
-		if (entityManager.isOpen()) {
-			entityManager.close();
-		}
-
-		return list;
-	}
+//	private List<Long> getTagIds(List<Tag> tags) {
+//		List<Long> ids = new ArrayList<Long>();
+//		for (Entry folder : tags) {
+//			ids.add(folder.getId());
+//		}
+//		return ids;
+//	}
+//
+//
+//	private List<Long> getFolderIds(List<FolderDB> folders) {
+//		List<Long> ids = new ArrayList<Long>();
+//		for (Entry folder : folders) {
+//			ids.add(folder.getId());
+//		}
+//		return ids;
+//	}
+//
+//	private List<FolderDB> getFolderIdsByCatalogId(Long catalogId)
+//			throws GeneralException {
+//		EntityManager entityManager = emf.createEntityManager();
+//		List<FolderDB> list;
+//		String sql = "SELECT r FROM FolderDB r WHERE r.catalog.id=" + catalogId;
+//		try {
+//			list = entityManager.createQuery(sql).getResultList();
+//		} catch (Exception e) {
+//			// logger.error ("Exception in method loadUserByEmail: ", e)
+//			throw new GeneralException("Exception in method loadUserByEmail:"
+//					+ e.getMessage(), e.getStackTrace());
+//
+//		}
+//
+//		if (entityManager.isOpen()) {
+//			entityManager.close();
+//		}
+//
+//		return list;
+//	}
 
 	private void seeEditionOnAnnotation(Annotation annotation,
 			AnnotationClient aClient) {
@@ -1428,7 +1428,7 @@ public class GWTServiceImpl extends RemoteServiceServlet implements GWTService {
 			} else {
 				entityManager.merge(annotationThread);
 			}
-Annotation a;
+			Annotation a;
 			userTransaction.commit();
 		} catch (Exception e) {
 			ServiceManagerUtils.rollback(userTransaction); // TODO utilizar
@@ -1744,14 +1744,15 @@ Annotation a;
 	public void updateCatalog(CatalogoClient catalogClient)
 			throws CatalogoNotFoundException {
 		Catalogo catalog = findCatalogo(catalogClient.getId());
-		catalog.setOrders(reorderrelationsCatalog(catalogClient.getEntries(), catalog.getOrders()));
+		catalog.setOrders(reorderrelationsCatalog(catalogClient.getEntries(),
+				catalog.getOrders()));
 		saveCatalog(catalog);
 	}
 
-	private List<Long> reorderrelationsCatalog(
-			List<EntryClient> entriesClient, List<Long> orders) {
+	private List<Long> reorderrelationsCatalog(List<EntryClient> entriesClient,
+			List<Long> orders) {
 		List<Long> orderList = new ArrayList<Long>();
-		
+
 		for (EntryClient entryClient : entriesClient) {
 			orderList.add(entryClient.getId());
 		}
@@ -2430,17 +2431,16 @@ Annotation a;
 		saveFolderDB(folder);
 	}
 
-
 	private List<Long> reorderrelations(List<EntryClient> children,
 			List<Relation> relations) {
 		List<Long> relationsOrdered = new ArrayList<Long>();
 		for (EntryClient entryRel : children) {
-			Long r = findrelation(entryRel,relations);
+			Long r = findrelation(entryRel, relations);
 			relationsOrdered.add(r);
 		}
 		return relationsOrdered;
 	}
-	
+
 	private Long findrelation(EntryClient entryRel, List<Relation> relations) {
 		for (Relation relation : relations) {
 			if (relation.getChild().getId().equals(entryRel.getId()))
@@ -2448,30 +2448,30 @@ Annotation a;
 		}
 		return null;
 	}
-	
-//	private List<Relation> reorderrelations(List<EntryClient> children,
-//			List<Relation> relations, List<Long> orders) {
-//		List<Relation> relationsOrdered = new ArrayList<Relation>();
-//		for (EntryClient entryRel : children) {
-//			Relation r = findrelation(entryRel,relations, orders);
-//			relationsOrdered.add(r);
-//		}
-//		return relationsOrdered;
-//	}
-//
-//	
-//
-//	
-//	private Relation findrelation(EntryClient entryRel, List<Relation> relations, List<Long> orders) {
-//		for (Long id : orders) {
-//			if (getRelationById(id,relations).getChild().getId().equals(entryRel.getId()))
-//				return getRelationById(id,relations);
-//		}
-//		return null;
-//	}
 
+	// private List<Relation> reorderrelations(List<EntryClient> children,
+	// List<Relation> relations, List<Long> orders) {
+	// List<Relation> relationsOrdered = new ArrayList<Relation>();
+	// for (EntryClient entryRel : children) {
+	// Relation r = findrelation(entryRel,relations, orders);
+	// relationsOrdered.add(r);
+	// }
+	// return relationsOrdered;
+	// }
+	//
+	//
+	//
+	//
+	// private Relation findrelation(EntryClient entryRel, List<Relation>
+	// relations, List<Long> orders) {
+	// for (Long id : orders) {
+	// if
+	// (getRelationById(id,relations).getChild().getId().equals(entryRel.getId()))
+	// return getRelationById(id,relations);
+	// }
+	// return null;
+	// }
 
-	
 	private void saveFolderDB(FolderDB folder) {
 		EntityManager entityManager = emf.createEntityManager();
 
@@ -2689,7 +2689,6 @@ Annotation a;
 		return ServiceManagerUtils.produceReadingActivityClients(list);
 	}
 
-	// TODO Hecho por Joaquin
 	@Override
 	public void saveReadingActivity(ReadingActivityClient readingActivityClient)
 			throws GeneralException {
@@ -2702,13 +2701,16 @@ Annotation a;
 				saveReadingActivity(R);
 			} else {
 
-				Professor Owner = findProfessor(readingActivityClient
+				Professor owner = findProfessor(readingActivityClient
 						.getProfessor().getId());
-				ReadingActivity New = new ReadingActivity(
-						readingActivityClient.getName(), Owner, null, null,
+				ReadingActivity newActivity = new ReadingActivity(
+						readingActivityClient.getName(), owner, null, null,
 						null, null, null, Constants.VISUAL_KEY, null, (short) 1);
-				Owner.getReadingActivities().add(New);
-				saveUser(Owner);
+				Tag tag = findTag(readingActivityClient.getDefaultType());
+				newActivity.setDefultTag(tag);
+				owner.getReadingActivities().add(newActivity);
+							
+				saveUser(owner);
 			}
 		} catch (ReadingActivityNotFoundException e) {
 			e.printStackTrace();
@@ -2721,6 +2723,8 @@ Annotation a;
 		} catch (TemplateNotFoundException e) {
 			e.printStackTrace();
 		} catch (ProfessorNotFoundException e) {
+			e.printStackTrace();
+		} catch (TagNotFoundException e) {
 			e.printStackTrace();
 		}
 
@@ -2749,7 +2753,8 @@ Annotation a;
 			ReadingActivityClient readingActivityClientEntrada,
 			ReadingActivity readingActivitySalida)
 			throws BookNotFoundException, CatalogoNotFoundException,
-			GroupNotFoundException, TemplateNotFoundException {
+			GroupNotFoundException, TemplateNotFoundException,
+			TagNotFoundException {
 
 		// Lenguaje
 		readingActivitySalida.setLanguage(readingActivityClientEntrada
@@ -2816,6 +2821,13 @@ Annotation a;
 		// Visualizacion
 		readingActivitySalida.setVisualization(readingActivityClientEntrada
 				.getVisualization());
+
+		// Default Type
+		if (!readingActivityClientEntrada.getDefaultType().equals(
+				readingActivitySalida.getDefultTag().getId())) {
+			Tag tag = findTag(readingActivityClientEntrada.getDefaultType());
+			readingActivitySalida.setDefultTag(tag);
+		}
 
 		return readingActivitySalida;
 	}

@@ -11,6 +11,7 @@ import lector.share.model.Book;
 
 import lector.share.model.LocalBook;
 import lector.share.model.TextSelector;
+import lector.share.model.client.BookClient;
 
 import com.google.gwt.user.client.rpc.AsyncCallback;
 
@@ -20,12 +21,9 @@ import com.google.gwt.user.client.rpc.AsyncCallback;
  */
 public interface ImageServiceAsync {
 
-	void getBlobstoreUploadUrl(AsyncCallback<String> callback);
+	void loadBookById(Long id, AsyncCallback<BookClient> callback);
 
-	void loadBookById(Long id, AsyncCallback<lector.share.model.Book> callback);
-
-	void saveBook(Book book, AsyncCallback<Void> callback);
-
-	void getBookByUserId(Long userAppId, AsyncCallback<List<Book>> callback);
+	void getBookByUserId(Long userAppId,
+			AsyncCallback<List<BookClient>> callback);
 
 }
