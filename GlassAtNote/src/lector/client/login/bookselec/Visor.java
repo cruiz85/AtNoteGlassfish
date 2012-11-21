@@ -178,7 +178,7 @@ public class Visor extends PopupPanel {
 		horizontalPanel_1.setHeight("100%");
 		
 		
-		if (Book.getWebLinks().size()>1)
+		if (Book.getWebLinks().size()>0)
 		{
 			DecoratorPanel decoratorPanel = new DecoratorPanel();
 			horizontalPanel_1.add(decoratorPanel);
@@ -201,7 +201,7 @@ public class Visor extends PopupPanel {
 		{
 		Window.alert(ErrorConstants.ERROR_BOOK_EMPTY);	
 		}
-		if (Book.getWebLinks().size()>2)
+		if (Book.getWebLinks().size()>1)
 		{
 			DecoratorPanel decoratorPanel_1 = new DecoratorPanel();
 			horizontalPanel_1.add(decoratorPanel_1);

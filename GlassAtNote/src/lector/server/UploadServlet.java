@@ -63,6 +63,8 @@ public class UploadServlet extends javax.servlet.http.HttpServlet implements
         // constructs the folder where uploaded file will be stored
         String uploadFolder = getServletContext().getRealPath("")
                                     + File.separator + DATA_DIRECTORY;
+        String uploadFolderRel = getServletContext().getContextPath()
+                + File.separator + DATA_DIRECTORY;
  
         // Create a new file upload handler
         ServletFileUpload upload = new ServletFileUpload(factory);
@@ -86,32 +88,33 @@ public class UploadServlet extends javax.servlet.http.HttpServlet implements
                 if (!item.isFormField()) {
                     String fileName = new File(item.getName()).getName();
                     String filePath = uploadFolder + File.separator + fileName;
+                    String fileRelPath= uploadFolderRel + File.separator + fileName;
                     File uploadedFile = new File(filePath);
                     
                     // saves the file to upload directory
                     item.write(uploadedFile);
-                    webLinks.add(filePath);
+                    webLinks.add(fileRelPath);
                 }
                 else
                 {
-                	if(item.getName().equals(Constants.BLOB_PUBLISHED_YEAR)){
-                		publishedYear = item.getName();	
+                	if(item.getFieldName().equals(Constants.BLOB_PUBLISHED_YEAR)){
+                		publishedYear = item.getString();	
                 	}
                 	 
-                	if(item.getName().equals(Constants.BLOB_TITLE)){
-                		title = item.getName();	
+                	if(item.getFieldName().equals(Constants.BLOB_TITLE)){
+                		title = item.getString();	
                 	}
-                	if(item.getName().equals(Constants.ISBN)){
-                		isbn = item.getName();	
+                	if(item.getFieldName().equals(Constants.ISBN)){
+                		isbn = item.getString();	
                 	}
-                	if(item.getName().equals(Constants.PAGES_COUNT)){
-                		pagesCount = item.getName();	
+                	if(item.getFieldName().equals(Constants.PAGES_COUNT)){
+                		pagesCount = item.getString();	
                 	}
-                	if(item.getName().equals(Constants.BLOB_AUTHOR)){
-                		author = item.getName();	
+                	if(item.getFieldName().equals(Constants.BLOB_AUTHOR)){
+                		author = item.getString();	
                 	}
-                	if(item.getName().equals(Constants.BLOB_UPLOADER)){
-                		userAppId = Long.parseLong(item.getName());	
+                	if(item.getFieldName().equals(Constants.BLOB_UPLOADER)){
+                		userAppId = Long.parseLong(item.getString());	
                 	}
 
                   }
