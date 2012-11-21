@@ -54,8 +54,10 @@ public class ExportServiceImpl extends RemoteServiceServlet implements
 			}
 			saveTemplate(template);
 
-		} catch (ProfessorNotFoundException | TemplateNotFoundException e) {
+		} catch (TemplateNotFoundException e) {
 			e.printStackTrace();
+		}catch(ProfessorNotFoundException pnfe){
+			pnfe.printStackTrace();
 		}
 
 	}
