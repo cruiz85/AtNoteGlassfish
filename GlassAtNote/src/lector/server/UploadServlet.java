@@ -4,28 +4,38 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
- 
+
+import javax.annotation.Resource;
+import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
+import javax.persistence.Persistence;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.transaction.UserTransaction;
 
 import lector.client.book.reader.GWTService;
 import lector.client.controler.Constants;
+import lector.share.model.GeneralException;
 import lector.share.model.LocalBook;
 import lector.share.model.Professor;
 import lector.share.model.ProfessorNotFoundException;
+import lector.share.model.UserApp;
  
 import org.apache.commons.fileupload.FileItem;
 import org.apache.commons.fileupload.FileUploadException;
 import org.apache.commons.fileupload.disk.DiskFileItemFactory;
 import org.apache.commons.fileupload.servlet.ServletFileUpload;
 
-import com.google.gwt.core.shared.GWT;
  
 public class UploadServlet extends javax.servlet.http.HttpServlet implements
         javax.servlet.Servlet {
     static final long serialVersionUID = 1L;
- 
+	@Resource
+	UserTransaction userTransaction;
+	private String PERSISTENCE_UNIT_NAME = "System";
+	private EntityManagerFactory emf = Persistence
+			.createEntityManagerFactory(PERSISTENCE_UNIT_NAME);
     private static final String DATA_DIRECTORY = "data";
     private static final int MAX_MEMORY_SIZE = 1024 * 1024 * 2;
     private static final int MAX_REQUEST_SIZE = 1024 * 1024;
@@ -87,7 +97,7 @@ public class UploadServlet extends javax.servlet.http.HttpServlet implements
     		Professor professor = ((GWTServiceImpl) gwtServiceImpl).findProfessor(userAppId);
     		LocalBook localBook = new LocalBook(professor, author, isbn, pagesCount, publishedYear, title);
     		professor.getBooks().add(localBook);
-    		((GWTServiceImpl) gwtServiceImpl).saveUser((Professor)professor);
+    		saveUser((Professor)professor);
             // displays done.jsp page after upload finished
         //    getServletContext().getRequestDispatcher("/done.jsp").forward(request, response);
             
@@ -99,4 +109,26 @@ public class UploadServlet extends javax.servlet.http.HttpServlet implements
             throw new ServletException(ex);
         }       
     }
+	private void saveUser(UserApp user) throws GeneralException {
+		EntityManager entityManager = emf.createEntityManager();
+
+		try {
+			userTransaction.begin();
+			if (user.getId() == null) {
+				entityManager.persist(user);
+			} else {
+				entityManager.merge(user);
+			}
+
+			userTransaction.commit();
+		} catch (Exception e) {
+			ServiceManagerUtils.rollback(userTransaction); // TODO utilizar
+															// método de
+															// logger
+		}
+		if (entityManager.isOpen()) {
+			entityManager.close();
+		}
+
+	}
 }

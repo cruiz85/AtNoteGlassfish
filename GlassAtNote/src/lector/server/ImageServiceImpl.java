@@ -30,9 +30,6 @@ import lector.share.model.client.BookClient;
 import lector.share.model.client.TextSelectorClient;
 import lector.share.model.client.TypeClient;
 
-import com.google.appengine.api.blobstore.BlobInfo;
-import com.google.appengine.api.blobstore.BlobInfoFactory;
-import com.google.appengine.api.blobstore.BlobKey;
 import com.google.appengine.api.images.Image;
 import com.google.appengine.api.images.ImagesService;
 import com.google.appengine.api.images.ImagesServiceFactory;
