@@ -481,7 +481,20 @@ public class Login implements EntryPoint {
 													+ newStudent.getLastName()
 													+ " Email: "
 													+ newStudent.getEmail()
-													+ " at " + CalendarNow.GetDateNow());
+													+ " at " + CalendarNow.GetDateNow(),new AsyncCallback<Void>() {
+														
+														@Override
+														public void onSuccess(Void result) {
+															Window.Location.reload();
+															
+														}
+														
+														@Override
+														public void onFailure(Throwable caught) {
+															Logger.callbackfailture();
+															
+														}
+													});
 									Window.Location.reload();
 								}
 

@@ -13,7 +13,7 @@ public class Logger {
 	private static AsyncCallback<Void> callback= new AsyncCallback<Void>() {
 
 		public void onFailure(Throwable caught) {
-			Window.alert(ErrorConstants.LOGS_ERROR);
+			callbackfailture();
 			
 		}
 
@@ -44,12 +44,23 @@ public class Logger {
 		loggerServiceHolder.info(PREFIX_CONSTANT_LOG+className, text, callback);
 
 	}
+	
+	public void info(String className, String text,AsyncCallback<Void> callbackin) {
+		//Window.alert("info");
+		loggerServiceHolder.info(PREFIX_CONSTANT_LOG+className, text, callbackin);
+
+	}
 
 	public void finest(String className, String text) {
 		loggerServiceHolder.finest(className, text, callback);
 
 	}
 	
+	
+	public static void callbackfailture()
+	{
+		Window.alert(ErrorConstants.LOGS_ERROR);
+	}
 	
 	public static Logger GetLogger(){
 		//Window.alert("GetLogger");

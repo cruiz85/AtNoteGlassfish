@@ -378,19 +378,13 @@ public class BookLoader implements EntryPoint {
 	}
 
 	private void startNewBlobstoreSession() {
-		userImageService.getBlobstoreUploadUrl(new AsyncCallback<String>() {
-
-			public void onFailure(Throwable caught) {
-
-			}
-
-			public void onSuccess(String result) {
-
-				form.setAction(result);
+		String A=Window.Location.getHref();
+		String[] B=A.split("?");
+		A=B[0]+"/upload";
+		Window.alert(A);
+				form.setAction(A);
 				submitButton.setText("Upload");
 				submitButton.setEnabled(true);
 
-			}
-		});
 	}
 }
