@@ -96,6 +96,7 @@ public class UploadServlet extends javax.servlet.http.HttpServlet implements
     				.getParameter(Constants.BLOB_UPLOADER));
     		Professor professor = ((GWTServiceImpl) gwtServiceImpl).findProfessor(userAppId);
     		LocalBook localBook = new LocalBook(professor, author, isbn, pagesCount, publishedYear, title);
+    		localBook.setWebLinks(webLinks);
     		professor.getBooks().add(localBook);
     		saveUser((Professor)professor);
             // displays done.jsp page after upload finished
