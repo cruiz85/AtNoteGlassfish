@@ -70,6 +70,12 @@ public class UploadServlet extends javax.servlet.http.HttpServlet implements
         // Set overall request size constraint
         upload.setSizeMax(MAX_REQUEST_SIZE);
         List<String> webLinks = new ArrayList<String>();
+        String publishedYear="0000";
+		String title="";
+		String isbn="0";
+		String pagesCount="0";
+		String author="0";
+		Long userAppId=null;
         try {
             // Parse the request
             List items = upload.parseRequest(request);
@@ -86,14 +92,31 @@ public class UploadServlet extends javax.servlet.http.HttpServlet implements
                     item.write(uploadedFile);
                     webLinks.add(filePath);
                 }
+                else
+                {
+                	if(item.getName().equals(Constants.BLOB_PUBLISHED_YEAR)){
+                		publishedYear = item.getName();	
+                	}
+                	 
+                	if(item.getName().equals(Constants.BLOB_TITLE)){
+                		title = item.getName();	
+                	}
+                	if(item.getName().equals(Constants.ISBN)){
+                		isbn = item.getName();	
+                	}
+                	if(item.getName().equals(Constants.PAGES_COUNT)){
+                		pagesCount = item.getName();	
+                	}
+                	if(item.getName().equals(Constants.BLOB_AUTHOR)){
+                		author = item.getName();	
+                	}
+                	if(item.getName().equals(Constants.BLOB_UPLOADER)){
+                		userAppId = Long.parseLong(item.getName());	
+                	}
+
+                  }
             }
-            String publishedYear = request.getParameter(Constants.BLOB_PUBLISHED_YEAR);
-    		String title = request.getParameter(Constants.BLOB_TITLE);
-    		String isbn = request.getParameter(Constants.ISBN);
-    		String pagesCount = request.getParameter(Constants.PAGES_COUNT);
-    		String author = request.getParameter(Constants.BLOB_AUTHOR);
-    		Long userAppId = Long.parseLong(request
-    				.getParameter(Constants.BLOB_UPLOADER));
+           
     		Professor professor = ((GWTServiceImpl) gwtServiceImpl).findProfessor(userAppId);
     		LocalBook localBook = new LocalBook(professor, author, isbn, pagesCount, publishedYear, title);
     		localBook.setWebLinks(webLinks);

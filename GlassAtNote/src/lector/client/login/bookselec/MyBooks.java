@@ -59,7 +59,7 @@ public class MyBooks implements EntryPoint {
 		
 
 		MenuBar menuBar = new MenuBar(false);
-		RootTXOriginal.add(menuBar);
+		RootTXOriginal.add(menuBar,0,0);
 
 			
 		MenuItem TextoBienvenida = new MenuItem(
@@ -85,7 +85,7 @@ public class MyBooks implements EntryPoint {
 		PanelGeneral.setSpacing(13);
 		PanelGeneral.setStyleName("fondoLogo");
 		
-		RootTXOriginal.add(PanelGeneral);
+		RootTXOriginal.add(PanelGeneral,0,25);
 		PanelGeneral.setSize("100%", "97%");
 		
 		VerticalPanel PanelLibrosGeneral = new VerticalPanel();

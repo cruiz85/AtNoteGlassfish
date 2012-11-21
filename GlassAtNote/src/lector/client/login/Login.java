@@ -495,7 +495,7 @@ public class Login implements EntryPoint {
 															
 														}
 													});
-									Window.Location.reload();
+//									Window.Location.reload();
 								}
 
 								@Override
