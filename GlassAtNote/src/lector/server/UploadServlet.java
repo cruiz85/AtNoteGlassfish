@@ -9,6 +9,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import lector.client.book.reader.GWTService;
 import lector.client.controler.Constants;
 import lector.share.model.LocalBook;
 import lector.share.model.Professor;
@@ -18,6 +19,8 @@ import org.apache.commons.fileupload.FileItem;
 import org.apache.commons.fileupload.FileUploadException;
 import org.apache.commons.fileupload.disk.DiskFileItemFactory;
 import org.apache.commons.fileupload.servlet.ServletFileUpload;
+
+import com.google.gwt.core.shared.GWT;
  
 public class UploadServlet extends javax.servlet.http.HttpServlet implements
         javax.servlet.Servlet {
@@ -26,7 +29,7 @@ public class UploadServlet extends javax.servlet.http.HttpServlet implements
     private static final String DATA_DIRECTORY = "data";
     private static final int MAX_MEMORY_SIZE = 1024 * 1024 * 2;
     private static final int MAX_REQUEST_SIZE = 1024 * 1024;
-    private GWTServiceImpl gwtServiceImpl = new GWTServiceImpl();
+    private GWTService gwtServiceImpl = new GWTServiceImpl();
     protected void doPost(HttpServletRequest request,
             HttpServletResponse response) throws ServletException, IOException {
     	
@@ -81,10 +84,10 @@ public class UploadServlet extends javax.servlet.http.HttpServlet implements
     		String author = request.getParameter(Constants.BLOB_AUTHOR);
     		Long userAppId = Long.parseLong(request
     				.getParameter(Constants.BLOB_UPLOADER));
-    		Professor professor = gwtServiceImpl.findProfessor(userAppId);
+    		Professor professor = ((GWTServiceImpl) gwtServiceImpl).findProfessor(userAppId);
     		LocalBook localBook = new LocalBook(professor, author, isbn, pagesCount, publishedYear, title);
     		professor.getBooks().add(localBook);
-    		gwtServiceImpl.saveUser((Professor)professor);
+    		((GWTServiceImpl) gwtServiceImpl).saveUser((Professor)professor);
             // displays done.jsp page after upload finished
         //    getServletContext().getRequestDispatcher("/done.jsp").forward(request, response);
             

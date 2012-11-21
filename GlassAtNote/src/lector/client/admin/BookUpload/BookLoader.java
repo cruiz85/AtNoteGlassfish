@@ -330,8 +330,9 @@ public class BookLoader implements EntryPoint {
 
 			public void onSubmitComplete(SubmitCompleteEvent event) {
 
-				startNewBlobstoreSession();
+				//startNewBlobstoreSession();
 
+				Window.alert(event.getResults());
 				/*
 				 * userImageService.getBookBlobsByUserId(ActualUser.getUser().getId
 				 * (), new AsyncCallback<ArrayList<BookBlob>>() {
@@ -378,10 +379,9 @@ public class BookLoader implements EntryPoint {
 	}
 
 	private void startNewBlobstoreSession() {
-		String A=Window.Location.getHref();
-		String[] B=A.split("?");
-		A=B[0]+"/upload";
-		Window.alert(A);
+		String A=GWT.getHostPageBaseURL();
+		
+		A=A+"upload";
 				form.setAction(A);
 				submitButton.setText("Upload");
 				submitButton.setEnabled(true);

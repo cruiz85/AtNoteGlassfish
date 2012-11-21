@@ -99,6 +99,9 @@ public class GWTServiceImpl extends RemoteServiceServlet implements GWTService {
 
 	private ExportService exportService = new ExportServiceImpl();
 
+	public GWTServiceImpl() {
+		super();
+	}
 	// @Override
 	// public UserApp login(String requestUri) throws UserNotFoundException {
 	// UserService userService = UserServiceFactory.getUserService();

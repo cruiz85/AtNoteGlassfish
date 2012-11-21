@@ -36,7 +36,7 @@
 		<servlet-class>lector.server.Serve</servlet-class>
 	</servlet>
 	<servlet-mapping>
-		<servlet-name>Upload</servlet-name>
+		<servlet-name>UploadServlet</servlet-name>
 		<url-pattern>/upload</url-pattern>
 	</servlet-mapping>
 	<servlet-mapping>
