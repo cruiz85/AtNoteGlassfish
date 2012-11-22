@@ -10,10 +10,10 @@ public class LocalBookClient extends BookClient implements IsSerializable{
 		super();
 	}
 
-	public LocalBookClient(Long professor, String author, String ISBN,
+	public LocalBookClient(Long id,Long professor, String author, String ISBN,
 			String pagesCount, String publishedYear, String title,
 			List<String> webLinks) {
-		super(professor, author, ISBN, pagesCount, publishedYear, title, webLinks);
+		super(id,professor, author, ISBN, pagesCount, publishedYear, title, webLinks);
 		// TODO Auto-generated constructor stub
 	}
 

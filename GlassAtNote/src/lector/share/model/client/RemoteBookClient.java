@@ -12,10 +12,10 @@ public class RemoteBookClient extends BookClient implements IsSerializable{
 		super();
 	}
 
-	public RemoteBookClient(Long professor, String author, String ISBN,
+	public RemoteBookClient(Long id, Long professor, String author, String ISBN,
 			String pagesCount, String publishedYear, String title,
 			List<String> webLinks, String libraryName) {
-		super(professor, author, ISBN, pagesCount, publishedYear, title, webLinks);
+		super(id, professor, author, ISBN, pagesCount, publishedYear, title, webLinks);
 		this.libraryName = libraryName;
 	}
 

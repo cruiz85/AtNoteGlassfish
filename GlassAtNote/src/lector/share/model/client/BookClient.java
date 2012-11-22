@@ -5,8 +5,7 @@ import java.util.List;
 
 import com.google.gwt.user.client.rpc.IsSerializable;
 
-
-public class BookClient implements IsSerializable{
+public class BookClient implements IsSerializable {
 
 	private Long id;
 	private String author;
@@ -20,8 +19,9 @@ public class BookClient implements IsSerializable{
 	public BookClient() {
 	}
 
-	public BookClient(Long professor, String author, String ISBN,
-			String pagesCount, String publishedYear, String title, List<String> webLinks) {
+	public BookClient(Long id, Long professor, String author, String ISBN,
+			String pagesCount, String publishedYear, String title,
+			List<String> webLinks) {
 		this.professor = professor;
 		this.author = author;
 		this.ISBN = ISBN;
@@ -29,9 +29,8 @@ public class BookClient implements IsSerializable{
 		this.publishedYear = publishedYear;
 		this.title = title;
 		this.webLinks = webLinks;
-
+		this.id = id;
 	}
-
 
 	public String getAuthor() {
 		return author;

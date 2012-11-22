@@ -172,7 +172,10 @@ public class ServiceManagerUtils {
 				Book, Group, CloseCatalog, OpenCatalog, t.getVisualization(),
 				Template, isFreeTemplateAllowed);
 		readingActivityClient.setId(t.getId());
-		readingActivityClient.setDefaultType(t.getDefultTag().getId());
+		if(t.getDefultTag()!= null){
+			readingActivityClient.setDefaultType(t.getDefultTag().getId());	
+		}
+		
 		return readingActivityClient;
 	}
 
@@ -216,7 +219,7 @@ public class ServiceManagerUtils {
 	}
 
 	public static LocalBookClient produceLocalBookClient(LocalBook lb) {
-		return new LocalBookClient(lb.getProfessor().getId(), lb.getAuthor(),
+		return new LocalBookClient(lb.getId(),lb.getProfessor().getId(), lb.getAuthor(),
 				lb.getISBN(), lb.getPagesCount(), lb.getPublishedYear(),
 				lb.getTitle(), produceListString(lb.getWebLinks()));
 	}

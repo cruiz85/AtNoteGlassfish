@@ -950,11 +950,15 @@ public class GWTServiceImpl extends RemoteServiceServlet implements GWTService {
 				short updatability = (annotationClient.isUpdatability() ? (short) 1
 						: 0);
 				List<Tag> tags = getTagsByTypes(annotationClient.getTags());
+				
 				oldAnnotation = new Annotation(creator, activity,
 						textSelectors, annotationClient.getComment(),
 						annotationClient.getBookId(), visibility, updatability,
 						annotationClient.getPageNumber(), tags,
 						annotationClient.isEditable());
+				for (Tag tag : tags) {
+					tag.getAnnotations().add(oldAnnotation);
+				}
 				saveAnnotation(oldAnnotation);
 			} catch (UserNotFoundException e) {
 				// TODO Auto-generated catch block
@@ -2709,8 +2713,10 @@ public class GWTServiceImpl extends RemoteServiceServlet implements GWTService {
 				ReadingActivity newActivity = new ReadingActivity(
 						readingActivityClient.getName(), owner, null, null,
 						null, null, null, Constants.VISUAL_KEY, null, (short) 1);
-				Tag tag = findTag(readingActivityClient.getDefaultType());
-				newActivity.setDefultTag(tag);
+				if(readingActivityClient.getDefaultType()!=null){
+					Tag tag = findTag(readingActivityClient.getDefaultType());
+					newActivity.setDefultTag(tag);	
+				}
 				owner.getReadingActivities().add(newActivity);
 							
 				saveUser(owner);
@@ -2771,7 +2777,7 @@ public class GWTServiceImpl extends RemoteServiceServlet implements GWTService {
 
 		// Libro = Si Cambia Borrar las anotaciones asociadas a la actividad.
 		if ((readingActivityClientEntrada.getBook() != null)
-				&& ((readingActivitySalida.getBook() == null) || (readingActivityClientEntrada
+				&& ((readingActivitySalida.getBook() == null) || (!readingActivityClientEntrada
 						.getBook().getId().equals(readingActivitySalida
 						.getBook().getId()))))
 			readingActivitySalida.setBook(findBook(readingActivityClientEntrada
@@ -2826,7 +2832,7 @@ public class GWTServiceImpl extends RemoteServiceServlet implements GWTService {
 				.getVisualization());
 
 		// Default Type
-		if (!readingActivityClientEntrada.getDefaultType().equals(
+		if (readingActivityClientEntrada.getDefaultType() != null && !readingActivityClientEntrada.getDefaultType().equals(
 				readingActivitySalida.getDefultTag().getId())) {
 			Tag tag = findTag(readingActivityClientEntrada.getDefaultType());
 			readingActivitySalida.setDefultTag(tag);
