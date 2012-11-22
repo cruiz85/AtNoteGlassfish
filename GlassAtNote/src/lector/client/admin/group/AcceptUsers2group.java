@@ -12,6 +12,7 @@ import lector.client.logger.Logger;
 import lector.client.login.ActualUser;
 import lector.client.reader.LoadingPanel;
 import lector.share.model.client.StudentClient;
+import lector.share.model.client.UserClient;
 
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.PopupPanel;
@@ -207,9 +208,9 @@ public class AcceptUsers2group extends PopupPanel {
 ////				return false;
 ////			}
 //		});
-List<StudentClient> result=GAUP.getMygroup().getRemainingStudents();
-for (StudentClient User1 : result) {
-	InsertionPanel.add(new SelectionCheckboxElement(User1));
+List<UserClient> result=GAUP.getMygroup().getRemainingUsers();
+for (UserClient User1 : result) {
+	InsertionPanel.add(new SelectionCheckboxElement((StudentClient) User1));
 	
 }
 //						stackPanel_1.addBotonLessTen(E);

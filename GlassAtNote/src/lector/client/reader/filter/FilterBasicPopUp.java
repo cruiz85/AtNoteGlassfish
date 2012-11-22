@@ -262,13 +262,13 @@ public class FilterBasicPopUp extends PopupPanel {
 			private ArrayList<UserClient> FindUsers(ArrayList<String> types,
 					GroupClient group) {
 				ArrayList<UserClient> salida=new ArrayList<UserClient>();
-				for (StudentClient studentUnit : group.getParticipatingStudents()) {
+				for (UserClient studentUnit : group.getParticipatingUsers()) {
 					testUserIn(studentUnit,types,salida);
 				}
 				return salida;
 			}
 
-			private void testUserIn(StudentClient studentUnit,
+			private void testUserIn(UserClient studentUnit,
 					ArrayList<String> types, ArrayList<UserClient> salida) {
 				for (String typocandidato : types) {
 					if (studentUnit.getFirstName().toUpperCase().contains(typocandidato))
@@ -283,7 +283,7 @@ public class FilterBasicPopUp extends PopupPanel {
 				
 			}
 
-			private void AddSalida(StudentClient studentUnit,
+			private void AddSalida(UserClient studentUnit,
 					ArrayList<UserClient> salida) {
 				if(!salida.contains(studentUnit))
 					salida.add(studentUnit);

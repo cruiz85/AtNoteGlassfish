@@ -15,6 +15,7 @@ import lector.share.model.GroupApp;
 import lector.share.model.UserApp;
 import lector.share.model.client.GroupClient;
 import lector.share.model.client.StudentClient;
+import lector.share.model.client.UserClient;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
@@ -135,7 +136,7 @@ public class GroupAndUserPanel extends Composite {
 	
 
 	private void refrescaElGrupo() {
-		List<StudentClient> result = Mygroup.getParticipatingStudents();
+		List<UserClient> result = Mygroup.getParticipatingUsers();
 		for (int i = 0; i < result.size() - 1; i++) {
 			ButtonGroupMio User = new ButtonGroupMio(result.get(i));
 			User.setHTML("<img src=\"Users.gif\">" + result.get(i).getEmail());
@@ -172,7 +173,7 @@ public class GroupAndUserPanel extends Composite {
 						Borrar=(StudentClient)BGM.getUsuario();
 						LoadingPanel.getInstance().center();
 						LoadingPanel.getInstance().setLabelTexto("Deleting...");
-						bookReaderServiceHolder.removeStudentParticipatingInGroup(BGM.getUsuario().getId(), Mygroup.getId(),new AsyncCallback<Void>() {
+						bookReaderServiceHolder.removeUserParticipatingInGroup(BGM.getUsuario().getId(), Mygroup.getId(),new AsyncCallback<Void>() {
 
 							public void onFailure(Throwable caught) {
 								LoadingPanel.getInstance().hide();

@@ -2,20 +2,21 @@ package lector.client.admin.group;
 
 import lector.share.model.UserApp;
 import lector.share.model.client.StudentClient;
+import lector.share.model.client.UserClient;
 
 import com.google.gwt.user.client.ui.Button;
 
 public class ButtonGroupMio extends Button {
 
 	
-	private StudentClient Usuario;
+	private UserClient Usuario;
 	
-	public ButtonGroupMio(StudentClient userApp) {
+	public ButtonGroupMio(UserClient userClient) {
 		super();
-		Usuario=userApp;
+		Usuario=userClient;
 	}
 	
-	public StudentClient getUsuario() {
+	public UserClient getUsuario() {
 		return Usuario;
 	}
 	
