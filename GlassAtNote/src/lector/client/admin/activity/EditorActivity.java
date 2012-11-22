@@ -22,6 +22,7 @@ import lector.share.model.client.GroupClient;
 import lector.share.model.client.ProfessorClient;
 import lector.share.model.client.ReadingActivityClient;
 import lector.share.model.client.TemplateClient;
+import lector.share.model.client.TypeClient;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
@@ -32,6 +33,7 @@ import com.google.gwt.event.dom.client.MouseOutEvent;
 import com.google.gwt.event.dom.client.MouseOutHandler;
 import com.google.gwt.event.dom.client.MouseOverEvent;
 import com.google.gwt.event.dom.client.MouseOverHandler;
+import com.google.gwt.safehtml.shared.SafeHtml;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.PopupPanel;
 import com.google.gwt.user.client.ui.VerticalPanel;
@@ -59,6 +61,12 @@ import com.google.gwt.event.dom.client.ChangeHandler;
 import com.google.gwt.event.dom.client.ChangeEvent;
 
 public class EditorActivity extends PopupPanel {
+	
+	/// IDIOMA
+	public static String BOTON_SELECT_DEFAULT_TYPE="Select Default Type";
+	public static String MENU_WELCOME_TEXT="Activity Editor :";
+	public static String MENU_SAVE_BUTTON="Save";
+	
 
 	private ReadingActivityClient ActualActivity;
 	private CatalogoClient SelectedCatalog = null;
@@ -93,8 +101,10 @@ public class EditorActivity extends PopupPanel {
 	private Image image;
 	private CheckBox AllowDefaulType;
 	private Label DefaultTypeLabel;
-	private ListBox ComboTypes;
+//	private ListBox ComboTypes;
 	private HorizontalPanel Panel_Selecion_Default;
+	private TypeClient DefaultType; 
+	private TypeClient DefaultTypeOld;
 
 	public EditorActivity(ReadingActivityClient RA) {
 		
@@ -117,7 +127,7 @@ public class EditorActivity extends PopupPanel {
 		MenuBar menuBar = new MenuBar(false);
 		flowPanel.add(menuBar);
 
-		MenuItem mntmNewItem = new MenuItem("Activity Editor :", false,
+		MenuItem mntmNewItem = new MenuItem(EditorActivity.MENU_WELCOME_TEXT, false,
 				(Command) null);
 		mntmNewItem.setEnabled(false);
 		mntmNewItem.setHTML("Activity Editor : " + ActualActivity.getName());
@@ -237,6 +247,7 @@ public class EditorActivity extends PopupPanel {
 					ActualActivity.setTemplate(Template);
 				ActualActivity.setIsFreeTemplateAllowed(CheckBoxFree.getValue());
 				ActualActivity.setVisualization(comboBox.getItemText(comboBox.getSelectedIndex()));
+					ActualActivity.setDefaultType(DefaultType.getId());
 				LoadingPanel.getInstance().center();
 				LoadingPanel.getInstance().setLabelTexto("Saving...");
 				bookReaderServiceHolder.saveReadingActivity(ActualActivity,
@@ -257,7 +268,7 @@ public class EditorActivity extends PopupPanel {
 
 			}
 		});
-		mntmNewItem_1.setHTML("Save");
+		mntmNewItem_1.setHTML(EditorActivity.MENU_SAVE_BUTTON );
 		menuBar.addItem(mntmNewItem_1);
 
 		MenuItem mntmNewItem_2 = new MenuItem("New item", false, new Command() {
@@ -306,35 +317,74 @@ public class EditorActivity extends PopupPanel {
 				
 				AllowDefaulType = new CheckBox("Allow Default Type");
 				AllowDefaulType.addValueChangeHandler(new ValueChangeHandler<Boolean>() {
+
 					public void onValueChange(ValueChangeEvent<Boolean> event) {
 						if (AllowDefaulType.getValue())
 						{
-							//TODO Falta Asignar el tipo
-							DefaultTypeLabel.setText("Default Type : " + ComboTypes.getValue(ComboTypes.getSelectedIndex()) );
+							if (DefaultTypeOld!=null)
+								DefaultTypeLabel.setText("Default Type : " + DefaultTypeOld );
 						}
 						else 
 						{
-							//TODO Falta Asignar el tipo
+							DefaultType=null;
+							DefaultTypeOld=DefaultType;
 							DefaultTypeLabel.setText("Default Type : ");
 						}
 					}
 				});
 				Panel_Selecion_Default.add(AllowDefaulType);
 				
-				ComboTypes = new ListBox();
-				//TODO Falta Asignar el tipo
-				ComboTypes.addItem("Alement 1", "1l");
-				ComboTypes.addItem("Alement 2", "2l");
-				ComboTypes.addItem("Alement 3", "3l");
-				Panel_Selecion_Default.add(ComboTypes);
-				ComboTypes.setWidth("119px");
-				ComboTypes.addChangeHandler(new ChangeHandler() {
-					public void onChange(ChangeEvent event) {
-						
-						DefaultTypeLabel.setText("Default Type :" + ComboTypes.getValue(ComboTypes.getSelectedIndex()));
-							//TODO Falta Asignar el tipo
+				Button BotonFinder=new Button(EditorActivity.BOTON_SELECT_DEFAULT_TYPE);
+				Panel_Selecion_Default.add(BotonFinder);
+				BotonFinder.setWidth("119px");
+				BotonFinder.addMouseDownHandler(new MouseDownHandler() {
+					public void onMouseDown(MouseDownEvent event) {
+						((Button) event.getSource())
+								.setStyleName("gwt-ButtonCenterPush");
 					}
 				});
+
+				BotonFinder.addMouseOutHandler(new MouseOutHandler() {
+			public void onMouseOut(MouseOutEvent event) {
+				((Button) event.getSource())
+						.setStyleName("gwt-ButtonCenter");
+			}
+		});
+
+				BotonFinder
+				.addMouseOverHandler(new MouseOverHandler() {
+					public void onMouseOver(MouseOverEvent event) {
+
+						((Button) event.getSource())
+								.setStyleName("gwt-ButtonCenterOver");
+
+					}
+				});
+
+				BotonFinder.setStyleName("gwt-ButtonCenter");
+				BotonFinder.addClickHandler(new ClickHandler() {
+					
+					@Override
+					public void onClick(ClickEvent event) {
+						FinderDefaultType FDT=new FinderDefaultType(DefaultTypeLabel,DefaultType,SelectedCatalog);
+						FDT.center();
+					}
+				});
+				
+//				ComboTypes = new ListBox();
+//				//TODO Falta Asignar el tipo
+//				ComboTypes.addItem("Alement 1", "1l");
+//				ComboTypes.addItem("Alement 2", "2l");
+//				ComboTypes.addItem("Alement 3", "3l");
+//				Panel_Selecion_Default.add(ComboTypes);
+//				ComboTypes.setWidth("119px");
+//				ComboTypes.addChangeHandler(new ChangeHandler() {
+//					public void onChange(ChangeEvent event) {
+//						
+//						DefaultTypeLabel.setText("Default Type :" + ComboTypes.getValue(ComboTypes.getSelectedIndex()));
+//							//TODO Falta Asignar el tipo
+//					}
+//				});
 
 		ScrollPanel BooksSP = new ScrollPanel();
 		tabPanel.add(BooksSP, "Books", false);

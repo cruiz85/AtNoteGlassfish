@@ -44,13 +44,18 @@ import com.google.gwt.user.client.ui.HasHorizontalAlignment;
 import com.google.gwt.user.client.ui.HasVerticalAlignment;
 
 public class MyBooks implements EntryPoint {
-
+	
+	/// IDIOMA
+	public static String MENU_WELLCOME_LABEL="'s Personal Library ";
+	
+	
 	private List<Long> BooksIDs = new ArrayList<Long>();
-	private VerticalPanel verticalPanel = new VerticalPanel();
+	private VerticalPanel verticalPanel;
 	private VerticalPanel PanelBotones;
 	private MyBooks Yo;
 	static GWTServiceAsync bookReaderServiceHolder = GWT
 			.create(GWTService.class);
+	
 
 	public void onModuleLoad() {
 		Yo=this;
@@ -63,10 +68,11 @@ public class MyBooks implements EntryPoint {
 
 			
 		MenuItem TextoBienvenida = new MenuItem(
-				ActualUser.getUser().getLastName() + "'s Personal Library ", false,
+				ActualUser.getUser().getLastName() + MyBooks.MENU_WELLCOME_LABEL, false,
 				(Command) null);
 		TextoBienvenida.setEnabled(false);
 		menuBar.addItem(TextoBienvenida);
+		menuBar.setWidth("100%");
 
 		MenuItemSeparator separator = new MenuItemSeparator();
 		menuBar.addSeparator(separator);
@@ -93,9 +99,11 @@ public class MyBooks implements EntryPoint {
 		PanelLibrosGeneral.setSpacing(10);
 		PanelGeneral.add(PanelLibrosGeneral);
 		PanelBotones = new VerticalPanel();
-		PanelBotones.setStyleName("BlancoTransparente");
-		PanelBotones.setSpacing(6);
-		PanelLibrosGeneral.add(PanelBotones);
+		verticalPanel = new VerticalPanel();
+		verticalPanel.setStyleName("BlancoTransparente");
+		verticalPanel.setSpacing(6);
+		PanelLibrosGeneral.add(verticalPanel);
+		verticalPanel.add(PanelBotones);
 		PanelBotones.setSize("500px", "");
 		BooksIDs = new ArrayList<Long>();
 		

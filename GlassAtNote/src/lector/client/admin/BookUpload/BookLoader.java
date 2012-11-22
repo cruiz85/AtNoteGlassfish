@@ -63,11 +63,10 @@ public class BookLoader implements EntryPoint {
 	public void onModuleLoad() {
 
 		RootPanel RP = RootPanel.get();
-		RootPanel RPMenu = RootPanel.get("Menu");
 		RP.setSize("100%", "100%");
 
 		MenuBar menuBar = new MenuBar(false);
-		RPMenu.add(menuBar);
+		RP.add(menuBar,0,0);
 		menuBar.setWidth("100%");
 
 		MenuItem mntmNewItem = new MenuItem("Close", false, new Command() {
@@ -81,7 +80,7 @@ public class BookLoader implements EntryPoint {
 
 		HorizontalPanel horizontalPanel = new HorizontalPanel();
 		horizontalPanel.setStyleName("fondoLogo");
-		RP.add(horizontalPanel);
+		RP.add(horizontalPanel,0,25);
 		horizontalPanel.setSize("100%", "100%");
 
 		HorizontalPanel horizontalPanel_1 = new HorizontalPanel();
@@ -332,7 +331,8 @@ public class BookLoader implements EntryPoint {
 
 				//startNewBlobstoreSession();
 
-				Window.alert(event.getResults());
+				if ((event.getResults()!=null)&&!(event.getResults().isEmpty()))
+					Window.alert(event.getResults());
 				/*
 				 * userImageService.getBookBlobsByUserId(ActualUser.getUser().getId
 				 * (), new AsyncCallback<ArrayList<BookBlob>>() {

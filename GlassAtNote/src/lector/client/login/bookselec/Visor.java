@@ -14,10 +14,8 @@ import com.google.gwt.event.dom.client.MouseOverEvent;
 import com.google.gwt.event.dom.client.MouseOverHandler;
 import com.google.gwt.event.dom.client.MouseUpEvent;
 import com.google.gwt.event.dom.client.MouseUpHandler;
-import com.google.gwt.user.client.ui.Frame;
 import com.google.gwt.user.client.ui.PopupPanel;
 import com.google.gwt.user.client.ui.SimplePanel;
-import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.MenuBar;
 import com.google.gwt.user.client.ui.MenuItem;
@@ -25,7 +23,6 @@ import com.google.gwt.user.client.Command;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.Image;
-import com.google.gwt.user.client.ui.SimpleCheckBox;
 import com.google.gwt.user.client.ui.HasHorizontalAlignment;
 import com.google.gwt.user.client.ui.HasVerticalAlignment;
 import com.google.gwt.user.client.ui.VerticalPanel;
@@ -193,13 +190,27 @@ public class Visor extends PopupPanel {
 					float Wi = I.getWidth();
 					float prop = He / 528;
 					float Winew = (Wi / prop);
-					Pagina1.setSize(Winew + "px", "528px");
+					
+					if (Winew<410)
+						Pagina1.setSize(Winew + "px", "528px");
+					else{
+						He = I.getHeight();
+						Wi = I.getWidth();
+						prop = Wi / 410;
+						float Hinew = (He / prop);
+						Pagina1.setSize("410px", Hinew + "px");
+					}	
+						
+									
+
+					
 					// Window.alert("Altura: " + He + "Ancho: " + Wi );
 				}
 			});
 		}else
 		{
 		Window.alert(ErrorConstants.ERROR_BOOK_EMPTY);	
+		hide();
 		}
 		if (Book.getWebLinks().size()>1)
 		{
@@ -217,15 +228,23 @@ public class Visor extends PopupPanel {
 					float Wi = I.getWidth();
 					float prop = He / 528;
 					float Winew = (Wi / prop);
-					Pagina2.setSize(Winew + "px", "528px");				
+					
+					if (Winew<410)
+						Pagina2.setSize(Winew + "px", "528px");
+					else{
+						He = I.getHeight();
+						Wi = I.getWidth();
+						prop = Wi / 410;
+						float Hinew = (He / prop);
+						Pagina2.setSize("410px", Hinew + "px");
+					}				
 				}
 				
 		});
 		}
-		else
-		{
+
+		if (Book.getWebLinks().size()<2)
 			Adelante.setEnabled(false);	
-		}
 		Atras.setEnabled(false);
 		PaginaInt.setValue(actualpagina);		
 	}
