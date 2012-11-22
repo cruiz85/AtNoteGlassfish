@@ -12,7 +12,7 @@ import com.google.gwt.user.client.rpc.RemoteServiceRelativePath;
 
 import lector.share.model.Annotation;
 import lector.share.model.AnnotationNotFoundException;
-import lector.share.model.AnnotationThread;
+
 import lector.share.model.AnnotationThreadNotFoundException;
 import lector.share.model.Book;
 import lector.share.model.BookNotFoundException;
@@ -87,7 +87,7 @@ public interface GWTService extends RemoteService {
 
 	// Student
 
-	public List<StudentClient> getStudentsByGroupId(Long groupId)
+	public List<UserClient> getUsersByGroupId(Long groupId)
 			throws GeneralException, GroupNotFoundException;
 
 	public List<StudentClient> getStudents() throws GeneralException,
@@ -126,7 +126,7 @@ public interface GWTService extends RemoteService {
 	public void removeStudentsToBeValidated(List<Long> userIds, Long groupId)
 			throws GeneralException;
 
-	public void removeStudentParticipatingInGroup(Long userId, Long groupId)
+	public void removeUserParticipatingInGroup(Long userId, Long groupId)
 			throws GeneralException;
 
 	/*

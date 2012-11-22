@@ -27,15 +27,14 @@ public class GroupApp implements Serializable, IsSerializable {
 	@ManyToOne
 	private Professor professor;
 	@ManyToMany(cascade = CascadeType.ALL)
-	//@JoinTable(name = "group_user", joinColumns = { @JoinColumn(name = "groupId", referencedColumnName = "id") }, inverseJoinColumns = { @JoinColumn(name = "userId", referencedColumnName = "id") })
-	private List<Student> participatingStudents = new ArrayList<Student>();
+	@JoinTable(name = "group_user", joinColumns = { @JoinColumn(name = "groupId", referencedColumnName = "id") }, inverseJoinColumns = { @JoinColumn(name = "userId", referencedColumnName = "id") })
+	private List<UserApp> participatingUsers = new ArrayList<UserApp>();
 
 	@ManyToMany(cascade = CascadeType.ALL)
-	private List<Student> remainingStudents = new ArrayList<Student>();
-
+	private List<UserApp> remainingUsers = new ArrayList<UserApp>();
 
 	public GroupApp() {
-	
+
 	}
 
 	public GroupApp(String name) {
@@ -67,21 +66,20 @@ public class GroupApp implements Serializable, IsSerializable {
 		this.professor = professor;
 	}
 
-	public List<Student> getParticipatingStudents() {
-		return participatingStudents;
+	public List<UserApp> getParticipatingUsers() {
+		return participatingUsers;
 	}
 
-	public void setParticipatingStudents(List<Student> participatingStudents) {
-		this.participatingStudents = participatingStudents;
+	public void setParticipatingUsers(List<UserApp> participatingUsers) {
+		this.participatingUsers = participatingUsers;
 	}
 
-	public List<Student> getRemainingStudents() {
-		return remainingStudents;
+	public List<UserApp> getRemainingUsers() {
+		return remainingUsers;
 	}
 
-	public void setRemainingStudents(List<Student> remainingStudents) {
-		this.remainingStudents = remainingStudents;
+	public void setRemainingUsers(List<UserApp> remainingUsers) {
+		this.remainingUsers = remainingUsers;
 	}
 
-	
 }

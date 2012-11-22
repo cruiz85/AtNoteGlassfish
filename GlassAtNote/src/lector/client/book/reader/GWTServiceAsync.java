@@ -132,9 +132,6 @@ public interface GWTServiceAsync {
 			List<Long> authorIds, Long Activity, Long Student,
 			AsyncCallback<List<AnnotationClient>> callback);
 
-	void getStudentsByGroupId(Long groupId,
-			AsyncCallback<List<StudentClient>> callback);
-
 	void getStudents(AsyncCallback<List<StudentClient>> callback);
 
 	void getProfessors(AsyncCallback<List<ProfessorClient>> callback);
@@ -243,9 +240,6 @@ public interface GWTServiceAsync {
 	void validateStudentsToBeInGroup(List<Long> userIds, Long groupId,
 			AsyncCallback<Void> callback);
 
-	void removeStudentParticipatingInGroup(Long userId, Long groupId,
-			AsyncCallback<Void> callback);
-
 	void removeStudentsToBeValidated(List<Long> userIds, Long groupId,
 			AsyncCallback<Void> callback);
 
@@ -275,6 +269,12 @@ public interface GWTServiceAsync {
 
 	void getAnnotationThreadsByItsAnnotation(Long annotationId,
 			AsyncCallback<List<AnnotationThreadClient>> callback);
+
+	void getUsersByGroupId(Long groupId,
+			AsyncCallback<List<UserClient>> callback);
+
+	void removeUserParticipatingInGroup(Long userId, Long groupId,
+			AsyncCallback<Void> callback);
 
 	
 }

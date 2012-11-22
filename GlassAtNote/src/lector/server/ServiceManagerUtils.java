@@ -227,8 +227,8 @@ public class ServiceManagerUtils {
 	public static GroupClient produceGroupClient(GroupApp g) {
 		return new GroupClient(g.getId(), g.getName(),
 				produceProfessorClient(g.getProfessor()),
-				produceStudentClients(g.getParticipatingStudents()),
-				produceStudentClients(g.getRemainingStudents()));
+				produceUserClients(g.getParticipatingUsers()),
+				produceUserClients(g.getRemainingUsers()));
 	}
 
 	public static List<GroupClient> produceGroupClients(List<GroupApp> g) {
@@ -371,6 +371,13 @@ public class ServiceManagerUtils {
 
 	}
 
+	public static List<UserClient> produceUserClients(List<UserApp> s) {
+		List<UserClient> studentClients = new ArrayList<UserClient>();
+		for (UserApp student : s) {
+			studentClients.add(produceUserClient(student));
+		}
+		return studentClients;
+	}
 	// EXPORTSERVICE - HANDLER
 
 	public static TemplateClient produceTemplateClient(Template template) {

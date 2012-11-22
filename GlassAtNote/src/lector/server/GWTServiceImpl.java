@@ -102,6 +102,7 @@ public class GWTServiceImpl extends RemoteServiceServlet implements GWTService {
 	public GWTServiceImpl() {
 		super();
 	}
+
 	// @Override
 	// public UserApp login(String requestUri) throws UserNotFoundException {
 	// UserService userService = UserServiceFactory.getUserService();
@@ -386,7 +387,7 @@ public class GWTServiceImpl extends RemoteServiceServlet implements GWTService {
 	}
 
 	@Override
-	public List<StudentClient> getStudentsByGroupId(Long groupId)
+	public List<UserClient> getUsersByGroupId(Long groupId)
 			throws GroupNotFoundException, GeneralException {
 		EntityManager entityManager = emf.createEntityManager();
 		List<GroupApp> list;
@@ -409,8 +410,8 @@ public class GWTServiceImpl extends RemoteServiceServlet implements GWTService {
 		if (entityManager.isOpen()) {
 			entityManager.close();
 		}
-		return ServiceManagerUtils.produceStudentClients(list.get(0)
-				.getParticipatingStudents());
+		return ServiceManagerUtils.produceUserClients(list.get(0)
+				.getParticipatingUsers());
 
 	}
 
@@ -825,9 +826,10 @@ public class GWTServiceImpl extends RemoteServiceServlet implements GWTService {
 			throws GeneralException {
 		try {
 			GroupApp group = findGroup(groupId);
-			Student student = findStudent(userId);
-			if (!group.getRemainingStudents().contains(student)) {
-				group.getRemainingStudents().add(student);
+			// Student student = findStudent(userId);
+			UserApp user = findUser(userId);
+			if (!group.getRemainingUsers().contains(user)) {
+				group.getRemainingUsers().add(user);
 			}
 			saveGroup(group);
 		} catch (Exception e) {
@@ -842,13 +844,14 @@ public class GWTServiceImpl extends RemoteServiceServlet implements GWTService {
 			throws GeneralException {
 		try {
 			GroupApp group = findGroup(groupId);
-			for (int i = 0; i < group.getRemainingStudents().size(); i++) {
-				Student remaining = group.getRemainingStudents().get(i);
-				if (ids.contains(remaining.getId())) {
-					group.getRemainingStudents().remove(remaining);
+			for (int i = 0; i < group.getRemainingUsers().size(); i++) {
+				UserApp remaining = group.getRemainingUsers().get(i);
+				if (remaining instanceof Student) {
+					if (ids.contains(remaining.getId())) {
+						group.getRemainingUsers().remove(remaining);
 
+					}
 				}
-
 				saveGroup(group);
 			}
 
@@ -861,13 +864,13 @@ public class GWTServiceImpl extends RemoteServiceServlet implements GWTService {
 	}
 
 	@Override
-	public void removeStudentParticipatingInGroup(Long userId, Long groupId)
+	public void removeUserParticipatingInGroup(Long userId, Long groupId)
 			throws GeneralException {
 		try {
 			GroupApp group = findGroup(groupId);
-			Student student = findStudent(userId);
-			if (group.getParticipatingStudents().contains(student)) {
-				group.getParticipatingStudents().remove(student);
+			UserApp user = findStudent(userId);
+			if (group.getParticipatingUsers().contains(user)) {
+				group.getParticipatingUsers().remove(user);
 			}
 			saveGroup(group);
 		} catch (Exception e) {
@@ -883,13 +886,15 @@ public class GWTServiceImpl extends RemoteServiceServlet implements GWTService {
 		try {
 			GroupApp group = findGroup(groupId);
 
-			for (int i = 0; i < group.getRemainingStudents().size(); i++) {
-				Student remaining = group.getRemainingStudents().get(i);
-				if (userIds.contains(remaining.getId())) {
-					group.getRemainingStudents().remove(remaining);
-					group.getParticipatingStudents().add(remaining);
+			for (int i = 0; i < group.getRemainingUsers().size(); i++) {
+				// Student remaining = group.getRemainingStudents().get(i);
+				UserApp remaining = group.getRemainingUsers().get(i);
+				if (remaining instanceof Student) {
+					if (userIds.contains(remaining.getId())) {
+						group.getRemainingUsers().remove(remaining);
+						group.getParticipatingUsers().add(remaining);
+					}
 				}
-
 				saveGroup(group);
 			}
 
@@ -906,14 +911,14 @@ public class GWTServiceImpl extends RemoteServiceServlet implements GWTService {
 		try {
 			Student student = findStudent(userId);
 			GroupApp group = findGroup(groupId);
-			if (group.getRemainingStudents().contains(student)) {
-				group.getRemainingStudents().remove(student);
+			if (group.getRemainingUsers().contains(student)) {
+				group.getRemainingUsers().remove(student);
 			} else {
 				throw new GeneralException(
 						"Hey!!! this user was not on the list to be validated from: the remainingList");
 			}
-			if (!group.getParticipatingStudents().contains(student)) {
-				group.getParticipatingStudents().add(student);
+			if (!group.getParticipatingUsers().contains(student)) {
+				group.getParticipatingUsers().add(student);
 			}
 			saveGroup(group);
 
@@ -950,15 +955,16 @@ public class GWTServiceImpl extends RemoteServiceServlet implements GWTService {
 				short updatability = (annotationClient.isUpdatability() ? (short) 1
 						: 0);
 				List<Tag> tags = getTagsByTypes(annotationClient.getTags());
-				
+
 				oldAnnotation = new Annotation(creator, activity,
 						textSelectors, annotationClient.getComment(),
 						annotationClient.getBookId(), visibility, updatability,
 						annotationClient.getPageNumber(), tags,
 						annotationClient.isEditable());
-				for (Tag tag : tags) {
-					tag.getAnnotations().add(oldAnnotation);
-				}
+				// for (Tag tag : tags) {
+				// tag.getAnnotations().add(oldAnnotation);
+				// }
+				// saveTag(tag);
 				saveAnnotation(oldAnnotation);
 			} catch (UserNotFoundException e) {
 				// TODO Auto-generated catch block
@@ -1046,43 +1052,43 @@ public class GWTServiceImpl extends RemoteServiceServlet implements GWTService {
 		return list;
 	}
 
-//	private List<Long> getTagIds(List<Tag> tags) {
-//		List<Long> ids = new ArrayList<Long>();
-//		for (Entry folder : tags) {
-//			ids.add(folder.getId());
-//		}
-//		return ids;
-//	}
-//
-//
-//	private List<Long> getFolderIds(List<FolderDB> folders) {
-//		List<Long> ids = new ArrayList<Long>();
-//		for (Entry folder : folders) {
-//			ids.add(folder.getId());
-//		}
-//		return ids;
-//	}
-//
-//	private List<FolderDB> getFolderIdsByCatalogId(Long catalogId)
-//			throws GeneralException {
-//		EntityManager entityManager = emf.createEntityManager();
-//		List<FolderDB> list;
-//		String sql = "SELECT r FROM FolderDB r WHERE r.catalog.id=" + catalogId;
-//		try {
-//			list = entityManager.createQuery(sql).getResultList();
-//		} catch (Exception e) {
-//			// logger.error ("Exception in method loadUserByEmail: ", e)
-//			throw new GeneralException("Exception in method loadUserByEmail:"
-//					+ e.getMessage(), e.getStackTrace());
-//
-//		}
-//
-//		if (entityManager.isOpen()) {
-//			entityManager.close();
-//		}
-//
-//		return list;
-//	}
+	// private List<Long> getTagIds(List<Tag> tags) {
+	// List<Long> ids = new ArrayList<Long>();
+	// for (Entry folder : tags) {
+	// ids.add(folder.getId());
+	// }
+	// return ids;
+	// }
+	//
+	//
+	// private List<Long> getFolderIds(List<FolderDB> folders) {
+	// List<Long> ids = new ArrayList<Long>();
+	// for (Entry folder : folders) {
+	// ids.add(folder.getId());
+	// }
+	// return ids;
+	// }
+	//
+	// private List<FolderDB> getFolderIdsByCatalogId(Long catalogId)
+	// throws GeneralException {
+	// EntityManager entityManager = emf.createEntityManager();
+	// List<FolderDB> list;
+	// String sql = "SELECT r FROM FolderDB r WHERE r.catalog.id=" + catalogId;
+	// try {
+	// list = entityManager.createQuery(sql).getResultList();
+	// } catch (Exception e) {
+	// // logger.error ("Exception in method loadUserByEmail: ", e)
+	// throw new GeneralException("Exception in method loadUserByEmail:"
+	// + e.getMessage(), e.getStackTrace());
+	//
+	// }
+	//
+	// if (entityManager.isOpen()) {
+	// entityManager.close();
+	// }
+	//
+	// return list;
+	// }
 
 	private void seeEditionOnAnnotation(Annotation annotation,
 			AnnotationClient aClient) {
@@ -2713,12 +2719,12 @@ public class GWTServiceImpl extends RemoteServiceServlet implements GWTService {
 				ReadingActivity newActivity = new ReadingActivity(
 						readingActivityClient.getName(), owner, null, null,
 						null, null, null, Constants.VISUAL_KEY, null, (short) 1);
-				if(readingActivityClient.getDefaultType()!=null){
+				if (readingActivityClient.getDefaultType() != null) {
 					Tag tag = findTag(readingActivityClient.getDefaultType());
-					newActivity.setDefultTag(tag);	
+					newActivity.setDefultTag(tag);
 				}
 				owner.getReadingActivities().add(newActivity);
-							
+
 				saveUser(owner);
 			}
 		} catch (ReadingActivityNotFoundException e) {
@@ -2778,8 +2784,8 @@ public class GWTServiceImpl extends RemoteServiceServlet implements GWTService {
 		// Libro = Si Cambia Borrar las anotaciones asociadas a la actividad.
 		if ((readingActivityClientEntrada.getBook() != null)
 				&& ((readingActivitySalida.getBook() == null) || (!readingActivityClientEntrada
-						.getBook().getId().equals(readingActivitySalida
-						.getBook().getId()))))
+						.getBook().getId()
+						.equals(readingActivitySalida.getBook().getId()))))
 			readingActivitySalida.setBook(findBook(readingActivityClientEntrada
 					.getBook().getId()));
 
@@ -2832,8 +2838,10 @@ public class GWTServiceImpl extends RemoteServiceServlet implements GWTService {
 				.getVisualization());
 
 		// Default Type
-		if (readingActivityClientEntrada.getDefaultType() != null && !readingActivityClientEntrada.getDefaultType().equals(
-				readingActivitySalida.getDefultTag().getId())) {
+		if (readingActivityClientEntrada.getDefaultType() != null
+				&& ((readingActivitySalida.getDefultTag() != null)
+				||!readingActivityClientEntrada.getDefaultType().equals(
+						readingActivitySalida.getDefultTag().getId()))) {
 			Tag tag = findTag(readingActivityClientEntrada.getDefaultType());
 			readingActivitySalida.setDefultTag(tag);
 		}
