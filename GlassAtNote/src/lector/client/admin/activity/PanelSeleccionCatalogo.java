@@ -1,11 +1,20 @@
 package lector.client.admin.activity;
 
+import lector.client.book.reader.GWTService;
+import lector.client.book.reader.GWTServiceAsync;
+import lector.client.controler.ErrorConstants;
+import lector.client.controler.InformationConstants;
+import lector.client.reader.LoadingPanel;
 import lector.share.model.client.CatalogoClient;
 
+import com.google.gwt.safehtml.shared.SafeHtml;
+import com.google.gwt.user.client.Window;
+import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.PopupPanel;
 import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.Button;
+import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.MouseDownEvent;
@@ -17,10 +26,14 @@ import com.google.gwt.event.dom.client.MouseOverHandler;
 
 public class PanelSeleccionCatalogo extends PopupPanel {
 
+	public static String BOTTON_TEACHER_CATALOG="Teacher Catalog";
+	public static String BOTTON_OPEN_CATALOG="Open Catalog";
 	private CatalogoClient Catalogo;
 	private Label LPrivate;
 	private Label LPublic;
 	private EditorActivity Father;
+	static GWTServiceAsync bookReaderServiceHolder = GWT
+			.create(GWTService.class);
 	
 	public PanelSeleccionCatalogo(CatalogoClient catalogo, Label catalogLabel,
 			Label openCatalogLabel, EditorActivity yo) {
@@ -36,7 +49,7 @@ public class PanelSeleccionCatalogo extends PopupPanel {
 		setWidget(horizontalPanel);
 		horizontalPanel.setSize("100%", "100%");
 		
-		Button btnNewButton = new Button("Teacher Catalog");
+		Button btnNewButton = new Button(PanelSeleccionCatalogo.BOTTON_TEACHER_CATALOG);
 		btnNewButton.setSize("100%", "100%");
 		btnNewButton.addMouseDownHandler(new MouseDownHandler() {
 			public void onMouseDown(MouseDownEvent event) {
@@ -58,14 +71,36 @@ public class PanelSeleccionCatalogo extends PopupPanel {
 			public void onClick(ClickEvent event) {
 				LPrivate.setText("Teacher Catalog :"
 						+ Catalogo.getCatalogName());
-				Father.setSelectedCatalog(Catalogo);
-				Father.setPanel_Selecion_Default_Visibility(true);
-				hide();
+				LoadingPanel.getInstance().center();
+				LoadingPanel.getInstance().setLabelTexto(InformationConstants.LOADING);
+				bookReaderServiceHolder.loadCatalogById(Catalogo.getId(), new AsyncCallback<CatalogoClient>() {
+					
+					@Override
+					public void onSuccess(CatalogoClient result) {
+						LoadingPanel.getInstance()
+						.hide();
+						Father.setSelectedCatalog(result);
+						Father.setPanel_Selecion_Default_Visibility(true);
+						hide();
+						
+					}
+					
+					@Override
+					public void onFailure(Throwable caught) {
+						LoadingPanel.getInstance()
+						.hide();
+						Window.alert(ErrorConstants.ERROR_LOADING_CATALOG);
+						hide();
+						
+					}
+				});
+				
+				
 			}
 		});
 		horizontalPanel.add(btnNewButton);
 		
-		Button btnNewButton_1 = new Button("Open Catalog");
+		Button btnNewButton_1 = new Button(PanelSeleccionCatalogo.BOTTON_OPEN_CATALOG);
 		btnNewButton_1.setSize("100%", "100%");
 		btnNewButton_1.addMouseDownHandler(new MouseDownHandler() {
 			public void onMouseDown(MouseDownEvent event) {

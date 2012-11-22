@@ -66,6 +66,7 @@ public class EditorActivity extends PopupPanel {
 	public static String BOTON_SELECT_DEFAULT_TYPE="Select Default Type";
 	public static String MENU_WELCOME_TEXT="Activity Editor :";
 	public static String MENU_SAVE_BUTTON="Save";
+	public static String DEFAUL_TYPE_LABEL="Default Type : ";
 	
 
 	private ReadingActivityClient ActualActivity;
@@ -90,6 +91,7 @@ public class EditorActivity extends PopupPanel {
 	private VerticalPanel GroupsPanel;
 	static GWTServiceAsync bookReaderServiceHolder = GWT
 			.create(GWTService.class);
+	
 	private ExportServiceAsync exportServiceHolder = GWT
 			.create(ExportService.class);
 	private CheckBox CheckBoxFree;
@@ -105,6 +107,7 @@ public class EditorActivity extends PopupPanel {
 	private HorizontalPanel Panel_Selecion_Default;
 	private TypeClient DefaultType; 
 	private TypeClient DefaultTypeOld;
+	private Button BotonFinder;
 
 	public EditorActivity(ReadingActivityClient RA) {
 		
@@ -156,8 +159,8 @@ public class EditorActivity extends PopupPanel {
 				if (checkcatalog()){
 						if (Window
 							.confirm("Are you sure you want to swap the catalogue in the activity?. The annotation associated to the activity will be deleted")) {
-						LoadingPanel.getInstance().center();
-						LoadingPanel.getInstance().setLabelTexto("Deleting...");
+//						LoadingPanel.getInstance().center();
+//						LoadingPanel.getInstance().setLabelTexto("Deleting...");
 						//TODO Reparar
 //						bookReaderServiceHolder
 //								.removeReadingActivityFromAnnotations(
@@ -185,8 +188,8 @@ public class EditorActivity extends PopupPanel {
 				else if (checkbook()){
 						if (Window
 							.confirm("Are you sure you want to swap the book in the activity?. The annotation associated to the activity will be deleted")) {
-						LoadingPanel.getInstance().center();
-						LoadingPanel.getInstance().setLabelTexto("Deleting...");
+//						LoadingPanel.getInstance().center();
+//						LoadingPanel.getInstance().setLabelTexto("Deleting...");
 						//TODO Reparar
 //						bookReaderServiceHolder
 //								.removeReadingActivityFromAnnotations(
@@ -322,19 +325,21 @@ public class EditorActivity extends PopupPanel {
 						if (AllowDefaulType.getValue())
 						{
 							if (DefaultTypeOld!=null)
-								DefaultTypeLabel.setText("Default Type : " + DefaultTypeOld );
+								DefaultTypeLabel.setText(EditorActivity.DEFAUL_TYPE_LABEL + DefaultTypeOld );
+							BotonFinder.setEnabled(true);
 						}
 						else 
 						{
 							DefaultType=null;
 							DefaultTypeOld=DefaultType;
-							DefaultTypeLabel.setText("Default Type : ");
+							DefaultTypeLabel.setText(EditorActivity.DEFAUL_TYPE_LABEL);
+							BotonFinder.setEnabled(false);
 						}
 					}
 				});
 				Panel_Selecion_Default.add(AllowDefaulType);
 				
-				Button BotonFinder=new Button(EditorActivity.BOTON_SELECT_DEFAULT_TYPE);
+				BotonFinder=new Button(EditorActivity.BOTON_SELECT_DEFAULT_TYPE);
 				Panel_Selecion_Default.add(BotonFinder);
 				BotonFinder.setWidth("119px");
 				BotonFinder.addMouseDownHandler(new MouseDownHandler() {
@@ -366,10 +371,11 @@ public class EditorActivity extends PopupPanel {
 					
 					@Override
 					public void onClick(ClickEvent event) {
-						FinderDefaultType FDT=new FinderDefaultType(DefaultTypeLabel,DefaultType,SelectedCatalog);
+						FinderDefaultType FDT=new FinderDefaultType(Yo,SelectedCatalog);
 						FDT.center();
 					}
 				});
+				BotonFinder.setEnabled(false);
 				
 //				ComboTypes = new ListBox();
 //				//TODO Falta Asignar el tipo
@@ -1086,6 +1092,16 @@ bookReaderServiceHolder.getBookClientsByIds(result, new AsyncCallback<List<BookC
 	
 	public void setPanel_Selecion_Default_Visibility(boolean State) {
 		Panel_Selecion_Default.setVisible(State);
+	}
+
+	public void setTypeDefault(TypeClient eC) {
+		if (AllowDefaulType.getValue())
+			{
+			DefaultType=eC;
+			DefaultTypeLabel.setText(DEFAUL_TYPE_LABEL+eC);
+			}
+		
+		
 	}
 	
 }

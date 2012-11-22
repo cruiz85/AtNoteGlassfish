@@ -519,7 +519,7 @@ bookReaderServiceHolder.updateCatalog(catalog, new AsyncCallback<Void>() {
 
 	protected void setStyleNameLabelNew() {
 		StlieOld=Label.getStyleName();
-		Label.setStyleName("gwt-ButtonIzquierdaSelectMIN");
+		Label.setStyleName("gwt-ButtonCenterContinuoDobleSelect");
 		LLamada_En_Cadena();
 		
 	}
