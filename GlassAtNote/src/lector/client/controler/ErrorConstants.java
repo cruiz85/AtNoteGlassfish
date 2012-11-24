@@ -76,5 +76,7 @@ public class ErrorConstants {
 	public static String ERROR_LOADING_BOOKS="Error loading books for user: ";
 	public static String ERROR_BOOK_EMPTY="Error: Book is empty";
 	public static String ERROR_RETRIVING_ACTIVITIES="There was an error encounter while retrieving the activities, please try again later";
+	public static String ERROR_SAVING_ACTIVITY="Error Saving Activity";
+	public static String ERROR_RETRIVING_DEFAULT_TYPE_FROM_CATALOG="Error Retriving Default type for the Close Catalog, it was remove from default field, insert it again";
 	
 }

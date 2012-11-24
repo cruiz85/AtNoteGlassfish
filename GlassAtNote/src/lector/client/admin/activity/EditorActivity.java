@@ -18,10 +18,12 @@ import lector.client.reader.LoadingPanel;
 import lector.share.model.Language;
 import lector.share.model.client.BookClient;
 import lector.share.model.client.CatalogoClient;
+import lector.share.model.client.EntryClient;
 import lector.share.model.client.GroupClient;
 import lector.share.model.client.ProfessorClient;
 import lector.share.model.client.ReadingActivityClient;
 import lector.share.model.client.TemplateClient;
+import lector.share.model.client.TypeCategoryClient;
 import lector.share.model.client.TypeClient;
 
 import com.google.gwt.core.client.GWT;
@@ -250,6 +252,9 @@ public class EditorActivity extends PopupPanel {
 					ActualActivity.setTemplate(Template);
 				ActualActivity.setIsFreeTemplateAllowed(CheckBoxFree.getValue());
 				ActualActivity.setVisualization(comboBox.getItemText(comboBox.getSelectedIndex()));
+				if (DefaultType==null&&AllowDefaulType.getValue())
+					ActualActivity.setDefaultType(null);
+				else
 					ActualActivity.setDefaultType(DefaultType.getId());
 				LoadingPanel.getInstance().center();
 				LoadingPanel.getInstance().setLabelTexto("Saving...");
@@ -257,7 +262,7 @@ public class EditorActivity extends PopupPanel {
 						new AsyncCallback<Void>() {
 
 							public void onFailure(Throwable caught) {
-								Window.alert("The Activity could not be saved");
+								Window.alert(ErrorConstants.ERROR_SAVING_ACTIVITY);
 								LoadingPanel.getInstance().hide();
 
 							}
@@ -551,6 +556,13 @@ public class EditorActivity extends PopupPanel {
 							SelectedCatalogOld = ActualActivity.getCloseCatalogo();
 							CatalogLabel.setText("Teacher Catalog :"
 									+ SelectedCatalog.getCatalogName());
+							if (ActualActivity.getDefaultType()!=null)
+								{
+								DefaultType=generaTypeAntiguo(ActualActivity.getDefaultType());
+								if (DefaultType!=null)
+									DefaultTypeLabel.setText(DEFAUL_TYPE_LABEL + DefaultType.getName());
+								else Window.alert(ErrorConstants.ERROR_RETRIVING_DEFAULT_TYPE_FROM_CATALOG);
+								}
 							generalangaugeOld();
 							Panel_Selecion_Default.setVisible(true);
 
@@ -558,6 +570,27 @@ public class EditorActivity extends PopupPanel {
 		} else
 			generalangaugeOld();
 
+	}
+
+	private TypeClient generaTypeAntiguo(Long defaultType) {
+		return findMe(SelectedCatalog.getEntries(),defaultType); 
+	}
+
+	private TypeClient findMe(List<EntryClient> entries, Long defaultType) {
+		for (EntryClient entryClient : entries) {
+			if (entryClient instanceof TypeClient)
+				{
+				TypeClient T=(TypeClient) entryClient;
+				if (T.getId().equals(defaultType))
+					return T;
+				}
+			else
+			{
+				TypeCategoryClient T=(TypeCategoryClient) entryClient;
+				return findMe(T.getChildren(), defaultType);
+			}
+		}
+		return null;
 	}
 
 	private void generalangaugeOld() {
@@ -996,79 +1029,88 @@ bookReaderServiceHolder.getBookClientsByIds(result, new AsyncCallback<List<BookC
 	
 	private void GenerateTemplates() {
 
-		exportServiceHolder.getTemplates(new AsyncCallback<List<TemplateClient>>() {
-			
-			public void onSuccess(List<TemplateClient> result) {
-				for (int i = 0; i < result.size()-1; i++) {
-					BotonTemplates BC = new BotonTemplates(result.get(i));
-					BC.setSize("100%", "100%");
-					TemplatePanel.add(BC);
-					BC.addClickHandler(new ClickHandler() {
+		exportServiceHolder
+				.getTemplates(new AsyncCallback<List<TemplateClient>>() {
 
-						public void onClick(ClickEvent event) {
-							BotonTemplates BCE = (BotonTemplates) event
-									.getSource();
-							Template=BCE.getTemplate();
-							TemplateLabel.setText("Template: "
-									+ Template.getName());
-						}
-					});
-					BC.addMouseDownHandler(new MouseDownHandler() {
-						public void onMouseDown(MouseDownEvent event) {
-							((Button)event.getSource()).setStyleName("gwt-ButtonPush");
-						}
-					});
-					BC.addMouseOutHandler(new MouseOutHandler() {
-						public void onMouseOut(MouseOutEvent event) {
-							((Button)event.getSource()).setStyleName("gwt-ButtonTOP");
-						}
-					});
-					BC.addMouseOverHandler(new MouseOverHandler() {
-						public void onMouseOver(MouseOverEvent event) {
-							((Button)event.getSource()).setStyleName("gwt-ButtonTOPOver");
-						}
-					});
-					BC.setStyleName("gwt-ButtonTOP");
-				}
-				if(!result.isEmpty()) {
-					BotonTemplates BC = new BotonTemplates(result.get(result.size()-1));
-					BC.setSize("100%", "100%");
-					TemplatePanel.add(BC);
-					BC.addClickHandler(new ClickHandler() {
+					public void onSuccess(List<TemplateClient> result) {
+						for (int i = 0; i < result.size() - 1; i++) {
+							BotonTemplates BC = new BotonTemplates(result
+									.get(i));
+							BC.setSize("100%", "100%");
+							TemplatePanel.add(BC);
+							BC.addClickHandler(new ClickHandler() {
 
-						public void onClick(ClickEvent event) {
-							BotonTemplates BCE = (BotonTemplates) event
-									.getSource();
-							Template=BCE.getTemplate();
-							TemplateLabel.setText("Template : "
-									+ Template.getName());
+								public void onClick(ClickEvent event) {
+									BotonTemplates BCE = (BotonTemplates) event
+											.getSource();
+									Template = BCE.getTemplate();
+									TemplateLabel.setText("Template: "
+											+ Template.getName());
+								}
+							});
+							BC.addMouseDownHandler(new MouseDownHandler() {
+								public void onMouseDown(MouseDownEvent event) {
+									((Button) event.getSource())
+											.setStyleName("gwt-ButtonPush");
+								}
+							});
+							BC.addMouseOutHandler(new MouseOutHandler() {
+								public void onMouseOut(MouseOutEvent event) {
+									((Button) event.getSource())
+											.setStyleName("gwt-ButtonTOP");
+								}
+							});
+							BC.addMouseOverHandler(new MouseOverHandler() {
+								public void onMouseOver(MouseOverEvent event) {
+									((Button) event.getSource())
+											.setStyleName("gwt-ButtonTOPOver");
+								}
+							});
+							BC.setStyleName("gwt-ButtonTOP");
 						}
-					});
-					BC.setStyleName("gwt-ButtonBotton");
-					BC.addMouseOutHandler(new MouseOutHandler() {
-						public void onMouseOut(MouseOutEvent event) {
-							((Button)event.getSource()).setStyleName("gwt-ButtonBotton");
+						if (!result.isEmpty()) {
+							BotonTemplates BC = new BotonTemplates(result
+									.get(result.size() - 1));
+							BC.setSize("100%", "100%");
+							TemplatePanel.add(BC);
+							BC.addClickHandler(new ClickHandler() {
+
+								public void onClick(ClickEvent event) {
+									BotonTemplates BCE = (BotonTemplates) event
+											.getSource();
+									Template = BCE.getTemplate();
+									TemplateLabel.setText("Template : "
+											+ Template.getName());
+								}
+							});
+							BC.setStyleName("gwt-ButtonBotton");
+							BC.addMouseOutHandler(new MouseOutHandler() {
+								public void onMouseOut(MouseOutEvent event) {
+									((Button) event.getSource())
+											.setStyleName("gwt-ButtonBotton");
+								}
+							});
+							BC.addMouseOverHandler(new MouseOverHandler() {
+								public void onMouseOver(MouseOverEvent event) {
+									((Button) event.getSource())
+											.setStyleName("gwt-ButtonBottonOver");
+								}
+							});
+							BC.addMouseDownHandler(new MouseDownHandler() {
+								public void onMouseDown(MouseDownEvent event) {
+									((Button) event.getSource())
+											.setStyleName("gwt-ButtonPushBotton");
+								}
+							});
 						}
-					});
-					BC.addMouseOverHandler(new MouseOverHandler() {
-						public void onMouseOver(MouseOverEvent event) {
-							((Button)event.getSource()).setStyleName("gwt-ButtonBottonOver");
-						}
-					});
-					BC.addMouseDownHandler(new MouseDownHandler() {
-						public void onMouseDown(MouseDownEvent event) {
-							((Button)event.getSource()).setStyleName("gwt-ButtonPushBotton");
-						}
-					});
-				}
-				
-			}
-			
-			public void onFailure(Throwable caught) {
-				Window.alert(ErrorConstants.COULD_NOT_REFRESH_TEMPLATES);
-				
-			}
-		});
+
+					}
+
+					public void onFailure(Throwable caught) {
+						Window.alert(ErrorConstants.COULD_NOT_REFRESH_TEMPLATES);
+
+					}
+				});
 	
 
 
@@ -1079,6 +1121,12 @@ bookReaderServiceHolder.getBookClientsByIds(result, new AsyncCallback<List<BookC
 	}
 	
 	public void setSelectedCatalog(CatalogoClient selectedCatalog) {
+		if (!SelectedCatalog.getId().equals(selectedCatalog.getId()))
+				{
+				DefaultType=null;
+				DefaultTypeOld=null;
+				DefaultTypeLabel.setText(DEFAUL_TYPE_LABEL);
+				}
 		SelectedCatalog = selectedCatalog;
 	}
 	
@@ -1098,7 +1146,7 @@ bookReaderServiceHolder.getBookClientsByIds(result, new AsyncCallback<List<BookC
 		if (AllowDefaulType.getValue())
 			{
 			DefaultType=eC;
-			DefaultTypeLabel.setText(DEFAUL_TYPE_LABEL+eC);
+			DefaultTypeLabel.setText(DEFAUL_TYPE_LABEL+eC.getName());
 			}
 		
 		
