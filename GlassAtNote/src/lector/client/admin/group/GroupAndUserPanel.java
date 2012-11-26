@@ -136,7 +136,7 @@ public class GroupAndUserPanel extends Composite {
 	
 
 	private void refrescaElGrupo() {
-		List<UserClient> result = Mygroup.getParticipatingUsers();
+		List<StudentClient> result = Mygroup.getParticipatingUsers();
 		for (int i = 0; i < result.size() - 1; i++) {
 			ButtonGroupMio User = new ButtonGroupMio(result.get(i));
 			User.setHTML("<img src=\"Users.gif\">" + result.get(i).getEmail());

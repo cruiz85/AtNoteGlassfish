@@ -208,7 +208,7 @@ public class AcceptUsers2group extends PopupPanel {
 ////				return false;
 ////			}
 //		});
-List<UserClient> result=GAUP.getMygroup().getRemainingUsers();
+List<StudentClient> result=GAUP.getMygroup().getRemainingUsers();
 for (UserClient User1 : result) {
 	InsertionPanel.add(new SelectionCheckboxElement((StudentClient) User1));
 	
