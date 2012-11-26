@@ -14,7 +14,8 @@ import javax.xml.bind.annotation.XmlRootElement;
 @XmlRootElement
 public class Student extends UserApp implements Serializable {
 	private static final long serialVersionUID = 1L;
-
+	@ManyToMany(mappedBy = "participatingStudents")
+	private List<GroupApp> participatingGroups = new ArrayList<GroupApp>();
 
 	public Student() {
 	}
@@ -32,6 +33,14 @@ public class Student extends UserApp implements Serializable {
 
 	public static long getSerialversionuid() {
 		return serialVersionUID;
+	}
+
+	public List<GroupApp> getParticipatingGroups() {
+		return participatingGroups;
+	}
+
+	public void setParticipatingGroups(List<GroupApp> participatingGroups) {
+		this.participatingGroups = participatingGroups;
 	}
 
 }

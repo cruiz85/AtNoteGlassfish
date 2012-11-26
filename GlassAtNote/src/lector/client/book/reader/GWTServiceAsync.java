@@ -271,7 +271,7 @@ public interface GWTServiceAsync {
 			AsyncCallback<List<AnnotationThreadClient>> callback);
 
 	void getUsersByGroupId(Long groupId,
-			AsyncCallback<List<UserClient>> callback);
+			AsyncCallback<List<StudentClient>> callback);
 
 	void removeUserParticipatingInGroup(Long userId, Long groupId,
 			AsyncCallback<Void> callback);

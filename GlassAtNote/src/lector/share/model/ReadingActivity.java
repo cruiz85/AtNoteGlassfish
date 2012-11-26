@@ -42,6 +42,7 @@ public class ReadingActivity implements Serializable, IsSerializable {
 	@OneToMany(mappedBy = "activity", cascade = CascadeType.ALL)
 	private List<Annotation> annotations = new ArrayList<Annotation>();
 
+	private short privacy = 1;
 	private Tag defultTag;
 
 	public ReadingActivity() {
@@ -50,7 +51,7 @@ public class ReadingActivity implements Serializable, IsSerializable {
 	public ReadingActivity(String name, Professor professor, Language language,
 			Book book, GroupApp group, Catalogo closeCatalogo,
 			Catalogo openCatalogo, String visualization, Template template,
-			short isFreeTemplateAllowed) {
+			short isFreeTemplateAllowed, short privacy) {
 		super();
 		this.name = name;
 		this.professor = professor;
@@ -62,6 +63,7 @@ public class ReadingActivity implements Serializable, IsSerializable {
 		Visualization = visualization;
 		this.template = template;
 		this.isFreeTemplateAllowed = isFreeTemplateAllowed;
+		this.privacy = privacy;
 	}
 
 	public Long getId() {
@@ -167,5 +169,14 @@ public class ReadingActivity implements Serializable, IsSerializable {
 	public void setIsFreeTemplateAllowed(short isFreeTemplateAllowed) {
 		this.isFreeTemplateAllowed = isFreeTemplateAllowed;
 	}
+
+	public short getPrivacy() {
+		return privacy;
+	}
+
+	public void setPrivacy(short privacy) {
+		this.privacy = privacy;
+	}
+	
 
 }

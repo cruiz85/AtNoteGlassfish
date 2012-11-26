@@ -11,16 +11,17 @@ public class GroupClient implements IsSerializable {
 	private String name;
 
 	private ProfessorClient professor;
-	private List<UserClient> participatingUsers = new ArrayList<UserClient>();
+	private List<StudentClient> participatingUsers = new ArrayList<StudentClient>();
 
-	private List<UserClient> remainingUsers = new ArrayList<UserClient>();
+	private List<StudentClient> remainingUsers = new ArrayList<StudentClient>();
 
 	public GroupClient() {
 
 	}
 
 	public GroupClient(Long id, String name, ProfessorClient professor,
-			List<UserClient> participatingUsers, List<UserClient> remainingUsers) {
+			List<StudentClient> participatingUsers,
+			List<StudentClient> remainingUsers) {
 		super();
 		this.id = id;
 		this.name = name;
@@ -58,19 +59,19 @@ public class GroupClient implements IsSerializable {
 		this.professor = professor;
 	}
 
-	public List<UserClient> getParticipatingUsers() {
+	public List<StudentClient> getParticipatingUsers() {
 		return participatingUsers;
 	}
 
-	public void setParticipatingUsers(List<UserClient> participatingUsers) {
+	public void setParticipatingUsers(List<StudentClient> participatingUsers) {
 		this.participatingUsers = participatingUsers;
 	}
 
-	public List<UserClient> getRemainingUsers() {
+	public List<StudentClient> getRemainingUsers() {
 		return remainingUsers;
 	}
 
-	public void setRemainingUsers(List<UserClient> remainingUsers) {
+	public void setRemainingUsers(List<StudentClient> remainingUsers) {
 		this.remainingUsers = remainingUsers;
 	}
 

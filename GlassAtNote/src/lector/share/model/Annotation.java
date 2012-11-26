@@ -43,7 +43,7 @@ public class Annotation implements Serializable {
 	private short updatability = 0;
 	private Integer pageNumber;
 
-	@ManyToMany(cascade = CascadeType.ALL)
+	@ManyToMany(mappedBy="annotations",cascade = CascadeType.REFRESH)
 	@JoinTable(name = "ann_file", joinColumns = { @JoinColumn(name = "annotationId", referencedColumnName = "id") }, inverseJoinColumns = { @JoinColumn(name = "fileId", referencedColumnName = "id") })
 	private List<Tag> tags;
 

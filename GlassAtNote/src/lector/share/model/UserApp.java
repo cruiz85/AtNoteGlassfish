@@ -11,17 +11,10 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Temporal;
-
-import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 
 import javax.persistence.Table;
-import javax.persistence.Transient;
-import javax.xml.bind.annotation.XmlRootElement;
-
 import com.google.gwt.user.client.rpc.IsSerializable;
-
-import lector.client.controler.Constants;
 
 @Entity
 @Table(name = "user_app")
@@ -34,9 +27,6 @@ public class UserApp implements Serializable, IsSerializable {
 	private String lastName;
 	private String email;
 	private String password;
-	@ManyToMany(mappedBy = "participatingUsers")
-	private List<GroupApp> participatingGroups = new ArrayList<GroupApp>();
-
 	@OneToMany(mappedBy = "creator", cascade = CascadeType.ALL)
 	private List<Annotation> annotations = new ArrayList<Annotation>();
 	@Temporal(javax.persistence.TemporalType.DATE)
@@ -57,14 +47,6 @@ public class UserApp implements Serializable, IsSerializable {
 		isConfirmed = 0;
 		this.createdDate=createdDate;
 	
-	}
-
-	public List<GroupApp> getParticipatingGroups() {
-		return participatingGroups;
-	}
-
-	public void setParticipatingGroups(List<GroupApp> participatingGroups) {
-		this.participatingGroups = participatingGroups;
 	}
 
 	public UserApp(String email) {

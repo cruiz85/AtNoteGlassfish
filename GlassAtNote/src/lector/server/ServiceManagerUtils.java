@@ -147,6 +147,7 @@ public class ServiceManagerUtils {
 	public static ReadingActivityClient produceReadingActivityClient(
 			ReadingActivity t) {
 		boolean isFreeTemplateAllowed = t.getIsFreeTemplateAllowed() == 1;
+		boolean privacy = t.getPrivacy() == 1;
 		BookClient Book = null;
 		GroupClient Group = null;
 		CatalogoClient CloseCatalog = null;
@@ -170,7 +171,7 @@ public class ServiceManagerUtils {
 		ReadingActivityClient readingActivityClient = new ReadingActivityClient(t.getName(),
 				produceProfessorClient(t.getProfessor()), t.getLanguage(),
 				Book, Group, CloseCatalog, OpenCatalog, t.getVisualization(),
-				Template, isFreeTemplateAllowed);
+				Template, isFreeTemplateAllowed, privacy);
 		readingActivityClient.setId(t.getId());
 		if(t.getDefultTag()!= null){
 			readingActivityClient.setDefaultType(t.getDefultTag().getId());	
@@ -227,8 +228,8 @@ public class ServiceManagerUtils {
 	public static GroupClient produceGroupClient(GroupApp g) {
 		return new GroupClient(g.getId(), g.getName(),
 				produceProfessorClient(g.getProfessor()),
-				produceUserClients(g.getParticipatingUsers()),
-				produceUserClients(g.getRemainingUsers()));
+				produceStudentClients(g.getParticipatingStudents()),
+				produceStudentClients(g.getRemainingStudents()));
 	}
 
 	public static List<GroupClient> produceGroupClients(List<GroupApp> g) {

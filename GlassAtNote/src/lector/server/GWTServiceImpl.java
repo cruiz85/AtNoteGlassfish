@@ -86,11 +86,6 @@ import lector.share.model.client.UserClient;
 
 public class GWTServiceImpl extends RemoteServiceServlet implements GWTService {
 
-	private static ArrayList<Long> ids;
-	private static ArrayList<Long> annotationThreadIds;
-	private static List<Long> sonIds; // used in schema generator
-
-	private EntityManager em;
 	private String PERSISTENCE_UNIT_NAME = "System";
 	private EntityManagerFactory emf = Persistence
 			.createEntityManagerFactory(PERSISTENCE_UNIT_NAME);
@@ -387,7 +382,7 @@ public class GWTServiceImpl extends RemoteServiceServlet implements GWTService {
 	}
 
 	@Override
-	public List<UserClient> getUsersByGroupId(Long groupId)
+	public List<StudentClient> getUsersByGroupId(Long groupId)
 			throws GroupNotFoundException, GeneralException {
 		EntityManager entityManager = emf.createEntityManager();
 		List<GroupApp> list;
@@ -410,8 +405,8 @@ public class GWTServiceImpl extends RemoteServiceServlet implements GWTService {
 		if (entityManager.isOpen()) {
 			entityManager.close();
 		}
-		return ServiceManagerUtils.produceUserClients(list.get(0)
-				.getParticipatingUsers());
+		return ServiceManagerUtils.produceStudentClients(list.get(0)
+				.getParticipatingStudents());
 
 	}
 
@@ -826,10 +821,10 @@ public class GWTServiceImpl extends RemoteServiceServlet implements GWTService {
 			throws GeneralException {
 		try {
 			GroupApp group = findGroup(groupId);
-			// Student student = findStudent(userId);
-			UserApp user = findUser(userId);
-			if (!group.getRemainingUsers().contains(user)) {
-				group.getRemainingUsers().add(user);
+			Student student = findStudent(userId);
+
+			if (!group.getRemainingStudents().contains(student)) {
+				group.getRemainingStudents().add(student);
 			}
 			saveGroup(group);
 		} catch (Exception e) {
@@ -844,11 +839,11 @@ public class GWTServiceImpl extends RemoteServiceServlet implements GWTService {
 			throws GeneralException {
 		try {
 			GroupApp group = findGroup(groupId);
-			for (int i = 0; i < group.getRemainingUsers().size(); i++) {
-				UserApp remaining = group.getRemainingUsers().get(i);
+			for (int i = 0; i < group.getRemainingStudents().size(); i++) {
+				Student remaining = group.getRemainingStudents().get(i);
 				if (remaining instanceof Student) {
 					if (ids.contains(remaining.getId())) {
-						group.getRemainingUsers().remove(remaining);
+						group.getRemainingStudents().remove(remaining);
 
 					}
 				}
@@ -869,8 +864,8 @@ public class GWTServiceImpl extends RemoteServiceServlet implements GWTService {
 		try {
 			GroupApp group = findGroup(groupId);
 			UserApp user = findStudent(userId);
-			if (group.getParticipatingUsers().contains(user)) {
-				group.getParticipatingUsers().remove(user);
+			if (group.getParticipatingStudents().contains(user)) {
+				group.getParticipatingStudents().remove(user);
 			}
 			saveGroup(group);
 		} catch (Exception e) {
@@ -886,13 +881,12 @@ public class GWTServiceImpl extends RemoteServiceServlet implements GWTService {
 		try {
 			GroupApp group = findGroup(groupId);
 
-			for (int i = 0; i < group.getRemainingUsers().size(); i++) {
-				// Student remaining = group.getRemainingStudents().get(i);
-				UserApp remaining = group.getRemainingUsers().get(i);
+			for (int i = 0; i < group.getRemainingStudents().size(); i++) {
+			 Student remaining = group.getRemainingStudents().get(i);
 				if (remaining instanceof Student) {
 					if (userIds.contains(remaining.getId())) {
-						group.getRemainingUsers().remove(remaining);
-						group.getParticipatingUsers().add(remaining);
+						group.getRemainingStudents().remove(remaining);
+						group.getRemainingStudents().add(remaining);
 					}
 				}
 				saveGroup(group);
@@ -911,14 +905,14 @@ public class GWTServiceImpl extends RemoteServiceServlet implements GWTService {
 		try {
 			Student student = findStudent(userId);
 			GroupApp group = findGroup(groupId);
-			if (group.getRemainingUsers().contains(student)) {
-				group.getRemainingUsers().remove(student);
+			if (group.getRemainingStudents().contains(student)) {
+				group.getRemainingStudents().remove(student);
 			} else {
 				throw new GeneralException(
 						"Hey!!! this user was not on the list to be validated from: the remainingList");
 			}
-			if (!group.getParticipatingUsers().contains(student)) {
-				group.getParticipatingUsers().add(student);
+			if (!group.getParticipatingStudents().contains(student)) {
+				group.getParticipatingStudents().add(student);
 			}
 			saveGroup(group);
 
@@ -2153,8 +2147,8 @@ public class GWTServiceImpl extends RemoteServiceServlet implements GWTService {
 		List<Tag> list;
 		String sql = "SELECT r FROM Tag r WHERE r.name='" + tagNames.get(0)
 				+ "' ";
-		for (int i = 1; i < ids.size(); i++) {
-			sql += "OR r.name='" + ids.get(i) + "'";
+		for (int i = 1; i < tagNames.size(); i++) {
+			sql += "OR r.name='" + tagNames.get(i) + "'";
 		}
 		sql += " AND r.catalogId=" + catalogId;
 		try {
@@ -2716,9 +2710,10 @@ public class GWTServiceImpl extends RemoteServiceServlet implements GWTService {
 
 				Professor owner = findProfessor(readingActivityClient
 						.getProfessor().getId());
+				short privacy = (readingActivityClient.isPrivacy()? (short)1:0);
 				ReadingActivity newActivity = new ReadingActivity(
 						readingActivityClient.getName(), owner, null, null,
-						null, null, null, Constants.VISUAL_KEY, null, (short) 1);
+						null, null, null, Constants.VISUAL_KEY, null, (short) 1, privacy);
 				if (readingActivityClient.getDefaultType() != null) {
 					Tag tag = findTag(readingActivityClient.getDefaultType());
 					newActivity.setDefultTag(tag);
@@ -2771,6 +2766,9 @@ public class GWTServiceImpl extends RemoteServiceServlet implements GWTService {
 			GroupNotFoundException, TemplateNotFoundException,
 			TagNotFoundException {
 
+		// privacy
+		short privacy = (readingActivityClientEntrada.isPrivacy()? (short)1:0);
+		readingActivitySalida.setPrivacy(privacy);
 		// Lenguaje
 		readingActivitySalida.setLanguage(readingActivityClientEntrada
 				.getLanguage());
@@ -2781,6 +2779,8 @@ public class GWTServiceImpl extends RemoteServiceServlet implements GWTService {
 		else
 			readingActivitySalida.setIsFreeTemplateAllowed((short) 0);
 
+		
+		
 		// Libro = Si Cambia Borrar las anotaciones asociadas a la actividad.
 		if ((readingActivityClientEntrada.getBook() != null)
 				&& ((readingActivitySalida.getBook() == null) || (!readingActivityClientEntrada
@@ -2839,9 +2839,9 @@ public class GWTServiceImpl extends RemoteServiceServlet implements GWTService {
 
 		// Default Type
 		if (readingActivityClientEntrada.getDefaultType() != null
-				&& ((readingActivitySalida.getDefultTag() != null)
-				||!readingActivityClientEntrada.getDefaultType().equals(
-						readingActivitySalida.getDefultTag().getId()))) {
+				&& ((readingActivitySalida.getDefultTag() != null) || !readingActivityClientEntrada
+						.getDefaultType().equals(
+								readingActivitySalida.getDefultTag().getId()))) {
 			Tag tag = findTag(readingActivityClientEntrada.getDefaultType());
 			readingActivitySalida.setDefultTag(tag);
 		}

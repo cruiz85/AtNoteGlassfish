@@ -18,7 +18,7 @@ import javax.persistence.Table;
 @DiscriminatorValue("TAG")
 public class Tag extends Entry implements Serializable, IsSerializable {
 
-	@ManyToMany(mappedBy="tags")
+	@ManyToMany
 	private List<Annotation> annotations = new ArrayList<Annotation>();
 
 	@ManyToOne

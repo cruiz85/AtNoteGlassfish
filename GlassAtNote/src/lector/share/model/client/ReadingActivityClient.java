@@ -22,6 +22,7 @@ public class ReadingActivityClient implements IsSerializable {
 	private TemplateClient template;
 	private boolean isFreeTemplateAllowed = false;
 	private Long defaultType;
+	private boolean privacy = true;
 
 	public ReadingActivityClient() {
 	}
@@ -30,7 +31,7 @@ public class ReadingActivityClient implements IsSerializable {
 			Language language, BookClient book, GroupClient group,
 			CatalogoClient closeCatalogo, CatalogoClient openCatalogo,
 			String visualization, TemplateClient template,
-			boolean isFreeTemplateAllowed) {
+			boolean isFreeTemplateAllowed, boolean privacy) {
 		super();
 		this.name = name;
 		this.professor = professor;
@@ -42,6 +43,7 @@ public class ReadingActivityClient implements IsSerializable {
 		Visualization = visualization;
 		this.template = template;
 		this.isFreeTemplateAllowed = isFreeTemplateAllowed;
+		this.privacy = privacy;
 	}
 
 	public Long getId() {
@@ -142,6 +144,14 @@ public class ReadingActivityClient implements IsSerializable {
 
 	public void setIsFreeTemplateAllowed(boolean isFreeTemplateAllowed) {
 		this.isFreeTemplateAllowed = isFreeTemplateAllowed;
+	}
+
+	public boolean isPrivacy() {
+		return privacy;
+	}
+
+	public void setPrivacy(boolean privacy) {
+		this.privacy = privacy;
 	}
 
 }
