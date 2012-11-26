@@ -882,7 +882,7 @@ public class GWTServiceImpl extends RemoteServiceServlet implements GWTService {
 			GroupApp group = findGroup(groupId);
 
 			for (int i = 0; i < group.getRemainingStudents().size(); i++) {
-			 Student remaining = group.getRemainingStudents().get(i);
+				Student remaining = group.getRemainingStudents().get(i);
 				if (remaining instanceof Student) {
 					if (userIds.contains(remaining.getId())) {
 						group.getRemainingStudents().remove(remaining);
@@ -1881,7 +1881,7 @@ public class GWTServiceImpl extends RemoteServiceServlet implements GWTService {
 							+ e.getMessage(), e.getStackTrace());
 
 		}
-		if (list == null || list.isEmpty()) {
+		if (list == null) {
 			// logger.error ("Exception in method loadGroupById: ", e)
 			throw new CatalogoNotFoundException(
 					"Catalogo not found in method getVisibleCatslogs");
@@ -2247,18 +2247,26 @@ public class GWTServiceImpl extends RemoteServiceServlet implements GWTService {
 	}
 
 	@Override
+	// TODO NOW
 	public void addChildEntry(Long entryId, Long fatherFolderDBId)
 			throws TwinBrotherException {
 		try {
 			FolderDB father = findFolderDB(fatherFolderDBId);
 			Entry entry = findEntry(entryId);
-			if (isThereTwinBrother(father, entry)) {
-				throw new TwinBrotherException(
-						"This element has a twin brother in DB");
+			if (father != null) {
+				if (isThereTwinBrother(father, entry)) {
+					throw new TwinBrotherException(
+							"This element has a twin brother in DB");
+				}
+				Relation relation = new Relation(father, entry);
+				father.getRelations().add(relation);
+				saveFolderDB(father);
+			} else {
+
+				Catalogo catalogo = findCatalogo(fatherFolderDBId);
+				catalogo.getEntries().add(entry);
+				saveCatalog(catalogo);
 			}
-			Relation relation = new Relation(father, entry);
-			father.getRelations().add(relation);
-			saveFolderDB(father);
 
 		} catch (FolderDBNotFoundException e) {
 
@@ -2266,6 +2274,8 @@ public class GWTServiceImpl extends RemoteServiceServlet implements GWTService {
 		} catch (EntryNotFoundException e) {
 
 			e.printStackTrace();
+		} catch (CatalogoNotFoundException cne) {
+			cne.printStackTrace();
 		}
 
 	}
@@ -2710,10 +2720,12 @@ public class GWTServiceImpl extends RemoteServiceServlet implements GWTService {
 
 				Professor owner = findProfessor(readingActivityClient
 						.getProfessor().getId());
-				short privacy = (readingActivityClient.isPrivacy()? (short)1:0);
+				short privacy = (readingActivityClient.isPrivacy() ? (short) 1
+						: 0);
 				ReadingActivity newActivity = new ReadingActivity(
 						readingActivityClient.getName(), owner, null, null,
-						null, null, null, Constants.VISUAL_KEY, null, (short) 1, privacy);
+						null, null, null, Constants.VISUAL_KEY, null,
+						(short) 1, privacy);
 				if (readingActivityClient.getDefaultType() != null) {
 					Tag tag = findTag(readingActivityClient.getDefaultType());
 					newActivity.setDefultTag(tag);
@@ -2767,7 +2779,8 @@ public class GWTServiceImpl extends RemoteServiceServlet implements GWTService {
 			TagNotFoundException {
 
 		// privacy
-		short privacy = (readingActivityClientEntrada.isPrivacy()? (short)1:0);
+		short privacy = (readingActivityClientEntrada.isPrivacy() ? (short) 1
+				: 0);
 		readingActivitySalida.setPrivacy(privacy);
 		// Lenguaje
 		readingActivitySalida.setLanguage(readingActivityClientEntrada
@@ -2779,8 +2792,6 @@ public class GWTServiceImpl extends RemoteServiceServlet implements GWTService {
 		else
 			readingActivitySalida.setIsFreeTemplateAllowed((short) 0);
 
-		
-		
 		// Libro = Si Cambia Borrar las anotaciones asociadas a la actividad.
 		if ((readingActivityClientEntrada.getBook() != null)
 				&& ((readingActivitySalida.getBook() == null) || (!readingActivityClientEntrada
@@ -2839,7 +2850,7 @@ public class GWTServiceImpl extends RemoteServiceServlet implements GWTService {
 
 		// Default Type
 		if (readingActivityClientEntrada.getDefaultType() != null
-				&& ((readingActivitySalida.getDefultTag() != null) || !readingActivityClientEntrada
+				&& ((readingActivitySalida.getDefultTag() == null) || !readingActivityClientEntrada
 						.getDefaultType().equals(
 								readingActivitySalida.getDefultTag().getId()))) {
 			Tag tag = findTag(readingActivityClientEntrada.getDefaultType());
