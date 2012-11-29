@@ -9,6 +9,8 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
+import javax.persistence.PreRemove;
 import javax.persistence.Table;
 
 import lector.share.model.Annotation;
@@ -35,7 +37,9 @@ public class Book implements Serializable {
 	private int annotationsCount = 0;
 	private List<Annotation> annotations;
 	private List<String> webLinks = new ArrayList<String>();
-
+	@OneToMany(mappedBy = "book")
+	private List<ReadingActivity> readingActivities = new ArrayList<ReadingActivity>();
+	
 	public Book() {
 	}
 
@@ -129,5 +133,24 @@ public class Book implements Serializable {
 
 	public List<Annotation> getAnnotations() {
 		return annotations;
+	}
+
+	public List<ReadingActivity> getReadingActivities() {
+		return readingActivities;
+	}
+
+	public void setReadingActivities(List<ReadingActivity> readingActivities) {
+		this.readingActivities = readingActivities;
+	}
+
+	public static long getSerialversionuid() {
+		return serialVersionUID;
+	}
+	
+	@PreRemove
+	private void preRemove() {
+	    for (ReadingActivity r : readingActivities) {
+	        r.setBook(null);
+	    }
 	}
 }

@@ -184,7 +184,7 @@ public class GWTServiceImpl extends RemoteServiceServlet implements GWTService {
 	}
 
 	private void saveStudent(StudentClient pClient)
-			throws UserNotFoundException {
+			throws UserNotFoundException, GeneralException {
 		boolean isNew = false;
 		Student oldStudent = null;
 		UserApp user = null;
@@ -213,11 +213,10 @@ public class GWTServiceImpl extends RemoteServiceServlet implements GWTService {
 			}
 
 		} catch (StudentNotFoundException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
-		} catch (GeneralException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			throw new GeneralException(
+					"error when saving user on private method saveStudent");
+
 		}
 		if (!isNew) {
 			boolean isThereAChange = comparareStudents(oldStudent, pClient);
@@ -225,7 +224,7 @@ public class GWTServiceImpl extends RemoteServiceServlet implements GWTService {
 				try {
 					saveUser(oldStudent);
 				} catch (GeneralException e) {
-					// TODO Auto-generated catch block
+
 					e.printStackTrace();
 				}
 			}
@@ -292,9 +291,10 @@ public class GWTServiceImpl extends RemoteServiceServlet implements GWTService {
 
 			userTransaction.commit();
 		} catch (Exception e) {
-			ServiceManagerUtils.rollback(userTransaction); // TODO utilizar
-															// método de
-															// logger
+			ServiceManagerUtils.rollback(userTransaction);
+			throw new GeneralException(
+					"Error in saving user, the transaction will be rolledBacked");
+
 		}
 		if (entityManager.isOpen()) {
 			entityManager.close();
@@ -521,14 +521,16 @@ public class GWTServiceImpl extends RemoteServiceServlet implements GWTService {
 			}
 		} catch (GroupNotFoundException e) {
 
-			throw new GeneralException("GroupeNotFound");
+			throw new GeneralException(
+					"Group not found, no entity will not be persisted");
 		} catch (ProfessorNotFoundException e) {
-			throw new GeneralException("GroupeNotFound");
+			throw new GeneralException(
+					"Professor not found, the entity will not be persisted");
 		}
 
 	}
 
-	private void saveGroup(GroupApp group) {
+	private void saveGroup(GroupApp group) throws GeneralException {
 		EntityManager entityManager = emf.createEntityManager();
 		try {
 			userTransaction.begin();
@@ -540,9 +542,9 @@ public class GWTServiceImpl extends RemoteServiceServlet implements GWTService {
 
 			userTransaction.commit();
 		} catch (Exception e) {
-			ServiceManagerUtils.rollback(userTransaction); // TODO utilizar
-															// método de
-															// logger
+			ServiceManagerUtils.rollback(userTransaction);
+			throw new GeneralException(
+					"Error when saving the Group, the transaction will be rolled back and no entity will be persisted");
 		}
 		if (entityManager.isOpen()) {
 			entityManager.close();
@@ -560,7 +562,6 @@ public class GWTServiceImpl extends RemoteServiceServlet implements GWTService {
 		try {
 			list = entityManager.createQuery(sql).getResultList();
 		} catch (Exception e) {
-			// logger.error ("Exception in method loadGroupById: ", e)
 			throw new GeneralException("Exception in method loadGroupById:"
 					+ e.getMessage(), e.getStackTrace());
 
@@ -893,8 +894,9 @@ public class GWTServiceImpl extends RemoteServiceServlet implements GWTService {
 			}
 
 		} catch (GroupNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			throw new GeneralException(
+					"Group not found, no entity will be persisted",
+					e.getStackTrace());
 		}
 
 	}
@@ -924,7 +926,8 @@ public class GWTServiceImpl extends RemoteServiceServlet implements GWTService {
 	}
 
 	@Override
-	public void saveAnnotation(AnnotationClient annotationClient) {
+	public void saveAnnotation(AnnotationClient annotationClient)
+			throws GeneralException {
 		Annotation oldAnnotation;
 		if (annotationClient.getId() != null) {
 			try {
@@ -932,8 +935,9 @@ public class GWTServiceImpl extends RemoteServiceServlet implements GWTService {
 				seeEditionOnAnnotation(oldAnnotation, annotationClient);
 				saveAnnotation(oldAnnotation);
 			} catch (AnnotationNotFoundException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+				throw new GeneralException(
+						"Annotation not found, no entity will be persisted",
+						e.getStackTrace());
 			}
 
 		} else {
@@ -1085,7 +1089,7 @@ public class GWTServiceImpl extends RemoteServiceServlet implements GWTService {
 	// }
 
 	private void seeEditionOnAnnotation(Annotation annotation,
-			AnnotationClient aClient) {
+			AnnotationClient aClient) throws GeneralException {
 		boolean isUpdatability = false;
 		boolean isVisibility = false;
 
@@ -1127,8 +1131,9 @@ public class GWTServiceImpl extends RemoteServiceServlet implements GWTService {
 		try {
 			checkChangesOnTags(annotation, oldAnnotationTagIds, aClientTags);
 		} catch (TagNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			throw new GeneralException(
+					"no Tag found the annotation will not be persisted",
+					e.getStackTrace());
 		}
 		saveAnnotation(annotation);
 	}
@@ -1165,7 +1170,7 @@ public class GWTServiceImpl extends RemoteServiceServlet implements GWTService {
 		}
 	}
 
-	private void saveAnnotation(Annotation annotation) {
+	private void saveAnnotation(Annotation annotation) throws GeneralException {
 		EntityManager entityManager = emf.createEntityManager();
 
 		Date now = new Date();
@@ -1182,9 +1187,10 @@ public class GWTServiceImpl extends RemoteServiceServlet implements GWTService {
 
 			userTransaction.commit();
 		} catch (Exception e) {
-			ServiceManagerUtils.rollback(userTransaction); // TODO utilizar
-															// método de
-															// logger
+			ServiceManagerUtils.rollback(userTransaction);
+			throw new GeneralException(
+					"Erron when saving the annotation no entity will be persisted",
+					e.getStackTrace());
 		}
 		if (entityManager.isOpen()) {
 			entityManager.close();
@@ -1371,7 +1377,8 @@ public class GWTServiceImpl extends RemoteServiceServlet implements GWTService {
 
 	@Override
 	public void saveAnnotationThread(
-			AnnotationThreadClient annotationThreadClient) {
+			AnnotationThreadClient annotationThreadClient)
+			throws GeneralException {
 		AnnotationThread oldAnnotationThread;
 		if (annotationThreadClient.getId() != null) {
 			try {
@@ -1382,8 +1389,9 @@ public class GWTServiceImpl extends RemoteServiceServlet implements GWTService {
 				saveAnnotationThread(oldAnnotationThread);
 
 			} catch (AnnotationThreadNotFoundException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+				throw new GeneralException(
+						"AnnotationThread not found, the entity will not be persisted",
+						e.getStackTrace());
 			}
 
 		} else {
@@ -1402,7 +1410,9 @@ public class GWTServiceImpl extends RemoteServiceServlet implements GWTService {
 				Anot.getThreads().add(oldAnnotationThread);
 				saveAnnotation(Anot);
 			} catch (AnnotationNotFoundException e) {
-				e.printStackTrace();
+				throw new GeneralException(
+						"Annotation not found, the entity will not be persisted",
+						e.getStackTrace());
 			}
 
 		}
@@ -1421,7 +1431,8 @@ public class GWTServiceImpl extends RemoteServiceServlet implements GWTService {
 
 	}
 
-	public void saveAnnotationThread(AnnotationThread annotationThread) {
+	public void saveAnnotationThread(AnnotationThread annotationThread)
+			throws GeneralException {
 		EntityManager entityManager = emf.createEntityManager();
 
 		Date now = new Date();
@@ -1438,9 +1449,10 @@ public class GWTServiceImpl extends RemoteServiceServlet implements GWTService {
 			Annotation a;
 			userTransaction.commit();
 		} catch (Exception e) {
-			ServiceManagerUtils.rollback(userTransaction); // TODO utilizar
-															// método de
-															// logger
+			ServiceManagerUtils.rollback(userTransaction);
+			throw new GeneralException(
+					"Error when saving the annotationThread, the transaction will be rolled back",
+					e.getStackTrace());
 		}
 		if (entityManager.isOpen()) {
 			entityManager.close();
@@ -1581,24 +1593,30 @@ public class GWTServiceImpl extends RemoteServiceServlet implements GWTService {
 	}
 
 	@Override
-	public void addBookToUser(BookClient bookClient, Long userId) {
+	public void addBookToUser(BookClient bookClient, Long userId)
+			throws GeneralException {
 		Book book = reproduceBookFromClient(bookClient, userId);
 		Professor professor = book.getProfessor();
 		professor.getBooks().add(book);
 		try {
 			saveUser(professor);
 		} catch (GeneralException e) {
-			e.printStackTrace();
+			throw new GeneralException("Error in method addBookToUser",
+					e.getStackTrace());
+
 		}
 
 	}
 
-	private Book reproduceBookFromClient(BookClient bookClient, Long userId) {
+	private Book reproduceBookFromClient(BookClient bookClient, Long userId)
+			throws GeneralException {
 		Professor professor = null;
 		try {
 			professor = findProfessor(userId);
 		} catch (ProfessorNotFoundException e) {
-			e.printStackTrace();
+			throw new GeneralException(
+					"Professor not found in method reproduceBookFromClient",
+					e.getStackTrace());
 		}
 		if (bookClient instanceof RemoteBookClient)
 			return ProcessRemotebook(bookClient, professor);
@@ -1741,15 +1759,22 @@ public class GWTServiceImpl extends RemoteServiceServlet implements GWTService {
 	}
 
 	@Override
-	public void saveCatalog(CatalogoClient catalogClient) {
+	public void saveCatalog(CatalogoClient catalogClient)
+			throws GeneralException {
 		short isPrivate = (catalogClient.getIsPrivate() ? (short) 1 : 0);
 		Catalogo catalogo = new Catalogo(isPrivate,
 				catalogClient.getProfessorId(), catalogClient.getCatalogName());
-		saveCatalog(catalogo);
+		try {
+			saveCatalog(catalogo);
+		} catch (GeneralException e) {
+			throw new GeneralException(
+					"Error when saving the catalog, the transaction will be rolled back",
+					e.getStackTrace());
+		}
 	}
 
 	public void updateCatalog(CatalogoClient catalogClient)
-			throws CatalogoNotFoundException {
+			throws CatalogoNotFoundException, GeneralException {
 		Catalogo catalog = findCatalogo(catalogClient.getId());
 		catalog.setOrders(reorderrelationsCatalog(catalogClient.getEntries(),
 				catalog.getOrders()));
@@ -1766,7 +1791,7 @@ public class GWTServiceImpl extends RemoteServiceServlet implements GWTService {
 		return orderList;
 	}
 
-	private void saveCatalog(Catalogo catalog) {
+	private void saveCatalog(Catalogo catalog) throws GeneralException {
 		EntityManager entityManager = emf.createEntityManager();
 		try {
 			userTransaction.begin();
@@ -1778,9 +1803,10 @@ public class GWTServiceImpl extends RemoteServiceServlet implements GWTService {
 
 			userTransaction.commit();
 		} catch (Exception e) {
-			ServiceManagerUtils.rollback(userTransaction); // TODO utilizar
-															// método de
-															// logger
+			ServiceManagerUtils.rollback(userTransaction);
+			throw new GeneralException(
+					"The catalog could not be saved, the transaction will be rolled back",
+					e.getStackTrace());
 		}
 		if (entityManager.isOpen()) {
 			entityManager.close();
@@ -1789,7 +1815,7 @@ public class GWTServiceImpl extends RemoteServiceServlet implements GWTService {
 
 	@Override
 	public void addChildToCatalog(EntryClient entryClient, Long catalogId)
-			throws TwinBrotherException {
+			throws TwinBrotherException, GeneralException {
 		try {
 			Entry entry = null;
 			Catalogo catalogo = findCatalogo(catalogId);
@@ -2005,7 +2031,8 @@ public class GWTServiceImpl extends RemoteServiceServlet implements GWTService {
 	}
 
 	@Override
-	public void saveType(TypeClient typesys, Long fatherEntry) {
+	public void saveType(TypeClient typesys, Long fatherEntry)
+			throws GeneralException {
 		Tag tag = new Tag();
 		try {
 			Catalogo catalogo = findCatalogo(typesys.getCatalog().getId());
@@ -2022,8 +2049,9 @@ public class GWTServiceImpl extends RemoteServiceServlet implements GWTService {
 			}
 
 		} catch (CatalogoNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			throw new GeneralException(
+					"Catalog not found, no entity will be rolled back",
+					e.getStackTrace());
 		} catch (FolderDBNotFoundException fnfe) {
 			fnfe.printStackTrace();
 		}
@@ -2247,9 +2275,8 @@ public class GWTServiceImpl extends RemoteServiceServlet implements GWTService {
 	}
 
 	@Override
-	// TODO NOW
 	public void addChildEntry(Long entryId, Long fatherFolderDBId)
-			throws TwinBrotherException {
+			throws TwinBrotherException, GeneralException {
 		try {
 			FolderDB father = findFolderDB(fatherFolderDBId);
 			Entry entry = findEntry(entryId);
@@ -2411,7 +2438,7 @@ public class GWTServiceImpl extends RemoteServiceServlet implements GWTService {
 
 	@Override
 	public void saveTypeCategory(TypeCategoryClient typeCategoryClient,
-			Long fatherEntry) {
+			Long fatherEntry) throws GeneralException {
 		FolderDB folderDB = new FolderDB();
 		try {
 

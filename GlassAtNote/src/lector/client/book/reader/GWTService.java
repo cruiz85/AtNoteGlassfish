@@ -141,7 +141,7 @@ public interface GWTService extends RemoteService {
 
 	// Annotations
 
-	public void saveAnnotation(AnnotationClient annotationClient);
+	public void saveAnnotation(AnnotationClient annotationClient) throws GeneralException;
 
 	public List<AnnotationClient> getAnnotationsByBookId(Long activityId,
 			String bookId) throws GeneralException,
@@ -179,7 +179,7 @@ public interface GWTService extends RemoteService {
 		// Annotations Threads
 
 	public void saveAnnotationThread(
-			AnnotationThreadClient annotationThreadClient);
+			AnnotationThreadClient annotationThreadClient) throws GeneralException;
 
 	public void deleteAnnotationThread(Long annotationThreadId)
 			throws GeneralException;
@@ -196,7 +196,7 @@ public interface GWTService extends RemoteService {
 	public List<BookClient> getBookClientsByIds(List<Long> ids)
 			throws BookNotFoundException, GeneralException;
 
-	public void addBookToUser(BookClient bookClient, Long userId);
+	public void addBookToUser(BookClient bookClient, Long userId) throws GeneralException;
 
 	// Carga un libro desde la factoria.
 
@@ -216,9 +216,9 @@ public interface GWTService extends RemoteService {
 
 	// Catalog
 
-	public void saveCatalog(CatalogoClient catalogClient);
+	public void saveCatalog(CatalogoClient catalogClient) throws GeneralException;
 	
-	public void updateCatalog(CatalogoClient catalogClient) throws CatalogoNotFoundException;
+	public void updateCatalog(CatalogoClient catalogClient) throws CatalogoNotFoundException, GeneralException;
 	
 	public CatalogoClient loadCatalogById(Long catalogId);
 
@@ -231,7 +231,7 @@ public interface GWTService extends RemoteService {
 
 	public void deleteCatalog(Long catalogId) throws GeneralException;
 
-	public void addChildToCatalog(EntryClient entryClient, Long catalogId) throws TwinBrotherException;
+	public void addChildToCatalog(EntryClient entryClient, Long catalogId) throws TwinBrotherException, GeneralException;
 
 	// Entity
 
@@ -248,7 +248,7 @@ public interface GWTService extends RemoteService {
 	public TypeClient loadTypeByNameAndCatalogId(String typeName, Long catalogId)
 			throws TagNotFoundException, GeneralException;
 
-	public void saveType(TypeClient typesys, Long fatherEntry);
+	public void saveType(TypeClient typesys, Long fatherEntry) throws GeneralException;
 
 	public void updateType(TypeClient typesys) throws TagNotFoundException;
 	
@@ -273,7 +273,7 @@ public interface GWTService extends RemoteService {
 	public List<String> getTypesNamesByIds(List<Long> typeIds)
 			throws GeneralException, TagNotFoundException;
 
-	public void addChildEntry(Long entryId, Long fatherTypeCategory)throws TwinBrotherException;
+	public void addChildEntry(Long entryId, Long fatherTypeCategory)throws TwinBrotherException, GeneralException;
 
 	// TypeCategory
 
@@ -292,7 +292,7 @@ public interface GWTService extends RemoteService {
 	public void renameTypeCategory(Long typeCategoryId, String newFolderDBName);
 
 	public void saveTypeCategory(TypeCategoryClient typeCategoryClient,
-			Long fatherEntry);
+			Long fatherEntry) throws GeneralException;
 	
 	public void updateTypeCategory(TypeCategoryClient typeCategoryClient) throws FolderDBNotFoundException;
 
