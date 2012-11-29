@@ -17,6 +17,7 @@ import com.google.gwt.event.dom.client.MouseOverEvent;
 import com.google.gwt.event.dom.client.MouseOverHandler;
 import com.google.gwt.event.dom.client.MouseUpEvent;
 import com.google.gwt.event.dom.client.MouseUpHandler;
+import com.google.gwt.safehtml.shared.SafeHtml;
 import com.google.gwt.user.client.Command;
 import com.google.gwt.user.client.Window.ScrollEvent;
 import com.google.gwt.user.client.Window.ScrollHandler;
@@ -75,6 +76,11 @@ import com.google.gwt.user.client.ui.HasHorizontalAlignment;
  */
 public class MainEntryPoint implements EntryPoint {
 
+	//IDIOMA
+	
+	private static String Export="Export";
+	
+	
 	static GWTServiceAsync bookReaderServiceHolder = GWT
 			.create(GWTService.class);
 	// Google Books Widgets
@@ -559,8 +565,6 @@ pageBack.addMouseDownHandler(new MouseDownHandler() {
 			public void execute() {
 				hidePopUpSelector();
 				hideDENSelector();
-//			//TODO Filtro
-//				Window.alert("Under Development");
 				TyposFilter.showRelativeTo(mntmFilter);
 
 			}
@@ -648,8 +652,7 @@ pageBack.addMouseDownHandler(new MouseDownHandler() {
 				PEX.show();
 			}
 		});
-		//TODO Anadir a LEnguaje
-		Exportacion.setHTML("Exportacion");
+		Exportacion.setHTML(MainEntryPoint.Export);
 		Exportacion.setVisible(false);
 		menuBar.addItem(Exportacion);
 		FilterInfo.setStyleName("gwt-MenuItemFiltering");
@@ -1002,7 +1005,6 @@ pageBack.addMouseDownHandler(new MouseDownHandler() {
 
 	
 	private static void RefresCoDeTypesYTags() {
-//		TODO FILTRO
 		TyposFilter = new FilterBasicPopUp();	
 	}
 
