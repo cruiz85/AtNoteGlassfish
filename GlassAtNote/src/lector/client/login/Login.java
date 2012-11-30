@@ -71,7 +71,7 @@ public class Login implements EntryPoint {
 		String UserCookie=Cookies.getCookie(Constants.COOKIE_NAME);
 		if (UserCookie!=null)
 			{
-			Long L=Long.valueOf(UserCookie);
+			Long L=(Long.parseLong(UserCookie)/CalendarNow.GetDateNowInt());
 			LoadingPanel.getInstance().setLabelTexto(
 					InformationConstants.LOADING);
 			LoadingPanel.getInstance().center();
@@ -583,7 +583,8 @@ public class Login implements EntryPoint {
 									{
 									 int caduca = 1000*60*60*24;
 									 Date expira = new Date(new Date().getTime() + caduca);
-									 Cookies.setCookie(Constants.COOKIE_NAME, Long.toString(result.getId()), expira);
+//									 Cookies.setCookie(Constants.COOKIE_NAME, Long.toString(result.getId()), expira);
+									 Cookies.setCookie(Constants.COOKIE_NAME, Long.toString(result.getId()*CalendarNow.GetDateNowInt()), expira);
 									}
 								Logger.GetLogger().info(
 										this.getClass().getName(),
