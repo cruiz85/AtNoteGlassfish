@@ -78,5 +78,7 @@ public class ErrorConstants {
 	public static String ERROR_RETRIVING_ACTIVITIES="There was an error encounter while retrieving the activities, please try again later";
 	public static String ERROR_SAVING_ACTIVITY="Error Saving Activity";
 	public static String ERROR_RETRIVING_DEFAULT_TYPE_FROM_CATALOG="Error Retriving Default type for the Close Catalog, it was remove from default field, insert it again";
+	public static String YOU_USER_NOT_EXIST="User not found in the apliction, please check it";
+	public static String GENERAL_ERROR_REFRESH="Critical error, please refresh the aplication";
 	
 }

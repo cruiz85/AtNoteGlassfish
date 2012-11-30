@@ -11,6 +11,8 @@ import lector.client.controler.ErrorConstants;
 import lector.client.controler.InformationConstants;
 import lector.client.logger.Logger;
 import lector.client.reader.LoadingPanel;
+import lector.share.model.NotAuthenticatedException;
+import lector.share.model.UserNotFoundException;
 import lector.share.model.client.ProfessorClient;
 import lector.share.model.client.StudentClient;
 import lector.share.model.client.UserClient;
@@ -98,11 +100,7 @@ public class Login implements EntryPoint {
 				@Override
 				public void onFailure(Throwable caught) {
 					LoadingPanel.getInstance().hide();
-					Logger.GetLogger().severe(
-							Yo.getClass().toString(),
-							ErrorConstants.YOU_ARE_NO_AUTORIZED + " at " + CalendarNow.GetDateNow());
-					
-				}
+					}
 			});
 			}
 		
@@ -563,9 +561,24 @@ public class Login implements EntryPoint {
 
 						public void onFailure(Throwable caught) {
 							LoadingPanel.getInstance().hide();
-							Window.alert(ErrorConstants.YOU_ARE_NO_AUTORIZED);
-							Logger.GetLogger().severe(Yo.getClass().toString(),
-									ErrorConstants.YOU_ARE_NO_AUTORIZED + " at " + CalendarNow.GetDateNow());
+							if (caught instanceof UserNotFoundException)
+								{
+								Window.alert(ErrorConstants.YOU_USER_NOT_EXIST);
+								Logger.GetLogger().severe(Yo.getClass().toString(),
+										ErrorConstants.YOU_USER_NOT_EXIST + " at " + CalendarNow.GetDateNow());	
+								}
+							else if (caught instanceof NotAuthenticatedException)
+								{
+								Window.alert(ErrorConstants.YOU_ARE_NO_AUTORIZED);
+								Logger.GetLogger().severe(Yo.getClass().toString(),
+										ErrorConstants.YOU_ARE_NO_AUTORIZED + " at " + CalendarNow.GetDateNow());	
+								}
+							else {
+								Window.alert(ErrorConstants.GENERAL_ERROR_REFRESH);
+								Logger.GetLogger().severe(Yo.getClass().toString(),
+										ErrorConstants.GENERAL_ERROR_REFRESH + " at " + CalendarNow.GetDateNow());	
+								}
+							
 							btnNewButton.setEnabled(true);
 						}
 
