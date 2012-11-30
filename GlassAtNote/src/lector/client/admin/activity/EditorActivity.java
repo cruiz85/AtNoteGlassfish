@@ -556,15 +556,19 @@ public class EditorActivity extends PopupPanel {
 							SelectedCatalogOld = ActualActivity.getCloseCatalogo();
 							CatalogLabel.setText("Teacher Catalog :"
 									+ SelectedCatalog.getCatalogName());
+							Panel_Selecion_Default.setVisible(true);
 							if (ActualActivity.getDefaultType()!=null)
 								{
-								DefaultType=generaTypeAntiguo(ActualActivity.getDefaultType());
-								if (DefaultType!=null)
-									DefaultTypeLabel.setText(DEFAUL_TYPE_LABEL + DefaultType.getName());
-								else Window.alert(ErrorConstants.ERROR_RETRIVING_DEFAULT_TYPE_FROM_CATALOG);
+								LoadDefType(ActualActivity.getDefaultType());
+//								
+//								DefaultType=generaTypeAntiguo(ActualActivity.getDefaultType());
+//								if (DefaultType!=null)
+//									DefaultTypeLabel.setText(DEFAUL_TYPE_LABEL + DefaultType.getName());
+//								else Window.alert(ErrorConstants.ERROR_RETRIVING_DEFAULT_TYPE_FROM_CATALOG);
 								}
-							generalangaugeOld();
-							Panel_Selecion_Default.setVisible(true);
+							else {
+								generalangaugeOld();
+							}
 
 
 		} else
@@ -572,27 +576,27 @@ public class EditorActivity extends PopupPanel {
 
 	}
 
-	private TypeClient generaTypeAntiguo(Long defaultType) {
-		return findMe(SelectedCatalog.getEntries(),defaultType); 
-	}
-
-	private TypeClient findMe(List<EntryClient> entries, Long defaultType) {
-		for (EntryClient entryClient : entries) {
-			if (entryClient instanceof TypeClient)
-				{
-				TypeClient T=(TypeClient) entryClient;
-				if (T.getId().equals(defaultType))
-					return T;
-				}
-			else
-			{
-				TypeCategoryClient T=(TypeCategoryClient) entryClient;
-				return findMe(T.getChildren(), defaultType);
+	private void LoadDefType(Long defaultType2) {
+		bookReaderServiceHolder.loadTypeById(defaultType2, new AsyncCallback<TypeClient>() {
+			
+			@Override
+			public void onSuccess(TypeClient result) {
+				generalangaugeOld();
+				DefaultType=result;
+				DefaultTypeLabel.setText(DEFAUL_TYPE_LABEL + DefaultType.getName());
 			}
-		}
-		return null;
+			
+			@Override
+			public void onFailure(Throwable caught) {
+				generalangaugeOld();
+				Window.alert(ErrorConstants.ERROR_RETRIVING_DEFAULT_TYPE_FROM_CATALOG);
+				
+			}
+		});
+		
 	}
 
+	
 	private void generalangaugeOld() {
 		if (ActualActivity.getLanguage() != null) {
 

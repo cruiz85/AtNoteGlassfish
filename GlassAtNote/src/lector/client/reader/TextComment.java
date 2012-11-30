@@ -62,76 +62,133 @@ public class TextComment extends DialogBox {
 
 		mntmGuardar = new MenuItem(ActualLang.getSave(), false, new Command() {
 
+			private ArrayList<TypeClient> ListaASalvar;
+
+
 			public void execute() {
 				
 				LoadingPanel.getInstance().setLabelTexto(ActualLang.getSaving());
 				LoadingPanel.getInstance().center();
 				if (moreThanone()) {
 					
-					List<TypeClient> ListaASalvar=new ArrayList<TypeClient>();
+					ListaASalvar=new ArrayList<TypeClient>();
 					for (int i = 0; i < PanelTexto.getPenelBotonesTipo().getWidgetCount(); i++) {
 						ListaASalvar.add((TypeClient) ((ButtonTipo)PanelTexto.getPenelBotonesTipo().getWidget(i)).getEntidad().getEntry());
 					}
-					Text comment = new Text(PanelTexto.getRichTextArea().getHTML());
-//					LoadingPanel.getInstance().setLabelTexto(ActualLang.getSaving());
-//					LoadingPanel.getInstance().center();
-					boolean visivility;
-					boolean update;
-					if (PanelTexto.getComboBox().getItemText(
-							PanelTexto.getComboBox().getSelectedIndex()).equals(
-							Constants.ANNOTATION_PUBLIC)) {
-						visivility=true;
-						update=PanelTexto.getChckbxNewCheckBox()
-								.getValue();
-					}else
-					{
-						visivility=false;
-						update=false;
-					}
-
-					annotation = new AnnotationClient();
-					annotation.setCreator(ActualUser.getUser());
-					annotation.setActivity(ActualUser.getReadingactivity()
-							.getId());
-					annotation.setTextSelectors(textSelector);
-					annotation.setComment(comment.toString());
-					annotation.setBookId(bookRef.getId());
-					annotation.setVisibility(visivility);
-					annotation.setUpdatability(update);
-					annotation.setPageNumber(MainEntryPoint
-							.getCurrentPageNumber());
-					annotation.setTags(ListaASalvar);
-					boolean IsInCatalog = false;
-					for (int i = 0; i < ListaASalvar.size(); i++)
-
-						if ((ActualUser.getReadingactivity().getCloseCatalogo().getId()
-								.equals(ListaASalvar.get(i).getCatalog()
-										.getId())))
-							IsInCatalog = true;
-
-					if (IsInCatalog) {
-						saveAnnotacion();
-						hide();
-					} else {
-
-						Window.alert(ActualLang.getE_Need_to_select_a_type()
-								+ ActualUser.getCatalogo().getCatalogName()
-								+ " : " + ActualLang.getSetTypes());
-						LoadingPanel.getInstance().hide();
-					}
+					saveDataAnnotacion();
+					
 
 				} else {
-					Window.alert(ActualLang.getE_Need_to_select_a_type()
-							+ ActualUser.getCatalogo().getCatalogName()
-							+ " : "
-							+ ActualLang.getSetTypes()
-							+ "("
-							+ (PanelTexto.getPenelBotonesTipo()
-									.getWidgetCount()) + ")");
-					LoadingPanel.getInstance().hide();
+					if (ActualUser.getReadingactivity().getDefaultType() != null) {
+						bookReaderServiceHolder.loadTypeById(ActualUser.getReadingactivity().getDefaultType(),new AsyncCallback<TypeClient>(){
+
+							@Override
+							public void onFailure(Throwable caught) {
+								LoadingPanel.getInstance().hide();
+								Window.alert(ActualLang.getE_Saving() + "Annotation");
+								
+							}
+
+							@Override
+							public void onSuccess(TypeClient result) {
+								ListaASalvar=new ArrayList<TypeClient>();
+								for (int i = 0; i < PanelTexto.getPenelBotonesTipo().getWidgetCount(); i++) {
+									ListaASalvar.add((TypeClient) ((ButtonTipo)PanelTexto.getPenelBotonesTipo().getWidget(i)).getEntidad().getEntry());
+								}
+								ListaASalvar.add(result);
+								saveDataAnnotacion();
+								
+							}});
+					} else {
+						LoadingPanel.getInstance().hide();
+						Window.alert(ActualLang.getE_Need_to_select_a_type()
+								+ ActualUser.getCatalogo().getCatalogName()
+								+ " : "
+								+ ActualLang.getSetTypes()
+								+ "("
+								+ (PanelTexto.getPenelBotonesTipo()
+										.getWidgetCount()) + ")");
+					}
 					
 				}
 
+				
+			}
+
+			private void saveDataAnnotacion() {
+				Text comment = new Text(PanelTexto.getRichTextArea().getHTML());
+//				LoadingPanel.getInstance().setLabelTexto(ActualLang.getSaving());
+//				LoadingPanel.getInstance().center();
+				boolean visivility;
+				boolean update;
+				if (PanelTexto.getComboBox().getItemText(
+						PanelTexto.getComboBox().getSelectedIndex()).equals(
+						Constants.ANNOTATION_PUBLIC)) {
+					visivility=true;
+					update=PanelTexto.getChckbxNewCheckBox()
+							.getValue();
+				}else
+				{
+					visivility=false;
+					update=false;
+				}
+
+				annotation = new AnnotationClient();
+				annotation.setCreator(ActualUser.getUser());
+				annotation.setActivity(ActualUser.getReadingactivity()
+						.getId());
+				annotation.setTextSelectors(textSelector);
+				annotation.setComment(comment.toString());
+				annotation.setBookId(bookRef.getId());
+				annotation.setVisibility(visivility);
+				annotation.setUpdatability(update);
+				annotation.setPageNumber(MainEntryPoint
+						.getCurrentPageNumber());
+				annotation.setTags(ListaASalvar);
+				boolean IsInCatalog = false;
+				for (int i = 0; i < ListaASalvar.size(); i++)
+
+					if ((ActualUser.getReadingactivity().getCloseCatalogo().getId()
+							.equals(ListaASalvar.get(i).getCatalog()
+									.getId())))
+						IsInCatalog = true;
+
+				if (IsInCatalog) {
+					saveAnnotacion();
+					hide();
+				} else {
+
+					if (ActualUser.getReadingactivity().getDefaultType() != null) {
+						bookReaderServiceHolder.loadTypeById(ActualUser.getReadingactivity().getDefaultType(),new AsyncCallback<TypeClient>(){
+
+							@Override
+							public void onFailure(Throwable caught) {
+								LoadingPanel.getInstance().hide();
+								Window.alert(ActualLang.getE_Saving() + "Annotation");
+								
+							}
+
+							@Override
+							public void onSuccess(TypeClient result) {
+								ListaASalvar=new ArrayList<TypeClient>();
+								for (int i = 0; i < PanelTexto.getPenelBotonesTipo().getWidgetCount(); i++) {
+									ListaASalvar.add((TypeClient) ((ButtonTipo)PanelTexto.getPenelBotonesTipo().getWidget(i)).getEntidad().getEntry());
+								}
+								ListaASalvar.add(result);
+								saveAnnotacion();
+								
+							}});
+					} else {
+						LoadingPanel.getInstance().hide();
+						Window.alert(ActualLang.getE_Need_to_select_a_type()
+								+ ActualUser.getCatalogo().getCatalogName()
+								+ " : "
+								+ ActualLang.getSetTypes()
+								+ "("
+								+ (PanelTexto.getPenelBotonesTipo()
+										.getWidgetCount()) + ")");
+					}
+				}
 				
 			}
 

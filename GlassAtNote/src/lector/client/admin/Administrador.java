@@ -10,6 +10,7 @@ import lector.share.model.client.ReadingActivityClient;
 
 import com.google.gwt.core.client.EntryPoint;
 import com.google.gwt.core.client.GWT;
+import com.google.gwt.safehtml.shared.SafeHtml;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.RootPanel;
 import com.google.gwt.user.client.ui.MenuBar;
@@ -39,6 +40,8 @@ import com.google.gwt.user.client.ui.DockPanel;
 
 public class Administrador implements EntryPoint {
 
+	private static String BOOK_MANAGMENT="Book Management";
+	
 	static GWTServiceAsync bookReaderServiceHolder = GWT
 			.create(GWTService.class);
 	private Button btnNewButton_4;
@@ -294,7 +297,7 @@ public class Administrador implements EntryPoint {
 							btnNewButton_6.setSize("100%", "100%");
 							
 							
-							Button btnNewButton_2 = new Button("Get a Book");
+							Button btnNewButton_2 = new Button(Administrador.BOOK_MANAGMENT);
 							verticalPanel_1.add(btnNewButton_2);
 							btnNewButton_2.addMouseOutHandler(new MouseOutHandler() {
 								public void onMouseOut(MouseOutEvent event) {
@@ -319,30 +322,30 @@ public class Administrador implements EntryPoint {
 							});
 							btnNewButton_2.setSize("100%", "100%");
 							//
-							Button LoadABook = new Button("Upload a Text");
-							verticalPanel_1.add(LoadABook);
-							LoadABook.addMouseOutHandler(new MouseOutHandler() {
-								public void onMouseOut(MouseOutEvent event) {
-									((Button)event.getSource()).setStyleName("gwt-ButtonTOP");
-								}
-							});
-							LoadABook.addMouseOverHandler(new MouseOverHandler() {
-								public void onMouseOver(MouseOverEvent event) {
-									((Button)event.getSource()).setStyleName("gwt-ButtonTOPOver");
-								}
-							});
-							LoadABook.addMouseDownHandler(new MouseDownHandler() {
-								public void onMouseDown(MouseDownEvent event) {
-									((Button)event.getSource()).setStyleName("gwt-ButtonPush");
-								}
-							});
-							LoadABook.setStyleName("gwt-ButtonTOP");
-							LoadABook.addClickHandler(new ClickHandler() {
-								public void onClick(ClickEvent event) {
-									Controlador.change2LoadABook();
-								}
-							});
-							LoadABook.setSize("100%", "100%");
+//							Button LoadABook = new Button("Upload a Text");
+//							verticalPanel_1.add(LoadABook);
+//							LoadABook.addMouseOutHandler(new MouseOutHandler() {
+//								public void onMouseOut(MouseOutEvent event) {
+//									((Button)event.getSource()).setStyleName("gwt-ButtonTOP");
+//								}
+//							});
+//							LoadABook.addMouseOverHandler(new MouseOverHandler() {
+//								public void onMouseOver(MouseOverEvent event) {
+//									((Button)event.getSource()).setStyleName("gwt-ButtonTOPOver");
+//								}
+//							});
+//							LoadABook.addMouseDownHandler(new MouseDownHandler() {
+//								public void onMouseDown(MouseDownEvent event) {
+//									((Button)event.getSource()).setStyleName("gwt-ButtonPush");
+//								}
+//							});
+//							LoadABook.setStyleName("gwt-ButtonTOP");
+//							LoadABook.addClickHandler(new ClickHandler() {
+//								public void onClick(ClickEvent event) {
+//									Controlador.change2LoadABook();
+//								}
+//							});
+//							LoadABook.setSize("100%", "100%");
 							//
 							
 							Button btnNewButton_3 = new Button("My Library");

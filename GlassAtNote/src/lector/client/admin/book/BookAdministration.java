@@ -19,6 +19,7 @@ import com.google.gwt.core.client.EntryPoint;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
+import com.google.gwt.safehtml.shared.SafeHtml;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.RootPanel;
 import com.google.gwt.user.client.ui.MenuBar;
@@ -33,6 +34,9 @@ import com.google.gwt.user.client.ui.HorizontalPanel;
 
 public class BookAdministration implements EntryPoint {
 
+	private static final String GET_A_BOOK = "Get a book from Google Library";
+	private static final String UPLOAD_A_TEXT = "Upload your own Text";
+	private static final String GET_A_BOOK_WELLCOME = "Book Management";
 	private StackPanelMio stackPanel_1;
 	private VerticalPanel Selected;
 	private VerticalPanel simplePanel;
@@ -55,14 +59,25 @@ public class BookAdministration implements EntryPoint {
 		menuBar.setSize("100%", "");
 
 		MenuItem mntmNewItem = new MenuItem("New item", false, (Command) null);
-		mntmNewItem.setHTML("Get a Book");
+		mntmNewItem.setHTML(BookAdministration.GET_A_BOOK_WELLCOME);
 		mntmNewItem.setEnabled(false);
 		menuBar.addItem(mntmNewItem);
 
 		MenuItemSeparator separator = new MenuItemSeparator();
 		menuBar.addSeparator(separator);
+		
+		MenuItem mntmNewItem2 = new MenuItem("New item", false, new Command(){
 
-		MenuItem mntmAddbook = new MenuItem("Add Book", false, new Command() {
+			@Override
+			public void execute() {
+				Controlador.change2LoadABook();
+				
+			}});
+		mntmNewItem2.setHTML(BookAdministration.UPLOAD_A_TEXT);
+		menuBar.addItem(mntmNewItem2);
+
+
+		MenuItem mntmAddbook = new MenuItem(BookAdministration.GET_A_BOOK, false, new Command() {
 			public void execute() {
 				Controlador.change2Searcher();
 			}

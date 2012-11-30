@@ -72,7 +72,7 @@ public class BookLoader implements EntryPoint {
 		MenuItem mntmNewItem = new MenuItem("Close", false, new Command() {
 
 			public void execute() {
-				Controlador.change2Administrator();
+				Controlador.change2BookAdminstrator();
 
 			}
 		});
@@ -358,7 +358,7 @@ public class BookLoader implements EntryPoint {
 
 					public void onSuccess(UserClient result) {
 						ActualUser.setUser(result);
-						Controlador.change2Administrator();
+						Controlador.change2BookAdminstrator();
 						// form.reset();
 
 					}

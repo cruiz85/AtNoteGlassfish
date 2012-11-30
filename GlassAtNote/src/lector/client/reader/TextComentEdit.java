@@ -84,9 +84,38 @@ public class TextComentEdit extends DialogBox {
 
 				if (!moreThanone())
 					{
-					LoadingPanel.getInstance().hide();
-					Window.alert(ActualLang.getE_Need_to_select_a_type()+ActualUser.getCatalogo().getCatalogName()+" : " + ActualLang.getSetTypes()+"("+(PanelTexto.getPenelBotonesTipo().getWidgetCount())+")"); 	
+					if (ActualUser.getReadingactivity().getDefaultType() != null) {
+						bookReaderServiceHolder.loadTypeById(ActualUser.getReadingactivity().getDefaultType(),new AsyncCallback<TypeClient>(){
+
+							@Override
+							public void onFailure(Throwable caught) {
+								LoadingPanel.getInstance().hide();
+								Window.alert(ActualLang.getE_Saving() + "Annotation");
+								
+							}
+
+							@Override
+							public void onSuccess(TypeClient result) {
+								ListaASalvar=new ArrayList<TypeClient>();
+								for (int i = 0; i < PanelTexto.getPenelBotonesTipo().getWidgetCount(); i++) {
+									ListaASalvar.add((TypeClient) ((ButtonTipo)PanelTexto.getPenelBotonesTipo().getWidget(i)).getEntidad().getEntry());
+								}
+								ListaASalvar.add(result);
+								checkAndSave();
+								
+							}});
+					} else {
+						LoadingPanel.getInstance().hide();
+						Window.alert(ActualLang.getE_Need_to_select_a_type()
+								+ ActualUser.getCatalogo().getCatalogName()
+								+ " : "
+								+ ActualLang.getSetTypes()
+								+ "("
+								+ (PanelTexto.getPenelBotonesTipo()
+										.getWidgetCount()) + ")");
 					}
+					}
+				
 				else {
 					ListaASalvar=new ArrayList<TypeClient>();
 					for (int i = 0; i < PanelTexto.getPenelBotonesTipo().getWidgetCount(); i++) {
@@ -126,10 +155,39 @@ public class TextComentEdit extends DialogBox {
 					saveAnnotacion();
 					hide();
 				} else {
+					if (ActualUser.getReadingactivity().getDefaultType() != null) {
+						bookReaderServiceHolder.loadTypeById(ActualUser.getReadingactivity().getDefaultType(),new AsyncCallback<TypeClient>(){
 
-					Window.alert(ActualLang.getE_Need_to_select_a_type()
-							+ ActualUser.getCatalogo().getCatalogName() + " : "
-							+ ActualLang.getSetTypes());
+							@Override
+							public void onFailure(Throwable caught) {
+								LoadingPanel.getInstance().hide();
+								Window.alert(ActualLang.getE_Saving() + "Annotation");
+								
+							}
+
+							@Override
+							public void onSuccess(TypeClient result) {
+								ListaASalvar=new ArrayList<TypeClient>();
+								for (int i = 0; i < PanelTexto.getPenelBotonesTipo().getWidgetCount(); i++) {
+									ListaASalvar.add((TypeClient) ((ButtonTipo)PanelTexto.getPenelBotonesTipo().getWidget(i)).getEntidad().getEntry());
+								}
+								ListaASalvar.add(result);
+								saveAnnotacion();
+								hide();
+								
+							}});
+					} else {
+						LoadingPanel.getInstance().hide();
+						Window.alert(ActualLang.getE_Need_to_select_a_type()
+								+ ActualUser.getCatalogo().getCatalogName()
+								+ " : "
+								+ ActualLang.getSetTypes()
+								+ "("
+								+ (PanelTexto.getPenelBotonesTipo()
+										.getWidgetCount()) + ")");
+					}
+					
+					
 				}
 				hide();
 				for (SelectorPanel SP : SE) {
@@ -157,11 +215,11 @@ public class TextComentEdit extends DialogBox {
 					}
 
 					public void onFailure(Throwable caught) {
+						LoadingPanel.getInstance().hide();
 						Window.alert(ActualLang.getE_Saving() + "Annotation");
 
 					}
 				};
-				//TODO Falta test reciente.
 						bookReaderServiceHolder.saveAnnotation(annotation,
 								callback2);
 
