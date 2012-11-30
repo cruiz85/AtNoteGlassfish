@@ -1121,7 +1121,7 @@ bookReaderServiceHolder.getBookClientsByIds(result, new AsyncCallback<List<BookC
 	}
 	
 	public void setSelectedCatalog(CatalogoClient selectedCatalog) {
-		if (!SelectedCatalog.getId().equals(selectedCatalog.getId()))
+		if ((SelectedCatalog!=null)&&(!SelectedCatalog.getId().equals(selectedCatalog.getId())))
 				{
 				DefaultType=null;
 				DefaultTypeOld=null;
