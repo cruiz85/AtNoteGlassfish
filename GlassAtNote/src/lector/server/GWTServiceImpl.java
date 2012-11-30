@@ -3123,8 +3123,9 @@ public class GWTServiceImpl extends RemoteServiceServlet implements GWTService {
 		EntityManager entityManager = emf.createEntityManager();
 
 		try {
+			Book book = entityManager.find(Book.class, id);
 			userTransaction.begin();
-			entityManager.createQuery("DELETE FROM Book s WHERE s.id=" + id);
+			entityManager.remove(book);
 			userTransaction.commit();
 		} catch (Exception e) {
 			ServiceManagerUtils.rollback(userTransaction);
@@ -3148,7 +3149,7 @@ public class GWTServiceImpl extends RemoteServiceServlet implements GWTService {
 					+ e.getMessage(), e.getStackTrace());
 
 		}
-		if (list == null || list.isEmpty()) {
+		if (list == null) {
 			// logger.error ("Exception in method loadGroupById: ", e)
 			throw new BookNotFoundException(
 					"Book not found in method loadBookById");
@@ -3166,6 +3167,10 @@ public class GWTServiceImpl extends RemoteServiceServlet implements GWTService {
 			throws BookNotFoundException, GeneralException {
 		EntityManager entityManager = emf.createEntityManager();
 		List<Book> list = new ArrayList<Book>();
+		if (ids == null) {
+			return new ArrayList<BookClient>();
+		}
+
 		String sql = "SELECT r FROM Book r WHERE r.id=" + ids.get(0);
 		for (int i = 1; i < ids.size(); i++) {
 			sql += "OR r.id=" + ids.get(i);

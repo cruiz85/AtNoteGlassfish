@@ -14,7 +14,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "file")
+@Table(name = "fileTag")
 @DiscriminatorValue("TAG")
 public class Tag extends Entry implements Serializable, IsSerializable {
 

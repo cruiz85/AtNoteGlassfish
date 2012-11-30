@@ -56,7 +56,7 @@ public class ExportServiceImpl extends RemoteServiceServlet implements
 
 		} catch (TemplateNotFoundException e) {
 			e.printStackTrace();
-		}catch(ProfessorNotFoundException pnfe){
+		} catch (ProfessorNotFoundException pnfe) {
 			pnfe.printStackTrace();
 		}
 
@@ -215,16 +215,17 @@ public class ExportServiceImpl extends RemoteServiceServlet implements
 			throws GeneralException {
 		TemplateCategory father = null;
 		Template template;
+		TemplateCategory templateCategory = null;
 		try {
 			template = findTemplate(templateCategoryClient.getTemplate()
 					.getId());
-			TemplateCategory templateCategory = findTemplateCategory(templateCategoryClient
-					.getId());
-			if (templateCategory == null) {
+			if (templateCategoryClient.getId() != null) {
+				templateCategory = findTemplateCategory(templateCategoryClient
+						.getId());
+				updateTemplateCategory(templateCategoryClient, templateCategory);
+			} else {
 				templateCategory = new TemplateCategory(
 						templateCategoryClient.getName(), father, template);
-			} else {
-				updateTemplateCategory(templateCategoryClient, templateCategory);
 			}
 
 			if (templateCategoryClient.getFather() != null) {

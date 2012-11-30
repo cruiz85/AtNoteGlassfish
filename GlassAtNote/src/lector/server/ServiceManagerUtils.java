@@ -168,15 +168,15 @@ public class ServiceManagerUtils {
 
 		if (t.getTemplate() != null)
 			Template = produceTemplateClient(t.getTemplate());
-		ReadingActivityClient readingActivityClient = new ReadingActivityClient(t.getName(),
-				produceProfessorClient(t.getProfessor()), t.getLanguage(),
-				Book, Group, CloseCatalog, OpenCatalog, t.getVisualization(),
-				Template, isFreeTemplateAllowed, privacy);
+		ReadingActivityClient readingActivityClient = new ReadingActivityClient(
+				t.getName(), produceProfessorClient(t.getProfessor()),
+				t.getLanguage(), Book, Group, CloseCatalog, OpenCatalog,
+				t.getVisualization(), Template, isFreeTemplateAllowed, privacy);
 		readingActivityClient.setId(t.getId());
-		if(t.getDefultTag()!= null){
-			readingActivityClient.setDefaultType(t.getDefultTag().getId());	
+		if (t.getDefultTag() != null) {
+			readingActivityClient.setDefaultType(t.getDefultTag().getId());
 		}
-		
+
 		return readingActivityClient;
 	}
 
@@ -220,9 +220,10 @@ public class ServiceManagerUtils {
 	}
 
 	public static LocalBookClient produceLocalBookClient(LocalBook lb) {
-		return new LocalBookClient(lb.getId(),lb.getProfessor().getId(), lb.getAuthor(),
-				lb.getISBN(), lb.getPagesCount(), lb.getPublishedYear(),
-				lb.getTitle(), produceListString(lb.getWebLinks()));
+		return new LocalBookClient(lb.getId(), lb.getProfessor().getId(),
+				lb.getAuthor(), lb.getISBN(), lb.getPagesCount(),
+				lb.getPublishedYear(), lb.getTitle(),
+				produceListString(lb.getWebLinks()));
 	}
 
 	public static GroupClient produceGroupClient(GroupApp g) {
@@ -246,7 +247,7 @@ public class ServiceManagerUtils {
 		return new ProfessorClient(p.getId(), p.getFirstName(),
 				p.getLastName(), p.getEmail(), p.getPassword(),
 				p.getCreatedDate(), confirmed,
-				getReadingActivityIds(p.getReadingActivities()),
+				getReadingActivityIds((List<ReadingActivity>)p.getReadingActivities()),
 				getBooksIds(p.getBooks()), getTemplatesIds(p.getTemplates()),
 				getGroupsIds(p.getGroups()));
 	}
@@ -261,9 +262,12 @@ public class ServiceManagerUtils {
 
 	private static List<Long> getReadingActivityIds(List<ReadingActivity> g) {
 		List<Long> ids = new ArrayList<Long>();
-		for (ReadingActivity readingActivity : g) {
-			ids.add(readingActivity.getId());
+		if (g != null) {
+			for (ReadingActivity readingActivity : g) {
+				ids.add(readingActivity.getId());
+			}
 		}
+
 		return ids;
 	}
 
@@ -379,6 +383,7 @@ public class ServiceManagerUtils {
 		}
 		return studentClients;
 	}
+
 	// EXPORTSERVICE - HANDLER
 
 	public static TemplateClient produceTemplateClient(Template template) {

@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -35,9 +36,10 @@ public class Book implements Serializable {
 	// private String imagesPath;
 	// private String url;
 	private int annotationsCount = 0;
+	@OneToMany(cascade=CascadeType.REMOVE)
 	private List<Annotation> annotations;
 	private List<String> webLinks = new ArrayList<String>();
-	@OneToMany(mappedBy = "book")
+	@OneToMany(mappedBy = "book", cascade= CascadeType.REFRESH)
 	private List<ReadingActivity> readingActivities = new ArrayList<ReadingActivity>();
 	
 	public Book() {
