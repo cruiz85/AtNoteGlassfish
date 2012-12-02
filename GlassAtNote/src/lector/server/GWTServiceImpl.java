@@ -1497,7 +1497,7 @@ public class GWTServiceImpl extends RemoteServiceServlet implements GWTService {
 							+ e.getMessage(), e.getStackTrace());
 
 		}
-		if (list == null || list.isEmpty()) {
+		if (list == null) {
 			// logger.error ("Exception in method loadUserById: ", e)
 			throw new AnnotationThreadNotFoundException(
 					"AnnotationThread not found in method getAnnotationThreadsByItsFather");
