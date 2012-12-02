@@ -956,7 +956,7 @@ public class GWTServiceImpl extends RemoteServiceServlet implements GWTService {
 
 				oldAnnotation = new Annotation(creator, activity,
 						textSelectors, annotationClient.getComment(),
-						annotationClient.getBookId(), visibility, updatability,
+						findBook(annotationClient.getBookId()), visibility, updatability,
 						annotationClient.getPageNumber(), tags,
 						annotationClient.isEditable());
 				// for (Tag tag : tags) {
@@ -969,7 +969,9 @@ public class GWTServiceImpl extends RemoteServiceServlet implements GWTService {
 				e.printStackTrace();
 			} catch (ReadingActivityNotFoundException e) {
 				e.printStackTrace();
-			} catch (GeneralException e) {
+			} catch (BookNotFoundException e) {
+				e.printStackTrace();
+			}catch (GeneralException e) {
 				e.printStackTrace();
 			}
 
@@ -1093,9 +1095,7 @@ public class GWTServiceImpl extends RemoteServiceServlet implements GWTService {
 		boolean isUpdatability = false;
 		boolean isVisibility = false;
 
-		if (!annotation.getBookId().equals(aClient.getBookId())) {
-			annotation.setBookId(aClient.getBookId());
-		}
+		// NO SE COMPRUEBA EL LIBRO PORQUE EN UNA EDICION ES JAMÁS CAMBIARÁ EL LIBRO
 		if (!annotation.getComment().equals(aClient.getComment())) {
 			annotation.setComment(aClient.getComment());
 		}

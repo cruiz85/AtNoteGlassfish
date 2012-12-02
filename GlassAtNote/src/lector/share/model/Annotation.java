@@ -37,7 +37,8 @@ public class Annotation implements Serializable {
 	@OneToMany(cascade = CascadeType.ALL)
 	private List<TextSelector> textSelectors;
 	private String comment;
-	private Long bookId;
+	@ManyToOne
+	private Book book;
 
 	private short visibility = 0;
 	private short updatability = 0;
@@ -58,7 +59,7 @@ public class Annotation implements Serializable {
 	}
 
 	public Annotation(UserApp creator, ReadingActivity activity,
-			List<TextSelector> textSelectors, String comment, Long bookId,
+			List<TextSelector> textSelectors, String comment, Book book,
 			short visibility, short updatability, Integer pageNumber,
 			List<Tag> tags, boolean isEditable) {
 		super();
@@ -66,7 +67,7 @@ public class Annotation implements Serializable {
 		this.activity = activity;
 		this.textSelectors = textSelectors;
 		this.comment = comment;
-		this.bookId = bookId;
+		this.book = book;
 		this.visibility = visibility;
 		this.updatability = updatability;
 		this.pageNumber = pageNumber;
@@ -170,12 +171,12 @@ public class Annotation implements Serializable {
 		this.creator = creator;
 	}
 
-	public Long getBookId() {
-		return bookId;
+	public Book getBook() {
+		return book;
 	}
 
-	public void setBookId(Long bookId) {
-		this.bookId = bookId;
+	public void setBook(Book book) {
+		this.book = book;
 	}
 
 	public void setVisibility(short visibility) {

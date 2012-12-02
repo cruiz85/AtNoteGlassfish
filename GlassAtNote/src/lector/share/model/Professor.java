@@ -20,7 +20,8 @@ public class Professor extends UserApp implements Serializable {
 	@OneToMany(mappedBy = "professor", cascade = CascadeType.ALL)
 	private List<ReadingActivity> readingActivities = new ArrayList<ReadingActivity>();
 
-	@OneToMany(mappedBy = "professor", cascade = CascadeType.ALL)
+	//@OneToMany(mappedBy = "professor", cascade = CascadeType.ALL)
+	@OneToMany
 	private List<Book> books = new ArrayList<Book>();
 
 	@OneToMany(mappedBy = "professor", cascade = CascadeType.ALL)

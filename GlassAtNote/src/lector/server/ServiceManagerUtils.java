@@ -92,7 +92,7 @@ public class ServiceManagerUtils {
 		return new AnnotationClient(a.getId(),
 				produceUserClient(a.getCreator()), a.getActivity().getId(),
 				produceTextSelectors(a.getTextSelectors()), a.getComment(),
-				a.getBookId(), visibility, updatability, a.getPageNumber(),
+				a.getBook().getId(), visibility, updatability, a.getPageNumber(),
 				produceTypeClientsLazy(a.getTags()), a.isEditable(),
 				a.getCreatedDate(), getIdsOfThreds(a));
 	}
