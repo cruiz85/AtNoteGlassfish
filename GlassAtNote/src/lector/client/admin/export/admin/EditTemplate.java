@@ -17,7 +17,6 @@ import com.google.gwt.core.client.EntryPoint;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.RootPanel;
-import com.google.gwt.user.client.ui.DockLayoutPanel;
 import com.google.gwt.dom.client.Style.Unit;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
@@ -32,12 +31,14 @@ import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.MenuItem;
 import com.google.gwt.user.client.Command;
 import com.google.gwt.user.client.Window;
+import com.google.gwt.user.client.ui.DockPanel;
 import com.google.gwt.user.client.ui.MenuItemSeparator;
 import com.google.gwt.user.client.ui.SplitLayoutPanel;
 import com.google.gwt.user.client.ui.VerticalPanel;
 import com.google.gwt.user.client.ui.ScrollPanel;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.Widget;
+import com.google.gwt.user.client.ui.SimplePanel;
 
 public class EditTemplate implements EntryPoint {
 
@@ -53,16 +54,13 @@ public class EditTemplate implements EntryPoint {
 
 	public void onModuleLoad() {
 		RootPanel rootPanel = RootPanel.get();
+		rootPanel.setStyleName("Root");
 		
 		YO=this;
-		DockLayoutPanel dockLayoutPanel = new DockLayoutPanel(Unit.EM);
-		dockLayoutPanel.setStyleName("fondoLogo");
-		rootPanel.add(dockLayoutPanel, 0, 0);
-		dockLayoutPanel.setSize("100%", "100%");
 		
 		MenuBar menuBar = new MenuBar(false);
-		dockLayoutPanel.addNorth(menuBar, 2);
-		
+		rootPanel.add(menuBar,0,0);
+		menuBar.setSize("100%", "100%");
 		MenuItem mntmNewItem = new MenuItem("New item", false, (Command) null);
 		mntmNewItem.setHTML("Template Administration");
 		mntmNewItem.setEnabled(false);
@@ -78,12 +76,9 @@ public class EditTemplate implements EntryPoint {
 		});
 		menuBar.addItem(mntmBack);
 		
-		HorizontalPanel horizontalPanel = new HorizontalPanel();
-		dockLayoutPanel.add(horizontalPanel);
-		horizontalPanel.setSize("100%", "100%");
-		
 		SplitLayoutPanel splitLayoutPanel = new SplitLayoutPanel();
-		horizontalPanel.add(splitLayoutPanel);
+		splitLayoutPanel.setStyleName("fondoLogo");
+		rootPanel.add(splitLayoutPanel,0,25);
 		splitLayoutPanel.setSize("100%", "100%");
 		
 		VerticalPanel verticalPanel = new VerticalPanel();
@@ -166,103 +161,103 @@ public class EditTemplate implements EntryPoint {
 						
 					}
 				});
-		Delete.addClickHandler(new ClickHandler() {
-			
-			public void onClick(ClickEvent event) {
-				((Button)event.getSource()).setStyleName("gwt-ButtonCenter");
-				
-			}
-		});
-		
-				Delete.addMouseDownHandler(new MouseDownHandler() {
-					public void onMouseDown(MouseDownEvent event) {
-						((Button)event.getSource()).setStyleName("gwt-ButtonCenterPush");
-					}
-				});
-				
-				Delete.addMouseOutHandler(new MouseOutHandler() {
-					public void onMouseOut(MouseOutEvent event) {
-						((Button)event.getSource()).setStyleName("gwt-ButtonCenter");
-				}
-				});
-				
-				Delete.addMouseOverHandler(new MouseOverHandler() {
-					public void onMouseOver(MouseOverEvent event) {
-						
-						((Button)event.getSource()).setStyleName("gwt-ButtonCenterOver");
-					
-				}
-	});
-				
 				Delete.addClickHandler(new ClickHandler() {
 					
 					public void onClick(ClickEvent event) {
 						((Button)event.getSource()).setStyleName("gwt-ButtonCenter");
-						RepresentacionTemplateCategory TC=PanelGestionTemplate.getActual();
-						RepresentacionTemplateCategory TCP=TC.getFather();
-						if (TCP!=null)
-						{
-							LoadingPanel.getInstance().center();
-							LoadingPanel.getInstance().setLabelTexto(InformationConstants.SAVING);
-							exportServiceHolder.deleteTemplateCategory(TC.getT().getId(), new AsyncCallback<Void>() {
-
-								public void onFailure(Throwable caught) {
-									LoadingPanel.getInstance().hide();
-									Window.alert(ErrorConstants.ERROR_DELETING_TEMPLATE_CATEGORY);
-									
-								}
-
-								public void onSuccess(Void result) {
-									
-									LoadingPanel.getInstance().hide();
-									PGT.refresh();
-								}
-							});
-								
-							
-							
-						}else
-						{
-							Window.alert(ErrorConstants.ERROR_THIS_IS_A_TEMPLATE_DELETE);	
+						
+					}
+				});
+				
+						Delete.addMouseDownHandler(new MouseDownHandler() {
+							public void onMouseDown(MouseDownEvent event) {
+								((Button)event.getSource()).setStyleName("gwt-ButtonCenterPush");
+							}
+						});
+						
+						Delete.addMouseOutHandler(new MouseOutHandler() {
+							public void onMouseOut(MouseOutEvent event) {
+								((Button)event.getSource()).setStyleName("gwt-ButtonCenter");
 						}
+						});
 						
-					}
-				});
-		CreateNew.addClickHandler(new ClickHandler() {
-			
-			public void onClick(ClickEvent event) {
-				((Button)event.getSource()).setStyleName("gwt-ButtonCenter");
-				TemplateCategoryClient TC=PGT.getActualNode();
-				PanelNewTemplateCategory PNTC=new PanelNewTemplateCategory(TC,YO);
-				PNTC.center();
-				
-			}
-		});
-		
-				CreateNew.addMouseDownHandler(new MouseDownHandler() {
-					public void onMouseDown(MouseDownEvent event) {
-						((Button)event.getSource()).setStyleName("gwt-ButtonCenterPush");
-					}
-				});
-				
-				CreateNew.addMouseOutHandler(new MouseOutHandler() {
-					public void onMouseOut(MouseOutEvent event) {
-						((Button)event.getSource()).setStyleName("gwt-ButtonCenter");
-				}
-				});
-				
-				CreateNew.addMouseOverHandler(new MouseOverHandler() {
-					public void onMouseOver(MouseOverEvent event) {
-						
-						((Button)event.getSource()).setStyleName("gwt-ButtonCenterOver");
-					
-				}
+						Delete.addMouseOverHandler(new MouseOverHandler() {
+							public void onMouseOver(MouseOverEvent event) {
+								
+								((Button)event.getSource()).setStyleName("gwt-ButtonCenterOver");
+							
+						}
 	});
-		
-		scrollPanel = new ScrollPanel();
-		scrollPanel.setStyleName("BlancoTransparente");
-		splitLayoutPanel.add(scrollPanel);
-		scrollPanel.setSize("100%", "100%");
+						
+						Delete.addClickHandler(new ClickHandler() {
+							
+							public void onClick(ClickEvent event) {
+								((Button)event.getSource()).setStyleName("gwt-ButtonCenter");
+								RepresentacionTemplateCategory TC=PanelGestionTemplate.getActual();
+								RepresentacionTemplateCategory TCP=TC.getFather();
+								if (TCP!=null)
+								{
+									LoadingPanel.getInstance().center();
+									LoadingPanel.getInstance().setLabelTexto(InformationConstants.SAVING);
+									exportServiceHolder.deleteTemplateCategory(TC.getT().getId(), new AsyncCallback<Void>() {
+
+										public void onFailure(Throwable caught) {
+											LoadingPanel.getInstance().hide();
+											Window.alert(ErrorConstants.ERROR_DELETING_TEMPLATE_CATEGORY);
+											
+										}
+
+										public void onSuccess(Void result) {
+											
+											LoadingPanel.getInstance().hide();
+											PGT.refresh();
+										}
+									});
+										
+									
+									
+								}else
+								{
+									Window.alert(ErrorConstants.ERROR_THIS_IS_A_TEMPLATE_DELETE);	
+								}
+								
+							}
+						});
+						CreateNew.addClickHandler(new ClickHandler() {
+							
+							public void onClick(ClickEvent event) {
+								((Button)event.getSource()).setStyleName("gwt-ButtonCenter");
+								TemplateCategoryClient TC=PGT.getActualNode();
+								PanelNewTemplateCategory PNTC=new PanelNewTemplateCategory(TC,YO);
+								PNTC.center();
+								
+							}
+						});
+						
+								CreateNew.addMouseDownHandler(new MouseDownHandler() {
+									public void onMouseDown(MouseDownEvent event) {
+										((Button)event.getSource()).setStyleName("gwt-ButtonCenterPush");
+									}
+								});
+								
+								CreateNew.addMouseOutHandler(new MouseOutHandler() {
+									public void onMouseOut(MouseOutEvent event) {
+										((Button)event.getSource()).setStyleName("gwt-ButtonCenter");
+								}
+								});
+								
+								CreateNew.addMouseOverHandler(new MouseOverHandler() {
+									public void onMouseOver(MouseOverEvent event) {
+										
+										((Button)event.getSource()).setStyleName("gwt-ButtonCenterOver");
+									
+								}
+	});
+								
+								scrollPanel = new ScrollPanel();
+								scrollPanel.setStyleName("BlancoTransparente");
+								splitLayoutPanel.add(scrollPanel);
+								scrollPanel.setSize("100%", "100%");
 		
 	}
 	

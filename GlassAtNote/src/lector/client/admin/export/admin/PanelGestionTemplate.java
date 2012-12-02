@@ -53,6 +53,7 @@ public class PanelGestionTemplate extends Composite {
 		PanelTemplate = new VerticalPanel();
 		PanelTemplate.add(Actual);
 		initWidget(PanelTemplate);
+//		refresh();
 		
 		for (TemplateCategoryClient templateCategory : t.getCategories()) {
 			RepresentacionTemplateCategory Nuevo=new RepresentacionTemplateCategory(templateCategory, Actual,Actual.getProfundidad());
@@ -160,7 +161,7 @@ public class PanelGestionTemplate extends Composite {
 		exportServiceHolder.loadTemplateById(T.getId(), new AsyncCallback<TemplateClient>() {
 			
 			public void onSuccess(TemplateClient result) {
-				
+				LoadingPanel.getInstance().hide();
 				ActualBaseT.setSubCategories(result.getCategories());
 				T=result;
 				for (TemplateCategoryClient templateCategory : T.getCategories()) {
