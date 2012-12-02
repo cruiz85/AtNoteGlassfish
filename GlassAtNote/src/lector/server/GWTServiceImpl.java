@@ -1481,13 +1481,13 @@ public class GWTServiceImpl extends RemoteServiceServlet implements GWTService {
 
 	@Override
 	public List<AnnotationThreadClient> getAnnotationThreadsByItsAnnotation(
-			Long threadFatherId) throws GeneralException,
+			Long annotationId) throws GeneralException,
 			AnnotationThreadNotFoundException {
 		EntityManager entityManager = emf.createEntityManager();
 		List<AnnotationThread> list;
 
 		String sql = "SELECT r FROM AnnotationThread r WHERE r.annotation.id="
-				+ threadFatherId;
+				+ annotationId + " AND r.father IS NULL";
 		try {
 			list = entityManager.createQuery(sql).getResultList();
 		} catch (Exception e) {
@@ -1506,9 +1506,8 @@ public class GWTServiceImpl extends RemoteServiceServlet implements GWTService {
 		if (entityManager.isOpen()) {
 			entityManager.close();
 		}
-
-		return ServiceManagerUtils.produceAnnotationThreadClients(list.get(0)
-				.getSubThreads(), null);
+     
+		return ServiceManagerUtils.produceAnnotationThreadClients(list, null);
 	}
 
 	@Override
