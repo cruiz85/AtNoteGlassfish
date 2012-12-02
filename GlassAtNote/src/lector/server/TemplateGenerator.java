@@ -18,7 +18,8 @@ public class TemplateGenerator {
 			TemplateCategoryClient templateCategoryClient = ServiceManagerUtils
 					.produceTemplateCategoryClient(templateCategory, tClient,
 							null);
-			if (templateCategory.getSubCategories() != null) {
+			if (templateCategory.getSubCategories() != null
+					&& !templateCategory.getSubCategories().isEmpty()) {
 				deepSearch(templateCategoryClient, templateCategory);
 			}
 			listTemplateCategoriesClients.add(templateCategoryClient);
