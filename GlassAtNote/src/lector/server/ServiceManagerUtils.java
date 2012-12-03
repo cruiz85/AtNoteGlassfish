@@ -405,7 +405,7 @@ public class ServiceManagerUtils {
 				templateCategory.getAnnotationsIds(), templateClient);
 		templateCategoryClient.setFather(father);
 
-		return null;
+		return templateCategoryClient;
 	}
 
 }

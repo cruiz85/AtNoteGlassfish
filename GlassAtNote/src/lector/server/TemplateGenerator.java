@@ -12,7 +12,7 @@ public class TemplateGenerator {
 	private static List<TemplateCategoryClient> listTemplateCategoriesClients = new ArrayList<TemplateCategoryClient>();
 
 	public static void Start(TemplateClient tClient, Template template) {
-
+		listTemplateCategoriesClients = new ArrayList<TemplateCategoryClient>();
 		List<TemplateCategory> children = template.getCategories();
 		for (TemplateCategory templateCategory : children) {
 			TemplateCategoryClient templateCategoryClient = ServiceManagerUtils
