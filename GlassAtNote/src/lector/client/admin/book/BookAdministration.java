@@ -201,7 +201,11 @@ public class BookAdministration implements EntryPoint {
 		stackPanel_1.setBotonClick(new ClickHandler() {
 
 			public void onClick(ClickEvent event) {
-				((BotonesStackPanelAdministracionMio) event.getSource()).Swap();
+				
+				BotonesStackPanelAdministracionMio BSPM = (BotonesStackPanelAdministracionMio) event.getSource();
+				BSPM.Swap();
+//				BotonesStackPanelAdministracionSimple BSPMB= new BotonesStackPanelAdministracionSimple(BSPM.getHTML(),BSPM.getNormal(),BSPM.getSelected());
+//				BSPM).Swap();
 			}
 		});
 		

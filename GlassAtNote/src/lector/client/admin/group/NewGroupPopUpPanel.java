@@ -71,7 +71,6 @@ public class NewGroupPopUpPanel extends PopupPanel {
 		verticalPanel.setVerticalAlignment(HasVerticalAlignment.ALIGN_MIDDLE);
 		verticalPanel.setHorizontalAlignment(HasHorizontalAlignment.ALIGN_CENTER);
 		flowPanel.add(verticalPanel);
-		verticalPanel.setSize("291px", "91px");
 		
 		Label label = new Label("Type the name of the new group ");
 		verticalPanel.add(label);

@@ -2,10 +2,12 @@ package lector.client.admin;
 
 
 
+import lector.client.admin.book.EntidadLibro;
 import lector.client.catalogo.BotonesStackPanelMio;
 import lector.client.catalogo.Finder;
 import lector.client.catalogo.client.Entity;
 import lector.client.catalogo.client.EntityCatalogElements;
+import lector.share.model.GeneralException;
 
 import com.google.gwt.user.client.ui.VerticalPanel;
 
@@ -84,13 +86,31 @@ public class BotonesStackPanelAdministracionMio extends BotonesStackPanelMio{
 	
 	}
 
-	protected boolean EstainSelected() {
+	protected boolean EstainSelected(){
+		if (((Entity)super.getEntidad()) instanceof EntityCatalogElements)
+			return processCatalem();
+		if (((Entity)super.getEntidad()) instanceof EntidadLibro )
+			return processLibro();
+		return false;
+	}
+
+	private boolean processLibro() {
+		for (int i = 0; i < Selected.getWidgetCount(); i++) {
+			BotonesStackPanelAdministracionMio BSM= (BotonesStackPanelAdministracionMio)Selected.getWidget(i);
+			if (((EntidadLibro)BSM.getEntidad()).getBook().getId().intValue()==((EntidadLibro)super.getEntidad()).getBook().getId().intValue()) return true;
+		}
+		return false;
+	}
+
+
+	private boolean processCatalem() {
 		for (int i = 1; i < Selected.getWidgetCount(); i++) {
 			BotonesStackPanelAdministracionMio BSM= (BotonesStackPanelAdministracionMio)Selected.getWidget(i);
 			if (((EntityCatalogElements)BSM.getEntidad()).getEntry().getId().intValue()==((EntityCatalogElements)super.getEntidad()).getEntry().getId().intValue()) return true;
 		}
 		return false;
 	}
+
 
 	public Finder getF() {
 		return F;
