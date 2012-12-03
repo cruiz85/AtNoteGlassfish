@@ -93,7 +93,7 @@ public class UploadServlet extends javax.servlet.http.HttpServlet implements
                     
                     // saves the file to upload directory
                     item.write(uploadedFile);
-                    webLinks.add(fileRelPath);
+                    webLinks.add(fileRelPath.replace("\\", "/"));
                 }
                 else
                 {

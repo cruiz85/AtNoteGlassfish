@@ -115,8 +115,8 @@ public class Visor extends PopupPanel {
 					Atras.setEnabled(false);
 				}
 				Adelante.setEnabled(true);	
-				Pagina1.setUrl(Book.getWebLinks().get(actualpagina-2));
-				Pagina2.setUrl(Book.getWebLinks().get(actualpagina-1));
+				Pagina1.setUrl(Book.getWebLinks().get(actualpagina-2).replace("\\", "/"));
+				Pagina2.setUrl(Book.getWebLinks().get(actualpagina-1).replace("\\", "/"));
 			}
 		});
 		horizontalPanel_3.add(Atras);
@@ -152,8 +152,8 @@ public class Visor extends PopupPanel {
 					Adelante.setEnabled(false);	
 				}
 				Atras.setEnabled(true);
-				Pagina1.setUrl(Book.getWebLinks().get(actualpagina-2));
-				Pagina2.setUrl(Book.getWebLinks().get(actualpagina-1));
+				Pagina1.setUrl(Book.getWebLinks().get(actualpagina-2).replace("\\", "/"));
+				Pagina2.setUrl(Book.getWebLinks().get(actualpagina-1).replace("\\", "/"));
 			}
 		});
 		
@@ -179,7 +179,7 @@ public class Visor extends PopupPanel {
 		{
 			DecoratorPanel decoratorPanel = new DecoratorPanel();
 			horizontalPanel_1.add(decoratorPanel);
-			Pagina1 = new Image(Book.getWebLinks().get(0));
+			Pagina1 = new Image(Book.getWebLinks().get(0).replace("\\", "/"));
 			decoratorPanel.setWidget(Pagina1);
 			Pagina1.setHeight("528px");
 			actualpagina=1;
@@ -217,7 +217,7 @@ public class Visor extends PopupPanel {
 			DecoratorPanel decoratorPanel_1 = new DecoratorPanel();
 			horizontalPanel_1.add(decoratorPanel_1);
 		
-			Pagina2 = new Image(Book.getWebLinks().get(1));
+			Pagina2 = new Image(Book.getWebLinks().get(1).replace("\\", "/"));
 			decoratorPanel_1.setWidget(Pagina2);
 			Pagina2.setHeight("528px");
 			actualpagina=2;

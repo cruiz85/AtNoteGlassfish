@@ -346,6 +346,7 @@ pageBack.addMouseDownHandler(new MouseDownHandler() {
 
 	public void onModuleLoad() {
 
+		PEX=new PopUPEXportacion();
 		// Paneles
 		//final RootPanel RootAnnotation = RootPanel.get("Etiquetas");
 		RootPanel RootMenu = RootPanel.get("Menu");
@@ -1407,7 +1408,7 @@ pageBack.addMouseDownHandler(new MouseDownHandler() {
 			}
 		});
 		
-		originalBook.setUrl(URL);
+		originalBook.setUrl(URL.replace("\\", "/"));
 	}
 	
 //	public static void setPorcentScrollAnnotationsPanel() {

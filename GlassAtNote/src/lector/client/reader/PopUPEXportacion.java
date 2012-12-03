@@ -27,6 +27,7 @@ import com.google.gwt.core.client.GWT;
 import com.google.gwt.dom.client.Style.Unit;
 import com.google.gwt.user.client.ui.FormPanel;
 import com.google.gwt.user.client.ui.MenuBar;
+import com.google.gwt.user.client.ui.RadioButton;
 import com.google.gwt.user.client.ui.TextArea;
 import com.google.gwt.user.client.ui.VerticalPanel;
 import com.google.gwt.user.client.ui.HasHorizontalAlignment;
@@ -39,11 +40,14 @@ import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.ListBox;
 import com.google.gwt.event.dom.client.ChangeHandler;
 import com.google.gwt.event.dom.client.ChangeEvent;
+import com.google.gwt.event.dom.client.ClickHandler;
+import com.google.gwt.event.dom.client.ClickEvent;
 
 public class PopUPEXportacion extends PopupPanel {
 
 	private VerticalPanel verticalPanel;
-	private ListBox comboBox;
+	private RadioButton comboBox;
+	private RadioButton TemplateButton;
 	private static final int Longitud = 473;
 	static ImageServiceAsync imageServiceHolder = GWT
 			.create(ImageService.class);
@@ -54,6 +58,8 @@ public class PopUPEXportacion extends PopupPanel {
 	private TemplateClient Template;
 	private static VerticalPanel Actual;
 	private static ElementoExportacionTemplate EET;
+	private static String BLANK_RADIO_BUTTON="Blank Template";
+	private static String TemplateGroup="Select";
 
 
 	public PopUPEXportacion() {
@@ -112,7 +118,6 @@ public class PopUPEXportacion extends PopupPanel {
 				}
 			}
 		});
-		// TODO Anadir a Lenguaje
 		menuBar.addItem(mntmNewItem_1);
 
 		ScrollPanel scrollPanel = new ScrollPanel();
@@ -126,34 +131,56 @@ public class PopUPEXportacion extends PopupPanel {
 
 		HorizontalPanel horizontalPanel = new HorizontalPanel();
 		verticalPanel_1.add(horizontalPanel);
+		
 
 		if (ActualUser.getReadingactivity().getIsFreeTemplateAllowed()
 				&& ActualUser.getReadingactivity().getTemplate() != null) {
-			comboBox = new ListBox();
-			TemplateClient IDTemplate = ActualUser.getReadingactivity()
-					.getTemplate();
-			if (ActualUser.getReadingactivity().getIsFreeTemplateAllowed())
-				comboBox.addItem("Blank Template");
-
-			comboBox.addItem(IDTemplate.getName());
-			Template = IDTemplate;
-			comboBox.setSelectedIndex(0);
-			comboBox.addChangeHandler(new ChangeHandler() {
-				public void onChange(ChangeEvent event) {
+			ClickHandler event=new ClickHandler() {
+				public void onClick(ClickEvent event) {
+					if (event.getSource() == comboBox){
 					verticalPanel.clear();
-					ListBox CB = (ListBox) event.getSource();
-					if (CB.getSelectedIndex() != 0)
-						LoadTemplate();
-					else {
-						Actual = verticalPanel;
-						if (EET != null)
-							EET.ResetButton();
+					Actual = verticalPanel;
+					if (EET != null)
+						EET.ResetButton();
+					}
+					else 
+					{
+						ReLoadTemplate();
 					}
 				}
-
-			});
+			};
+			comboBox = new RadioButton(PopUPEXportacion.TemplateGroup,PopUPEXportacion.BLANK_RADIO_BUTTON);
+			comboBox.addClickHandler(event);
+			TemplateClient IDTemplate = ActualUser.getReadingactivity()
+					.getTemplate();
+			TemplateButton= new RadioButton(PopUPEXportacion.TemplateGroup,IDTemplate.getName());
+			Template = IDTemplate;
+			TemplateButton.addClickHandler(event);
+			comboBox.setValue(true);
+//					new ClickHandler() {
+//				public void onClick(ClickEvent event) {
+//					LoadTemplate();
+//				}
+//			});
+//			comboBox.setSelectedIndex(0);
+//			comboBox.addChangeHandler(new ChangeHandler() {
+//				public void onChange(ChangeEvent event) {
+//					verticalPanel.clear();
+//					ListBox CB = (ListBox) event.getSource();
+//					if (CB.getSelectedIndex() != 0)
+//						LoadTemplate();
+//					else {
+//						Actual = verticalPanel;
+//						if (EET != null)
+//							EET.ResetButton();
+//					}
+//				}
+//
+//			});
 			horizontalPanel.add(comboBox);
+			horizontalPanel.add(TemplateButton);
 			comboBox.setWidth("245px");
+			TemplateButton.setWidth("245px");
 		} else if (ActualUser.getReadingactivity().getTemplate() != null) {
 
 			Template = ActualUser.getReadingactivity().getTemplate();
@@ -161,7 +188,7 @@ public class PopUPEXportacion extends PopupPanel {
 			if (EET != null)
 				EET.ResetButton();
 			Actual = verticalPanel;
-			LoadTemplate();
+			ReLoadTemplate();
 			// }
 			//
 			// public void onFailure(Throwable caught) {
@@ -177,6 +204,24 @@ public class PopUPEXportacion extends PopupPanel {
 		if (EET != null)
 			EET.ResetButton();
 
+	}
+
+	private void ReLoadTemplate() {
+exportServiceHolder.loadTemplateById(Template.getId(), new AsyncCallback<TemplateClient>() {
+			
+			@Override
+			public void onSuccess(TemplateClient result) {
+				Template=result;
+				LoadTemplate();
+			}
+			
+			@Override
+			public void onFailure(Throwable caught) {
+				Window.alert(ErrorConstants.ERROR_LOADING_TEMPLATE);
+				
+			}
+		});
+		
 	}
 
 	protected void LoadTemplate() {
@@ -232,11 +277,10 @@ public class PopUPEXportacion extends PopupPanel {
 
 	public void Refresh() {
 		verticalPanel.clear();
-		if (Template!=null&&(comboBox==null||comboBox.getSelectedIndex()!=0))
+		if (Template!=null&&TemplateButton.getValue())
 			LoadTemplate();
 		
 	}
 	
 
-	
 }
