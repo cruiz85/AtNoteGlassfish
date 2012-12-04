@@ -128,9 +128,9 @@ public class MergeSelector extends PopupPanel {
 								EditorTagsAndTypes.LoadBasicTypes();
 							}
 						};
-						AsyncCallback<Integer> callback2 = new AsyncCallback<Integer>() {
+						AsyncCallback<Void> callback2 = new AsyncCallback<Void>() {
 
-							public void onSuccess(Integer result) {
+							public void onSuccess(Void result) {
 								LoadingPanel.getInstance().hide();
 								EditorTagsAndTypes.LoadBasicTypes();
 
@@ -142,19 +142,15 @@ public class MergeSelector extends PopupPanel {
 							}
 						};
 
-//						LoadingPanel.getInstance().setLabelTexto("Saving...");
-//						LoadingPanel.getInstance().center();
-//						if ((entity instanceof Folder) && (destinoEn instanceof Folder))
-//							//TODO EN ESPERA
-////							bookReaderServiceHolder.fusionFolder(entity.getID(),
-////									destinoEn.getID(), callback);
-//						else if ((entity instanceof File)
-//								&& (destinoEn instanceof File))
-//							//TODO EN ESPERA
-////							bookReaderServiceHolder.fusionFiles(entity.getID(),
-////									destinoEn.getID(), callback2);
-//						else
-//							Window.alert("The elements you're trying to merge are differents");
+						LoadingPanel.getInstance().setLabelTexto("Saving...");
+						LoadingPanel.getInstance().center();
+						if ((entity instanceof Folder) && (destinoEn instanceof Folder))
+							bookReaderServiceHolder.fusionFolder(((Folder)entity).getEntry().getId(),
+									((Folder)destinoEn).getEntry().getId(), callback);
+						else if ((entity instanceof File)
+								&& (destinoEn instanceof File))
+							bookReaderServiceHolder.fusionTypes(((File)entity).getEntry().getId(),
+									((File)destinoEn).getEntry().getId(), callback2);
 					}
 
 				});

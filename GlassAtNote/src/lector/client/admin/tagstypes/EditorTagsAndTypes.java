@@ -44,6 +44,10 @@ import com.google.gwt.user.client.ui.HorizontalPanel;
 
 public class EditorTagsAndTypes implements EntryPoint {
 
+	private static String MERGE_BUTTON="Merge";
+	private static String AVAILABLE_SECCION="Available";
+	private static String SELECTED_SECCION="Selected";
+	
 	private static VerticalPanel Selected = new VerticalPanel();
 	private static AbsolutePanel Actual = new AbsolutePanel();
 	static GWTServiceAsync bookReaderServiceHolder = GWT
@@ -59,18 +63,18 @@ public class EditorTagsAndTypes implements EntryPoint {
 		Actual.add(menuBar_2);
 		menuBar_2.setWidth("100%");
 
-		MenuItem mntmNewItem_2 = new MenuItem("Available", false,
+		MenuItem mntmNewItem_2 = new MenuItem(EditorTagsAndTypes.AVAILABLE_SECCION, false,
 				(Command) null);
 		mntmNewItem_2.setEnabled(false);
-		mntmNewItem_2.setHTML("Available");
+		mntmNewItem_2.setHTML(EditorTagsAndTypes.AVAILABLE_SECCION);
 		menuBar_2.addItem(mntmNewItem_2);
 
 		menuBar_3 = new MenuBar(false);
 		label.add(menuBar_3);
 		menuBar_3.setWidth("100%");
 
-		MenuItem mntmSelected = new MenuItem("Selected", false, (Command) null);
-		mntmSelected.setHTML("Selected");
+		MenuItem mntmSelected = new MenuItem(EditorTagsAndTypes.SELECTED_SECCION, false, (Command) null);
+		mntmSelected.setHTML(EditorTagsAndTypes.AVAILABLE_SECCION);
 		mntmSelected.setEnabled(false);
 		menuBar_3.addItem(mntmSelected);
 		
@@ -160,32 +164,47 @@ public class EditorTagsAndTypes implements EntryPoint {
 		mntmNewItem_3.setHTML("Create");
 		menuBar.addItem(mntmNewItem_3);
 
-		MenuItem mntmMerge = new MenuItem("Merge", false, new Command() {
+		MenuItem mntmMerge = new MenuItem(EditorTagsAndTypes.MERGE_BUTTON, false, new Command() {
 
+			private final int minimuunElements=2;
 
 			public void execute() {
 				int Unir = Selected.getWidgetCount();
-				if (Unir >= 3) {
+				if (Unir >= minimuunElements) {
 
 					ArrayList<BotonesStackPanelAdministracionMio> ListaUnir = new ArrayList<BotonesStackPanelAdministracionMio>();
-					for (int i = 0; i < Unir; i++) {
+					BotonesStackPanelAdministracionMio BSPAM=(BotonesStackPanelAdministracionMio) Selected.getWidget(0);
+					ListaUnir.add((BSPAM));
+					boolean Incompatible=false;
+					for (int i = 1; i < Unir; i++) {
+						BotonesStackPanelAdministracionMio BSPAM2=(BotonesStackPanelAdministracionMio) Selected.getWidget(i);
 						ListaUnir
-								.add(((BotonesStackPanelAdministracionMio) Selected
-										.getWidget(i)));
+								.add((BSPAM2));
+						if (((EntityCatalogElements)BSPAM.getEntidad()).getEntry().getId().equals(((EntityCatalogElements)BSPAM2.getEntidad()).getEntry().getId()))
+							{
+							Incompatible=true;
+							break;
+							}
+							
 					}
 
+					if (!Incompatible)
+					{
 					MergeSelector.setCatalog(catalogo);
 					MergeSelector MS = new MergeSelector(ListaUnir);
 					MS.center();
 					MS.setModal(true);
-
+					}else {
+						Window.alert(InformationConstants.ELEMENTS_SHOULD_BE_THE_SAME_TYPE);
+					}
 				} else {
-					Window.alert("There are less than two elements to merge");
+					Window.alert(InformationConstants.SHOULD_ME_MORE_THAN1 + minimuunElements + InformationConstants.SHOULD_ME_MORE_THAN2);
 				}
 
 			}
 
 		});
+		mntmMerge.setHTML(EditorTagsAndTypes.MERGE_BUTTON);
 		mntmMerge.setEnabled(true);
 		menuBar.addItem(mntmMerge);
 
@@ -227,13 +246,11 @@ public class EditorTagsAndTypes implements EntryPoint {
 
 					}
 				};
-				//TODO Hacer
-//				if (entidad instanceof File)
-//					bookReaderServiceHolder.moveFile(entidad.getActualFather()
-//							.getID(), entidad.getID(), finder.getTopPath()
-//							.getID(), callback);
-//				else
-//					bookReaderServiceHolder.moveFolder(entidad
+				if (entidad instanceof File)
+					bookReaderServiceHolder.moveType(((File) entidad).getFatherIdCreador().getId(), ((File) entidad).getEntry().getId(), finder.getTopPath().getEntry().getId(), callback);
+				else
+					bookReaderServiceHolder.moveFolderDB(((Folder) entidad).getFatherIdCreador().getId(), ((Folder) entidad).getEntry().getId(), finder.getTopPath().getEntry().getId(), callback);
+//					(entidad
 //							.getActualFather().getID(), entidad.getID(), finder
 //							.getTopPath().getID(), callback);
 

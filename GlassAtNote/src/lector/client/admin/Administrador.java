@@ -41,9 +41,11 @@ import com.google.gwt.user.client.ui.DockPanel;
 public class Administrador implements EntryPoint {
 
 	private static String BOOK_MANAGMENT="Book Management";
+	private static String WELLCOME_MENU="Welcome to the administrator page : ";
 	
 	static GWTServiceAsync bookReaderServiceHolder = GWT
 			.create(GWTService.class);
+
 	private Button btnNewButton_4;
 	private Button MyProfile;
 	
@@ -68,7 +70,7 @@ public class Administrador implements EntryPoint {
 						dockPanel.add(menuBar, DockPanel.NORTH);
 						menuBar.setSize("100%", "24px");
 						
-						MenuItem menuItem = new MenuItem("Welcome to the administrator page : " + Bienvenida , false, (Command) null);
+						MenuItem menuItem = new MenuItem(Administrador.WELLCOME_MENU + Bienvenida , false, (Command) null);
 						menuItem.setEnabled(false);
 						menuBar.addItem(menuItem);
 						

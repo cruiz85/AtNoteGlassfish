@@ -32,4 +32,7 @@ public class InformationConstants {
 	public static String NO_RESULTS="There are not result with this words";
 	public static String ADDED_BOOK1="Added book ";
 	public static String ADDED_BOOK2=" to user ";
+	public static String ELEMENTS_SHOULD_BE_THE_SAME_TYPE= "One of the selects elements are diferent in his type, all should be the sae type";
+	public static String SHOULD_ME_MORE_THAN1="You should select more than ";
+	public static String SHOULD_ME_MORE_THAN2=" elements.";
 }

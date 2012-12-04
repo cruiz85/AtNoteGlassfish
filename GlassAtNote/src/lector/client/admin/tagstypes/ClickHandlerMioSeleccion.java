@@ -43,7 +43,9 @@ public class ClickHandlerMioSeleccion extends ClickHandlerMio implements
 				
 			}
 		};
-		
+		if (PFSE.getFather().getId().equals(Constants.CATALOGID))
+			bookReaderServiceHolder.addChildToCatalog(E.getEntry(), E.getEntry().getCatalog().getId(), LLamada);
+		else
 			bookReaderServiceHolder.addChildEntry(E.getEntry().getId(), PFSE.getFather().getId(), LLamada);
 
 	}
@@ -63,8 +65,8 @@ AsyncCallback<Void> LLamada=new AsyncCallback<Void>() {
 				
 			}
 		};
-		if (PFSE.getFather()==null)
-			bookReaderServiceHolder.addChildEntry(BS.getEntry().getId(),  Constants.CATALOGID, LLamada);
+		if (PFSE.getFather().getId().equals(Constants.CATALOGID))
+			bookReaderServiceHolder.addChildToCatalog(BS.getEntry(), BS.getEntry().getCatalog().getId(), LLamada);
 		else 
 			bookReaderServiceHolder.addChildEntry(BS.getEntry().getId(), PFSE.getFather().getId(), LLamada);
 
