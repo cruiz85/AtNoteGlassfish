@@ -2218,9 +2218,13 @@ public class GWTServiceImpl extends RemoteServiceServlet implements GWTService {
 				} else {
 
 					FolderDB folderFrom = findFolderDB(typeCategoryFromId);
+					Relation tmp = findRelation(relation.getId());
+					for (Relation relationToRemove : folderFrom.getRelations()) {
+						if(relationToRemove.getId().equals(tmp.getId())){
+							folderFrom.getRelations().remove(relationToRemove);		
+						}
+					}
 					
-					Relation tmp =findRelation(relation.getId());
-					folderFrom.getRelations().remove(tmp );
 					Catalogo catalogo = tag.getCatalog();
 					catalogo.getEntries().add(tag);
 					callForMultiplePersist(folderFrom, catalogo);
