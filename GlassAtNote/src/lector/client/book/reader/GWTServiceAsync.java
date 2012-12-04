@@ -7,21 +7,8 @@ package lector.client.book.reader;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import java.util.ArrayList;
 import java.util.List;
-
-import lector.share.model.Annotation;
-import lector.share.model.AnnotationThread;
-import lector.share.model.Book;
-import lector.share.model.Catalogo;
 import lector.share.model.Entry;
-import lector.share.model.FolderDB;
-import lector.share.model.GoogleBook;
-import lector.share.model.Professor;
-import lector.share.model.Student;
-import lector.share.model.Tag;
-import lector.share.model.GroupApp;
 import lector.share.model.Language;
-import lector.share.model.ReadingActivity;
-import lector.share.model.UserApp;
 import lector.share.model.client.AnnotationClient;
 import lector.share.model.client.AnnotationThreadClient;
 import lector.share.model.client.BookClient;
@@ -29,7 +16,6 @@ import lector.share.model.client.CatalogoClient;
 import lector.share.model.client.EntryClient;
 import lector.share.model.client.GoogleBookClient;
 import lector.share.model.client.GroupClient;
-
 import lector.share.model.client.ProfessorClient;
 import lector.share.model.client.ReadingActivityClient;
 import lector.share.model.client.StudentClient;
@@ -244,7 +230,7 @@ public interface GWTServiceAsync {
 			AsyncCallback<Void> callback);
 
 	void fusionTypes(Long typeFromId, Long typeToId,
-			AsyncCallback<Long> callback);
+			AsyncCallback<Void> callback);
 
 	void moveType(Long typeCategoryFromId, Long typeId, Long typeCategoryToId,
 			AsyncCallback<Void> callback);

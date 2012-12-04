@@ -9,21 +9,14 @@ import java.util.List;
 
 import com.google.gwt.user.client.rpc.RemoteService;
 import com.google.gwt.user.client.rpc.RemoteServiceRelativePath;
-
-import lector.share.model.Annotation;
 import lector.share.model.AnnotationNotFoundException;
-
 import lector.share.model.AnnotationThreadNotFoundException;
-import lector.share.model.Book;
 import lector.share.model.BookNotFoundException;
-import lector.share.model.Catalogo;
 import lector.share.model.CatalogoNotFoundException;
 import lector.share.model.DecendanceException;
 import lector.share.model.Entry;
-import lector.share.model.FolderDB;
 import lector.share.model.FolderDBNotFoundException;
 import lector.share.model.GeneralException;
-import lector.share.model.GoogleBook;
 import lector.share.model.GroupNotFoundException;
 import lector.share.model.IlegalFolderFusionException;
 import lector.share.model.LanguageNotFoundException;
@@ -258,7 +251,7 @@ public interface GWTService extends RemoteService {
 			throws GeneralException, NullParameterException,
 			AnnotationNotFoundException;
 
-	public Long fusionTypes(Long typeFromId, Long typeToId)
+	public void fusionTypes(Long typeFromId, Long typeToId)
 			throws GeneralException, NullParameterException;
 
 	public void moveType(Long typeCategoryFromId, Long typeId,

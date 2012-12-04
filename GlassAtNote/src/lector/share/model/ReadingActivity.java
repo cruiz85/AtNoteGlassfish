@@ -13,6 +13,8 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.PrePersist;
+import javax.persistence.PreUpdate;
 
 import javax.persistence.Table;
 
@@ -32,7 +34,7 @@ public class ReadingActivity implements Serializable, IsSerializable {
 
 	private Language language;
 	
-	@ManyToOne
+	@ManyToOne(cascade=CascadeType.REFRESH)
     @JoinColumn(name = "book_id", nullable = true)
 	private Book book;
 
@@ -181,5 +183,13 @@ public class ReadingActivity implements Serializable, IsSerializable {
 	public void setPrivacy(short privacy) {
 		this.privacy = privacy;
 	}
+	
+//	@PrePersist
+//	@PreUpdate
+//	public void prePersist() {
+//		if(!book.getReadingActivities().contains(this)){
+//			book.getReadingActivities().add(this);
+//		}
+//	}
 	
 }

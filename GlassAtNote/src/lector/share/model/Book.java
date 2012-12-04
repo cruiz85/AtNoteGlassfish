@@ -36,7 +36,7 @@ public class Book implements Serializable {
 	// private String imagesPath;
 	// private String url;
 	private int annotationsCount = 0;
-	@OneToMany(cascade=CascadeType.REMOVE)
+	@OneToMany(mappedBy="book", cascade=CascadeType.REMOVE)
 	private List<Annotation> annotations;
 	private List<String> webLinks = new ArrayList<String>();
 	@OneToMany(mappedBy = "book", cascade= CascadeType.REFRESH)

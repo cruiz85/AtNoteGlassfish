@@ -9,11 +9,8 @@ import java.net.URL;
 import java.net.URLConnection;
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Collection;
 import java.util.Date;
-import java.util.Iterator;
 import java.util.List;
-import java.util.ListIterator;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.annotation.Resource;
@@ -21,13 +18,9 @@ import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 import javax.transaction.UserTransaction;
-
-import org.apache.tools.ant.taskdefs.LoadProperties;
-
 import lector.client.book.reader.ExportService;
 import lector.client.book.reader.GWTService;
 import lector.client.controler.Constants;
-
 import com.google.gwt.user.server.rpc.RemoteServiceServlet;
 import lector.share.model.Annotation;
 import lector.share.model.AnnotationNotFoundException;
@@ -53,7 +46,6 @@ import lector.share.model.ProfessorNotFoundException;
 import lector.share.model.ReadingActivityNotFoundException;
 import lector.share.model.Relation;
 import lector.share.model.RelationNotFoundException;
-import lector.share.model.RemoteBook;
 import lector.share.model.Student;
 import lector.share.model.StudentNotFoundException;
 import lector.share.model.Tag;
@@ -956,8 +948,8 @@ public class GWTServiceImpl extends RemoteServiceServlet implements GWTService {
 
 				oldAnnotation = new Annotation(creator, activity,
 						textSelectors, annotationClient.getComment(),
-						findBook(annotationClient.getBookId()), visibility, updatability,
-						annotationClient.getPageNumber(), tags,
+						findBook(annotationClient.getBookId()), visibility,
+						updatability, annotationClient.getPageNumber(), tags,
 						annotationClient.isEditable());
 				// for (Tag tag : tags) {
 				// tag.getAnnotations().add(oldAnnotation);
@@ -971,7 +963,7 @@ public class GWTServiceImpl extends RemoteServiceServlet implements GWTService {
 				e.printStackTrace();
 			} catch (BookNotFoundException e) {
 				e.printStackTrace();
-			}catch (GeneralException e) {
+			} catch (GeneralException e) {
 				e.printStackTrace();
 			}
 
@@ -1095,7 +1087,8 @@ public class GWTServiceImpl extends RemoteServiceServlet implements GWTService {
 		boolean isUpdatability = false;
 		boolean isVisibility = false;
 
-		// NO SE COMPRUEBA EL LIBRO PORQUE EN UNA EDICION ES JAMÁS CAMBIARÁ EL LIBRO
+		// NO SE COMPRUEBA EL LIBRO PORQUE EN UNA EDICION ES JAMÁS CAMBIARÁ EL
+		// LIBRO
 		if (!annotation.getComment().equals(aClient.getComment())) {
 			annotation.setComment(aClient.getComment());
 		}
@@ -1506,7 +1499,7 @@ public class GWTServiceImpl extends RemoteServiceServlet implements GWTService {
 		if (entityManager.isOpen()) {
 			entityManager.close();
 		}
-     
+
 		return ServiceManagerUtils.produceAnnotationThreadClients(list, null);
 	}
 
@@ -1831,17 +1824,33 @@ public class GWTServiceImpl extends RemoteServiceServlet implements GWTService {
 			saveCatalog(catalogo);
 		} catch (CatalogoNotFoundException e) {
 			e.printStackTrace();
+		} catch (TagNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (FolderDBNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
 
 	}
 
-	private Tag reproduceTagFromClient(TypeClient typeClient) {
-		return new Tag(typeClient.getName());
+	private Tag reproduceTagFromClient(TypeClient typeClient) throws TagNotFoundException {
+		if(typeClient.getId()!=null){
+			return new Tag(typeClient.getName());	
+		}else{
+			return findTag(typeClient.getId());
+		}
+		
 	}
 
 	private FolderDB reproduceFolderFromClient(
-			TypeCategoryClient typeCategoryClient) {
-		return new FolderDB(typeCategoryClient.getName());
+			TypeCategoryClient typeCategoryClient) throws FolderDBNotFoundException {
+		if(typeCategoryClient.getId()!=null){
+			return new FolderDB(typeCategoryClient.getName());
+		}else{
+			return findFolderDB(typeCategoryClient.getId());
+		}
+		
 	}
 
 	@Override
@@ -2091,28 +2100,142 @@ public class GWTServiceImpl extends RemoteServiceServlet implements GWTService {
 	}
 
 	@Override
-	public Long fusionTypes(Long typeFromId, Long typeToId)
+	public void fusionTypes(Long typeFromId, Long typeToId)
 			throws GeneralException, NullParameterException {
-		// TODO Auto-generated method stub
-		return null;
+		if (typeFromId == null || typeToId == null) {
+			throw new NullParameterException(
+					"Parameter cant be null in method deleteDnServices");
+		}
+
+		try {
+			Tag tagFrom = findTag(typeFromId);
+			Tag tagTo = findTag(typeToId);
+			tagTo.getAnnotations().addAll(tagFrom.getAnnotations());
+			List<Relation> relationsFrom = getRelationsByChildId(tagFrom
+					.getId());
+			List<Relation> relationsTo = getRelationsByChildId(tagFrom.getId());
+			if (!relationsFrom.isEmpty()) {
+				for (Relation relationFrom : relationsFrom) {
+					for (Relation relationTo : relationsTo) {
+						if (!relationFrom.getFather().equals(
+								relationTo.getFather())) {
+							Relation re = new Relation(
+									relationFrom.getFather(), tagTo);
+							relationsTo.add(re);
+						}
+					}
+				}
+				callForMultiplePersist(tagTo, relationsTo, tagFrom);
+			}
+		} catch (TagNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (RelationNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+
+	private void callForMultiplePersist(Tag tagTo, List<Relation> relationsTo,
+			Tag tagFrom) {
+		EntityManager entityManager = emf.createEntityManager();
+		try {
+			userTransaction.begin();
+			entityManager.merge(tagTo);
+			for (Relation relation : relationsTo) {
+				if (relation.getId() != null) {
+					entityManager.merge(relation);
+				} else {
+					entityManager.persist(relation);
+				}
+			}
+			entityManager.remove(tagFrom);
+			userTransaction.commit();
+		} catch (Exception e) {
+			ServiceManagerUtils.rollback(userTransaction);
+		}
+		if (entityManager.isOpen()) {
+			entityManager.close();
+		}
+
+	}
+
+	private List<Relation> getRelationsByChildId(Long id)
+			throws GeneralException, RelationNotFoundException {
+		EntityManager entityManager = emf.createEntityManager();
+		List<Relation> list;
+
+		String sql = "SELECT r FROM Relation r WHERE r.child.id=" + id;
+		try {
+			list = entityManager.createQuery(sql).getResultList();
+		} catch (Exception e) {
+			// logger.error ("Exception in method loadGroupByEmail: ", e)
+			throw new GeneralException("Exception in method getRelations:"
+					+ e.getMessage(), e.getStackTrace());
+
+		}
+		if (list == null) {
+			// logger.error ("Exception in method loadGroupById: ", e)
+			throw new RelationNotFoundException(
+					"Relation not found in method getRelations");
+
+		}
+		if (entityManager.isOpen()) {
+			entityManager.close();
+		}
+
+		return list;
 	}
 
 	@Override
+	// TODO CONSIDERAR MOVER AL CATALOGO
 	public void moveType(Long typeCategoryFromId, Long typeId,
 			Long typeCategoryToId) throws GeneralException {
 		try {
 			FolderDB typeCategoryTo = findFolderDB(typeCategoryToId);
+
 			Relation relation = loadRelationByFatherAndSonId(
 					typeCategoryFromId, typeId);
-			relation.setFather(typeCategoryTo);
-			saveRelation(relation);
+			if (typeCategoryTo != null) {
+				relation.setFather(typeCategoryTo);
+				typeCategoryTo.getRelations().add(relation);
+				saveFolderDB(typeCategoryTo);
+			} else {
+				Tag tag = findTag(typeId);
+				FolderDB folderFrom = findFolderDB(typeCategoryFromId);
+				folderFrom.getRelations().remove(relation);
+				Catalogo catalogo = tag.getCatalog();
+				catalogo.getEntries().add(tag);
+				callForMultiplePersist(folderFrom, catalogo);
+
+			}
+
 		} catch (FolderDBNotFoundException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (RelationNotFoundException rnfe) {
 			rnfe.printStackTrace();
+		} catch (TagNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
 
+	}
+
+	private void callForMultiplePersist(FolderDB folderFrom, Catalogo catalogo) {
+
+		EntityManager entityManager = emf.createEntityManager();
+		try {
+			userTransaction.begin();
+			entityManager.merge(folderFrom);
+			entityManager.remove(catalogo);
+			userTransaction.commit();
+		} catch (Exception e) {
+			ServiceManagerUtils.rollback(userTransaction);
+		}
+		if (entityManager.isOpen()) {
+			entityManager.close();
+		}
 	}
 
 	private void saveRelation(Relation relation) {
