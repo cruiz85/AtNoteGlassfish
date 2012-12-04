@@ -104,7 +104,7 @@ public class BotonesStackPanelAdministracionMio extends BotonesStackPanelMio{
 
 
 	private boolean processCatalem() {
-		for (int i = 1; i < Selected.getWidgetCount(); i++) {
+		for (int i = 0; i < Selected.getWidgetCount(); i++) {
 			BotonesStackPanelAdministracionMio BSM= (BotonesStackPanelAdministracionMio)Selected.getWidget(i);
 			if (((EntityCatalogElements)BSM.getEntidad()).getEntry().getId().intValue()==((EntityCatalogElements)super.getEntidad()).getEntry().getId().intValue()) return true;
 		}
