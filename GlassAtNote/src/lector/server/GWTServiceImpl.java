@@ -768,6 +768,17 @@ public class GWTServiceImpl extends RemoteServiceServlet implements GWTService {
 		return list.get(0);
 	}
 
+	private Relation findRelation(Long id) throws RelationNotFoundException {
+		EntityManager entityManager = emf.createEntityManager();
+		Relation a = entityManager.find(Relation.class, id);
+		if (a == null) {
+			throw new RelationNotFoundException(
+					"Relation not found in method loadRelationoById");
+		}
+		entityManager.close();
+		return a;
+	}
+	
 	// TODO LANZAR EXCEPCIÓN
 	public Professor findProfessor(Long id) throws ProfessorNotFoundException {
 		EntityManager entityManager = emf.createEntityManager();
@@ -1834,23 +1845,25 @@ public class GWTServiceImpl extends RemoteServiceServlet implements GWTService {
 
 	}
 
-	private Tag reproduceTagFromClient(TypeClient typeClient) throws TagNotFoundException {
-		if(typeClient.getId()!=null){
-			return new Tag(typeClient.getName());	
-		}else{
+	private Tag reproduceTagFromClient(TypeClient typeClient)
+			throws TagNotFoundException {
+		if (typeClient.getId() != null) {
+			return new Tag(typeClient.getName());
+		} else {
 			return findTag(typeClient.getId());
 		}
-		
+
 	}
 
 	private FolderDB reproduceFolderFromClient(
-			TypeCategoryClient typeCategoryClient) throws FolderDBNotFoundException {
-		if(typeCategoryClient.getId()!=null){
+			TypeCategoryClient typeCategoryClient)
+			throws FolderDBNotFoundException {
+		if (typeCategoryClient.getId() != null) {
 			return new FolderDB(typeCategoryClient.getName());
-		}else{
+		} else {
 			return findFolderDB(typeCategoryClient.getId());
 		}
-		
+
 	}
 
 	@Override
@@ -2191,21 +2204,38 @@ public class GWTServiceImpl extends RemoteServiceServlet implements GWTService {
 	public void moveType(Long typeCategoryFromId, Long typeId,
 			Long typeCategoryToId) throws GeneralException {
 		try {
-			FolderDB typeCategoryTo = findFolderDB(typeCategoryToId);
 
-			Relation relation = loadRelationByFatherAndSonId(
-					typeCategoryFromId, typeId);
-			if (typeCategoryTo != null) {
-				relation.setFather(typeCategoryTo);
-				typeCategoryTo.getRelations().add(relation);
-				saveFolderDB(typeCategoryTo);
+			Tag tag = findTag(typeId);
+			if (!typeCategoryFromId.equals(Constants.CATALOGID)) {
+				Relation relation = loadRelationByFatherAndSonId(
+						typeCategoryFromId, typeId);
+
+				if (!typeCategoryToId.equals(Constants.CATALOGID)) {
+					FolderDB typeCategoryTo = findFolderDB(typeCategoryToId);
+					relation.setFather(typeCategoryTo);
+					typeCategoryTo.getRelations().add(relation);
+					saveFolderDB(typeCategoryTo);
+				} else {
+
+					FolderDB folderFrom = findFolderDB(typeCategoryFromId);
+					
+					Relation tmp =findRelation(relation.getId());
+					folderFrom.getRelations().remove(tmp );
+					Catalogo catalogo = tag.getCatalog();
+					catalogo.getEntries().add(tag);
+					callForMultiplePersist(folderFrom, catalogo);
+
+				}
+
 			} else {
-				Tag tag = findTag(typeId);
-				FolderDB folderFrom = findFolderDB(typeCategoryFromId);
-				folderFrom.getRelations().remove(relation);
 				Catalogo catalogo = tag.getCatalog();
-				catalogo.getEntries().add(tag);
-				callForMultiplePersist(folderFrom, catalogo);
+				catalogo.getEntries().remove(tag);
+				if (!typeCategoryToId.equals(Constants.CATALOGID)) {
+					FolderDB typeCategoryTo = findFolderDB(typeCategoryToId);
+					Relation relation = new Relation(typeCategoryTo, tag);
+					typeCategoryTo.getRelations().add(relation);
+					callForMultiplePersist(typeCategoryTo, catalogo);
+				}
 
 			}
 
