@@ -2188,7 +2188,6 @@ public class GWTServiceImpl extends RemoteServiceServlet implements GWTService {
 	}
 
 	@Override
-	// TODO CONSIDERAR MOVER AL CATALOGO
 	public void moveType(Long typeCategoryFromId, Long typeId,
 			Long typeCategoryToId) throws GeneralException {
 		try {
@@ -2228,7 +2227,7 @@ public class GWTServiceImpl extends RemoteServiceServlet implements GWTService {
 		try {
 			userTransaction.begin();
 			entityManager.merge(folderFrom);
-			entityManager.remove(catalogo);
+			entityManager.merge(catalogo);
 			userTransaction.commit();
 		} catch (Exception e) {
 			ServiceManagerUtils.rollback(userTransaction);
