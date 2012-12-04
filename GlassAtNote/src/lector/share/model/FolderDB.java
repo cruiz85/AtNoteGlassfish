@@ -4,9 +4,11 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
+
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
@@ -16,7 +18,7 @@ import javax.persistence.Table;
 @DiscriminatorValue("FOLDER")
 public class FolderDB extends Entry implements Serializable {
 
-	@OneToMany
+	@OneToMany(mappedBy="father", cascade=CascadeType.REMOVE)
 	private List<Relation> relations = new ArrayList<Relation>();
 	private List<Long> orders = new ArrayList<Long>();
 

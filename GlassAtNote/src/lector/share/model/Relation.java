@@ -1,6 +1,5 @@
 package lector.share.model;
 
-
 import java.io.Serializable;
 
 import javax.persistence.Entity;
@@ -9,7 +8,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
-
+import javax.persistence.ManyToOne;
 
 import javax.persistence.Table;
 
@@ -21,12 +20,9 @@ public class Relation implements Serializable {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
-
 	private Entry father;
 	private Entry child;
 	private Long catalogId;
-	
-	
 
 	public Relation() {
 

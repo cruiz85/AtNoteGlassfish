@@ -778,7 +778,7 @@ public class GWTServiceImpl extends RemoteServiceServlet implements GWTService {
 		entityManager.close();
 		return a;
 	}
-	
+
 	// TODO LANZAR EXCEPCIÓN
 	public Professor findProfessor(Long id) throws ProfessorNotFoundException {
 		EntityManager entityManager = emf.createEntityManager();
@@ -2123,23 +2123,51 @@ public class GWTServiceImpl extends RemoteServiceServlet implements GWTService {
 		try {
 			Tag tagFrom = findTag(typeFromId);
 			Tag tagTo = findTag(typeToId);
+			Catalogo catalogo = tagTo.getCatalog();
 			tagTo.getAnnotations().addAll(tagFrom.getAnnotations());
 			List<Relation> relationsFrom = getRelationsByChildId(tagFrom
 					.getId());
+			List<Relation> relationFathers = new ArrayList<Relation>();
 			List<Relation> relationsTo = getRelationsByChildId(tagFrom.getId());
 			if (!relationsFrom.isEmpty()) {
+
 				for (Relation relationFrom : relationsFrom) {
 					for (Relation relationTo : relationsTo) {
-						if (!relationFrom.getFather().equals(
-								relationTo.getFather())) {
-							Relation re = new Relation(
-									relationFrom.getFather(), tagTo);
-							relationsTo.add(re);
+						if (!relationFrom.getFather().getId()
+								.equals(relationTo.getFather().getId())) {
+							relationFrom.setChild(tagTo);
+							relationsTo.add(relationFrom);
+
+						} else {
+							relationFathers.add(relationFrom);
+							
 						}
+
 					}
 				}
-				callForMultiplePersist(tagTo, relationsTo, tagFrom);
 			}
+			Entry tagToTemp = null;
+			Entry tagFromTemp = null;
+			for (Entry entry : catalogo.getEntries()) {
+				if (entry.getId().equals(tagFrom.getId())) {
+					tagFromTemp = (Tag) entry;
+				}
+				if (entry.getId().equals(tagTo.getId())) {
+					tagToTemp = (Tag) entry;
+				}
+			}
+			if (tagFromTemp != null) {
+				catalogo.getEntries().remove(tagFromTemp);
+				if (tagToTemp != null) {
+					catalogo.getEntries().remove(tagToTemp);
+				}
+				catalogo.getEntries().add(tagToTemp);
+
+			}
+
+			callForMultiplePersist(relationsTo, tagFrom, catalogo,
+					relationFathers);
+
 		} catch (TagNotFoundException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -2149,12 +2177,11 @@ public class GWTServiceImpl extends RemoteServiceServlet implements GWTService {
 		}
 	}
 
-	private void callForMultiplePersist(Tag tagTo, List<Relation> relationsTo,
-			Tag tagFrom) {
+	private void callForMultiplePersist(List<Relation> relationsTo,
+			Tag tagFrom, Catalogo catalogo, List<Relation> relationFathers) {
 		EntityManager entityManager = emf.createEntityManager();
 		try {
 			userTransaction.begin();
-			entityManager.merge(tagTo);
 			for (Relation relation : relationsTo) {
 				if (relation.getId() != null) {
 					entityManager.merge(relation);
@@ -2162,7 +2189,23 @@ public class GWTServiceImpl extends RemoteServiceServlet implements GWTService {
 					entityManager.persist(relation);
 				}
 			}
-			entityManager.remove(tagFrom);
+			for (Relation relationRem : relationFathers) {
+				
+				FolderDB folderFrom = (FolderDB) relationRem
+						.getFather();
+				for (Relation relation : folderFrom.getRelations()) {
+					if(relation.getId().equals(relationRem.getId())){
+						folderFrom.getRelations().remove(relation);	
+						break;
+					}
+					
+				}
+				entityManager.merge(folderFrom);	
+				entityManager.merge(relationRem);	
+			}
+//			entityManager.merge(tagFrom);
+		//	entityManager.remove(tagFrom);
+			entityManager.merge(catalogo);
 			userTransaction.commit();
 		} catch (Exception e) {
 			ServiceManagerUtils.rollback(userTransaction);
@@ -2220,11 +2263,12 @@ public class GWTServiceImpl extends RemoteServiceServlet implements GWTService {
 					FolderDB folderFrom = findFolderDB(typeCategoryFromId);
 					Relation tmp = findRelation(relation.getId());
 					for (Relation relationToRemove : folderFrom.getRelations()) {
-						if(relationToRemove.getId().equals(tmp.getId())){
-							folderFrom.getRelations().remove(relationToRemove);		
+						if (relationToRemove.getId().equals(tmp.getId())) {
+							folderFrom.getRelations().remove(relationToRemove);
+							break;
 						}
 					}
-					
+
 					Catalogo catalogo = tag.getCatalog();
 					catalogo.getEntries().add(tag);
 					callForMultiplePersist(folderFrom, catalogo);
