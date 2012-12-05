@@ -252,7 +252,7 @@ public class EditorActivity extends PopupPanel {
 					ActualActivity.setTemplate(Template);
 				ActualActivity.setIsFreeTemplateAllowed(CheckBoxFree.getValue());
 				ActualActivity.setVisualization(comboBox.getItemText(comboBox.getSelectedIndex()));
-				if (DefaultType==null&&AllowDefaulType.getValue())
+				if (DefaultType==null||!AllowDefaulType.getValue())
 					ActualActivity.setDefaultType(null);
 				else
 					ActualActivity.setDefaultType(DefaultType.getId());

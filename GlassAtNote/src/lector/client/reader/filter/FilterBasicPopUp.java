@@ -265,19 +265,20 @@ public class FilterBasicPopUp extends PopupPanel {
 				for (UserClient studentUnit : group.getParticipatingUsers()) {
 					testUserIn(studentUnit,types,salida);
 				}
+				testUserIn(group.getProfessor(),types,salida);
 				return salida;
 			}
 
 			private void testUserIn(UserClient studentUnit,
 					ArrayList<String> types, ArrayList<UserClient> salida) {
 				for (String typocandidato : types) {
-					if (studentUnit.getFirstName().toUpperCase().contains(typocandidato))
+					if (studentUnit.getFirstName().toUpperCase().contains(typocandidato.toUpperCase()))
 						AddSalida(studentUnit,salida);
-					if (studentUnit.getLastName().toUpperCase().contains(typocandidato))
+					if (studentUnit.getLastName().toUpperCase().contains(typocandidato.toUpperCase()))
 						AddSalida(studentUnit,salida);
-					if (studentUnit.getId().toString().toUpperCase().contains(typocandidato))
+					if (studentUnit.getId().toString().toUpperCase().contains(typocandidato.toUpperCase()))
 						AddSalida(studentUnit,salida);
-					if (studentUnit.getEmail().toUpperCase().contains(typocandidato))
+					if (studentUnit.getEmail().toUpperCase().contains(typocandidato.toUpperCase()))
 						AddSalida(studentUnit,salida);
 				}
 				

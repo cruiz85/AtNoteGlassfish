@@ -5,7 +5,6 @@ drop table `atnote`.`catalogo_entry`;
 drop table `atnote`.`book_annotation`;
 drop table `atnote`.`annotation_thread`;
 drop table `atnote`.`annotation_text_selector`;
-drop table `atnote`.`ann_file`;
 drop table `atnote`.`text_selector`;
 drop table `atnote`.`relation`;
 drop table `atnote`.`entry_annotation`;

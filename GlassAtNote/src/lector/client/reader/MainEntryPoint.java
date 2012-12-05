@@ -1158,7 +1158,7 @@ pageBack.addMouseDownHandler(new MouseDownHandler() {
 	public static void setFiltroTypesAndUser(ArrayList<TypeClient> filtroTypes, ArrayList<UserClient> User, ArrayList<String> Words) {
 		if (filtroTypes.size()==0 && User.isEmpty())
 			setfilterinfo(false);
-		else setfilterinfo(true);
+		else {setfilterinfo(true);
 		MainEntryPoint.filtroTypes = filtroTypes;
 		MainEntryPoint.filtroUsers=User;
 		MainEntryPoint.filtroWords=Words;
@@ -1171,6 +1171,7 @@ pageBack.addMouseDownHandler(new MouseDownHandler() {
 			ResultRanked=setfilterByUser(ResultRanked);
 			Result = OrdenaResultado(ResultRanked);
 			insertrefreshedAnot(Result);
+		}
 		}
 	}
 
@@ -1221,7 +1222,7 @@ pageBack.addMouseDownHandler(new MouseDownHandler() {
 			return true;
 		}
 		for (int pos = 0; pos < filtroUsers.size(); pos++){ 
-				if (a.equals(filtroUsers.get(pos)))
+				if (a.equals(filtroUsers.get(pos).getId()))
 					{
 					return true;
 					}

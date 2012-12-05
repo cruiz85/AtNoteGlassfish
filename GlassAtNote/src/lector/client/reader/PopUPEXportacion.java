@@ -13,7 +13,6 @@ import lector.client.controler.Controlador;
 import lector.client.controler.ErrorConstants;
 import lector.client.login.ActualUser;
 import lector.client.reader.export.EnvioExportacion;
-import lector.client.reader.export.ExportResult;
 import lector.client.reader.export.PanelSeleccionExportacion;
 import lector.client.reader.export.arbitroLlamadas;
 import lector.share.model.client.TemplateCategoryClient;
