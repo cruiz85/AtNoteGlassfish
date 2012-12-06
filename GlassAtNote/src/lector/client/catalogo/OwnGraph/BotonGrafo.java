@@ -15,6 +15,7 @@ import lector.share.model.client.TypeClient;
 import com.caucho.amber.entity.Entity;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.HorizontalPanel;
+import com.google.gwt.user.client.ui.Panel;
 import com.google.gwt.user.client.ui.VerticalPanel;
 
 public class BotonGrafo extends BotonesStackPanelAdministracionMio {
@@ -22,13 +23,13 @@ public class BotonGrafo extends BotonesStackPanelAdministracionMio {
 	private CatalogoClient catalogo;
 	private EntryClient entry;
 	private boolean isCatalog;
-	private HorizontalPanel SelectionPanel;
+	private Panel SelectionPanel;
 	
 	
 	
-	public BotonGrafo(String HTML,VerticalPanel Normal, HorizontalPanel horizontalPanel, Finder Fin) {
+	public BotonGrafo(String HTML,VerticalPanel Normal, Panel Panel, Finder Fin) {
 		super(HTML, Normal, new VerticalPanel(), Fin);
-		SelectionPanel= horizontalPanel;
+		SelectionPanel= Panel;
 		
 	}
 
@@ -89,7 +90,7 @@ public class BotonGrafo extends BotonesStackPanelAdministracionMio {
 		setF(actual);
 	}
 	
-	public HorizontalPanel getSelectionPanel() {
+	public Panel getSelectionPanel() {
 		return SelectionPanel;
 	}
 }

@@ -1,4 +1,4 @@
-package lector.client.browser;
+package lector.client.reader.browser;
 
 import java.util.ArrayList;
 
@@ -8,6 +8,7 @@ import lector.client.book.reader.GWTServiceAsync;
 import lector.client.catalogo.Finder;
 import lector.client.catalogo.FinderKeys;
 import lector.client.catalogo.FinderOwnGrafo;
+import lector.client.catalogo.OwnGraph.BotonGrafo;
 import lector.client.catalogo.client.Entity;
 import lector.client.catalogo.client.EntityCatalogElements;
 import lector.client.controler.Constants;
@@ -95,7 +96,7 @@ public class Browser implements EntryPoint {
 		Selected.add(SelectedB);
 		SelectedB.setWidth("100%");
 		
-		FinderOwnGrafo.setButtonTipoGrafo(new BotonesStackPanelBrowser(
+		FinderOwnGrafo.setButtonTipoGrafo(new BotonGrafo(
 				"prototipo", new VerticalPanel(), SelectedB,FinderButton2));
 		FinderOwnGrafo.setBotonClickGrafo(new ClickHandler() {
 
@@ -177,7 +178,7 @@ public class Browser implements EntryPoint {
 		//FinderButton = new FinderGrafo(ActualUser.getOpenCatalog());
 		
 		
-		FinderOwnGrafo.setButtonTipoGrafo(new BotonesStackPanelBrowser(
+		FinderOwnGrafo.setButtonTipoGrafo(new BotonGrafo(
 				"prototipo", new VerticalPanel(), SelectedB,FinderButton));
 		
 		btnNewButton = new Button(ActualLang.getFilterButtonBrowser());

@@ -1,4 +1,4 @@
-package lector.client.browser;
+package lector.client.reader.browser;
 
 import java.util.ArrayList;
 

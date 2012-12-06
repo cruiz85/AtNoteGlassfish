@@ -1,4 +1,4 @@
-package lector.client.browser;
+package lector.client.reader.browser;
 
 import lector.client.admin.tagstypes.ClickHandlerMio;
 import lector.client.catalogo.BotonesStackPanelMio;

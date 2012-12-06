@@ -1,4 +1,4 @@
-package lector.client.browser;
+package lector.client.reader.browser;
 
 import com.google.gwt.user.client.Element;
 import com.google.gwt.user.client.ui.DialogBox;

@@ -152,7 +152,7 @@ public class SelectorTypePopUpAnnotacion extends PopupPanel {
 		        
 		        if (Act instanceof File)
 		        {
-		        	ButtonTipo nuevo=new ButtonTipo(((File) Act),CT.getTexto(),BS.getSelectionPanel());
+		        	ButtonTipo nuevo=new ButtonTipo(((File) Act),CT.getTexto(),(HorizontalPanel) BS.getSelectionPanel());
 		        	nuevo.addClickHandler(new ClickHandler() {
 						
 						public void onClick(ClickEvent event) {
@@ -193,7 +193,7 @@ public class SelectorTypePopUpAnnotacion extends PopupPanel {
 							
 						}
 					});
-		        	if (!ExistPreview(BS.getSelectionPanel(),Act))
+		        	if (!ExistPreview((HorizontalPanel) BS.getSelectionPanel(),Act))
 		        			BS.getSelectionPanel().add(nuevo);
 		        	else Window.alert(ActualUser.getLanguage().getE_ExistBefore());
 		        }
