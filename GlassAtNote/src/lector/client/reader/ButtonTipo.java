@@ -6,22 +6,23 @@ import lector.share.model.client.EntryClient;
 
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.HorizontalPanel;
+import com.google.gwt.user.client.ui.Panel;
 
 public class ButtonTipo extends Button {
 
 	private EntityCatalogElements Entidad;
-	private HorizontalPanel pertenezco;
+	private Panel pertenezco;
 	
-	public ButtonTipo(EntityCatalogElements act, HorizontalPanel horizontalPanel) {
+	public ButtonTipo(EntityCatalogElements act, Panel Panel) {
 		super(act.getName());
 		Entidad=act;
-		pertenezco=horizontalPanel;
+		pertenezco=Panel;
 	}
 	
-	public ButtonTipo(EntityCatalogElements act, String texto, HorizontalPanel horizontalPanel) {
+	public ButtonTipo(EntityCatalogElements act, String texto, Panel Panel) {
 		super(texto+act.getName());
 		Entidad=act;
-		pertenezco=horizontalPanel;
+		pertenezco=Panel;
 	}
 
 	public void setEntidad(EntityCatalogElements a) {
@@ -36,7 +37,7 @@ public class ButtonTipo extends Button {
 		this.pertenezco = pertenezco;
 	}
 	
-	public HorizontalPanel getPertenezco() {
+	public Panel getPertenezco() {
 		return pertenezco;
 	}
 

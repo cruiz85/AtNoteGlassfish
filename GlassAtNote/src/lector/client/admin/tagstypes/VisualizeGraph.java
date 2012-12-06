@@ -60,7 +60,7 @@ public class VisualizeGraph extends DialogBox {
 		horizontalPanel.setSize("100%", "100%");
 		PG=new PanelGrafo();
 		horizontalPanel.add(PG);
-
+		PanelGrafo.setAccionAsociada(null);
 
 		
 		

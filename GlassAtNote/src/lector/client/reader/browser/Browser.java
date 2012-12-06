@@ -9,11 +9,15 @@ import lector.client.catalogo.Finder;
 import lector.client.catalogo.FinderKeys;
 import lector.client.catalogo.FinderOwnGrafo;
 import lector.client.catalogo.OwnGraph.BotonGrafo;
+import lector.client.catalogo.OwnGraph.PanelGrafo;
 import lector.client.catalogo.client.Entity;
 import lector.client.catalogo.client.EntityCatalogElements;
+import lector.client.catalogo.client.File;
+import lector.client.catalogo.client.Folder;
 import lector.client.controler.Constants;
 import lector.client.controler.Controlador;
 import lector.client.login.ActualUser;
+import lector.client.reader.ButtonTipo;
 import lector.client.reader.LoadingPanel;
 import lector.share.model.Annotation;
 import lector.share.model.Language;
@@ -33,7 +37,10 @@ import com.google.gwt.event.dom.client.MouseOutHandler;
 import com.google.gwt.event.dom.client.MouseOverEvent;
 import com.google.gwt.event.dom.client.MouseOverHandler;
 import com.google.gwt.user.client.rpc.AsyncCallback;
+import com.google.gwt.user.client.ui.ComplexPanel;
+import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.Image;
+import com.google.gwt.user.client.ui.Panel;
 import com.google.gwt.user.client.ui.RootPanel;
 import com.google.gwt.user.client.ui.SplitLayoutPanel;
 import com.google.gwt.user.client.ui.VerticalSplitPanel;
@@ -66,6 +73,22 @@ public class Browser implements EntryPoint {
 			.create(GWTService.class);
 	private static ArrayList<TypeClient> filtroResidual;
 
+public enum CatalogTipo {
+		
+		Catalog1("<img src=\"File.gif\">"), Catalog2("<img src=\"File2.gif\">");
+		
+		private String Texto;
+		
+		private CatalogTipo(String A) {
+			Texto=A;
+		}
+		
+		public String getTexto() {
+			return Texto;
+		}
+		
+	};
+	
 	public Browser() {
 		SelectedB = new VerticalPanel();
 	}
@@ -102,27 +125,74 @@ public class Browser implements EntryPoint {
 
 			public void onClick(ClickEvent event) {
 				
-				BotonesStackPanelBrowser BS = ((BotonesStackPanelBrowser) event
-						.getSource());
-			
-				if ((FinderButton2.getTopPath()==null)||(((EntityCatalogElements) BS.getEntidad()).getEntry().getParents().isEmpty())) 
-					{
-					BS.Swap();
-					}
-				else if (EqualsFinderButton(BS))
-					{
-					BS.Swap();
-					}
+				BotonGrafo BS=((BotonGrafo) event.getSource());
+		        EntityCatalogElements Act=(EntityCatalogElements) BS.getEntidad();
+		        
+		        if (Act instanceof File || ((Act instanceof Folder)&&(Act.getEntry().getId()!=Constants.CATALOGID)))
+		        {
+		        	
+		        	ButtonTipo nuevo;
+		        	if (BS.getF().getCatalogo().getId().equals(FinderButton2.getCatalogo().getId()))
+		        		nuevo=new ButtonTipo(Act,CatalogTipo.Catalog2.getTexto(),BS.getSelectionPanel());
+		        	else nuevo=new ButtonTipo(Act,CatalogTipo.Catalog1.getTexto(),BS.getSelectionPanel());
+		        	nuevo.setSize("100%", "100%");
+		        	nuevo.addClickHandler(new ClickHandler() {
+		        		
+						public void onClick(ClickEvent event) {
+							((Button)event.getSource()).setStyleName("gwt-ButtonCenter");
+							
+						}
+					});
 				
+		        	nuevo.addMouseDownHandler(new MouseDownHandler() {
+						public void onMouseDown(MouseDownEvent event) {
+							((Button)event.getSource()).setStyleName("gwt-ButtonCenterPush");
+						}
+					});
+					
+
+		        	nuevo.addMouseOutHandler(new MouseOutHandler() {
+						public void onMouseOut(MouseOutEvent event) {
+							((Button)event.getSource()).setStyleName("gwt-ButtonCenter");
+					}
+				});
+					
+
+		        	nuevo.addMouseOverHandler(new MouseOverHandler() {
+						public void onMouseOver(MouseOverEvent event) {
+							
+							((Button)event.getSource()).setStyleName("gwt-ButtonCenterOver");
+						
+					}
+				});
+
+		        	nuevo.setStyleName("gwt-ButtonCenter");
+		        	nuevo.addClickHandler(new ClickHandler() {
+						
+						public void onClick(ClickEvent event) {
+							ButtonTipo Yo=(ButtonTipo)event.getSource();
+							Yo.getPertenezco().remove(Yo);
+							
+							
+						}
+					});
+		        	if (!ExistPreview((Panel) BS.getSelectionPanel(),Act))
+		        			BS.getSelectionPanel().add(nuevo);
+		        	else Window.alert(ActualUser.getLanguage().getE_ExistBefore());
+		        }
+				
+								
 				if (SelectedB.getWidgetCount()==0)btnNewButton.setVisible(false);
 				else btnNewButton.setVisible(true);
 				
 			}
 
-			private boolean EqualsFinderButton(BotonesStackPanelBrowser bS) {
-				for (EntryClient entity : ((EntityCatalogElements)bS.getEntidad()).getEntry().getParents()) {
-					if (FinderButton2.getTopPath().getEntry().getId().equals(entity.getId())) return true;
-				}		
+			private boolean ExistPreview(Panel labeltypo, EntityCatalogElements act) {
+				for (int i = 0; i < ((ComplexPanel) labeltypo).getWidgetCount(); i++) {
+					EntityCatalogElements temp = ((ButtonTipo)((ComplexPanel) labeltypo).getWidget(i)).getEntidad();
+					if (temp.getEntry().getId()==act.getEntry().getId()) return true;
+					
+				}
 				return false;
 			}
 		});
@@ -138,6 +208,7 @@ public class Browser implements EntryPoint {
 		 //FinderButton1 = new FinderGrafo(ActualUser.getOpenCatalog());
 		 if (ActualUser.getReadingactivity().getVisualization()==null||ActualUser.getReadingactivity().getVisualization().equals(Constants.VISUAL_ARBOL))
 	        {
+			 
 			 FinderButton= new FinderOwnGrafo(ActualUser.getOpenCatalog());
 			// FinderButton1.RefrescaLosDatos();
 	        }
@@ -209,34 +280,77 @@ public class Browser implements EntryPoint {
 		btnNewButton.setSize("100%", "100%");
 		
 		
-		FinderOwnGrafo.setBotonClickGrafo(new ClickHandler() {
-
-			public void onClick(ClickEvent event) {
-				BotonesStackPanelBrowser BS = ((BotonesStackPanelBrowser) event
-						.getSource());
-//			// REvisar Despierto.
-//				if ((FinderButton.getTopPath()==null)||(BS.getEntidad().getFathers().isEmpty())) 
-//					{
-//					BS.Swap();
+//		FinderOwnGrafo.setBotonClickGrafo(new ClickHandler() {
+//
+//public void onClick(ClickEvent event) {
+//				
+//				BotonGrafo BS=((BotonGrafo) event.getSource());
+//		        EntityCatalogElements Act=(EntityCatalogElements) BS.getEntidad();
+//		        
+//		        if (Act instanceof File || ((Act instanceof Folder)&&(Act.getEntry().getId()!=Constants.CATALOGID)))
+//		        {
+//		        	ButtonTipo nuevo=new ButtonTipo(Act,CatalogTipo.Catalog1.getTexto(),BS.getSelectionPanel());
+//		        	nuevo.setSize("100%", "100%");
+//		        	nuevo.addClickHandler(new ClickHandler() {
+//						
+//						public void onClick(ClickEvent event) {
+//							((Button)event.getSource()).setStyleName("gwt-ButtonCenter");
+//							
+//						}
+//					});
+//				
+//		        	nuevo.addMouseDownHandler(new MouseDownHandler() {
+//						public void onMouseDown(MouseDownEvent event) {
+//							((Button)event.getSource()).setStyleName("gwt-ButtonCenterPush");
+//						}
+//					});
+//					
+//
+//		        	nuevo.addMouseOutHandler(new MouseOutHandler() {
+//						public void onMouseOut(MouseOutEvent event) {
+//							((Button)event.getSource()).setStyleName("gwt-ButtonCenter");
 //					}
-//				else
-				if (!EqualsFinderButton(BS))
-					{
-					BS.Swap();
-					}
-				
-				if (SelectedB.getWidgetCount()==0)btnNewButton.setVisible(false);
-				else btnNewButton.setVisible(true);
-			}
-
-			private boolean EqualsFinderButton(BotonesStackPanelBrowser bS) {
-				for (int i=0; i<SelectedB.getWidgetCount();i++) {
-					BotonesStackPanelBrowser Boton=(BotonesStackPanelBrowser)SelectedB.getWidget(i);
-					if (((EntityCatalogElements)Boton.getEntidad()).getEntry().getId().equals(((EntityCatalogElements)bS.getEntidad()).getEntry().getId())) return true;
-				}		
-				return false;
-			}
-		});
+//				});
+//					
+//
+//		        	nuevo.addMouseOverHandler(new MouseOverHandler() {
+//						public void onMouseOver(MouseOverEvent event) {
+//							
+//							((Button)event.getSource()).setStyleName("gwt-ButtonCenterOver");
+//						
+//					}
+//				});
+//
+//		        	nuevo.setStyleName("gwt-ButtonCenter");
+//		        	nuevo.addClickHandler(new ClickHandler() {
+//						
+//						public void onClick(ClickEvent event) {
+//							ButtonTipo Yo=(ButtonTipo)event.getSource();
+//							Yo.getPertenezco().remove(Yo);
+//							
+//							
+//						}
+//					});
+//		        	if (!ExistPreview(BS.getSelectionPanel(),Act))
+//		        			BS.getSelectionPanel().add(nuevo);
+//		        	else Window.alert(ActualUser.getLanguage().getE_ExistBefore());
+//		        }
+//				
+//								
+//				if (SelectedB.getWidgetCount()==0)btnNewButton.setVisible(false);
+//				else btnNewButton.setVisible(true);
+//				
+//			}
+//
+//			private boolean ExistPreview(Panel labeltypo, EntityCatalogElements act) {
+//				for (int i = 0; i < ((ComplexPanel) labeltypo).getWidgetCount(); i++) {
+//					EntityCatalogElements temp = ((ButtonTipo)((ComplexPanel) labeltypo).getWidget(i)).getEntidad();
+//					if (temp.getEntry().getId()==act.getEntry().getId()) return true;
+//					
+//				}
+//				return false;
+//			}
+//		});
 
 		FinderButton.setSize("100%", "100%");
 		
@@ -284,6 +398,7 @@ public class Browser implements EntryPoint {
 		
 		MenuItem BotonClose = new MenuItem("New item", false, new Command() {
 			public void execute() {
+				PanelGrafo.setAccionAsociada(null);
 				Controlador.change2Reader();
 			}
 		});
