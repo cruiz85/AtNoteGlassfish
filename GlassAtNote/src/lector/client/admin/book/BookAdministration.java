@@ -3,7 +3,9 @@ package lector.client.admin.book;
 import java.util.List;
 import java.util.Stack;
 
-import lector.client.admin.BotonesStackPanelAdministracionMio;
+import lector.client.admin.generalPanels.BotonesStackPanelAdministracionMio;
+import lector.client.admin.generalPanels.BotonesStackPanelAdministracionSimple;
+import lector.client.admin.generalPanels.PublicPrivatePanel;
 import lector.client.book.reader.GWTService;
 import lector.client.book.reader.GWTServiceAsync;
 import lector.client.catalogo.StackPanelMio;
@@ -19,6 +21,12 @@ import com.google.gwt.core.client.EntryPoint;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
+import com.google.gwt.event.dom.client.MouseDownEvent;
+import com.google.gwt.event.dom.client.MouseDownHandler;
+import com.google.gwt.event.dom.client.MouseOutEvent;
+import com.google.gwt.event.dom.client.MouseOutHandler;
+import com.google.gwt.event.dom.client.MouseOverEvent;
+import com.google.gwt.event.dom.client.MouseOverHandler;
 import com.google.gwt.safehtml.shared.SafeHtml;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.RootPanel;
@@ -26,6 +34,7 @@ import com.google.gwt.user.client.ui.MenuBar;
 import com.google.gwt.user.client.ui.MenuItem;
 import com.google.gwt.user.client.Command;
 import com.google.gwt.user.client.Window;
+import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.MenuItemSeparator;
 import com.google.gwt.user.client.ui.SplitLayoutPanel;
 import com.google.gwt.user.client.ui.SimplePanel;
@@ -37,7 +46,7 @@ public class BookAdministration implements EntryPoint {
 	private static final String GET_A_BOOK = "Get a book from Google Library";
 	private static final String UPLOAD_A_TEXT = "Upload your own Text";
 	private static final String GET_A_BOOK_WELLCOME = "Book Management";
-	private StackPanelMio stackPanel_1;
+	private PublicPrivatePanel stackPanel_1;
 	private VerticalPanel Selected;
 	private VerticalPanel simplePanel;
 	static GWTServiceAsync bookReaderServiceHolder = GWT
@@ -185,7 +194,7 @@ public class BookAdministration implements EntryPoint {
 		horizontalPanel_1.setSpacing(7);
 		horizontalPanel_1.setSize("100%", "100%");
 
-		stackPanel_1 = new StackPanelMio();
+		stackPanel_1 = new PublicPrivatePanel();
 		horizontalPanel_1.add(stackPanel_1);
 		
 		SimplePanel simplePanel_1 = new SimplePanel();
@@ -196,40 +205,90 @@ public class BookAdministration implements EntryPoint {
 		simplePanel_1.setWidget(Selected);
 		Selected.setWidth("100%");
 		
-		stackPanel_1.setBotonTipo(new BotonesStackPanelAdministracionSimple(
-				"prototipo", new VerticalPanel(), Selected));
-		stackPanel_1.setBotonClick(new ClickHandler() {
-
-			public void onClick(ClickEvent event) {
-				
-				BotonesStackPanelAdministracionMio BSPM = (BotonesStackPanelAdministracionMio) event.getSource();
-				BSPM.Swap();
-//				BotonesStackPanelAdministracionSimple BSPMB= new BotonesStackPanelAdministracionSimple(BSPM.getHTML(),BSPM.getNormal(),BSPM.getSelected());
-//				BSPM).Swap();
-			}
-		});
+//		stackPanel_1.setBotonTipo(new BotonesStackPanelAdministracionSimple(
+//				"prototipo", new VerticalPanel(), Selected));
+//		stackPanel_1.setBotonClick(new ClickHandler() {
+//
+//			public void onClick(ClickEvent event) {
+//				
+//				BotonesStackPanelAdministracionMio BSPM = (BotonesStackPanelAdministracionMio) event.getSource();
+//				BSPM.Swap();
+////				BotonesStackPanelAdministracionSimple BSPMB= new BotonesStackPanelAdministracionSimple(BSPM.getHTML(),BSPM.getNormal(),BSPM.getSelected());
+////				BSPM).Swap();
+//			}
+//		});
 		
 		
 		List<Long> ListaIDsLibros = ((ProfessorClient) ActualUser.getUser())
 				.getBooks();
 		if (!ListaIDsLibros.isEmpty())
+			//TODO CAMBIAR POR UN CARGADOR DE TODOS LOS LIBROS
 			bookReaderServiceHolder.getBookClientsByIds(ListaIDsLibros,
 					new AsyncCallback<List<BookClient>>() {
 
 						@Override
 						public void onSuccess(List<BookClient> result) {
-							if (result.size() < 10) {
-								for (BookClient Book : result) {
-									EntidadLibro E = new EntidadLibro(Book);
-									stackPanel_1.addBotonLessTen(E);
-								}
+							
+							for (BookClient Book : result) {
+								EntidadLibro E = new EntidadLibro(Book);
+								BotonesStackPanelAdministracionSimple BSPS=new BotonesStackPanelAdministracionSimple(E.getName(), stackPanel_1.getPrivate(), Selected);
+								BSPS.setEntidad(E);
+								BSPS.addClickHandler(new ClickHandler() {
+									
+									public void onClick(ClickEvent event) {
+										((Button)event.getSource()).setStyleName("gwt-ButtonCenter");
+										
+									}
+								});
+								
+								BSPS.addMouseDownHandler(new MouseDownHandler() {
+										public void onMouseDown(MouseDownEvent event) {
+											((Button)event.getSource()).setStyleName("gwt-ButtonCenterPush");
+										}});
+								
+								BSPS.addMouseOutHandler(new MouseOutHandler() {
+									public void onMouseOut(MouseOutEvent event) {
+										((Button)event.getSource()).setStyleName("gwt-ButtonCenter");
+								}});
+								
 
-							} else {
-								for (BookClient Book : result) {
-									EntidadLibro E = new EntidadLibro(Book);
-									stackPanel_1.addBoton(E);
-								}
+								BSPS.addMouseOverHandler(new MouseOverHandler() {
+									public void onMouseOver(MouseOverEvent event) {
+										
+										((Button)event.getSource()).setStyleName("gwt-ButtonCenterOver");
+									
+								}});
+								
+								BSPS.setStyleName("gwt-ButtonCenter");
+								BSPS.setWidth("100%");
+								
+								BSPS.addClickHandler(new ClickHandler() {
+									
+									@Override
+									public void onClick(ClickEvent event) {
+										BotonesStackPanelAdministracionSimple BSPM = (BotonesStackPanelAdministracionSimple) event.getSource();
+										BSPM.setSelected(Selected);
+										BSPM.Swap();
+										
+										
+										
+										
+									}
+								});
 							}
+							
+//							if (result.size() < 10) {
+//								for (BookClient Book : result) {
+//									EntidadLibro E = new EntidadLibro(Book);
+//									stackPanel_1.addBotonLessTen(E);
+//								}
+//
+//							} else {
+//								for (BookClient Book : result) {
+//									EntidadLibro E = new EntidadLibro(Book);
+//									stackPanel_1.addBoton(E);
+//								}
+//							}
 							stackPanel_1.ClearEmpty();
 
 						}

@@ -1,6 +1,6 @@
 package lector.client.catalogo.OwnGraph;
 
-import lector.client.admin.BotonesStackPanelAdministracionMio;
+import lector.client.admin.generalPanels.BotonesStackPanelAdministracionMio;
 import lector.client.catalogo.BotonesStackPanelMio;
 import lector.client.catalogo.BotonesStackPanelMioGrafo;
 import lector.client.catalogo.Finder;
@@ -41,9 +41,10 @@ public class BotonGrafo extends BotonesStackPanelAdministracionMio {
 	public void setCatalogo(CatalogoClient entrada) {
 		super.setHTML(entrada.getCatalogName());
 		catalogo=entrada;
-		entry=null;
+		entry=new TypeCategoryClient(entrada.getCatalogName());
 		isCatalog=true;
-		setEntidad(new Folder(new TypeCategoryClient(entrada.getCatalogName()), entrada, null));
+		setEntidad(new Folder((TypeCategoryClient) entry, entrada, null));
+		
 	}
 
 	public EntryClient getEntry() {

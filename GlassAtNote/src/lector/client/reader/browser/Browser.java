@@ -2,7 +2,7 @@ package lector.client.reader.browser;
 
 import java.util.ArrayList;
 
-import lector.client.admin.BotonesStackPanelAdministracionMio;
+import lector.client.admin.generalPanels.BotonesStackPanelAdministracionMio;
 import lector.client.book.reader.GWTService;
 import lector.client.book.reader.GWTServiceAsync;
 import lector.client.catalogo.Finder;
@@ -132,9 +132,9 @@ public enum CatalogTipo {
 		        {
 		        	
 		        	ButtonTipo nuevo;
-		        	if (BS.getF().getCatalogo().getId().equals(FinderButton2.getCatalogo().getId()))
-		        		nuevo=new ButtonTipo(Act,CatalogTipo.Catalog2.getTexto(),BS.getSelectionPanel());
-		        	else nuevo=new ButtonTipo(Act,CatalogTipo.Catalog1.getTexto(),BS.getSelectionPanel());
+		        	if (BS.getF().getCatalogo().getId().equals(FinderButton.getCatalogo().getId()))
+		        		nuevo=new ButtonTipo(Act,CatalogTipo.Catalog1.getTexto(),BS.getSelectionPanel());
+		        	else nuevo=new ButtonTipo(Act,CatalogTipo.Catalog2.getTexto(),BS.getSelectionPanel());
 		        	nuevo.setSize("100%", "100%");
 		        	nuevo.addClickHandler(new ClickHandler() {
 		        		
@@ -172,7 +172,8 @@ public enum CatalogTipo {
 						public void onClick(ClickEvent event) {
 							ButtonTipo Yo=(ButtonTipo)event.getSource();
 							Yo.getPertenezco().remove(Yo);
-							
+							if (SelectedB.getWidgetCount()==0)btnNewButton.setVisible(false);
+							else btnNewButton.setVisible(true);
 							
 						}
 					});
@@ -197,7 +198,7 @@ public enum CatalogTipo {
 			}
 		});
 		
-		
+		BotonesStackPanelBrowser.setBrowser(this);
 		FinderKeys.setButtonTipo(new BotonesStackPanelBrowser(
 				"prototipo", new VerticalPanel(),SelectedB,FinderButton));
 		 FinderKeys.setBotonClick(new ClickHandlerMioFilterBrowser(FinderButton));
@@ -422,8 +423,16 @@ public enum CatalogTipo {
 		LoadingPanel.getInstance().setLabelTexto(ActualLang.getFiltering());
 		ArrayList<EntryClient> Tipos=new ArrayList<EntryClient>();
 		for (int i = 0; i < SelectedB.getWidgetCount(); i++) {
-			BotonesStackPanelBrowser BSM= (BotonesStackPanelBrowser)SelectedB.getWidget(i);
+			if (SelectedB.getWidget(i) instanceof ButtonTipo)
+			{
+			ButtonTipo BSM= (ButtonTipo)SelectedB.getWidget(i);
 			Tipos.add(((EntityCatalogElements)BSM.getEntidad()).getEntry()) ;
+			}
+			else {
+
+BotonesStackPanelBrowser BSM= (BotonesStackPanelBrowser)SelectedB.getWidget(i);
+Tipos.add(((EntityCatalogElements)BSM.getEntidad()).getEntry()) ;
+			}
 		}
 		
 		ArrayList<TypeClient> TCClear=new ArrayList<TypeClient>();
@@ -439,7 +448,7 @@ public enum CatalogTipo {
 		
 			generafiltro(TCClear);
 			filterAndAdd(TCClear);
-	
+			LoadingPanel.getInstance().hide();
 //		bookReaderServiceHolder.getEntriesIdsByIdsRec(Tipos, new AsyncCallback<ArrayList<FileDB>>() {
 //			
 //			public void onSuccess(ArrayList<FileDB> result) {
@@ -471,8 +480,17 @@ public enum CatalogTipo {
 	}
 
 	private ArrayList<TypeClient> procesaTipo(TypeCategoryClient typeClient) {
-		// TODO Auto-generated method stub
-		return null;
+		ArrayList<TypeClient> Salida=new ArrayList<TypeClient>();
+		for (EntryClient typeClient2 : typeClient.getChildren()) {
+			if (typeClient2 instanceof TypeClient)
+				Salida.add((TypeClient) typeClient2);
+			else {
+				ArrayList<TypeClient> result=procesaTipo((TypeCategoryClient) typeClient2);
+				if (result!=null&&!result.isEmpty())
+					Salida.addAll(result);
+			}
+		}
+		return Salida;
 	}
 
 	protected void filterAndAdd(ArrayList<TypeClient> result) {
@@ -522,5 +540,13 @@ public enum CatalogTipo {
 	
 	public static Button getBtnNewButton() {
 		return btnNewButton;
+	}
+	
+	public Finder getFinderButton() {
+		return FinderButton;
+	}
+	
+	public Finder getFinderButton2() {
+		return FinderButton2;
 	}
 }

@@ -1,4 +1,4 @@
-package lector.client.admin;
+package lector.client.admin.generalPanels;
 
 
 

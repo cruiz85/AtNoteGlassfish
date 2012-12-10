@@ -330,8 +330,9 @@ public class BookLoader implements EntryPoint {
 			public void onSubmitComplete(SubmitCompleteEvent event) {
 
 				//startNewBlobstoreSession();
-
-				if ((event.getResults()!=null)&&!(event.getResults().isEmpty()))
+				String results=event.getResults();
+				results=results.replaceAll("\\<.*?\\>","");
+				if ((event.getResults()!=null)&&!(results.isEmpty()))
 					Window.alert(event.getResults());
 				/*
 				 * userImageService.getBookBlobsByUserId(ActualUser.getUser().getId

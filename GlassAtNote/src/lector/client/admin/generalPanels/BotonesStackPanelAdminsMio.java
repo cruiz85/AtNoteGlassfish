@@ -1,7 +1,8 @@
-package lector.client.admin.admins;
+package lector.client.admin.generalPanels;
 
 import com.google.gwt.user.client.ui.VerticalPanel;
 
+import lector.client.admin.admins.EntidadAdmin;
 import lector.client.catalogo.BotonesStackPanelMio;
 
 public class BotonesStackPanelAdminsMio extends BotonesStackPanelMio {

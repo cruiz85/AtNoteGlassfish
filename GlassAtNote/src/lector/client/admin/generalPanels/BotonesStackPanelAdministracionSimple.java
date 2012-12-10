@@ -1,8 +1,7 @@
-package lector.client.admin.book;
+package lector.client.admin.generalPanels;
 
 import com.google.gwt.user.client.ui.VerticalPanel;
 
-import lector.client.admin.BotonesStackPanelAdministracionMio;
 import lector.client.catalogo.BotonesStackPanelMio;
 import lector.client.catalogo.Finder;
 

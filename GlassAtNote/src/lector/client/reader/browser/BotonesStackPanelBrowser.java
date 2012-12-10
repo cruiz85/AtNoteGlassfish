@@ -11,14 +11,18 @@ import com.google.gwt.event.dom.client.MouseOverHandler;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.VerticalPanel;
 
-import lector.client.admin.BotonesStackPanelAdministracionMio;
+import lector.client.admin.generalPanels.BotonesStackPanelAdministracionMio;
 import lector.client.catalogo.BotonesStackPanelMio;
 import lector.client.catalogo.Finder;
 import lector.client.catalogo.client.Entity;
 import lector.client.catalogo.client.EntityCatalogElements;
+import lector.client.reader.ButtonTipo;
+import lector.client.reader.browser.Browser.CatalogTipo;
 
 public class BotonesStackPanelBrowser extends
 		BotonesStackPanelAdministracionMio {
+	
+	private static Browser browser;
 	
 	public BotonesStackPanelBrowser(String HTML, VerticalPanel Normal,
 			VerticalPanel Selected,Finder  F) {
@@ -59,7 +63,12 @@ public class BotonesStackPanelBrowser extends
 			}
 		});
 		BS.setStyleName("gwt-ButtonTOP");
-		BS.setHTML(this.getHTML());
+		BS.setText(this.getText());
+		BS.setF(getF());
+		if (BS.getF().getCatalogo().getId().equals(browser.getFinderButton().getCatalogo().getId()))
+			BS.setHTML(CatalogTipo.Catalog1.getTexto() + this.getHTML());
+    	else BS.setHTML(CatalogTipo.Catalog2.getTexto() + this.getHTML());
+		
 		BS.setEntidad(getEntidad());
 		Selected.add(BS);
 		BS.addClickHandler(new ClickHandler() {
@@ -88,5 +97,12 @@ public class BotonesStackPanelBrowser extends
 		return false;
 	}
 	
+	public static void setBrowser(Browser browser) {
+		BotonesStackPanelBrowser.browser = browser;
+	}
+	
+	public static Browser getBrowser() {
+		return browser;
+	}
 
 }

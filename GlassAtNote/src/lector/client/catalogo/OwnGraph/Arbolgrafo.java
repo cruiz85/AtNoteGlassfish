@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import lector.client.catalogo.BotonesStackPanelMio;
 import lector.client.catalogo.client.File;
 import lector.client.catalogo.client.Folder;
+import lector.client.controler.Constants;
 import lector.share.model.client.CatalogoClient;
 import lector.share.model.client.EntryClient;
 import lector.share.model.client.TypeCategoryClient;
@@ -71,6 +72,7 @@ public Arbolgrafo() {
 		if (AccionAsociada!=null)
 			BG.addClickHandler(AccionAsociada);
 		BG.setCatalogo(entrada);
+		BG.getEntry().setId(Constants.CATALOGID);
 		BG.setStyleName("gwt-ButtonCenter");
 		
 		BG.addClickHandler(new ClickHandler() {

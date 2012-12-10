@@ -10,6 +10,9 @@ import com.google.gwt.user.client.ui.HasVerticalAlignment;
 
 public class LoadingPanel extends PopupPanel {
 
+	public static String DELETING="Deleting...";
+	public static String SAVING="Saving...";
+	
     private static LoadingPanel MyPanelStatic;
 	private Label LabelText;
 
