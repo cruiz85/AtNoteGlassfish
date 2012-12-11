@@ -114,10 +114,6 @@ public interface GWTServiceAsync {
 	void getAnnotationsByIds(List<Long> ids,
 			AsyncCallback<List<AnnotationClient>> callback);
 
-	void getAnnotationsByIdsAndAuthorsStudent(List<Long> ids,
-			List<Long> authorIds, Long Activity, Long Student,
-			AsyncCallback<List<AnnotationClient>> callback);
-
 	void getStudents(AsyncCallback<List<StudentClient>> callback);
 
 	void getProfessors(AsyncCallback<List<ProfessorClient>> callback);
@@ -139,10 +135,6 @@ public interface GWTServiceAsync {
 			AsyncCallback<List<AnnotationClient>> callback);
 
 	void getAnnotationsByPageNumber(Integer pageNumber, String bookId,
-			Long readingActivityId,
-			AsyncCallback<List<AnnotationClient>> callback);
-
-	void getAnnotationsByStudentIds(List<Long> ids, Long Student,
 			Long readingActivityId,
 			AsyncCallback<List<AnnotationClient>> callback);
 
@@ -261,6 +253,12 @@ public interface GWTServiceAsync {
 
 	void removeUserParticipatingInGroup(Long userId, Long groupId,
 			AsyncCallback<Void> callback);
+
+	void getAnnotationsForStudentId(List<Long> ids, Long Student,
+			AsyncCallback<List<AnnotationClient>> callback);
+
+	void getAnnotationsByTypeClientIds(List<Long> ids, Long catalogId,
+			AsyncCallback<List<AnnotationClient>> callback);
 
 	
 }

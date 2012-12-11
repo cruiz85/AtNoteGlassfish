@@ -388,7 +388,7 @@ public class GWTServiceImpl extends RemoteServiceServlet implements GWTService {
 					+ e.getMessage(), e.getStackTrace());
 
 		}
-		if (list == null || list.isEmpty()) {
+		if (list == null) {
 			// logger.error ("Exception in method loadGroupById: ", e)
 			throw new GroupNotFoundException(
 					"Group not found in method loadGroupByEmail");
@@ -1344,20 +1344,75 @@ public class GWTServiceImpl extends RemoteServiceServlet implements GWTService {
 		return null;
 	}
 
-	// TODO que hace este método.
 	@Override
-	public List<AnnotationClient> getAnnotationsByStudentIds(List<Long> ids,
-			Long Student, Long readingActivityId) {
-		// TODO Auto-generated method stub
-		return null;
-	}
+	public List<AnnotationClient> getAnnotationsForStudentId(List<Long> ids,
+			Long studentId) throws GeneralException,
+			AnnotationNotFoundException {
+		EntityManager entityManager = emf.createEntityManager();
+		List<Annotation> list;
+		List<Annotation> listForStudent;
+		String sql = "SELECT r FROM Annotation r WHERE r.id=" + ids.get(0);
+		for (int i = 1; i < ids.size(); i++) {
+			sql += "OR r.id=" + ids.get(i);
+		}
 
-	// TODO que hace este método.
+		try {
+			list = entityManager.createQuery(sql).getResultList();
+			listForStudent = new ArrayList<Annotation>();
+			for (Annotation annotation : list) {
+				if (annotation.getVisibility() == 1) {
+					listForStudent.add(annotation);
+				} else {
+					if (annotation.getCreator().getId().equals(studentId)) {
+						listForStudent.add(annotation);
+					}
+				}
+
+			}
+		} catch (Exception e) {
+			// logger.error ("Exception in method loadGroupByEmail: ", e)
+			throw new GeneralException("Exception in method loadGroupByEmail:"
+					+ e.getMessage(), e.getStackTrace());
+
+		}
+
+		if (entityManager.isOpen()) {
+			entityManager.close();
+		}
+		return ServiceManagerUtils.produceAnnotationClients(listForStudent);
+	}
+//TODO AQUI DEBERÍA SER NOMBRES Y NO IDS
 	@Override
-	public List<AnnotationClient> getAnnotationsByIdsAndAuthorsStudent(
-			List<Long> ids, List<Long> authorIds, Long Activity, Long Student) {
-		// TODO Auto-generated method stub
-		return null;
+	public List<AnnotationClient> getAnnotationsByTypeClientIds(List<String> names, Long catalogId) throws GeneralException, TagNotFoundException {
+		EntityManager entityManager = emf.createEntityManager();
+		List<Tag> list;
+		List<Annotation> annotationList = new ArrayList<Annotation>();
+		String sql = "SELECT t FROM Tag t WHERE t.catalog.id=" + catalogId + "AND AND (t.name=" + names.get(0);
+		for (int i = 1; i < names.size(); i++) {
+			sql += "OR r.id=" + names.get(i);
+		}
+		sql += ")";
+		try {
+			list = entityManager.createQuery(sql).getResultList();
+			for (Tag tag : list) {
+				annotationList.addAll(tag.getAnnotations());
+			}
+		} catch (Exception e) {
+			// logger.error ("Exception in method loadUserByName: ", e)
+			throw new GeneralException("Exception in method loadUserByName:"
+					+ e.getMessage(), e.getStackTrace());
+
+		}
+		if (list == null || list.isEmpty()) {
+			// logger.error ("Exception in method loadUserById: ", e)
+			throw new TagNotFoundException(
+					"User not found in method loadUserByName");
+
+		}
+		if (entityManager.isOpen()) {
+			entityManager.close();
+		}
+		return ServiceManagerUtils.produceAnnotationClients(annotationList);
 	}
 
 	@Override
@@ -2140,7 +2195,7 @@ public class GWTServiceImpl extends RemoteServiceServlet implements GWTService {
 
 						} else {
 							relationFathers.add(relationFrom);
-							
+
 						}
 
 					}
@@ -2190,21 +2245,20 @@ public class GWTServiceImpl extends RemoteServiceServlet implements GWTService {
 				}
 			}
 			for (Relation relationRem : relationFathers) {
-				
-				FolderDB folderFrom = (FolderDB) relationRem
-						.getFather();
+
+				FolderDB folderFrom = (FolderDB) relationRem.getFather();
 				for (Relation relation : folderFrom.getRelations()) {
-					if(relation.getId().equals(relationRem.getId())){
-						folderFrom.getRelations().remove(relation);	
+					if (relation.getId().equals(relationRem.getId())) {
+						folderFrom.getRelations().remove(relation);
 						break;
 					}
-					
+
 				}
-				entityManager.merge(folderFrom);	
-				entityManager.merge(relationRem);	
+				entityManager.merge(folderFrom);
+				entityManager.merge(relationRem);
 			}
-//			entityManager.merge(tagFrom);
-		//	entityManager.remove(tagFrom);
+			// entityManager.merge(tagFrom);
+			// entityManager.remove(tagFrom);
 			entityManager.merge(catalogo);
 			userTransaction.commit();
 		} catch (Exception e) {
