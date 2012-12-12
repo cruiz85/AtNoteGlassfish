@@ -29,8 +29,6 @@ import lector.share.model.client.UserClient;
  */
 public interface GWTServiceAsync {
 
-	
-
 	void deleteAnnotation(Long annotationId, AsyncCallback<Void> asyncCallback);
 
 	void saveAnnotation(AnnotationClient annotationClient,
@@ -43,11 +41,9 @@ public interface GWTServiceAsync {
 
 	void saveUser(UserClient userClient, AsyncCallback<Void> asyncCallback);
 
-
 	void saveGroup(GroupClient groupClient, AsyncCallback<Void> asyncCallback);
 
 	void deleteGroup(Long groupId, AsyncCallback<Void> asyncCallback);
-
 
 	void deleteCatalog(Long catalogId, AsyncCallback<Void> callback);
 
@@ -58,10 +54,8 @@ public interface GWTServiceAsync {
 
 	void deleteLanguage(Long languageId, AsyncCallback<Void> callback);
 
-
 	void saveReadingActivity(ReadingActivityClient readingActivityClient,
 			AsyncCallback<Void> callback);
-
 
 	void getEntriesIdsByNames(ArrayList<String> names, Long catalogTeacher,
 			Long catalogOpen, AsyncCallback<List<Long>> callback);
@@ -74,7 +68,6 @@ public interface GWTServiceAsync {
 	void deleteAnnotationThread(Long annotationThreadId,
 			AsyncCallback<Void> callback);
 
-	
 	void getJSONServiceTODrawGraph(String query, String data,
 			AsyncCallback<String> callback);
 
@@ -91,7 +84,8 @@ public interface GWTServiceAsync {
 	void getAnnotationsNumberByTagName(String annotationTagName,
 			AsyncCallback<Integer> callback);
 
-	void renameType(Long typeIds, String newTagName, AsyncCallback<Void> callback);
+	void renameType(Long typeIds, String newTagName,
+			AsyncCallback<Void> callback);
 
 	void moveFolderDB(Long typeCategoryId, Long typeCategoryFromId,
 			Long typeCategoryToId, AsyncCallback<Void> callback);
@@ -104,7 +98,7 @@ public interface GWTServiceAsync {
 
 	void loadUserById(Long userId, AsyncCallback<UserClient> callback);
 
-//	void loadUserByEmail(String email, AsyncCallback<UserClient> callback);
+	// void loadUserByEmail(String email, AsyncCallback<UserClient> callback);
 
 	void deleteStudentById(Long studentId, AsyncCallback<Void> callback);
 
@@ -147,7 +141,6 @@ public interface GWTServiceAsync {
 
 	void getVisbibleCatalogsByProfessorId(Long professorId,
 			AsyncCallback<List<CatalogoClient>> callback);
-
 
 	void getSonsFromFolderDB(Long typeCategoryId,
 			AsyncCallback<List<EntryClient>> callback);
@@ -239,8 +232,7 @@ public interface GWTServiceAsync {
 	void updateCatalog(CatalogoClient catalogClient,
 			AsyncCallback<Void> callback);
 
-	void updateType(TypeClient typesys,
-			AsyncCallback<Void> callback);
+	void updateType(TypeClient typesys, AsyncCallback<Void> callback);
 
 	void updateTypeCategory(TypeCategoryClient typeCategoryClient,
 			AsyncCallback<Void> callback);
@@ -257,8 +249,12 @@ public interface GWTServiceAsync {
 	void getAnnotationsForStudentId(List<Long> ids, Long Student,
 			AsyncCallback<List<AnnotationClient>> callback);
 
-	void getAnnotationsByTypeClientIds(List<Long> ids, Long readingActivityId,
-			Long userId, AsyncCallback<List<AnnotationClient>> callback);
+	void getAnnotationsByTypeClientIdsForProfessor(List<Long> ids,
+			Long readingActivityId, Long userId,
+			AsyncCallback<List<AnnotationClient>> callback);
 
-	
+	void getAnnotationsByTypeClientIdsForStudent(List<Long> ids,
+			Long readingActivityId, Long studentId,
+			AsyncCallback<List<AnnotationClient>> callback);
+
 }

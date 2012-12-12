@@ -1383,36 +1383,98 @@ public class GWTServiceImpl extends RemoteServiceServlet implements GWTService {
 	}
 
 	@Override
-	public List<AnnotationClient> getAnnotationsByTypeClientIds(List<Long> ids, Long readingActivityId, Long userId) throws GeneralException, TagNotFoundException {
+	public List<AnnotationClient> getAnnotationsByTypeClientIdsForProfessor(
+			List<Long> ids, Long readingActivityId, Long userId)
+			throws GeneralException, TagNotFoundException {
 		EntityManager entityManager = emf.createEntityManager();
 		List<Tag> list;
 		List<Annotation> annotationList = new ArrayList<Annotation>();
+		List<Annotation> annotationActivityFilter = new ArrayList<Annotation>();
 		String sql = "SELECT t FROM Tag t WHERE t.id=" + ids.get(0);
 		for (int i = 1; i < ids.size(); i++) {
 			sql += "OR r.id=" + ids.get(i);
 		}
-		sql += ")";
 		try {
 			list = entityManager.createQuery(sql).getResultList();
+			if (list == null) {
+				// logger.error ("Exception in method loadUserById: ", e)
+				throw new TagNotFoundException(
+						"User not found in method loadUserByName");
+
+			}
 			for (Tag tag : list) {
 				annotationList.addAll(tag.getAnnotations());
 			}
+
+			for (Annotation annotation : annotationList) {
+				if (annotation.getActivity().getId().equals(readingActivityId)) {
+					annotationActivityFilter.add(annotation);
+				}
+			}
+
 		} catch (Exception e) {
-			// logger.error ("Exception in method loadUserByName: ", e)
+
 			throw new GeneralException("Exception in method loadUserByName:"
 					+ e.getMessage(), e.getStackTrace());
 
 		}
-		if (list == null || list.isEmpty()) {
-			// logger.error ("Exception in method loadUserById: ", e)
-			throw new TagNotFoundException(
-					"User not found in method loadUserByName");
 
-		}
 		if (entityManager.isOpen()) {
 			entityManager.close();
 		}
-		return ServiceManagerUtils.produceAnnotationClients(annotationList);
+		return ServiceManagerUtils
+				.produceAnnotationClients(annotationActivityFilter);
+	}
+
+	@Override
+	public List<AnnotationClient> getAnnotationsByTypeClientIdsForStudent(
+			List<Long> ids, Long readingActivityId, Long studentId)
+			throws GeneralException, TagNotFoundException {
+		EntityManager entityManager = emf.createEntityManager();
+		List<Tag> list;
+		List<Annotation> annotationList = new ArrayList<Annotation>();
+		List<Annotation> annotationStudentFilter = new ArrayList<Annotation>();
+		String sql = "SELECT t FROM Tag t WHERE t.id=" + ids.get(0);
+		for (int i = 1; i < ids.size(); i++) {
+			sql += "OR r.id=" + ids.get(i);
+		}
+		try {
+			list = entityManager.createQuery(sql).getResultList();
+			if (list == null) {
+				// logger.error ("Exception in method loadUserById: ", e)
+				throw new TagNotFoundException(
+						"User not found in method loadUserByName");
+
+			}
+			for (Tag tag : list) {
+				annotationList.addAll(tag.getAnnotations());
+			}
+			List<Annotation> annotationActivityFilter = new ArrayList<Annotation>();
+			for (Annotation annotation : annotationList) {
+				if (annotation.getActivity().getId().equals(readingActivityId)) {
+					annotationActivityFilter.add(annotation);
+				}
+			}
+
+			for (Annotation annotation : annotationActivityFilter) {
+				if (annotation.getCreator().getId().equals(studentId)
+						|| annotation.getVisibility() == 1) {
+					annotationStudentFilter.add(annotation);
+				}
+			}
+
+		} catch (Exception e) {
+
+			throw new GeneralException("Exception in method loadUserByName:"
+					+ e.getMessage(), e.getStackTrace());
+
+		}
+
+		if (entityManager.isOpen()) {
+			entityManager.close();
+		}
+		return ServiceManagerUtils
+				.produceAnnotationClients(annotationStudentFilter);
 	}
 
 	@Override
