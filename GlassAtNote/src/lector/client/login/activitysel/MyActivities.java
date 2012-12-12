@@ -293,8 +293,7 @@ public class MyActivities implements EntryPoint {
 						ButtonActivityReader B = (ButtonActivityReader) event.getSource();
 						RA=B.getRA();
 						ActualUser.setReadingactivity(RA);
-						ArrayList<TypeClient> L=new ArrayList<TypeClient>();
-						MainEntryPoint.setFiltroTypes(L);			
+						MainEntryPoint.CleanFilter();			
 						loadCatalog();
 						 }
 				});
@@ -361,8 +360,7 @@ public class MyActivities implements EntryPoint {
 						ButtonActivityReader B = (ButtonActivityReader) event.getSource();
 						RA=B.getRA();
 						ActualUser.setReadingactivity(RA);
-						ArrayList<TypeClient> L=new ArrayList<TypeClient>();
-						MainEntryPoint.setFiltroTypes(L);
+						MainEntryPoint.CleanFilter();
 						
 						loadCatalog();
 					}
