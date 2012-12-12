@@ -1,6 +1,7 @@
 package lector.client.reader.browser;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import lector.client.admin.generalPanels.BotonesStackPanelAdministracionMio;
 import lector.client.book.reader.GWTService;
@@ -483,44 +484,67 @@ Tipos.add(((EntityCatalogElements)BSM.getEntidad()).getEntry()) ;
 		ArrayList<TypeClient> Salida=new ArrayList<TypeClient>();
 		for (EntryClient typeClient2 : typeClient.getChildren()) {
 			if (typeClient2 instanceof TypeClient)
-				Salida.add((TypeClient) typeClient2);
+				Insert(Salida,(TypeClient) typeClient2);
 			else {
 				ArrayList<TypeClient> result=procesaTipo((TypeCategoryClient) typeClient2);
 				if (result!=null&&!result.isEmpty())
-					Salida.addAll(result);
+					for (TypeClient typeClient3 : result) {
+						Insert(Salida,(TypeClient) typeClient3);
+					}
 			}
 		}
 		return Salida;
+	}
+
+	private void Insert(ArrayList<TypeClient> salida, TypeClient typeClient2) {
+		boolean encontrado = false;
+		for (TypeClient typeClient : salida) {
+			if (typeClient.getId().equals(typeClient2.getId()))
+			{
+			encontrado=true;
+			break;
+			}
+		}
+		
+		if (!encontrado) salida.add((TypeClient) typeClient2);
+		
 	}
 
 	protected void filterAndAdd(ArrayList<TypeClient> result) {
 		
 		//TODO
 		Window.alert(result.toString());
-//		ArrayList<Long> ArrayAnotaciones=new ArrayList<Long>();
-//		AsyncCallback<ArrayList<AnnotationClient>> callback=new AsyncCallback<ArrayList<AnnotationClient>>() {
-//			
-//			public void onSuccess(ArrayList<AnnotationClient> result) {
-//				VerticalPanel AnnotationPanel=new VerticalPanel();
-//				AnotationResultPanel APR=new AnotationResultPanel(AnnotationPanel);
-//				AnnotationPanel.clear();
-//				for (AnnotationClient AIndiv : result) {
-//					AnnotationPanel.add(new CommentPanelBrowser(AIndiv, new Image(ActualUser.getBook().getWebLinks().get(AIndiv.getPageNumber())),APR.getHeight()));
-//				}
-//				LoadingPanel.getInstance().hide();
-//				
-//				APR.center();
-//			}
-//			
-//			public void onFailure(Throwable caught) {
-//				Window.alert(ActualLang.getE_filteringmesageAnnotations());
-//				LoadingPanel.getInstance().hide();
-//				
-//			}
-//		};
-//		if (ActualUser.getRol().equals(Constants.PROFESSOR)){
-//		bookReaderServiceHolder.getAnnotationsByIdsTeacher(ArrayAnotaciones,ActualUser.getReadingactivity().getId(),callback );
-//		}else bookReaderServiceHolder.getAnnotationsByIdsStudent(ArrayAnotaciones,ActualUser.getUser().getId(),ActualUser.getReadingactivity().getId(),callback );
+		
+		
+		ArrayList<Long> ArrayTypes=new ArrayList<Long>();
+		for (TypeClient long1 : result) {
+			ArrayTypes.add(long1.getId());
+		}
+		
+		AsyncCallback<List<AnnotationClient>> callback=new AsyncCallback<List<AnnotationClient>>() {
+			
+			public void onSuccess(List
+					<AnnotationClient> result) {
+				VerticalPanel AnnotationPanel=new VerticalPanel();
+				AnotationResultPanel APR=new AnotationResultPanel(AnnotationPanel);
+				AnnotationPanel.clear();
+				for (AnnotationClient AIndiv : result) {
+					AnnotationPanel.add(new CommentPanelBrowser(AIndiv, new Image(ActualUser.getBook().getWebLinks().get(AIndiv.getPageNumber())),APR.getHeight()));
+				}
+				LoadingPanel.getInstance().hide();
+				
+				APR.center();
+			}
+			
+			public void onFailure(Throwable caught) {
+				Window.alert(ActualLang.getE_filteringmesageAnnotations());
+				LoadingPanel.getInstance().hide();
+				
+			}
+		};
+		if (ActualUser.getRol().equals(Constants.PROFESSOR)){
+		bookReaderServiceHolder.getAnnotationsByTypeClientIdsForProfessor(ArrayTypes, ActualUser.getReadingactivity().getId(), ActualUser.getUser().getId(), callback);
+		}else bookReaderServiceHolder.getAnnotationsByTypeClientIdsForStudent(ArrayTypes, ActualUser.getReadingactivity().getId(), ActualUser.getUser().getId(), callback);
 		
 	}
 	

@@ -1,4 +1,4 @@
-package lector.client.reader.browser;
+package lector.client.reader.filter.advance;
 
 import java.util.ArrayList;
 
@@ -6,35 +6,32 @@ import lector.client.controler.Controlador;
 import lector.client.login.ActualUser;
 import lector.client.reader.MainEntryPoint;
 import lector.client.reader.SelectorPanel;
-import lector.share.model.Annotation;
-import lector.share.model.TextSelector;
 import lector.share.model.client.AnnotationClient;
 import lector.share.model.client.TextSelectorClient;
+
 
 import com.google.gwt.event.dom.client.LoadEvent;
 import com.google.gwt.event.dom.client.LoadHandler;
 import com.google.gwt.event.dom.client.MouseMoveEvent;
 import com.google.gwt.user.client.ui.DialogBox;
 import com.google.gwt.user.client.ui.DockPanel;
-import com.google.gwt.user.client.ui.PopupPanel;
 import com.google.gwt.user.client.ui.Image;
-import com.google.gwt.user.client.ui.SimplePanel;
 import com.google.gwt.user.client.ui.MenuBar;
 import com.google.gwt.user.client.ui.MenuItem;
 import com.google.gwt.user.client.Command;
 
-public class VisualBookPanel extends DialogBox {
+public class VisualBookPanelFilterAdvance extends DialogBox {
 
 	private Image image;
 	 private AnnotationClient annotation;
 	private ArrayList<SelectorPanel> SE;
-	private VisualBookPanel Yo;
+	private VisualBookPanelFilterAdvance Yo;
 
 
 	/**
 	 * @wbp.parser.constructor
 	 */
-	public VisualBookPanel(AnnotationClient annotationin,Image imagein) {
+	public VisualBookPanelFilterAdvance(AnnotationClient annotationin,Image imagein) {
 		super(false);
 		
 		Yo=this;
@@ -44,7 +41,7 @@ public class VisualBookPanel extends DialogBox {
 		image = imagein;
 		DockPanel SP=new DockPanel();
 
-		setHTML(ActualUser.getBook().getTitle() + "    -    "+ActualUser.getLanguage().getPage() +": " + annotation.getPageNumber());
+		setHTML(ActualUser.getBook().getTitle() + "    -     "+ActualUser.getLanguage().getPage() +": " + annotation.getPageNumber());
 		
 		
 		setWidget(SP);
@@ -59,22 +56,22 @@ setWidget(SP);
 				Yo.hide();
 			}
 		});
-		mntmNewItem.setHTML(ActualUser.getLanguage().getClose());
+		mntmNewItem.setHTML(ActualUser.getLanguage().getCloseFA());
 		menuBar.addItem(mntmNewItem);
 		
 		MenuItem mntmNewItem_1 = new MenuItem("New item", false, new Command() {
 			public void execute() {
 				Yo.hide();
 				MainEntryPoint.setCurrentPageNumber(annotation.getPageNumber());
-				MainEntryPoint.setFiltroTypes(Browser.getFiltroResidual());
+				MainEntryPoint.setFiltroAnotPar(FilterAsyncSystem.getFiltroResidual());
 				Controlador.change2Reader();
 			}
 		});
-		mntmNewItem_1.setHTML(ActualUser.getLanguage().getGO_To_Page());
+		mntmNewItem_1.setHTML(ActualUser.getLanguage().getGO_To_PageFA());
 		menuBar.addItem(mntmNewItem_1);
 		
 
-//		MenuItem mntmShowSelection = new MenuItem(ActualUser.getLanguage().getComment_Area(), false, new Command() {
+//		MenuItem mntmShowSelection = new MenuItem(ActualUser.getLanguage().getComment_AreaFA(), false, new Command() {
 //			public void execute() {
 //				SE=new ArrayList<SelectorPanel>();
 //				for (TextSelectorClient TS : annotation.getTextSelectors()) {
@@ -87,9 +84,10 @@ setWidget(SP);
 //			        SEE.show();
 //			        SE.add(SEE);
 //				}
+//				
 //			}
 //		});
-	//	menuBar.addItem(mntmShowSelection);
+		//menuBar.addItem(mntmShowSelection);
 		
 		SP.add(image, DockPanel.SOUTH);
 		
@@ -116,7 +114,6 @@ setWidget(SP);
 		super.center();
 		SE=new ArrayList<SelectorPanel>();
 		for (TextSelectorClient TS : annotation.getTextSelectors()) {
-			
 			SelectorPanel SEE = new SelectorPanel(TS.getX().intValue(),
 					TS.getY().intValue(),
 	                image.getAbsoluteLeft(), image.getAbsoluteTop(),
@@ -129,8 +126,9 @@ setWidget(SP);
 	
 	@Override
 	public void hide() {
-		for (SelectorPanel SEE : SE) {
-			SEE.hide();
+		for (SelectorPanel SP : SE) {
+			SP.hide();
+
 		}
 		super.hide();
 
@@ -141,7 +139,6 @@ setWidget(SP);
 		super.show();
 		SE=new ArrayList<SelectorPanel>();
 		for (TextSelectorClient TS : annotation.getTextSelectors()) {
-			
 			SelectorPanel SEE = new SelectorPanel(TS.getX().intValue(),
 					TS.getY().intValue(),
 	                image.getAbsoluteLeft(), image.getAbsoluteTop(),
@@ -157,7 +154,6 @@ setWidget(SP);
 		this.annotation = annotation;
 	}
 
-	
 	@Override
 	protected void continueDragging(MouseMoveEvent event) {
 

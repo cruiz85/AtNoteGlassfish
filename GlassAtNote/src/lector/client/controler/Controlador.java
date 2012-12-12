@@ -22,7 +22,7 @@ import lector.client.login.bookselec.MyBooks;
 import lector.client.reader.MainEntryPoint;
 import lector.client.reader.browser.Browser;
 //import lector.client.reader.export.ExportResult;
-//import lector.client.reader.filter.advance.FilterAdvance;
+import lector.client.reader.filter.advance.FilterAdvance;
 import lector.client.search.Searcher;
 import lector.client.welcome.Welcome;
 import lector.client.login.UserEdition;
@@ -53,7 +53,7 @@ public class Controlador implements EntryPoint {
     private static NewAdminActivities Activitys= new NewAdminActivities();
     private static MyActivities MyActivities= new MyActivities();
     private static Browser Browser=new Browser();
-//    private static FilterAdvance FilterAdvance=new FilterAdvance();
+    private static FilterAdvance FilterAdvance=new FilterAdvance();
     private static UserEdition UserEdition = new UserEdition();
 	private static BookLoader BooKLoader=new BookLoader();
 	private static NewAdminTemplate AdminTemplate=new NewAdminTemplate();
@@ -192,13 +192,13 @@ public class Controlador implements EntryPoint {
 		
 	}
 
-	public static void change2VisorEntry(String Path) {
-//		clear();
-//		Actual = Visor;
-//		Visor.setBook(Path);
-//		Actual.onModuleLoad();
-//		
-	}
+//	public static void change2VisorEntry(String Path) {
+////		clear();
+////		Actual = Visor;
+////		Visor.setBook(Path);
+////		Actual.onModuleLoad();
+////		
+//	}
 	
 	public static void change2Browser() {
 		clear();
@@ -208,10 +208,10 @@ public class Controlador implements EntryPoint {
 	}
 	
 	public static void change2FilterAdvance() {
-//		clear();
-//		Actual = FilterAdvance;
-//		Actual.onModuleLoad();
-//		
+		clear();
+		Actual = FilterAdvance;
+		Actual.onModuleLoad();
+		
 	}
 
 	public static void change2UserEdition() {
@@ -234,12 +234,12 @@ public class Controlador implements EntryPoint {
 		
 	}
 
-	public static void change2ExportResult() {
-//		clear();
-//		Actual = ExportResultado;
-//		Actual.onModuleLoad();
-//		
-	}
+//	public static void change2ExportResult() {
+////		clear();
+////		Actual = ExportResultado;
+////		Actual.onModuleLoad();
+////		
+//	}
 
 	public static void change2EditTemplate() {
 		clear();
