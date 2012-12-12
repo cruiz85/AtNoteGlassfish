@@ -14,6 +14,7 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.annotation.Resource;
+import javax.jdo.annotations.Transactional;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
@@ -462,7 +463,7 @@ public class GWTServiceImpl extends RemoteServiceServlet implements GWTService {
 					+ e.getMessage(), e.getStackTrace());
 
 		}
-		if (list == null || list.isEmpty()) {
+		if (list == null) {
 			// logger.error ("Exception in method loadGroupById: ", e)
 			throw new ProfessorNotFoundException(
 					"Professor not found in method getProfessors");
@@ -473,6 +474,40 @@ public class GWTServiceImpl extends RemoteServiceServlet implements GWTService {
 		}
 
 		return ServiceManagerUtils.produceProfessorClients(list);
+	}
+
+	@Override
+	public List<ProfessorClient> getProfessorsAnnotatorsByActivityId(
+			Long activityId) throws GeneralException, UserNotFoundException {
+		EntityManager entityManager = emf.createEntityManager();
+		List<UserApp> list;
+		List<Professor> professorList = new ArrayList<Professor>();
+		String sql = "SELECT a.creator FROM Annotation a WHERE a.activity="
+				+ activityId;
+		try {
+			list = entityManager.createQuery(sql).getResultList();
+			if (list == null) {
+				// logger.error ("Exception in method loadGroupById: ", e)
+				throw new UserNotFoundException(
+						"Professor not found in method getProfessors");
+
+			}
+			for (UserApp user : list) {
+				if (user instanceof Professor)
+					professorList.add((Professor) user);
+			}
+		} catch (Exception e) {
+			// logger.error ("Exception in method loadGroupByEmail: ", e)
+			throw new GeneralException("Exception in method getProfessors:"
+					+ e.getMessage(), e.getStackTrace());
+
+		}
+
+		if (entityManager.isOpen()) {
+			entityManager.close();
+		}
+
+		return ServiceManagerUtils.produceProfessorClients(professorList);
 	}
 
 	@Override

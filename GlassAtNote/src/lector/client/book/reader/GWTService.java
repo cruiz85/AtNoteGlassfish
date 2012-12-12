@@ -92,7 +92,9 @@ public interface GWTService extends RemoteService {
 
 	public List<ProfessorClient> getProfessors() throws GeneralException,
 			ProfessorNotFoundException;
-
+	
+	public List<ProfessorClient> getProfessorsAnnotatorsByActivityId(Long activityId) throws GeneralException,
+	UserNotFoundException;
 	public void deleteProfessorById(Long professorId) throws GeneralException;
 
 	// void deleteBookFromUser(String bookId, Long userId); no debe ser

@@ -257,4 +257,7 @@ public interface GWTServiceAsync {
 			Long readingActivityId, Long studentId,
 			AsyncCallback<List<AnnotationClient>> callback);
 
+	void getProfessorsAnnotatorsByActivityId(Long activityId,
+			AsyncCallback<List<ProfessorClient>> callback);
+
 }
