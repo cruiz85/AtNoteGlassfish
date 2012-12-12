@@ -160,7 +160,7 @@ public interface GWTService extends RemoteService {
 	public List<AnnotationClient> getAnnotationsByTeacherIds(List<Long> ids,
 			Long readingActivityId);
 	
-	public List<AnnotationClient> getAnnotationsByTypeClientIds(List<String> ids, Long catalogId) throws GeneralException,
+	public List<AnnotationClient> getAnnotationsByTypeClientIds(List<Long> ids, Long readingActivityId, Long userId) throws GeneralException,
 			TagNotFoundException;
 	
 	public List<AnnotationClient> getAnnotationsForStudentId(List<Long> ids,

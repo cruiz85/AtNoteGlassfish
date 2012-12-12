@@ -1381,15 +1381,15 @@ public class GWTServiceImpl extends RemoteServiceServlet implements GWTService {
 		}
 		return ServiceManagerUtils.produceAnnotationClients(listForStudent);
 	}
-//TODO AQUI DEBERÍA SER NOMBRES Y NO IDS
+
 	@Override
-	public List<AnnotationClient> getAnnotationsByTypeClientIds(List<String> names, Long catalogId) throws GeneralException, TagNotFoundException {
+	public List<AnnotationClient> getAnnotationsByTypeClientIds(List<Long> ids, Long readingActivityId, Long userId) throws GeneralException, TagNotFoundException {
 		EntityManager entityManager = emf.createEntityManager();
 		List<Tag> list;
 		List<Annotation> annotationList = new ArrayList<Annotation>();
-		String sql = "SELECT t FROM Tag t WHERE t.catalog.id=" + catalogId + "AND AND (t.name=" + names.get(0);
-		for (int i = 1; i < names.size(); i++) {
-			sql += "OR r.id=" + names.get(i);
+		String sql = "SELECT t FROM Tag t WHERE t.id=" + ids.get(0);
+		for (int i = 1; i < ids.size(); i++) {
+			sql += "OR r.id=" + ids.get(i);
 		}
 		sql += ")";
 		try {

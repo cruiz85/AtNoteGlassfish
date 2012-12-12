@@ -257,8 +257,8 @@ public interface GWTServiceAsync {
 	void getAnnotationsForStudentId(List<Long> ids, Long Student,
 			AsyncCallback<List<AnnotationClient>> callback);
 
-	void getAnnotationsByTypeClientIds(List<Long> ids, Long catalogId,
-			AsyncCallback<List<AnnotationClient>> callback);
+	void getAnnotationsByTypeClientIds(List<Long> ids, Long readingActivityId,
+			Long userId, AsyncCallback<List<AnnotationClient>> callback);
 
 	
 }
