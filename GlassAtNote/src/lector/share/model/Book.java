@@ -39,7 +39,7 @@ public class Book implements Serializable {
 	@OneToMany(mappedBy="book", cascade=CascadeType.REMOVE)
 	private List<Annotation> annotations;
 	private List<String> webLinks = new ArrayList<String>();
-	@OneToMany(mappedBy = "book", cascade= CascadeType.REFRESH)
+	@OneToMany(cascade= CascadeType.REMOVE)
 	private List<ReadingActivity> readingActivities = new ArrayList<ReadingActivity>();
 	
 	public Book() {
