@@ -632,7 +632,7 @@ public class GWTServiceImpl extends RemoteServiceServlet implements GWTService {
 		List<GroupApp> list;
 		String sql = "SELECT r FROM GroupApp r WHERE r.id=" + ids.get(0);
 		for (int i = 1; i < ids.size(); i++) {
-			sql += "OR r.id=" + ids.get(i);
+			sql += " OR r.id=" + ids.get(i);
 		}
 
 		try {
@@ -1023,7 +1023,7 @@ public class GWTServiceImpl extends RemoteServiceServlet implements GWTService {
 		String sql = "SELECT r FROM Tag r WHERE r.id="
 				+ typeClients.get(0).getId();
 		for (int i = 1; i < typeClients.size(); i++) {
-			sql += "OR r.id=" + typeClients.get(i).getId();
+			sql += " OR r.id=" + typeClients.get(i).getId();
 		}
 
 		try {
@@ -1388,7 +1388,7 @@ public class GWTServiceImpl extends RemoteServiceServlet implements GWTService {
 		List<Annotation> listForStudent;
 		String sql = "SELECT r FROM Annotation r WHERE r.id=" + ids.get(0);
 		for (int i = 1; i < ids.size(); i++) {
-			sql += "OR r.id=" + ids.get(i);
+			sql += " OR r.id=" + ids.get(i);
 		}
 
 		try {
@@ -2526,7 +2526,7 @@ public class GWTServiceImpl extends RemoteServiceServlet implements GWTService {
 		String sql = "SELECT r FROM Tag r WHERE r.name='" + tagNames.get(0)
 				+ "' ";
 		for (int i = 1; i < tagNames.size(); i++) {
-			sql += "OR r.name='" + tagNames.get(i) + "'";
+			sql += " OR r.name='" + tagNames.get(i) + "'";
 		}
 		sql += " AND r.catalogId=" + catalogId;
 		try {
@@ -2552,7 +2552,7 @@ public class GWTServiceImpl extends RemoteServiceServlet implements GWTService {
 		List<Tag> list;
 		String sql = "SELECT r FROM Tag r WHERE r.id=" + typeIds.get(0);
 		for (int i = 1; i < typeIds.size(); i++) {
-			sql += "OR r.id=" + typeIds.get(i);
+			sql += " OR r.id=" + typeIds.get(i);
 		}
 
 		try {
@@ -2577,7 +2577,7 @@ public class GWTServiceImpl extends RemoteServiceServlet implements GWTService {
 		List<Tag> list;
 		String sql = "SELECT r FROM Tag r WHERE r.id=" + typeIds.get(0);
 		for (int i = 1; i < typeIds.size(); i++) {
-			sql += "OR r.id=" + typeIds.get(i);
+			sql += " OR r.id=" + typeIds.get(i);
 		}
 
 		try {
@@ -2978,7 +2978,7 @@ public class GWTServiceImpl extends RemoteServiceServlet implements GWTService {
 		String sql = "SELECT r FROM ReadingActivity r WHERE r.group="
 				+ ids.get(0);
 		for (int i = 1; i < ids.size(); i++) {
-			sql += "OR r.group=" + ids.get(i);
+			sql += " OR r.group=" + ids.get(i);
 		}
 
 		try {
@@ -3517,13 +3517,13 @@ public class GWTServiceImpl extends RemoteServiceServlet implements GWTService {
 			throws BookNotFoundException, GeneralException {
 		EntityManager entityManager = emf.createEntityManager();
 		List<Book> list = new ArrayList<Book>();
-		if (ids == null) {
+		if (ids == null || ids.isEmpty()) {
 			return new ArrayList<BookClient>();
 		}
 
 		String sql = "SELECT r FROM Book r WHERE r.id=" + ids.get(0);
 		for (int i = 1; i < ids.size(); i++) {
-			sql += "OR r.id=" + ids.get(i);
+			sql += " OR r.id=" + ids.get(i);
 		}
 
 		try {
