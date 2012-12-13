@@ -16,6 +16,7 @@ import lector.client.logger.Logger;
 import lector.client.login.ActualUser;
 import lector.share.model.client.BookClient;
 import lector.share.model.client.ProfessorClient;
+import lector.share.model.client.UserClient;
 
 import com.google.gwt.core.client.EntryPoint;
 import com.google.gwt.core.client.GWT;
@@ -43,13 +44,15 @@ import com.google.gwt.user.client.ui.HorizontalPanel;
 
 public class BookAdministration implements EntryPoint {
 
-	private static final String GET_A_BOOK = "Get a book from Google Library";
-	private static final String UPLOAD_A_TEXT = "Upload your own Text";
-	private static final String GET_A_BOOK_WELLCOME = "Book Management";
+	public static String GET_A_BOOK = "Get a book from Google Library";
+	public static String UPLOAD_A_TEXT = "Upload your own Text";
+	public static String GET_A_BOOK_WELLCOME = "Book Management";
+	public static String CONFIRM_REMOVE_BOOK = "Are you sure to remove the book?, The activities asociates to the book will be removed. Book to remove: ";
+	
 	private PublicPrivatePanel stackPanel_1;
 	private VerticalPanel Selected;
 	private VerticalPanel simplePanel;
-	static GWTServiceAsync bookReaderServiceHolder = GWT
+	protected static GWTServiceAsync bookReaderServiceHolder = GWT
 			.create(GWTService.class);
 	private static Stack<Long> Aborrar;
 	private static Long bookToBeRemoved = null;
@@ -103,9 +106,9 @@ public class BookAdministration implements EntryPoint {
 				for (int i = 0; i < SelectedWidgetCount; i++) {
 					BotonesStackPanelAdministracionMio BDPM = (BotonesStackPanelAdministracionMio) Selected
 							.getWidget(i);
-					Aborrar.add(((EntidadLibro) BDPM.getEntidad()).getBook()
-							.getId());
-					// ActualUser.getUser().getBookIds().remove(BDPM.getText());
+					if (Window.confirm(BookAdministration.CONFIRM_REMOVE_BOOK + ((EntidadLibro) BDPM.getEntidad()).getBook().getTitle()))
+						Aborrar.add(((EntidadLibro) BDPM.getEntidad()).getBook()
+								.getId());
 				}
 
 				Selected.clear();
@@ -120,7 +123,10 @@ public class BookAdministration implements EntryPoint {
 						}
 
 						else
+							{
 							Selected.clear();
+							RefreshUserAndBooks();
+							}
 					}
 
 					public void onFailure(Throwable caught) {
@@ -140,7 +146,12 @@ public class BookAdministration implements EntryPoint {
 					bookReaderServiceHolder.deleteBookById(bookToBeRemoved,
 							callback);
 				}
-
+				else{
+					List<Long> ListaIDsLibros = ((ProfessorClient) ActualUser.getUser())
+							.getBooks();
+					if (!ListaIDsLibros.isEmpty())
+						refresh(ListaIDsLibros);
+				}
 				// bookReaderServiceHolder.saveUser(ActualUser.getUser(),
 				// new AsyncCallback<Boolean>() {
 				//
@@ -222,90 +233,117 @@ public class BookAdministration implements EntryPoint {
 		List<Long> ListaIDsLibros = ((ProfessorClient) ActualUser.getUser())
 				.getBooks();
 		if (!ListaIDsLibros.isEmpty())
-			//TODO CAMBIAR POR UN CARGADOR DE TODOS LOS LIBROS
-			bookReaderServiceHolder.getBookClientsByIds(ListaIDsLibros,
-					new AsyncCallback<List<BookClient>>() {
-
-						@Override
-						public void onSuccess(List<BookClient> result) {
-							
-							for (BookClient Book : result) {
-								EntidadLibro E = new EntidadLibro(Book);
-								BotonesStackPanelAdministracionSimple BSPS=new BotonesStackPanelAdministracionSimple(E.getName(), stackPanel_1.getPrivate(), Selected);
-								BSPS.setEntidad(E);
-								BSPS.addClickHandler(new ClickHandler() {
-									
-									public void onClick(ClickEvent event) {
-										((Button)event.getSource()).setStyleName("gwt-ButtonCenter");
-										
-									}
-								});
-								
-								BSPS.addMouseDownHandler(new MouseDownHandler() {
-										public void onMouseDown(MouseDownEvent event) {
-											((Button)event.getSource()).setStyleName("gwt-ButtonCenterPush");
-										}});
-								
-								BSPS.addMouseOutHandler(new MouseOutHandler() {
-									public void onMouseOut(MouseOutEvent event) {
-										((Button)event.getSource()).setStyleName("gwt-ButtonCenter");
-								}});
-								
-
-								BSPS.addMouseOverHandler(new MouseOverHandler() {
-									public void onMouseOver(MouseOverEvent event) {
-										
-										((Button)event.getSource()).setStyleName("gwt-ButtonCenterOver");
-									
-								}});
-								
-								BSPS.setStyleName("gwt-ButtonCenter");
-								BSPS.setWidth("100%");
-								
-								BSPS.addClickHandler(new ClickHandler() {
-									
-									@Override
-									public void onClick(ClickEvent event) {
-										BotonesStackPanelAdministracionSimple BSPM = (BotonesStackPanelAdministracionSimple) event.getSource();
-										BSPM.setSelected(Selected);
-										BSPM.Swap();
-										
-										
-										
-										
-									}
-								});
-							}
-							
-//							if (result.size() < 10) {
-//								for (BookClient Book : result) {
-//									EntidadLibro E = new EntidadLibro(Book);
-//									stackPanel_1.addBotonLessTen(E);
-//								}
-//
-//							} else {
-//								for (BookClient Book : result) {
-//									EntidadLibro E = new EntidadLibro(Book);
-//									stackPanel_1.addBoton(E);
-//								}
-//							}
-							stackPanel_1.ClearEmpty();
-
-						}
-
-						@Override
-						public void onFailure(Throwable caught) {
-							Window.alert(ErrorConstants.ERROR_RETRIVING_THE_BOOKS);
-							Logger.GetLogger()
-							.severe(Yo.getClass().toString(),
-									ErrorConstants.ERROR_RETRIVING_THE_BOOKS + " at " + CalendarNow.GetDateNow() + 
-									" by User " + ActualUser.getUser().getEmail());
-
-						}
-					});
+			refresh(ListaIDsLibros);
 		
 		stackPanel_1.setSize("100%", "100%");
 		stackPanel_1.ClearEmpty();
 		
+	}
+	
+	protected void RefreshUserAndBooks()
+	{
+		bookReaderServiceHolder.loadUserById(ActualUser.getUser().getId(), new AsyncCallback<UserClient>() {
+			
+			@Override
+			public void onSuccess(UserClient result) {
+				ActualUser.setUser(result);
+				List<Long> ListaIDsLibros = ((ProfessorClient) ActualUser.getUser())
+						.getBooks();
+				if (!ListaIDsLibros.isEmpty())
+					refresh(ListaIDsLibros);
+				
+			}
+			
+			@Override
+			public void onFailure(Throwable caught) {
+				Window.alert(ErrorConstants.ERROR_LOADING_USER);
+				
+			}
+		});
+	}
+	
+	public void refresh(List<Long> listaIDsLibros)
+	{
+		//TODO CAMBIAR POR UN CARGADOR DE TODOS LOS LIBROS
+		bookReaderServiceHolder.getBookClientsByIds(listaIDsLibros,
+				new AsyncCallback<List<BookClient>>() {
+
+					@Override
+					public void onSuccess(List<BookClient> result) {
+						
+						for (BookClient Book : result) {
+							EntidadLibro E = new EntidadLibro(Book);
+							BotonesStackPanelAdministracionSimple BSPS=new BotonesStackPanelAdministracionSimple(E.getName(), stackPanel_1.getPrivate(), Selected);
+							BSPS.setEntidad(E);
+							BSPS.addClickHandler(new ClickHandler() {
+								
+								public void onClick(ClickEvent event) {
+									((Button)event.getSource()).setStyleName("gwt-ButtonCenter");
+									
+								}
+							});
+							
+							BSPS.addMouseDownHandler(new MouseDownHandler() {
+									public void onMouseDown(MouseDownEvent event) {
+										((Button)event.getSource()).setStyleName("gwt-ButtonCenterPush");
+									}});
+							
+							BSPS.addMouseOutHandler(new MouseOutHandler() {
+								public void onMouseOut(MouseOutEvent event) {
+									((Button)event.getSource()).setStyleName("gwt-ButtonCenter");
+							}});
+							
+
+							BSPS.addMouseOverHandler(new MouseOverHandler() {
+								public void onMouseOver(MouseOverEvent event) {
+									
+									((Button)event.getSource()).setStyleName("gwt-ButtonCenterOver");
+								
+							}});
+							
+							BSPS.setStyleName("gwt-ButtonCenter");
+							BSPS.setWidth("100%");
+							
+							BSPS.addClickHandler(new ClickHandler() {
+								
+								@Override
+								public void onClick(ClickEvent event) {
+									BotonesStackPanelAdministracionSimple BSPM = (BotonesStackPanelAdministracionSimple) event.getSource();
+									BSPM.setSelected(Selected);
+									BSPM.Swap();
+									
+									
+									
+									
+								}
+							});
+						}
+						
+//						if (result.size() < 10) {
+//							for (BookClient Book : result) {
+//								EntidadLibro E = new EntidadLibro(Book);
+//								stackPanel_1.addBotonLessTen(E);
+//							}
+//
+//						} else {
+//							for (BookClient Book : result) {
+//								EntidadLibro E = new EntidadLibro(Book);
+//								stackPanel_1.addBoton(E);
+//							}
+//						}
+						stackPanel_1.ClearEmpty();
+
+					}
+
+					@Override
+					public void onFailure(Throwable caught) {
+						Window.alert(ErrorConstants.ERROR_RETRIVING_THE_BOOKS);
+						Logger.GetLogger()
+						.severe(Yo.getClass().toString(),
+								ErrorConstants.ERROR_RETRIVING_THE_BOOKS + " at " + CalendarNow.GetDateNow() + 
+								" by User " + ActualUser.getUser().getEmail());
+
+					}
+				});
 	}
 }

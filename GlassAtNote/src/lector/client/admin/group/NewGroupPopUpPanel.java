@@ -40,10 +40,12 @@ import com.google.gwt.event.dom.client.MouseOverHandler;
 
 public class NewGroupPopUpPanel extends PopupPanel {
 
+	private static String ALERT_MORE_THAN_2_WORDS_FOR_CREATE_A_GROUP = "The name of the grupo need to be at less two characters and can`t be empty";
 	private TextBox textBox;
 	private Groupadministration Father;
 	static GWTServiceAsync bookReaderServiceHolder = GWT
 	.create(GWTService.class);
+	
 	private GroupClient Saved;
 
 	public NewGroupPopUpPanel(Groupadministration Fatherin) {
@@ -119,7 +121,7 @@ public class NewGroupPopUpPanel extends PopupPanel {
 
 	protected void generateNewGroup() {
 		String Grupo=textBox.getText();
-		if (!Grupo.isEmpty()||Grupo.length()<2)
+		if (!Grupo.isEmpty()&&Grupo.length()>2)
 				{
 			LoadingPanel.getInstance().center();
 			LoadingPanel.getInstance().setLabelTexto("Saving...");
@@ -143,7 +145,7 @@ public class NewGroupPopUpPanel extends PopupPanel {
 					}
 				});
 				}
-		else Window.alert("The name of the grupo need to be at less two characters and can`t be empty");
+		else Window.alert(NewGroupPopUpPanel.ALERT_MORE_THAN_2_WORDS_FOR_CREATE_A_GROUP );
 		
 		
 	}

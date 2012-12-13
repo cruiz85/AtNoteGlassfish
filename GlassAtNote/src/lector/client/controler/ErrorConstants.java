@@ -81,5 +81,6 @@ public class ErrorConstants {
 	public static String YOU_USER_NOT_EXIST="User not found in the apliction, please check it";
 	public static String GENERAL_ERROR_REFRESH="Critical error, please refresh the aplication";
 	public static String ERROR_DELETING_READING_ACTIVITY="Error Deleting Reading Activity";
+	public static String ERROR_LOADING_USER= "Error Loading user";
 	
 }

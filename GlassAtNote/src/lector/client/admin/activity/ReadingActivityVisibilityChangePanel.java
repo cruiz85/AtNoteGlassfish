@@ -22,6 +22,12 @@ import com.google.gwt.user.client.ui.HasVerticalAlignment;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.event.dom.client.ClickEvent;
+import com.google.gwt.event.dom.client.MouseDownEvent;
+import com.google.gwt.event.dom.client.MouseDownHandler;
+import com.google.gwt.event.dom.client.MouseOutEvent;
+import com.google.gwt.event.dom.client.MouseOutHandler;
+import com.google.gwt.event.dom.client.MouseOverEvent;
+import com.google.gwt.event.dom.client.MouseOverHandler;
 
 public class ReadingActivityVisibilityChangePanel extends PopupPanel {
 	
@@ -88,12 +94,65 @@ public class ReadingActivityVisibilityChangePanel extends PopupPanel {
 		});
 		horizontalPanel.add(btnNewButton_1);
 		
+		
+		btnNewButton_1.addMouseDownHandler(new MouseDownHandler() {
+			public void onMouseDown(MouseDownEvent event) {
+				((Button) event.getSource())
+						.setStyleName("gwt-ButtonCenterPush");
+			}
+		});
+
+		btnNewButton_1.addMouseOutHandler(new MouseOutHandler() {
+	public void onMouseOut(MouseOutEvent event) {
+		((Button) event.getSource())
+				.setStyleName("gwt-ButtonCenter");
+	}
+});
+
+		btnNewButton_1
+		.addMouseOverHandler(new MouseOverHandler() {
+			public void onMouseOver(MouseOverEvent event) {
+
+				((Button) event.getSource())
+						.setStyleName("gwt-ButtonCenterOver");
+
+			}
+		});
+
+		btnNewButton_1.setStyleName("gwt-ButtonCenter");
+
 		Button btnNewButton = new Button(ReadingActivityVisibilityChangePanel.CANCEL);
 		btnNewButton.addClickHandler(new ClickHandler() {
 			public void onClick(ClickEvent event) {
 				hide();
 			}
 		});
+		
+		btnNewButton.addMouseDownHandler(new MouseDownHandler() {
+			public void onMouseDown(MouseDownEvent event) {
+				((Button) event.getSource())
+						.setStyleName("gwt-ButtonCenterPush");
+			}
+		});
+
+btnNewButton.addMouseOutHandler(new MouseOutHandler() {
+	public void onMouseOut(MouseOutEvent event) {
+		((Button) event.getSource())
+				.setStyleName("gwt-ButtonCenter");
+	}
+});
+
+btnNewButton
+		.addMouseOverHandler(new MouseOverHandler() {
+			public void onMouseOver(MouseOverEvent event) {
+
+				((Button) event.getSource())
+						.setStyleName("gwt-ButtonCenterOver");
+
+			}
+		});
+
+btnNewButton.setStyleName("gwt-ButtonCenter");
 		horizontalPanel.add(btnNewButton);
 	}
 

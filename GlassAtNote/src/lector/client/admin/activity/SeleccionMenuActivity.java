@@ -95,22 +95,23 @@ public class SeleccionMenuActivity extends PopupPanel {
 			}
 		});
 		verticalPanel.add(btnNewButton_3);
-		btnNewButton_3.setStyleName("gwt-ButtonBotton");
+		btnNewButton_3.setSize("100%", "100%");
+		btnNewButton_3.addMouseDownHandler(new MouseDownHandler() {
+			public void onMouseDown(MouseDownEvent event) {
+				((Button)event.getSource()).setStyleName("gwt-ButtonPush");
+			}
+		});
 		btnNewButton_3.addMouseOutHandler(new MouseOutHandler() {
 			public void onMouseOut(MouseOutEvent event) {
-				((Button)event.getSource()).setStyleName("gwt-ButtonBotton");
+				((Button)event.getSource()).setStyleName("gwt-ButtonTOP");
 			}
 		});
 		btnNewButton_3.addMouseOverHandler(new MouseOverHandler() {
 			public void onMouseOver(MouseOverEvent event) {
-				((Button)event.getSource()).setStyleName("gwt-ButtonBottonOver");
+				((Button)event.getSource()).setStyleName("gwt-ButtonTOPOver");
 			}
 		});
-		btnNewButton_3.addMouseDownHandler(new MouseDownHandler() {
-			public void onMouseDown(MouseDownEvent event) {
-				((Button)event.getSource()).setStyleName("gwt-ButtonPushBotton");
-			}
-		});
+		btnNewButton_3.setStyleName("gwt-ButtonTOP");
 		
 		Button btnNewButton_2 = new Button(SeleccionMenuActivity.EDIT );
 		btnNewButton_2.addClickHandler(new ClickHandler() {
