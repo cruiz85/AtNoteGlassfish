@@ -34,8 +34,8 @@ public class ReadingActivity implements Serializable, IsSerializable {
 
 	private Language language;
 	
-	@ManyToOne
-    @JoinColumn(name = "book_id")
+	@ManyToOne(cascade=CascadeType.REFRESH)
+    @JoinColumn(name = "book_id", nullable = true)
 	private Book book;
 
 	private GroupApp group;
@@ -45,7 +45,7 @@ public class ReadingActivity implements Serializable, IsSerializable {
 	private String Visualization;
 	private Template template;
 	private short isFreeTemplateAllowed = 0;
-	@OneToMany(mappedBy = "activity", cascade = CascadeType.REMOVE)
+	@OneToMany(mappedBy = "activity", cascade = CascadeType.ALL)
 	private List<Annotation> annotations = new ArrayList<Annotation>();
 
 	private short privacy = 1;

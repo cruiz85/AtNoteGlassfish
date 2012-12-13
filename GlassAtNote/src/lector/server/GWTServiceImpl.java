@@ -1427,7 +1427,7 @@ public class GWTServiceImpl extends RemoteServiceServlet implements GWTService {
 		List<Annotation> annotationActivityFilter = new ArrayList<Annotation>();
 		String sql = "SELECT t FROM Tag t WHERE t.id=" + ids.get(0);
 		for (int i = 1; i < ids.size(); i++) {
-			sql += " OR t.id=" + ids.get(i);
+			sql += "OR r.id=" + ids.get(i);
 		}
 		try {
 			list = entityManager.createQuery(sql).getResultList();
@@ -1471,7 +1471,7 @@ public class GWTServiceImpl extends RemoteServiceServlet implements GWTService {
 		List<Annotation> annotationStudentFilter = new ArrayList<Annotation>();
 		String sql = "SELECT t FROM Tag t WHERE t.id=" + ids.get(0);
 		for (int i = 1; i < ids.size(); i++) {
-			sql += " OR t.id=" + ids.get(i);
+			sql += "OR r.id=" + ids.get(i);
 		}
 		try {
 			list = entityManager.createQuery(sql).getResultList();
