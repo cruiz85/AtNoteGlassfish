@@ -45,7 +45,7 @@ public class Annotation implements Serializable {
 	private Integer pageNumber;
 
 	@ManyToMany(mappedBy="annotations",cascade = CascadeType.REFRESH)
-	@JoinTable(name = "ann_file", joinColumns = { @JoinColumn(name = "annotationId", referencedColumnName = "id") }, inverseJoinColumns = { @JoinColumn(name = "fileId", referencedColumnName = "id") })
+	@JoinTable(name = "entry_annotation", joinColumns = { @JoinColumn(name = "annotationId", referencedColumnName = "id") }, inverseJoinColumns = { @JoinColumn(name = "tagId", referencedColumnName = "id") })
 	private List<Tag> tags;
 
 	@Temporal(javax.persistence.TemporalType.DATE)
