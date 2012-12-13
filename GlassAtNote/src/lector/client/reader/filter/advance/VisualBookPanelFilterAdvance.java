@@ -8,6 +8,8 @@ import lector.client.reader.MainEntryPoint;
 import lector.client.reader.SelectorPanel;
 import lector.share.model.client.AnnotationClient;
 import lector.share.model.client.TextSelectorClient;
+import lector.share.model.client.TypeClient;
+import lector.share.model.client.UserClient;
 
 
 import com.google.gwt.event.dom.client.LoadEvent;
@@ -63,7 +65,7 @@ setWidget(SP);
 			public void execute() {
 				Yo.hide();
 				MainEntryPoint.setCurrentPageNumber(annotation.getPageNumber());
-				MainEntryPoint.setFiltroAnotPar(FilterAsyncSystem.getFiltroResidual());
+				MainEntryPoint.setFiltro(new ArrayList<TypeClient>(),new ArrayList<UserClient>(), new ArrayList<String>(), FilterAsyncSystem.getFiltroResidual());
 				Controlador.change2Reader();
 			}
 		});

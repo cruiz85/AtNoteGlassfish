@@ -879,10 +879,8 @@ pageBack.addMouseDownHandler(new MouseDownHandler() {
 			if (verticalAnnotationsPanel.getWidgetCount() != 0) {
 				verticalAnnotationsPanel.clear();
 			}
-			List<AnnotationClient> Result = refreshSelected(X, Y);
-			Result=applyConcreteFilter(Result);
-			ArrayList<AnnotationRanked> ResultRanked = setFilerByType(Result);
-			Result = OrdenaResultado(ResultRanked);
+			List<AnnotationClient> Result = refreshSelected(X, Y);			
+			FiltraAnotaciones(Result);
 			insertrefreshedAnot(Result);
 			break;
 		default:
@@ -1055,10 +1053,8 @@ pageBack.addMouseDownHandler(new MouseDownHandler() {
 			public void onSuccess(List<AnnotationClient> result) {
 
 				anotaciones_Actuales=result;
-				result=applyConcreteFilter(result);
-				ArrayList<AnnotationRanked> ResultRanked = setFilerByType(result);
-				result = OrdenaResultado(ResultRanked);
-				insertrefreshedAnot(result);
+				ArrayList<AnnotationClient> Salida=FiltraAnotaciones(result);
+				insertrefreshedAnot(Salida);
 				LoadingPanel.getInstance().hide();
 			}
 		};
@@ -1071,6 +1067,43 @@ pageBack.addMouseDownHandler(new MouseDownHandler() {
 							.getId(), ActualUser.getReadingactivity().getId(), callback);
 		}
 
+	}
+
+
+	protected static ArrayList<AnnotationClient> FiltraAnotaciones(List<AnnotationClient> result) {
+		
+		if (!filtroAnotPar.isEmpty()){
+			setfilterinfo(true);
+			return (ArrayList<AnnotationClient>) applyConcreteFilter(result);
+		}
+		else{
+			if (!filtroTypes.isEmpty()||!filtroUsers.isEmpty()||filtroWords.isEmpty())
+			{
+				ArrayList<AnnotationRanked> ResultRankedTipe = setFilerByType(result);
+				ArrayList<AnnotationRanked> ResultRankedUser = setfilterByUser(result);
+				setfilterinfo(true);
+				return combine(ResultRankedTipe,ResultRankedUser);
+			}
+			else return (ArrayList<AnnotationClient>) result;
+		}
+			
+	}
+
+	private static ArrayList<AnnotationClient> combine(ArrayList<AnnotationRanked> resultRankedTipe,
+			ArrayList<AnnotationRanked> resultRankedUser) {
+		for (AnnotationRanked annotationRanked : resultRankedUser) {
+			boolean found = false;
+			for (AnnotationRanked annotationRanked1 : resultRankedTipe) {
+				if (annotationRanked.getAnotacionRankeada().getId().equals(annotationRanked1.getAnotacionRankeada().getId()))
+					{
+					found=true;
+					annotationRanked1.setRanking(annotationRanked1.getRanking()+1f);
+					break;
+					}
+			}
+			if (!found) resultRankedTipe.add(annotationRanked);
+		}
+		return  OrdenaResultado(resultRankedTipe);
 	}
 
 
@@ -1114,23 +1147,21 @@ pageBack.addMouseDownHandler(new MouseDownHandler() {
 		return filtroTypes;
 	}
 
-	public static void setFiltroTypes(ArrayList<TypeClient> filtroTypes) {
-		if (filtroTypes.size()==0)
-			setfilterinfo(false);
-		else setfilterinfo(true);
-		MainEntryPoint.filtroTypes = filtroTypes;
-		filtroAnotPar=new ArrayList<Long>();
-		filtroUsers=new ArrayList<UserClient>();
-		filtroWords=new ArrayList<String>();
-		if (state == State.AllAnnotations) {
-			verticalAnnotationsPanel.clear();
-			List<AnnotationClient> Result = anotaciones_Actuales;
-			Result=applyConcreteFilter(Result);
-			ArrayList<AnnotationRanked> ResultRanked = setFilerByType(Result);
-			Result = OrdenaResultado(ResultRanked);
-			insertrefreshedAnot(Result);
-		}
-	}
+//	public static void setFiltroTypes(ArrayList<TypeClient> filtroTypes) {
+//		if (filtroTypes.size()==0)
+//			setfilterinfo(false);
+//		else setfilterinfo(true);
+//		MainEntryPoint.filtroTypes = filtroTypes;
+//		filtroAnotPar=new ArrayList<Long>();
+//		filtroUsers=new ArrayList<UserClient>();
+//		filtroWords=new ArrayList<String>();
+//		if (state == State.AllAnnotations) {
+//			verticalAnnotationsPanel.clear();
+//			List<AnnotationClient> Result = anotaciones_Actuales;
+//			FiltraAnotaciones(Result);
+//			insertrefreshedAnot(Result);
+//		}
+//	}
 
 	public static void hidePopUpSelector() {
 		if (popUpSelector!=null)
@@ -1155,23 +1186,17 @@ pageBack.addMouseDownHandler(new MouseDownHandler() {
 		
 	}
 	
-	public static void setFiltroTypesAndUser(ArrayList<TypeClient> filtroTypes, ArrayList<UserClient> User, ArrayList<String> Words) {
-		if (filtroTypes.size()==0 && User.isEmpty())
-			setfilterinfo(false);
-		else {setfilterinfo(true);
+	public static void setFiltro(ArrayList<TypeClient> filtroTypes, ArrayList<UserClient> User, ArrayList<String> Words,ArrayList<Long> Concretas) {
 		MainEntryPoint.filtroTypes = filtroTypes;
 		MainEntryPoint.filtroUsers=User;
 		MainEntryPoint.filtroWords=Words;
+		MainEntryPoint.filtroAnotPar=Concretas;
 		filtroAnotPar=new ArrayList<Long>();
 		if (state == State.AllAnnotations) {
 			verticalAnnotationsPanel.clear();
 			List<AnnotationClient> Result = anotaciones_Actuales;
-			Result=applyConcreteFilter(Result);
-			ArrayList<AnnotationRanked> ResultRanked = setFilerByType(Result);
-			ResultRanked=setfilterByUser(ResultRanked);
-			Result = OrdenaResultado(ResultRanked);
+			FiltraAnotaciones(Result);
 			insertrefreshedAnot(Result);
-		}
 		}
 	}
 
@@ -1196,21 +1221,25 @@ pageBack.addMouseDownHandler(new MouseDownHandler() {
 	}
 
 	private static ArrayList<AnnotationRanked> setfilterByUser(
-			ArrayList<AnnotationRanked> resultRanked) {
+			List<AnnotationClient> result) {
+		
 		
 		ArrayList<AnnotationRanked> resultout = new ArrayList<AnnotationRanked>();
-		
 		if (filtroUsers.isEmpty())
-			return resultRanked;
+			{
+			return resultout;
+			}
 
-		if (resultRanked != null) {
-			for (int i = 0; i < resultRanked.size(); i++) {
-				Long A = resultRanked.get(i).getAnotacionRankeada().getCreator().getId();
+		if (result != null) {
+			for (int i = 0; i < result.size(); i++) {
+				Long A = result.get(i).getCreator().getId();
 				if (isInUser(A)) {
-					resultRanked.get(i).setRanking(resultRanked.get(i).getRanking()+1);
-					resultout.add(resultRanked.get(i));
+					AnnotationRanked resultRanked = new AnnotationRanked(result.get(i));
+					resultRanked.setRanking(1);
+					resultout.add(resultRanked);
 				}
 			}
+			
 		}
 
 		
@@ -1230,13 +1259,13 @@ pageBack.addMouseDownHandler(new MouseDownHandler() {
 		return false;
 	}
 	
-	public static void setFiltroAnotPar(ArrayList<Long> filtroAnotPar) {
-		MainEntryPoint.filtroAnotPar = filtroAnotPar;
-		filtroTypes=new ArrayList<TypeClient>();
-		filtroUsers=new ArrayList<UserClient>();
-		filtroWords=new ArrayList<String>();
-		
-	}
+//	public static void setFiltroAnotPar(ArrayList<Long> filtroAnotPar) {
+//		MainEntryPoint.filtroAnotPar = filtroAnotPar;
+//		filtroTypes=new ArrayList<TypeClient>();
+//		filtroUsers=new ArrayList<UserClient>();
+//		filtroWords=new ArrayList<String>();
+//		
+//	}
 	
 	public static void imageOnLoad(String URL)
 	{
@@ -1432,6 +1461,19 @@ pageBack.addMouseDownHandler(new MouseDownHandler() {
 	
 	public static PopUPEXportacion getPEX() {
 		return PEX;
+	}
+
+	public static void CleanFilter() {
+		filtroAnotPar= new ArrayList<Long>();
+		filtroTypes= new ArrayList<TypeClient>();
+		filtroUsers = new ArrayList<UserClient>();
+		filtroWords = new ArrayList<String>();
+		if (state == State.AllAnnotations) {
+			verticalAnnotationsPanel.clear();
+			List<AnnotationClient> Result = anotaciones_Actuales;
+			insertrefreshedAnot(Result);
+		}
+		
 	}
 	
 }

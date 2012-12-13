@@ -42,8 +42,7 @@ public class AceptWindow extends PopupPanel {
 		Button btnNewButton = new Button(ActualUser.getLanguage().getAcceptFilter());
 		btnNewButton.addClickHandler(new ClickHandler() {
 			public void onClick(ClickEvent event) {
-				ArrayList<TypeClient> filtro= new ArrayList<TypeClient>();
-			MainEntryPoint.setFiltroTypes(filtro);
+			MainEntryPoint.CleanFilter();
 				hide();
 			}
 		});

@@ -174,86 +174,11 @@ public class FilterBasicPopUp extends PopupPanel {
 					Types=MakeWords(Words);
 					filtro=FindTypes(Types,ActualUser.getCatalogo());
 					ArrayList<UserClient> Usuarios=FindUsers(Types,ActualUser.getReadingactivity().getGroup());
-					MainEntryPoint.setFiltroTypesAndUser(filtro, Usuarios,Types);
+					MainEntryPoint.setFiltro(filtro, Usuarios,Types,new ArrayList<Long>());
 					Me.hide();
-					
-					
-//					bookReaderServiceHolder.getEntriesIdsByNames(Types, ActualUser.getCatalogo().getId(), ActualUser.getOpenCatalog().getId(),new AsyncCallback<ArrayList<Long>>() {
-//
-//						public void onFailure(Throwable caught) {
-//							Window.alert(ActualUser.getLanguage().getE_typeFilter());
-//							Me.hide();
-//						}
-//
-//						public void onSuccess(ArrayList<Long> result) {
-//							filtro.addAll(result);
-//							//MainEntryPoint.setFiltroTypes(filtro);
-//							FiltroPorUsers();
-//							Me.hide();
-//						}
-//
-//						private void FiltroPorUsers() {
-//							bookReaderServiceHolder.getUsersByGroupId(ActualUser.getReadingactivity().getGroupId(),new AsyncCallback<ArrayList<UserApp>>() {
-//								
-//								public void onSuccess(ArrayList<UserApp> result) {
-//									
-//									GroupUser=result;
-//									
-//									bookReaderServiceHolder.loadUserById(ActualUser.getReadingactivity().getProfessorId(), new AsyncCallback<UserApp>() {
-//										
-//										public void onSuccess(UserApp result) {
-//											GroupUser.add(result);
-//											
-//											ArrayList<Long> UserIds=new ArrayList<Long>();
-//
-//											for (UserApp user : GroupUser) {
-//												if (IsSimilar(user)) UserIds.add(user.getId());
-//											}
-//											
-//											MainEntryPoint.setFiltroTypesAndUser(filtro, UserIds);
-//											
-//										}
-//										
-//										public void onFailure(Throwable caught) {
-//											Window.alert(ActualUser.getLanguage().getE_UserLoad());
-//											Me.hide();
-//											
-//										}
-//									});
-//									
-//								
-//									
-//									
-//									
-//								}
-//								
-//								private boolean IsSimilar(UserApp user) {
-//									for (String uni : Types) {
-//										if (user.getEmail().contains(uni))
-//											return true;
-//									}
-//									return false;
-//								}
-//
-//								public void onFailure(Throwable caught) {
-//									Window.alert(ActualUser.getLanguage().getE_UserLoad());
-//									Me.hide();
-//									
-//								}
-//							});
-//							
-//						}
-//					});
-					
-					/*StringBuffer SB=new StringBuffer();
-					for (int i = 0; i < Types.size(); i++) {
-						if (i!=0) SB.append(" - "); 
-						SB.append(i+" : " + Types.get(i));
-					}
-					Window.alert(SB.toString());*/
 				}
 				}else {
-				MainEntryPoint.setFiltroTypes(filtro);
+				MainEntryPoint.CleanFilter();
 				Me.hide();
 				}
 			
