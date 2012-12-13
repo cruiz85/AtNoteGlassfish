@@ -639,7 +639,7 @@ pageBack.addMouseDownHandler(new MouseDownHandler() {
 			}
 		});
 		
-		if (filtroTypes.size()==0 && filtroUsers.isEmpty())
+		if (filtroTypes.isEmpty() && filtroUsers.isEmpty() && filtroAnotPar.isEmpty() && filtroWords.isEmpty())
 			setfilterinfo(false);
 		else setfilterinfo(true);
 		
@@ -1077,7 +1077,7 @@ pageBack.addMouseDownHandler(new MouseDownHandler() {
 			return (ArrayList<AnnotationClient>) applyConcreteFilter(result);
 		}
 		else{
-			if (!filtroTypes.isEmpty()||!filtroUsers.isEmpty()||filtroWords.isEmpty())
+			if (!filtroTypes.isEmpty()||!filtroUsers.isEmpty()||!filtroWords.isEmpty())
 			{
 				ArrayList<AnnotationRanked> ResultRankedTipe = setFilerByType(result);
 				ArrayList<AnnotationRanked> ResultRankedUser = setfilterByUser(result);
@@ -1468,6 +1468,7 @@ pageBack.addMouseDownHandler(new MouseDownHandler() {
 		filtroTypes= new ArrayList<TypeClient>();
 		filtroUsers = new ArrayList<UserClient>();
 		filtroWords = new ArrayList<String>();
+		setfilterinfo(false);
 		if (state == State.AllAnnotations) {
 			verticalAnnotationsPanel.clear();
 			List<AnnotationClient> Result = anotaciones_Actuales;
