@@ -1,14 +1,13 @@
 drop table `atnote`.`group_user`;
 drop table `atnote`.`group_app_user_app`;
-drop table `atnote`.`entry_relation`;
 drop table `atnote`.`catalogo_entry`;
-drop table `atnote`.`book_annotation`;
 drop table `atnote`.`annotation_thread`;
 drop table `atnote`.`annotation_text_selector`;
 drop table `atnote`.`text_selector`;
 drop table `atnote`.`relation`;
 drop table `atnote`.`entry_annotation`;
 drop table `atnote`.`annotation`;
+drop table `atnote`.`book_reading_activity`;
 drop table `atnote`.`reading_activity`;
 drop table `atnote`.`user_app_book`;
 drop table `atnote`.`book`;

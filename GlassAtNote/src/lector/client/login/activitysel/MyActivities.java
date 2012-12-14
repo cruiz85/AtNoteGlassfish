@@ -3,6 +3,7 @@ package lector.client.login.activitysel;
 import java.util.ArrayList;
 import java.util.List;
 
+import lector.client.admin.generalPanels.PublicPrivatePanel;
 import lector.client.book.reader.GWTService;
 import lector.client.book.reader.GWTServiceAsync;
 import lector.client.book.reader.ImageService;
@@ -174,6 +175,7 @@ public class MyActivities implements EntryPoint {
 		
 		HorizontalPanel horizontalPanel_2 = new HorizontalPanel();
 		horizontalPanel_2.setStyleName("BlancoTransparente");
+		horizontalPanel_2.setSpacing(6);
 		horizontalPanel_1.add(horizontalPanel_2);
 		verticalPanel = new VerticalPanel();
 		horizontalPanel_2.add(verticalPanel);
@@ -198,9 +200,11 @@ public class MyActivities implements EntryPoint {
 						public void onSuccess(List<ReadingActivityClient> result) {
 							LoadingPanel.getInstance().hide();
 							BooksIDs = result;
-							setealibros();
+							setealibrosProfessor();
 
 						}
+
+					
 
 						public void onFailure(Throwable caught) {
 							LoadingPanel.getInstance().hide();
@@ -233,6 +237,156 @@ public class MyActivities implements EntryPoint {
 		}
 	}
 
+	private void setealibrosProfessor() {
+		PublicPrivatePanel PPPanel= new PublicPrivatePanel();
+		verticalPanel.add(PPPanel);
+		for (int i = 0; i < BooksIDs.size()-1; i++) {
+
+			ButtonActivityReader button = new ButtonActivityReader(BooksIDs.get(i));
+			button.setSize("100%", "100%");
+			if (!buttonexist(button)) {
+				if (CheckCompleta(button))
+				{
+					if (BooksIDs.get(i).getProfessor().getId().equals(ActualUser.getUser().getId()))
+						PPPanel.getPrivate().add(button);
+					else PPPanel.getPublic().add(button);
+					
+				button.setStyleName("gwt-ButtonTOP");
+				button.addMouseDownHandler(new MouseDownHandler() {
+					public void onMouseDown(MouseDownEvent event) {
+						((Button)event.getSource()).setStyleName("gwt-ButtonPush");
+					}
+				});
+				button.addMouseOutHandler(new MouseOutHandler() {
+					public void onMouseOut(MouseOutEvent event) {
+						((Button)event.getSource()).setStyleName("gwt-ButtonTOP");
+					}
+				});
+				button.addMouseOverHandler(new MouseOverHandler() {
+					public void onMouseOver(MouseOverEvent event) {
+						((Button)event.getSource()).setStyleName("gwt-ButtonTOPOver");
+					}
+				});
+				}else
+				{
+					if (ActualUser.getUser() instanceof ProfessorClient)	
+					{
+						if (BooksIDs.get(i).getProfessor().getId().equals(ActualUser.getUser().getId()))
+							PPPanel.getPrivate().add(button);
+						else PPPanel.getPublic().add(button);
+						
+						button.setEnabled(false);
+						button.setTitle("Inclomplete Activity Data");
+						button.setStyleName("gwt-ButtonGris");
+						button.addMouseDownHandler(new MouseDownHandler() {
+							public void onMouseDown(MouseDownEvent event) {
+								((Button)event.getSource()).setStyleName("gwt-ButtonGrisPush");
+							}
+						});
+						button.addMouseOutHandler(new MouseOutHandler() {
+							public void onMouseOut(MouseOutEvent event) {
+								((Button)event.getSource()).setStyleName("gwt-ButtonGris");
+							}
+						});
+						button.addMouseOverHandler(new MouseOverHandler() {
+							public void onMouseOver(MouseOverEvent event) {
+								((Button)event.getSource()).setStyleName("gwt-ButtonGrisOver");
+							}
+						});
+					}
+				}
+	
+				
+				button.addClickHandler(new ClickHandler() {
+					
+
+					public void onClick(ClickEvent event) {
+
+						ButtonActivityReader B = (ButtonActivityReader) event.getSource();
+						RA=B.getRA();
+						ActualUser.setReadingactivity(RA);
+						MainEntryPoint.CleanFilter();			
+						loadCatalog();
+						 }
+				});
+			}
+		}
+		
+		
+		//Ultimo Botton
+		if (!BooksIDs.isEmpty())
+		{
+			ButtonActivityReader button = new ButtonActivityReader(BooksIDs.get(BooksIDs.size()-1));
+			button.setSize("100%", "100%");
+			if (!buttonexist(button)) {
+				if (CheckCompleta(button))
+				{
+					if (BooksIDs.get(BooksIDs.size()-1).getProfessor().getId().equals(ActualUser.getUser().getId()))
+						PPPanel.getPrivate().add(button);
+					else PPPanel.getPublic().add(button);
+					
+				button.setStyleName("gwt-ButtonBotton");
+				button.addMouseOutHandler(new MouseOutHandler() {
+					public void onMouseOut(MouseOutEvent event) {
+						((Button)event.getSource()).setStyleName("gwt-ButtonBotton");
+					}
+				});
+				button.addMouseOverHandler(new MouseOverHandler() {
+					public void onMouseOver(MouseOverEvent event) {
+						((Button)event.getSource()).setStyleName("gwt-ButtonBottonOver");
+					}
+				});
+				button.addMouseDownHandler(new MouseDownHandler() {
+					public void onMouseDown(MouseDownEvent event) {
+						((Button)event.getSource()).setStyleName("gwt-ButtonPushBotton");
+					}
+				});
+				}else
+				{
+					if (ActualUser.getUser() instanceof ProfessorClient)	
+					{
+						if (BooksIDs.get(BooksIDs.size()-1).getProfessor().getId().equals(ActualUser.getUser().getId()))
+							PPPanel.getPrivate().add(button);
+						else PPPanel.getPublic().add(button);
+						button.setEnabled(false);
+						button.setTitle("Inclomplete Activity Data");
+						button.setStyleName("gwt-ButtonGrisDown");
+						button.addMouseOutHandler(new MouseOutHandler() {
+							public void onMouseOut(MouseOutEvent event) {
+								((Button)event.getSource()).setStyleName("gwt-ButtonGrisDown");
+							}
+						});
+						button.addMouseOverHandler(new MouseOverHandler() {
+							public void onMouseOver(MouseOverEvent event) {
+								((Button)event.getSource()).setStyleName("gwt-ButtonGrisDownOver");
+							}
+						});
+						button.addMouseDownHandler(new MouseDownHandler() {
+							public void onMouseDown(MouseDownEvent event) {
+								((Button)event.getSource()).setStyleName("gwt-ButtonGrisDownPush");
+							}
+						});
+					}
+				}
+				
+				
+				button.addClickHandler(new ClickHandler() {
+
+					public void onClick(ClickEvent event) {
+
+						ButtonActivityReader B = (ButtonActivityReader) event.getSource();
+						RA=B.getRA();
+						ActualUser.setReadingactivity(RA);
+						MainEntryPoint.CleanFilter();
+						
+						loadCatalog();
+					}
+				});
+			}
+		}
+		
+	}
+	
 	private void setealibros() {
 		for (int i = 0; i < BooksIDs.size()-1; i++) {
 
