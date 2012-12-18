@@ -5,6 +5,7 @@ import lector.client.book.reader.GWTServiceAsync;
 import lector.client.controler.ActualState;
 import lector.client.controler.CalendarNow;
 import lector.client.controler.Controlador;
+import lector.client.controler.ErrorConstants;
 import lector.client.controler.InformationConstants;
 import lector.client.logger.Logger;
 
@@ -58,15 +59,19 @@ public class SeleccionMenu extends PopupPanel {
 				bookReaderServiceHolder.deleteLanguage(BLan.getLanguage().getId(), new AsyncCallback<Void>() {
 					
 					public void onSuccess(Void result) {
-						Logger.GetLogger().info(this.getClass().getName(), "Usuario: " + ActualState.getUser().getEmail()
-								+ " delete a language " + BLan.getLanguage().getName() + " at " + CalendarNow.GetDateNow() );
+						Logger.GetLogger().info(this.getClass().getName(),
+								ActualState.getUser().toString(),
+								"Delete a language " + BLan.getLanguage().getName());
 						Father.refresh();
 						hide();
 						
 					}
 					
 					public void onFailure(Throwable caught) {
-						Window.alert("The language could not be removed");
+						Window.alert(ErrorConstants.ERROR_DELETING_LANGUAGE);
+						Logger.GetLogger().severe(this.getClass().getName(),
+								ActualState.getUser().toString(),
+								ErrorConstants.ERROR_DELETING_LANGUAGE);
 						
 					}
 				});
@@ -95,8 +100,9 @@ public class SeleccionMenu extends PopupPanel {
 		Button btnNewButton_2 = new Button("Edit");
 		btnNewButton_2.addClickHandler(new ClickHandler() {
 			public void onClick(ClickEvent event) {
-				Logger.GetLogger().info(this.getClass().getName(), "Usuario: " + ActualState.getUser().getEmail()
-						+ " start edit a language " + BLan.getLanguage().getName() + " at " + CalendarNow.GetDateNow() );
+				Logger.GetLogger().info(this.getClass().getName(),
+						ActualState.getUser().toString(),
+						"Start edit a language " + BLan.getLanguage().getName());
 				EditordeLenguajes.setLenguajeActual(BLan.getLanguage());
 				Controlador.change2EditorLenguaje();
 				hide();

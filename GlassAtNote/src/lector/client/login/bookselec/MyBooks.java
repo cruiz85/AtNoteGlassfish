@@ -132,7 +132,10 @@ public class MyBooks implements EntryPoint {
 				public void onFailure(Throwable caught) {
 					LoadingPanel.getInstance().hide();
 					Window.alert(ErrorConstants.ERROR_LOADING_BOOKS + ActualState.getUser().getEmail());
-					Logger.GetLogger().severe(Yo.getClass().toString(), ErrorConstants.ERROR_LOADING_BOOKS + ActualState.getUser().getEmail() + " at " + CalendarNow.GetDateNow() );
+					Logger.GetLogger().severe(
+							Yo.getClass().toString(),
+							ActualState.getUser().toString(),
+							ErrorConstants.ERROR_LOADING_BOOKS);
 					
 				}
 			});

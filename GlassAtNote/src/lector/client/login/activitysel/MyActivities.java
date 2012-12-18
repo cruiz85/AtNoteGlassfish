@@ -131,9 +131,9 @@ public class MyActivities implements EntryPoint {
 						public void onSuccess(Void result) {
 							LoadingPanel.getInstance().hide();
 							Window.alert(InformationConstants.GOODBYE);
-							Logger.GetLogger().info(Yo.getClass().toString(), "Delete:  "+
-							"First Name: " + ActualState.getUser().getFirstName() + " Last Name: " + ActualState.getUser().getLastName() +
-							" Email: " + ActualState.getUser().getEmail());
+							Logger.GetLogger().info(Yo.getClass().toString(),
+									 ActualState.getUser().toString(),
+									 "Delete him self ");
 							Window.Location.reload();
 						}
 						
@@ -141,7 +141,9 @@ public class MyActivities implements EntryPoint {
 						public void onFailure(Throwable caught) {
 							LoadingPanel.getInstance().hide();
 							Window.alert(ErrorConstants.ERROR_DELETING_USER);
-							Logger.GetLogger().severe(Yo.getClass().toString(), ErrorConstants.ERROR_DELETING_USER + " " + ActualState.getUser().getEmail() + " at " + CalendarNow.GetDateNow() );
+							Logger.GetLogger().severe(Yo.getClass().toString(),
+									ActualState.getUser().toString(),
+									ErrorConstants.ERROR_DELETING_USER + ActualState.getUser().toString());
 						}
 					});
 				}

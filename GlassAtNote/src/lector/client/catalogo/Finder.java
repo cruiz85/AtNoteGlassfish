@@ -200,7 +200,7 @@ public class Finder extends Composite {
 			@Override
 			public void onFailure(Throwable caught) {
 				Window.alert(ErrorConstants.ERROR_LOADING_CATALOG);
-				Logger.GetLogger().severe(Yo.getClass().toString(), ErrorConstants.ERROR_LOADING_CATALOG);
+				Logger.GetLogger().severe(Yo.getClass().toString(),ActualState.getUser().toString(), ErrorConstants.ERROR_LOADING_CATALOG);
 				LoadingPanel.getInstance().hide();
 			}
 

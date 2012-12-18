@@ -7,6 +7,7 @@ import lector.client.controler.Constants;
 import lector.client.controler.Controlador;
 import lector.client.controler.ErrorConstants;
 import lector.client.controler.InformationConstants;
+import lector.client.logger.Logger;
 import lector.share.model.client.ReadingActivityClient;
 
 import com.google.gwt.core.client.EntryPoint;
@@ -108,13 +109,13 @@ public class Administrador implements EntryPoint {
 	private RootPanel rootPanel;
 	private DockPanel PanelFondoGeneral;
 	private AbsolutePanel PanelEdicion;
-	
+	private Administrador Yo;
 
 
 	public void onModuleLoad() {
 		rootPanel = RootPanel.get();
 		rootPanel.setStyleName("Root");
-
+		Yo=this;
 		if ((ActualState.getUser().getFirstName() != null)
 				&& (!ActualState.getUser().getFirstName().isEmpty()))
 			BIENVENIDA = ActualState.getUser().getFirstName();
@@ -145,6 +146,10 @@ public class Administrador implements EntryPoint {
 						Cookies.removeCookie(Constants.COOKIE_NAME);
 						// Window.open(ActualUser.getUser().getLogoutUrl(),
 						// "_self", "");
+						Logger.GetLogger()
+						.info(Yo.getClass().toString(),
+								ActualState.getUser().toString(),
+								"Log out");
 						ActualState.setUser(null);
 						ActualState.setBook(null);
 						ActualState.setReadingactivity(null);

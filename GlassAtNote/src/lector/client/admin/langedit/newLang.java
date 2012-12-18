@@ -1,12 +1,11 @@
 package lector.client.admin.langedit;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import lector.client.book.reader.GWTService;
 import lector.client.book.reader.GWTServiceAsync;
 import lector.client.controler.ActualState;
-import lector.client.controler.CalendarNow;
+import lector.client.controler.ErrorConstants;
 import lector.client.logger.Logger;
 import lector.client.reader.LoadingPanel;
 import lector.share.model.Language;
@@ -32,6 +31,9 @@ import com.google.gwt.event.dom.client.MouseOverHandler;
 
 public class newLang extends PopupPanel {
 
+	
+	private static String INSERT_NAME_NEW_LANGUAGE_LABEL = "Insert the name for the new Language";
+	
 	private PopupPanel Me;
 	private NewAdminLangs Father;
 	private TextBox textBox;
@@ -48,7 +50,7 @@ public class newLang extends PopupPanel {
 		setWidget(verticalPanel);
 		verticalPanel.setSize("100%", "100%");
 		
-		Label label = new Label("Insert the name for the new Language");
+		Label label = new Label(newLang.INSERT_NAME_NEW_LANGUAGE_LABEL );
 		verticalPanel.add(label);
 		label.setSize("100%", "100%");
 		
@@ -81,10 +83,13 @@ public class newLang extends PopupPanel {
 		});
 		btnNewButton.setStyleName("gwt-ButtonCenter");
 		btnNewButton.addClickHandler(new ClickHandler() {
+			private String S;
+
 			public void onClick(ClickEvent event) {
-				
-				
-					
+				S=textBox.getText();
+				if (S.isEmpty()|| S.length()<2) 
+					Window.alert("The Name can be more lenght or equal than two");
+				else {	
 					
 				LoadingPanel.getInstance().center();
 				LoadingPanel.getInstance().setLabelTexto("Saving...");
@@ -92,11 +97,10 @@ public class newLang extends PopupPanel {
 						
 						public void onSuccess(List<String> result) {
 							LoadingPanel.getInstance().hide();
-							String S=textBox.getText();
+							
 							Language L=new Language(S);
-							if (S.isEmpty()|| S.length()<2) 
-								Window.alert("The Name can be more lenght or equal than two");
-							else {
+							
+							
 							List<String> LL =result;
 							boolean encontrado=false;
 							for (String LLL : LL) {
@@ -115,13 +119,17 @@ public class newLang extends PopupPanel {
 
 								public void onFailure(Throwable caught) {
 									LoadingPanel.getInstance().hide();
-									Window.alert("I can save the Lenguaje");
+									Window.alert(ErrorConstants.ERROR_SAVING_LANGUAGE);
+									Logger.GetLogger().severe(this.getClass().getName(), 
+											ActualState.getUser().toString(),
+											ErrorConstants.ERROR_RETRIVING_LANGUAGES);
 									
 								}
 
 								public void onSuccess(Void result) {
-									Logger.GetLogger().info(this.getClass().getName(), "Usuario: " + ActualState.getUser().getEmail()
-											+ " make a language " + LSave.getName() + " at " + CalendarNow.GetDateNow() );
+									Logger.GetLogger().info(this.getClass().getName(), 
+											ActualState.getUser().toString(),
+											"Create a language named : " + LSave.getName());
 									LoadingPanel.getInstance().hide();
 									Father.refresh();
 									Me.hide();
@@ -130,21 +138,25 @@ public class newLang extends PopupPanel {
 								
 							});
 								}
-							else{ Window.alert("This Language exist previusly");
+							else{ 
+								Window.alert("This Language exist previusly");
 							LoadingPanel.getInstance().hide();
 							}
-							}
+							
 							
 						}
 						
 						public void onFailure(Throwable caught) {
 							LoadingPanel.getInstance().hide();
-							Window.alert("I can't load the Lenguajes");
+							Window.alert(ErrorConstants.ERROR_RETRIVING_LANGUAGES);
+							Logger.GetLogger().severe(this.getClass().getName(), 
+									ActualState.getUser().toString(),
+									ErrorConstants.ERROR_RETRIVING_LANGUAGES);
 							
 						}
 					});
 					
-					
+			}
 				}
 				
 			

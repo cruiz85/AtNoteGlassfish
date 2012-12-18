@@ -48,8 +48,8 @@ public class MenuOpciones extends PopupPanel {
 			public void onClick(ClickEvent event) {
 				Controlador.change2EditTemplate();
 				EditTemplate.setTemplate(T);
-				Logger.GetLogger().info(this.getClass().getName(), "Usuario: " + ActualState.getUser().getEmail()
-						+ " Edit Template named " + T.getName() + " at " + CalendarNow.GetDateNow() );
+				Logger.GetLogger().info(this.getClass().getName(),ActualState.getUser().toString(),
+						"Edit Template named " + T.getName());
 			}
 		});
 		btnNewButton.setSize("100%", "100%");
@@ -83,13 +83,17 @@ public class MenuOpciones extends PopupPanel {
 						LoadingPanel.getInstance().hide();
 						YO.refresh();
 						hide();
-						Logger.GetLogger().info(this.getClass().getName(), "Usuario: " + ActualState.getUser().getEmail()
-								+ " Delete a Template named " + T.getName() + " at " + CalendarNow.GetDateNow() );
+						Logger.GetLogger().info(this.getClass().getName(),
+								ActualState.getUser().toString(),
+								"Delete a Template named " + T.getName());
 					}
 					
 					public void onFailure(Throwable caught) {
 						LoadingPanel.getInstance().hide();
 						Window.alert(ErrorConstants.ERROR_DELETING_TEMPLATE);
+						Logger.GetLogger().severe(this.getClass().getName(),
+								ActualState.getUser().toString(),
+								ErrorConstants.ERROR_DELETING_TEMPLATE);
 						
 					}
 				});

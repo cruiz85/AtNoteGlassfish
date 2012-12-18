@@ -6,6 +6,7 @@ import lector.client.book.reader.GWTServiceAsync;
 import lector.client.controler.ActualState;
 import lector.client.controler.CalendarNow;
 import lector.client.controler.Controlador;
+import lector.client.controler.ErrorConstants;
 
 import lector.client.logger.Logger;
 import lector.client.reader.LoadingPanel;
@@ -49,7 +50,6 @@ public class SeleccionMenuCatalog extends PopupPanel {
 				hide();
 			}
 		});
-		//verticalPanel.add(btnNewButton);
 		btnNewButton.setSize("100%", "100%");
 		
 		Button btnNewButton_1 = new Button("Delete");
@@ -66,16 +66,19 @@ public class SeleccionMenuCatalog extends PopupPanel {
 				bookReaderServiceHolder.deleteCatalog(BLan.getCatalog().getId(), new AsyncCallback<Void>() {
 					
 					public void onSuccess(Void result) {
-						Logger.GetLogger().info(this.getClass().getName(), "Usuario: " + ActualState.getUser().getEmail()
-								+ " delete a catalog " + BLan.getCatalog().getCatalogName() + " at " + CalendarNow.GetDateNow() );
+						Logger.GetLogger().info(this.getClass().getName(),
+								ActualState.getUser().toString(),
+								"Delete a catalog :" + BLan.getCatalog().getCatalogName() );
 						LoadingPanel.getInstance().hide();
 						Father.refresh();
 					}
 					
 					public void onFailure(Throwable caught) {
 						LoadingPanel.getInstance().hide();
-					Window.alert("The Catalog could not be deleted");
-					
+					Window.alert(ErrorConstants.ERROR_DELETING_CATALOG);
+					Logger.GetLogger().severe(this.getClass().getName(),
+							ActualState.getUser().toString(),
+							ErrorConstants.ERROR_DELETING_CATALOG);
 						
 					}
 				});
@@ -106,8 +109,10 @@ public class SeleccionMenuCatalog extends PopupPanel {
 		btnNewButton_2.addClickHandler(new ClickHandler() {
 			public void onClick(ClickEvent event) {
 				hide();
-				Logger.GetLogger().info(this.getClass().getName(), "Usuario: " + ActualState.getUser().getEmail()
-						+ " edit a catalog " + BLan.getCatalog().getCatalogName() + " at " + CalendarNow.GetDateNow() );
+				Logger.GetLogger().info(this.getClass().getName(),
+						ActualState.getUser().toString(),
+						"Usuario: " + ActualState.getUser()
+						+ " edit a catalog " + BLan.getCatalog().getCatalogName());
 				EditorTagsAndTypes.setCatalogo(BLan.getCatalog());
 				Controlador.change2EditorTagsAndTypes();
 				

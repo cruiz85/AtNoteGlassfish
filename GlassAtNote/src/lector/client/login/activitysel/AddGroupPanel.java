@@ -72,6 +72,10 @@ public class AddGroupPanel extends PopupPanel {
 					public void onSuccess(Void result) {
 						LoadingPanel.getInstance().hide();
 						Window.alert(InformationConstants.YOUR_ADD_WAS_CORRECT_WAIT_FOR_TEACHER);
+						Logger.GetLogger().info(
+								Yo.getClass().toString(),
+								ActualState.getUser().toString(),
+								"User"+ ActualState.getUser().toString() + " add to Group" + textBox.getValue());
 						hide();
 
 					}
@@ -82,6 +86,7 @@ public class AddGroupPanel extends PopupPanel {
 						Window.alert(ErrorConstants.ERROR_IN_ADDITION_TO_A_GROUP);
 						Logger.GetLogger().severe(
 								Yo.getClass().toString(),
+								ActualState.getUser().toString(),
 								ErrorConstants.ERROR_IN_ADDITION_TO_A_GROUP
 										+ textBox.getValue());
 						hide();

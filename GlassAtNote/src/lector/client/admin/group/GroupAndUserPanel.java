@@ -83,14 +83,16 @@ public class GroupAndUserPanel extends Composite {
 					public void onFailure(Throwable caught) {
 						LoadingPanel.getInstance().hide();
 						Window.alert(ErrorConstants.ERROR_DELETING_GROUP);
-						Logger.GetLogger().severe(this.getClass().getName(), "Usuario: " + ActualState.getUser().getEmail()
-								+ " "+ ErrorConstants.ERROR_DELETING_GROUP  + " at " + CalendarNow.GetDateNow() );
+						Logger.GetLogger().severe(this.getClass().getName(),
+								ActualState.getUser().toString(),
+								ErrorConstants.ERROR_DELETING_GROUP);
 						
 					}
 
 					public void onSuccess(Void result) {
-						Logger.GetLogger().info(this.getClass().getName(), "Usuario: " + ActualState.getUser().getEmail()
-								+ " delete a group "+ Mygroup.getClass().toString() + " named " + Mygroup.getName() + " at " + CalendarNow.GetDateNow() );
+						Logger.GetLogger().info(this.getClass().getName(),
+											ActualState.getUser().toString(),
+											"Delete a group named: " + Mygroup.getName() );
 						LoadingPanel.getInstance().hide();
 						PanelMioDentro.clear();
 						Father.refreshGroups();
@@ -178,37 +180,22 @@ public class GroupAndUserPanel extends Composite {
 							public void onFailure(Throwable caught) {
 								LoadingPanel.getInstance().hide();
 								Window.alert(ErrorConstants.ERROR_DELETING_USER1  + Borrar + ErrorConstants.ERROR_DELETING_USER2 + Mygroup.getName() );
-								Logger.GetLogger().severe(this.getClass().getName(), "Usuario: " + ActualState.getUser().getEmail()
-										+ " "+ ErrorConstants.ERROR_DELETING_USER1  + Borrar + ErrorConstants.ERROR_DELETING_USER2 + Mygroup.getName() + " at " + CalendarNow.GetDateNow() );
+								Logger.GetLogger().severe(this.getClass().getName(), 
+														ActualState.getUser().toString(),
+														ErrorConstants.ERROR_DELETING_USER1  + Borrar + ErrorConstants.ERROR_DELETING_USER2 + Mygroup.getName());
 								
 							}
 
 							public void onSuccess(Void result) {
-								Logger.GetLogger().info(this.getClass().getName(), "Usuario: " + ActualState.getUser().getEmail()
-										+ " delete a user "+ Borrar + " from " + Mygroup.getName() + " at " + CalendarNow.GetDateNow() );
+								Logger.GetLogger().info(this.getClass().getName(),
+										ActualState.getUser().toString(),
+										"Delete a user: "+ Borrar + " from: " + Mygroup.getName());
 								LoadingPanel.getInstance().hide();
 								Panel_Usuarios.clear();
 								refrescaElGrupo();
 								
 							}
-						} );
-						
-						//TODO CESAR
-//						bookReaderServiceHolder.removeUserAndGroupRelation(BGM
-//								.getUsuario().getId(),
-//
-//						Mygroup.getId(), new AsyncCallback<Void>() {
-//
-//							public void onFailure(Throwable caught) {
-//								Window.alert("The user could not be removed from his/her group");
-//
-//							}
-//
-//							public void onSuccess(Void result) {
-//								refresh();
-//							}
-//						});
-						
+						} );					
 
 					}
 
@@ -243,29 +230,38 @@ public class GroupAndUserPanel extends Composite {
 			});
 			User.addClickHandler(new ClickHandler() {
 
+				private StudentClient Borrar;
+
 				public void onClick(ClickEvent event) {
 					if (Window
 							.confirm("Are you sure to remove the user from the list")) {
 					ButtonGroupMio BGM = ((ButtonGroupMio) event
 								.getSource());
 
-//					//TODO CESAR
-//						bookReaderServiceHolder.removeUserAndGroupRelation(BGM
-//								.getUsuario().getId(),
-//						// bookReaderServiceHolder
-//						// .removeUserAndGroupRelation(
-//						// result.getId(),
-//								Mygroup.getId(), new AsyncCallback<Void>() {
-//
-//									public void onFailure(Throwable caught) {
-//										Window.alert("The user could not be removed from his/her group");
-//
-//									}
-//
-//									public void onSuccess(Void result) {
-//										refresh();
-//									}
-//								});
+					Borrar=(StudentClient)BGM.getUsuario();
+					LoadingPanel.getInstance().center();
+					LoadingPanel.getInstance().setLabelTexto("Deleting...");
+					bookReaderServiceHolder.removeUserParticipatingInGroup(BGM.getUsuario().getId(), Mygroup.getId(),new AsyncCallback<Void>() {
+
+						public void onFailure(Throwable caught) {
+							LoadingPanel.getInstance().hide();
+							Window.alert(ErrorConstants.ERROR_DELETING_USER1  + Borrar + ErrorConstants.ERROR_DELETING_USER2 + Mygroup.getName() );
+							Logger.GetLogger().severe(this.getClass().getName(), 
+													ActualState.getUser().toString(),
+													ErrorConstants.ERROR_DELETING_USER1  + Borrar + ErrorConstants.ERROR_DELETING_USER2 + Mygroup.getName());
+							
+						}
+
+						public void onSuccess(Void result) {
+							Logger.GetLogger().info(this.getClass().getName(),
+									ActualState.getUser().toString(),
+									"Delete a user: "+ Borrar + " from: " + Mygroup.getName());
+							LoadingPanel.getInstance().hide();
+							Panel_Usuarios.clear();
+							refrescaElGrupo();
+							
+						}
+					} );		
 //
 					}
 

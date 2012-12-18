@@ -1,6 +1,5 @@
 package lector.client.admin.admins;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Stack;
 
@@ -9,18 +8,12 @@ import lector.client.book.reader.GWTService;
 import lector.client.book.reader.GWTServiceAsync;
 import lector.client.catalogo.StackPanelMio;
 import lector.client.controler.ActualState;
-import lector.client.controler.CalendarNow;
-import lector.client.controler.Constants;
 import lector.client.controler.Controlador;
 import lector.client.controler.ErrorConstants;
 import lector.client.controler.InformationConstants;
 import lector.client.logger.Logger;
 import lector.client.reader.LoadingPanel;
-import lector.share.model.UserApp;
 import lector.share.model.client.ProfessorClient;
-import lector.share.model.client.StudentClient;
-import lector.share.model.client.UserClient;
-
 import com.google.gwt.core.client.EntryPoint;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.user.client.rpc.AsyncCallback;
@@ -34,7 +27,6 @@ import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.MenuItemSeparator;
 import com.google.gwt.user.client.ui.PasswordTextBox;
 import com.google.gwt.user.client.ui.ScrollPanel;
-import com.google.gwt.user.client.ui.StackPanel;
 import com.google.gwt.user.client.ui.VerticalPanel;
 import com.google.gwt.user.client.ui.HorizontalSplitPanel;
 import com.google.gwt.user.client.ui.SimplePanel;
@@ -43,7 +35,6 @@ import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.HasHorizontalAlignment;
 import com.google.gwt.user.client.ui.HasVerticalAlignment;
 import com.google.gwt.user.client.ui.Button;
-import com.google.gwt.user.client.ui.Widget;
 import com.google.gwt.event.dom.client.ChangeEvent;
 import com.google.gwt.event.dom.client.ChangeHandler;
 import com.google.gwt.event.dom.client.ClickHandler;
@@ -330,24 +321,10 @@ public class NewAdminAdministrator implements EntryPoint {
 								}
 
 								public void onSuccess(Void result) {
-									// Salir si me borro a mi mismo
 									Logger.GetLogger().info(
 											Yo.getClass().toString(),
-											"New User deleted:  "
-													+ "First Name: "
-													+ Ident.getFirstName()
-													+ " Last Name: "
-													+ Ident.getLastName()
-													+ " Email: "
-													+ Ident.getEmail()
-													+ " ID: "
-													+ Ident.getId()
-													+ " by "
-													+ " at " + CalendarNow.GetDateNow()
-													+ " Deleted By :" +
-													ActualState.getUser().getFirstName()
-													+ " " + ActualState.getUser().getLastName()
-													+ " " + ActualState.getUser().getEmail());
+											ActualState.getUser().toString(),
+											"Administrator Deleted:  " + Ident.toString());
 									if (ActualState.getUser().getId()
 											.equals(Ident.getId())) {
 										ActualState.setUser(null);
@@ -400,17 +377,8 @@ public class NewAdminAdministrator implements EntryPoint {
 									LoadingPanel.getInstance().hide();
 									Logger.GetLogger().info(
 											Yo.getClass().toString(),
-											"New User created:  "
-													+ "First Name: "
-													+ newStudent.getFirstName()
-													+ " Last Name: "
-													+ newStudent.getLastName()
-													+ " Email: "
-													+ newStudent.getEmail()  + " at " + CalendarNow.GetDateNow()
-													+ " Created By :" +
-													ActualState.getUser().getFirstName()
-													+ " " + ActualState.getUser().getLastName()
-													+ " " + ActualState.getUser().getEmail()) ;
+											ActualState.getUser().toString(),
+											"New Administrator created:  "+ newStudent.toString()) ;
 									refreshPanel();
 									SaveAdmins.setEnabled(true);
 								}
@@ -419,10 +387,11 @@ public class NewAdminAdministrator implements EntryPoint {
 								public void onFailure(Throwable caught) {
 									SaveAdmins.setEnabled(true);
 									LoadingPanel.getInstance().hide();
-									Window.alert(ErrorConstants.ERROR_IN_REGISTERATION  + " at " + CalendarNow.GetDateNow());
+									Window.alert(ErrorConstants.ERROR_IN_REGISTERATION);
 									Logger.GetLogger()
 											.severe(Yo.getClass().toString(),
-													ErrorConstants.ERROR_IN_REGISTERATION  + " at " + CalendarNow.GetDateNow());
+													ActualState.getUser().toString(),
+													ErrorConstants.ERROR_IN_REGISTERATION);
 								}
 							});
 				}
@@ -489,9 +458,9 @@ public class NewAdminAdministrator implements EntryPoint {
 					public void onFailure(Throwable caught) {
 						LoadingPanel.getInstance().hide();
 						Window.alert(ErrorConstants.ERROR_LOADING_USERS);
-						Logger.GetLogger().info(Yo.getClass().toString(),
-								ErrorConstants.ERROR_LOADING_USERS
-										+ " at " + CalendarNow.GetDateNow());
+						Logger.GetLogger().severe(Yo.getClass().toString(),
+								ActualState.getUser().toString(),
+								ErrorConstants.ERROR_LOADING_USERS);
 					}
 
 					public void onSuccess(List<ProfessorClient> result) {

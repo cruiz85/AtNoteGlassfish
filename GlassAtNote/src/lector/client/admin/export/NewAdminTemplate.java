@@ -112,7 +112,6 @@ public class NewAdminTemplate implements EntryPoint  {
 		LoadingPanel.getInstance().center();
 		LoadingPanel.getInstance().setLabelTexto("Loading...");
 		exportServiceHolder.getTemplates(
-//				ActualUser.getUser().getId(),
 				new AsyncCallback<List<TemplateClient>>() {
 			
 			public void onSuccess(List<TemplateClient> result) {
@@ -148,8 +147,8 @@ public class NewAdminTemplate implements EntryPoint  {
 				Window.alert(ErrorConstants.ERROR_REFRESH_TEMPLATES);
 				Logger.GetLogger()
 				.severe(yo.getClass().toString(),
-						ErrorConstants.ERROR_REFRESH_TEMPLATES + " at " + CalendarNow.GetDateNow() + 
-						" by User " + ActualState.getUser().getEmail());
+						 ActualState.getUser().toString(),
+						ErrorConstants.ERROR_REFRESH_TEMPLATES);
 				
 			}
 		});

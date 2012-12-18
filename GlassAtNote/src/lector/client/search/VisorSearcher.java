@@ -84,7 +84,8 @@ public class VisorSearcher extends PopupPanel {
 						Yo.hide();
 						Logger.GetLogger()
 						.info(Yo.getClass().toString(),
-								InformationConstants.ADDED_BOOK1+Entrada.getTitle()+InformationConstants.ADDED_BOOK1+ActualState.getUser().getEmail() + " at " + CalendarNow.GetDateNow());
+								ActualState.getUser().toString(),
+								InformationConstants.ADDED_BOOK1+Entrada.getTitle()+InformationConstants.ADDED_BOOK1);
 						
 					}
 					
@@ -105,6 +106,10 @@ public class VisorSearcher extends PopupPanel {
 							public void onFailure(Throwable caught) {
 								LoadingPanel.getInstance().hide();
 								Window.alert(ErrorConstants.ERROR_RELOADING_USER_REFRESH);
+								Logger.GetLogger()
+								.severe(Yo.getClass().toString(),
+										ActualState.getUser().toString(),
+										ErrorConstants.ERROR_RELOADING_USER_REFRESH);
 								Window.Location.reload();
 								
 							}
@@ -115,27 +120,13 @@ public class VisorSearcher extends PopupPanel {
 					@Override
 					public void onFailure(Throwable caught) {
 						LoadingPanel.getInstance().hide();
-						Window.alert(ErrorConstants.ERROR_SAVING_BOOK1+Entrada.getTitle()+ErrorConstants.ERROR_SAVING_BOOK2+ActualState.getUser().getEmail());
+						Window.alert(ErrorConstants.ERROR_SAVING_BOOK1+Entrada.getTitle()+ErrorConstants.ERROR_SAVING_BOOK2);
 						Logger.GetLogger()
 						.severe(Yo.getClass().toString(),
-								ErrorConstants.ERROR_SAVING_BOOK1+Entrada.getTitle()+ErrorConstants.ERROR_SAVING_BOOK2+ActualState.getUser().getEmail() + " at " + CalendarNow.GetDateNow());
+								ActualState.getUser().toString(),
+								ErrorConstants.ERROR_SAVING_BOOK1+Entrada.getTitle()+ErrorConstants.ERROR_SAVING_BOOK2);
 					}
 				});
-//				ActualUser.getUser().getBookIds().add(Entrada.getTitle()+" "+Constants.BREAKER+" "+Entrada.getId());
-//				bookReaderServiceHolder.saveUser(ActualUser.getUser(),
-//						new AsyncCallback<Boolean>() {
-//
-//							public void onFailure(Throwable caught) {
-//								Window.alert("Sorry, the book could not be saved, try again later");
-//								Controlador.change2BookAdminstrator();
-//								Yo.hide();
-//							}
-//
-//							public void onSuccess(Boolean result) {
-//								Controlador.change2BookAdminstrator();
-//								Yo.hide();
-//							}
-//						});
 			}
 		});
 		menuBar.addItem(mntmSave);

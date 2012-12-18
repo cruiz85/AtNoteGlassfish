@@ -102,13 +102,17 @@ public class EditTemplateOptiones extends PopupPanel {
 						LoadingPanel.getInstance().hide();	
 						hide();
 						YO.refresh();
-						Logger.GetLogger().info(this.getClass().getName(), "Usuario: " + ActualState.getUser().getEmail()
-								+ " Change Teplate options to Modificable="+ T.getModifyable() + " for Template named " + T.getName() + " at " + CalendarNow.GetDateNow() );
+						Logger.GetLogger().info(this.getClass().getName(),
+								ActualState.getUser().toString(),
+								"Change Teplate options to Modificable : "+ T.getModifyable() + " for Template : " + T.getName());
 					}
 					
 					public void onFailure(Throwable caught) {
 						LoadingPanel.getInstance().hide();		
 						Window.alert(ErrorConstants.ERROR_UPDATING_TEMPLATE);
+						Logger.GetLogger().severe(this.getClass().getName(),
+								ActualState.getUser().toString(),
+								ErrorConstants.ERROR_UPDATING_TEMPLATE);
 					}
 				});
 				

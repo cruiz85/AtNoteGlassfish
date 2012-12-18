@@ -2,6 +2,7 @@ package lector.client.logger;
 
 import lector.client.book.reader.LoggerService;
 import lector.client.book.reader.LoggerServiceAsync;
+import lector.client.controler.CalendarNow;
 import lector.client.controler.ErrorConstants;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.user.client.Window;
@@ -9,7 +10,12 @@ import com.google.gwt.user.client.rpc.AsyncCallback;
 
 public class Logger {
 
-	private String PREFIX_CONSTANT_LOG= "LOG : " ;
+	private static String PREFIX_CONSTANT_LOG= "@NOTE LOG : " ;
+	private static String PREFIX_CONSTANT_ERROR= "@NOTE ERROR : " ;
+	private static String AT = " AT ";
+	private static String CAUSE_BY="CAUSE ";
+	private static String FROM_USER = " FROM USER ";		
+	private static String LOGS_ERROR="Error recording the log";
 	
 	
 	private static AsyncCallback<Void> callback= new AsyncCallback<Void>() {
@@ -31,8 +37,8 @@ public class Logger {
 	.create(LoggerService.class);
 	
 	
-	public void severe(String className, String text) {
-		loggerServiceHolder.severe(className, text, callback);
+	public void severe(String className, String User, String cause) {
+		loggerServiceHolder.severe(PREFIX_CONSTANT_ERROR + className, PREFIX_CONSTANT_ERROR + CAUSE_BY + cause + FROM_USER + User + AT + GetDateNow(), callback);
 
 	}
 
@@ -41,15 +47,14 @@ public class Logger {
 
 	}
 
-	public void info(String className, String text) {
-		//Window.alert("info");
-		loggerServiceHolder.info(PREFIX_CONSTANT_LOG+className, text, callback);
+	
+	public void info(String className, String User, String cause,AsyncCallback<Void> callbackin) {
+		loggerServiceHolder.info(PREFIX_CONSTANT_LOG+className,PREFIX_CONSTANT_LOG + CAUSE_BY + cause + FROM_USER + User + AT + GetDateNow(), callbackin);
 
 	}
 	
-	public void info(String className, String text,AsyncCallback<Void> callbackin) {
-		//Window.alert("info");
-		loggerServiceHolder.info(PREFIX_CONSTANT_LOG+className, text, callbackin);
+	public void info(String className, String User, String cause) {
+		loggerServiceHolder.info(PREFIX_CONSTANT_LOG+className,PREFIX_CONSTANT_LOG + CAUSE_BY + cause + FROM_USER + User + AT + GetDateNow(), callback);
 
 	}
 
@@ -61,9 +66,14 @@ public class Logger {
 	
 	public static void callbackfailture()
 	{
-		Window.alert(ErrorConstants.LOGS_ERROR);
+		Window.alert(Logger.LOGS_ERROR);
 	}
 	
+	
+	public static String GetDateNow()
+	{
+		return CalendarNow.GetDateNow();
+	}
 	public static Logger GetLogger(){
 		//Window.alert("GetLogger");
 		if (Log==null) Log=new Logger();

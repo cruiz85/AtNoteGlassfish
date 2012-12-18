@@ -70,6 +70,11 @@ public class NewUserAdministrator implements EntryPoint {
 
 					public void onFailure(Throwable caught) {
 						LoadingPanel.getInstance().hide();
+						Window.alert(ErrorConstants.ERROR_RETRIVING_USERS);
+						Logger.GetLogger().severe(
+								Yo.getClass().toString(),
+								ActualState.getUser().toString(),
+								ErrorConstants.ERROR_RETRIVING_USERS);
 
 					}
 
@@ -148,28 +153,19 @@ public class NewUserAdministrator implements EntryPoint {
 
 								public void onFailure(Throwable caught) {
 									Window.alert(ErrorConstants.ERROR_USER_CAN_NOT_BE_REMOVED);
+									Logger.GetLogger().severe(
+											Yo.getClass().toString(),
+											ActualState.getUser().toString(),
+											ErrorConstants.ERROR_USER_CAN_NOT_BE_REMOVED);
 
 								}
 
 								public void onSuccess(Void result) {
-									// Salir si me borro a mi mismo
 									Logger.GetLogger().info(
 											Yo.getClass().toString(),
+											ActualState.getUser().toString(),
 											"User deleted:  "
-													+ "First Name: "
-													+ Ident.getFirstName()
-													+ " Last Name: "
-													+ Ident.getLastName()
-													+ " Email: "
-													+ Ident.getEmail()
-													+ " ID: "
-													+ Ident.getId()
-													+ " by "
-													+ " at " + CalendarNow.GetDateNow()
-													+ " Deleted By :" +
-													ActualState.getUser().getFirstName()
-													+ " " + ActualState.getUser().getLastName()
-													+ " " + ActualState.getUser().getEmail());
+													+ Ident.toString());
 
 									refreshPanel();
 								}

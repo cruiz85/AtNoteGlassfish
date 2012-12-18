@@ -4,6 +4,7 @@ import lector.client.book.reader.GWTService;
 import lector.client.book.reader.GWTServiceAsync;
 import lector.client.controler.ActualState;
 import lector.client.controler.CalendarNow;
+import lector.client.controler.ErrorConstants;
 import lector.client.controler.InformationConstants;
 import lector.client.logger.Logger;
 import lector.client.reader.LoadingPanel;
@@ -32,6 +33,8 @@ import com.google.gwt.user.client.ui.CheckBox;
 
 public class newCatalog extends PopupPanel {
 
+	public static String INSERT_NAME_NEW_CATALOG_LABEL="Insert the name for the new Catalogue and Visibility\r\n";
+	
 	private PopupPanel Me;
 	private NewAdminCatalogs Father;
 	private TextBox textBox;
@@ -50,7 +53,7 @@ public class newCatalog extends PopupPanel {
 		setWidget(verticalPanel);
 		verticalPanel.setSize("100%", "100%");
 
-		Label lblInsertTheName = new Label("Insert the name for the new Catalogue and Visibility\r\n");
+		Label lblInsertTheName = new Label(newCatalog.INSERT_NAME_NEW_CATALOG_LABEL);
 		verticalPanel.add(lblInsertTheName);
 		lblInsertTheName.setSize("100%", "100%");
 
@@ -105,8 +108,9 @@ public class newCatalog extends PopupPanel {
 							new AsyncCallback<Void>() {
 
 								public void onSuccess(Void result) {
-									Logger.GetLogger().info(this.getClass().getName(), "Usuario: " + ActualState.getUser().getEmail()
-											+ " create a catalog " + NuevoC.getCatalogName() + " at " + CalendarNow.GetDateNow() );
+									Logger.GetLogger().info(this.getClass().getName(),
+											ActualState.getUser().toString(),
+											"Create a catalog " + NuevoC.getCatalogName());
 									Father.refresh();
 									LoadingPanel.getInstance().hide();
 
@@ -114,7 +118,10 @@ public class newCatalog extends PopupPanel {
 
 								public void onFailure(Throwable caught) {
 									LoadingPanel.getInstance().hide();
-									Window.alert("I could not save the Catalogue");
+									Window.alert(ErrorConstants.ERROR_SAVING_CATALOG);
+									Logger.GetLogger().severe(this.getClass().getName(),
+											ActualState.getUser().toString(),
+											"Create a catalog " + NuevoC.getCatalogName());
 
 								}
 							});

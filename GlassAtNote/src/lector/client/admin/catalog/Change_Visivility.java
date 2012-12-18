@@ -5,6 +5,7 @@ import lector.client.book.reader.GWTServiceAsync;
 import lector.client.controler.ActualState;
 import lector.client.controler.CalendarNow;
 import lector.client.controler.ErrorConstants;
+import lector.client.controler.InformationConstants;
 import lector.client.logger.Logger;
 import lector.client.reader.LoadingPanel;
 import lector.share.model.client.CatalogoClient;
@@ -40,7 +41,7 @@ public class Change_Visivility extends PopupPanel {
 		
 		if (!Cin.getProfessorId().equals(ActualState.getUser().getId()))
 			{
-			Window.alert(ErrorConstants.ERROR_CANTPRIVATICE_A_CATALOG_THAT_YOU_DONT_CREATE);
+			Window.alert(InformationConstants.CANTPRIVATICE_A_CATALOG_THAT_YOU_DONT_CREATE);
 			hide();
 			}
 		
@@ -74,8 +75,10 @@ public class Change_Visivility extends PopupPanel {
 				LoadingPanel.getInstance().center();
 				LoadingPanel.getInstance().setLabelTexto("Loading...");
 				C.setIsPrivate(chckbxNewCheckBox.getValue());
-				Logger.GetLogger().info(this.getClass().getName(), "Usuario: " + ActualState.getUser().getEmail()
-						+ " change visivility of catalog " + C.getCatalogName() + " to " + C.getIsPrivate() + " at "  + CalendarNow.GetDateNow() );
+				Logger.GetLogger().info(
+						this.getClass().getName(),
+						ActualState.getUser().toString(),
+						"Change visivility of catalog " + C.getCatalogName() + " to " + C.getIsPrivate());
 				bookReaderServiceHolder.saveCatalog(C, new AsyncCallback<Void>() {
 					
 					@Override
@@ -89,38 +92,13 @@ public class Change_Visivility extends PopupPanel {
 					@Override
 					public void onFailure(Throwable caught) {
 						Window.alert(ErrorConstants.ERROR_CHANGE_VISIVILITY_OF_CATALOG);
+						Logger.GetLogger().severe(this.getClass().getName(),
+						ActualState.getUser().toString(),
+						ErrorConstants.ERROR_CHANGE_VISIVILITY_OF_CATALOG);
 						LoadingPanel.getInstance().hide();
 						
 					}
 				});
-//				bookReaderServiceHolder.loadCatalogById(C.getId(), new AsyncCallback<Catalogo>() {
-//					
-//					public void onSuccess(Catalogo result) {
-//						result.setIsPrivate(chckbxNewCheckBox.getValue());
-//						bookReaderServiceHolder.saveCatalog(result,
-//						new AsyncCallback<Void>() {
-//
-//							public void onSuccess(Void result) {
-//								Father.refresh();
-//								LoadingPanel.getInstance().hide();
-//								Yo.hide();
-//
-//							}
-//
-//							public void onFailure(Throwable caught) {
-//								
-//							}
-//						});
-//						
-//					}
-//					
-//					public void onFailure(Throwable caught) {
-//						Window.alert("Failed Loading Catalog thas was to be saved");
-//						LoadingPanel.getInstance().hide();
-//						
-//					}
-//				});
-//
 			}
 		});
 		menuBar.addItem(mntmSave);

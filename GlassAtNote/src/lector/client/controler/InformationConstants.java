@@ -36,5 +36,6 @@ public class InformationConstants {
 	public static String SHOULD_ME_MORE_THAN1="You should select more than ";
 	public static String SHOULD_ME_MORE_THAN2=" elements.";
 	public static String ACTIVITY_CHANGES_AND_ARE_NOW_NOT_ACCESIBLE="Some atributes was modificated and the Reading Activity are now not accessible";
+	public static String CANTPRIVATICE_A_CATALOG_THAT_YOU_DONT_CREATE="you can not privatize a catalog that you did not create";
 	
 }

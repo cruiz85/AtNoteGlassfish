@@ -28,6 +28,7 @@ import lector.client.catalogo.client.Folder;
 import lector.client.controler.ActualState;
 import lector.client.controler.CalendarNow;
 import lector.client.controler.Constants;
+import lector.client.controler.ErrorConstants;
 import lector.client.logger.Logger;
 import lector.client.reader.LoadingPanel;
 import lector.share.model.FileException;
@@ -39,6 +40,8 @@ import lector.share.model.client.TypeClient;
 
 public class NewTyperAdmin extends PopupPanel {
 
+	public static String NEW_CATALOG_ELEMENT_IS_EMPTY= "The new type is empty";
+	
 	private GWTServiceAsync bookReaderServiceHolder = GWT
 			.create(GWTService.class);
 	private PopupPanel Yo;
@@ -122,7 +125,10 @@ public class NewTyperAdmin extends PopupPanel {
 								Window.alert(((FolderException) caught)   // Se ataja cuando se guarda un folder con un nombre que ya existe en su mismo nivel.
 										.getMessage());
 							} else {
-								Window.alert("The file could not be saved");
+								Window.alert(ErrorConstants.ERROR_SAVING_ENTRY);
+								Logger.GetLogger().severe(this.getClass().getName(), 
+										ActualState.getUser().toString(),
+										ErrorConstants.ERROR_SAVING_ENTRY);
 							}
 
 							LoadingPanel.getInstance().hide();
@@ -131,8 +137,9 @@ public class NewTyperAdmin extends PopupPanel {
 						}
 
 						public void onSuccess(Void result) {
-							Logger.GetLogger().info(this.getClass().getName(), "Usuario: " + ActualState.getUser().getEmail()
-									+ " Create a "+ Saved.getClass().toString() + " named " + Saved.getName() + " at " + CalendarNow.GetDateNow() );
+							Logger.GetLogger().info(this.getClass().getName(), 
+									ActualState.getUser().toString(),
+									"Create a "+ Saved.getClass().toString() + " named : " + Saved.getName());
 							LoadingPanel.getInstance().hide(); 
 							EditorTagsAndTypes.LoadBasicTypes();
 							Yo.hide();
@@ -170,7 +177,7 @@ public class NewTyperAdmin extends PopupPanel {
 				// Yo.hide();
 
 				else {
-					Window.alert("The new type is empty");
+					Window.alert(NewTyperAdmin.NEW_CATALOG_ELEMENT_IS_EMPTY);
 					NewTyperAdmin NT = new NewTyperAdmin(Father, WNCopy);
 					NT.isModal();
 					NT.center();
@@ -208,7 +215,6 @@ public class NewTyperAdmin extends PopupPanel {
 		CancelButton.addClickHandler(new ClickHandler() {
 			public void onClick(ClickEvent event) {
 				Yo.hide();
-				// Window.alert("Esconder");
 			}
 		});
 	}

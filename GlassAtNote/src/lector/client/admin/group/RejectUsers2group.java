@@ -109,12 +109,17 @@ public class RejectUsers2group extends PopupPanel {
 		
 		Button Acept = new Button("Reject");
 		Acept.addClickHandler(new ClickHandler() {
+			private ArrayList<String> userIdsName;
+
 			public void onClick(ClickEvent event) {
-				List<Long> userIds=new ArrayList<Long>();
+				ArrayList<Long> userIds=new ArrayList<Long>();
+				userIdsName= new ArrayList<String>();
 				for (Widget widget : InsertionPanel) {
 					SelectionCheckboxElement SCE=(SelectionCheckboxElement)widget;
-					if (SCE.getCheckBox().getValue())
+					if (SCE.getCheckBox().getValue()){
 						userIds.add(SCE.getStudentClient().getId());
+						userIdsName.add(SCE.getStudentClient().toString());
+					}
 				}
 				LoadingPanel.getInstance().center();
 				LoadingPanel.getInstance().setLabelTexto(InformationConstants.REJECTING);
@@ -122,6 +127,9 @@ public class RejectUsers2group extends PopupPanel {
 					
 					@Override
 					public void onSuccess(Void result) {
+						Logger.GetLogger().severe(Yo.getClass().toString(),
+								ActualState.getUser().toString(),
+								" Rejected in Group " + GAUP.getMygroup().getName() + " Users : " +userIdsName);
 						LoadingPanel.getInstance().hide();
 						GAUP.refresh();
 						hide();						
@@ -131,7 +139,9 @@ public class RejectUsers2group extends PopupPanel {
 					public void onFailure(Throwable caught) {
 						LoadingPanel.getInstance().hide();
 						Window.alert(ErrorConstants.ERROR_IN_REJECTION);
-						Logger.GetLogger().severe(Yo.getClass().toString(), ErrorConstants.ERROR_IN_REJECTION + " " + GAUP.getMygroup().getName() + " User : " +ActualState.getUser());
+						Logger.GetLogger().severe(Yo.getClass().toString(),
+								ActualState.getUser().toString(),
+								ErrorConstants.ERROR_IN_REJECTION  + GAUP.getMygroup().getName() + " Users : " +userIdsName);
 						
 					}
 				});

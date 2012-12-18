@@ -131,8 +131,9 @@ public class NewGroupPopUpPanel extends PopupPanel {
 				bookReaderServiceHolder.saveGroup(GC, new AsyncCallback<Void>() {
 					
 					public void onSuccess(Void result) {
-						Logger.GetLogger().info(this.getClass().getName(), "Usuario: " + ActualState.getUser().getEmail()
-								+ " Create a group " + Saved.getName() + " at " + CalendarNow.GetDateNow() );
+						Logger.GetLogger().info(this.getClass().getName(), 
+								ActualState.getUser().toString(),
+								"Create a group " + Saved.getName());
 						LoadingPanel.getInstance().hide();
 						Father.refreshGroups();
 						hide();					
@@ -141,6 +142,9 @@ public class NewGroupPopUpPanel extends PopupPanel {
 					public void onFailure(Throwable caught) {
 						LoadingPanel.getInstance().hide();
 					Window.alert(ErrorConstants.THE_GROUP_COULD_NOT_BE_SAVED);
+					Logger.GetLogger().info(this.getClass().getName(), 
+							ActualState.getUser().toString(),
+							ErrorConstants.THE_GROUP_COULD_NOT_BE_SAVED);
 						
 					}
 				});

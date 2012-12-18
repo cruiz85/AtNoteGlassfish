@@ -101,8 +101,9 @@ public class newTemplate extends PopupPanel {
 				exportServiceHolder.saveTemplate(T, new AsyncCallback<Void>() {
 					
 					public void onSuccess(Void result) {
-						Logger.GetLogger().info(this.getClass().getName(), "Usuario: " + ActualState.getUser().getEmail()
-								+ " Create a Template named " + T.getName() + " at " + CalendarNow.GetDateNow() );
+						Logger.GetLogger().info(this.getClass().getName(),
+								ActualState.getUser().toString(),
+								"Create a Template named " + T.getName());
 						LoadingPanel.getInstance().hide();
 						Yo.refresh();
 						hide();
@@ -114,8 +115,8 @@ public class newTemplate extends PopupPanel {
 						Window.alert(ErrorConstants.ERROR_SAVING_TEMPLATE);
 						Logger.GetLogger()
 						.severe(Yo.getClass().toString(),
-								ErrorConstants.ERROR_SAVING_TEMPLATE + " at " + CalendarNow.GetDateNow() + 
-								" by User " + ActualState.getUser().getEmail());
+								ActualState.getUser().toString(),
+								ErrorConstants.ERROR_SAVING_TEMPLATE);
 						
 					}
 				});

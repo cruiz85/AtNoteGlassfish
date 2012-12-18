@@ -91,11 +91,8 @@ public class Login implements EntryPoint {
 					ActualState.setUser(result);
 					Logger.GetLogger().info(
 							this.getClass().getName(),
-							"Usuario: " + result.getFirstName()
-									+ " " + result.getLastName()
-									+ " - " + result.getEmail()
-									+ " at "
-									+ CalendarNow.GetDateNow());
+							ActualState.getUser().toString(),
+							"Log In");
 					if (result instanceof StudentClient)
 						Controlador.change2MyActivities();
 					else if (result instanceof ProfessorClient)
@@ -478,14 +475,9 @@ public class Login implements EntryPoint {
 									Window.alert(InformationConstants.A_EMAIL_BE_SEND_TO_YOUR_EMAIL_FOR_CONFIRM_THE_REGISTRATION);
 									Logger.GetLogger().info(
 											Yo.getClass().toString(),
+											ActualState.getIP(),
 											"New User created:  "
-													+ "First Name: "
-													+ newStudent.getFirstName()
-													+ " Last Name: "
-													+ newStudent.getLastName()
-													+ " Email: "
-													+ newStudent.getEmail()
-													+ " at " + CalendarNow.GetDateNow(),new AsyncCallback<Void>() {
+													+ newStudent.toString(),new AsyncCallback<Void>() {
 														
 														@Override
 														public void onSuccess(Void result) {
@@ -508,7 +500,8 @@ public class Login implements EntryPoint {
 									Window.alert(ErrorConstants.ERROR_IN_REGISTERATION);
 									Logger.GetLogger()
 											.severe(Yo.getClass().toString(),
-													ErrorConstants.ERROR_IN_REGISTERATION + " at " + CalendarNow.GetDateNow());
+													ActualState.getIP(),
+													ErrorConstants.ERROR_IN_REGISTERATION);
 								}
 							});
 				}
@@ -576,18 +569,21 @@ public class Login implements EntryPoint {
 								{
 								Window.alert(ErrorConstants.YOU_USER_NOT_EXIST);
 								Logger.GetLogger().severe(Yo.getClass().toString(),
-										ErrorConstants.YOU_USER_NOT_EXIST + " at " + CalendarNow.GetDateNow());	
+										ActualState.getIP(),
+										ErrorConstants.YOU_USER_NOT_EXIST);	
 								}
 							else if (caught instanceof NotAuthenticatedException)
 								{
 								Window.alert(ErrorConstants.YOU_ARE_NO_AUTORIZED);
 								Logger.GetLogger().severe(Yo.getClass().toString(),
-										ErrorConstants.YOU_ARE_NO_AUTORIZED + " at " + CalendarNow.GetDateNow());	
+										ActualState.getIP(),
+										ErrorConstants.YOU_ARE_NO_AUTORIZED);	
 								}
 							else {
 								Window.alert(ErrorConstants.GENERAL_ERROR_REFRESH);
 								Logger.GetLogger().severe(Yo.getClass().toString(),
-										ErrorConstants.GENERAL_ERROR_REFRESH + " at " + CalendarNow.GetDateNow());	
+										ActualState.getIP(),
+										ErrorConstants.GENERAL_ERROR_REFRESH);	
 								}
 							
 							btnNewButton.setEnabled(true);
@@ -597,9 +593,9 @@ public class Login implements EntryPoint {
 							LoadingPanel.getInstance().hide();
 							if (result == null) {
 								Window.alert(ErrorConstants.YOU_ARE_NO_AUTORIZED);
-								Logger.GetLogger().severe(
-										Yo.getClass().toString(),
-										ErrorConstants.YOU_ARE_NO_AUTORIZED + " at " + CalendarNow.GetDateNow());
+								Logger.GetLogger().severe(Yo.getClass().toString(),
+										ActualState.getIP(),
+										ErrorConstants.YOU_ARE_NO_AUTORIZED);
 								btnNewButton.setEnabled(true);
 							} else {
 								ActualState.setUser(result);
@@ -612,11 +608,8 @@ public class Login implements EntryPoint {
 									}
 								Logger.GetLogger().info(
 										this.getClass().getName(),
-										"Usuario: " + result.getFirstName()
-												+ " " + result.getLastName()
-												+ " - " + result.getEmail()
-												+ " at "
-												+ CalendarNow.GetDateNow());
+										ActualState.getUser().toString(),
+										"Log in");
 								if (result instanceof StudentClient)
 									Controlador.change2MyActivities();
 								else if (result instanceof ProfessorClient)

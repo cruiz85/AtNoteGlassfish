@@ -72,7 +72,7 @@ public class UserClient implements IsSerializable {
 	
 	@Override
 	public String toString() {
-		return "name:" + firstName + " lastName:" + lastName;
+		return "name : " + firstName + " lastName : " + lastName + " email : " + email;
 	}
 
 	public String getFirstName() {

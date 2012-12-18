@@ -85,4 +85,7 @@ public class ActualState {
 		if (readingactivity!=null) readingactivity.setOpenCatalogo(openCatalog);
 	}
 	
+	public static native String getIP() /*-{
+    return $wnd._ipAddress;
+}-*/;
 }

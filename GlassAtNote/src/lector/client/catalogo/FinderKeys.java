@@ -229,7 +229,7 @@ public class FinderKeys extends Finder {
 			@Override
 			public void onFailure(Throwable caught) {
 				Window.alert(ErrorConstants.ERROR_LOADING_CATALOG);
-				Logger.GetLogger().severe(Yo.getClass().toString(), ErrorConstants.ERROR_LOADING_CATALOG);
+				Logger.GetLogger().severe(Yo.getClass().toString(),ActualState.getUser().toString(), ErrorConstants.ERROR_LOADING_CATALOG);
 				LoadingPanel.getInstance().hide();
 			}
 
@@ -302,27 +302,7 @@ public class FinderKeys extends Finder {
 					}
 				}
 				
-			}
-
-			public void sortStringExchange( List<EntryClient>  lista )
-		      {
-		            int i, j;
-		            EntryClient temp;
-
-		            for ( i = 0;  i < lista.size() - 1;  i++ )
-		            {
-		                for ( j = i + 1;  j < lista.size();  j++ )
-		                {  
-		                         if ( lista.get(i).getName().compareToIgnoreCase( lista.get(j).getName()) > 0 )
-		                          {                                             // ascending sort
-		                                      temp = lista.get(i);
-		                                      lista.set(i, lista.get(j));    // swapping
-		                                      lista.set(j, temp); 
-		                                      
-		                           } 
-		                   } 
-		             } 
-		      } 	
+			} 	
 		});
 		
 	}

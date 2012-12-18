@@ -109,12 +109,18 @@ public class AcceptUsers2group extends PopupPanel {
 		
 		Button Acept = new Button("Acept");
 		Acept.addClickHandler(new ClickHandler() {
+			private ArrayList<String> userIdsName;
+
 			public void onClick(ClickEvent event) {
-				List<Long> userIds=new ArrayList<Long>();
+				ArrayList<Long> userIds=new ArrayList<Long>();
+				userIdsName=new ArrayList<String>();
 				for (Widget widget : InsertionPanel) {
 					SelectionCheckboxElement SCE=(SelectionCheckboxElement)widget;
-					if (SCE.getCheckBox().getValue())
+					if (SCE.getCheckBox().getValue()){
 						userIds.add(SCE.getStudentClient().getId());
+						userIdsName.add(SCE.getStudentClient().toString());
+					}
+						
 				}
 				LoadingPanel.getInstance().center();
 				LoadingPanel.getInstance().setLabelTexto(InformationConstants.VALIDATING);
@@ -123,6 +129,9 @@ public class AcceptUsers2group extends PopupPanel {
 					@Override
 					public void onSuccess(Void result) {
 						LoadingPanel.getInstance().hide();
+						Logger.GetLogger().severe(Yo.getClass().toString(), 
+								  ActualState.getUser().toString(),
+								  "Validate in group " + GAUP.getMygroup().getName() + " Users : " +userIdsName);
 						GAUP.refresh();
 						hide();						
 					}
@@ -131,7 +140,9 @@ public class AcceptUsers2group extends PopupPanel {
 					public void onFailure(Throwable caught) {
 						LoadingPanel.getInstance().hide();
 						Window.alert(ErrorConstants.ERROR_IN_VALIDATION);
-						Logger.GetLogger().severe(Yo.getClass().toString(), ErrorConstants.ERROR_IN_VALIDATION + " " + GAUP.getMygroup().getName() + " User : " +ActualState.getUser());
+						Logger.GetLogger().severe(Yo.getClass().toString(), 
+												  ActualState.getUser().toString(),
+												  ErrorConstants.ERROR_IN_VALIDATION + " " + GAUP.getMygroup().getName() +  ErrorConstants.ERROR_IN_VALIDATION2  +userIdsName);
 						hide();	
 					}
 				});
@@ -167,63 +178,12 @@ public class AcceptUsers2group extends PopupPanel {
 		
 				
 		
-		
-		
-//		stackPanel_1 = new StackPanelMio();
-//		stackPanel_1.setBotonTipo(new BotonesStackPanelGroupUserMio(
-//				"prototipo", new VerticalPanel(),null));
-//		
-//		stackPanel_1.setBotonClick(new ClickHandler() {
-//			public void onClick(ClickEvent event) {
-//				UserClient UsuarioNombre=((BotonesStackPanelGroupUserMio)event.getSource()).getUser();
 
-//						ArrayList<Long> ListaYa=GAUP.getMygroup().getUsersIds();
-//						if (!noestaenlalista(result,ListaYa)){
-//							GAUP.getMygroup().getUsersIds().add(result.getId());
-//						bookReaderServiceHolder.saveGroup(GAUP.getMygroup(), new AsyncCallback<Void>() {
-//
-//							public void onFailure(Throwable caught) {
-//								Window.alert("The group could not saved");
-//								
-//							}
-//
-//							public void onSuccess(Void result) {
-//								GAUP.refresh();
-//								
-//							}
-//						});
-//						}
-//						else Window.alert("The user was in the list before");
-						
-						
-//					}
-//				});
-//
-//			}
-//
-////			private boolean noestaenlalista(UserApp userEnter, ArrayList<Long> listaYa) {
-////				for (Long UsersT : listaYa) {
-////					if (UsersT.equals(userEnter.getId()))return true;
-////				}
-////				return false;
-////			}
-//		});
 List<StudentClient> result=GAUP.getMygroup().getRemainingUsers();
 for (UserClient User1 : result) {
 	InsertionPanel.add(new SelectionCheckboxElement((StudentClient) User1));
 	
 }
-//						stackPanel_1.addBotonLessTen(E);
-					
-			
-//				stackPanel_1.ClearEmpty();
-				
-//			}
-			
-//		
-//		stackPanel_1.setSize("100%", "100%");
-//		verticalPanel.add(stackPanel_1);
-//	
 		
 		
 		

@@ -133,8 +133,8 @@ public class BookAdministration implements EntryPoint {
 						Window.alert(ErrorConstants.ERROR_REMOVING_BOOK);
 						Logger.GetLogger()
 						.severe(Yo.getClass().toString(),
-								ErrorConstants.ERROR_REMOVING_BOOK + " at " + CalendarNow.GetDateNow() + 
-								" by User " + ActualState.getUser().getEmail());
+								ActualState.getUser().toString(),
+								ErrorConstants.ERROR_REMOVING_BOOK);
 
 					}
 				};
@@ -340,8 +340,8 @@ public class BookAdministration implements EntryPoint {
 						Window.alert(ErrorConstants.ERROR_RETRIVING_THE_BOOKS);
 						Logger.GetLogger()
 						.severe(Yo.getClass().toString(),
-								ErrorConstants.ERROR_RETRIVING_THE_BOOKS + " at " + CalendarNow.GetDateNow() + 
-								" by User " + ActualState.getUser().getEmail());
+								ActualState.getUser().toString(),
+								ErrorConstants.ERROR_RETRIVING_THE_BOOKS);
 
 					}
 				});
