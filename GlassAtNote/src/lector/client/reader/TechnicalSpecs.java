@@ -1,7 +1,7 @@
 package lector.client.reader;
 
+import lector.client.controler.ActualState;
 import lector.client.controler.Constants;
-import lector.client.login.ActualUser;
 import lector.share.model.Language;
 import lector.share.model.client.BookClient;
 import lector.share.model.client.GoogleBookClient;
@@ -26,11 +26,11 @@ public class TechnicalSpecs extends Composite {
         verticalPanel.add(richTextArea);
         richTextArea.setEnabled(false);
         richTextArea.setVisible(true);
-        if (ActualUser.getLanguage()!=null)setHTMLInRichTextArea();
+        if (ActualState.getLanguage()!=null)setHTMLInRichTextArea();
     }
 
     public void setHTMLInRichTextArea() {
-    	Language Lang=ActualUser.getLanguage();
+    	Language Lang=ActualState.getLanguage();
     	String pathImage;
     	if (book instanceof GoogleBookClient)
     		pathImage=((GoogleBookClient)book).getTbURL();

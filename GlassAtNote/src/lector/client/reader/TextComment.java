@@ -8,8 +8,8 @@ import java.util.List;
 import lector.client.book.reader.GWTService;
 import lector.client.book.reader.GWTServiceAsync;
 import lector.client.catalogo.client.Entity;
+import lector.client.controler.ActualState;
 import lector.client.controler.Constants;
-import lector.client.login.ActualUser;
 import lector.share.model.Annotation;
 import lector.share.model.Language;
 import lector.share.model.TextSelector;
@@ -48,12 +48,12 @@ public class TextComment extends DialogBox {
 		setAnimationEnabled(true);
 		CommentPanel.setEstado(true);
 		Date now = new Date();
-		setHTML(ActualUser.getUser().getFirstName()
-				+ " " + ActualUser.getUser().getLastName().charAt(0)+ ".  -  " + now.toGMTString());
+		setHTML(ActualState.getUser().getFirstName()
+				+ " " + ActualState.getUser().getLastName().charAt(0)+ ".  -  " + now.toGMTString());
 		setSize("100%", "100%");
 		bookRef = book;
 		this.textSelector = textSelectorin;
-		ActualLang=ActualUser.getLanguage();
+		ActualLang=ActualState.getLanguage();
 		VerticalPanel verticalPanel = new VerticalPanel();
 		setWidget(verticalPanel);
 		verticalPanel.setSize("883px", "329px");
@@ -79,8 +79,8 @@ public class TextComment extends DialogBox {
 					
 
 				} else {
-					if (ActualUser.getReadingactivity().getDefaultType() != null) {
-						bookReaderServiceHolder.loadTypeById(ActualUser.getReadingactivity().getDefaultType(),new AsyncCallback<TypeClient>(){
+					if (ActualState.getReadingactivity().getDefaultType() != null) {
+						bookReaderServiceHolder.loadTypeById(ActualState.getReadingactivity().getDefaultType(),new AsyncCallback<TypeClient>(){
 
 							@Override
 							public void onFailure(Throwable caught) {
@@ -102,7 +102,7 @@ public class TextComment extends DialogBox {
 					} else {
 						LoadingPanel.getInstance().hide();
 						Window.alert(ActualLang.getE_Need_to_select_a_type()
-								+ ActualUser.getCatalogo().getCatalogName()
+								+ ActualState.getCatalogo().getCatalogName()
 								+ " : "
 								+ ActualLang.getSetTypes()
 								+ "("
@@ -134,8 +134,8 @@ public class TextComment extends DialogBox {
 				}
 
 				annotation = new AnnotationClient();
-				annotation.setCreator(ActualUser.getUser());
-				annotation.setActivity(ActualUser.getReadingactivity()
+				annotation.setCreator(ActualState.getUser());
+				annotation.setActivity(ActualState.getReadingactivity()
 						.getId());
 				annotation.setTextSelectors(textSelector);
 				annotation.setComment(comment.toString());
@@ -148,7 +148,7 @@ public class TextComment extends DialogBox {
 				boolean IsInCatalog = false;
 				for (int i = 0; i < ListaASalvar.size(); i++)
 
-					if ((ActualUser.getReadingactivity().getCloseCatalogo().getId()
+					if ((ActualState.getReadingactivity().getCloseCatalogo().getId()
 							.equals(ListaASalvar.get(i).getCatalog()
 									.getId())))
 						IsInCatalog = true;
@@ -158,8 +158,8 @@ public class TextComment extends DialogBox {
 					hide();
 				} else {
 
-					if (ActualUser.getReadingactivity().getDefaultType() != null) {
-						bookReaderServiceHolder.loadTypeById(ActualUser.getReadingactivity().getDefaultType(),new AsyncCallback<TypeClient>(){
+					if (ActualState.getReadingactivity().getDefaultType() != null) {
+						bookReaderServiceHolder.loadTypeById(ActualState.getReadingactivity().getDefaultType(),new AsyncCallback<TypeClient>(){
 
 							@Override
 							public void onFailure(Throwable caught) {
@@ -181,7 +181,7 @@ public class TextComment extends DialogBox {
 					} else {
 						LoadingPanel.getInstance().hide();
 						Window.alert(ActualLang.getE_Need_to_select_a_type()
-								+ ActualUser.getCatalogo().getCatalogName()
+								+ ActualState.getCatalogo().getCatalogName()
 								+ " : "
 								+ ActualLang.getSetTypes()
 								+ "("

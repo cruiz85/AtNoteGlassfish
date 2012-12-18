@@ -5,11 +5,11 @@ import lector.client.book.reader.ExportService;
 import lector.client.book.reader.ExportServiceAsync;
 import lector.client.book.reader.GWTService;
 import lector.client.book.reader.GWTServiceAsync;
+import lector.client.controler.ActualState;
 import lector.client.controler.CalendarNow;
 import lector.client.controler.ErrorConstants;
 import lector.client.controler.InformationConstants;
 import lector.client.logger.Logger;
-import lector.client.login.ActualUser;
 import lector.client.reader.LoadingPanel;
 import lector.share.model.Template;
 import lector.share.model.TemplateCategory;
@@ -94,14 +94,14 @@ public class newTemplate extends PopupPanel {
 			public void onClick(ClickEvent event) {
 				T=new TemplateClient();
 				T.setName(textBox.getText());
-				T.setProfessor(ActualUser.getUser().getId());
+				T.setProfessor(ActualState.getUser().getId());
 				T.setModifyable(chckbxNewCheckBox.getValue());
 				LoadingPanel.getInstance().center();
 				LoadingPanel.getInstance().setLabelTexto("Loading...");
 				exportServiceHolder.saveTemplate(T, new AsyncCallback<Void>() {
 					
 					public void onSuccess(Void result) {
-						Logger.GetLogger().info(this.getClass().getName(), "Usuario: " + ActualUser.getUser().getEmail()
+						Logger.GetLogger().info(this.getClass().getName(), "Usuario: " + ActualState.getUser().getEmail()
 								+ " Create a Template named " + T.getName() + " at " + CalendarNow.GetDateNow() );
 						LoadingPanel.getInstance().hide();
 						Yo.refresh();
@@ -115,7 +115,7 @@ public class newTemplate extends PopupPanel {
 						Logger.GetLogger()
 						.severe(Yo.getClass().toString(),
 								ErrorConstants.ERROR_SAVING_TEMPLATE + " at " + CalendarNow.GetDateNow() + 
-								" by User " + ActualUser.getUser().getEmail());
+								" by User " + ActualState.getUser().getEmail());
 						
 					}
 				});

@@ -9,8 +9,8 @@ import lector.client.catalogo.FinderOwnGrafo;
 import lector.client.catalogo.OwnGraph.BotonGrafo;
 import lector.client.catalogo.client.Entity;
 import lector.client.catalogo.client.EntityCatalogElements;
+import lector.client.controler.ActualState;
 import lector.client.controler.Constants;
-import lector.client.login.ActualUser;
 import lector.share.model.client.CatalogoClient;
 import lector.share.model.client.EntryClient;
 import lector.share.model.client.TypeClient;
@@ -64,7 +64,7 @@ public class PopUpFinderSelectorExistAnnotation extends PopupPanel {
 					}
 					
 					public void onFailure(Throwable caught) {
-						Window.alert(ActualUser.getLanguage().getE_Saving());
+						Window.alert(ActualState.getLanguage().getE_Saving());
 						
 					}
 				};
@@ -78,7 +78,7 @@ public class PopUpFinderSelectorExistAnnotation extends PopupPanel {
 		
 		finderrefresh=finderin;
 		
-		if (ActualUser.getReadingactivity().getVisualization()==null||ActualUser.getReadingactivity().getVisualization().equals(Constants.VISUAL_ARBOL))
+		if (ActualState.getReadingactivity().getVisualization()==null||ActualState.getReadingactivity().getVisualization().equals(Constants.VISUAL_ARBOL))
         {
 		finder = new FinderOwnGrafo(CatalogoIn);
 		FinderOwnGrafo.setButtonTipoGrafo(new BotonGrafo(
@@ -102,7 +102,7 @@ public class PopUpFinderSelectorExistAnnotation extends PopupPanel {
 					}
 					
 					public void onFailure(Throwable caught) {
-						Window.alert(ActualUser.getLanguage().getE_Saving());
+						Window.alert(ActualState.getLanguage().getE_Saving());
 						
 					}
 				};
@@ -141,7 +141,7 @@ public class PopUpFinderSelectorExistAnnotation extends PopupPanel {
 		MenuBar menuBar = new MenuBar(false);
 		DLP.addNorth(menuBar, 1.9);
 		
-		MenuItem mntmClose = new MenuItem(ActualUser.getLanguage().getClose(), false, new Command() {
+		MenuItem mntmClose = new MenuItem(ActualState.getLanguage().getClose(), false, new Command() {
 			public void execute() {
 				hide();
 			}

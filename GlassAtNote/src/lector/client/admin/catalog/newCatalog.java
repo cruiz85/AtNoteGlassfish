@@ -2,10 +2,10 @@ package lector.client.admin.catalog;
 
 import lector.client.book.reader.GWTService;
 import lector.client.book.reader.GWTServiceAsync;
+import lector.client.controler.ActualState;
 import lector.client.controler.CalendarNow;
 import lector.client.controler.InformationConstants;
 import lector.client.logger.Logger;
-import lector.client.login.ActualUser;
 import lector.client.reader.LoadingPanel;
 import lector.share.model.Catalogo;
 import lector.share.model.client.CatalogoClient;
@@ -96,7 +96,7 @@ public class newCatalog extends PopupPanel {
 				else {
 					CatalogoClient C = new CatalogoClient();
 					C.setCatalogName(S);
-					C.setProfessorId(ActualUser.getUser().getId());
+					C.setProfessorId(ActualState.getUser().getId());
 					C.setIsPrivate(chckbxNewCheckBox.getValue());
 					LoadingPanel.getInstance().center();
 					LoadingPanel.getInstance().setLabelTexto(InformationConstants.SAVING);
@@ -105,7 +105,7 @@ public class newCatalog extends PopupPanel {
 							new AsyncCallback<Void>() {
 
 								public void onSuccess(Void result) {
-									Logger.GetLogger().info(this.getClass().getName(), "Usuario: " + ActualUser.getUser().getEmail()
+									Logger.GetLogger().info(this.getClass().getName(), "Usuario: " + ActualState.getUser().getEmail()
 											+ " create a catalog " + NuevoC.getCatalogName() + " at " + CalendarNow.GetDateNow() );
 									Father.refresh();
 									LoadingPanel.getInstance().hide();

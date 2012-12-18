@@ -2,8 +2,8 @@ package lector.client.reader.browser;
 
 import java.util.ArrayList;
 
+import lector.client.controler.ActualState;
 import lector.client.controler.Controlador;
-import lector.client.login.ActualUser;
 import lector.client.reader.MainEntryPoint;
 import lector.client.reader.SelectorPanel;
 import lector.share.model.Annotation;
@@ -46,7 +46,7 @@ public class VisualBookPanel extends DialogBox {
 		image = imagein;
 		DockPanel SP=new DockPanel();
 
-		setHTML(ActualUser.getBook().getTitle() + "    -    "+ActualUser.getLanguage().getPage() +": " + annotation.getPageNumber());
+		setHTML(ActualState.getBook().getTitle() + "    -    "+ActualState.getLanguage().getPage() +": " + annotation.getPageNumber());
 		
 		
 		setWidget(SP);
@@ -61,7 +61,7 @@ setWidget(SP);
 				Yo.hide();
 			}
 		});
-		mntmNewItem.setHTML(ActualUser.getLanguage().getClose());
+		mntmNewItem.setHTML(ActualState.getLanguage().getClose());
 		menuBar.addItem(mntmNewItem);
 		
 		MenuItem mntmNewItem_1 = new MenuItem("New item", false, new Command() {
@@ -72,7 +72,7 @@ setWidget(SP);
 				Controlador.change2Reader();
 			}
 		});
-		mntmNewItem_1.setHTML(ActualUser.getLanguage().getGO_To_Page());
+		mntmNewItem_1.setHTML(ActualState.getLanguage().getGO_To_Page());
 		menuBar.addItem(mntmNewItem_1);
 		
 

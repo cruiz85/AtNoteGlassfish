@@ -5,9 +5,9 @@ import java.util.List;
 
 import lector.client.book.reader.GWTService;
 import lector.client.book.reader.GWTServiceAsync;
+import lector.client.controler.ActualState;
 import lector.client.controler.Controlador;
 
-import lector.client.login.ActualUser;
 import lector.client.reader.LoadingPanel;
 import lector.share.model.client.CatalogoClient;
 
@@ -120,7 +120,7 @@ public class NewAdminCatalogs implements EntryPoint {
 
 		LoadingPanel.getInstance().center();
 		LoadingPanel.getInstance().setLabelTexto("Loading...");
-bookReaderServiceHolder.getVisbibleCatalogsByProfessorId(ActualUser.getUser().getId(), new AsyncCallback<List<CatalogoClient>>() {
+bookReaderServiceHolder.getVisbibleCatalogsByProfessorId(ActualState.getUser().getId(), new AsyncCallback<List<CatalogoClient>>() {
 
 	public void onFailure(Throwable caught) {
 		LoadingPanel.getInstance().hide();
@@ -206,7 +206,7 @@ bookReaderServiceHolder.getVisbibleCatalogsByProfessorId(ActualUser.getUser().ge
 //		horizontalPanel.setHeight("20px");
 		LoadingPanel.getInstance().center();
 		LoadingPanel.getInstance().setLabelTexto("Loading...");
-bookReaderServiceHolder.getVisbibleCatalogsByProfessorId(ActualUser.getUser().getId(), new AsyncCallback<List<CatalogoClient>>() {
+bookReaderServiceHolder.getVisbibleCatalogsByProfessorId(ActualState.getUser().getId(), new AsyncCallback<List<CatalogoClient>>() {
 
 	public void onFailure(Throwable caught) {
 		Window.alert("There was a problem encounter while loading the catalogs, please try again later");

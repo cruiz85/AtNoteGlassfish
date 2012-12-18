@@ -1,4 +1,4 @@
-package lector.client.login;
+package lector.client.controler;
 
 
 import javax.security.auth.callback.LanguageCallback;
@@ -14,7 +14,7 @@ import lector.share.model.client.ReadingActivityClient;
 import lector.share.model.client.StudentClient;
 import lector.share.model.client.UserClient;
 
-public class ActualUser {
+public class ActualState {
 
 	private static UserClient User;
 	private static ReadingActivityClient readingactivity;
@@ -73,7 +73,7 @@ public class ActualUser {
 	}
 	
 	public static void setReadingactivity(ReadingActivityClient readingactivity) {
-		ActualUser.readingactivity = readingactivity;
+		ActualState.readingactivity = readingactivity;
 	}
 	
 	public static CatalogoClient getOpenCatalog() {

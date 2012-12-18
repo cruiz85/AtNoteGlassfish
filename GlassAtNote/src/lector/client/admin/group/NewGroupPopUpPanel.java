@@ -2,10 +2,10 @@ package lector.client.admin.group;
 
 import lector.client.book.reader.GWTService;
 import lector.client.book.reader.GWTServiceAsync;
+import lector.client.controler.ActualState;
 import lector.client.controler.CalendarNow;
 import lector.client.controler.ErrorConstants;
 import lector.client.logger.Logger;
-import lector.client.login.ActualUser;
 import lector.client.reader.LoadingPanel;
 import lector.share.model.GroupApp;
 import lector.share.model.client.GroupClient;
@@ -126,12 +126,12 @@ public class NewGroupPopUpPanel extends PopupPanel {
 			LoadingPanel.getInstance().center();
 			LoadingPanel.getInstance().setLabelTexto("Saving...");
 			GroupClient GC=new GroupClient(Grupo);
-			GC.setProfessor((ProfessorClient) ActualUser.getUser());
+			GC.setProfessor((ProfessorClient) ActualState.getUser());
 			Saved=GC;
 				bookReaderServiceHolder.saveGroup(GC, new AsyncCallback<Void>() {
 					
 					public void onSuccess(Void result) {
-						Logger.GetLogger().info(this.getClass().getName(), "Usuario: " + ActualUser.getUser().getEmail()
+						Logger.GetLogger().info(this.getClass().getName(), "Usuario: " + ActualState.getUser().getEmail()
 								+ " Create a group " + Saved.getName() + " at " + CalendarNow.GetDateNow() );
 						LoadingPanel.getInstance().hide();
 						Father.refreshGroups();

@@ -2,10 +2,10 @@ package lector.client.admin.catalog;
 
 import lector.client.book.reader.GWTService;
 import lector.client.book.reader.GWTServiceAsync;
+import lector.client.controler.ActualState;
 import lector.client.controler.CalendarNow;
 import lector.client.controler.ErrorConstants;
 import lector.client.logger.Logger;
-import lector.client.login.ActualUser;
 import lector.client.reader.LoadingPanel;
 import lector.share.model.client.CatalogoClient;
 
@@ -38,7 +38,7 @@ public class Change_Visivility extends PopupPanel {
 		super(false);
 		setModal(true);
 		
-		if (!Cin.getProfessorId().equals(ActualUser.getUser().getId()))
+		if (!Cin.getProfessorId().equals(ActualState.getUser().getId()))
 			{
 			Window.alert(ErrorConstants.ERROR_CANTPRIVATICE_A_CATALOG_THAT_YOU_DONT_CREATE);
 			hide();
@@ -74,7 +74,7 @@ public class Change_Visivility extends PopupPanel {
 				LoadingPanel.getInstance().center();
 				LoadingPanel.getInstance().setLabelTexto("Loading...");
 				C.setIsPrivate(chckbxNewCheckBox.getValue());
-				Logger.GetLogger().info(this.getClass().getName(), "Usuario: " + ActualUser.getUser().getEmail()
+				Logger.GetLogger().info(this.getClass().getName(), "Usuario: " + ActualState.getUser().getEmail()
 						+ " change visivility of catalog " + C.getCatalogName() + " to " + C.getIsPrivate() + " at "  + CalendarNow.GetDateNow() );
 				bookReaderServiceHolder.saveCatalog(C, new AsyncCallback<Void>() {
 					

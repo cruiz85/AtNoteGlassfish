@@ -1,10 +1,9 @@
-package lector.client.login;
+package lector.client.controler;
 
 
 
 import lector.client.book.reader.GWTService;
 import lector.client.book.reader.GWTServiceAsync;
-import lector.client.controler.Constants;
 import lector.share.model.Professor;
 import lector.share.model.UserApp;
 

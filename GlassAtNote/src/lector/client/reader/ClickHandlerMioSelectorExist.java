@@ -7,8 +7,8 @@ import lector.client.book.reader.GWTServiceAsync;
 import lector.client.catalogo.BotonesStackPanelMio;
 import lector.client.catalogo.Finder;
 import lector.client.catalogo.client.EntityCatalogElements;
+import lector.client.controler.ActualState;
 import lector.client.controler.Constants;
-import lector.client.login.ActualUser;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
@@ -51,7 +51,7 @@ public class ClickHandlerMioSelectorExist extends ClickHandlerMio implements
 					}
 					
 					public void onFailure(Throwable caught) {
-						Window.alert(ActualUser.getLanguage().getE_Saving());
+						Window.alert(ActualState.getLanguage().getE_Saving());
 						
 					}
 				};

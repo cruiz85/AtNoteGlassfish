@@ -2,10 +2,10 @@ package lector.client.login.activitysel;
 
 import lector.client.book.reader.GWTService;
 import lector.client.book.reader.GWTServiceAsync;
+import lector.client.controler.ActualState;
 import lector.client.controler.ErrorConstants;
 import lector.client.controler.InformationConstants;
 import lector.client.logger.Logger;
-import lector.client.login.ActualUser;
 import lector.client.reader.LoadingPanel;
 
 import com.google.gwt.core.client.GWT;
@@ -65,7 +65,7 @@ public class AddGroupPanel extends PopupPanel {
 				LoadingPanel.getInstance().center();
 				LoadingPanel.getInstance().setLabelTexto(
 						InformationConstants.ADDING_TO_GROUP);
-				bookReaderServiceHolder.addStudentToBeValidated(ActualUser
+				bookReaderServiceHolder.addStudentToBeValidated(ActualState
 						.getUser().getId(), I, new AsyncCallback<Void>() {
 
 					@Override

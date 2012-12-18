@@ -4,11 +4,11 @@ import java.util.List;
 
 import lector.client.book.reader.ExportService;
 import lector.client.book.reader.ExportServiceAsync;
+import lector.client.controler.ActualState;
 import lector.client.controler.CalendarNow;
 import lector.client.controler.Controlador;
 import lector.client.controler.ErrorConstants;
 import lector.client.logger.Logger;
-import lector.client.login.ActualUser;
 import lector.client.reader.LoadingPanel;
 import lector.share.model.client.TemplateClient;
 
@@ -149,7 +149,7 @@ public class NewAdminTemplate implements EntryPoint  {
 				Logger.GetLogger()
 				.severe(yo.getClass().toString(),
 						ErrorConstants.ERROR_REFRESH_TEMPLATES + " at " + CalendarNow.GetDateNow() + 
-						" by User " + ActualUser.getUser().getEmail());
+						" by User " + ActualState.getUser().getEmail());
 				
 			}
 		});

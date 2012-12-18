@@ -3,7 +3,6 @@ package lector.client.controler;
 import lector.client.admin.Administrador;
 import lector.client.admin.langedit.EditordeLenguajes;
 import lector.client.admin.langedit.NewAdminLangs;
-import lector.client.login.ActualUser;
 import lector.client.login.Login;
 import lector.client.admin.BookUpload.BookLoader;
 import lector.client.admin.activity.NewAdminActivities;
@@ -89,7 +88,7 @@ public class Controlador implements EntryPoint {
     	clear();
         Actual = MEP;
         Actual.onModuleLoad();
-        BookClient book = ActualUser.getReadingactivity().getBook();
+        BookClient book = ActualState.getReadingactivity().getBook();
         
         MainEntryPoint.SetBook(book);
         MainEntryPoint.getTechnicalSpecs().setBook(book);

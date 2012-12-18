@@ -5,11 +5,11 @@ import java.util.List;
 
 import lector.client.book.reader.GWTService;
 import lector.client.book.reader.GWTServiceAsync;
+import lector.client.controler.ActualState;
 import lector.client.controler.CalendarNow;
 import lector.client.controler.ErrorConstants;
 import lector.client.controler.InformationConstants;
 import lector.client.logger.Logger;
-import lector.client.login.ActualUser;
 import lector.client.reader.LoadingPanel;
 import lector.share.model.GroupApp;
 import lector.share.model.UserApp;
@@ -83,13 +83,13 @@ public class GroupAndUserPanel extends Composite {
 					public void onFailure(Throwable caught) {
 						LoadingPanel.getInstance().hide();
 						Window.alert(ErrorConstants.ERROR_DELETING_GROUP);
-						Logger.GetLogger().severe(this.getClass().getName(), "Usuario: " + ActualUser.getUser().getEmail()
+						Logger.GetLogger().severe(this.getClass().getName(), "Usuario: " + ActualState.getUser().getEmail()
 								+ " "+ ErrorConstants.ERROR_DELETING_GROUP  + " at " + CalendarNow.GetDateNow() );
 						
 					}
 
 					public void onSuccess(Void result) {
-						Logger.GetLogger().info(this.getClass().getName(), "Usuario: " + ActualUser.getUser().getEmail()
+						Logger.GetLogger().info(this.getClass().getName(), "Usuario: " + ActualState.getUser().getEmail()
 								+ " delete a group "+ Mygroup.getClass().toString() + " named " + Mygroup.getName() + " at " + CalendarNow.GetDateNow() );
 						LoadingPanel.getInstance().hide();
 						PanelMioDentro.clear();
@@ -178,13 +178,13 @@ public class GroupAndUserPanel extends Composite {
 							public void onFailure(Throwable caught) {
 								LoadingPanel.getInstance().hide();
 								Window.alert(ErrorConstants.ERROR_DELETING_USER1  + Borrar + ErrorConstants.ERROR_DELETING_USER2 + Mygroup.getName() );
-								Logger.GetLogger().severe(this.getClass().getName(), "Usuario: " + ActualUser.getUser().getEmail()
+								Logger.GetLogger().severe(this.getClass().getName(), "Usuario: " + ActualState.getUser().getEmail()
 										+ " "+ ErrorConstants.ERROR_DELETING_USER1  + Borrar + ErrorConstants.ERROR_DELETING_USER2 + Mygroup.getName() + " at " + CalendarNow.GetDateNow() );
 								
 							}
 
 							public void onSuccess(Void result) {
-								Logger.GetLogger().info(this.getClass().getName(), "Usuario: " + ActualUser.getUser().getEmail()
+								Logger.GetLogger().info(this.getClass().getName(), "Usuario: " + ActualState.getUser().getEmail()
 										+ " delete a user "+ Borrar + " from " + Mygroup.getName() + " at " + CalendarNow.GetDateNow() );
 								LoadingPanel.getInstance().hide();
 								Panel_Usuarios.clear();

@@ -6,8 +6,8 @@ import java.util.List;
 import lector.client.book.reader.GWTService;
 import lector.client.book.reader.GWTServiceAsync;
 import lector.client.catalogo.client.File;
+import lector.client.controler.ActualState;
 import lector.client.controler.Constants;
-import lector.client.login.ActualUser;
 import lector.client.reader.PanelTextComent.CatalogTipo;
 import lector.share.model.Annotation;
 import lector.share.model.Language;
@@ -64,7 +64,7 @@ public class TextComentNoEdit extends DialogBox {
 		setHTML(annotation.getCreator().getFirstName()
 				+ " " + +annotation.getCreator().getLastName().charAt(0)+ ".  -  " + annotation.getCreatedDate().toGMTString());
 		CommentPanel.setEstado(true);
-		ActualLang = ActualUser.getLanguage();
+		ActualLang = ActualState.getLanguage();
 		VerticalPanel verticalPanel = new VerticalPanel();
 		setWidget(verticalPanel);
 		verticalPanel.setSize("883px", "337px");
@@ -121,7 +121,7 @@ List<TypeClient> result = annotation.getTags();
 						for (int i = 0; i < result.size(); i++) {
 						TypeClient resulttmp=result.get(i);
 						File F=new File(resulttmp, resulttmp.getCatalog(),null);
-						if (F.getCatalogo().getId().equals(ActualUser.getReadingactivity().getCloseCatalogo().getId()))
+						if (F.getCatalogo().getId().equals(ActualState.getReadingactivity().getCloseCatalogo().getId()))
 						{
 							ButtonTipo B=new ButtonTipo(F,CatalogTipo.Catalog1.getTexto(),horizontalPanel_1);
 							B.addClickHandler(new ClickHandler() {

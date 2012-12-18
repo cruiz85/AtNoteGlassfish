@@ -5,8 +5,8 @@ import java.util.List;
 
 import lector.client.book.reader.GWTService;
 import lector.client.book.reader.GWTServiceAsync;
+import lector.client.controler.ActualState;
 import lector.client.controler.Controlador;
-import lector.client.login.ActualUser;
 import lector.share.model.GroupApp;
 import lector.share.model.client.GroupClient;
 
@@ -119,7 +119,7 @@ public class Groupadministration implements EntryPoint {
 		horizontalPanel.add(Panel_grupo_seleccionado);
 		Panel_grupo_seleccionado.setSize("100%", "100%");
 		
-		bookReaderServiceHolder.getGroupsByUserId(ActualUser.getUser().getId(), new AsyncCallback<List<GroupClient>>() {
+		bookReaderServiceHolder.getGroupsByUserId(ActualState.getUser().getId(), new AsyncCallback<List<GroupClient>>() {
 			
 			public void onSuccess(List<GroupClient> result) {
 			
@@ -254,7 +254,7 @@ public class Groupadministration implements EntryPoint {
 		Panel_de_grupos.clear();
 		Panel_grupo_seleccionado.clear();
 		
-bookReaderServiceHolder.getGroupsByUserId(ActualUser.getUser().getId(), new AsyncCallback<List<GroupClient>>() {
+bookReaderServiceHolder.getGroupsByUserId(ActualState.getUser().getId(), new AsyncCallback<List<GroupClient>>() {
 	
 	public void onSuccess(List<GroupClient> result) {
 			

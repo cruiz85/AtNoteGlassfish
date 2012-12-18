@@ -5,12 +5,12 @@ import java.util.ArrayList;
 import lector.client.admin.export.newTemplate;
 import lector.client.book.reader.ExportService;
 import lector.client.book.reader.ExportServiceAsync;
+import lector.client.controler.ActualState;
 import lector.client.controler.CalendarNow;
 import lector.client.controler.Constants;
 import lector.client.controler.ErrorConstants;
 import lector.client.controler.InformationConstants;
 import lector.client.logger.Logger;
-import lector.client.login.ActualUser;
 import lector.client.reader.LoadingPanel;
 import lector.share.model.client.TemplateCategoryClient;
 
@@ -122,7 +122,7 @@ public class PanelNewTemplateCategory extends PopupPanel {
 					exportServiceHolder.saveTemplateCategory(T , new AsyncCallback<Void>() {
 						
 						public void onSuccess(Void result) {
-							Logger.GetLogger().info(this.getClass().getName(), "Usuario: " + ActualUser.getUser().getEmail()
+							Logger.GetLogger().info(this.getClass().getName(), "Usuario: " + ActualState.getUser().getEmail()
 									+ " Create a Template Category named " + T.getName() + " at " + CalendarNow.GetDateNow() );
 							LoadingPanel.getInstance().hide();
 							PadreLLamada.refresh();
@@ -136,7 +136,7 @@ public class PanelNewTemplateCategory extends PopupPanel {
 							Logger.GetLogger()
 							.severe(Yo.getClass().toString(),
 									ErrorConstants.ERROR_SAVING_NEW_TEMPLATE_CATEGORY + " at " + CalendarNow.GetDateNow() + 
-									" by User " + ActualUser.getUser().getEmail());
+									" by User " + ActualState.getUser().getEmail());
 							
 						}
 					});

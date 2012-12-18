@@ -8,13 +8,13 @@ import lector.client.book.reader.GWTService;
 import lector.client.book.reader.GWTServiceAsync;
 import lector.client.book.reader.ImageService;
 import lector.client.book.reader.ImageServiceAsync;
+import lector.client.controler.ActualState;
 import lector.client.controler.CalendarNow;
 import lector.client.controler.Constants;
 import lector.client.controler.Controlador;
 import lector.client.controler.ErrorConstants;
 import lector.client.controler.InformationConstants;
 import lector.client.logger.Logger;
-import lector.client.login.ActualUser;
 import lector.client.login.bookselec.ButtonActivityReader;
 import lector.client.reader.LoadingPanel;
 import lector.client.reader.MainEntryPoint;
@@ -75,10 +75,10 @@ public class MyActivities implements EntryPoint {
 		RootMenu.add(menuBar);
 
 		String Bienvenida;
-		if ((ActualUser.getUser().getFirstName()!=null)&&(!ActualUser.getUser().getFirstName().isEmpty()))
-		Bienvenida="Welcome " + ActualUser.getUser().getFirstName();
+		if ((ActualState.getUser().getFirstName()!=null)&&(!ActualState.getUser().getFirstName().isEmpty()))
+		Bienvenida="Welcome " + ActualState.getUser().getFirstName();
 		else 
-		Bienvenida="Welcome " + ActualUser.getUser().getEmail();
+		Bienvenida="Welcome " + ActualState.getUser().getEmail();
 		MenuItem menuItem = new MenuItem(Bienvenida, false, (Command) null);
 		menuItem.setEnabled(false);
 		menuBar.addItem(menuItem);
@@ -105,9 +105,9 @@ public class MyActivities implements EntryPoint {
 				Controlador.change2Welcome();
 				Cookies.removeCookie(Constants.COOKIE_NAME);
 			//	 Window.open(ActualUser.getUser().getLogoutUrl(), "_self", "");
-				ActualUser.setUser(null);
-				ActualUser.setBook(null);
-				ActualUser.setReadingactivity(null);
+				ActualState.setUser(null);
+				ActualState.setBook(null);
+				ActualState.setReadingactivity(null);
 			}
 		});
 
@@ -125,15 +125,15 @@ public class MyActivities implements EntryPoint {
 				{
 					LoadingPanel.getInstance().center();
 					LoadingPanel.getInstance().setLabelTexto(InformationConstants.VALIDATING);
-					bookReaderServiceHolder.deleteStudentById(ActualUser.getUser().getId(), new AsyncCallback<Void>() {
+					bookReaderServiceHolder.deleteStudentById(ActualState.getUser().getId(), new AsyncCallback<Void>() {
 						
 						@Override
 						public void onSuccess(Void result) {
 							LoadingPanel.getInstance().hide();
 							Window.alert(InformationConstants.GOODBYE);
 							Logger.GetLogger().info(Yo.getClass().toString(), "Delete:  "+
-							"First Name: " + ActualUser.getUser().getFirstName() + " Last Name: " + ActualUser.getUser().getLastName() +
-							" Email: " + ActualUser.getUser().getEmail());
+							"First Name: " + ActualState.getUser().getFirstName() + " Last Name: " + ActualState.getUser().getLastName() +
+							" Email: " + ActualState.getUser().getEmail());
 							Window.Location.reload();
 						}
 						
@@ -141,16 +141,16 @@ public class MyActivities implements EntryPoint {
 						public void onFailure(Throwable caught) {
 							LoadingPanel.getInstance().hide();
 							Window.alert(ErrorConstants.ERROR_DELETING_USER);
-							Logger.GetLogger().severe(Yo.getClass().toString(), ErrorConstants.ERROR_DELETING_USER + " " + ActualUser.getUser().getEmail() + " at " + CalendarNow.GetDateNow() );
+							Logger.GetLogger().severe(Yo.getClass().toString(), ErrorConstants.ERROR_DELETING_USER + " " + ActualState.getUser().getEmail() + " at " + CalendarNow.GetDateNow() );
 						}
 					});
 				}
 			}
 		});
 		
-		if (ActualUser.getUser() instanceof ProfessorClient)
+		if (ActualState.getUser() instanceof ProfessorClient)
 			menuBar.addItem(menuItem_1);
-		else if (ActualUser.getUser() instanceof StudentClient)
+		else if (ActualState.getUser() instanceof StudentClient)
 			{
 			menuBar.addItem(mntmNewItem);
 			menuBar.addItem(menuItem_2);
@@ -187,10 +187,10 @@ public class MyActivities implements EntryPoint {
 
 	private void generaBookIds() {
 
-		UserClient User = ActualUser.getUser();
+		UserClient User = ActualState.getUser();
 		LoadingPanel.getInstance().center();
 		LoadingPanel.getInstance().setLabelTexto("Loading...");
-		if (ActualUser.getUser() instanceof ProfessorClient) {
+		if (ActualState.getUser() instanceof ProfessorClient) {
 			bookReaderServiceHolder.getReadingActivitiesByProfessorId(
 					User.getId(),
 					new AsyncCallback<List<ReadingActivityClient>>()
@@ -247,7 +247,7 @@ public class MyActivities implements EntryPoint {
 			if (!buttonexist(button)) {
 				if (CheckCompleta(button))
 				{
-					if (BooksIDs.get(i).getProfessor().getId().equals(ActualUser.getUser().getId()))
+					if (BooksIDs.get(i).getProfessor().getId().equals(ActualState.getUser().getId()))
 						PPPanel.getPrivate().add(button);
 					else PPPanel.getPublic().add(button);
 					
@@ -269,9 +269,9 @@ public class MyActivities implements EntryPoint {
 				});
 				}else
 				{
-					if (ActualUser.getUser() instanceof ProfessorClient)	
+					if (ActualState.getUser() instanceof ProfessorClient)	
 					{
-						if (BooksIDs.get(i).getProfessor().getId().equals(ActualUser.getUser().getId()))
+						if (BooksIDs.get(i).getProfessor().getId().equals(ActualState.getUser().getId()))
 							PPPanel.getPrivate().add(button);
 						else PPPanel.getPublic().add(button);
 						
@@ -304,7 +304,7 @@ public class MyActivities implements EntryPoint {
 
 						ButtonActivityReader B = (ButtonActivityReader) event.getSource();
 						RA=B.getRA();
-						ActualUser.setReadingactivity(RA);
+						ActualState.setReadingactivity(RA);
 						MainEntryPoint.CleanFilter();			
 						loadCatalog();
 						 }
@@ -321,7 +321,7 @@ public class MyActivities implements EntryPoint {
 			if (!buttonexist(button)) {
 				if (CheckCompleta(button))
 				{
-					if (BooksIDs.get(BooksIDs.size()-1).getProfessor().getId().equals(ActualUser.getUser().getId()))
+					if (BooksIDs.get(BooksIDs.size()-1).getProfessor().getId().equals(ActualState.getUser().getId()))
 						PPPanel.getPrivate().add(button);
 					else PPPanel.getPublic().add(button);
 					
@@ -343,9 +343,9 @@ public class MyActivities implements EntryPoint {
 				});
 				}else
 				{
-					if (ActualUser.getUser() instanceof ProfessorClient)	
+					if (ActualState.getUser() instanceof ProfessorClient)	
 					{
-						if (BooksIDs.get(BooksIDs.size()-1).getProfessor().getId().equals(ActualUser.getUser().getId()))
+						if (BooksIDs.get(BooksIDs.size()-1).getProfessor().getId().equals(ActualState.getUser().getId()))
 							PPPanel.getPrivate().add(button);
 						else PPPanel.getPublic().add(button);
 						button.setEnabled(false);
@@ -376,7 +376,7 @@ public class MyActivities implements EntryPoint {
 
 						ButtonActivityReader B = (ButtonActivityReader) event.getSource();
 						RA=B.getRA();
-						ActualUser.setReadingactivity(RA);
+						ActualState.setReadingactivity(RA);
 						MainEntryPoint.CleanFilter();
 						
 						loadCatalog();
@@ -414,7 +414,7 @@ public class MyActivities implements EntryPoint {
 				});
 				}else
 				{
-					if (ActualUser.getUser() instanceof ProfessorClient)	
+					if (ActualState.getUser() instanceof ProfessorClient)	
 					{
 						verticalPanel.add(button);
 						button.setEnabled(false);
@@ -446,7 +446,7 @@ public class MyActivities implements EntryPoint {
 
 						ButtonActivityReader B = (ButtonActivityReader) event.getSource();
 						RA=B.getRA();
-						ActualUser.setReadingactivity(RA);
+						ActualState.setReadingactivity(RA);
 						MainEntryPoint.CleanFilter();			
 						loadCatalog();
 						 }
@@ -482,7 +482,7 @@ public class MyActivities implements EntryPoint {
 				});
 				}else
 				{
-					if (ActualUser.getUser() instanceof ProfessorClient)	
+					if (ActualState.getUser() instanceof ProfessorClient)	
 					{
 						verticalPanel.add(button);
 						button.setEnabled(false);
@@ -513,7 +513,7 @@ public class MyActivities implements EntryPoint {
 
 						ButtonActivityReader B = (ButtonActivityReader) event.getSource();
 						RA=B.getRA();
-						ActualUser.setReadingactivity(RA);
+						ActualState.setReadingactivity(RA);
 						MainEntryPoint.CleanFilter();
 						
 						loadCatalog();
@@ -535,7 +535,7 @@ public class MyActivities implements EntryPoint {
 		bookReaderServiceHolder.loadCatalogById(RA.getCloseCatalogo().getId(), new AsyncCallback<CatalogoClient>() {
 			
 			public void onSuccess(CatalogoClient result) {
-				ActualUser.setCatalogo(result);
+				ActualState.setCatalogo(result);
 				loadOpenCatalog();
 				
 			}
@@ -554,7 +554,7 @@ public class MyActivities implements EntryPoint {
 		bookReaderServiceHolder.loadCatalogById(RA.getOpenCatalogo().getId(), new AsyncCallback<CatalogoClient>() {
 			
 			public void onSuccess(CatalogoClient result) {
-				ActualUser.setOpenCatalog(result);
+				ActualState.setOpenCatalog(result);
 				Controlador.change2Reader();
 				
 			}

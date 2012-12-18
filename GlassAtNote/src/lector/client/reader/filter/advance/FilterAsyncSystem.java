@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import com.google.gwt.user.client.ui.Image;
 import com.google.gwt.user.client.ui.VerticalPanel;
 
-import lector.client.login.ActualUser;
+import lector.client.controler.ActualState;
 import lector.client.reader.LoadingPanel;
 import lector.share.model.client.AnnotationClient;
 
@@ -20,7 +20,7 @@ public class FilterAsyncSystem {
 	public FilterAsyncSystem(ArrayList<Rule> Reglas) {
 		//TODO Mensajes Generales
 		LoadingPanel.getInstance().center();
-		LoadingPanel.getInstance().setLabelTexto(ActualUser.getLanguage().getFiltering());
+		LoadingPanel.getInstance().setLabelTexto(ActualState.getLanguage().getFiltering());
 		ReglasEvaluar=Reglas;
 		actualRule=0;
 		Anotaciones=new ArrayList<AnnotationClient>();
@@ -42,7 +42,7 @@ public class FilterAsyncSystem {
 		VerticalPanel resultado=new VerticalPanel();
 		AnotationFilterResultPanel Panel=new AnotationFilterResultPanel(resultado);
 		for (AnnotationClient AIndiv : Anotaciones) {
-			resultado.add(new CommentPanelFAdvance(AIndiv, new Image(ActualUser.getBook().getWebLinks().get(AIndiv.getPageNumber())),Panel.getHeight()));
+			resultado.add(new CommentPanelFAdvance(AIndiv, new Image(ActualState.getBook().getWebLinks().get(AIndiv.getPageNumber())),Panel.getHeight()));
 		}	
 		Panel.center();
 		LoadingPanel.getInstance().hide();

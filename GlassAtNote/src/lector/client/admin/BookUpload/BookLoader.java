@@ -2,10 +2,10 @@ package lector.client.admin.BookUpload;
 
 import java.util.ArrayList;
 
+import lector.client.controler.ActualState;
 import lector.client.controler.Constants;
 import lector.client.controler.Controlador;
 import lector.client.controler.ErrorConstants;
-import lector.client.login.ActualUser;
 
 import com.google.gwt.core.client.EntryPoint;
 import com.google.gwt.core.client.GWT;
@@ -168,7 +168,7 @@ public class BookLoader implements EntryPoint {
 		userApp = new TextBox();
 		verticalPanel_2.add(userApp);
 		userApp.setWidth("393px");
-		userApp.setText(ActualUser.getUser().getId().toString());
+		userApp.setText(ActualState.getUser().getId().toString());
 		userApp.setReadOnly(true);
 		userApp.setVisible(false);
 		userApp.setName(Constants.BLOB_UPLOADER);
@@ -354,11 +354,11 @@ public class BookLoader implements EntryPoint {
 				 * 
 				 * } });
 				 */
-				bookReaderServiceHolder.loadUserById(ActualUser.getUser()
+				bookReaderServiceHolder.loadUserById(ActualState.getUser()
 						.getId(), new AsyncCallback<UserClient>() {
 
 					public void onSuccess(UserClient result) {
-						ActualUser.setUser(result);
+						ActualState.setUser(result);
 						Controlador.change2BookAdminstrator();
 						// form.reset();
 

@@ -3,13 +3,13 @@ package lector.client.search;
 
 import lector.client.book.reader.GWTService;
 import lector.client.book.reader.GWTServiceAsync;
+import lector.client.controler.ActualState;
 import lector.client.controler.CalendarNow;
 import lector.client.controler.Constants;
 import lector.client.controler.Controlador;
 import lector.client.controler.ErrorConstants;
 import lector.client.controler.InformationConstants;
 import lector.client.logger.Logger;
-import lector.client.login.ActualUser;
 import lector.client.login.UserEdition;
 import lector.client.reader.LoadingPanel;
 import lector.share.model.client.GoogleBookClient;
@@ -72,7 +72,7 @@ public class VisorSearcher extends PopupPanel {
 			public void execute() {
 				
 				//Window.alert("Works");
-				ProfessorClient PC=(ProfessorClient) ActualUser.getUser();
+				ProfessorClient PC=(ProfessorClient) ActualState.getUser();
 				LoadingPanel.getInstance().center();
 				LoadingPanel.getInstance().setLabelTexto(InformationConstants.SAVING);
 				bookReaderServiceHolder.addBookToUser(Entrada,PC.getId(), new AsyncCallback<Void>() {
@@ -84,18 +84,18 @@ public class VisorSearcher extends PopupPanel {
 						Yo.hide();
 						Logger.GetLogger()
 						.info(Yo.getClass().toString(),
-								InformationConstants.ADDED_BOOK1+Entrada.getTitle()+InformationConstants.ADDED_BOOK1+ActualUser.getUser().getEmail() + " at " + CalendarNow.GetDateNow());
+								InformationConstants.ADDED_BOOK1+Entrada.getTitle()+InformationConstants.ADDED_BOOK1+ActualState.getUser().getEmail() + " at " + CalendarNow.GetDateNow());
 						
 					}
 					
 					private void realoadUser() {
 						
-						bookReaderServiceHolder.loadUserById(ActualUser.getUser().getId(), new AsyncCallback<UserClient>() {
+						bookReaderServiceHolder.loadUserById(ActualState.getUser().getId(), new AsyncCallback<UserClient>() {
 							
 							@Override
 							public void onSuccess(UserClient result) {
 								LoadingPanel.getInstance().hide();
-								ActualUser.setUser(result);
+								ActualState.setUser(result);
 								Controlador.change2BookAdminstrator();
 
 								
@@ -115,10 +115,10 @@ public class VisorSearcher extends PopupPanel {
 					@Override
 					public void onFailure(Throwable caught) {
 						LoadingPanel.getInstance().hide();
-						Window.alert(ErrorConstants.ERROR_SAVING_BOOK1+Entrada.getTitle()+ErrorConstants.ERROR_SAVING_BOOK2+ActualUser.getUser().getEmail());
+						Window.alert(ErrorConstants.ERROR_SAVING_BOOK1+Entrada.getTitle()+ErrorConstants.ERROR_SAVING_BOOK2+ActualState.getUser().getEmail());
 						Logger.GetLogger()
 						.severe(Yo.getClass().toString(),
-								ErrorConstants.ERROR_SAVING_BOOK1+Entrada.getTitle()+ErrorConstants.ERROR_SAVING_BOOK2+ActualUser.getUser().getEmail() + " at " + CalendarNow.GetDateNow());
+								ErrorConstants.ERROR_SAVING_BOOK1+Entrada.getTitle()+ErrorConstants.ERROR_SAVING_BOOK2+ActualState.getUser().getEmail() + " at " + CalendarNow.GetDateNow());
 					}
 				});
 //				ActualUser.getUser().getBookIds().add(Entrada.getTitle()+" "+Constants.BREAKER+" "+Entrada.getId());

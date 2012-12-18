@@ -4,6 +4,7 @@ import java.util.Date;
 
 import lector.client.book.reader.GWTService;
 import lector.client.book.reader.GWTServiceAsync;
+import lector.client.controler.ActualState;
 import lector.client.controler.CalendarNow;
 import lector.client.controler.Constants;
 import lector.client.controler.Controlador;
@@ -22,6 +23,7 @@ import com.google.gwt.core.client.GWT;
 import com.google.gwt.user.client.Cookies;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
+import com.google.gwt.user.client.ui.AbsolutePanel;
 import com.google.gwt.user.client.ui.RootPanel;
 import com.google.gwt.user.client.ui.VerticalPanel;
 import com.google.gwt.user.client.ui.HasHorizontalAlignment;
@@ -68,6 +70,9 @@ public class Login implements EntryPoint {
 	private StudentClient newStudent;
 	private CheckBox KeepConected;
 	private final long SemillaPrimo=999983;
+	private AbsolutePanel PanelEdicion;
+	private DockPanel dockPanel;
+	private RootPanel rootPanel;
 
 	public void onModuleLoad() {
 
@@ -83,7 +88,7 @@ public class Login implements EntryPoint {
 				@Override
 				public void onSuccess(UserClient result) {
 					LoadingPanel.getInstance().hide();
-					ActualUser.setUser(result);
+					ActualState.setUser(result);
 					Logger.GetLogger().info(
 							this.getClass().getName(),
 							"Usuario: " + result.getFirstName()
@@ -105,11 +110,11 @@ public class Login implements EntryPoint {
 			});
 			}
 		
-		RootPanel rootPanel = RootPanel.get();
+		rootPanel = RootPanel.get();
 		rootPanel.setStyleName("Root");
 		Yo = this;
 
-		DockPanel dockPanel = new DockPanel();
+		dockPanel = new DockPanel();
 		dockPanel.setStyleName("fondoLogo");
 		rootPanel.add(dockPanel, 0, 0);
 		dockPanel.setSize("100%", "100%");
@@ -545,7 +550,12 @@ public class Login implements EntryPoint {
 		MenuBar menuBar = new MenuBar(false);
 		dockPanel.add(menuBar, DockPanel.NORTH);
 		menuBar.setHeight("24px");
+		
+		
+		
 	}
+
+	
 
 	protected void revisarTextboxAndEnter() {
 		String nombre = User.getText();
@@ -592,7 +602,7 @@ public class Login implements EntryPoint {
 										ErrorConstants.YOU_ARE_NO_AUTORIZED + " at " + CalendarNow.GetDateNow());
 								btnNewButton.setEnabled(true);
 							} else {
-								ActualUser.setUser(result);
+								ActualState.setUser(result);
 								if (KeepConected.getValue())
 									{
 									 int caduca = 1000*60*60*24;

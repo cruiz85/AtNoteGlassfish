@@ -5,11 +5,11 @@ import lector.client.book.reader.ExportService;
 import lector.client.book.reader.ExportServiceAsync;
 import lector.client.book.reader.GWTService;
 import lector.client.book.reader.GWTServiceAsync;
+import lector.client.controler.ActualState;
 import lector.client.controler.CalendarNow;
 import lector.client.controler.Controlador;
 import lector.client.controler.ErrorConstants;
 import lector.client.logger.Logger;
-import lector.client.login.ActualUser;
 import lector.client.reader.LoadingPanel;
 import lector.share.model.client.TemplateClient;
 
@@ -48,7 +48,7 @@ public class MenuOpciones extends PopupPanel {
 			public void onClick(ClickEvent event) {
 				Controlador.change2EditTemplate();
 				EditTemplate.setTemplate(T);
-				Logger.GetLogger().info(this.getClass().getName(), "Usuario: " + ActualUser.getUser().getEmail()
+				Logger.GetLogger().info(this.getClass().getName(), "Usuario: " + ActualState.getUser().getEmail()
 						+ " Edit Template named " + T.getName() + " at " + CalendarNow.GetDateNow() );
 			}
 		});
@@ -83,7 +83,7 @@ public class MenuOpciones extends PopupPanel {
 						LoadingPanel.getInstance().hide();
 						YO.refresh();
 						hide();
-						Logger.GetLogger().info(this.getClass().getName(), "Usuario: " + ActualUser.getUser().getEmail()
+						Logger.GetLogger().info(this.getClass().getName(), "Usuario: " + ActualState.getUser().getEmail()
 								+ " Delete a Template named " + T.getName() + " at " + CalendarNow.GetDateNow() );
 					}
 					

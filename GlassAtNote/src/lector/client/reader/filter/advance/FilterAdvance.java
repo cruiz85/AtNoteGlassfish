@@ -12,9 +12,9 @@ import lector.client.catalogo.FinderKeys;
 import lector.client.catalogo.FinderOwnGrafo;
 import lector.client.catalogo.OwnGraph.BotonGrafo;
 import lector.client.catalogo.client.Entity;
+import lector.client.controler.ActualState;
 import lector.client.controler.Constants;
 import lector.client.controler.Controlador;
-import lector.client.login.ActualUser;
 import lector.client.reader.BotonesStackPanelReaderSelectMio;
 import lector.client.reader.ClickHandlerMioSelector;
 import lector.client.reader.MainEntryPoint;
@@ -79,14 +79,14 @@ public class FilterAdvance implements EntryPoint{
 		MenuBar menuBar = new MenuBar(false);
 		rootMenu.add(menuBar);
 		
-		MenuItem mntmClose = new MenuItem(ActualUser.getLanguage().getCloseFA(), false, new Command() {
+		MenuItem mntmClose = new MenuItem(ActualState.getLanguage().getCloseFA(), false, new Command() {
 			public void execute() {
 				Controlador.change2Reader();
 			}
 		});
 		menuBar.addItem(mntmClose);
 		
-		MenuItem mntmFilter = new MenuItem(ActualUser.getLanguage().getFilterButtonFA(), false, new Command() {
+		MenuItem mntmFilter = new MenuItem(ActualState.getLanguage().getFilterButtonFA(), false, new Command() {
 			public void execute() {
 				ArrayList<Rule> auxRul=new ArrayList<Rule>();
 				for (int i = 0; i < Rules.getWidgetCount(); i++) {
@@ -97,7 +97,7 @@ public class FilterAdvance implements EntryPoint{
 		});
 		menuBar.addItem(mntmFilter);
 		
-		MenuItem mntmNewRule = new MenuItem(ActualUser.getLanguage().getNew_Rule(), false, new Command() {
+		MenuItem mntmNewRule = new MenuItem(ActualState.getLanguage().getNew_Rule(), false, new Command() {
 			public void execute() {
 				newRule NR=new newRule(); 
 				NR.center();
@@ -147,15 +147,15 @@ public class FilterAdvance implements EntryPoint{
 		
 //		FinderButton2 = new FinderGrafo(ActualUser.getCatalogo());
 		
-		if (ActualUser.getReadingactivity().getVisualization()==null||ActualUser.getReadingactivity().getVisualization().equals(Constants.VISUAL_ARBOL))
+		if (ActualState.getReadingactivity().getVisualization()==null||ActualState.getReadingactivity().getVisualization().equals(Constants.VISUAL_ARBOL))
         {
-			FinderButton2= new FinderOwnGrafo(ActualUser.getCatalogo());
+			FinderButton2= new FinderOwnGrafo(ActualState.getCatalogo());
 			//FinderButton2.RefrescaLosDatos();
         }
         else 
         {
         	FinderButton2= new FinderKeys();
-        	FinderButton2.setCatalogo(ActualUser.getCatalogo());
+        	FinderButton2.setCatalogo(ActualState.getCatalogo());
           //  FinderButton2.RefrescaLosDatos();
         }
 		
@@ -230,15 +230,15 @@ public class FilterAdvance implements EntryPoint{
 	//	FinderButton1.setCatalogo(ActualUser.getOpenCatalog());
 		
 		 //FinderButton1 = new FinderGrafo(ActualUser.getOpenCatalog());
-		 if (ActualUser.getReadingactivity().getVisualization()==null||ActualUser.getReadingactivity().getVisualization().equals(Constants.VISUAL_ARBOL))
+		 if (ActualState.getReadingactivity().getVisualization()==null||ActualState.getReadingactivity().getVisualization().equals(Constants.VISUAL_ARBOL))
 	        {
-			 FinderButton1= new FinderOwnGrafo(ActualUser.getOpenCatalog());
+			 FinderButton1= new FinderOwnGrafo(ActualState.getOpenCatalog());
 			// FinderButton1.RefrescaLosDatos();
 	        }
 	        else 
 	        {
 	        	FinderButton1= new FinderKeys();
-	        	FinderButton1.setCatalogo(ActualUser.getOpenCatalog());
+	        	FinderButton1.setCatalogo(ActualState.getOpenCatalog());
 	        //	FinderButton1.RefrescaLosDatos();
 	        }
 		
@@ -262,18 +262,18 @@ public class FilterAdvance implements EntryPoint{
 		decoratedTabPanel.setSize("100%", "100%");
 		
 		SimplePanel Catalogo2 = new SimplePanel();
-		decoratedTabPanel.add(Catalogo2, ActualUser.getLanguage().getTeacherTypes(), false);
+		decoratedTabPanel.add(Catalogo2, ActualState.getLanguage().getTeacherTypes(), false);
 		Catalogo2.add(FinderButton2);
 		Catalogo2.setSize("100%", "100%");
 		
 		decoratedTabPanel.selectTab(0);
 		
 		SimplePanel Catalogo1 = new SimplePanel();
-		decoratedTabPanel.add(Catalogo1, ActualUser.getLanguage().getOpenTypes(), false);
+		decoratedTabPanel.add(Catalogo1, ActualState.getLanguage().getOpenTypes(), false);
 		Catalogo1.setSize("100%", "100%");
 		Catalogo1.add(FinderButton1);
 		
-		for (UserClient userClient : ActualUser.getReadingactivity().getGroup().getParticipatingUsers()) {
+		for (UserClient userClient : ActualState.getReadingactivity().getGroup().getParticipatingUsers()) {
 			ButtonUser B;
 			 B=new ButtonUser(userClient);
 			B.addClickHandler(new ClickHandler() {
@@ -308,7 +308,7 @@ public class FilterAdvance implements EntryPoint{
 			AlumnosYProfesores.add(B);
 		}
 		
-		bookReaderServiceHolder.getProfessorsAnnotatorsByActivityId(ActualUser.getReadingactivity().getId(), new AsyncCallback<List<ProfessorClient>>() {
+		bookReaderServiceHolder.getProfessorsAnnotatorsByActivityId(ActualState.getReadingactivity().getId(), new AsyncCallback<List<ProfessorClient>>() {
 			
 			@Override
 			public void onSuccess(List<ProfessorClient> result) {
@@ -373,7 +373,7 @@ public class FilterAdvance implements EntryPoint{
 			
 			@Override
 			public void onFailure(Throwable caught) {
-				Window.alert(ActualUser.getLanguage().getE_UserLoad());
+				Window.alert(ActualState.getLanguage().getE_UserLoad());
 				
 			}
 		});

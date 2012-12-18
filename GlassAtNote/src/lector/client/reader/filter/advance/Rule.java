@@ -8,8 +8,8 @@ import java.util.List;
 import lector.client.book.reader.GWTService;
 import lector.client.book.reader.GWTServiceAsync;
 import lector.client.catalogo.client.EntityCatalogElements;
+import lector.client.controler.ActualState;
 import lector.client.controler.Constants;
-import lector.client.login.ActualUser;
 import lector.share.model.client.AnnotationClient;
 import lector.share.model.client.EntryClient;
 import lector.share.model.client.StudentClient;
@@ -70,7 +70,7 @@ public class Rule extends Composite {
 		dockPanel.add(flowPanel, DockPanel.NORTH);
 		flowPanel.setSize("100%", "100%");
 		
-		btnNewButton = new Button(ActualUser.getLanguage().getRule()+" : " + NameRule);
+		btnNewButton = new Button(ActualState.getLanguage().getRule()+" : " + NameRule);
 		btnNewButton.setStyleName("gwt-ButtonBlack");
 		btnNewButton.addClickHandler(new ClickHandler() {
 			public void onClick(ClickEvent event) {
@@ -90,7 +90,7 @@ public class Rule extends Composite {
 			}
 		});
 		
-		Button btnNewButton_1 = new Button(ActualUser.getLanguage().getRemove());
+		Button btnNewButton_1 = new Button(ActualState.getLanguage().getRemove());
 		btnNewButton_1.addClickHandler(new ClickHandler() {
 			public void onClick(ClickEvent event) {
 				FilterAdvance.getRules().remove(Yo);
@@ -274,16 +274,16 @@ public class Rule extends Composite {
 			@Override
 			public void onFailure(Throwable caught) {
 				FilterAsyncSystem.nextRule();
-				Window.alert(ActualUser.getLanguage().getE_filteringmesageAnnotations() + ActualUser.getLanguage().getRule()+" :" + NameRule  );
+				Window.alert(ActualState.getLanguage().getE_filteringmesageAnnotations() + ActualState.getLanguage().getRule()+" :" + NameRule  );
 				
 			}
 		};
 		
 		
-		if (ActualUser.getUser() instanceof StudentClient) 
-			bookReaderServiceHolder.getAnnotationsByTypeClientIdsForStudent(TiposPosIds, ActualUser.getReadingactivity().getId(), ActualUser.getUser().getId(), callback);
+		if (ActualState.getUser() instanceof StudentClient) 
+			bookReaderServiceHolder.getAnnotationsByTypeClientIdsForStudent(TiposPosIds, ActualState.getReadingactivity().getId(), ActualState.getUser().getId(), callback);
 		else 
-			bookReaderServiceHolder.getAnnotationsByTypeClientIdsForProfessor(TiposPosIds, ActualUser.getReadingactivity().getId(), ActualUser.getUser().getId(), callback);
+			bookReaderServiceHolder.getAnnotationsByTypeClientIdsForProfessor(TiposPosIds, ActualState.getReadingactivity().getId(), ActualState.getUser().getId(), callback);
 		
 		
 		

@@ -1,6 +1,6 @@
 package lector.client.reader.browser;
 
-import lector.client.login.ActualUser;
+import lector.client.controler.ActualState;
 import lector.client.reader.SelectorPanel;
 import lector.share.model.Annotation;
 import lector.share.model.client.AnnotationClient;

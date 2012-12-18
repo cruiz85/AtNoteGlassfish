@@ -5,7 +5,7 @@ import lector.client.book.reader.GWTServiceAsync;
 import lector.client.catalogo.Finder;
 import lector.client.catalogo.client.File;
 import lector.client.catalogo.client.Folder;
-import lector.client.login.ActualUser;
+import lector.client.controler.ActualState;
 import lector.share.model.FileException;
 import lector.share.model.FolderException;
 import lector.share.model.client.TypeCategoryClient;
@@ -124,7 +124,7 @@ btnNewButton.addClickHandler(new ClickHandler() {
 						} else {
 							Window.alert("The file could not be saved");
 						}
-						Window.alert(ActualUser.getLanguage().getE_Saving());
+						Window.alert(ActualState.getLanguage().getE_Saving());
 						hide();
 						
 

@@ -2,11 +2,11 @@ package lector.client.admin.export;
 
 import lector.client.book.reader.ExportService;
 import lector.client.book.reader.ExportServiceAsync;
+import lector.client.controler.ActualState;
 import lector.client.controler.CalendarNow;
 import lector.client.controler.ErrorConstants;
 import lector.client.controler.InformationConstants;
 import lector.client.logger.Logger;
-import lector.client.login.ActualUser;
 import lector.client.reader.LoadingPanel;
 import lector.share.model.Template;
 import lector.share.model.client.TemplateClient;
@@ -102,7 +102,7 @@ public class EditTemplateOptiones extends PopupPanel {
 						LoadingPanel.getInstance().hide();	
 						hide();
 						YO.refresh();
-						Logger.GetLogger().info(this.getClass().getName(), "Usuario: " + ActualUser.getUser().getEmail()
+						Logger.GetLogger().info(this.getClass().getName(), "Usuario: " + ActualState.getUser().getEmail()
 								+ " Change Teplate options to Modificable="+ T.getModifyable() + " for Template named " + T.getName() + " at " + CalendarNow.GetDateNow() );
 					}
 					

@@ -4,9 +4,9 @@ import java.util.List;
 
 import lector.client.book.reader.GWTService;
 import lector.client.book.reader.GWTServiceAsync;
+import lector.client.controler.ActualState;
 import lector.client.controler.Controlador;
 import lector.client.controler.ErrorConstants;
-import lector.client.login.ActualUser;
 import lector.client.reader.LoadingPanel;
 import lector.share.model.client.ReadingActivityClient;
 
@@ -109,7 +109,7 @@ public class NewAdminActivities implements EntryPoint {
 
 		LoadingPanel.getInstance().center();
 		LoadingPanel.getInstance().setLabelTexto("Loading...");
-		bookReaderServiceHolder.getReadingActivitiesByProfessorId(ActualUser
+		bookReaderServiceHolder.getReadingActivitiesByProfessorId(ActualState
 				.getUser().getId(),
 				new AsyncCallback<List<ReadingActivityClient>>() {
 
@@ -197,7 +197,7 @@ public class NewAdminActivities implements EntryPoint {
 		Actual.clear();
 		LoadingPanel.getInstance().center();
 		LoadingPanel.getInstance().setLabelTexto("Saving...");
-		bookReaderServiceHolder.getReadingActivitiesByProfessorId(ActualUser
+		bookReaderServiceHolder.getReadingActivitiesByProfessorId(ActualState
 				.getUser().getId(),
 				new AsyncCallback<List<ReadingActivityClient>>() {
 

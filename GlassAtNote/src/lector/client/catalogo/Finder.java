@@ -12,10 +12,10 @@ import lector.client.catalogo.client.Entity;
 import lector.client.catalogo.client.EntityCatalogElements;
 import lector.client.catalogo.client.File;
 import lector.client.catalogo.client.Folder;
+import lector.client.controler.ActualState;
 import lector.client.controler.Constants;
 import lector.client.controler.ErrorConstants;
 import lector.client.logger.Logger;
-import lector.client.login.ActualUser;
 import lector.client.reader.LoadingPanel;
 import lector.share.model.client.CatalogoClient;
 import lector.share.model.client.EntryClient;
@@ -193,7 +193,7 @@ public class Finder extends Composite {
 	protected void cargaLaRama() {
 		
 		LoadingPanel.getInstance().center();
-		if (InReadingActivity)  LoadingPanel.getInstance().setLabelTexto(ActualUser.getLanguage().getLoading());
+		if (InReadingActivity)  LoadingPanel.getInstance().setLabelTexto(ActualState.getLanguage().getLoading());
 		else LoadingPanel.getInstance().setLabelTexto("Loading...");
 		bookReaderServiceHolder.loadCatalogById(C.getId(),new AsyncCallback<CatalogoClient>(){
 

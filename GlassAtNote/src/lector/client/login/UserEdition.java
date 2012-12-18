@@ -2,6 +2,7 @@ package lector.client.login;
 
 import lector.client.book.reader.GWTService;
 import lector.client.book.reader.GWTServiceAsync;
+import lector.client.controler.ActualState;
 import lector.client.controler.Constants;
 import lector.client.controler.Controlador;
 import lector.client.controler.ErrorConstants;
@@ -55,9 +56,9 @@ public class UserEdition implements EntryPoint {
 		
 		MenuItem CloseBoton = new MenuItem("Close", false, new Command() {
 			public void execute() {
-				if (ActualUser.getUser() instanceof ProfessorClient)
+				if (ActualState.getUser() instanceof ProfessorClient)
 					Controlador.change2Administrator();
-				else if (ActualUser.getUser() instanceof StudentClient)
+				else if (ActualState.getUser() instanceof StudentClient)
 					 Controlador.change2MyActivities();
 			}
 		});
@@ -100,7 +101,7 @@ public class UserEdition implements EntryPoint {
 		NameText.setVisibleLength(25);
 		horizontalPanel_2.add(NameText);
 		NameText.setWidth("90%");
-		NameText.setText(ActualUser.getUser().getFirstName());
+		NameText.setText(ActualState.getUser().getFirstName());
 		
 		HorizontalPanel horizontalPanel_3 = new HorizontalPanel();
 		horizontalPanel_3.setVerticalAlignment(HasVerticalAlignment.ALIGN_MIDDLE);
@@ -120,7 +121,7 @@ public class UserEdition implements EntryPoint {
 		ApellidosText.setMaxLength(120);
 		horizontalPanel_3.add(ApellidosText);
 		ApellidosText.setWidth("90%");
-		ApellidosText.setText(ActualUser.getUser().getLastName());
+		ApellidosText.setText(ActualState.getUser().getLastName());
 		
 		HorizontalPanel horizontalPanel_4 = new HorizontalPanel();
 		horizontalPanel_4.setVerticalAlignment(HasVerticalAlignment.ALIGN_MIDDLE);
@@ -175,7 +176,7 @@ public class UserEdition implements EntryPoint {
 									private UserClient AU;
 
 									public void onClick(ClickEvent event) {
-										AU=ActualUser.getUser();
+										AU=ActualState.getUser();
 										AU.setFirstName(NameText.getText());
 										AU.setLastName(ApellidosText.getText());
 										LoadingPanel.getInstance().center();
@@ -185,11 +186,11 @@ public class UserEdition implements EntryPoint {
 											
 											public void onSuccess(Void result) {
 												
-												ActualUser.setUser(AU);
+												ActualState.setUser(AU);
 												LoadingPanel.getInstance().hide();
-												if (ActualUser.getUser() instanceof ProfessorClient)
+												if (ActualState.getUser() instanceof ProfessorClient)
 													Controlador.change2Administrator();
-												else if (ActualUser.getUser() instanceof StudentClient)
+												else if (ActualState.getUser() instanceof StudentClient)
 													Controlador.change2MyActivities();
 																
 														

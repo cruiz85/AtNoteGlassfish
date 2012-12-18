@@ -3,11 +3,11 @@ package lector.client.admin.catalog;
 import lector.client.admin.tagstypes.EditorTagsAndTypes;
 import lector.client.book.reader.GWTService;
 import lector.client.book.reader.GWTServiceAsync;
+import lector.client.controler.ActualState;
 import lector.client.controler.CalendarNow;
 import lector.client.controler.Controlador;
 
 import lector.client.logger.Logger;
-import lector.client.login.ActualUser;
 import lector.client.reader.LoadingPanel;
 import lector.client.controler.InformationConstants;
 
@@ -66,7 +66,7 @@ public class SeleccionMenuCatalog extends PopupPanel {
 				bookReaderServiceHolder.deleteCatalog(BLan.getCatalog().getId(), new AsyncCallback<Void>() {
 					
 					public void onSuccess(Void result) {
-						Logger.GetLogger().info(this.getClass().getName(), "Usuario: " + ActualUser.getUser().getEmail()
+						Logger.GetLogger().info(this.getClass().getName(), "Usuario: " + ActualState.getUser().getEmail()
 								+ " delete a catalog " + BLan.getCatalog().getCatalogName() + " at " + CalendarNow.GetDateNow() );
 						LoadingPanel.getInstance().hide();
 						Father.refresh();
@@ -106,7 +106,7 @@ public class SeleccionMenuCatalog extends PopupPanel {
 		btnNewButton_2.addClickHandler(new ClickHandler() {
 			public void onClick(ClickEvent event) {
 				hide();
-				Logger.GetLogger().info(this.getClass().getName(), "Usuario: " + ActualUser.getUser().getEmail()
+				Logger.GetLogger().info(this.getClass().getName(), "Usuario: " + ActualState.getUser().getEmail()
 						+ " edit a catalog " + BLan.getCatalog().getCatalogName() + " at " + CalendarNow.GetDateNow() );
 				EditorTagsAndTypes.setCatalogo(BLan.getCatalog());
 				Controlador.change2EditorTagsAndTypes();

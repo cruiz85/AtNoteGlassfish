@@ -2,7 +2,7 @@ package lector.client.reader;
 
 import lector.client.catalogo.Finder;
 import lector.client.catalogo.FinderKeys;
-import lector.client.login.ActualUser;
+import lector.client.controler.ActualState;
 import lector.share.model.client.CatalogoClient;
 
 import com.google.gwt.event.dom.client.ClickEvent;
@@ -38,7 +38,7 @@ public class SelectorTypePopUpAnnotacionAdministracion extends PopupPanel {
         dockPanel.setCellHeight(menuBar, "15px");
         menuBar.setSize("100%", "20px");
         
-        mntmNewItem = new MenuItem(ActualUser.getLanguage().getNew(), false, new Command() {
+        mntmNewItem = new MenuItem(ActualState.getLanguage().getNew(), false, new Command() {
         	public void execute() {
         		SelectorNewBetweenTypeAndFolder SBFF=new SelectorNewBetweenTypeAndFolder(finder,finderrefresh);
 				SBFF.center();
@@ -49,7 +49,7 @@ public class SelectorTypePopUpAnnotacionAdministracion extends PopupPanel {
       menuBar.addItem(mntmNewItem);
         mntmNewItem.setSize("50%", "");
         
-        MenuItem mntmNewItem_2 = new MenuItem(ActualUser.getLanguage().getFromExist(), false, new Command() {
+        MenuItem mntmNewItem_2 = new MenuItem(ActualState.getLanguage().getFromExist(), false, new Command() {
         	public void execute() {
         		PopUpFinderSelectorExistAnnotation PAFSE=new PopUpFinderSelectorExistAnnotation(finder.getCatalogo(),finder.getTopPath(),finderrefresh);
 				PAFSE.center();
@@ -65,7 +65,7 @@ public class SelectorTypePopUpAnnotacionAdministracion extends PopupPanel {
         		hide();
         	}
         });
-        mntmNewItem_1.setHTML(ActualUser.getLanguage().getCancel());
+        mntmNewItem_1.setHTML(ActualState.getLanguage().getCancel());
         menuBar.addItem(mntmNewItem_1);
         
         SimplePanel scrollPanel = new SimplePanel();

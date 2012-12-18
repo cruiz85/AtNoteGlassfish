@@ -2,8 +2,8 @@ package lector.client.admin.activity;
 
 import lector.client.book.reader.GWTService;
 import lector.client.book.reader.GWTServiceAsync;
+import lector.client.controler.ActualState;
 import lector.client.controler.Constants;
-import lector.client.login.ActualUser;
 import lector.client.reader.LoadingPanel;
 import lector.share.model.client.ProfessorClient;
 import lector.share.model.client.ReadingActivityClient;
@@ -86,7 +86,7 @@ public class newActivity extends PopupPanel {
 				else {
 					ReadingActivityClient A = new ReadingActivityClient();
 					A.setName(S);
-					A.setProfessor((ProfessorClient)ActualUser.getUser());
+					A.setProfessor((ProfessorClient)ActualState.getUser());
 					A.setIsFreeTemplateAllowed(true);
 					A.setVisualization(Constants.VISUAL_ARBOL);
 					LoadingPanel.getInstance().center();

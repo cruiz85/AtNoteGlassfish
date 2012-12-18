@@ -2,7 +2,7 @@ package lector.client.reader;
 
 import java.util.ArrayList;
 
-import lector.client.login.ActualUser;
+import lector.client.controler.ActualState;
 import lector.share.model.client.TypeClient;
 
 import com.google.gwt.user.client.ui.PopupPanel;
@@ -32,14 +32,14 @@ public class AceptWindow extends PopupPanel {
 		setWidget(verticalPanel);
 		verticalPanel.setSize("100%", "100%");
 		
-		Label lblNewLabel = new Label(ActualUser.getLanguage().getDOYOUFilterOUT());
+		Label lblNewLabel = new Label(ActualState.getLanguage().getDOYOUFilterOUT());
 		verticalPanel.add(lblNewLabel);
 		
 		HorizontalPanel horizontalPanel = new HorizontalPanel();
 		horizontalPanel.setSpacing(5);
 		verticalPanel.add(horizontalPanel);
 		
-		Button btnNewButton = new Button(ActualUser.getLanguage().getAcceptFilter());
+		Button btnNewButton = new Button(ActualState.getLanguage().getAcceptFilter());
 		btnNewButton.addClickHandler(new ClickHandler() {
 			public void onClick(ClickEvent event) {
 			MainEntryPoint.CleanFilter();
@@ -79,7 +79,7 @@ public class AceptWindow extends PopupPanel {
 		btnNewButton.setStyleName("gwt-ButtonCenter");
 		horizontalPanel.add(btnNewButton);
 		
-		Button btnNewButton_1 = new Button(ActualUser.getLanguage().getCancel());
+		Button btnNewButton_1 = new Button(ActualState.getLanguage().getCancel());
 		btnNewButton_1.addClickHandler(new ClickHandler() {
 			public void onClick(ClickEvent event) {
 				hide();

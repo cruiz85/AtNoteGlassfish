@@ -9,11 +9,11 @@ import lector.client.admin.generalPanels.PublicPrivatePanel;
 import lector.client.book.reader.GWTService;
 import lector.client.book.reader.GWTServiceAsync;
 import lector.client.catalogo.StackPanelMio;
+import lector.client.controler.ActualState;
 import lector.client.controler.CalendarNow;
 import lector.client.controler.Controlador;
 import lector.client.controler.ErrorConstants;
 import lector.client.logger.Logger;
-import lector.client.login.ActualUser;
 import lector.share.model.client.BookClient;
 import lector.share.model.client.ProfessorClient;
 import lector.share.model.client.UserClient;
@@ -134,20 +134,20 @@ public class BookAdministration implements EntryPoint {
 						Logger.GetLogger()
 						.severe(Yo.getClass().toString(),
 								ErrorConstants.ERROR_REMOVING_BOOK + " at " + CalendarNow.GetDateNow() + 
-								" by User " + ActualUser.getUser().getEmail());
+								" by User " + ActualState.getUser().getEmail());
 
 					}
 				};
 
 				if (!Aborrar.isEmpty()) {
 					bookToBeRemoved = Aborrar.pop();
-					((ProfessorClient) ActualUser.getUser()).getBooks().remove(
+					((ProfessorClient) ActualState.getUser()).getBooks().remove(
 							bookToBeRemoved);
 					bookReaderServiceHolder.deleteBookById(bookToBeRemoved,
 							callback);
 				}
 				else{
-					List<Long> ListaIDsLibros = ((ProfessorClient) ActualUser.getUser())
+					List<Long> ListaIDsLibros = ((ProfessorClient) ActualState.getUser())
 							.getBooks();
 					if (!ListaIDsLibros.isEmpty())
 						refresh(ListaIDsLibros);
@@ -230,7 +230,7 @@ public class BookAdministration implements EntryPoint {
 //		});
 		
 		
-		List<Long> ListaIDsLibros = ((ProfessorClient) ActualUser.getUser())
+		List<Long> ListaIDsLibros = ((ProfessorClient) ActualState.getUser())
 				.getBooks();
 		if (!ListaIDsLibros.isEmpty())
 			refresh(ListaIDsLibros);
@@ -242,12 +242,12 @@ public class BookAdministration implements EntryPoint {
 	
 	protected void RefreshUserAndBooks()
 	{
-		bookReaderServiceHolder.loadUserById(ActualUser.getUser().getId(), new AsyncCallback<UserClient>() {
+		bookReaderServiceHolder.loadUserById(ActualState.getUser().getId(), new AsyncCallback<UserClient>() {
 			
 			@Override
 			public void onSuccess(UserClient result) {
-				ActualUser.setUser(result);
-				List<Long> ListaIDsLibros = ((ProfessorClient) ActualUser.getUser())
+				ActualState.setUser(result);
+				List<Long> ListaIDsLibros = ((ProfessorClient) ActualState.getUser())
 						.getBooks();
 				if (!ListaIDsLibros.isEmpty())
 					refresh(ListaIDsLibros);
@@ -341,7 +341,7 @@ public class BookAdministration implements EntryPoint {
 						Logger.GetLogger()
 						.severe(Yo.getClass().toString(),
 								ErrorConstants.ERROR_RETRIVING_THE_BOOKS + " at " + CalendarNow.GetDateNow() + 
-								" by User " + ActualUser.getUser().getEmail());
+								" by User " + ActualState.getUser().getEmail());
 
 					}
 				});

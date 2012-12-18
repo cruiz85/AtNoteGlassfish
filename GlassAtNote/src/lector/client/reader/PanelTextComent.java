@@ -1,7 +1,7 @@
 package lector.client.reader;
 
+import lector.client.controler.ActualState;
 import lector.client.controler.Constants;
-import lector.client.login.ActualUser;
 import lector.share.model.Language;
 import lector.share.model.client.AnnotationClient;
 import lector.share.model.client.StudentClient;
@@ -97,7 +97,7 @@ public class PanelTextComent extends Composite {
 
 
 			public void onClick(ClickEvent event) {
-				finder = new SelectorTypePopUpAnnotacion(PenelBotonesTipo,ActualUser.getCatalogo(),CatalogTipo.Catalog1);
+				finder = new SelectorTypePopUpAnnotacion(PenelBotonesTipo,ActualState.getCatalogo(),CatalogTipo.Catalog1);
 				finder.center();
 				finder.setModal(true);
 				finder.RefrescaLosDatos();
@@ -137,7 +137,7 @@ public class PanelTextComent extends Composite {
 
 
 			public void onClick(ClickEvent event) {
-				finder = new SelectorTypePopUpAnnotacionPublic(PenelBotonesTipo,ActualUser.getOpenCatalog(),CatalogTipo.Catalog2);
+				finder = new SelectorTypePopUpAnnotacionPublic(PenelBotonesTipo,ActualState.getOpenCatalog(),CatalogTipo.Catalog2);
 				finder.center();
 				finder.setModal(true);
 				((Button)event.getSource()).setStyleName("gwt-ButtonCenter");
@@ -291,8 +291,8 @@ public class PanelTextComent extends Composite {
 	public void setUpgradeable(AnnotationClient A)
 	{
 	if ((!A.isUpdatability())&&
-			(!(A.getCreator().getId().equals(ActualUser.getUser().getId())))&&
-			(ActualUser.getUser() instanceof StudentClient))
+			(!(A.getCreator().getId().equals(ActualState.getUser().getId())))&&
+			(ActualState.getUser() instanceof StudentClient))
 		{
 		BotonSelectTypePublic.setEnabled(false);
 		BotonSelectType.setEnabled(false);

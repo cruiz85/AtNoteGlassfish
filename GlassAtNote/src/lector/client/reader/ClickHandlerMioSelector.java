@@ -16,7 +16,7 @@ import lector.client.admin.tagstypes.ClickHandlerMio;
 import lector.client.catalogo.BotonesStackPanelMio;
 import lector.client.catalogo.client.EntityCatalogElements;
 import lector.client.catalogo.client.File;
-import lector.client.login.ActualUser;
+import lector.client.controler.ActualState;
 import lector.client.reader.PanelTextComent.CatalogTipo;
 
 public class ClickHandlerMioSelector extends ClickHandlerMio {
@@ -79,7 +79,7 @@ public class ClickHandlerMioSelector extends ClickHandlerMio {
 			});
      	if (!ExistPreview(BS.getLabeltypo(),Act))
      			BS.getLabeltypo().add(nuevo);
-     	else Window.alert(ActualUser.getLanguage().getE_ExistBefore());
+     	else Window.alert(ActualState.getLanguage().getE_ExistBefore());
      }
      }
 

@@ -5,13 +5,13 @@ import java.util.List;
 
 import lector.client.book.reader.GWTService;
 import lector.client.book.reader.GWTServiceAsync;
+import lector.client.controler.ActualState;
 import lector.client.controler.CalendarNow;
 import lector.client.controler.Constants;
 import lector.client.controler.Controlador;
 import lector.client.controler.ErrorConstants;
 import lector.client.controler.InformationConstants;
 import lector.client.logger.Logger;
-import lector.client.login.ActualUser;
 import lector.client.reader.LoadingPanel;
 import lector.share.model.client.BookClient;
 import lector.share.model.client.ProfessorClient;
@@ -68,7 +68,7 @@ public class MyBooks implements EntryPoint {
 
 			
 		MenuItem TextoBienvenida = new MenuItem(
-				ActualUser.getUser().getLastName() + MyBooks.MENU_WELLCOME_LABEL, false,
+				ActualState.getUser().getLastName() + MyBooks.MENU_WELLCOME_LABEL, false,
 				(Command) null);
 		TextoBienvenida.setEnabled(false);
 		menuBar.addItem(TextoBienvenida);
@@ -113,7 +113,7 @@ public class MyBooks implements EntryPoint {
 
 	private void generaBookIds() {
 		
-		UserClient User = ActualUser.getUser();
+		UserClient User = ActualState.getUser();
 		if (User instanceof ProfessorClient){
 			BooksIDs = ((ProfessorClient) User).getBooks();
 			LoadingPanel.getInstance().center();
@@ -131,8 +131,8 @@ public class MyBooks implements EntryPoint {
 				@Override
 				public void onFailure(Throwable caught) {
 					LoadingPanel.getInstance().hide();
-					Window.alert(ErrorConstants.ERROR_LOADING_BOOKS + ActualUser.getUser().getEmail());
-					Logger.GetLogger().severe(Yo.getClass().toString(), ErrorConstants.ERROR_LOADING_BOOKS + ActualUser.getUser().getEmail() + " at " + CalendarNow.GetDateNow() );
+					Window.alert(ErrorConstants.ERROR_LOADING_BOOKS + ActualState.getUser().getEmail());
+					Logger.GetLogger().severe(Yo.getClass().toString(), ErrorConstants.ERROR_LOADING_BOOKS + ActualState.getUser().getEmail() + " at " + CalendarNow.GetDateNow() );
 					
 				}
 			});

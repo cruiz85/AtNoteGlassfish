@@ -1,7 +1,7 @@
 package lector.client.admin.activity;
 
 import lector.client.catalogo.FinderKeys;
-import lector.client.login.ActualUser;
+import lector.client.controler.ActualState;
 import lector.client.reader.BotonesStackPanelReaderSelectMio;
 import lector.client.reader.ButtonTipo;
 import lector.client.reader.ClickHandlerMioSelector;

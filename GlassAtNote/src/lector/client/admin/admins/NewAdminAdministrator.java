@@ -8,13 +8,13 @@ import lector.client.admin.generalPanels.BotonesStackPanelAdminsMio;
 import lector.client.book.reader.GWTService;
 import lector.client.book.reader.GWTServiceAsync;
 import lector.client.catalogo.StackPanelMio;
+import lector.client.controler.ActualState;
 import lector.client.controler.CalendarNow;
 import lector.client.controler.Constants;
 import lector.client.controler.Controlador;
 import lector.client.controler.ErrorConstants;
 import lector.client.controler.InformationConstants;
 import lector.client.logger.Logger;
-import lector.client.login.ActualUser;
 import lector.client.reader.LoadingPanel;
 import lector.share.model.UserApp;
 import lector.share.model.client.ProfessorClient;
@@ -345,14 +345,14 @@ public class NewAdminAdministrator implements EntryPoint {
 													+ " by "
 													+ " at " + CalendarNow.GetDateNow()
 													+ " Deleted By :" +
-													ActualUser.getUser().getFirstName()
-													+ " " + ActualUser.getUser().getLastName()
-													+ " " + ActualUser.getUser().getEmail());
-									if (ActualUser.getUser().getId()
+													ActualState.getUser().getFirstName()
+													+ " " + ActualState.getUser().getLastName()
+													+ " " + ActualState.getUser().getEmail());
+									if (ActualState.getUser().getId()
 											.equals(Ident.getId())) {
-										ActualUser.setUser(null);
-										ActualUser.setBook(null);
-										ActualUser.setReadingactivity(null);
+										ActualState.setUser(null);
+										ActualState.setBook(null);
+										ActualState.setReadingactivity(null);
 										Window.alert(InformationConstants.GOODBYE);
 										Window.Location.reload();
 									}
@@ -408,9 +408,9 @@ public class NewAdminAdministrator implements EntryPoint {
 													+ " Email: "
 													+ newStudent.getEmail()  + " at " + CalendarNow.GetDateNow()
 													+ " Created By :" +
-													ActualUser.getUser().getFirstName()
-													+ " " + ActualUser.getUser().getLastName()
-													+ " " + ActualUser.getUser().getEmail()) ;
+													ActualState.getUser().getFirstName()
+													+ " " + ActualState.getUser().getLastName()
+													+ " " + ActualState.getUser().getEmail()) ;
 									refreshPanel();
 									SaveAdmins.setEnabled(true);
 								}

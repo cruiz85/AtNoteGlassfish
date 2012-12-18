@@ -6,10 +6,10 @@ import java.util.List;
 import lector.client.admin.users.EntidadUser;
 import lector.client.book.reader.GWTService;
 import lector.client.book.reader.GWTServiceAsync;
+import lector.client.controler.ActualState;
 import lector.client.controler.ErrorConstants;
 import lector.client.controler.InformationConstants;
 import lector.client.logger.Logger;
-import lector.client.login.ActualUser;
 import lector.client.reader.LoadingPanel;
 import lector.share.model.client.StudentClient;
 import lector.share.model.client.UserClient;
@@ -131,7 +131,7 @@ public class RejectUsers2group extends PopupPanel {
 					public void onFailure(Throwable caught) {
 						LoadingPanel.getInstance().hide();
 						Window.alert(ErrorConstants.ERROR_IN_REJECTION);
-						Logger.GetLogger().severe(Yo.getClass().toString(), ErrorConstants.ERROR_IN_REJECTION + " " + GAUP.getMygroup().getName() + " User : " +ActualUser.getUser());
+						Logger.GetLogger().severe(Yo.getClass().toString(), ErrorConstants.ERROR_IN_REJECTION + " " + GAUP.getMygroup().getName() + " User : " +ActualState.getUser());
 						
 					}
 				});

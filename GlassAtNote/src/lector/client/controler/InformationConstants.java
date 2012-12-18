@@ -2,7 +2,7 @@ package lector.client.controler;
 
 public class InformationConstants {
 
-	public static String INSERT_ID_OF_THE_GROUP = "Insert the KEy of the Group";
+	public static String INSERT_ID_OF_THE_GROUP = "Insert the Key of the Group";
 	public static String CREATE_NEW_TEMPLATECATEGORY = "Insert the name for the new Template category in ";
 	public static String  ORDER_EDITABLE = "Editable Structure";
 	public static String THIS_IS_A_LOCAL_BOOK = "This is a local book, can't be shown with google view";
@@ -35,5 +35,6 @@ public class InformationConstants {
 	public static String ELEMENTS_SHOULD_BE_THE_SAME_TYPE= "One of the selects elements are diferent in his type, all should be the sae type";
 	public static String SHOULD_ME_MORE_THAN1="You should select more than ";
 	public static String SHOULD_ME_MORE_THAN2=" elements.";
+	public static String ACTIVITY_CHANGES_AND_ARE_NOW_NOT_ACCESIBLE="Some atributes was modificated and the Reading Activity are now not accessible";
 	
 }

@@ -11,9 +11,9 @@ import lector.client.book.reader.ExportService;
 import lector.client.book.reader.ExportServiceAsync;
 import lector.client.book.reader.GWTService;
 import lector.client.book.reader.GWTServiceAsync;
+import lector.client.controler.ActualState;
 import lector.client.controler.Constants;
 import lector.client.controler.ErrorConstants;
-import lector.client.login.ActualUser;
 import lector.client.reader.LoadingPanel;
 import lector.share.model.Language;
 import lector.share.model.client.BookClient;
@@ -700,7 +700,7 @@ public class EditorActivity extends PopupPanel {
 	}
 	
 	private void Generatepanels() {
-		bookReaderServiceHolder.getVisbibleCatalogsByProfessorId(ActualUser
+		bookReaderServiceHolder.getVisbibleCatalogsByProfessorId(ActualState
 				.getUser().getId(), new AsyncCallback<List<CatalogoClient>>() {
 
 			public void onSuccess(List<CatalogoClient> result) {
@@ -869,7 +869,7 @@ public class EditorActivity extends PopupPanel {
 	private void Generatepanelsbooks() {
 
 
-		List<Long> result = ((ProfessorClient)ActualUser.getUser()).getBooks();
+		List<Long> result = ((ProfessorClient)ActualState.getUser()).getBooks();
 bookReaderServiceHolder.getBookClientsByIds(result, new AsyncCallback<List<BookClient>>() {
 			
 			@Override
@@ -953,7 +953,7 @@ bookReaderServiceHolder.getBookClientsByIds(result, new AsyncCallback<List<BookC
 
 	private void Generatepanelsgroup() {
 		bookReaderServiceHolder
-				.getGroupsByUserId(ActualUser.getUser().getId(), new AsyncCallback<List<GroupClient>>() {
+				.getGroupsByUserId(ActualState.getUser().getId(), new AsyncCallback<List<GroupClient>>() {
 
 					public void onSuccess(List<GroupClient> result) {
 						for (int i = 0; i < result.size()-1; i++) {

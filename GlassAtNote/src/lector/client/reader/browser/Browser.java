@@ -15,9 +15,9 @@ import lector.client.catalogo.client.Entity;
 import lector.client.catalogo.client.EntityCatalogElements;
 import lector.client.catalogo.client.File;
 import lector.client.catalogo.client.Folder;
+import lector.client.controler.ActualState;
 import lector.client.controler.Constants;
 import lector.client.controler.Controlador;
-import lector.client.login.ActualUser;
 import lector.client.reader.ButtonTipo;
 import lector.client.reader.LoadingPanel;
 import lector.share.model.Annotation;
@@ -97,7 +97,7 @@ public enum CatalogTipo {
 	
 	public void onModuleLoad() {
 		
-		ActualLang=ActualUser.getLanguage();
+		ActualLang=ActualState.getLanguage();
 		
 		RootPanel rootPanel = RootPanel.get();
 		RootPanel RootMenu = RootPanel.get("Menu");
@@ -121,28 +121,28 @@ public enum CatalogTipo {
 		Selected.add(SelectedB);
 		SelectedB.setWidth("100%");
 		
-		 if (ActualUser.getReadingactivity().getVisualization()==null||ActualUser.getReadingactivity().getVisualization().equals(Constants.VISUAL_ARBOL))
+		 if (ActualState.getReadingactivity().getVisualization()==null||ActualState.getReadingactivity().getVisualization().equals(Constants.VISUAL_ARBOL))
 	        {
 			 
-			 FinderButton= new FinderOwnGrafo(ActualUser.getOpenCatalog());
+			 FinderButton= new FinderOwnGrafo(ActualState.getOpenCatalog());
 			// FinderButton1.RefrescaLosDatos();
 	        }
 	        else 
 	        {
 	        	FinderButton= new FinderKeys();
-	        	FinderButton.setCatalogo(ActualUser.getOpenCatalog());
+	        	FinderButton.setCatalogo(ActualState.getOpenCatalog());
 	        //	FinderButton1.RefrescaLosDatos();
 	        }
 		
-		 if (ActualUser.getReadingactivity().getVisualization()==null||ActualUser.getReadingactivity().getVisualization().equals(Constants.VISUAL_ARBOL))
+		 if (ActualState.getReadingactivity().getVisualization()==null||ActualState.getReadingactivity().getVisualization().equals(Constants.VISUAL_ARBOL))
 	        {
-			 FinderButton2= new FinderOwnGrafo(ActualUser.getCatalogo());
+			 FinderButton2= new FinderOwnGrafo(ActualState.getCatalogo());
 			// FinderButton1.RefrescaLosDatos();
 	        }
 	        else 
 	        {
 	        	FinderButton2= new FinderKeys();
-	        	FinderButton2.setCatalogo(ActualUser.getCatalogo());
+	        	FinderButton2.setCatalogo(ActualState.getCatalogo());
 	        //	FinderButton1.RefrescaLosDatos();
 	        }
 		
@@ -206,7 +206,7 @@ public enum CatalogTipo {
 					});
 		        	if (!ExistPreview((Panel) BS.getSelectionPanel(),Act))
 		        			BS.getSelectionPanel().add(nuevo);
-		        	else Window.alert(ActualUser.getLanguage().getE_ExistBefore());
+		        	else Window.alert(ActualState.getLanguage().getE_ExistBefore());
 		        }
 				
 								
@@ -529,7 +529,7 @@ Tipos.add(((EntityCatalogElements)BSM.getEntidad()).getEntry()) ;
 				AnotationResultPanel APR=new AnotationResultPanel(AnnotationPanel);
 				AnnotationPanel.clear();
 				for (AnnotationClient AIndiv : result) {
-					AnnotationPanel.add(new CommentPanelBrowser(AIndiv, new Image(ActualUser.getBook().getWebLinks().get(AIndiv.getPageNumber())),APR.getHeight()));
+					AnnotationPanel.add(new CommentPanelBrowser(AIndiv, new Image(ActualState.getBook().getWebLinks().get(AIndiv.getPageNumber())),APR.getHeight()));
 				}
 				LoadingPanel.getInstance().hide();
 				
@@ -542,11 +542,11 @@ Tipos.add(((EntityCatalogElements)BSM.getEntidad()).getEntry()) ;
 				
 			}
 		};
-		if (ActualUser.getUser() instanceof ProfessorClient){
-		bookReaderServiceHolder.getAnnotationsByTypeClientIdsForProfessor(ArrayTypes, ActualUser.getReadingactivity().getId(), ActualUser.getUser().getId(), callback);
+		if (ActualState.getUser() instanceof ProfessorClient){
+		bookReaderServiceHolder.getAnnotationsByTypeClientIdsForProfessor(ArrayTypes, ActualState.getReadingactivity().getId(), ActualState.getUser().getId(), callback);
 		}
 		else 
-			bookReaderServiceHolder.getAnnotationsByTypeClientIdsForStudent(ArrayTypes, ActualUser.getReadingactivity().getId(), ActualUser.getUser().getId(), callback);
+			bookReaderServiceHolder.getAnnotationsByTypeClientIdsForStudent(ArrayTypes, ActualState.getReadingactivity().getId(), ActualState.getUser().getId(), callback);
 		
 	}
 	

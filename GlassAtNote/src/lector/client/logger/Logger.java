@@ -10,6 +10,8 @@ import com.google.gwt.user.client.rpc.AsyncCallback;
 public class Logger {
 
 	private String PREFIX_CONSTANT_LOG= "LOG : " ;
+	
+	
 	private static AsyncCallback<Void> callback= new AsyncCallback<Void>() {
 
 		public void onFailure(Throwable caught) {

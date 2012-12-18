@@ -6,8 +6,8 @@ import java.util.List;
 import lector.client.book.reader.GWTService;
 import lector.client.book.reader.GWTServiceAsync;
 import lector.client.catalogo.client.File;
+import lector.client.controler.ActualState;
 import lector.client.controler.Constants;
-import lector.client.login.ActualUser;
 import lector.client.reader.PanelTextComent.CatalogTipo;
 import lector.share.model.Language;
 import lector.share.model.client.AnnotationClient;
@@ -57,7 +57,7 @@ public class TextComentEdit extends DialogBox {
 		setHTML(annotation.getCreator().getFirstName()
 				+ " " + +annotation.getCreator().getLastName().charAt(0)+ ".  -  " + annotation.getCreatedDate().toGMTString());
 		CommentPanel.setEstado(true);
-		ActualLang = ActualUser.getLanguage();
+		ActualLang = ActualState.getLanguage();
 		VerticalPanel verticalPanel = new VerticalPanel();
 		setWidget(verticalPanel);
 		verticalPanel.setSize("883px", "337px");
@@ -84,8 +84,8 @@ public class TextComentEdit extends DialogBox {
 
 				if (!moreThanone())
 					{
-					if (ActualUser.getReadingactivity().getDefaultType() != null) {
-						bookReaderServiceHolder.loadTypeById(ActualUser.getReadingactivity().getDefaultType(),new AsyncCallback<TypeClient>(){
+					if (ActualState.getReadingactivity().getDefaultType() != null) {
+						bookReaderServiceHolder.loadTypeById(ActualState.getReadingactivity().getDefaultType(),new AsyncCallback<TypeClient>(){
 
 							@Override
 							public void onFailure(Throwable caught) {
@@ -107,7 +107,7 @@ public class TextComentEdit extends DialogBox {
 					} else {
 						LoadingPanel.getInstance().hide();
 						Window.alert(ActualLang.getE_Need_to_select_a_type()
-								+ ActualUser.getCatalogo().getCatalogName()
+								+ ActualState.getCatalogo().getCatalogName()
 								+ " : "
 								+ ActualLang.getSetTypes()
 								+ "("
@@ -133,7 +133,7 @@ public class TextComentEdit extends DialogBox {
 
 				annotation.setTags(ListaASalvar);
 				annotation.setVisibility(false);
-				annotation.setActivity(ActualUser.getReadingactivity().getId());
+				annotation.setActivity(ActualState.getReadingactivity().getId());
 				if (PanelTexto
 						.getComboBox()
 						.getItemText(
@@ -147,7 +147,7 @@ public class TextComentEdit extends DialogBox {
 				boolean IsInCatalog = false;
 				for (int i = 0; i < ListaASalvar.size(); i++)
 
-					if ((ActualUser.getReadingactivity().getCloseCatalogo().getId()
+					if ((ActualState.getReadingactivity().getCloseCatalogo().getId()
 							.equals(ListaASalvar.get(i).getCatalog().getId())))
 						IsInCatalog = true;
 
@@ -155,8 +155,8 @@ public class TextComentEdit extends DialogBox {
 					saveAnnotacion();
 					hide();
 				} else {
-					if (ActualUser.getReadingactivity().getDefaultType() != null) {
-						bookReaderServiceHolder.loadTypeById(ActualUser.getReadingactivity().getDefaultType(),new AsyncCallback<TypeClient>(){
+					if (ActualState.getReadingactivity().getDefaultType() != null) {
+						bookReaderServiceHolder.loadTypeById(ActualState.getReadingactivity().getDefaultType(),new AsyncCallback<TypeClient>(){
 
 							@Override
 							public void onFailure(Throwable caught) {
@@ -179,7 +179,7 @@ public class TextComentEdit extends DialogBox {
 					} else {
 						LoadingPanel.getInstance().hide();
 						Window.alert(ActualLang.getE_Need_to_select_a_type()
-								+ ActualUser.getCatalogo().getCatalogName()
+								+ ActualState.getCatalogo().getCatalogName()
 								+ " : "
 								+ ActualLang.getSetTypes()
 								+ "("
@@ -307,7 +307,7 @@ public class TextComentEdit extends DialogBox {
 		for (int i = 0; i < result.size(); i++) {
 			TypeClient resulttmp=result.get(i);
 			File F=new File(resulttmp, resulttmp.getCatalog(),null);
-			if (F.getCatalogo().getId().equals(ActualUser.getReadingactivity().getCloseCatalogo().getId()))
+			if (F.getCatalogo().getId().equals(ActualState.getReadingactivity().getCloseCatalogo().getId()))
 						{
 							ButtonTipo B=new ButtonTipo(F,CatalogTipo.Catalog1.getTexto(),PanelTexto.getPenelBotonesTipo());
 							B.addClickHandler(new ClickHandler() {

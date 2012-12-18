@@ -8,8 +8,8 @@ import java.util.List;
 import lector.client.book.reader.GWTService;
 import lector.client.book.reader.GWTServiceAsync;
 import lector.client.catalogo.client.File;
+import lector.client.controler.ActualState;
 import lector.client.controler.Constants;
-import lector.client.login.ActualUser;
 import lector.client.reader.hilocomentarios.ReplyDialog;
 import lector.share.model.client.AnnotationClient;
 import lector.share.model.client.TextSelectorClient;
@@ -278,7 +278,7 @@ public enum CatalogTipo {
                     public void onClick(ClickEvent event) {
                     	MainEntryPoint.hidePopUpSelector();
 				MainEntryPoint.hideDENSelector();
-                        if (annotation.isEditable()||(annotation.getCreator().getId().equals(ActualUser.getUser().getId())))
+                        if (annotation.isEditable()||(annotation.getCreator().getId().equals(ActualState.getUser().getId())))
                         	{
                         	TextComentEdit TCE = new TextComentEdit(annotation,SE);
                         	TCE.center();
@@ -392,7 +392,7 @@ public enum CatalogTipo {
 						whithPanel=0;
 						for (int i = 0; i < result.size(); i++) {
 						TypeClient T=result.get(i);
-						if (T.getCatalog().getId().equals(ActualUser.getReadingactivity().getCloseCatalogo().getId()))
+						if (T.getCatalog().getId().equals(ActualState.getReadingactivity().getCloseCatalogo().getId()))
 						{
 							ButtonTipo B=new ButtonTipo(new File(T, T.getCatalog(), null),CatalogTipo.Catalog1.getTexto(),PanelTexto);
 							B.addClickHandler(new ClickHandler() {

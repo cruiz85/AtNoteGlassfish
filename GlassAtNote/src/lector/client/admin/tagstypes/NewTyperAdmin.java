@@ -25,10 +25,10 @@ import lector.client.book.reader.GWTServiceAsync;
 import lector.client.catalogo.client.Entity;
 import lector.client.catalogo.client.File;
 import lector.client.catalogo.client.Folder;
+import lector.client.controler.ActualState;
 import lector.client.controler.CalendarNow;
 import lector.client.controler.Constants;
 import lector.client.logger.Logger;
-import lector.client.login.ActualUser;
 import lector.client.reader.LoadingPanel;
 import lector.share.model.FileException;
 import lector.share.model.FolderException;
@@ -131,7 +131,7 @@ public class NewTyperAdmin extends PopupPanel {
 						}
 
 						public void onSuccess(Void result) {
-							Logger.GetLogger().info(this.getClass().getName(), "Usuario: " + ActualUser.getUser().getEmail()
+							Logger.GetLogger().info(this.getClass().getName(), "Usuario: " + ActualState.getUser().getEmail()
 									+ " Create a "+ Saved.getClass().toString() + " named " + Saved.getName() + " at " + CalendarNow.GetDateNow() );
 							LoadingPanel.getInstance().hide(); 
 							EditorTagsAndTypes.LoadBasicTypes();

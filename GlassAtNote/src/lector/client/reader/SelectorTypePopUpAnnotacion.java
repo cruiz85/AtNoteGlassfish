@@ -8,8 +8,8 @@ import lector.client.catalogo.client.Entity;
 import lector.client.catalogo.client.EntityCatalogElements;
 import lector.client.catalogo.client.File;
 import lector.client.catalogo.client.Folder;
+import lector.client.controler.ActualState;
 import lector.client.controler.Constants;
-import lector.client.login.ActualUser;
 import lector.client.reader.PanelTextComent.CatalogTipo;
 import lector.share.model.client.CatalogoClient;
 import lector.share.model.client.ProfessorClient;
@@ -66,13 +66,13 @@ public class SelectorTypePopUpAnnotacion extends PopupPanel {
         menuBar.setSize("100%", "20px");
         
        
-        mntmNewItem = new MenuItem(ActualUser.getLanguage().getNewAdmin(), false, new Command() {
+        mntmNewItem = new MenuItem(ActualState.getLanguage().getNewAdmin(), false, new Command() {
         	public void execute() {
         		SelectorTypePopUpAnnotacionAdministracion SBTF=new SelectorTypePopUpAnnotacionAdministracion(panelBotonesTipo,Cata,finder);
         		SBTF.center();
         	}
         });
-        if (ActualUser.getUser() instanceof ProfessorClient) menuBar.addItem(mntmNewItem);
+        if (ActualState.getUser() instanceof ProfessorClient) menuBar.addItem(mntmNewItem);
         mntmNewItem.setSize("100%", "100%");
         
         MenuItem mntmNewItem_1 = new MenuItem("New item", false, new Command() {
@@ -101,7 +101,7 @@ public class SelectorTypePopUpAnnotacion extends PopupPanel {
 				return false;
 			}
         });
-        mntmNewItem_1.setHTML(ActualUser.getLanguage().getClose());
+        mntmNewItem_1.setHTML(ActualState.getLanguage().getClose());
         menuBar.addItem(mntmNewItem_1);
         
         ScrollPanel SP=new ScrollPanel();
@@ -122,7 +122,7 @@ public class SelectorTypePopUpAnnotacion extends PopupPanel {
         
         RestoreFinderButtonActio();
         
-        if (ActualUser.getReadingactivity().getVisualization()==null||ActualUser.getReadingactivity().getVisualization().equals(Constants.VISUAL_ARBOL))
+        if (ActualState.getReadingactivity().getVisualization()==null||ActualState.getReadingactivity().getVisualization().equals(Constants.VISUAL_ARBOL))
         {
         finder= new FinderOwnGrafo(Cata);
         scrollPanel.setWidget(finder);
@@ -195,7 +195,7 @@ public class SelectorTypePopUpAnnotacion extends PopupPanel {
 					});
 		        	if (!ExistPreview((HorizontalPanel) BS.getSelectionPanel(),Act))
 		        			BS.getSelectionPanel().add(nuevo);
-		        	else Window.alert(ActualUser.getLanguage().getE_ExistBefore());
+		        	else Window.alert(ActualState.getLanguage().getE_ExistBefore());
 		        }
 		        }
 

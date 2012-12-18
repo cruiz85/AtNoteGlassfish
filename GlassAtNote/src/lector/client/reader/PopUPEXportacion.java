@@ -9,9 +9,9 @@ import lector.client.book.reader.GWTService;
 import lector.client.book.reader.GWTServiceAsync;
 import lector.client.book.reader.ImageService;
 import lector.client.book.reader.ImageServiceAsync;
+import lector.client.controler.ActualState;
 import lector.client.controler.Controlador;
 import lector.client.controler.ErrorConstants;
-import lector.client.login.ActualUser;
 import lector.client.reader.export.EnvioExportacion;
 import lector.client.reader.export.PanelSeleccionExportacion;
 import lector.client.reader.export.arbitroLlamadas;
@@ -74,7 +74,7 @@ public class PopUPEXportacion extends PopupPanel {
 		MenuBar menuBar = new MenuBar(false);
 		dockLayoutPanel.addNorth(menuBar, 1.9);
 
-		MenuItem Close = new MenuItem(ActualUser.getLanguage().getClose(),
+		MenuItem Close = new MenuItem(ActualState.getLanguage().getClose(),
 				false, new Command() {
 					public void execute() {
 						hide();
@@ -132,8 +132,8 @@ public class PopUPEXportacion extends PopupPanel {
 		verticalPanel_1.add(horizontalPanel);
 		
 
-		if (ActualUser.getReadingactivity().getIsFreeTemplateAllowed()
-				&& ActualUser.getReadingactivity().getTemplate() != null) {
+		if (ActualState.getReadingactivity().getIsFreeTemplateAllowed()
+				&& ActualState.getReadingactivity().getTemplate() != null) {
 			ClickHandler event=new ClickHandler() {
 				public void onClick(ClickEvent event) {
 					if (event.getSource() == comboBox){
@@ -150,7 +150,7 @@ public class PopUPEXportacion extends PopupPanel {
 			};
 			comboBox = new RadioButton(PopUPEXportacion.TemplateGroup,PopUPEXportacion.BLANK_RADIO_BUTTON);
 			comboBox.addClickHandler(event);
-			TemplateClient IDTemplate = ActualUser.getReadingactivity()
+			TemplateClient IDTemplate = ActualState.getReadingactivity()
 					.getTemplate();
 			TemplateButton= new RadioButton(PopUPEXportacion.TemplateGroup,IDTemplate.getName());
 			Template = IDTemplate;
@@ -180,9 +180,9 @@ public class PopUPEXportacion extends PopupPanel {
 			horizontalPanel.add(TemplateButton);
 			comboBox.setWidth("245px");
 			TemplateButton.setWidth("245px");
-		} else if (ActualUser.getReadingactivity().getTemplate() != null) {
+		} else if (ActualState.getReadingactivity().getTemplate() != null) {
 
-			Template = ActualUser.getReadingactivity().getTemplate();
+			Template = ActualState.getReadingactivity().getTemplate();
 			verticalPanel.clear();
 			if (EET != null)
 				EET.ResetButton();

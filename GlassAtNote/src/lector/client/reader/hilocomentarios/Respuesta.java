@@ -6,7 +6,7 @@ import java.util.List;
 
 import lector.client.book.reader.GWTService;
 import lector.client.book.reader.GWTServiceAsync;
-import lector.client.login.ActualUser;
+import lector.client.controler.ActualState;
 import lector.client.reader.MainEntryPoint;
 import lector.client.reader.SelectorPanel;
 import lector.share.model.AnnotationThread;
@@ -263,7 +263,7 @@ public class Respuesta extends Composite {
 						}
 						
 						public void onFailure(Throwable caught) {
-							Window.alert(ActualUser.getLanguage().getE_DeleteReply());
+							Window.alert(ActualState.getLanguage().getE_DeleteReply());
 							
 							
 						}
@@ -271,7 +271,7 @@ public class Respuesta extends Composite {
 	        	}
 	        });
 	        menuBar.setVisible(false);
-	       if (!ActualUser.getUser().getId().equals(annotation.getUserId()))  mntmNewItem_1.setEnabled(false);
+	       if (!ActualState.getUser().getId().equals(annotation.getUserId()))  mntmNewItem_1.setEnabled(false);
 	        mntmNewItem_1.setHTML("Delete");
 	        menuBar.addItem(mntmNewItem_1);
 	        

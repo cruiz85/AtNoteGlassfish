@@ -39,11 +39,11 @@ import java.util.List;
 
 import lector.client.book.reader.GWTService;
 import lector.client.book.reader.GWTServiceAsync;
+import lector.client.controler.ActualState;
 import lector.client.controler.Constants;
 import lector.client.controler.Controlador;
 import lector.client.controler.ErrorConstants;
 import lector.client.controler.HelpMessage;
-import lector.client.login.ActualUser;
 import lector.client.reader.hilocomentarios.ArbitroThreads;
 import lector.client.reader.filter.FilterBasicPopUp;
 import lector.client.reader.hilocomentarios.JeraquiaSimulada;
@@ -363,7 +363,7 @@ pageBack.addMouseDownHandler(new MouseDownHandler() {
 		if (state == null)
 			state = State.NoAnnotations; // ya esta inicializado, no es
 		
-		ActualLang=ActualUser.getLanguage();
+		ActualLang=ActualState.getLanguage();
 		menuBar.clearItems();
 		menuBar.setAnimationEnabled(true);
 		RootMenu.add(menuBar);
@@ -580,7 +580,7 @@ pageBack.addMouseDownHandler(new MouseDownHandler() {
 			public void execute() {
 				hidePopUpSelector();
 				hideDENSelector();
-				ActualUser.setBook(book);
+				ActualState.setBook(book);
 				Controlador.change2Browser();
 				if (PEX!=null) PEX.hide();
 			}
@@ -598,7 +598,7 @@ pageBack.addMouseDownHandler(new MouseDownHandler() {
 					public void execute() {
 						hidePopUpSelector();
 						hideDENSelector();
-						ActualUser.setBook(book);
+						ActualState.setBook(book);
 						Controlador.change2Administrator();
 						if (PEX!=null)
 							PEX.hide();
@@ -606,7 +606,7 @@ pageBack.addMouseDownHandler(new MouseDownHandler() {
 				});
 		mntmManage.setHTML(ActualLang.getBackAdministrationButton());
 		menuBar.addItem(mntmManage);
-		if (!(ActualUser.getUser() instanceof ProfessorClient)) {
+		if (!(ActualState.getUser() instanceof ProfessorClient)) {
 			mntmManage.setEnabled(false);
 			mntmManage.setVisible(false);
 		}
@@ -617,7 +617,7 @@ pageBack.addMouseDownHandler(new MouseDownHandler() {
 			public void execute() {
 				hidePopUpSelector();
 				hideDENSelector();
-				ActualUser.setBook(book);
+				ActualState.setBook(book);
 				Controlador.change2MyActivities();
 				PEX.hide();
 			}
@@ -720,7 +720,7 @@ pageBack.addMouseDownHandler(new MouseDownHandler() {
 				decoratorPanel.setVisible(false);
 				//ScrollAnnotationsPanel.setAlwaysShowScrollBars(true);
 				selectorPageBox.setVisible(false);
-		if (!(ActualUser.getUser() instanceof StudentClient)) {
+		if (!(ActualState.getUser() instanceof StudentClient)) {
 			mntmManage2.setEnabled(false);
 			mntmManage2.setVisible(false);
 		}
@@ -1026,13 +1026,13 @@ pageBack.addMouseDownHandler(new MouseDownHandler() {
 				LoadingPanel.getInstance().hide();
 			}
 		};
-		if (ActualUser.getUser() instanceof ProfessorClient) {
+		if (ActualState.getUser() instanceof ProfessorClient) {
 			bookReaderServiceHolder.getAnnotationsByPageNumber(
-					currentPageNumber, book.getISBN(),ActualUser.getReadingactivity().getId(), callback);
+					currentPageNumber, book.getISBN(),ActualState.getReadingactivity().getId(), callback);
 		} else {
 			bookReaderServiceHolder.getAnnotationsByPageNumbertAndUserId(
-					currentPageNumber, book.getISBN(), ActualUser.getUser()
-							.getId(), ActualUser.getReadingactivity().getId(), callback);
+					currentPageNumber, book.getISBN(), ActualState.getUser()
+							.getId(), ActualState.getReadingactivity().getId(), callback);
 		}
 
 	}
@@ -1058,13 +1058,13 @@ pageBack.addMouseDownHandler(new MouseDownHandler() {
 				LoadingPanel.getInstance().hide();
 			}
 		};
-		if (ActualUser.getUser() instanceof ProfessorClient) {
+		if (ActualState.getUser() instanceof ProfessorClient) {
 			bookReaderServiceHolder.getAnnotationsByPageNumber(
-					currentPageNumber, book.getISBN(),ActualUser.getReadingactivity().getId(), callback);
+					currentPageNumber, book.getISBN(),ActualState.getReadingactivity().getId(), callback);
 		} else {
 			bookReaderServiceHolder.getAnnotationsByPageNumbertAndUserId(
-					currentPageNumber, book.getISBN(), ActualUser.getUser()
-							.getId(), ActualUser.getReadingactivity().getId(), callback);
+					currentPageNumber, book.getISBN(), ActualState.getUser()
+							.getId(), ActualState.getReadingactivity().getId(), callback);
 		}
 
 	}

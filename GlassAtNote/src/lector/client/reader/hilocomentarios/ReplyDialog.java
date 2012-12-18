@@ -2,7 +2,7 @@ package lector.client.reader.hilocomentarios;
 
 import lector.client.book.reader.GWTService;
 import lector.client.book.reader.GWTServiceAsync;
-import lector.client.login.ActualUser;
+import lector.client.controler.ActualState;
 import lector.client.reader.MainEntryPoint;
 import lector.client.reader.RichTextToolbar;
 import lector.share.model.AnnotationThread;
@@ -45,8 +45,8 @@ public class ReplyDialog extends DialogBox {
 		AnotPadre = AnotPadrein;
 		setAnimationEnabled(true);
 		Date now = new Date();
-		setHTML(ActualUser.getUser().getFirstName()
-				+ " " + ActualUser.getUser().getLastName().charAt(0)+ ".  -  " + now.toGMTString());
+		setHTML(ActualState.getUser().getFirstName()
+				+ " " + ActualState.getUser().getLastName().charAt(0)+ ".  -  " + now.toGMTString());
 		richTextArea = new RichTextArea();
 		toolbar = new RichTextToolbar(richTextArea);
 		verticalPanel = new VerticalPanel();
@@ -54,15 +54,15 @@ public class ReplyDialog extends DialogBox {
 		menuBar = new MenuBar(false);
 		verticalPanel.add(menuBar);
 
-		Language ActualLang = ActualUser.getLanguage();
+		Language ActualLang = ActualState.getLanguage();
 
 		Guardar = new MenuItem(ActualLang.getSave(), false, new Command() {
 			public void execute() {
 				Date now = new Date();
 				AnnotationThreadClient AT = new AnnotationThreadClient(Padre, new ArrayList<AnnotationThreadClient>(),AnotPadre,
-						richTextArea.getHTML(), ActualUser.getUser()
-								.getId(), ActualUser.getUser().getFirstName()
-								+ " " + ActualUser.getUser().getLastName().charAt(0)+ ".",now);
+						richTextArea.getHTML(), ActualState.getUser()
+								.getId(), ActualState.getUser().getFirstName()
+								+ " " + ActualState.getUser().getLastName().charAt(0)+ ".",now);
 				bookReaderServiceHolder.saveAnnotationThread(AT,
 						new AsyncCallback<Void>() {
 
