@@ -36,6 +36,10 @@ import com.google.gwt.user.client.ui.DockPanel;
 
 public class Administrador implements EntryPoint {
 
+	private static final String ADMINISTRATORS_NAME = "Administration Menu";
+	
+	private static final int NCampos=14;
+	
 	private static String WELLCOME_MENU = "Welcome to the administrator page : ";
 	private static String BIENVENIDA = "null";
 	private static String CLOSE_SESSION_MENU = "Close Session";
@@ -51,6 +55,7 @@ public class Administrador implements EntryPoint {
 	private static String MY_ACTIVITIES_BUTTON = "My Activities";
 	private static String MY_PROFILE_BUTTON = "Edit Profile";
 	private static String RETURN_TO_ACTIVITY_BUTTON = "Return to the Activity";
+
 	
 	private static final String WELLCOME_MENU_RESET = "Welcome to the administrator page : ";
 	private static final String CLOSE_SESSION_MENU_RESET = "Close Session";
@@ -733,10 +738,63 @@ public class Administrador implements EntryPoint {
 	}
 	
 	public String toFile() {
-		return super.toString();
+		StringBuffer SB=new StringBuffer();
+		SB.append(WELLCOME_MENU+'\n');
+		SB.append(BIENVENIDA+'\n');
+		SB.append(CLOSE_SESSION_MENU+'\n');
+		SB.append(CATALOG_BUTTON+'\n');
+		SB.append(INTERFACE_LANGUAGE_BUTTON+'\n');
+		SB.append(EXPORT_TEMPLATES_BUTTON+'\n');
+		SB.append(ACTIVITY_BUTTON+'\n');
+		SB.append(GROUP_BUTTON+'\n');
+		SB.append(USERS_BUTTON+'\n');
+		SB.append(ADMINISTRATORS_BUTTON+'\n');
+		SB.append(BOOK_MANAGMENT_BUTTON+'\n');
+		SB.append(MY_LIBRARY_BUTTON+'\n');
+		SB.append(MY_ACTIVITIES_BUTTON+'\n');
+		SB.append(MY_PROFILE_BUTTON+'\n');
+		SB.append(RETURN_TO_ACTIVITY_BUTTON+'\n');
+		return SB.toString();
 	}
 	
 	public void FromFile(String Entrada) {
-
+		String[] Lista = Entrada.split("\n");
+		if (Lista.length > NCampos) {
+			if (!Lista[0].isEmpty())
+				WELLCOME_MENU = Lista[0];
+			if (!Lista[1].isEmpty())
+				BIENVENIDA = Lista[1];
+			if (!Lista[2].isEmpty())
+				CLOSE_SESSION_MENU = Lista[2];
+			if (!Lista[3].isEmpty())
+				CATALOG_BUTTON = Lista[3];
+			if (!Lista[4].isEmpty())
+				INTERFACE_LANGUAGE_BUTTON = Lista[4];
+			if (!Lista[5].isEmpty())
+				EXPORT_TEMPLATES_BUTTON = Lista[5];
+			if (!Lista[6].isEmpty())
+				ACTIVITY_BUTTON = Lista[6];
+			if (!Lista[7].isEmpty())
+				GROUP_BUTTON = Lista[7];
+			if (!Lista[8].isEmpty())
+				USERS_BUTTON = Lista[8];
+			if (!Lista[9].isEmpty())
+				ADMINISTRATORS_BUTTON = Lista[9];
+			if (!Lista[10].isEmpty())
+				BOOK_MANAGMENT_BUTTON = Lista[10];
+			if (!Lista[11].isEmpty())
+				MY_LIBRARY_BUTTON = Lista[11];
+			if (!Lista[12].isEmpty())
+				MY_ACTIVITIES_BUTTON = Lista[12];
+			if (!Lista[13].isEmpty())
+				MY_PROFILE_BUTTON = Lista[13];
+			if (!Lista[14].isEmpty())
+				RETURN_TO_ACTIVITY_BUTTON = Lista[14];
+		}
+		else 
+			Window.alert(ErrorConstants.ERROR_LOADING_CATALOG_IN+ ADMINISTRATORS_NAME);
+			
+			
+		
 	}
 }

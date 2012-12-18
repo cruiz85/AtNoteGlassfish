@@ -82,6 +82,7 @@ public class ErrorConstants {
 	public static String GENERAL_ERROR_REFRESH="Critical error, please refresh the aplication";
 	public static String ERROR_DELETING_READING_ACTIVITY="Error Deleting Reading Activity";
 	public static String ERROR_LOADING_USER= "Error Loading user";
-	public  static String ERROR_ACTIVITY_DONT_EXIST_OR_ARE_UNREACHEABLE="The activity don't exist or are unreacheable now, may be because was removed recently, if don't, try again";
+	public static String ERROR_ACTIVITY_DONT_EXIST_OR_ARE_UNREACHEABLE="The activity don't exist or are unreacheable now, may be because was removed recently, if don't, try again";
+	public static String ERROR_LOADING_CATALOG_IN= "Error Loading Catalog in : ";
 	
 }
