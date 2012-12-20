@@ -3,7 +3,6 @@ package lector.client.admin.langedit;
 import lector.client.book.reader.GWTService;
 import lector.client.book.reader.GWTServiceAsync;
 import lector.client.controler.ActualState;
-import lector.client.controler.CalendarNow;
 import lector.client.controler.Controlador;
 import lector.client.controler.ErrorConstants;
 import lector.client.controler.InformationConstants;
@@ -25,44 +24,48 @@ import com.google.gwt.event.dom.client.MouseOverEvent;
 import com.google.gwt.event.dom.client.MouseOverHandler;
 
 public class SeleccionMenu extends PopupPanel {
+	
+	public static final String SELECTION_MENU_NAME="Selection Language Popup Menu";
+	
+	private static String SELECT = "Select";
+	private static String DELETE = "Delete";
+	private static String EDIT = "Edit";
+	
+	private Button DeleteButton;
+	private Button EditButton;
+	private Button SelectButton;
+	
+	private BottonLang BotonLangPressed;
+	private NewAdminLangs FatherNewAdminLangs;
 
-	private BottonLang BLan;
-	private NewAdminLangs Father;
+	
+	
+	
 	static GWTServiceAsync bookReaderServiceHolder = GWT
 	.create(GWTService.class);
 	
 	public SeleccionMenu(BottonLang BL, NewAdminLangs Fatherin) {
 		super(true);
-		BLan=BL;
+		BotonLangPressed=BL;
 		setSize("100%", "100%");
-		Father=Fatherin;
+		FatherNewAdminLangs=Fatherin;
 		VerticalPanel verticalPanel = new VerticalPanel();
 		setWidget(verticalPanel);
 		verticalPanel.setSize("100%", "100%");
 		
-		Button btnNewButton = new Button("Select");
-		btnNewButton.addClickHandler(new ClickHandler() {
-			public void onClick(ClickEvent event) {
-				BLan.swap();
-				hide();
-			}
-		});
-		//verticalPanel.add(btnNewButton);
-		btnNewButton.setSize("100%", "100%");
-		
-		Button btnNewButton_1 = new Button("Delete");
-		btnNewButton_1.addClickHandler(new ClickHandler() {
+		DeleteButton = new Button(SeleccionMenu.DELETE );
+		DeleteButton.addClickHandler(new ClickHandler() {
 			public void onClick(ClickEvent event) {
 				if (Window
-						.confirm(InformationConstants.ARE_YOU_SURE_DELETE_LANGUAGE + BLan.getLanguage().getName()))
+						.confirm(InformationConstants.ARE_YOU_SURE_DELETE_LANGUAGE + BotonLangPressed.getLanguage().getName()))
 				{
-				bookReaderServiceHolder.deleteLanguage(BLan.getLanguage().getId(), new AsyncCallback<Void>() {
+				bookReaderServiceHolder.deleteLanguage(BotonLangPressed.getLanguage().getId(), new AsyncCallback<Void>() {
 					
 					public void onSuccess(Void result) {
 						Logger.GetLogger().info(this.getClass().getName(),
 								ActualState.getUser().toString(),
-								"Delete a language " + BLan.getLanguage().getName());
-						Father.refresh();
+								"Delete a language " + BotonLangPressed.getLanguage().getName());
+						FatherNewAdminLangs.refresh();
 						hide();
 						
 					}
@@ -78,54 +81,67 @@ public class SeleccionMenu extends PopupPanel {
 				}
 			}
 		});
-		btnNewButton_1.addMouseDownHandler(new MouseDownHandler() {
+		DeleteButton.addMouseDownHandler(new MouseDownHandler() {
 			public void onMouseDown(MouseDownEvent event) {
 				((Button)event.getSource()).setStyleName("gwt-ButtonPush");
 			}
 		});
-		btnNewButton_1.addMouseOutHandler(new MouseOutHandler() {
+		DeleteButton.addMouseOutHandler(new MouseOutHandler() {
 			public void onMouseOut(MouseOutEvent event) {
 				((Button)event.getSource()).setStyleName("gwt-ButtonTOP");
 			}
 		});
-		btnNewButton_1.addMouseOverHandler(new MouseOverHandler() {
+		DeleteButton.addMouseOverHandler(new MouseOverHandler() {
 			public void onMouseOver(MouseOverEvent event) {
 				((Button)event.getSource()).setStyleName("gwt-ButtonTOPOver");
 			}
 		});
-		btnNewButton_1.setStyleName("gwt-ButtonTOP");
-		verticalPanel.add(btnNewButton_1);
-		btnNewButton_1.setSize("100%", "100%");
+		DeleteButton.setStyleName("gwt-ButtonTOP");
+		verticalPanel.add(DeleteButton);
+		DeleteButton.setSize("100%", "100%");
 		
-		Button btnNewButton_2 = new Button("Edit");
-		btnNewButton_2.addClickHandler(new ClickHandler() {
+		SelectButton = new Button(SeleccionMenu.SELECT);
+		SelectButton.addClickHandler(new ClickHandler() {
+			public void onClick(ClickEvent event) {
+				Window.alert(InformationConstants.CHANGE_LANGUAGE_WARNING);
+						ActualState.setActualLanguage(BotonLangPressed.getLanguage());
+				hide();
+			}
+		});
+		SelectButton.setStyleName("gwt-ButtonTOP");
+		verticalPanel.add(SelectButton);
+		SelectButton.setSize("100%", "100%");
+		
+		EditButton = new Button(SeleccionMenu.EDIT);
+		EditButton.addClickHandler(new ClickHandler() {
 			public void onClick(ClickEvent event) {
 				Logger.GetLogger().info(this.getClass().getName(),
 						ActualState.getUser().toString(),
-						"Start edit a language " + BLan.getLanguage().getName());
-				EditordeLenguajes.setLenguajeActual(BLan.getLanguage());
+						"Start edit a language " + BotonLangPressed.getLanguage().getName());
+				EditordeLenguajes.setLenguajeActual(BotonLangPressed.getLanguage());
 				Controlador.change2EditorLenguaje();
 				hide();
 			}
 		});
-		btnNewButton_2.setStyleName("gwt-ButtonBotton");
-		btnNewButton_2.addMouseOutHandler(new MouseOutHandler() {
+		EditButton.setStyleName("gwt-ButtonBotton");
+		EditButton.addMouseOutHandler(new MouseOutHandler() {
 			public void onMouseOut(MouseOutEvent event) {
 				((Button)event.getSource()).setStyleName("gwt-ButtonBotton");
 			}
 		});
-		btnNewButton_2.addMouseOverHandler(new MouseOverHandler() {
+		EditButton.addMouseOverHandler(new MouseOverHandler() {
 			public void onMouseOver(MouseOverEvent event) {
 				((Button)event.getSource()).setStyleName("gwt-ButtonBottonOver");
 			}
 		});
-		btnNewButton_2.addMouseDownHandler(new MouseDownHandler() {
+		EditButton.addMouseDownHandler(new MouseDownHandler() {
 			public void onMouseDown(MouseDownEvent event) {
 				((Button)event.getSource()).setStyleName("gwt-ButtonPushBotton");
 			}
 		});
-		verticalPanel.add(btnNewButton_2);
-		btnNewButton_2.setSize("100%", "100%");
+		
+		verticalPanel.add(EditButton);
+		EditButton.setSize("100%", "100%");
 	}
 
 }

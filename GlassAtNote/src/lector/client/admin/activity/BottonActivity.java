@@ -1,6 +1,5 @@
 package lector.client.admin.activity;
 
-import lector.share.model.ReadingActivity;
 import lector.share.model.client.ReadingActivityClient;
 
 import com.google.gwt.user.client.ui.Button;

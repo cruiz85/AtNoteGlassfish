@@ -37,5 +37,8 @@ public class InformationConstants {
 	public static String SHOULD_ME_MORE_THAN2=" elements.";
 	public static String ACTIVITY_CHANGES_AND_ARE_NOW_NOT_ACCESIBLE="Some atributes was modificated and the Reading Activity are now not accessible";
 	public static String CANTPRIVATICE_A_CATALOG_THAT_YOU_DONT_CREATE="you can not privatize a catalog that you did not create";
-	
+	public static String CHANGE_LANGUAGE_WARNING = "Lenguage interface will be chage, remember, activities has her own language and should be change in Activiy Administration";
+	public static String BLANK_ATRIBUTES="Some attributes are in blank. The activity will be unavailable until you fill all the atributes, do you want to continue?";
+	public static String ARE_YOU_SURE_TO_SWAP_ONE_ORE_BOTH_CATALOGS="Are you sure you want to swap one or both the catalogues in the activity?. The annotation associated to the activity will be deleted";
+	public static String ARE_YOU_SURE_TO_SWAP_BOOK="Are you sure you want to swap the book in the activity?. The annotation associated to the activity will be deleted";
 }

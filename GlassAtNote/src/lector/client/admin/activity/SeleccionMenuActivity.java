@@ -3,6 +3,7 @@ package lector.client.admin.activity;
 import lector.client.book.reader.GWTService;
 import lector.client.book.reader.GWTServiceAsync;
 import lector.client.controler.ErrorConstants;
+import lector.client.controler.InformationConstants;
 import lector.client.reader.LoadingPanel;
 
 import com.google.gwt.user.client.Window;
@@ -48,7 +49,7 @@ public class SeleccionMenuActivity extends PopupPanel {
 			public void onClick(ClickEvent event) {
 				if (Window.confirm(SeleccionMenuActivity.ARE_YOU_SURE_DELETE_READING_ACTIVITY)){
 				LoadingPanel.getInstance().center();
-				LoadingPanel.getInstance().setLabelTexto(LoadingPanel.DELETING);
+				LoadingPanel.getInstance().setLabelTexto(InformationConstants.DELETING);
 				bookReaderServiceHolder.deleteReadingActivity(BLan.getReadingActivity().getId(), new AsyncCallback<Void>() {
 					
 					public void onSuccess(Void result) {

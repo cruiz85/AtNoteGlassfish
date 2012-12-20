@@ -46,7 +46,7 @@ public class VisualBookPanel extends DialogBox {
 		image = imagein;
 		DockPanel SP=new DockPanel();
 
-		setHTML(ActualState.getBook().getTitle() + "    -    "+ActualState.getLanguage().getPage() +": " + annotation.getPageNumber());
+		setHTML(ActualState.getReadingActivityBook().getTitle() + "    -    "+ActualState.getLanguage().getPage() +": " + annotation.getPageNumber());
 		
 		
 		setWidget(SP);

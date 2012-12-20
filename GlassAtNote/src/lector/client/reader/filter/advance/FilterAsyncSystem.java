@@ -42,7 +42,7 @@ public class FilterAsyncSystem {
 		VerticalPanel resultado=new VerticalPanel();
 		AnotationFilterResultPanel Panel=new AnotationFilterResultPanel(resultado);
 		for (AnnotationClient AIndiv : Anotaciones) {
-			resultado.add(new CommentPanelFAdvance(AIndiv, new Image(ActualState.getBook().getWebLinks().get(AIndiv.getPageNumber())),Panel.getHeight()));
+			resultado.add(new CommentPanelFAdvance(AIndiv, new Image(ActualState.getReadingActivityBook().getWebLinks().get(AIndiv.getPageNumber())),Panel.getHeight()));
 		}	
 		Panel.center();
 		LoadingPanel.getInstance().hide();

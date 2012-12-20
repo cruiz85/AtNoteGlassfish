@@ -73,7 +73,7 @@ public class ReadingActivityVisibilityChangePanel extends PopupPanel {
 			public void onClick(ClickEvent event) {
 				readingActivityClient.setPrivacy(chckbxNewCheckBox.getValue());
 				LoadingPanel.getInstance().center();
-				LoadingPanel.getInstance().setLabelTexto(LoadingPanel.SAVING);
+				LoadingPanel.getInstance().setLabelTexto(InformationConstants.SAVING);
 				bookReaderServiceHolder.saveReadingActivity(readingActivityClient, new AsyncCallback<Void>() {
 					
 					@Override

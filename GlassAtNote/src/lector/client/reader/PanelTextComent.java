@@ -97,7 +97,7 @@ public class PanelTextComent extends Composite {
 
 
 			public void onClick(ClickEvent event) {
-				finder = new SelectorTypePopUpAnnotacion(PenelBotonesTipo,ActualState.getCatalogo(),CatalogTipo.Catalog1);
+				finder = new SelectorTypePopUpAnnotacion(PenelBotonesTipo,ActualState.getReadingActivityCloseCatalog(),CatalogTipo.Catalog1);
 				finder.center();
 				finder.setModal(true);
 				finder.RefrescaLosDatos();
@@ -137,7 +137,7 @@ public class PanelTextComent extends Composite {
 
 
 			public void onClick(ClickEvent event) {
-				finder = new SelectorTypePopUpAnnotacionPublic(PenelBotonesTipo,ActualState.getOpenCatalog(),CatalogTipo.Catalog2);
+				finder = new SelectorTypePopUpAnnotacionPublic(PenelBotonesTipo,ActualState.getReadingActivityOpenCatalog(),CatalogTipo.Catalog2);
 				finder.center();
 				finder.setModal(true);
 				((Button)event.getSource()).setStyleName("gwt-ButtonCenter");

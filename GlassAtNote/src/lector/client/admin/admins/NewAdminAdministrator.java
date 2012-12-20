@@ -328,7 +328,7 @@ public class NewAdminAdministrator implements EntryPoint {
 									if (ActualState.getUser().getId()
 											.equals(Ident.getId())) {
 										ActualState.setUser(null);
-										ActualState.setBook(null);
+										ActualState.setReadingActivityBook(null);
 										ActualState.setReadingactivity(null);
 										Window.alert(InformationConstants.GOODBYE);
 										Window.Location.reload();

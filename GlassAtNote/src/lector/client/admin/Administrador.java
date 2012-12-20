@@ -8,6 +8,7 @@ import lector.client.controler.Controlador;
 import lector.client.controler.ErrorConstants;
 import lector.client.controler.InformationConstants;
 import lector.client.logger.Logger;
+import lector.share.model.Language;
 import lector.share.model.client.ReadingActivityClient;
 
 import com.google.gwt.core.client.EntryPoint;
@@ -151,7 +152,7 @@ public class Administrador implements EntryPoint {
 								ActualState.getUser().toString(),
 								"Log out");
 						ActualState.setUser(null);
-						ActualState.setBook(null);
+						ActualState.setReadingActivityBook(null);
 						ActualState.setReadingactivity(null);
 					}
 				});
@@ -382,32 +383,7 @@ public class Administrador implements EntryPoint {
 			}
 		});
 		BookManagmentButton.setSize("100%", "100%");
-		//
-		// Button LoadABook = new Button("Upload a Text");
-		// verticalPanel_1.add(LoadABook);
-		// LoadABook.addMouseOutHandler(new MouseOutHandler() {
-		// public void onMouseOut(MouseOutEvent event) {
-		// ((Button)event.getSource()).setStyleName("gwt-ButtonTOP");
-		// }
-		// });
-		// LoadABook.addMouseOverHandler(new MouseOverHandler() {
-		// public void onMouseOver(MouseOverEvent event) {
-		// ((Button)event.getSource()).setStyleName("gwt-ButtonTOPOver");
-		// }
-		// });
-		// LoadABook.addMouseDownHandler(new MouseDownHandler() {
-		// public void onMouseDown(MouseDownEvent event) {
-		// ((Button)event.getSource()).setStyleName("gwt-ButtonPush");
-		// }
-		// });
-		// LoadABook.setStyleName("gwt-ButtonTOP");
-		// LoadABook.addClickHandler(new ClickHandler() {
-		// public void onClick(ClickEvent event) {
-		// Controlador.change2LoadABook();
-		// }
-		// });
-		// LoadABook.setSize("100%", "100%");
-		//
+		
 
 		MyLibraryButton = new Button(Administrador.MY_LIBRARY_BUTTON);
 		verticalPanel_1.add(MyLibraryButton);
@@ -552,7 +528,8 @@ public class Administrador implements EntryPoint {
 		}
 		
 		PanelEdicion=new AbsolutePanel();
-		closeEditPanel();
+		if (ActualState.isLanguageActive())
+			closeEditPanel();
 	}
 	
 	public void closeEditPanel()
@@ -648,6 +625,7 @@ public class Administrador implements EntryPoint {
 				else MY_PROFILE_BUTTON=MY_PROFILE_BUTTON_RESET;
 				
 				ParsearFieldsAItems();
+				SaveChages();
 			}
 		});
 		WellcomeMenuTextBox=new TextBox();
@@ -722,6 +700,14 @@ public class Administrador implements EntryPoint {
 		
 	}
 	
+	protected void SaveChages() {
+		Language LanguageActual = ActualState.getActualLanguage();
+		String AdministracionLanguageConfiguratio=toFile();
+		//TODO modificarLenguaje
+		ActualState.saveLanguageActual(LanguageActual);
+		
+	}
+
 	public void ParsearFieldsAItems()
 	{
 	WellcomeButtonMenu.setHTML(WELLCOME_MENU + BIENVENIDA);	
@@ -742,7 +728,7 @@ public class Administrador implements EntryPoint {
 	
 	}
 	
-	public String toFile() {
+	public static String toFile() {
 		StringBuffer SB=new StringBuffer();
 		SB.append(WELLCOME_MENU+'\n');
 		SB.append(BIENVENIDA+'\n');
@@ -762,7 +748,7 @@ public class Administrador implements EntryPoint {
 		return SB.toString();
 	}
 	
-	public void FromFile(String Entrada) {
+	public static void FromFile(String Entrada) {
 		String[] Lista = Entrada.split("\n");
 		if (Lista.length > NCampos) {
 			if (!Lista[0].isEmpty())

@@ -580,7 +580,7 @@ pageBack.addMouseDownHandler(new MouseDownHandler() {
 			public void execute() {
 				hidePopUpSelector();
 				hideDENSelector();
-				ActualState.setBook(book);
+				ActualState.setReadingActivityBook(book);
 				Controlador.change2Browser();
 				if (PEX!=null) PEX.hide();
 			}
@@ -598,7 +598,7 @@ pageBack.addMouseDownHandler(new MouseDownHandler() {
 					public void execute() {
 						hidePopUpSelector();
 						hideDENSelector();
-						ActualState.setBook(book);
+						ActualState.setReadingActivityBook(book);
 						Controlador.change2Administrator();
 						if (PEX!=null)
 							PEX.hide();
@@ -617,7 +617,7 @@ pageBack.addMouseDownHandler(new MouseDownHandler() {
 			public void execute() {
 				hidePopUpSelector();
 				hideDENSelector();
-				ActualState.setBook(book);
+				ActualState.setReadingActivityBook(book);
 				Controlador.change2MyActivities();
 				PEX.hide();
 			}

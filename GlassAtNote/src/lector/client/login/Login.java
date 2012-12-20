@@ -475,7 +475,7 @@ public class Login implements EntryPoint {
 									Window.alert(InformationConstants.A_EMAIL_BE_SEND_TO_YOUR_EMAIL_FOR_CONFIRM_THE_REGISTRATION);
 									Logger.GetLogger().info(
 											Yo.getClass().toString(),
-											ActualState.getIP(),
+											null,
 											"New User created:  "
 													+ newStudent.toString(),new AsyncCallback<Void>() {
 														
@@ -500,7 +500,7 @@ public class Login implements EntryPoint {
 									Window.alert(ErrorConstants.ERROR_IN_REGISTERATION);
 									Logger.GetLogger()
 											.severe(Yo.getClass().toString(),
-													ActualState.getIP(),
+													null,
 													ErrorConstants.ERROR_IN_REGISTERATION);
 								}
 							});
@@ -569,20 +569,20 @@ public class Login implements EntryPoint {
 								{
 								Window.alert(ErrorConstants.YOU_USER_NOT_EXIST);
 								Logger.GetLogger().severe(Yo.getClass().toString(),
-										ActualState.getIP(),
+										null,
 										ErrorConstants.YOU_USER_NOT_EXIST);	
 								}
 							else if (caught instanceof NotAuthenticatedException)
 								{
 								Window.alert(ErrorConstants.YOU_ARE_NO_AUTORIZED);
 								Logger.GetLogger().severe(Yo.getClass().toString(),
-										ActualState.getIP(),
+										null,
 										ErrorConstants.YOU_ARE_NO_AUTORIZED);	
 								}
 							else {
 								Window.alert(ErrorConstants.GENERAL_ERROR_REFRESH);
 								Logger.GetLogger().severe(Yo.getClass().toString(),
-										ActualState.getIP(),
+										null,
 										ErrorConstants.GENERAL_ERROR_REFRESH);	
 								}
 							
@@ -594,7 +594,7 @@ public class Login implements EntryPoint {
 							if (result == null) {
 								Window.alert(ErrorConstants.YOU_ARE_NO_AUTORIZED);
 								Logger.GetLogger().severe(Yo.getClass().toString(),
-										ActualState.getIP(),
+										null,
 										ErrorConstants.YOU_ARE_NO_AUTORIZED);
 								btnNewButton.setEnabled(true);
 							} else {

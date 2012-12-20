@@ -107,7 +107,7 @@ public class TextComentEdit extends DialogBox {
 					} else {
 						LoadingPanel.getInstance().hide();
 						Window.alert(ActualLang.getE_Need_to_select_a_type()
-								+ ActualState.getCatalogo().getCatalogName()
+								+ ActualState.getReadingActivityCloseCatalog().getCatalogName()
 								+ " : "
 								+ ActualLang.getSetTypes()
 								+ "("
@@ -179,7 +179,7 @@ public class TextComentEdit extends DialogBox {
 					} else {
 						LoadingPanel.getInstance().hide();
 						Window.alert(ActualLang.getE_Need_to_select_a_type()
-								+ ActualState.getCatalogo().getCatalogName()
+								+ ActualState.getReadingActivityCloseCatalog().getCatalogName()
 								+ " : "
 								+ ActualLang.getSetTypes()
 								+ "("

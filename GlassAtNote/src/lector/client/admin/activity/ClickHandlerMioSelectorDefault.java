@@ -1,6 +1,5 @@
 package lector.client.admin.activity;
 
-import lector.client.admin.generalPanels.BotonesStackPanelAdministracionMio;
 import lector.client.admin.tagstypes.ClickHandlerMio;
 import lector.client.catalogo.BotonesStackPanelMio;
 import lector.client.catalogo.client.EntityCatalogElements;
@@ -9,7 +8,6 @@ import lector.share.model.client.EntryClient;
 import lector.share.model.client.TypeClient;
 
 import com.google.gwt.event.dom.client.ClickEvent;
-import com.google.gwt.event.dom.client.ClickHandler;
 
 public class ClickHandlerMioSelectorDefault extends ClickHandlerMio {
 

@@ -106,7 +106,7 @@ public class MyActivities implements EntryPoint {
 				Cookies.removeCookie(Constants.COOKIE_NAME);
 			//	 Window.open(ActualUser.getUser().getLogoutUrl(), "_self", "");
 				ActualState.setUser(null);
-				ActualState.setBook(null);
+				ActualState.setReadingActivityBook(null);
 				ActualState.setReadingactivity(null);
 			}
 		});
@@ -537,7 +537,7 @@ public class MyActivities implements EntryPoint {
 		bookReaderServiceHolder.loadCatalogById(RA.getCloseCatalogo().getId(), new AsyncCallback<CatalogoClient>() {
 			
 			public void onSuccess(CatalogoClient result) {
-				ActualState.setCatalogo(result);
+				ActualState.setReadingActivityCloseCatalog(result);
 				loadOpenCatalog();
 				
 			}
@@ -556,7 +556,7 @@ public class MyActivities implements EntryPoint {
 		bookReaderServiceHolder.loadCatalogById(RA.getOpenCatalogo().getId(), new AsyncCallback<CatalogoClient>() {
 			
 			public void onSuccess(CatalogoClient result) {
-				ActualState.setOpenCatalog(result);
+				ActualState.setReadingActivityOpenCatalog(result);
 				Controlador.change2Reader();
 				
 			}

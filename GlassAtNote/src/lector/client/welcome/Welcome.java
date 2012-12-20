@@ -43,6 +43,7 @@ import com.google.gwt.event.dom.client.MouseOverHandler;
 import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.HasVerticalAlignment;
 import com.google.gwt.user.client.ui.FocusPanel;
+import com.google.gwt.util.PreventSpuriousRebuilds;
 
 public class Welcome implements EntryPoint {
 	static GWTServiceAsync bookReaderServiceHolder = GWT
@@ -52,6 +53,7 @@ public class Welcome implements EntryPoint {
 	private Button btnNewButton;
 	private HorizontalPanel horizontalPanel;
 	private RootPanel Footer;
+	private static About About;
 
 ////	 DESCOMENTAR EN DESARROLLO, CREA UN USUARIO ROOT.
 //	 private void callUserRoot() {
@@ -100,154 +102,143 @@ public class Welcome implements EntryPoint {
 		rootPanel.setSize("100%", "100%");
 		rootPanel.setStyleName("Root");
 
-		VerticalPanel verticalPanel = new VerticalPanel();
-		verticalPanel.setVerticalAlignment(HasVerticalAlignment.ALIGN_MIDDLE);
-		verticalPanel
-				.setHorizontalAlignment(HasHorizontalAlignment.ALIGN_CENTER);
-		verticalPanel.setStyleName("fondoLogo");
-		rootPanel.add(verticalPanel, 0, 0);
-		// rootPanel.add(verticalPanel);
-		verticalPanel.setSize("100%", "100%");
-
-		VerticalPanel verticalPanel_1 = new VerticalPanel();
-//		verticalPanel_1.setStyleName("fondoLogo");
-		verticalPanel_1.setVerticalAlignment(HasVerticalAlignment.ALIGN_MIDDLE);
-		verticalPanel_1
-				.setHorizontalAlignment(HasHorizontalAlignment.ALIGN_CENTER);
-		verticalPanel.add(verticalPanel_1);
-
-		HorizontalPanel horizontalPanel_1 = new HorizontalPanel();
-		verticalPanel_1.add(horizontalPanel_1);
-		horizontalPanel_1
-				.setVerticalAlignment(HasVerticalAlignment.ALIGN_MIDDLE);
-
-		Image image_1 = new Image("Logo.jpg");
-		image_1.addClickHandler(new ClickHandler() {
-			public void onClick(ClickEvent event) {
-				PopupPanel About = new About();
-				About.center();
-			}
-		});
-		//horizontalPanel_1.add(image_1);
-		
-		FocusPanel simplePanel = new FocusPanel();
-		simplePanel.addClickHandler(new ClickHandler() {
-			public void onClick(ClickEvent event) {
-				PopupPanel About = new About();
-				About.center();
-			}
-		});
-		horizontalPanel_1.add(simplePanel);
-		simplePanel.setSize("728px", "343px");
-
-		HorizontalPanel horizontalPanel_2 = new HorizontalPanel();
-		horizontalPanel_2.setStyleName("AzulTransparente");
-		horizontalPanel_2
-				.setVerticalAlignment(HasVerticalAlignment.ALIGN_MIDDLE);
-		horizontalPanel_2.setSpacing(10);
-		verticalPanel_1.add(horizontalPanel_2);
-		
-		HorizontalPanel horizontalPanel_6 = new HorizontalPanel();
-		horizontalPanel_6.setStyleName("BlancoTransparente");
-		horizontalPanel_6.setVerticalAlignment(HasVerticalAlignment.ALIGN_MIDDLE);
-		horizontalPanel_6.setHorizontalAlignment(HasHorizontalAlignment.ALIGN_CENTER);
-		horizontalPanel_2.add(horizontalPanel_6);
-		horizontalPanel_6.setWidth("90px");
-		
-				Image image = new Image("logo_ucm.jpg");
-				horizontalPanel_6.add(image);
-				image.addClickHandler(new ClickHandler() {
-					public void onClick(ClickEvent event) {
-						Window.open("http://www.ucm.es", "_blank", null);
-
-					}
-				});
-		image.setSize("75px", "78px");
-
-		HorizontalPanel horizontalPanel_4 = new HorizontalPanel();
-		horizontalPanel_2.add(horizontalPanel_4);
-		
-		HorizontalPanel horizontalPanel_7 = new HorizontalPanel();
-		horizontalPanel_7.setStyleName("BlancoTransparente");
-		horizontalPanel_7.setVerticalAlignment(HasVerticalAlignment.ALIGN_MIDDLE);
-		horizontalPanel_7.setHorizontalAlignment(HasHorizontalAlignment.ALIGN_CENTER);
-		horizontalPanel_2.add(horizontalPanel_7);
-		horizontalPanel_7.setWidth("180px");
-		
-				Image image_2 = new Image("logo-leethi_fa.gif");
-				horizontalPanel_7.add(image_2);
-				image_2.addClickHandler(new ClickHandler() {
-					public void onClick(ClickEvent event) {
-						Window.open("http://www.ucm.es/info/leethi/", "_blank", null);
-
-					}
-				});
-		image_2.setSize("164px", "72px");
-
-		HorizontalPanel horizontalPanel_5 = new HorizontalPanel();
-		horizontalPanel_2.add(horizontalPanel_5);
-		
-		HorizontalPanel horizontalPanel_8 = new HorizontalPanel();
-		horizontalPanel_8.setHorizontalAlignment(HasHorizontalAlignment.ALIGN_CENTER);
-		horizontalPanel_8.setVerticalAlignment(HasVerticalAlignment.ALIGN_MIDDLE);
-		horizontalPanel_8.setStyleName("BlancoTransparente");
-		horizontalPanel_2.add(horizontalPanel_8);
-		horizontalPanel_8.setWidth("220px");
-
-		Image image_3 = new Image("ISLA.jpg");
-		horizontalPanel_8.add(image_3);
-		image_3.addClickHandler(new ClickHandler() {
-			public void onClick(ClickEvent event) {
-				Window.open("http://ilsa.fdi.ucm.es/", "_blank", null);
-
-			}
-		});
-		image_3.setSize("201px", "69px");
+//		Image image_1 = new Image("Logo.jpg");
+//		image_1.addClickHandler(new ClickHandler() {
+//			public void onClick(ClickEvent event) {
+//				PopupPanel About = new About();
+//				About.center();
+//			}
+//		});
 
 		Label lblNewLabel_1 = new Label(
-				"Developers: Cesar Ruiz, Joaquin Gayoso");
-		// verticalPanel_1.add(lblNewLabel_1);
-		SimplePanel S = new SimplePanel();
-		Footer.add(S);
-		S.setWidget(lblNewLabel_1);
-		lblNewLabel_1.setStyleName("Desarrolladores");
+				"About @Note Proyect  ");
+		lblNewLabel_1.addClickHandler(new ClickHandler() {
+			public void onClick(ClickEvent event) {
+				if (About==null)
+					About = new About();
+				About.center();
+			}
+		});
+		
+				VerticalPanel verticalPanel = new VerticalPanel();
+				rootPanel.add(verticalPanel,0,0);
+				verticalPanel.setSize("100%", "100%");
+				verticalPanel.setVerticalAlignment(HasVerticalAlignment.ALIGN_MIDDLE);
+				verticalPanel
+						.setHorizontalAlignment(HasHorizontalAlignment.ALIGN_CENTER);
+				verticalPanel.setStyleName("fondoLogo");
+				
+						VerticalPanel verticalPanel_1 = new VerticalPanel();
+						//		verticalPanel_1.setStyleName("fondoLogo");
+								verticalPanel_1.setVerticalAlignment(HasVerticalAlignment.ALIGN_MIDDLE);
+								verticalPanel_1
+										.setHorizontalAlignment(HasHorizontalAlignment.ALIGN_CENTER);
+								verticalPanel.add(verticalPanel_1);
+								
+										HorizontalPanel horizontalPanel_1 = new HorizontalPanel();
+										verticalPanel_1.add(horizontalPanel_1);
+										horizontalPanel_1
+												.setVerticalAlignment(HasVerticalAlignment.ALIGN_MIDDLE);
+										
+										HorizontalPanel horizontalPanel_11 = new HorizontalPanel();
+										horizontalPanel_11.setStyleName("focusNoBorder");
+										horizontalPanel_1.add(horizontalPanel_11);
+										horizontalPanel_11.setSize("1px", Window.getClientHeight()/3+"px");
+										
+												HorizontalPanel horizontalPanel_2 = new HorizontalPanel();
+												horizontalPanel_2.setStyleName("AzulTransparente");
+												horizontalPanel_2
+														.setVerticalAlignment(HasVerticalAlignment.ALIGN_MIDDLE);
+												horizontalPanel_2.setSpacing(10);
+												verticalPanel_1.add(horizontalPanel_2);
+												
+												HorizontalPanel horizontalPanel_6 = new HorizontalPanel();
+												horizontalPanel_6.setStyleName("BlancoTransparente");
+												horizontalPanel_6.setVerticalAlignment(HasVerticalAlignment.ALIGN_MIDDLE);
+												horizontalPanel_6.setHorizontalAlignment(HasHorizontalAlignment.ALIGN_CENTER);
+												horizontalPanel_2.add(horizontalPanel_6);
+												horizontalPanel_6.setWidth("90px");
+												
+														Image image = new Image("logo_ucm.jpg");
+														horizontalPanel_6.add(image);
+														image.addClickHandler(new ClickHandler() {
+															public void onClick(ClickEvent event) {
+																Window.open("http://www.ucm.es", "_blank", null);
 
-		HorizontalPanel horizontalPanel_3 = new HorizontalPanel();
-		verticalPanel_1.add(horizontalPanel_3);
-		horizontalPanel_3.setHeight("70px");
+															}
+														});
+														image.setSize("75px", "78px");
+														
+																HorizontalPanel horizontalPanel_4 = new HorizontalPanel();
+																horizontalPanel_2.add(horizontalPanel_4);
+																
+																HorizontalPanel horizontalPanel_7 = new HorizontalPanel();
+																horizontalPanel_7.setStyleName("BlancoTransparente");
+																horizontalPanel_7.setVerticalAlignment(HasVerticalAlignment.ALIGN_MIDDLE);
+																horizontalPanel_7.setHorizontalAlignment(HasHorizontalAlignment.ALIGN_CENTER);
+																horizontalPanel_2.add(horizontalPanel_7);
+																horizontalPanel_7.setWidth("180px");
+																
+																		Image image_2 = new Image("logo-leethi_fa.gif");
+																		horizontalPanel_7.add(image_2);
+																		image_2.addClickHandler(new ClickHandler() {
+																			public void onClick(ClickEvent event) {
+																				Window.open("http://www.ucm.es/info/leethi/", "_blank", null);
 
-		horizontalPanel = new HorizontalPanel();
-		verticalPanel_1.add(horizontalPanel);
+																			}
+																		});
+																		image_2.setSize("164px", "72px");
+																		
+																				HorizontalPanel horizontalPanel_5 = new HorizontalPanel();
+																				horizontalPanel_2.add(horizontalPanel_5);
+																				
+																				HorizontalPanel horizontalPanel_8 = new HorizontalPanel();
+																				horizontalPanel_8.setHorizontalAlignment(HasHorizontalAlignment.ALIGN_CENTER);
+																				horizontalPanel_8.setVerticalAlignment(HasVerticalAlignment.ALIGN_MIDDLE);
+																				horizontalPanel_8.setStyleName("BlancoTransparente");
+																				horizontalPanel_2.add(horizontalPanel_8);
+																				horizontalPanel_8.setWidth("220px");
+																				
+																						Image image_3 = new Image("ISLA.jpg");
+																						horizontalPanel_8.add(image_3);
+																						image_3.addClickHandler(new ClickHandler() {
+																							public void onClick(ClickEvent event) {
+																								Window.open("http://ilsa.fdi.ucm.es/", "_blank", null);
 
-		Label lblCollaborativeAnnotationOf = new Label(
-				"Collaborative Annotation of Digitalized Literary Texts");
-		lblCollaborativeAnnotationOf.setStyleName("TituloWelcome");
-		// verticalPanel.add(lblCollaborativeAnnotationOf);
-		lblCollaborativeAnnotationOf.setWidth("1112px");
-		 
-		 HorizontalPanel horizontalPanel_9 = new HorizontalPanel();
-		 horizontalPanel_9.setSpacing(5);
-		 horizontalPanel_9.setVerticalAlignment(HasVerticalAlignment.ALIGN_MIDDLE);
-		 horizontalPanel_9.setHorizontalAlignment(HasHorizontalAlignment.ALIGN_CENTER);
-		 horizontalPanel_9.setStyleName("AzulTransparente");
-		 horizontalPanel.add(horizontalPanel_9);
-		 horizontalPanel_9.setWidth("184px");
-		 
-		 HorizontalPanel horizontalPanel_10 = new HorizontalPanel();
-		 horizontalPanel_10.setSpacing(3);
-		 horizontalPanel_10.setStyleName("BlancoTransparente");
-		 horizontalPanel_9.add(horizontalPanel_10);
-
-		 btnNewButton = new Button("Log In");
-		 horizontalPanel_10.add(btnNewButton);
-		 btnNewButton.addClickHandler(new ClickHandler() {
-		 public void onClick(ClickEvent event) {
-		 Controlador.change2Login();
-		 Footer.clear();
-		 }
-		 });
-		 btnNewButton.setText("Log In");
-		 
+																							}
+																						});
+																						image_3.setSize("201px", "69px");
+																						
+																								HorizontalPanel horizontalPanel_3 = new HorizontalPanel();
+																								verticalPanel_1.add(horizontalPanel_3);
+																								horizontalPanel_3.setHeight("70px");
+																								
+																										horizontalPanel = new HorizontalPanel();
+																										verticalPanel_1.add(horizontalPanel);
+																										
+																										HorizontalPanel horizontalPanel_9 = new HorizontalPanel();
+																										horizontalPanel_9.setSpacing(5);
+																										horizontalPanel_9.setVerticalAlignment(HasVerticalAlignment.ALIGN_MIDDLE);
+																										horizontalPanel_9.setHorizontalAlignment(HasHorizontalAlignment.ALIGN_CENTER);
+																										horizontalPanel_9.setStyleName("AzulTransparente");
+																										horizontalPanel.add(horizontalPanel_9);
+																										horizontalPanel_9.setWidth("184px");
+																										
+																										HorizontalPanel horizontalPanel_10 = new HorizontalPanel();
+																										horizontalPanel_10.setSpacing(3);
+																										horizontalPanel_10.setStyleName("BlancoTransparente");
+																										horizontalPanel_9.add(horizontalPanel_10);
+																										
+																												 btnNewButton = new Button("Log In");
+																												 horizontalPanel_10.add(btnNewButton);
+																												 btnNewButton.addClickHandler(new ClickHandler() {
+																												 public void onClick(ClickEvent event) {
+																												 Controlador.change2Login();
+																												 Footer.clear();
+																												 }
+																												 });
+																												 btnNewButton.setText("Log In");
+																												 
 btnNewButton.addMouseDownHandler(new MouseDownHandler() {
 				public void onMouseDown(MouseDownEvent event) {
 					((Button) event.getSource())
@@ -261,19 +252,30 @@ btnNewButton.addMouseDownHandler(new MouseDownHandler() {
 					.setStyleName("gwt-ButtonCenter");
 		}
 	});
+	
+		btnNewButton
+				.addMouseOverHandler(new MouseOverHandler() {
+					public void onMouseOver(MouseOverEvent event) {
+	
+						((Button) event.getSource())
+								.setStyleName("gwt-ButtonCenterOver");
+	
+					}
+				});
+		
+			btnNewButton.setStyleName("gwt-ButtonCenter");
+			btnNewButton.setSize("164px", "50px");
+		// verticalPanel_1.add(lblNewLabel_1);
+		SimplePanel S = new SimplePanel();
+		Footer.add(S);
+		S.setWidget(lblNewLabel_1);
+		lblNewLabel_1.setStyleName("Desarrolladores");
 
-	btnNewButton
-			.addMouseOverHandler(new MouseOverHandler() {
-				public void onMouseOver(MouseOverEvent event) {
-
-					((Button) event.getSource())
-							.setStyleName("gwt-ButtonCenterOver");
-
-				}
-			});
-
-	btnNewButton.setStyleName("gwt-ButtonCenter");
-	btnNewButton.setSize("164px", "50px");
+		Label lblCollaborativeAnnotationOf = new Label(
+				"Collaborative Annotation of Digitalized Literary Texts");
+		lblCollaborativeAnnotationOf.setStyleName("TituloWelcome");
+		// verticalPanel.add(lblCollaborativeAnnotationOf);
+		lblCollaborativeAnnotationOf.setWidth("1112px");
 		
 	}
 }

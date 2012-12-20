@@ -124,25 +124,25 @@ public enum CatalogTipo {
 		 if (ActualState.getReadingactivity().getVisualization()==null||ActualState.getReadingactivity().getVisualization().equals(Constants.VISUAL_ARBOL))
 	        {
 			 
-			 FinderButton= new FinderOwnGrafo(ActualState.getOpenCatalog());
+			 FinderButton= new FinderOwnGrafo(ActualState.getReadingActivityOpenCatalog());
 			// FinderButton1.RefrescaLosDatos();
 	        }
 	        else 
 	        {
 	        	FinderButton= new FinderKeys();
-	        	FinderButton.setCatalogo(ActualState.getOpenCatalog());
+	        	FinderButton.setCatalogo(ActualState.getReadingActivityOpenCatalog());
 	        //	FinderButton1.RefrescaLosDatos();
 	        }
 		
 		 if (ActualState.getReadingactivity().getVisualization()==null||ActualState.getReadingactivity().getVisualization().equals(Constants.VISUAL_ARBOL))
 	        {
-			 FinderButton2= new FinderOwnGrafo(ActualState.getCatalogo());
+			 FinderButton2= new FinderOwnGrafo(ActualState.getReadingActivityCloseCatalog());
 			// FinderButton1.RefrescaLosDatos();
 	        }
 	        else 
 	        {
 	        	FinderButton2= new FinderKeys();
-	        	FinderButton2.setCatalogo(ActualState.getCatalogo());
+	        	FinderButton2.setCatalogo(ActualState.getReadingActivityCloseCatalog());
 	        //	FinderButton1.RefrescaLosDatos();
 	        }
 		
@@ -529,7 +529,7 @@ Tipos.add(((EntityCatalogElements)BSM.getEntidad()).getEntry()) ;
 				AnotationResultPanel APR=new AnotationResultPanel(AnnotationPanel);
 				AnnotationPanel.clear();
 				for (AnnotationClient AIndiv : result) {
-					AnnotationPanel.add(new CommentPanelBrowser(AIndiv, new Image(ActualState.getBook().getWebLinks().get(AIndiv.getPageNumber())),APR.getHeight()));
+					AnnotationPanel.add(new CommentPanelBrowser(AIndiv, new Image(ActualState.getReadingActivityBook().getWebLinks().get(AIndiv.getPageNumber())),APR.getHeight()));
 				}
 				LoadingPanel.getInstance().hide();
 				

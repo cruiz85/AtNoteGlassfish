@@ -149,13 +149,13 @@ public class FilterAdvance implements EntryPoint{
 		
 		if (ActualState.getReadingactivity().getVisualization()==null||ActualState.getReadingactivity().getVisualization().equals(Constants.VISUAL_ARBOL))
         {
-			FinderButton2= new FinderOwnGrafo(ActualState.getCatalogo());
+			FinderButton2= new FinderOwnGrafo(ActualState.getReadingActivityCloseCatalog());
 			//FinderButton2.RefrescaLosDatos();
         }
         else 
         {
         	FinderButton2= new FinderKeys();
-        	FinderButton2.setCatalogo(ActualState.getCatalogo());
+        	FinderButton2.setCatalogo(ActualState.getReadingActivityCloseCatalog());
           //  FinderButton2.RefrescaLosDatos();
         }
 		
@@ -232,13 +232,13 @@ public class FilterAdvance implements EntryPoint{
 		 //FinderButton1 = new FinderGrafo(ActualUser.getOpenCatalog());
 		 if (ActualState.getReadingactivity().getVisualization()==null||ActualState.getReadingactivity().getVisualization().equals(Constants.VISUAL_ARBOL))
 	        {
-			 FinderButton1= new FinderOwnGrafo(ActualState.getOpenCatalog());
+			 FinderButton1= new FinderOwnGrafo(ActualState.getReadingActivityOpenCatalog());
 			// FinderButton1.RefrescaLosDatos();
 	        }
 	        else 
 	        {
 	        	FinderButton1= new FinderKeys();
-	        	FinderButton1.setCatalogo(ActualState.getOpenCatalog());
+	        	FinderButton1.setCatalogo(ActualState.getReadingActivityOpenCatalog());
 	        //	FinderButton1.RefrescaLosDatos();
 	        }
 		

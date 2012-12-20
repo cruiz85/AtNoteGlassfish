@@ -14,16 +14,16 @@ import lector.client.book.reader.GWTServiceAsync;
 import lector.client.controler.ActualState;
 import lector.client.controler.Constants;
 import lector.client.controler.ErrorConstants;
+import lector.client.controler.InformationConstants;
+import lector.client.logger.Logger;
 import lector.client.reader.LoadingPanel;
 import lector.share.model.Language;
 import lector.share.model.client.BookClient;
 import lector.share.model.client.CatalogoClient;
-import lector.share.model.client.EntryClient;
 import lector.share.model.client.GroupClient;
 import lector.share.model.client.ProfessorClient;
 import lector.share.model.client.ReadingActivityClient;
 import lector.share.model.client.TemplateClient;
-import lector.share.model.client.TypeCategoryClient;
 import lector.share.model.client.TypeClient;
 
 import com.google.gwt.core.client.GWT;
@@ -35,7 +35,6 @@ import com.google.gwt.event.dom.client.MouseOutEvent;
 import com.google.gwt.event.dom.client.MouseOutHandler;
 import com.google.gwt.event.dom.client.MouseOverEvent;
 import com.google.gwt.event.dom.client.MouseOverHandler;
-import com.google.gwt.safehtml.shared.SafeHtml;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.PopupPanel;
 import com.google.gwt.user.client.ui.VerticalPanel;
@@ -64,11 +63,19 @@ import com.google.gwt.event.dom.client.ChangeEvent;
 
 public class EditorActivity extends PopupPanel {
 	
-	/// IDIOMA
-	public static String BOTON_SELECT_DEFAULT_TYPE="Select Default Type";
-	public static String MENU_WELCOME_TEXT="Activity Editor :";
-	public static String MENU_SAVE_BUTTON="Save";
-	public static String DEFAUL_TYPE_LABEL="Default Type : ";
+	
+	
+	private static String MENU_WELLCOME_TEXT="Activity Editor :";
+	private static String MENU_SAVE_BUTTON="Save";
+	private static String MENU_CANCEL_BUTTON="Cancel";
+	private static String TAB_PANEL_LANGUAGE="Language";
+	private static String DEFAUL_TYPE_LABEL="Default Type : ";
+	private static String BOTON_SELECT_DEFAULT_TYPE="Select Default Type";
+	
+	
+	private MenuItem WellcomeMenuItem;
+	private MenuItem SaveMenuItem;
+	private MenuItem CancelMenuItem;
 	
 
 	private ReadingActivityClient ActualActivity;
@@ -94,6 +101,7 @@ public class EditorActivity extends PopupPanel {
 	static GWTServiceAsync bookReaderServiceHolder = GWT
 			.create(GWTService.class);
 	
+	
 	private ExportServiceAsync exportServiceHolder = GWT
 			.create(ExportService.class);
 	private CheckBox CheckBoxFree;
@@ -105,11 +113,13 @@ public class EditorActivity extends PopupPanel {
 	private Image image;
 	private CheckBox AllowDefaulType;
 	private Label DefaultTypeLabel;
-//	private ListBox ComboTypes;
 	private HorizontalPanel Panel_Selecion_Default;
 	private TypeClient DefaultType; 
 	private TypeClient DefaultTypeOld;
 	private Button BotonFinder;
+	
+	
+	
 
 	public EditorActivity(ReadingActivityClient RA) {
 		
@@ -132,23 +142,23 @@ public class EditorActivity extends PopupPanel {
 		MenuBar menuBar = new MenuBar(false);
 		flowPanel.add(menuBar);
 
-		MenuItem mntmNewItem = new MenuItem(EditorActivity.MENU_WELCOME_TEXT, false,
+		WellcomeMenuItem = new MenuItem(EditorActivity.MENU_WELLCOME_TEXT, false,
 				(Command) null);
-		mntmNewItem.setEnabled(false);
-		mntmNewItem.setHTML("Activity Editor : " + ActualActivity.getName());
-		menuBar.addItem(mntmNewItem);
+		WellcomeMenuItem.setEnabled(false);
+		WellcomeMenuItem.setHTML(EditorActivity.MENU_WELLCOME_TEXT + ActualActivity.getName());
+		menuBar.addItem(WellcomeMenuItem);
 
 		MenuItemSeparator separator = new MenuItemSeparator();
 		menuBar.addSeparator(separator);
 
-		MenuItem mntmNewItem_1 = new MenuItem("New item", false, new Command() {
+		SaveMenuItem = new MenuItem(EditorActivity.MENU_SAVE_BUTTON, false, new Command() {
 			public void execute() {
 				
 				if (SelectedBook == null || SelectedCatalog == null
 						|| SelectedGroup == null || SelectedLanguage == null 
 						|| SelectedCatalogPublic == null )
 					if (Window
-							.confirm("Some attributes are in blank. The activity will be unavailable until you fill all the atributes, do you want to continue?"))
+							.confirm(InformationConstants.BLANK_ATRIBUTES))
 						saveActivity();
 					else {
 					}
@@ -160,7 +170,40 @@ public class EditorActivity extends PopupPanel {
 			private void saveActivity() {
 				if (checkcatalog()){
 						if (Window
-							.confirm("Are you sure you want to swap the catalogue in the activity?. The annotation associated to the activity will be deleted")) {
+							.confirm(InformationConstants.ARE_YOU_SURE_TO_SWAP_ONE_ORE_BOTH_CATALOGS)) {
+							
+							Window.alert("Under Developer");
+							StringBuffer SB=new StringBuffer();
+							SB.append("Change Catalog or both and remove activities");
+							if (SelectedCatalogOld != null)
+							{
+								SB.append(" - Old Private: ");
+								SB.append(SelectedCatalogOld.getCatalogName());
+								SB.append(":");
+								SB.append(SelectedCatalogOld.getId());
+							}
+							if (SelectedCatalog != null)
+							{
+								SB.append("- New Private: ");
+								SB.append(SelectedCatalog.getCatalogName());
+								SB.append(":");
+								SB.append(SelectedCatalog.getId());
+							}
+							if (SelectedCatalogOldPublic != null)
+							{	
+								SB.append("- Old Public: ");
+								SB.append(SelectedCatalogOldPublic.getCatalogName());
+								SB.append(":");
+								SB.append(SelectedCatalogOldPublic.getId());
+							}
+							if (SelectedCatalogPublic != null)
+							{
+								SB.append("- New Private: ");
+								SB.append(SelectedCatalogPublic.getCatalogName());
+								SB.append(":");
+								SB.append(SelectedCatalogPublic.getId());
+							}
+							Logger.GetLogger().info(Yo.getClass().toString(), ActualState.getUser().toString(),SB.toString());
 //						LoadingPanel.getInstance().center();
 //						LoadingPanel.getInstance().setLabelTexto("Deleting...");
 						//TODO Reparar
@@ -189,7 +232,25 @@ public class EditorActivity extends PopupPanel {
 					}
 				else if (checkbook()){
 						if (Window
-							.confirm("Are you sure you want to swap the book in the activity?. The annotation associated to the activity will be deleted")) {
+							.confirm(InformationConstants.ARE_YOU_SURE_TO_SWAP_BOOK)) {
+							Window.alert("Under Developer");
+							StringBuffer SB=new StringBuffer();
+							SB.append("Change Book and remove activities");
+							if (SelectedBookOld!=null)
+							{
+								SB.append(" - Old Book: ");
+								SB.append(SelectedBookOld.getTitle());
+								SB.append(":");
+								SB.append(SelectedBookOld.getId());
+							}
+							if (SelectedBook!=null)
+							{
+								SB.append("- New Private: ");
+								SB.append(SelectedBook.getTitle());
+								SB.append(":");
+								SB.append(SelectedBook.getId());
+							}
+							Logger.GetLogger().info(Yo.getClass().toString(), ActualState.getUser().toString(),SB.toString());
 //						LoadingPanel.getInstance().center();
 //						LoadingPanel.getInstance().setLabelTexto("Deleting...");
 						//TODO Reparar
@@ -257,7 +318,7 @@ public class EditorActivity extends PopupPanel {
 				else
 					ActualActivity.setDefaultType(DefaultType.getId());
 				LoadingPanel.getInstance().center();
-				LoadingPanel.getInstance().setLabelTexto("Saving...");
+				LoadingPanel.getInstance().setLabelTexto(InformationConstants.SAVING);
 				bookReaderServiceHolder.saveReadingActivity(ActualActivity,
 						new AsyncCallback<Void>() {
 
@@ -276,16 +337,16 @@ public class EditorActivity extends PopupPanel {
 
 			}
 		});
-		mntmNewItem_1.setHTML(EditorActivity.MENU_SAVE_BUTTON );
-		menuBar.addItem(mntmNewItem_1);
+		SaveMenuItem.setHTML(EditorActivity.MENU_SAVE_BUTTON );
+		menuBar.addItem(SaveMenuItem);
 
-		MenuItem mntmNewItem_2 = new MenuItem("New item", false, new Command() {
+		CancelMenuItem = new MenuItem(EditorActivity.MENU_CANCEL_BUTTON, false, new Command() {
 			public void execute() {
 				Yo.hide();
 			}
 		});
-		mntmNewItem_2.setHTML("Cancel");
-		menuBar.addItem(mntmNewItem_2);
+		CancelMenuItem.setHTML(EditorActivity.MENU_CANCEL_BUTTON);
+		menuBar.addItem(CancelMenuItem);
 
 		VerticalSplitPanel verticalSplitPanel = new VerticalSplitPanel();
 		flowPanel.add(verticalSplitPanel);
@@ -296,7 +357,7 @@ public class EditorActivity extends PopupPanel {
 		tabPanel.setSize("100%", "100%");
 
 		ScrollPanel LanguageSP = new ScrollPanel();
-		tabPanel.add(LanguageSP, "Language", false);
+		tabPanel.add(LanguageSP, EditorActivity.TAB_PANEL_LANGUAGE, false);
 		LanguageSP.setSize("100%", "226px");
 
 		LanguagePanel = new VerticalPanel();
@@ -382,20 +443,6 @@ public class EditorActivity extends PopupPanel {
 				});
 				BotonFinder.setEnabled(false);
 				
-//				ComboTypes = new ListBox();
-//				//TODO Falta Asignar el tipo
-//				ComboTypes.addItem("Alement 1", "1l");
-//				ComboTypes.addItem("Alement 2", "2l");
-//				ComboTypes.addItem("Alement 3", "3l");
-//				Panel_Selecion_Default.add(ComboTypes);
-//				ComboTypes.setWidth("119px");
-//				ComboTypes.addChangeHandler(new ChangeHandler() {
-//					public void onChange(ChangeEvent event) {
-//						
-//						DefaultTypeLabel.setText("Default Type :" + ComboTypes.getValue(ComboTypes.getSelectedIndex()));
-//							//TODO Falta Asignar el tipo
-//					}
-//				});
 
 		ScrollPanel BooksSP = new ScrollPanel();
 		tabPanel.add(BooksSP, "Books", false);

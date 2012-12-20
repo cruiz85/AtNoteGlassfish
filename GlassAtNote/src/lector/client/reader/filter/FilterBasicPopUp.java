@@ -172,7 +172,7 @@ public class FilterBasicPopUp extends PopupPanel {
 				String[] Words= Token.split(",");
 				if (Words.length>0){
 					Types=MakeWords(Words);
-					filtro=FindTypes(Types,ActualState.getCatalogo());
+					filtro=FindTypes(Types,ActualState.getReadingActivityCloseCatalog());
 					ArrayList<UserClient> Usuarios=FindUsers(Types,ActualState.getReadingactivity().getGroup());
 					MainEntryPoint.setFiltro(filtro, Usuarios,Types,new ArrayList<Long>());
 					Me.hide();
