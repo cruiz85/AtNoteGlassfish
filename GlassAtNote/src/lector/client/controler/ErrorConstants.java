@@ -2,6 +2,7 @@ package lector.client.controler;
 
 public class ErrorConstants {
 	
+	public static String ERROR_RETRIVING_GROUPS = "Error Retriving catalog, please reload";
 	public static String ERROR_IN_ADDITION_TO_A_GROUP = "Error additing user to a group ";
 	public static String ERROR_NO_EMAIL_VALIDO = "Error in email, it should be look like 'example@server.com' but looks like ";
 	public static String ERROR_LOAD_IMAGE = "Error retriving graph refresh the page";
@@ -32,7 +33,7 @@ public class ErrorConstants {
 	public static String ERROR_THERE_ARE_NOT_DOWN_BROTHER="There are not a down brother to swap weights the category";
 	public static String ERROR_THERE_ARE_NOT_UP_BROTHER="There are not a up brother to swap weights the category";
 	public static String ERROR_LOADING_TEMPLATE="Error loading the template";
-	public static String COULD_NOT_REFRESH_TEMPLATES="Error retriving templates, plese try re-open editor";
+	public static String ERROR_RETRIVING_TEMPLATES="Error retriving templates, plese try re-open editor";
 	public static String TEMPLATES_CAT_BE_EMPTY="You can not unselect if you do not select a template first";
 	public static String ERROR_RETRIVING_TEMPLATE_MASTER_EXPORT_PANEL="Error Retriving Template, please reload";
 	public static String ERROR_ON_MOVE_CATEGORY_ASCENDESCEN = "Error moving category with her brothers, please retry it";

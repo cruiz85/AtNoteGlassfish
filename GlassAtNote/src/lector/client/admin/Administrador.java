@@ -541,7 +541,7 @@ public class Administrador implements EntryPoint {
 		PanelEdicion.setStyleName("");
 		Button Boton=new Button();
 		PanelEdicion.add(Boton,0, 0);
-		Boton.setHTML("Edit");
+		Boton.setHTML(InformationConstants.EDIT_BOTTON);
 		Boton.addClickHandler(new ClickHandler() {
 			
 			@Override
@@ -561,7 +561,7 @@ public class Administrador implements EntryPoint {
 		PanelEdicion.setStyleName("BlancoTransparente");
 		Button Boton=new Button();
 		PanelEdicion.add(Boton,PanelEdicion.getOffsetWidth()-65, 0);
-		Boton.setHTML("End Edit");
+		Boton.setHTML(InformationConstants.END_EDIT_BOTTON);
 		Boton.addClickHandler(new ClickHandler() {
 			
 			@Override
