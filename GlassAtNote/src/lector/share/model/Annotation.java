@@ -15,10 +15,13 @@ import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.PreRemove;
 
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.Transient;
+
+import org.eclipse.persistence.annotations.PrivateOwned;
 
 @Entity
 @Table(name = "annotation")
@@ -29,23 +32,27 @@ public class Annotation implements Serializable {
 	@Column(name = "id")
 	private Long id;
 	@ManyToOne
+	@JoinColumn(name = "CREATOR_ID")
 	private UserApp creator;
 	@ManyToOne
+	@JoinColumn(name = "ACTIVITY_ID")
 	private ReadingActivity activity;
-	@OneToMany(mappedBy = "annotation", cascade = CascadeType.ALL)
+	@PrivateOwned
+	@OneToMany(mappedBy = "annotation", orphanRemoval = true)
 	private List<AnnotationThread> threads = new ArrayList<AnnotationThread>();
 	@OneToMany(cascade = CascadeType.ALL)
 	private List<TextSelector> textSelectors;
 	private String comment;
 	@ManyToOne
+	@JoinColumn(name = "BOOK_ID")
 	private Book book;
 
 	private short visibility = 0;
 	private short updatability = 0;
 	private Integer pageNumber;
 
-	@ManyToMany(mappedBy="annotations",cascade = CascadeType.PERSIST)
-	@JoinTable(name = "entry_annotation", joinColumns = { @JoinColumn(name = "annotations_id", referencedColumnName = "id") }, inverseJoinColumns = { @JoinColumn(name = "tags_id", referencedColumnName = "id") })
+	@ManyToMany(mappedBy = "annotations")
+	//@JoinTable(name = "tag_annotation", joinColumns = { @JoinColumn(name = "annotations_id", referencedColumnName = "id") }, inverseJoinColumns = { @JoinColumn(name = "tags_id", referencedColumnName = "id") })
 	private List<Tag> tags;
 
 	@Temporal(javax.persistence.TemporalType.DATE)
@@ -185,6 +192,12 @@ public class Annotation implements Serializable {
 
 	public void setUpdatability(short updatability) {
 		this.updatability = updatability;
+	}
+
+	@PreRemove
+	public void preRemove() {
+		setActivity(null);
+		this.activity.getAnnotations().remove(this);
 	}
 
 }

@@ -17,17 +17,16 @@ import lector.share.model.Book;
 public class Professor extends UserApp implements Serializable {
 	private static final long serialVersionUID = 1L;
 
-	@OneToMany(mappedBy = "professor", cascade = CascadeType.ALL)
+	@OneToMany(mappedBy = "professor")
 	private List<ReadingActivity> readingActivities = new ArrayList<ReadingActivity>();
 
-	//@OneToMany(mappedBy = "professor", cascade = CascadeType.ALL)
-	@OneToMany
+	@OneToMany(mappedBy = "professor", cascade = CascadeType.ALL)
 	private List<Book> books = new ArrayList<Book>();
 
 	@OneToMany(mappedBy = "professor", cascade = CascadeType.ALL)
 	private List<Template> templates = new ArrayList<Template>();
 
-	@OneToMany(mappedBy = "professor", cascade = CascadeType.ALL)
+	@OneToMany(mappedBy = "professor", orphanRemoval=true)
 	private List<GroupApp> groups = new ArrayList<GroupApp>();
 
 	public Professor() {

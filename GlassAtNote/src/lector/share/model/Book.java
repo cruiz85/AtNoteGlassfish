@@ -36,11 +36,9 @@ public class Book implements Serializable {
 	// private String imagesPath;
 	// private String url;
 	private int annotationsCount = 0;
-	@OneToMany(mappedBy="book", cascade=CascadeType.REMOVE)
-	private List<Annotation> annotations;
+//	@OneToMany(mappedBy="book", cascade=CascadeType.REMOVE)
+//	private List<Annotation> annotations;
 	private List<String> webLinks = new ArrayList<String>();
-	@OneToMany(cascade= CascadeType.REMOVE)
-	private List<ReadingActivity> readingActivities = new ArrayList<ReadingActivity>();
 	
 	public Book() {
 	}
@@ -128,31 +126,8 @@ public class Book implements Serializable {
 		this.webLinks = webLinks;
 	}
 
-	public void setAnnotations(List<Annotation> annotations) {
-		this.annotations = annotations;
-		this.annotationsCount = this.annotations.size();
-	}
-
-	public List<Annotation> getAnnotations() {
-		return annotations;
-	}
-
-	public List<ReadingActivity> getReadingActivities() {
-		return readingActivities;
-	}
-
-	public void setReadingActivities(List<ReadingActivity> readingActivities) {
-		this.readingActivities = readingActivities;
-	}
-
 	public static long getSerialversionuid() {
 		return serialVersionUID;
 	}
 	
-	@PreRemove
-	private void preRemove() {
-	    for (ReadingActivity r : readingActivities) {
-	        r.setBook(null);
-	    }
-	}
 }

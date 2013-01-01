@@ -23,7 +23,7 @@ public class Template implements Serializable {
 	private Long id;
 	private String name;
 	private short modifyable = 0;
-	@OneToMany(mappedBy = "template", cascade = CascadeType.ALL)
+	@OneToMany(mappedBy = "template", orphanRemoval=true)
 	private List<TemplateCategory> categories = new ArrayList<TemplateCategory>();
 	@ManyToOne
 	private Professor professor;

@@ -30,12 +30,13 @@ public class ReadingActivity implements Serializable, IsSerializable {
 	private String name;
 
 	@ManyToOne
+	@JoinColumn(name = "PROFESSOR_ID")
 	Professor professor;
 
 	private Language language;
 	
 	@ManyToOne
-	@JoinColumn(name = "book_id")
+	@JoinColumn(name = "BOOK_ID")
 	private Book book;
 
 	private GroupApp group;
@@ -45,7 +46,7 @@ public class ReadingActivity implements Serializable, IsSerializable {
 	private String Visualization;
 	private Template template;
 	private short isFreeTemplateAllowed = 0;
-	@OneToMany(mappedBy = "activity", cascade = CascadeType.ALL)
+	@OneToMany(mappedBy = "activity", orphanRemoval=true)
 	private List<Annotation> annotations = new ArrayList<Annotation>();
 
 	private short privacy = 1;

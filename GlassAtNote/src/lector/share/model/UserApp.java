@@ -27,7 +27,7 @@ public class UserApp implements Serializable, IsSerializable {
 	private String lastName;
 	private String email;
 	private String password;
-	@OneToMany(mappedBy = "creator", cascade = CascadeType.ALL)
+	@OneToMany(mappedBy = "creator", orphanRemoval=true) 
 	private List<Annotation> annotations = new ArrayList<Annotation>();
 	@Temporal(javax.persistence.TemporalType.DATE)
 	private Date createdDate;

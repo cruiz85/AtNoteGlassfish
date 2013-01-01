@@ -431,15 +431,19 @@ public class GWTServiceImpl extends RemoteServiceServlet implements GWTService {
 		return ServiceManagerUtils.produceStudentClients(list);
 	}
 
+	// TODO EL ESTUDIANTE TIENE UNA RELACION MANY-TO-MANY
 	@Override
 	public void deleteStudentById(Long studentId) throws GeneralException {
 		EntityManager entityManager = emf.createEntityManager();
 
 		try {
+			Student student = entityManager.find(Student.class, studentId);
 			userTransaction.begin();
-			entityManager.createQuery(
-					"DELETE FROM Student s WHERE s.id=" + studentId)
-					.executeUpdate();
+
+			entityManager.remove(student);
+			student.getParticipatingGroups().size();
+			student.setParticipatingGroups(null);
+			entityManager.flush();
 			userTransaction.commit();
 		} catch (Exception e) {
 			ServiceManagerUtils.rollback(userTransaction);
@@ -510,15 +514,24 @@ public class GWTServiceImpl extends RemoteServiceServlet implements GWTService {
 		return ServiceManagerUtils.produceProfessorClients(professorList);
 	}
 
+	// TODO QUEDE AQUI
 	@Override
 	public void deleteProfessorById(Long professorId) throws GeneralException {
 		EntityManager entityManager = emf.createEntityManager();
 
 		try {
+			Professor professor = entityManager.find(Professor.class,
+					professorId);
 			userTransaction.begin();
-			entityManager.createQuery(
-					"DELETE FROM Professor s WHERE s.id=" + professorId)
-					.executeUpdate();
+			professor.getAnnotations().size();
+			professor.getBooks().size();
+			professor.getGroups().size();
+			professor.getReadingActivities().size();
+			professor.getTemplates().size();
+
+			professor.setAnnotations(null);
+			entityManager.remove(professor);
+			entityManager.flush();
 			userTransaction.commit();
 		} catch (Exception e) {
 			ServiceManagerUtils.rollback(userTransaction);
@@ -544,7 +557,8 @@ public class GWTServiceImpl extends RemoteServiceServlet implements GWTService {
 				oldGroup.setProfessor(professor);
 				oldGroup.setName(groupClient.getName());
 				professor.getGroups().add(oldGroup);
-				saveUser(professor);
+				// saveUser(professor);
+				saveGroup(oldGroup);
 			}
 		} catch (GroupNotFoundException e) {
 
@@ -564,9 +578,10 @@ public class GWTServiceImpl extends RemoteServiceServlet implements GWTService {
 			if (group.getId() == null) {
 				entityManager.persist(group);
 			} else {
+
 				entityManager.merge(group);
 			}
-
+			entityManager.merge(group.getProfessor());
 			userTransaction.commit();
 		} catch (Exception e) {
 			ServiceManagerUtils.rollback(userTransaction);
@@ -997,10 +1012,10 @@ public class GWTServiceImpl extends RemoteServiceServlet implements GWTService {
 						findBook(annotationClient.getBookId()), visibility,
 						updatability, annotationClient.getPageNumber(), tags,
 						annotationClient.isEditable());
-				// for (Tag tag : tags) {
-				// tag.getAnnotations().add(oldAnnotation);
-				// }
-				// saveTag(tag);
+				for (Tag tag : tags) {
+					tag.getAnnotations().add(oldAnnotation);
+				}
+
 				saveAnnotation(oldAnnotation);
 			} catch (UserNotFoundException e) {
 				// TODO Auto-generated catch block
@@ -1174,7 +1189,7 @@ public class GWTServiceImpl extends RemoteServiceServlet implements GWTService {
 					"no Tag found the annotation will not be persisted",
 					e.getStackTrace());
 		}
-		saveAnnotation(annotation);
+	//	saveAnnotation(annotation);
 	}
 
 	private List<Long> getTagIdsFromAnnotation(Annotation a) {
@@ -1192,19 +1207,27 @@ public class GWTServiceImpl extends RemoteServiceServlet implements GWTService {
 		}
 		return ids;
 	}
-
+// CODIGO NUEVO
 	private void checkChangesOnTags(Annotation oldAnnotation, List<Long> aTags,
 			List<Long> aClientTags) throws TagNotFoundException {
 
 		for (Long id : aTags) {
 			if (!aClientTags.contains(id)) {
-				oldAnnotation.getTags().remove(findTag(id));
+				Tag tag = findTag(id);
+				oldAnnotation.getTags().size();
+				oldAnnotation.getTags().remove(tag);
+				tag.getAnnotations().remove(oldAnnotation);
+				
+				
 			}
 		}
 
 		for (Long id : aClientTags) {
 			if (!aTags.contains(id)) {
-				oldAnnotation.getTags().add(findTag(id));
+				Tag tag = findTag(id);
+				oldAnnotation.getTags().size();
+				oldAnnotation.getTags().add(tag);
+				tag.getAnnotations().add(oldAnnotation);
 			}
 		}
 	}
@@ -1220,10 +1243,15 @@ public class GWTServiceImpl extends RemoteServiceServlet implements GWTService {
 			userTransaction.begin();
 			if (annotation.getId() == null) {
 				entityManager.persist(annotation);
+				entityManager.merge(annotation.getActivity());
+				entityManager.merge(annotation.getCreator());
 			} else {
 				entityManager.merge(annotation);
 			}
-
+			for (Tag tag : annotation.getTags()) {
+				entityManager.merge(tag);
+			}
+			entityManager.flush();
 			userTransaction.commit();
 		} catch (Exception e) {
 			ServiceManagerUtils.rollback(userTransaction);
@@ -1518,10 +1546,33 @@ public class GWTServiceImpl extends RemoteServiceServlet implements GWTService {
 		EntityManager entityManager = emf.createEntityManager();
 
 		try {
+			Annotation annotation = entityManager.find(Annotation.class,
+					annotationId);
+			// ReadingActivity activity = entityManager.find(
+			// ReadingActivity.class, annotation.getActivity().getId());
 			userTransaction.begin();
-			entityManager.createQuery(
-					"DELETE FROM Annotation s WHERE s.id=" + annotationId)
-					.executeUpdate();
+
+			annotation.getActivity().getAnnotations().size();
+			annotation.getActivity().getAnnotations().remove(annotation);
+			entityManager.merge(annotation.getActivity());
+			annotation.setActivity(null);
+
+			annotation.getCreator().getAnnotations().size();
+			annotation.getCreator().getAnnotations().remove(annotation);
+			annotation.setCreator(null);
+			entityManager.merge(annotation.getCreator());
+
+			annotation.getTags().size();
+			for (Tag tag : annotation.getTags()) {
+				tag.getAnnotations().remove(annotation);
+			}
+
+			annotation.setTags(null);
+			entityManager.merge(annotation.getTags());
+
+			entityManager.remove(annotation);
+			entityManager.flush();
+			// /entityManager.merge(annotation.getActivity());
 			userTransaction.commit();
 		} catch (Exception e) {
 			ServiceManagerUtils.rollback(userTransaction);
@@ -1999,7 +2050,7 @@ public class GWTServiceImpl extends RemoteServiceServlet implements GWTService {
 
 	private Tag reproduceTagFromClient(TypeClient typeClient)
 			throws TagNotFoundException {
-		if (typeClient.getId() != null) {
+		if (typeClient.getId() == null) {
 			return new Tag(typeClient.getName());
 		} else {
 			return findTag(typeClient.getId());
@@ -2010,7 +2061,7 @@ public class GWTServiceImpl extends RemoteServiceServlet implements GWTService {
 	private FolderDB reproduceFolderFromClient(
 			TypeCategoryClient typeCategoryClient)
 			throws FolderDBNotFoundException {
-		if (typeCategoryClient.getId() != null) {
+		if (typeCategoryClient.getId() == null) {
 			return new FolderDB(typeCategoryClient.getName());
 		} else {
 			return findFolderDB(typeCategoryClient.getId());
@@ -3138,7 +3189,9 @@ public class GWTServiceImpl extends RemoteServiceServlet implements GWTService {
 			} else {
 				entityManager.merge(readingActivity);
 			}
-
+			entityManager.merge(readingActivity.getBook());
+			entityManager.merge(readingActivity.getProfessor());
+			entityManager.flush();
 			userTransaction.commit();
 		} catch (Exception e) {
 			ServiceManagerUtils.rollback(userTransaction);

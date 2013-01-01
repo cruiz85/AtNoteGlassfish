@@ -20,6 +20,7 @@ public class Relation implements Serializable {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
+	@ManyToOne
 	private Entry father;
 	private Entry child;
 	private Long catalogId;

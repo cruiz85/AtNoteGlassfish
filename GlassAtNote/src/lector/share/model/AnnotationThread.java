@@ -18,6 +18,8 @@ import javax.persistence.Temporal;
 
 import javax.persistence.Table;
 
+import org.eclipse.persistence.annotations.PrivateOwned;
+
 @Entity
 @Table(name = "annotation_thread")
 public class AnnotationThread implements Serializable {
@@ -28,11 +30,11 @@ public class AnnotationThread implements Serializable {
 	@ManyToOne
 	@JoinColumn(name = "fathertId")
 	private AnnotationThread father;
+	@PrivateOwned
 	@OneToMany(mappedBy = "father", cascade = CascadeType.ALL)
 	private List<AnnotationThread> subThreads = new ArrayList<AnnotationThread>();
-	
 	@ManyToOne
-	@JoinColumn(name = "annotation")
+	@JoinColumn(name = "ANNOTATION_ID")
 	private Annotation annotation;
 	private String comment;
 	private Long userId;    
