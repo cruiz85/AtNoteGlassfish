@@ -67,10 +67,10 @@ public class Login implements EntryPoint {
 	private TextBox email;
 	private TextBox FirstName;
 	private Login Yo;
-	private StudentClient newStudent;
+	private UserClient newStudent;
 	private CheckBox KeepConected;
 	private final long SemillaPrimo=999983;
-	private AbsolutePanel PanelEdicion;
+//	private AbsolutePanel PanelEdicion;
 	private DockPanel dockPanel;
 	private RootPanel rootPanel;
 
@@ -457,7 +457,9 @@ public class Login implements EntryPoint {
 				} else if (!isValidEmail(email.getText())) {
 					Window.alert(ErrorConstants.IT_IS_NOT_A_EMAIL);
 				} else {
-					StudentClient UC = new StudentClient();
+					//TODO
+					ProfessorClient UC = new ProfessorClient();
+					//StudentClient UC = new StudentClient();
 					UC.setFirstName(FirstName.getText());
 					UC.setLastName(lastName.getText());
 					UC.setEmail(email.getText().toLowerCase());

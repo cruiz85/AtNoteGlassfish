@@ -1,20 +1,20 @@
 package lector.client.controler;
 
 
-import java.util.Locale;
-
-import javax.security.auth.callback.LanguageCallback;
-
+import com.google.gwt.core.client.GWT;
 import com.google.gwt.user.client.Window;
-
+import com.google.gwt.user.client.rpc.AsyncCallback;
 
 import lector.client.admin.Administrador;
+import lector.client.admin.activity.EditorActivity;
+import lector.client.book.reader.GWTService;
+import lector.client.book.reader.GWTServiceAsync;
+import lector.client.logger.Logger;
+import lector.client.reader.LoadingPanel;
 import lector.share.model.Language;
 import lector.share.model.client.BookClient;
 import lector.share.model.client.CatalogoClient;
-import lector.share.model.client.ProfessorClient;
 import lector.share.model.client.ReadingActivityClient;
-import lector.share.model.client.StudentClient;
 import lector.share.model.client.UserClient;
 
 public class ActualState {
@@ -22,6 +22,8 @@ public class ActualState {
 	private static UserClient User;
 	private static ReadingActivityClient readingactivity;
 	private static Language ActualLanguage;
+	static GWTServiceAsync bookReaderServiceHolder = GWT
+			.create(GWTService.class);
 
 	public static UserClient getUser() {
 		return User;
@@ -103,7 +105,8 @@ public class ActualState {
 
 	private static void ChangeLanguage() {
 		//Reaccion en cadena a todos los elementos con Lenguaje editable
-		//Administrador.FromFile(Entrada);
+		Administrador.FromFile(ActualLanguage.getAdministracionLanguageConfiguration());
+		EditorActivity.FromFile(ActualLanguage.getEditorActivityLanguageConfiguration());
 	}
 
 	public static boolean isLanguageActive() {
@@ -112,7 +115,26 @@ public class ActualState {
 	}
 
 	public static void saveLanguageActual(Language languageActual) {
-		// TODO salva el Lenguaje
+		ActualLanguage=languageActual;
+		LoadingPanel.getInstance().setLabelTexto(
+				InformationConstants.LOADING);
+		LoadingPanel.getInstance().center();
+		bookReaderServiceHolder.saveLanguage(languageActual, new AsyncCallback<Void>() {
+			
+			@Override
+			public void onSuccess(Void result) {
+				LoadingPanel.getInstance().hide();
+				
+			}
+			
+			@Override
+			public void onFailure(Throwable caught) {
+				LoadingPanel.getInstance().hide();
+				Window.alert(ErrorConstants.ERROR_SAVING_LANGUAGE);
+				Logger.GetLogger().severe(ActualState.class.toString(),getUser().toString(), ErrorConstants.ERROR_SAVING_LANGUAGE);
+				
+			}
+		});
 		
 	}
 	

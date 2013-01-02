@@ -82,6 +82,8 @@ public class ErrorConstants {
 	public static String ERROR_DELETING_READING_ACTIVITY="Error Deleting Reading Activity";
 	public static String ERROR_LOADING_USER= "Error Loading user";
 	public static String ERROR_ACTIVITY_DONT_EXIST_OR_ARE_UNREACHEABLE="The activity don't exist or are unreacheable now, may be because was removed recently, if don't, try again";
+	
+	//Posible deprecated
 	public static String ERROR_LOADING_CATALOG_IN= "Error Loading Catalog in : ";
 	public static String ERROR_SAVING_CATALOG="I could not save the Catalogue";
 	public static String ERROR_DELETING_CATALOG="The Catalog could not be deleted";
@@ -90,6 +92,9 @@ public class ErrorConstants {
 	public static String ERROR_DELETING_LANGUAGE= "The language could not be removed";
 	public static String ERROR_SAVING_ENTRY= "The catalog elment could not be saved";
 	public static String ERROR_RETRIVING_USERS= "Error Retriving Users";
+	
+	//Posible constante de error del sistema
+	public static String ERROR_LOADING_LANGUAGE_IN;
 
 	
 }

@@ -19,6 +19,10 @@ public class Language implements Serializable {
 	private Long id;
 
 	private String name;
+	
+	private String AdministracionLanguageConfiguration = "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n";
+	private String EditorActivityLanguageConfiguration="\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n"; 
+	
 	// MainWindow
 	private String NamePage = "@Note";
 	private String Specifications = "Book Card";
@@ -103,19 +107,11 @@ public class Language implements Serializable {
 	private String OpenTypes = "Open Types";
 
 	public Language() {
+		
 	}
 
-	// TODO Generales
 	public Language(String name) {
 		this.name = name;
-	}
-
-	public Long getId() {
-		return id;
-	}
-
-	public void setId(Long id) {
-		this.id = id;
 	}
 
 	public String getName() {
@@ -125,10 +121,45 @@ public class Language implements Serializable {
 	public void setName(String name) {
 		this.name = name;
 	}
+	
+	public Long getId() {
+		return id;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
+	}
+	
+	public String getAdministracionLanguageConfiguration() {
+		return AdministracionLanguageConfiguration;
+	}
+
+	public void setAdministracionLanguageConfiguration(
+			String administracionLanguageConfiguration) {
+		AdministracionLanguageConfiguration = administracionLanguageConfiguration;
+	}
+	
+	public String getEditorActivityLanguageConfiguration() {
+		return EditorActivityLanguageConfiguration;
+	}
+
+	public void setEditorActivityLanguageConfiguration(
+			String editorActivityLanguageConfiguration) {
+		EditorActivityLanguageConfiguration = editorActivityLanguageConfiguration;
+	}
+	
+	
+	
+	// TODO Generales
+
+
+	
 
 	public void setNewAdmin(String newAdmin) {
 		NewAdmin = newAdmin;
 	}
+
+	
 
 	// TODO MainWindow
 	public String getNamePage() {

@@ -65,7 +65,11 @@ import com.google.gwt.event.dom.client.ChangeHandler;
 import com.google.gwt.event.dom.client.ChangeEvent;
 
 public class EditorActivity extends PopupPanel {
-
+	
+	private static final String EDITORACTIVITY_NAME = "Editor Activity PopUp";
+	
+	private static final int NCampos=21;
+	
 	private static String MENU_WELLCOME_TEXT = "Activity Editor :";
 	private static String MENU_SAVE_BUTTON = "Save";
 	private static String MENU_CANCEL_BUTTON = "Cancel";
@@ -786,60 +790,45 @@ public class EditorActivity extends PopupPanel {
 				else PUBLIC_CATALOG_LABEL=PUBLIC_CATALOG_LABEL_RESET;
 				
 				
-//				if (!PublicCatalogLabelTextBox.getText().isEmpty())
-//				MY_PROFILE_BUTTON=PublicCatalogLabelTextBox.getText();
-//			else MY_PROFILE_BUTTON=MY_PROFILE_BUTTON_RESET;
-//			
+				if (!DefaultTypeLabelTextBox.getText().isEmpty())
+				DEFAUL_TYPE_LABEL=DefaultTypeLabelTextBox.getText();
+			else DEFAUL_TYPE_LABEL=DEFAUL_TYPE_LABEL_RESET;
+			
 				
 				
-//				if (!MyProfileButtonTextBox.getText().isEmpty())
-//				MY_PROFILE_BUTTON=MyProfileButtonTextBox.getText();
-//			else MY_PROFILE_BUTTON=MY_PROFILE_BUTTON_RESET;
-//			
+				if (!BooksLabelTextBox.getText().isEmpty())
+				BOOK_LABEL=BooksLabelTextBox.getText();
+			else BOOK_LABEL=BOOK_LABEL_RESET;
+			
 				
 				
-//				if (!MyProfileButtonTextBox.getText().isEmpty())
-//				MY_PROFILE_BUTTON=MyProfileButtonTextBox.getText();
-//			else MY_PROFILE_BUTTON=MY_PROFILE_BUTTON_RESET;
-//			
+				if (!GroupsLabel.getText().isEmpty())
+				GROUPS_LABEL=GroupsLabel.getText();
+			else GROUPS_LABEL=GROUPS_LABEL_RESET;
+			
 				
 				
-//				if (!MyProfileButtonTextBox.getText().isEmpty())
-//				MY_PROFILE_BUTTON=MyProfileButtonTextBox.getText();
-//			else MY_PROFILE_BUTTON=MY_PROFILE_BUTTON_RESET;
-//			
+				if (!TemplateLabelTextBox.getText().isEmpty())
+				TEMPLATE_LABEL=TemplateLabelTextBox.getText();
+			else TEMPLATE_LABEL=TEMPLATE_LABEL_RESET;
+			
 				
 				
-//				if (!MyProfileButtonTextBox.getText().isEmpty())
-//				MY_PROFILE_BUTTON=MyProfileButtonTextBox.getText();
-//			else MY_PROFILE_BUTTON=MY_PROFILE_BUTTON_RESET;
-//			
+				if (!BlankTemplateAllowedLabelTextBox.getText().isEmpty())
+				BLANK_TEMPLATE_ALLOWED=BlankTemplateAllowedLabelTextBox.getText();
+			else BLANK_TEMPLATE_ALLOWED=BLANK_TEMPLATE_ALLOWED_RESET;
+			
 				
 				
-//				if (!MyProfileButtonTextBox.getText().isEmpty())
-//				MY_PROFILE_BUTTON=MyProfileButtonTextBox.getText();
-//			else MY_PROFILE_BUTTON=MY_PROFILE_BUTTON_RESET;
-//			
-				
-				
-//				if (!MyProfileButtonTextBox.getText().isEmpty())
-//				MY_PROFILE_BUTTON=MyProfileButtonTextBox.getText();
-//			else MY_PROFILE_BUTTON=MY_PROFILE_BUTTON_RESET;
-//			
-				
-//				ParsearFieldsAItems();
-//				SaveChages();
+				if (!VisualizacionLabelTextBox.getText().isEmpty())
+					VISUALIZACION_LABEL=VisualizacionLabelTextBox.getText();
+			else VISUALIZACION_LABEL=VISUALIZACION_LABEL_RESET;
+			
+								
+				ParsearFieldsAItems();
+				SaveChages();
 			}
 		});
-		/*
-		 * TODO Aqui me quede Trabaajando 21/12/2012
-	private TextBox DefaultTypeLabelTextBox ;
-	private TextBox BooksLabelTextBox ;
-	private TextBox GroupsLabelTextBox ;
-	private TextBox TemplateLabelTextBox ;
-	private TextBox BlankTemplateAllowedLabelTextBox ;
-	private TextBox VisualizacionLabelTextBox ;
-		 */
 		WellcomeMenuItemTextBox=new TextBox();
 		WellcomeMenuItemTextBox.setText(EditorActivity.MENU_WELLCOME_TEXT);
 		WellcomeMenuItemTextBox.setSize(WellcomeMenuItem.getOffsetWidth()+"px", WellcomeMenuItem.getOffsetHeight()+"px");
@@ -930,36 +919,147 @@ public class EditorActivity extends PopupPanel {
 		PublicCatalogLabelTextBox.setSize(PublicCatalogLabel.getOffsetWidth()+"px", PublicCatalogLabel.getOffsetHeight()+"px");
 		PanelEdicion.add(PublicCatalogLabelTextBox, PublicCatalogLabel.getAbsoluteLeft(), PublicCatalogLabel.getAbsoluteTop());
 		
-//		ReturnToActivityButtonTextBox=new TextBox();
-//		ReturnToActivityButtonTextBox.setText(RETURN_TO_ACTIVITY_BUTTON);
-//		ReturnToActivityButtonTextBox.setSize(ReturnToActivityButton.getOffsetWidth()+"px", ReturnToActivityButton.getOffsetHeight()+"px");
-//		PanelEdicion.add(ReturnToActivityButtonTextBox, ReturnToActivityButton.getAbsoluteLeft(), ReturnToActivityButton.getAbsoluteTop());
-//		
-//		ReturnToActivityButtonTextBox=new TextBox();
-//		ReturnToActivityButtonTextBox.setText(RETURN_TO_ACTIVITY_BUTTON);
-//		ReturnToActivityButtonTextBox.setSize(ReturnToActivityButton.getOffsetWidth()+"px", ReturnToActivityButton.getOffsetHeight()+"px");
-//		PanelEdicion.add(ReturnToActivityButtonTextBox, ReturnToActivityButton.getAbsoluteLeft(), ReturnToActivityButton.getAbsoluteTop());
-//		
-//		ReturnToActivityButtonTextBox=new TextBox();
-//		ReturnToActivityButtonTextBox.setText(RETURN_TO_ACTIVITY_BUTTON);
-//		ReturnToActivityButtonTextBox.setSize(ReturnToActivityButton.getOffsetWidth()+"px", ReturnToActivityButton.getOffsetHeight()+"px");
-//		PanelEdicion.add(ReturnToActivityButtonTextBox, ReturnToActivityButton.getAbsoluteLeft(), ReturnToActivityButton.getAbsoluteTop());
-//		
-//		ReturnToActivityButtonTextBox=new TextBox();
-//		ReturnToActivityButtonTextBox.setText(RETURN_TO_ACTIVITY_BUTTON);
-//		ReturnToActivityButtonTextBox.setSize(ReturnToActivityButton.getOffsetWidth()+"px", ReturnToActivityButton.getOffsetHeight()+"px");
-//		PanelEdicion.add(ReturnToActivityButtonTextBox, ReturnToActivityButton.getAbsoluteLeft(), ReturnToActivityButton.getAbsoluteTop());
-//		
-//		ReturnToActivityButtonTextBox=new TextBox();
-//		ReturnToActivityButtonTextBox.setText(RETURN_TO_ACTIVITY_BUTTON);
-//		ReturnToActivityButtonTextBox.setSize(ReturnToActivityButton.getOffsetWidth()+"px", ReturnToActivityButton.getOffsetHeight()+"px");
-//		PanelEdicion.add(ReturnToActivityButtonTextBox, ReturnToActivityButton.getAbsoluteLeft(), ReturnToActivityButton.getAbsoluteTop());
-//		
-//		ReturnToActivityButtonTextBox=new TextBox();
-//		ReturnToActivityButtonTextBox.setText(RETURN_TO_ACTIVITY_BUTTON);
-//		ReturnToActivityButtonTextBox.setSize(ReturnToActivityButton.getOffsetWidth()+"px", ReturnToActivityButton.getOffsetHeight()+"px");
-//		PanelEdicion.add(ReturnToActivityButtonTextBox, ReturnToActivityButton.getAbsoluteLeft(), ReturnToActivityButton.getAbsoluteTop());
-//		
+		DefaultTypeLabelTextBox=new TextBox();
+		DefaultTypeLabelTextBox.setText(DEFAUL_TYPE_LABEL);
+		DefaultTypeLabelTextBox.setSize(DefaultTypeLabel.getOffsetWidth()+"px", DefaultTypeLabel.getOffsetHeight()+"px");
+		PanelEdicion.add(DefaultTypeLabelTextBox, DefaultTypeLabel.getAbsoluteLeft(), DefaultTypeLabel.getAbsoluteTop());
+		
+		BooksLabelTextBox=new TextBox();
+		BooksLabelTextBox.setText(BOOK_LABEL);
+		BooksLabelTextBox.setSize(BooksLabel.getOffsetWidth()+"px", BooksLabel.getOffsetHeight()+"px");
+		PanelEdicion.add(BooksLabelTextBox, BooksLabel.getAbsoluteLeft(), BooksLabel.getAbsoluteTop());
+		
+		GroupsLabelTextBox=new TextBox();
+		GroupsLabelTextBox.setText(GROUPS_LABEL);
+		GroupsLabelTextBox.setSize(GroupsLabel.getOffsetWidth()+"px", GroupsLabel.getOffsetHeight()+"px");
+		PanelEdicion.add(GroupsLabelTextBox, GroupsLabel.getAbsoluteLeft(), GroupsLabel.getAbsoluteTop());
+		
+		TemplateLabelTextBox=new TextBox();
+		TemplateLabelTextBox.setText(TEMPLATE_LABEL);
+		TemplateLabelTextBox.setSize(TemplateLabel.getOffsetWidth()+"px", TemplateLabel.getOffsetHeight()+"px");
+		PanelEdicion.add(TemplateLabelTextBox, TemplateLabel.getAbsoluteLeft(), TemplateLabel.getAbsoluteTop());
+		
+		BlankTemplateAllowedLabelTextBox=new TextBox();
+		BlankTemplateAllowedLabelTextBox.setText(BLANK_TEMPLATE_ALLOWED);
+		BlankTemplateAllowedLabelTextBox.setSize(BlankTemplateAllowedLabel.getOffsetWidth()+"px", BlankTemplateAllowedLabel.getOffsetHeight()+"px");
+		PanelEdicion.add(BlankTemplateAllowedLabelTextBox, BlankTemplateAllowedLabel.getAbsoluteLeft(), BlankTemplateAllowedLabel.getAbsoluteTop());
+		
+		VisualizacionLabelTextBox=new TextBox();
+		VisualizacionLabelTextBox.setText(VISUALIZACION_LABEL);
+		VisualizacionLabelTextBox.setSize(VisualizacionLabel.getOffsetWidth()+"px", VisualizacionLabel.getOffsetHeight()+"px");
+		PanelEdicion.add(VisualizacionLabelTextBox, VisualizacionLabel.getAbsoluteLeft(), VisualizacionLabel.getAbsoluteTop());
+		
+	}
+
+	protected void SaveChages() {
+		Language LanguageActual = ActualState.getActualLanguage();
+		String EditorActivityLanguageConfiguration=toFile();
+		LanguageActual.setEditorActivityLanguageConfiguration(EditorActivityLanguageConfiguration);
+		ActualState.saveLanguageActual(LanguageActual);
+		
+	}
+
+	public String toFile() {
+		StringBuffer SB=new StringBuffer();
+		SB.append(MENU_WELLCOME_TEXT + '\n');
+		SB.append( MENU_SAVE_BUTTON + '\n' );
+		SB.append( MENU_CANCEL_BUTTON + '\n' );
+		SB.append( TAB_PANEL_LANGUAGE + '\n' );
+		SB.append( TAB_PANEL_CATALOG + '\n' );
+		SB.append( ALLOW_DEFAULT_TYPE + '\n' );
+		SB.append( BOTON_SELECT_DEFAULT_TYPE + '\n' );
+		SB.append( TAB_PANEL_BOOK + '\n' );
+		SB.append( TAB_PANEL_GROUPS + '\n' );
+		SB.append( TAB_PANEL_TEMPLATES + '\n' );
+		SB.append( ALLOW_BLANK_TEMPLATE + '\n' );
+		SB.append( TAB_PANEL_VISUALIZACION + '\n' );
+		SB.append( LANGUAGE_LABEL + '\n' );
+		SB.append( PRIVATE_CATALOG_LABEL + '\n' );
+		SB.append( PUBLIC_CATALOG_LABEL + '\n' );
+		SB.append( DEFAUL_TYPE_LABEL + '\n' );
+		SB.append( BOOK_LABEL + '\n' );
+		SB.append( GROUPS_LABEL + '\n' );
+		SB.append( TEMPLATE_LABEL + '\n' );
+		SB.append( BLANK_TEMPLATE_ALLOWED + '\n' );
+		SB.append( VISUALIZACION_LABEL + '\n' );
+		return SB.toString();
+	}
+
+	public static void FromFile(String Entrada) {
+		String[] Lista = Entrada.split("\n");
+		if (Lista.length >= NCampos) {
+			if (!Lista[0].isEmpty())
+				MENU_WELLCOME_TEXT = Lista[0];
+			if (!Lista[1].isEmpty())
+				MENU_SAVE_BUTTON = Lista[1];
+			if (!Lista[2].isEmpty())
+				MENU_CANCEL_BUTTON = Lista[2];
+			if (!Lista[3].isEmpty())
+				TAB_PANEL_LANGUAGE = Lista[3];
+			if (!Lista[4].isEmpty())
+				TAB_PANEL_CATALOG = Lista[4];
+			if (!Lista[5].isEmpty())
+				ALLOW_DEFAULT_TYPE = Lista[5];
+			if (!Lista[6].isEmpty())
+				BOTON_SELECT_DEFAULT_TYPE = Lista[6];
+			if (!Lista[7].isEmpty())
+				TAB_PANEL_BOOK = Lista[7];
+			if (!Lista[8].isEmpty())
+				TAB_PANEL_GROUPS = Lista[8];
+			if (!Lista[9].isEmpty())
+				TAB_PANEL_TEMPLATES = Lista[9];
+			if (!Lista[10].isEmpty())
+				ALLOW_BLANK_TEMPLATE = Lista[10];
+			if (!Lista[11].isEmpty())
+				TAB_PANEL_VISUALIZACION = Lista[11];
+			if (!Lista[12].isEmpty())
+				LANGUAGE_LABEL = Lista[12];
+			if (!Lista[13].isEmpty())
+				PRIVATE_CATALOG_LABEL = Lista[13];
+			if (!Lista[14].isEmpty())
+				PUBLIC_CATALOG_LABEL = Lista[14];
+			if (!Lista[14].isEmpty())
+				DEFAUL_TYPE_LABEL = Lista[15];
+			if (!Lista[14].isEmpty())
+				BOOK_LABEL = Lista[16];
+			if (!Lista[14].isEmpty())
+				GROUPS_LABEL = Lista[17];
+			if (!Lista[14].isEmpty())
+				TEMPLATE_LABEL = Lista[18];
+			if (!Lista[14].isEmpty())
+				BLANK_TEMPLATE_ALLOWED = Lista[19];
+			if (!Lista[14].isEmpty())
+				VISUALIZACION_LABEL = Lista[20];
+		}
+		else 
+			Logger.GetLogger().severe(EditorActivity.class.toString(), ActualState.getUser().toString(), ErrorConstants.ERROR_LOADING_LANGUAGE_IN  + EDITORACTIVITY_NAME);	
+	}
+	
+	protected void ParsearFieldsAItems() {
+
+		WellcomeMenuItem.setHTML(MENU_WELLCOME_TEXT);	
+		SaveMenuItem.setHTML(MENU_SAVE_BUTTON);
+		CancelMenuItem.setHTML(MENU_CANCEL_BUTTON);
+		TabPanelGeneral.clear();
+		TabPanelGeneral.add(LanguageTabPanel, EditorActivity.TAB_PANEL_LANGUAGE, false);
+		TabPanelGeneral.add(CatalogTabPanel, EditorActivity.TAB_PANEL_CATALOG, false);
+		AllowDefaulTypeCheckBox.setHTML(ALLOW_DEFAULT_TYPE);
+		BotonSelectDefaultType.setHTML(BOTON_SELECT_DEFAULT_TYPE);
+		TabPanelGeneral.add(BooksTabPanel, EditorActivity.TAB_PANEL_BOOK, false);
+		TabPanelGeneral.add(GroupsTabPanel, EditorActivity.TAB_PANEL_GROUPS, false);
+		TabPanelGeneral.add(TemplatesTabPanel, EditorActivity.TAB_PANEL_TEMPLATES, false);
+		AllowFreeTemplateCheckBox.setHTML(ALLOW_BLANK_TEMPLATE);
+		TabPanelGeneral.add(VisualizacionTabPanel, EditorActivity.TAB_PANEL_VISUALIZACION, false);
+		LanguageLabel.setText(LANGUAGE_LABEL);
+		PrivateCatalogLabel.setText(PRIVATE_CATALOG_LABEL);
+		PublicCatalogLabel.setText(PUBLIC_CATALOG_LABEL);
+		DefaultTypeLabel.setText(DEFAUL_TYPE_LABEL);
+		BooksLabel.setText(BOOK_LABEL);
+		GroupsLabel.setText(GROUPS_LABEL);
+		TemplateLabel.setText(TEMPLATE_LABEL);
+		BlankTemplateAllowedLabel.setText(BLANK_TEMPLATE_ALLOWED);
+		VisualizacionLabel.setText(VISUALIZACION_LABEL);
+		
 	}
 
 	private void generateOldCampsAndPanels() {

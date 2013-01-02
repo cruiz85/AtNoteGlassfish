@@ -1,5 +1,6 @@
 package lector.client.admin;
 
+import lector.client.admin.activity.EditorActivity;
 import lector.client.book.reader.GWTService;
 import lector.client.book.reader.GWTServiceAsync;
 import lector.client.controler.ActualState;
@@ -40,7 +41,7 @@ public class Administrador implements EntryPoint {
 
 	private static final String ADMINISTRATORS_NAME = "Administration Menu";
 	
-	private static final int NCampos=14;
+	private static final int NCampos=15;
 	
 	private static String WELLCOME_MENU = "Welcome to the administrator page : ";
 	private static String BIENVENIDA = "null";
@@ -145,8 +146,6 @@ public class Administrador implements EntryPoint {
 					public void execute() {
 						Controlador.change2Welcome();
 						Cookies.removeCookie(Constants.COOKIE_NAME);
-						// Window.open(ActualUser.getUser().getLogoutUrl(),
-						// "_self", "");
 						Logger.GetLogger()
 						.info(Yo.getClass().toString(),
 								ActualState.getUser().toString(),
@@ -702,8 +701,8 @@ public class Administrador implements EntryPoint {
 	
 	protected void SaveChages() {
 		Language LanguageActual = ActualState.getActualLanguage();
-		String AdministracionLanguageConfiguratio=toFile();
-		//TODO modificarLenguaje
+		String AdministracionLanguageConfiguration=toFile();
+		LanguageActual.setAdministracionLanguageConfiguration(AdministracionLanguageConfiguration);
 		ActualState.saveLanguageActual(LanguageActual);
 		
 	}
@@ -750,7 +749,7 @@ public class Administrador implements EntryPoint {
 	
 	public static void FromFile(String Entrada) {
 		String[] Lista = Entrada.split("\n");
-		if (Lista.length > NCampos) {
+		if (Lista.length >= NCampos) {
 			if (!Lista[0].isEmpty())
 				WELLCOME_MENU = Lista[0];
 			if (!Lista[1].isEmpty())
@@ -783,7 +782,7 @@ public class Administrador implements EntryPoint {
 				RETURN_TO_ACTIVITY_BUTTON = Lista[14];
 		}
 		else 
-			Window.alert(ErrorConstants.ERROR_LOADING_CATALOG_IN+ ADMINISTRATORS_NAME);
+			Logger.GetLogger().severe(EditorActivity.class.toString(), ActualState.getUser().toString(), ErrorConstants.ERROR_LOADING_LANGUAGE_IN  + ADMINISTRATORS_NAME);
 			
 			
 		
