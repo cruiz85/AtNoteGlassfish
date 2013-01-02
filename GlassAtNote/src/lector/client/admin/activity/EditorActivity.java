@@ -165,6 +165,8 @@ public class EditorActivity extends PopupPanel {
 	private static String IMAGEN_KEY="EditImages/Key.jpg";
 	private Image imageVisualization;
 	
+	private static final int DecoradorWidth = 1;
+	
 	private EditorActivity Yo;
 	
 	private ReadingActivityClient ActualActivity;
@@ -194,6 +196,8 @@ public class EditorActivity extends PopupPanel {
 			.create(ExportService.class);
 	private AbsolutePanel PanelEdicion;
 	private FlowPanel flowPanel;
+
+	private AbsolutePanel GeneralPanel;
 	
 
 	public EditorActivity(ReadingActivityClient RA) {
@@ -210,8 +214,11 @@ public class EditorActivity extends PopupPanel {
 		setGlassEnabled(true);
 		ActualActivity = RA;
 		Yo = this;
+		GeneralPanel=new AbsolutePanel();
+		GeneralPanel.setSize("794px", "536px");
 		flowPanel = new FlowPanel();
-		setWidget(flowPanel);
+		setWidget(GeneralPanel);
+		GeneralPanel.add(flowPanel, 0, 0);
 		flowPanel.setSize("794px", "536px");
 
 		MenuBar menuBar = new MenuBar(false);
@@ -689,19 +696,17 @@ public class EditorActivity extends PopupPanel {
 		TabPanelGeneral.selectTab(0);
 		
 		PanelEdicion=new AbsolutePanel();
-		if (ActualState.isLanguageActive())
-			closeEditPanel();
 
 	}
 
 	private void closeEditPanel() {
-		RootPanel.get().remove(PanelEdicion);
-		RootPanel.get().add(PanelEdicion, flowPanel.getAbsoluteTop()-40, flowPanel.getAbsoluteTop());
+		GeneralPanel.remove(PanelEdicion);
+		GeneralPanel.add(PanelEdicion,flowPanel.getOffsetWidth()-40, 0);
 		PanelEdicion.setSize("40px","50px");
 		PanelEdicion.clear();
 		PanelEdicion.setStyleName("");
 		Button Boton=new Button();
-		PanelEdicion.add(Boton,0, 0);
+		PanelEdicion.add(Boton,0,0);
 		Boton.setHTML(InformationConstants.EDIT_BOTTON);
 		Boton.addClickHandler(new ClickHandler() {
 			
@@ -715,13 +720,13 @@ public class EditorActivity extends PopupPanel {
 	}
 
 	public void OpenEditPanel() {
-		RootPanel.get().remove(PanelEdicion);
-		RootPanel.get().add(PanelEdicion, flowPanel.getAbsoluteLeft(), flowPanel.getAbsoluteTop());
+		GeneralPanel.remove(PanelEdicion);
+		GeneralPanel.add(PanelEdicion,0,0);
 		PanelEdicion.setSize(flowPanel.getOffsetWidth()+"px",flowPanel.getOffsetHeight()+"px");
 		PanelEdicion.clear();
 		PanelEdicion.setStyleName("BlancoTransparente");
 		Button Boton=new Button();
-		PanelEdicion.add(Boton,PanelEdicion.getOffsetWidth()-65, 0);
+		PanelEdicion.add(Boton,PanelEdicion.getOffsetWidth()-70, 0);
 		Boton.setHTML(InformationConstants.END_EDIT_BOTTON);
 		Boton.addClickHandler(new ClickHandler() {
 			
@@ -832,18 +837,18 @@ public class EditorActivity extends PopupPanel {
 		WellcomeMenuItemTextBox=new TextBox();
 		WellcomeMenuItemTextBox.setText(EditorActivity.MENU_WELLCOME_TEXT);
 		WellcomeMenuItemTextBox.setSize(WellcomeMenuItem.getOffsetWidth()+"px", WellcomeMenuItem.getOffsetHeight()+"px");
-		PanelEdicion.add(WellcomeMenuItemTextBox, WellcomeMenuItem.getAbsoluteLeft(), WellcomeMenuItem.getAbsoluteTop());
+		PanelEdicion.add(WellcomeMenuItemTextBox, WellcomeMenuItem.getAbsoluteLeft()-flowPanel.getAbsoluteLeft()-DecoradorWidth, WellcomeMenuItem.getAbsoluteTop()-flowPanel.getAbsoluteTop()-DecoradorWidth);
 		
 		SaveMenuItemTextBox=new TextBox();
 		SaveMenuItemTextBox.setText(MENU_SAVE_BUTTON);
 		SaveMenuItemTextBox.setSize(SaveMenuItem.getOffsetWidth()+"px", SaveMenuItem.getOffsetHeight()+"px");
-		PanelEdicion.add(SaveMenuItemTextBox, SaveMenuItem.getAbsoluteLeft(), SaveMenuItem.getAbsoluteTop());
+		PanelEdicion.add(SaveMenuItemTextBox, SaveMenuItem.getAbsoluteLeft()-flowPanel.getAbsoluteLeft()-DecoradorWidth, SaveMenuItem.getAbsoluteTop()-flowPanel.getAbsoluteTop()-DecoradorWidth);
 		
 		
 		CancelMenuItemTextBox=new TextBox();
 		CancelMenuItemTextBox.setText(MENU_CANCEL_BUTTON);
 		CancelMenuItemTextBox.setSize(CancelMenuItem.getOffsetWidth()+"px", CancelMenuItem.getOffsetHeight()+"px");
-		PanelEdicion.add(CancelMenuItemTextBox, CancelMenuItem.getAbsoluteLeft(), CancelMenuItem.getAbsoluteTop());
+		PanelEdicion.add(CancelMenuItemTextBox, CancelMenuItem.getAbsoluteLeft()-flowPanel.getAbsoluteLeft()-DecoradorWidth, CancelMenuItem.getAbsoluteTop()-flowPanel.getAbsoluteTop()-DecoradorWidth);
 		
 		int NTabs=TabPanelGeneral.getWidgetCount();
 		int Dist=TabPanelGeneral.getTabBar().getOffsetWidth()/NTabs;
@@ -854,100 +859,100 @@ public class EditorActivity extends PopupPanel {
 		LanguageTabPanelTextBox=new TextBox();
 		LanguageTabPanelTextBox.setText(TAB_PANEL_LANGUAGE);
 		LanguageTabPanelTextBox.setSize(Dist+"px", TabPanelGeneral.getTabBar().getOffsetHeight()+"px");
-		PanelEdicion.add(LanguageTabPanelTextBox, (TabPanelGeneral.getTabBar().getAbsoluteLeft()+Dist*WTabCounter)+SeparacionExtaPorRoun,TabPanelGeneral.getTabBar().getAbsoluteTop());
+		PanelEdicion.add(LanguageTabPanelTextBox, (TabPanelGeneral.getTabBar().getAbsoluteLeft()+Dist*WTabCounter)+SeparacionExtaPorRoun-flowPanel.getAbsoluteLeft()-DecoradorWidth,TabPanelGeneral.getTabBar().getAbsoluteTop()-flowPanel.getAbsoluteTop()-DecoradorWidth);
 		WTabCounter++;
 		
 		CatalogTabPanelTextBox=new TextBox();
 		CatalogTabPanelTextBox.setText(TAB_PANEL_CATALOG);
 		CatalogTabPanelTextBox.setSize(Dist+"px", TabPanelGeneral.getTabBar().getOffsetHeight()+"px");
-		PanelEdicion.add(CatalogTabPanelTextBox,  (TabPanelGeneral.getTabBar().getAbsoluteLeft()+Dist*WTabCounter)+SeparacionExtaPorRoun,TabPanelGeneral.getTabBar().getAbsoluteTop());
+		PanelEdicion.add(CatalogTabPanelTextBox,  (TabPanelGeneral.getTabBar().getAbsoluteLeft()+Dist*WTabCounter)+SeparacionExtaPorRoun-flowPanel.getAbsoluteLeft()-DecoradorWidth,TabPanelGeneral.getTabBar().getAbsoluteTop()-flowPanel.getAbsoluteTop()-DecoradorWidth);
 		WTabCounter++;
 		
 		AllowDefaulTypeCheckBoxTextBox=new TextBox();
 		AllowDefaulTypeCheckBoxTextBox.setText(ALLOW_DEFAULT_TYPE);
 		AllowDefaulTypeCheckBoxTextBox.setSize(AllowDefaulTypeCheckBox.getOffsetWidth()+"px", AllowDefaulTypeCheckBox.getOffsetHeight()+"px");
-		PanelEdicion.add(AllowDefaulTypeCheckBoxTextBox,TabPanelGeneral.getTabBar().getAbsoluteLeft(), TabPanelGeneral.getAbsoluteTop() + TabPanelGeneral.getOffsetHeight()*HExtraTabCounter);
+		PanelEdicion.add(AllowDefaulTypeCheckBoxTextBox,TabPanelGeneral.getTabBar().getAbsoluteLeft()-flowPanel.getAbsoluteLeft()-DecoradorWidth, TabPanelGeneral.getAbsoluteTop() + TabPanelGeneral.getOffsetHeight()*HExtraTabCounter -flowPanel.getAbsoluteTop()-DecoradorWidth);
 		HExtraTabCounter++;
 		
 		BotonSelectDefaultTypeTextBox=new TextBox();
 		BotonSelectDefaultTypeTextBox.setText(BOTON_SELECT_DEFAULT_TYPE);
 		BotonSelectDefaultTypeTextBox.setSize(BotonSelectDefaultType.getOffsetWidth()+"px", BotonSelectDefaultType.getOffsetHeight()+"px");
-		PanelEdicion.add(BotonSelectDefaultTypeTextBox, TabPanelGeneral.getTabBar().getAbsoluteLeft(), TabPanelGeneral.getAbsoluteTop() + TabPanelGeneral.getOffsetHeight()*HExtraTabCounter);
+		PanelEdicion.add(BotonSelectDefaultTypeTextBox, TabPanelGeneral.getTabBar().getAbsoluteLeft()-flowPanel.getAbsoluteLeft()-DecoradorWidth, TabPanelGeneral.getAbsoluteTop() + TabPanelGeneral.getOffsetHeight()*HExtraTabCounter -flowPanel.getAbsoluteTop()-DecoradorWidth);
 		HExtraTabCounter++;
 		
 		BooksTabPanelTextBox=new TextBox();
 		BooksTabPanelTextBox.setText(TAB_PANEL_BOOK);
 		BooksTabPanelTextBox.setSize(Dist+"px", TabPanelGeneral.getTabBar().getOffsetHeight()+"px");
-		PanelEdicion.add(BooksTabPanelTextBox,  (TabPanelGeneral.getTabBar().getAbsoluteLeft()+Dist*WTabCounter)+SeparacionExtaPorRoun,TabPanelGeneral.getTabBar().getAbsoluteTop());
+		PanelEdicion.add(BooksTabPanelTextBox,  (TabPanelGeneral.getTabBar().getAbsoluteLeft()+Dist*WTabCounter)+SeparacionExtaPorRoun-flowPanel.getAbsoluteLeft()-DecoradorWidth,TabPanelGeneral.getTabBar().getAbsoluteTop() -flowPanel.getAbsoluteTop()-DecoradorWidth);
 		WTabCounter++;
 		
 		GroupsTabPanelTextBox=new TextBox();
 		GroupsTabPanelTextBox.setText(TAB_PANEL_GROUPS);
 		GroupsTabPanelTextBox.setSize(Dist+"px", TabPanelGeneral.getTabBar().getOffsetHeight()+"px");
-		PanelEdicion.add(GroupsTabPanelTextBox,(TabPanelGeneral.getTabBar().getAbsoluteLeft()+Dist*WTabCounter)+SeparacionExtaPorRoun,TabPanelGeneral.getTabBar().getAbsoluteTop());
+		PanelEdicion.add(GroupsTabPanelTextBox,(TabPanelGeneral.getTabBar().getAbsoluteLeft()+Dist*WTabCounter)+SeparacionExtaPorRoun-flowPanel.getAbsoluteLeft()-DecoradorWidth,TabPanelGeneral.getTabBar().getAbsoluteTop() -flowPanel.getAbsoluteTop()-DecoradorWidth);
 		WTabCounter++;
 		
 		TemplatesTabPanelTextBox=new TextBox();
 		TemplatesTabPanelTextBox.setText(TAB_PANEL_TEMPLATES);
 		TemplatesTabPanelTextBox.setSize(Dist+"px", TabPanelGeneral.getTabBar().getOffsetHeight()+"px");
-		PanelEdicion.add(TemplatesTabPanelTextBox, (TabPanelGeneral.getTabBar().getAbsoluteLeft()+Dist*WTabCounter)+SeparacionExtaPorRoun,TabPanelGeneral.getTabBar().getAbsoluteTop());
+		PanelEdicion.add(TemplatesTabPanelTextBox, (TabPanelGeneral.getTabBar().getAbsoluteLeft()+Dist*WTabCounter)+SeparacionExtaPorRoun-flowPanel.getAbsoluteLeft()-DecoradorWidth,TabPanelGeneral.getTabBar().getAbsoluteTop() -flowPanel.getAbsoluteTop()-DecoradorWidth);
 		WTabCounter++;
 		
 		AllowFreeTemplateCheckBoxTextBox=new TextBox();
 		AllowFreeTemplateCheckBoxTextBox.setText(ALLOW_BLANK_TEMPLATE);
 		AllowFreeTemplateCheckBoxTextBox.setSize(AllowDefaulTypeCheckBox.getOffsetWidth()+"px", AllowDefaulTypeCheckBox.getOffsetHeight()+"px");
-		PanelEdicion.add(AllowFreeTemplateCheckBoxTextBox, TabPanelGeneral.getTabBar().getAbsoluteLeft(), TabPanelGeneral.getAbsoluteTop() + TabPanelGeneral.getOffsetHeight()*HExtraTabCounter);
+		PanelEdicion.add(AllowFreeTemplateCheckBoxTextBox, TabPanelGeneral.getTabBar().getAbsoluteLeft()-flowPanel.getAbsoluteLeft()-DecoradorWidth, TabPanelGeneral.getAbsoluteTop() + TabPanelGeneral.getOffsetHeight()*HExtraTabCounter-flowPanel.getAbsoluteTop()-DecoradorWidth);
 		HExtraTabCounter++;
 		
 		VisualizacionTabPanelTextBox=new TextBox();
 		VisualizacionTabPanelTextBox.setText(TAB_PANEL_VISUALIZACION);
 		VisualizacionTabPanelTextBox.setSize(Dist+"px", TabPanelGeneral.getTabBar().getOffsetHeight()+"px");
-		PanelEdicion.add(VisualizacionTabPanelTextBox,(TabPanelGeneral.getTabBar().getAbsoluteLeft()+Dist*WTabCounter)+SeparacionExtaPorRoun,TabPanelGeneral.getTabBar().getAbsoluteTop());
+		PanelEdicion.add(VisualizacionTabPanelTextBox,(TabPanelGeneral.getTabBar().getAbsoluteLeft()+Dist*WTabCounter)+SeparacionExtaPorRoun-flowPanel.getAbsoluteLeft()-DecoradorWidth,TabPanelGeneral.getTabBar().getAbsoluteTop()-flowPanel.getAbsoluteTop()-DecoradorWidth);
 		
 		LanguageLabelTextBox=new TextBox();
 		LanguageLabelTextBox.setText(LANGUAGE_LABEL);
 		LanguageLabelTextBox.setSize(LanguageLabel.getOffsetWidth()+"px", LanguageLabel.getOffsetHeight()+"px");
-		PanelEdicion.add(LanguageLabelTextBox, LanguageLabel.getAbsoluteLeft(), LanguageLabel.getAbsoluteTop());
+		PanelEdicion.add(LanguageLabelTextBox, LanguageLabel.getAbsoluteLeft()-flowPanel.getAbsoluteLeft()-DecoradorWidth, LanguageLabel.getAbsoluteTop()-flowPanel.getAbsoluteTop()-DecoradorWidth);
 		
 		PrivateCatalogLabelTextBox=new TextBox();
 		PrivateCatalogLabelTextBox.setText(PRIVATE_CATALOG_LABEL);
 		PrivateCatalogLabelTextBox.setSize(PrivateCatalogLabel.getOffsetWidth()+"px", PrivateCatalogLabel.getOffsetHeight()+"px");
-		PanelEdicion.add(PrivateCatalogLabelTextBox, PrivateCatalogLabel.getAbsoluteLeft(), PrivateCatalogLabel.getAbsoluteTop());
+		PanelEdicion.add(PrivateCatalogLabelTextBox, PrivateCatalogLabel.getAbsoluteLeft()-flowPanel.getAbsoluteLeft()-DecoradorWidth, PrivateCatalogLabel.getAbsoluteTop()-flowPanel.getAbsoluteTop()-DecoradorWidth);
 		
 		PublicCatalogLabelTextBox=new TextBox();
 		PublicCatalogLabelTextBox.setText(PUBLIC_CATALOG_LABEL);
 		PublicCatalogLabelTextBox.setSize(PublicCatalogLabel.getOffsetWidth()+"px", PublicCatalogLabel.getOffsetHeight()+"px");
-		PanelEdicion.add(PublicCatalogLabelTextBox, PublicCatalogLabel.getAbsoluteLeft(), PublicCatalogLabel.getAbsoluteTop());
+		PanelEdicion.add(PublicCatalogLabelTextBox, PublicCatalogLabel.getAbsoluteLeft()-flowPanel.getAbsoluteLeft()-DecoradorWidth, PublicCatalogLabel.getAbsoluteTop()-flowPanel.getAbsoluteTop()-DecoradorWidth);
 		
 		DefaultTypeLabelTextBox=new TextBox();
 		DefaultTypeLabelTextBox.setText(DEFAUL_TYPE_LABEL);
 		DefaultTypeLabelTextBox.setSize(DefaultTypeLabel.getOffsetWidth()+"px", DefaultTypeLabel.getOffsetHeight()+"px");
-		PanelEdicion.add(DefaultTypeLabelTextBox, DefaultTypeLabel.getAbsoluteLeft(), DefaultTypeLabel.getAbsoluteTop());
+		PanelEdicion.add(DefaultTypeLabelTextBox, DefaultTypeLabel.getAbsoluteLeft()-flowPanel.getAbsoluteLeft()-DecoradorWidth, DefaultTypeLabel.getAbsoluteTop()-flowPanel.getAbsoluteTop()-DecoradorWidth);
 		
 		BooksLabelTextBox=new TextBox();
 		BooksLabelTextBox.setText(BOOK_LABEL);
 		BooksLabelTextBox.setSize(BooksLabel.getOffsetWidth()+"px", BooksLabel.getOffsetHeight()+"px");
-		PanelEdicion.add(BooksLabelTextBox, BooksLabel.getAbsoluteLeft(), BooksLabel.getAbsoluteTop());
+		PanelEdicion.add(BooksLabelTextBox, BooksLabel.getAbsoluteLeft()-flowPanel.getAbsoluteLeft()-DecoradorWidth, BooksLabel.getAbsoluteTop()-flowPanel.getAbsoluteTop()-DecoradorWidth);
 		
 		GroupsLabelTextBox=new TextBox();
 		GroupsLabelTextBox.setText(GROUPS_LABEL);
 		GroupsLabelTextBox.setSize(GroupsLabel.getOffsetWidth()+"px", GroupsLabel.getOffsetHeight()+"px");
-		PanelEdicion.add(GroupsLabelTextBox, GroupsLabel.getAbsoluteLeft(), GroupsLabel.getAbsoluteTop());
+		PanelEdicion.add(GroupsLabelTextBox, GroupsLabel.getAbsoluteLeft()-flowPanel.getAbsoluteLeft()-DecoradorWidth, GroupsLabel.getAbsoluteTop()-flowPanel.getAbsoluteTop()-DecoradorWidth);
 		
 		TemplateLabelTextBox=new TextBox();
 		TemplateLabelTextBox.setText(TEMPLATE_LABEL);
 		TemplateLabelTextBox.setSize(TemplateLabel.getOffsetWidth()+"px", TemplateLabel.getOffsetHeight()+"px");
-		PanelEdicion.add(TemplateLabelTextBox, TemplateLabel.getAbsoluteLeft(), TemplateLabel.getAbsoluteTop());
+		PanelEdicion.add(TemplateLabelTextBox, TemplateLabel.getAbsoluteLeft()-flowPanel.getAbsoluteLeft()-DecoradorWidth, TemplateLabel.getAbsoluteTop()-flowPanel.getAbsoluteTop()-DecoradorWidth);
 		
 		BlankTemplateAllowedLabelTextBox=new TextBox();
 		BlankTemplateAllowedLabelTextBox.setText(BLANK_TEMPLATE_ALLOWED);
 		BlankTemplateAllowedLabelTextBox.setSize(BlankTemplateAllowedLabel.getOffsetWidth()+"px", BlankTemplateAllowedLabel.getOffsetHeight()+"px");
-		PanelEdicion.add(BlankTemplateAllowedLabelTextBox, BlankTemplateAllowedLabel.getAbsoluteLeft(), BlankTemplateAllowedLabel.getAbsoluteTop());
+		PanelEdicion.add(BlankTemplateAllowedLabelTextBox, BlankTemplateAllowedLabel.getAbsoluteLeft()-flowPanel.getAbsoluteLeft()-DecoradorWidth, BlankTemplateAllowedLabel.getAbsoluteTop()-flowPanel.getAbsoluteTop()-DecoradorWidth);
 		
 		VisualizacionLabelTextBox=new TextBox();
 		VisualizacionLabelTextBox.setText(VISUALIZACION_LABEL);
 		VisualizacionLabelTextBox.setSize(VisualizacionLabel.getOffsetWidth()+"px", VisualizacionLabel.getOffsetHeight()+"px");
-		PanelEdicion.add(VisualizacionLabelTextBox, VisualizacionLabel.getAbsoluteLeft(), VisualizacionLabel.getAbsoluteTop());
+		PanelEdicion.add(VisualizacionLabelTextBox, VisualizacionLabel.getAbsoluteLeft()-flowPanel.getAbsoluteLeft()-DecoradorWidth, VisualizacionLabel.getAbsoluteTop()-flowPanel.getAbsoluteTop()-DecoradorWidth);
 		
 	}
 
@@ -1693,6 +1698,13 @@ public class EditorActivity extends PopupPanel {
 			DefaultTypeLabel.setText(DEFAUL_TYPE_LABEL + eC.getName());
 		}
 
+	}
+	
+	@Override
+	public void center() {
+		super.center();
+		if (ActualState.isLanguageActive())
+			closeEditPanel();
 	}
 
 }

@@ -110,8 +110,8 @@ public class ActualState {
 	}
 
 	public static boolean isLanguageActive() {
-		//return ActualLanguage!=null;
-		return true;
+		return ActualLanguage!=null;
+		//return true;
 	}
 
 	public static void saveLanguageActual(Language languageActual) {

@@ -701,10 +701,9 @@ public class Administrador implements EntryPoint {
 	
 	protected void SaveChages() {
 		Language LanguageActual = ActualState.getActualLanguage();
-		String AdministracionLanguageConfiguration=toFile();
+			String AdministracionLanguageConfiguration=toFile();
 		LanguageActual.setAdministracionLanguageConfiguration(AdministracionLanguageConfiguration);
 		ActualState.saveLanguageActual(LanguageActual);
-		
 	}
 
 	public void ParsearFieldsAItems()
