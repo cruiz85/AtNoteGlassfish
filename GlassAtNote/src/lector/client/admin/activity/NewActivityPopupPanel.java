@@ -4,12 +4,16 @@ import lector.client.book.reader.GWTService;
 import lector.client.book.reader.GWTServiceAsync;
 import lector.client.controler.ActualState;
 import lector.client.controler.Constants;
+import lector.client.controler.ErrorConstants;
 import lector.client.reader.LoadingPanel;
 import lector.share.model.client.ProfessorClient;
 import lector.share.model.client.ReadingActivityClient;
+import lector.client.controler.InformationConstants;
 
+import com.google.gwt.safehtml.shared.SafeHtml;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
+import com.google.gwt.user.client.ui.AbsolutePanel;
 import com.google.gwt.user.client.ui.PopupPanel;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.VerticalPanel;
@@ -27,30 +31,61 @@ import com.google.gwt.event.dom.client.MouseOutHandler;
 import com.google.gwt.event.dom.client.MouseOverEvent;
 import com.google.gwt.event.dom.client.MouseOverHandler;
 
-public class newActivity extends PopupPanel {
+public class NewActivityPopupPanel extends PopupPanel {
 
-	private PopupPanel Me;
+	private static final String ACTIVITY_ADMINISTRATION = "New Activity Popup";
+	
+	private static final int NCampos=1;
+	
+	private static final int DecoradorWidth = 2;
+
+
+	
+	private String INSERT_NAME_LABEL="Insert the name for the new Activity";
+	private String CREATE_BUTTON = "Create";
+	private String CANCEL_BUTTON = "Cancel";
+	
+	private String INSERT_NAME_LABEL_RESET="Insert the name for the new Activity";
+	private String CREATE_BUTTON_RESET = "Create";
+	private String CANCEL_BUTTON_RESET = "Cancel";
+	
+	private Label InsertNameLabel;
+	private Button CreateButton;
+	private Button CancelButton;
+	
+	private TextBox InsertNameLabelTextBox;
+	private TextBox CreateButtonTextBox;
+	private Button CancelButtonTextBox;
+	
+	private TextBox InsertionTextTextBox;
+	private PopupPanel Yo;
 	private NewAdminActivities Father;
-	private TextBox textBox;
+	private AbsolutePanel General;
+
 	static GWTServiceAsync bookReaderServiceHolder = GWT
 			.create(GWTService.class);
 
-	public newActivity(NewAdminActivities Fatherin) {
+	public NewActivityPopupPanel(NewAdminActivities Fatherin) {
 		super(true);
 		this.Father = Fatherin;
-		Me = this;
+		Yo = this;
+		General = new AbsolutePanel();
 		VerticalPanel verticalPanel = new VerticalPanel();
+		verticalPanel.setHorizontalAlignment(HasHorizontalAlignment.ALIGN_CENTER);
 		verticalPanel.setSpacing(3);
-		setWidget(verticalPanel);
+		//setWidget(verticalPanel);
+		setWidget(General);
+		General.setSize("269px", "160px");
+		General.add(verticalPanel,0,0);
 		verticalPanel.setSize("100%", "100%");
 
-		Label label = new Label("Insert the name for the new Activity");
-		verticalPanel.add(label);
-		label.setSize("100%", "100%");
+		InsertNameLabel = new Label();
+		verticalPanel.add(InsertNameLabel);
+		InsertNameLabel.setSize("100%", "100%");
 
-		textBox = new TextBox();
-		verticalPanel.add(textBox);
-		textBox.setWidth("98%");
+		InsertionTextTextBox = new TextBox();
+		verticalPanel.add(InsertionTextTextBox);
+		InsertionTextTextBox.setWidth("50%");
 
 		HorizontalPanel horizontalPanel = new HorizontalPanel();
 		horizontalPanel
@@ -59,30 +94,30 @@ public class newActivity extends PopupPanel {
 		verticalPanel.add(horizontalPanel);
 		horizontalPanel.setWidth("100%");
 
-		Button btnNewButton = new Button("Create");
-		btnNewButton.setSize("100%", "100%");
-		btnNewButton.addMouseDownHandler(new MouseDownHandler() {
+		CreateButton = new Button(CREATE_BUTTON);
+		CreateButton.setSize("100%", "100%");
+		CreateButton.addMouseDownHandler(new MouseDownHandler() {
 			public void onMouseDown(MouseDownEvent event) {
 				((Button)event.getSource()).setStyleName("gwt-ButtonCenterPush");
 			}
 		});
-		btnNewButton.addMouseOutHandler(new MouseOutHandler() {
+		CreateButton.addMouseOutHandler(new MouseOutHandler() {
 			public void onMouseOut(MouseOutEvent event) {
 				((Button)event.getSource()).setStyleName("gwt-ButtonCenter");
 			}
 		});
-		btnNewButton.addMouseOverHandler(new MouseOverHandler() {
+		CreateButton.addMouseOverHandler(new MouseOverHandler() {
 			public void onMouseOver(MouseOverEvent event) {
 				((Button)event.getSource()).setStyleName("gwt-ButtonCenterOver");
 			}
 		});
-		btnNewButton.setStyleName("gwt-ButtonCenter");
-		btnNewButton.addClickHandler(new ClickHandler() {
+		CreateButton.setStyleName("gwt-ButtonCenter");
+		CreateButton.addClickHandler(new ClickHandler() {
 			public void onClick(ClickEvent event) {
 
-				String S = textBox.getText();
-				if (S.isEmpty() || S.length() < 2)
-					Window.alert("The Name can be more lenght or equal than two");
+				String S = InsertionTextTextBox.getText();
+				if (S.isEmpty())
+					Window.alert(InformationConstants.THE_NAME_CAN_NOT_BE_EMPTY);
 				else {
 					ReadingActivityClient A = new ReadingActivityClient();
 					A.setName(S);
@@ -90,19 +125,19 @@ public class newActivity extends PopupPanel {
 					A.setIsFreeTemplateAllowed(true);
 					A.setVisualization(Constants.VISUAL_ARBOL);
 					LoadingPanel.getInstance().center();
-					LoadingPanel.getInstance().setLabelTexto("Saving...");
+					LoadingPanel.getInstance().setLabelTexto(InformationConstants.SAVING);
 					bookReaderServiceHolder.saveReadingActivity(A,
 							new AsyncCallback<Void>() {
 
 								public void onFailure(Throwable caught) {
-									Window.alert("The Activity could not be saved");
+									Window.alert(ErrorConstants.ERROR_SAVING_ACTIVITY);
 									LoadingPanel.getInstance().hide();
 								}
 
 								public void onSuccess(Void result) {
 									LoadingPanel.getInstance().hide();
 									Father.refresh();
-									Me.hide();
+									Yo.hide();
 									
 								}
 							});
@@ -110,32 +145,32 @@ public class newActivity extends PopupPanel {
 
 			}
 		});
-		horizontalPanel.add(btnNewButton);
+		horizontalPanel.add(CreateButton);
 
-		Button btnNewButton_1 = new Button("Cancel");
-		btnNewButton_1.setSize("100%", "100%");
-		btnNewButton_1.addMouseDownHandler(new MouseDownHandler() {
+		CancelButton = new Button(CANCEL_BUTTON);
+		CancelButton.setSize("100%", "100%");
+		CancelButton.addMouseDownHandler(new MouseDownHandler() {
 			public void onMouseDown(MouseDownEvent event) {
 				((Button)event.getSource()).setStyleName("gwt-ButtonCenterPush");
 			}
 		});
-		btnNewButton_1.addMouseOutHandler(new MouseOutHandler() {
+		CancelButton.addMouseOutHandler(new MouseOutHandler() {
 			public void onMouseOut(MouseOutEvent event) {
 				((Button)event.getSource()).setStyleName("gwt-ButtonCenter");
 			}
 		});
-		btnNewButton_1.addMouseOverHandler(new MouseOverHandler() {
+		CancelButton.addMouseOverHandler(new MouseOverHandler() {
 			public void onMouseOver(MouseOverEvent event) {
 				((Button)event.getSource()).setStyleName("gwt-ButtonCenterOver");
 			}
 		});
-		btnNewButton_1.setStyleName("gwt-ButtonCenter");
-		btnNewButton_1.addClickHandler(new ClickHandler() {
+		CancelButton.setStyleName("gwt-ButtonCenter");
+		CancelButton.addClickHandler(new ClickHandler() {
 			public void onClick(ClickEvent event) {
-				Me.hide();
+				Yo.hide();
 			}
 		});
-		horizontalPanel.add(btnNewButton_1);
+		horizontalPanel.add(CancelButton);
 		super.setGlassEnabled(true);
 	}
 

@@ -21,7 +21,8 @@ public class Language implements Serializable {
 	private String name;
 	
 	private String AdministracionLanguageConfiguration = "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n";
-	private String EditorActivityLanguageConfiguration="\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n"; 
+	private String EditorActivityLanguageConfiguration= "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n"; 
+	private String FinderDefaultTypeLanguageConfiguration= "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n";
 	
 	// MainWindow
 	private String NamePage = "@Note";
@@ -148,7 +149,14 @@ public class Language implements Serializable {
 		EditorActivityLanguageConfiguration = editorActivityLanguageConfiguration;
 	}
 	
-	
+	public String getFinderDefaultTypeLanguageConfiguration() {
+		return FinderDefaultTypeLanguageConfiguration;
+	}
+
+	public void setFinderDefaultTypeLanguageConfiguration(
+			String finderDefaultTypeLanguageConfiguration) {
+		FinderDefaultTypeLanguageConfiguration = finderDefaultTypeLanguageConfiguration;
+	}
 	
 	// TODO Generales
 

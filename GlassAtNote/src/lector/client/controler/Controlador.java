@@ -1,6 +1,6 @@
 package lector.client.controler;
 
-import lector.client.admin.Administrador;
+import lector.client.admin.AdministradorEntryPoint;
 import lector.client.admin.langedit.EditordeLenguajes;
 import lector.client.admin.langedit.NewAdminLangs;
 import lector.client.login.Login;
@@ -38,7 +38,7 @@ public class Controlador implements EntryPoint {
     private static MainEntryPoint MEP = new MainEntryPoint();
     private static EntryPoint Actual = null;
     private static Searcher Search = new Searcher();
-    private static Administrador Admin = new Administrador();
+    private static AdministradorEntryPoint Admin = new AdministradorEntryPoint();
     private static EditorTagsAndTypes AdminTagsAndTypes = new EditorTagsAndTypes();
     private static Login LoginPage=new Login();
     private static BookAdministration bookAdministrador=new BookAdministration();

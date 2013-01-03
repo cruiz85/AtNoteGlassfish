@@ -9,14 +9,14 @@ import lector.share.model.client.TypeClient;
 
 import com.google.gwt.event.dom.client.ClickEvent;
 
-public class ClickHandlerMioSelectorDefault extends ClickHandlerMio {
+public class MioSelectorDefaultClickHandler extends ClickHandlerMio {
 
-	private EditorActivity eA;
-	private FinderDefaultType Padre;
+	private EditorActivityPopupPanel eA;
+	private FinderDefaultTypePopupPanel Padre;
 	
 	
-	public ClickHandlerMioSelectorDefault(EditorActivity eA,
-			FinderDefaultType yo) {
+	public MioSelectorDefaultClickHandler(EditorActivityPopupPanel eA,
+			FinderDefaultTypePopupPanel yo) {
 		Padre=yo;
 		this.eA=eA;
 	}

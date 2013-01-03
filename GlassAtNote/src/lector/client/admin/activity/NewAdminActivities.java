@@ -63,7 +63,7 @@ public class NewAdminActivities implements EntryPoint {
 
 		MenuItem mntmNewItem = new MenuItem("New item", false, new Command() {
 			public void execute() {
-				newActivity NL = new newActivity(yo);
+				NewActivityPopupPanel NL = new NewActivityPopupPanel(yo);
 				NL.center();
 
 			}
@@ -124,7 +124,7 @@ public class NewAdminActivities implements EntryPoint {
 						List<ReadingActivityClient> ActivityMostrar = result;
 						for (int i = 0; i < ActivityMostrar.size()-1; i++) {
 							
-							BottonActivity nue = new BottonActivity(Actual,
+							ActivityBotton nue = new ActivityBotton(Actual,
 									new VerticalPanel(), ActivityMostrar.get(i));
 							nue.setSize("100%", "100%");
 							nue.addMouseDownHandler(new MouseDownHandler() {
@@ -147,9 +147,9 @@ public class NewAdminActivities implements EntryPoint {
 
 								public void onClick(ClickEvent event) {
 									SeleccionMenuActivity panel = new SeleccionMenuActivity(
-											(BottonActivity) event.getSource(),
+											(ActivityBotton) event.getSource(),
 											yo);
-									panel.showRelativeTo((BottonActivity) event
+									panel.showRelativeTo((ActivityBotton) event
 											.getSource());
 								}
 							});
@@ -157,7 +157,7 @@ public class NewAdminActivities implements EntryPoint {
 						}
 						if (!ActivityMostrar.isEmpty()) {
 							
-							BottonActivity nue = new BottonActivity(Actual,
+							ActivityBotton nue = new ActivityBotton(Actual,
 									new VerticalPanel(), ActivityMostrar.get(ActivityMostrar.size()-1));
 							nue.setSize("100%", "100%");
 							nue.setStyleName("gwt-ButtonBotton");
@@ -180,9 +180,9 @@ public class NewAdminActivities implements EntryPoint {
 
 								public void onClick(ClickEvent event) {
 									SeleccionMenuActivity panel = new SeleccionMenuActivity(
-											(BottonActivity) event.getSource(),
+											(ActivityBotton) event.getSource(),
 											yo);
-									panel.showRelativeTo((BottonActivity) event
+									panel.showRelativeTo((ActivityBotton) event
 											.getSource());
 								}
 							});
@@ -212,7 +212,7 @@ public class NewAdminActivities implements EntryPoint {
 						List<ReadingActivityClient> ActivityMostrar = result;
 for (int i = 0; i < ActivityMostrar.size()-1; i++) {
 							
-							BottonActivity nue = new BottonActivity(Actual,
+							ActivityBotton nue = new ActivityBotton(Actual,
 									new VerticalPanel(), ActivityMostrar.get(i));
 							nue.setSize("100%", "100%");
 							nue.addMouseDownHandler(new MouseDownHandler() {
@@ -235,9 +235,9 @@ for (int i = 0; i < ActivityMostrar.size()-1; i++) {
 
 								public void onClick(ClickEvent event) {
 									SeleccionMenuActivity panel = new SeleccionMenuActivity(
-											(BottonActivity) event.getSource(),
+											(ActivityBotton) event.getSource(),
 											yo);
-									panel.showRelativeTo((BottonActivity) event
+									panel.showRelativeTo((ActivityBotton) event
 											.getSource());
 								}
 							});
@@ -245,7 +245,7 @@ for (int i = 0; i < ActivityMostrar.size()-1; i++) {
 						}
 						if (!ActivityMostrar.isEmpty()) {
 							
-							BottonActivity nue = new BottonActivity(Actual,
+							ActivityBotton nue = new ActivityBotton(Actual,
 									new VerticalPanel(), ActivityMostrar.get(ActivityMostrar.size()-1));
 							nue.setSize("100%", "100%");
 							nue.setStyleName("gwt-ButtonBotton");
@@ -268,9 +268,9 @@ for (int i = 0; i < ActivityMostrar.size()-1; i++) {
 
 								public void onClick(ClickEvent event) {
 									SeleccionMenuActivity panel = new SeleccionMenuActivity(
-											(BottonActivity) event.getSource(),
+											(ActivityBotton) event.getSource(),
 											yo);
-									panel.showRelativeTo((BottonActivity) event
+									panel.showRelativeTo((ActivityBotton) event
 											.getSource());
 								}
 							});

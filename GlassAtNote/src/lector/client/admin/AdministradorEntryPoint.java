@@ -1,6 +1,6 @@
 package lector.client.admin;
 
-import lector.client.admin.activity.EditorActivity;
+import lector.client.admin.activity.EditorActivityPopupPanel;
 import lector.client.book.reader.GWTService;
 import lector.client.book.reader.GWTServiceAsync;
 import lector.client.controler.ActualState;
@@ -37,7 +37,7 @@ import com.google.gwt.event.dom.client.MouseDownHandler;
 import com.google.gwt.event.dom.client.MouseDownEvent;
 import com.google.gwt.user.client.ui.DockPanel;
 
-public class Administrador implements EntryPoint {
+public class AdministradorEntryPoint implements EntryPoint {
 
 	private static final String ADMINISTRATORS_NAME = "Administration Menu";
 	
@@ -111,7 +111,7 @@ public class Administrador implements EntryPoint {
 	private RootPanel rootPanel;
 	private DockPanel PanelFondoGeneral;
 	private AbsolutePanel PanelEdicion;
-	private Administrador Yo;
+	private AdministradorEntryPoint Yo;
 
 
 	public void onModuleLoad() {
@@ -133,7 +133,7 @@ public class Administrador implements EntryPoint {
 		PanelFondoGeneral.add(menuBar, DockPanel.NORTH);
 		menuBar.setSize("100%", "24px");
 
-		WellcomeButtonMenu = new MenuItem(Administrador.WELLCOME_MENU
+		WellcomeButtonMenu = new MenuItem(AdministradorEntryPoint.WELLCOME_MENU
 				+ BIENVENIDA, false, (Command) null);
 		WellcomeButtonMenu.setEnabled(false);
 		menuBar.addItem(WellcomeButtonMenu);
@@ -141,7 +141,7 @@ public class Administrador implements EntryPoint {
 		MenuItemSeparator separator = new MenuItemSeparator();
 		menuBar.addSeparator(separator);
 
-		CloseSessionMenu = new MenuItem(Administrador.CLOSE_SESSION_MENU, false,
+		CloseSessionMenu = new MenuItem(AdministradorEntryPoint.CLOSE_SESSION_MENU, false,
 				new Command() {
 					public void execute() {
 						Controlador.change2Welcome();
@@ -183,7 +183,7 @@ public class Administrador implements EntryPoint {
 		horizontalPanel_1.add(verticalPanel_1);
 		verticalPanel_1.setWidth("100%");
 
-		CatalogButton = new Button(Administrador.CATALOG_BUTTON );
+		CatalogButton = new Button(AdministradorEntryPoint.CATALOG_BUTTON );
 		verticalPanel_1.add(CatalogButton);
 		CatalogButton.addMouseDownHandler(new MouseDownHandler() {
 			public void onMouseDown(MouseDownEvent event) {
@@ -208,7 +208,7 @@ public class Administrador implements EntryPoint {
 		});
 		CatalogButton.setSize("100%", "100%");
 
-		InterfaceLanguageButton = new Button(Administrador.INTERFACE_LANGUAGE_BUTTON );
+		InterfaceLanguageButton = new Button(AdministradorEntryPoint.INTERFACE_LANGUAGE_BUTTON );
 		verticalPanel_1.add(InterfaceLanguageButton);
 		InterfaceLanguageButton.addMouseOutHandler(new MouseOutHandler() {
 			public void onMouseOut(MouseOutEvent event) {
@@ -233,7 +233,7 @@ public class Administrador implements EntryPoint {
 		});
 		InterfaceLanguageButton.setSize("100%", "100%");
 
-		ExportTemplatesButton = new Button(Administrador.EXPORT_TEMPLATES_BUTTON);
+		ExportTemplatesButton = new Button(AdministradorEntryPoint.EXPORT_TEMPLATES_BUTTON);
 		verticalPanel_1.add(ExportTemplatesButton);
 		ExportTemplatesButton.addMouseOutHandler(new MouseOutHandler() {
 			public void onMouseOut(MouseOutEvent event) {
@@ -258,7 +258,7 @@ public class Administrador implements EntryPoint {
 		});
 		ExportTemplatesButton.setSize("100%", "100%");
 
-		ActvityButton = new Button(Administrador.ACTIVITY_BUTTON);
+		ActvityButton = new Button(AdministradorEntryPoint.ACTIVITY_BUTTON);
 		verticalPanel_1.add(ActvityButton);
 		ActvityButton.addMouseOutHandler(new MouseOutHandler() {
 			public void onMouseOut(MouseOutEvent event) {
@@ -283,7 +283,7 @@ public class Administrador implements EntryPoint {
 		});
 		ActvityButton.setSize("100%", "100%");
 
-		GroupButton = new Button(Administrador.GROUP_BUTTON);
+		GroupButton = new Button(AdministradorEntryPoint.GROUP_BUTTON);
 		verticalPanel_1.add(GroupButton);
 		GroupButton.addMouseOutHandler(new MouseOutHandler() {
 			public void onMouseOut(MouseOutEvent event) {
@@ -308,7 +308,7 @@ public class Administrador implements EntryPoint {
 		});
 		GroupButton.setSize("100%", "100%");
 
-		UsersButton = new Button(Administrador.USERS_BUTTON);
+		UsersButton = new Button(AdministradorEntryPoint.USERS_BUTTON);
 		verticalPanel_1.add(UsersButton);
 		UsersButton.addMouseOutHandler(new MouseOutHandler() {
 			public void onMouseOut(MouseOutEvent event) {
@@ -333,7 +333,7 @@ public class Administrador implements EntryPoint {
 		});
 		UsersButton.setSize("100%", "100%");
 
-		AdministratorsButton = new Button(Administrador.ADMINISTRATORS_BUTTON );
+		AdministratorsButton = new Button(AdministradorEntryPoint.ADMINISTRATORS_BUTTON );
 		verticalPanel_1.add(AdministratorsButton);
 		AdministratorsButton.addMouseOutHandler(new MouseOutHandler() {
 			public void onMouseOut(MouseOutEvent event) {
@@ -358,7 +358,7 @@ public class Administrador implements EntryPoint {
 		});
 		AdministratorsButton.setSize("100%", "100%");
 
-		BookManagmentButton = new Button(Administrador.BOOK_MANAGMENT_BUTTON);
+		BookManagmentButton = new Button(AdministradorEntryPoint.BOOK_MANAGMENT_BUTTON);
 		verticalPanel_1.add(BookManagmentButton);
 		BookManagmentButton.addMouseOutHandler(new MouseOutHandler() {
 			public void onMouseOut(MouseOutEvent event) {
@@ -384,7 +384,7 @@ public class Administrador implements EntryPoint {
 		BookManagmentButton.setSize("100%", "100%");
 		
 
-		MyLibraryButton = new Button(Administrador.MY_LIBRARY_BUTTON);
+		MyLibraryButton = new Button(AdministradorEntryPoint.MY_LIBRARY_BUTTON);
 		verticalPanel_1.add(MyLibraryButton);
 		MyLibraryButton.addMouseOutHandler(new MouseOutHandler() {
 			public void onMouseOut(MouseOutEvent event) {
@@ -404,7 +404,7 @@ public class Administrador implements EntryPoint {
 		MyLibraryButton.setStyleName("gwt-ButtonTOP");
 		MyLibraryButton.setSize("100%", "100%");
 
-		MyActivitiesButton = new Button(Administrador.MY_ACTIVITIES_BUTTON);
+		MyActivitiesButton = new Button(AdministradorEntryPoint.MY_ACTIVITIES_BUTTON);
 		verticalPanel_1.add(MyActivitiesButton);
 		MyActivitiesButton.addMouseOutHandler(new MouseOutHandler() {
 			public void onMouseOut(MouseOutEvent event) {
@@ -424,7 +424,7 @@ public class Administrador implements EntryPoint {
 		MyActivitiesButton.setStyleName("gwt-ButtonTOP");
 		MyActivitiesButton.setSize("100%", "100%");
 
-		MyProfileButton = new Button(Administrador.MY_PROFILE_BUTTON);
+		MyProfileButton = new Button(AdministradorEntryPoint.MY_PROFILE_BUTTON);
 		verticalPanel_1.add(MyProfileButton);
 		MyProfileButton.addClickHandler(new ClickHandler() {
 			public void onClick(ClickEvent event) {
@@ -449,7 +449,7 @@ public class Administrador implements EntryPoint {
 		MyProfileButton.setStyleName("gwt-ButtonTOP");
 		MyProfileButton.setSize("100%", "100%");
 
-		ReturnToActivityButton = new Button(Administrador.RETURN_TO_ACTIVITY_BUTTON);
+		ReturnToActivityButton = new Button(AdministradorEntryPoint.RETURN_TO_ACTIVITY_BUTTON);
 		verticalPanel_1.add(ReturnToActivityButton);
 		ReturnToActivityButton.setStyleName("gwt-ButtonBotton");
 		ReturnToActivityButton.addMouseOutHandler(new MouseOutHandler() {
@@ -781,7 +781,7 @@ public class Administrador implements EntryPoint {
 				RETURN_TO_ACTIVITY_BUTTON = Lista[14];
 		}
 		else 
-			Logger.GetLogger().severe(EditorActivity.class.toString(), ActualState.getUser().toString(), ErrorConstants.ERROR_LOADING_LANGUAGE_IN  + ADMINISTRATORS_NAME);
+			Logger.GetLogger().severe(EditorActivityPopupPanel.class.toString(), ActualState.getUser().toString(), ErrorConstants.ERROR_LOADING_LANGUAGE_IN  + ADMINISTRATORS_NAME);
 			
 			
 		

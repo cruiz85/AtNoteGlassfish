@@ -5,8 +5,9 @@ import com.google.gwt.core.client.GWT;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 
-import lector.client.admin.Administrador;
-import lector.client.admin.activity.EditorActivity;
+import lector.client.admin.AdministradorEntryPoint;
+import lector.client.admin.activity.EditorActivityPopupPanel;
+import lector.client.admin.activity.FinderDefaultTypePopupPanel;
 import lector.client.book.reader.GWTService;
 import lector.client.book.reader.GWTServiceAsync;
 import lector.client.logger.Logger;
@@ -105,8 +106,9 @@ public class ActualState {
 
 	private static void ChangeLanguage() {
 		//Reaccion en cadena a todos los elementos con Lenguaje editable
-		Administrador.FromFile(ActualLanguage.getAdministracionLanguageConfiguration());
-		EditorActivity.FromFile(ActualLanguage.getEditorActivityLanguageConfiguration());
+		AdministradorEntryPoint.FromFile(ActualLanguage.getAdministracionLanguageConfiguration());
+		EditorActivityPopupPanel.FromFile(ActualLanguage.getEditorActivityLanguageConfiguration());
+		FinderDefaultTypePopupPanel.FromFile(ActualLanguage.getFinderDefaultTypeLanguageConfiguration());
 	}
 
 	public static boolean isLanguageActive() {

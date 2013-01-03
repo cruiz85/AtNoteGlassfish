@@ -45,7 +45,6 @@ import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.AbsolutePanel;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.MenuItemSeparator;
-import com.google.gwt.user.client.ui.RootPanel;
 import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.VerticalSplitPanel;
 import com.google.gwt.user.client.ui.TabPanel;
@@ -64,9 +63,9 @@ import com.google.gwt.event.logical.shared.ValueChangeEvent;
 import com.google.gwt.event.dom.client.ChangeHandler;
 import com.google.gwt.event.dom.client.ChangeEvent;
 
-public class EditorActivity extends PopupPanel {
+public class EditorActivityPopupPanel extends PopupPanel {
 	
-	private static final String EDITORACTIVITY_NAME = "Editor Activity PopUp";
+	private static final String EDITORACTIVITY_NAME = "Editor Activity Popup";
 	
 	private static final int NCampos=21;
 	
@@ -165,9 +164,9 @@ public class EditorActivity extends PopupPanel {
 	private static String IMAGEN_KEY="EditImages/Key.jpg";
 	private Image imageVisualization;
 	
-	private static final int DecoradorWidth = 1;
+	private static final int DecoradorWidth = 2;
 	
-	private EditorActivity Yo;
+	private EditorActivityPopupPanel Yo;
 	
 	private ReadingActivityClient ActualActivity;
 	private CatalogoClient SelectedCatalog = null;
@@ -200,7 +199,7 @@ public class EditorActivity extends PopupPanel {
 	private AbsolutePanel GeneralPanel;
 	
 
-	public EditorActivity(ReadingActivityClient RA) {
+	public EditorActivityPopupPanel(ReadingActivityClient RA) {
 
 		super(false);
 		SelectedCatalog = null;
@@ -224,17 +223,17 @@ public class EditorActivity extends PopupPanel {
 		MenuBar menuBar = new MenuBar(false);
 		flowPanel.add(menuBar);
 
-		WellcomeMenuItem = new MenuItem(EditorActivity.MENU_WELLCOME_TEXT,
+		WellcomeMenuItem = new MenuItem(EditorActivityPopupPanel.MENU_WELLCOME_TEXT,
 				false, (Command) null);
 		WellcomeMenuItem.setEnabled(false);
-		WellcomeMenuItem.setHTML(EditorActivity.MENU_WELLCOME_TEXT
+		WellcomeMenuItem.setHTML(EditorActivityPopupPanel.MENU_WELLCOME_TEXT
 				+ ActualActivity.getName());
 		menuBar.addItem(WellcomeMenuItem);
 
 		MenuItemSeparator separator = new MenuItemSeparator();
 		menuBar.addSeparator(separator);
 
-		SaveMenuItem = new MenuItem(EditorActivity.MENU_SAVE_BUTTON, false,
+		SaveMenuItem = new MenuItem(EditorActivityPopupPanel.MENU_SAVE_BUTTON, false,
 				new Command() {
 					public void execute() {
 
@@ -434,16 +433,16 @@ public class EditorActivity extends PopupPanel {
 
 					}
 				});
-		SaveMenuItem.setHTML(EditorActivity.MENU_SAVE_BUTTON);
+		SaveMenuItem.setHTML(EditorActivityPopupPanel.MENU_SAVE_BUTTON);
 		menuBar.addItem(SaveMenuItem);
 
-		CancelMenuItem = new MenuItem(EditorActivity.MENU_CANCEL_BUTTON, false,
+		CancelMenuItem = new MenuItem(EditorActivityPopupPanel.MENU_CANCEL_BUTTON, false,
 				new Command() {
 					public void execute() {
 						Yo.hide();
 					}
 				});
-		CancelMenuItem.setHTML(EditorActivity.MENU_CANCEL_BUTTON);
+		CancelMenuItem.setHTML(EditorActivityPopupPanel.MENU_CANCEL_BUTTON);
 		menuBar.addItem(CancelMenuItem);
 
 		VerticalSplitPanel verticalSplitPanel = new VerticalSplitPanel();
@@ -455,7 +454,7 @@ public class EditorActivity extends PopupPanel {
 		TabPanelGeneral.setSize("100%", "100%");
 
 		LanguageTabPanel = new ScrollPanel();
-		TabPanelGeneral.add(LanguageTabPanel, EditorActivity.TAB_PANEL_LANGUAGE, false);
+		TabPanelGeneral.add(LanguageTabPanel, EditorActivityPopupPanel.TAB_PANEL_LANGUAGE, false);
 		LanguageTabPanel.setSize("100%", "226px");
 
 		LanguagePanel = new VerticalPanel();
@@ -463,7 +462,7 @@ public class EditorActivity extends PopupPanel {
 		LanguagePanel.setSize("100%", "100%");
 
 		CatalogTabPanel = new ScrollPanel();
-		TabPanelGeneral.add(CatalogTabPanel, EditorActivity.TAB_PANEL_CATALOG, false);
+		TabPanelGeneral.add(CatalogTabPanel, EditorActivityPopupPanel.TAB_PANEL_CATALOG, false);
 		CatalogTabPanel.setSize("100%", "226px");
 
 		HorizontalPanel horizontalPanel_4 = new HorizontalPanel();
@@ -484,7 +483,7 @@ public class EditorActivity extends PopupPanel {
 		PanelSelecionDefault.setSize("280px", "");
 		PanelSelecionDefault.setVisible(false);
 
-		AllowDefaulTypeCheckBox = new CheckBox(EditorActivity.ALLOW_DEFAULT_TYPE);
+		AllowDefaulTypeCheckBox = new CheckBox(EditorActivityPopupPanel.ALLOW_DEFAULT_TYPE);
 		AllowDefaulTypeCheckBox
 				.addValueChangeHandler(new ValueChangeHandler<Boolean>() {
 
@@ -492,21 +491,21 @@ public class EditorActivity extends PopupPanel {
 						if (AllowDefaulTypeCheckBox.getValue()) {
 							if (DefaultTypeOld != null)
 								DefaultTypeLabel
-										.setText(EditorActivity.DEFAUL_TYPE_LABEL
+										.setText(EditorActivityPopupPanel.DEFAUL_TYPE_LABEL
 												+ DefaultTypeOld);
 							BotonSelectDefaultType.setEnabled(true);
 						} else {
 							DefaultType = null;
 							DefaultTypeOld = DefaultType;
 							DefaultTypeLabel
-									.setText(EditorActivity.DEFAUL_TYPE_LABEL);
+									.setText(EditorActivityPopupPanel.DEFAUL_TYPE_LABEL);
 							BotonSelectDefaultType.setEnabled(false);
 						}
 					}
 				});
 		PanelSelecionDefault.add(AllowDefaulTypeCheckBox);
 
-		BotonSelectDefaultType = new Button(EditorActivity.BOTON_SELECT_DEFAULT_TYPE);
+		BotonSelectDefaultType = new Button(EditorActivityPopupPanel.BOTON_SELECT_DEFAULT_TYPE);
 		PanelSelecionDefault.add(BotonSelectDefaultType);
 		BotonSelectDefaultType.setWidth("119px");
 		BotonSelectDefaultType.addMouseDownHandler(new MouseDownHandler() {
@@ -536,7 +535,7 @@ public class EditorActivity extends PopupPanel {
 
 			@Override
 			public void onClick(ClickEvent event) {
-				FinderDefaultType FDT = new FinderDefaultType(Yo,
+				FinderDefaultTypePopupPanel FDT = new FinderDefaultTypePopupPanel(Yo,
 						SelectedCatalog);
 				FDT.center();
 			}
@@ -544,7 +543,7 @@ public class EditorActivity extends PopupPanel {
 		BotonSelectDefaultType.setEnabled(false);
 
 		BooksTabPanel = new ScrollPanel();
-		TabPanelGeneral.add(BooksTabPanel, EditorActivity.TAB_PANEL_BOOK, false);
+		TabPanelGeneral.add(BooksTabPanel, EditorActivityPopupPanel.TAB_PANEL_BOOK, false);
 		BooksTabPanel.setSize("100%", "226px");
 
 		BooksPanel = new VerticalPanel();
@@ -552,7 +551,7 @@ public class EditorActivity extends PopupPanel {
 		BooksPanel.setSize("100%", "100%");
 
 		GroupsTabPanel = new ScrollPanel();
-		TabPanelGeneral.add(GroupsTabPanel, EditorActivity.TAB_PANEL_GROUPS, false);
+		TabPanelGeneral.add(GroupsTabPanel, EditorActivityPopupPanel.TAB_PANEL_GROUPS, false);
 		GroupsTabPanel.setSize("100%", "226px");
 
 		GroupsPanel = new VerticalPanel();
@@ -560,7 +559,7 @@ public class EditorActivity extends PopupPanel {
 		GroupsPanel.setSize("100%", "100%");
 
 		TemplatesTabPanel = new SimplePanel();
-		TabPanelGeneral.add(TemplatesTabPanel, EditorActivity.TAB_PANEL_TEMPLATES, false);
+		TabPanelGeneral.add(TemplatesTabPanel, EditorActivityPopupPanel.TAB_PANEL_TEMPLATES, false);
 		TemplatesTabPanel.setSize("100%", "226px");
 
 		VerticalPanel verticalPanel = new VerticalPanel();
@@ -582,7 +581,7 @@ public class EditorActivity extends PopupPanel {
 		verticalPanel.add(horizontalPanel);
 		horizontalPanel.setSize("100%", "45px");
 
-		AllowFreeTemplateCheckBox = new CheckBox(EditorActivity.ALLOW_BLANK_TEMPLATE);
+		AllowFreeTemplateCheckBox = new CheckBox(EditorActivityPopupPanel.ALLOW_BLANK_TEMPLATE);
 		AllowFreeTemplateCheckBox.setValue(true);
 		AllowFreeTemplateCheckBox.addValueChangeHandler(new ValueChangeHandler<Boolean>() {
 			public void onValueChange(ValueChangeEvent<Boolean> event) {
@@ -599,7 +598,7 @@ public class EditorActivity extends PopupPanel {
 		horizontalPanel.add(AllowFreeTemplateCheckBox);
 
 		VisualizacionTabPanel = new ScrollPanel();
-		TabPanelGeneral.add(VisualizacionTabPanel, EditorActivity.TAB_PANEL_VISUALIZACION, false);
+		TabPanelGeneral.add(VisualizacionTabPanel, EditorActivityPopupPanel.TAB_PANEL_VISUALIZACION, false);
 		VisualizacionTabPanel.setSize("100%", "226px");
 
 		HorizontalPanel horizontalPanel_1 = new HorizontalPanel();
@@ -618,13 +617,13 @@ public class EditorActivity extends PopupPanel {
 			public void onChange(ChangeEvent event) {
 				if (SeleccionVisualizacionComboBox.getItemText(SeleccionVisualizacionComboBox.getSelectedIndex()).equals(
 						Constants.VISUAL_ARBOL)) {
-					VisualizacionLabel.setText(EditorActivity.VISUALIZACION_LABEL 
+					VisualizacionLabel.setText(EditorActivityPopupPanel.VISUALIZACION_LABEL 
 							+ Constants.VISUAL_ARBOL);
-					imageVisualization.setUrl(EditorActivity.IMAGEN_ARBOL);
+					imageVisualization.setUrl(EditorActivityPopupPanel.IMAGEN_ARBOL);
 				} else {
-					VisualizacionLabel.setText(EditorActivity.VISUALIZACION_LABEL
+					VisualizacionLabel.setText(EditorActivityPopupPanel.VISUALIZACION_LABEL
 							+ Constants.VISUAL_KEY);
-					imageVisualization.setUrl(EditorActivity.IMAGEN_KEY);
+					imageVisualization.setUrl(EditorActivityPopupPanel.IMAGEN_KEY);
 				}
 			}
 		});
@@ -641,7 +640,7 @@ public class EditorActivity extends PopupPanel {
 		horizontalPanel_1.add(verticalPanel_3);
 		verticalPanel_3.setSize("545px", "100%");
 
-		imageVisualization = new Image(EditorActivity.IMAGEN_ARBOL);
+		imageVisualization = new Image(EditorActivityPopupPanel.IMAGEN_ARBOL);
 		verticalPanel_3.add(imageVisualization);
 		imageVisualization.setSize("503px", "151px");
 
@@ -651,28 +650,28 @@ public class EditorActivity extends PopupPanel {
 		verticalSplitPanel.setBottomWidget(verticalPanel_2);
 		verticalPanel_2.setSize("100%", "236px");
 
-		LanguageLabel = new Label(EditorActivity.LANGUAGE_LABEL);
+		LanguageLabel = new Label(EditorActivityPopupPanel.LANGUAGE_LABEL);
 		verticalPanel_2.add(LanguageLabel);
 
-		PrivateCatalogLabel = new Label(EditorActivity.PRIVATE_CATALOG_LABEL);
+		PrivateCatalogLabel = new Label(EditorActivityPopupPanel.PRIVATE_CATALOG_LABEL);
 		verticalPanel_2.add(PrivateCatalogLabel);
 
-		PublicCatalogLabel = new Label(EditorActivity.PUBLIC_CATALOG_LABEL);
+		PublicCatalogLabel = new Label(EditorActivityPopupPanel.PUBLIC_CATALOG_LABEL);
 		verticalPanel_2.add(PublicCatalogLabel);
 
-		DefaultTypeLabel = new Label(EditorActivity.DEFAUL_TYPE_LABEL);
+		DefaultTypeLabel = new Label(EditorActivityPopupPanel.DEFAUL_TYPE_LABEL);
 		verticalPanel_2.add(DefaultTypeLabel);
 
-		BooksLabel = new Label(EditorActivity.BOOK_LABEL);
+		BooksLabel = new Label(EditorActivityPopupPanel.BOOK_LABEL);
 		verticalPanel_2.add(BooksLabel);
 
-		GroupsLabel = new Label(EditorActivity.GROUPS_LABEL);
+		GroupsLabel = new Label(EditorActivityPopupPanel.GROUPS_LABEL);
 		verticalPanel_2.add(GroupsLabel);
 
 		VerticalPanel verticalPanel_4 = new VerticalPanel();
 		verticalPanel_2.add(verticalPanel_4);
 
-		TemplateLabel = new Label(EditorActivity.TEMPLATE_LABEL);
+		TemplateLabel = new Label(EditorActivityPopupPanel.TEMPLATE_LABEL);
 		verticalPanel_4.add(TemplateLabel);
 
 		HorizontalPanel horizontalPanel_2 = new HorizontalPanel();
@@ -683,11 +682,11 @@ public class EditorActivity extends PopupPanel {
 		horizontalPanel_2.add(simplePanel);
 		simplePanel.setSize("35px", "18px");
 
-		BlankTemplateAllowedLabel = new Label(EditorActivity.BLANK_TEMPLATE_ALLOWED);
+		BlankTemplateAllowedLabel = new Label(EditorActivityPopupPanel.BLANK_TEMPLATE_ALLOWED);
 		horizontalPanel_2.add(BlankTemplateAllowedLabel);
 		BlankTemplateAllowedLabel.setStyleName("gwt-LabelRedactivity");
 
-		VisualizacionLabel = new Label(EditorActivity.VISUALIZACION_LABEL
+		VisualizacionLabel = new Label(EditorActivityPopupPanel.VISUALIZACION_LABEL
 				+ Constants.VISUAL_ARBOL);
 		verticalPanel_2.add(VisualizacionLabel);
 
@@ -835,7 +834,7 @@ public class EditorActivity extends PopupPanel {
 			}
 		});
 		WellcomeMenuItemTextBox=new TextBox();
-		WellcomeMenuItemTextBox.setText(EditorActivity.MENU_WELLCOME_TEXT);
+		WellcomeMenuItemTextBox.setText(EditorActivityPopupPanel.MENU_WELLCOME_TEXT);
 		WellcomeMenuItemTextBox.setSize(WellcomeMenuItem.getOffsetWidth()+"px", WellcomeMenuItem.getOffsetHeight()+"px");
 		PanelEdicion.add(WellcomeMenuItemTextBox, WellcomeMenuItem.getAbsoluteLeft()-flowPanel.getAbsoluteLeft()-DecoradorWidth, WellcomeMenuItem.getAbsoluteTop()-flowPanel.getAbsoluteTop()-DecoradorWidth);
 		
@@ -1037,7 +1036,7 @@ public class EditorActivity extends PopupPanel {
 				VISUALIZACION_LABEL = Lista[20];
 		}
 		else 
-			Logger.GetLogger().severe(EditorActivity.class.toString(), ActualState.getUser().toString(), ErrorConstants.ERROR_LOADING_LANGUAGE_IN  + EDITORACTIVITY_NAME);	
+			Logger.GetLogger().severe(EditorActivityPopupPanel.class.toString(), ActualState.getUser().toString(), ErrorConstants.ERROR_LOADING_LANGUAGE_IN  + EDITORACTIVITY_NAME);	
 	}
 	
 	protected void ParsearFieldsAItems() {
@@ -1046,15 +1045,15 @@ public class EditorActivity extends PopupPanel {
 		SaveMenuItem.setHTML(MENU_SAVE_BUTTON);
 		CancelMenuItem.setHTML(MENU_CANCEL_BUTTON);
 		TabPanelGeneral.clear();
-		TabPanelGeneral.add(LanguageTabPanel, EditorActivity.TAB_PANEL_LANGUAGE, false);
-		TabPanelGeneral.add(CatalogTabPanel, EditorActivity.TAB_PANEL_CATALOG, false);
+		TabPanelGeneral.add(LanguageTabPanel, EditorActivityPopupPanel.TAB_PANEL_LANGUAGE, false);
+		TabPanelGeneral.add(CatalogTabPanel, EditorActivityPopupPanel.TAB_PANEL_CATALOG, false);
 		AllowDefaulTypeCheckBox.setHTML(ALLOW_DEFAULT_TYPE);
 		BotonSelectDefaultType.setHTML(BOTON_SELECT_DEFAULT_TYPE);
-		TabPanelGeneral.add(BooksTabPanel, EditorActivity.TAB_PANEL_BOOK, false);
-		TabPanelGeneral.add(GroupsTabPanel, EditorActivity.TAB_PANEL_GROUPS, false);
-		TabPanelGeneral.add(TemplatesTabPanel, EditorActivity.TAB_PANEL_TEMPLATES, false);
+		TabPanelGeneral.add(BooksTabPanel, EditorActivityPopupPanel.TAB_PANEL_BOOK, false);
+		TabPanelGeneral.add(GroupsTabPanel, EditorActivityPopupPanel.TAB_PANEL_GROUPS, false);
+		TabPanelGeneral.add(TemplatesTabPanel, EditorActivityPopupPanel.TAB_PANEL_TEMPLATES, false);
 		AllowFreeTemplateCheckBox.setHTML(ALLOW_BLANK_TEMPLATE);
-		TabPanelGeneral.add(VisualizacionTabPanel, EditorActivity.TAB_PANEL_VISUALIZACION, false);
+		TabPanelGeneral.add(VisualizacionTabPanel, EditorActivityPopupPanel.TAB_PANEL_VISUALIZACION, false);
 		LanguageLabel.setText(LANGUAGE_LABEL);
 		PrivateCatalogLabel.setText(PRIVATE_CATALOG_LABEL);
 		PublicCatalogLabel.setText(PUBLIC_CATALOG_LABEL);
@@ -1072,7 +1071,7 @@ public class EditorActivity extends PopupPanel {
 
 			SelectedCatalog = ActualActivity.getCloseCatalogo();
 			SelectedCatalogOld = ActualActivity.getCloseCatalogo();
-			PrivateCatalogLabel.setText(EditorActivity.PRIVATE_CATALOG_LABEL
+			PrivateCatalogLabel.setText(EditorActivityPopupPanel.PRIVATE_CATALOG_LABEL
 					+ SelectedCatalog.getCatalogName());
 			PanelSelecionDefault.setVisible(true);
 			if (ActualActivity.getDefaultType() != null) {
@@ -1101,7 +1100,7 @@ public class EditorActivity extends PopupPanel {
 					public void onSuccess(TypeClient result) {
 						generalangaugeOld();
 						DefaultType = result;
-						DefaultTypeLabel.setText(EditorActivity.DEFAUL_TYPE_LABEL
+						DefaultTypeLabel.setText(EditorActivityPopupPanel.DEFAUL_TYPE_LABEL
 								+ DefaultType.getName());
 					}
 
@@ -1119,7 +1118,7 @@ public class EditorActivity extends PopupPanel {
 		if (ActualActivity.getLanguage() != null) {
 
 			SelectedLanguage = ActualActivity.getLanguage();
-			LanguageLabel.setText(EditorActivity.LANGUAGE_LABEL + SelectedLanguage.getName());
+			LanguageLabel.setText(EditorActivityPopupPanel.LANGUAGE_LABEL + SelectedLanguage.getName());
 			generabookOld();
 
 		} else
@@ -1131,7 +1130,7 @@ public class EditorActivity extends PopupPanel {
 		if (ActualActivity.getBook() != null) {
 			SelectedBook = ActualActivity.getBook();
 			SelectedBookOld = SelectedBook;
-			BooksLabel.setText(EditorActivity.BOOK_LABEL + SelectedBook.getTitle());
+			BooksLabel.setText(EditorActivityPopupPanel.BOOK_LABEL + SelectedBook.getTitle());
 			generagroupOld();
 		} else
 			generagroupOld();
@@ -1140,7 +1139,7 @@ public class EditorActivity extends PopupPanel {
 
 	private void generagroupOld() {
 		if (ActualActivity.getGroup() != null) {
-			GroupsLabel.setText(EditorActivity.GROUPS_LABEL
+			GroupsLabel.setText(EditorActivityPopupPanel.GROUPS_LABEL
 					+ ActualActivity.getGroup().getName());
 			SelectedGroup = ActualActivity.getGroup();
 			generatecatalogPublicOld();
@@ -1155,7 +1154,7 @@ public class EditorActivity extends PopupPanel {
 		if (ActualActivity.getOpenCatalogo() != null) {
 			SelectedCatalogPublic = ActualActivity.getOpenCatalogo();
 			SelectedCatalogOldPublic = ActualActivity.getOpenCatalogo();
-			PublicCatalogLabel.setText(EditorActivity.PUBLIC_CATALOG_LABEL
+			PublicCatalogLabel.setText(EditorActivityPopupPanel.PUBLIC_CATALOG_LABEL
 					+ SelectedCatalogPublic.getCatalogName());
 			generateTemplateOld();
 
@@ -1167,7 +1166,7 @@ public class EditorActivity extends PopupPanel {
 		if (ActualActivity.getTemplate() != null) {
 
 			Template = ActualActivity.getTemplate();
-			TemplateLabel.setText(EditorActivity.TEMPLATE_LABEL + Template.getName());
+			TemplateLabel.setText(EditorActivityPopupPanel.TEMPLATE_LABEL + Template.getName());
 			generateBlancTemplateOld();
 
 		} else
@@ -1193,15 +1192,15 @@ public class EditorActivity extends PopupPanel {
 			if (ActualActivity.getVisualization()
 					.equals(Constants.VISUAL_ARBOL)) {
 				SeleccionVisualizacionComboBox.setSelectedIndex(0);
-				VisualizacionLabel.setText(EditorActivity.VISUALIZACION_LABEL
+				VisualizacionLabel.setText(EditorActivityPopupPanel.VISUALIZACION_LABEL
 						+ Constants.VISUAL_ARBOL);
-				imageVisualization.setUrl(EditorActivity.IMAGEN_ARBOL);
+				imageVisualization.setUrl(EditorActivityPopupPanel.IMAGEN_ARBOL);
 
 			} else {
 				SeleccionVisualizacionComboBox.setSelectedIndex(1);
-				VisualizacionLabel.setText(EditorActivity.VISUALIZACION_LABEL
+				VisualizacionLabel.setText(EditorActivityPopupPanel.VISUALIZACION_LABEL
 						+ Constants.VISUAL_KEY);
-				imageVisualization.setUrl(EditorActivity.IMAGEN_KEY);
+				imageVisualization.setUrl(EditorActivityPopupPanel.IMAGEN_KEY);
 			}
 			Generatepanels();
 
@@ -1317,7 +1316,7 @@ public class EditorActivity extends PopupPanel {
 								public void onClick(ClickEvent event) {
 									Botonlanguage BCE = (Botonlanguage) event
 											.getSource();
-									LanguageLabel.setText(EditorActivity.LANGUAGE_LABEL
+									LanguageLabel.setText(EditorActivityPopupPanel.LANGUAGE_LABEL
 											+ BCE.getLanguage().getName());
 									SelectedLanguage = BCE.getLanguage();
 
@@ -1354,7 +1353,7 @@ public class EditorActivity extends PopupPanel {
 								public void onClick(ClickEvent event) {
 									Botonlanguage BCE = (Botonlanguage) event
 											.getSource();
-									LanguageLabel.setText(EditorActivity.LANGUAGE_LABEL
+									LanguageLabel.setText(EditorActivityPopupPanel.LANGUAGE_LABEL
 											+ BCE.getLanguage().getName());
 									SelectedLanguage = BCE.getLanguage();
 
@@ -1414,7 +1413,7 @@ public class EditorActivity extends PopupPanel {
 								public void onClick(ClickEvent event) {
 									Botonbooks BCE = (Botonbooks) event
 											.getSource();
-									BooksLabel.setText(EditorActivity.BOOK_LABEL
+									BooksLabel.setText(EditorActivityPopupPanel.BOOK_LABEL
 											+ BCE.getBook().getTitle());
 									SelectedBook = BCE.getBook();
 
@@ -1450,7 +1449,7 @@ public class EditorActivity extends PopupPanel {
 								public void onClick(ClickEvent event) {
 									Botonbooks BCE = (Botonbooks) event
 											.getSource();
-									BooksLabel.setText(EditorActivity.BOOK_LABEL
+									BooksLabel.setText(EditorActivityPopupPanel.BOOK_LABEL
 											+ BCE.getBook().getTitle());
 									SelectedBook = BCE.getBook();
 
@@ -1505,7 +1504,7 @@ public class EditorActivity extends PopupPanel {
 								public void onClick(ClickEvent event) {
 									Botongroups BCE = (Botongroups) event
 											.getSource();
-									GroupsLabel.setText(EditorActivity.GROUPS_LABEL
+									GroupsLabel.setText(EditorActivityPopupPanel.GROUPS_LABEL
 											+ BCE.getGrupo().getName());
 									SelectedGroup = BCE.getGrupo();
 								}
@@ -1540,7 +1539,7 @@ public class EditorActivity extends PopupPanel {
 								public void onClick(ClickEvent event) {
 									Botongroups BCE = (Botongroups) event
 											.getSource();
-									GroupsLabel.setText(EditorActivity.GROUPS_LABEL
+									GroupsLabel.setText(EditorActivityPopupPanel.GROUPS_LABEL
 											+ BCE.getGrupo().getName());
 									SelectedGroup = BCE.getGrupo();
 								}
@@ -1595,7 +1594,7 @@ public class EditorActivity extends PopupPanel {
 									BotonTemplates BCE = (BotonTemplates) event
 											.getSource();
 									Template = BCE.getTemplate();
-									TemplateLabel.setText(EditorActivity.TEMPLATE_LABEL
+									TemplateLabel.setText(EditorActivityPopupPanel.TEMPLATE_LABEL
 											+ Template.getName());
 								}
 							});
@@ -1630,7 +1629,7 @@ public class EditorActivity extends PopupPanel {
 									BotonTemplates BCE = (BotonTemplates) event
 											.getSource();
 									Template = BCE.getTemplate();
-									TemplateLabel.setText(EditorActivity.TEMPLATE_LABEL
+									TemplateLabel.setText(EditorActivityPopupPanel.TEMPLATE_LABEL
 											+ Template.getName());
 								}
 							});

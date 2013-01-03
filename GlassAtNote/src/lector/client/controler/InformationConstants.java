@@ -1,7 +1,7 @@
 package lector.client.controler;
 
 public class InformationConstants {
-
+	
 	public static String INSERT_ID_OF_THE_GROUP = "Insert the Key of the Group";
 	public static String CREATE_NEW_TEMPLATECATEGORY = "Insert the name for the new Template category in ";
 	public static String  ORDER_EDITABLE = "Editable Structure";
@@ -43,4 +43,5 @@ public class InformationConstants {
 	public static String ARE_YOU_SURE_TO_SWAP_BOOK="Are you sure you want to swap the book in the activity?. The annotation associated to the activity will be deleted";
 	public static String EDIT_BOTTON="Edit";
 	public static String END_EDIT_BOTTON="End Edit";
+	public static String THE_NAME_CAN_NOT_BE_EMPTY="The Name can be more lenght or equal than two";
 }

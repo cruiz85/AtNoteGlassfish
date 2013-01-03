@@ -31,12 +31,12 @@ public class PanelSeleccionCatalogo extends PopupPanel {
 	private CatalogoClient Catalogo;
 	private Label LPrivate;
 	private Label LPublic;
-	private EditorActivity Father;
+	private EditorActivityPopupPanel Father;
 	static GWTServiceAsync bookReaderServiceHolder = GWT
 			.create(GWTService.class);
 	
 	public PanelSeleccionCatalogo(CatalogoClient catalogo, Label catalogLabel,
-			Label openCatalogLabel, EditorActivity yo) {
+			Label openCatalogLabel, EditorActivityPopupPanel yo) {
 		
 		super(true);
 		Catalogo=catalogo;

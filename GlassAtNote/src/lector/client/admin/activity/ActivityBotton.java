@@ -5,14 +5,14 @@ import lector.share.model.client.ReadingActivityClient;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.VerticalPanel;
 
-public class BottonActivity extends Button {
+public class ActivityBotton extends Button {
 
 	private ReadingActivityClient readingActivity;
 	private VerticalPanel Actual;
 	private VerticalPanel Normal;
 	private VerticalPanel Selected;
 
-	public BottonActivity(VerticalPanel Normalin, VerticalPanel Selectedin,
+	public ActivityBotton(VerticalPanel Normalin, VerticalPanel Selectedin,
 			ReadingActivityClient readingActivityClient) {
 		super(readingActivityClient.getName());
 		this.readingActivity = readingActivityClient;
