@@ -52,8 +52,10 @@ public class Annotation implements Serializable {
 	private Integer pageNumber;
 
 	@ManyToMany(mappedBy = "annotations")
-	//@JoinTable(name = "tag_annotation", joinColumns = { @JoinColumn(name = "annotations_id", referencedColumnName = "id") }, inverseJoinColumns = { @JoinColumn(name = "tags_id", referencedColumnName = "id") })
-	private List<Tag> tags;
+	// @JoinTable(name = "tag_annotation", joinColumns = { @JoinColumn(name =
+	// "annotations_id", referencedColumnName = "id") }, inverseJoinColumns = {
+	// @JoinColumn(name = "tags_id", referencedColumnName = "id") })
+	private List<Tag> tags = new ArrayList<Tag>();
 
 	@Temporal(javax.persistence.TemporalType.DATE)
 	private Date createdDate;
@@ -192,12 +194,6 @@ public class Annotation implements Serializable {
 
 	public void setUpdatability(short updatability) {
 		this.updatability = updatability;
-	}
-
-	@PreRemove
-	public void preRemove() {
-		setActivity(null);
-		this.activity.getAnnotations().remove(this);
 	}
 
 }

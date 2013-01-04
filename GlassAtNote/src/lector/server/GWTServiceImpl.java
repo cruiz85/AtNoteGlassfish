@@ -1189,7 +1189,7 @@ public class GWTServiceImpl extends RemoteServiceServlet implements GWTService {
 					"no Tag found the annotation will not be persisted",
 					e.getStackTrace());
 		}
-	//	saveAnnotation(annotation);
+		// saveAnnotation(annotation);
 	}
 
 	private List<Long> getTagIdsFromAnnotation(Annotation a) {
@@ -1207,7 +1207,8 @@ public class GWTServiceImpl extends RemoteServiceServlet implements GWTService {
 		}
 		return ids;
 	}
-// CODIGO NUEVO
+
+	// CODIGO NUEVO
 	private void checkChangesOnTags(Annotation oldAnnotation, List<Long> aTags,
 			List<Long> aClientTags) throws TagNotFoundException {
 
@@ -1217,8 +1218,7 @@ public class GWTServiceImpl extends RemoteServiceServlet implements GWTService {
 				oldAnnotation.getTags().size();
 				oldAnnotation.getTags().remove(tag);
 				tag.getAnnotations().remove(oldAnnotation);
-				
-				
+
 			}
 		}
 
@@ -1544,7 +1544,7 @@ public class GWTServiceImpl extends RemoteServiceServlet implements GWTService {
 	public void deleteAnnotation(Long annotationId) throws GeneralException,
 			AnnotationNotFoundException {
 		EntityManager entityManager = emf.createEntityManager();
-
+		entityManager.clear();
 		try {
 			Annotation annotation = entityManager.find(Annotation.class,
 					annotationId);
@@ -1559,8 +1559,8 @@ public class GWTServiceImpl extends RemoteServiceServlet implements GWTService {
 
 			annotation.getCreator().getAnnotations().size();
 			annotation.getCreator().getAnnotations().remove(annotation);
-			annotation.setCreator(null);
 			entityManager.merge(annotation.getCreator());
+			annotation.setCreator(null);
 
 			annotation.getTags().size();
 			for (Tag tag : annotation.getTags()) {
@@ -1568,7 +1568,6 @@ public class GWTServiceImpl extends RemoteServiceServlet implements GWTService {
 			}
 
 			annotation.setTags(null);
-			entityManager.merge(annotation.getTags());
 
 			entityManager.remove(annotation);
 			entityManager.flush();
