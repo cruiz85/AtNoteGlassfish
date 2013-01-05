@@ -46,12 +46,10 @@ public class AnnotationThread implements Serializable {
 		super();
 	}
 
-	public AnnotationThread(AnnotationThread father,
-			List<AnnotationThread> subThreads, Annotation annotation,
+	public AnnotationThread(AnnotationThread father, Annotation annotation,
 			String comment, Long userId, String userName, Date createdDate) {
 		super();
 		this.father = father;
-		this.subThreads = subThreads;
 		this.annotation = annotation;
 		this.comment = comment;
 		this.userId = userId;

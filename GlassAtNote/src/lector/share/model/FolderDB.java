@@ -13,7 +13,7 @@ import javax.persistence.OneToMany;
 @DiscriminatorValue("FOLDER")
 public class FolderDB extends Entry implements Serializable {
 
-	@OneToMany(mappedBy="father", cascade=CascadeType.REMOVE)
+	@OneToMany(mappedBy="father", orphanRemoval=true)
 	private List<Relation> relations = new ArrayList<Relation>();
 	private List<Long> orders = new ArrayList<Long>();
 
@@ -26,7 +26,10 @@ public class FolderDB extends Entry implements Serializable {
 		super(name);
 
 	}
+	public FolderDB(String name,Catalogo catalogo) {
+		super(name, catalogo);
 
+	}
 	public List<Relation> getRelations() {
 		return relations;
 	}

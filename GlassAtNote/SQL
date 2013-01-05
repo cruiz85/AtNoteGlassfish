@@ -16,3 +16,8 @@ drop table `atnote`.`catalogo`;
 drop table `atnote`.`group_app_user_app`;
 drop table `atnote`.`group_app`;
 drop table `atnote`.`user_app`;
+
+
+#PARA INCLUIR UN PROFESOR
+INSERT INTO `atnote`.`user_app` (`ID`, `DTYPE`, `CREATEDDATE`, `EMAIL`, `FIRSTNAME`, `ISCONFIRMED`, `LASTNAME`, `PASSWORD`) VALUES ('2', 'Professor', '2013-01-05', 'ce', 'd', '1', 'wd', '33');
+

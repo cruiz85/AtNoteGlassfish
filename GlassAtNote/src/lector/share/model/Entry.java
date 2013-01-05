@@ -41,7 +41,7 @@ public abstract class Entry implements Serializable {
 	public Entry(String name, Catalogo catalog) {
 		super();
 		this.name = name;
-//		this.catalog = catalog;
+		this.catalog = catalog;
 	}
 
 	public Entry(String name) {

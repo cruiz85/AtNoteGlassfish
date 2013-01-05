@@ -4,8 +4,6 @@ import com.google.gwt.user.client.rpc.IsSerializable;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
-
-import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -13,10 +11,9 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
-import javax.persistence.PrePersist;
-import javax.persistence.PreUpdate;
-
 import javax.persistence.Table;
+
+import org.eclipse.persistence.annotations.PrivateOwned;
 
 import lector.share.model.Book;
 
@@ -31,10 +28,10 @@ public class ReadingActivity implements Serializable, IsSerializable {
 
 	@ManyToOne
 	@JoinColumn(name = "PROFESSOR_ID")
-	Professor professor;
+	private Professor professor;
 
 	private Language language;
-	
+
 	@ManyToOne
 	@JoinColumn(name = "BOOK_ID")
 	private Book book;
@@ -43,10 +40,11 @@ public class ReadingActivity implements Serializable, IsSerializable {
 	private Catalogo closeCatalogo;
 	private Catalogo openCatalogo;
 
-	private String Visualization;
+	private String visualization;
 	private Template template;
 	private short isFreeTemplateAllowed = 0;
-	@OneToMany(mappedBy = "activity", orphanRemoval=true)
+	@PrivateOwned
+	@OneToMany(mappedBy = "activity", orphanRemoval = true)
 	private List<Annotation> annotations = new ArrayList<Annotation>();
 
 	private short privacy = 1;
@@ -58,7 +56,7 @@ public class ReadingActivity implements Serializable, IsSerializable {
 	public ReadingActivity(String name, Professor professor, Language language,
 			Book book, GroupApp group, Catalogo closeCatalogo,
 			Catalogo openCatalogo, String visualization, Template template,
-			short isFreeTemplateAllowed, short privacy) {
+			short isFreeTemplateAllowed, short privacy, Tag defultTag) {
 		super();
 		this.name = name;
 		this.professor = professor;
@@ -67,10 +65,11 @@ public class ReadingActivity implements Serializable, IsSerializable {
 		this.group = group;
 		this.closeCatalogo = closeCatalogo;
 		this.openCatalogo = openCatalogo;
-		Visualization = visualization;
+		this.visualization = visualization;
 		this.template = template;
 		this.isFreeTemplateAllowed = isFreeTemplateAllowed;
 		this.privacy = privacy;
+		this.defultTag = defultTag;
 	}
 
 	public Long getId() {
@@ -154,11 +153,11 @@ public class ReadingActivity implements Serializable, IsSerializable {
 	}
 
 	public String getVisualization() {
-		return Visualization;
+		return visualization;
 	}
 
 	public void setVisualization(String visualization) {
-		Visualization = visualization;
+		this.visualization = visualization;
 	}
 
 	public Template getTemplate() {
@@ -184,13 +183,13 @@ public class ReadingActivity implements Serializable, IsSerializable {
 	public void setPrivacy(short privacy) {
 		this.privacy = privacy;
 	}
-	
-//	@PrePersist
-//	@PreUpdate
-//	public void prePersist() {
-//		if(!book.getReadingActivities().contains(this)){
-//			book.getReadingActivities().add(this);
-//		}
-//	}
-	
+
+	// @PrePersist
+	// @PreUpdate
+	// public void prePersist() {
+	// if(!book.getReadingActivities().contains(this)){
+	// book.getReadingActivities().add(this);
+	// }
+	// }
+
 }

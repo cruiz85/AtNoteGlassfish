@@ -29,8 +29,7 @@ public class GroupApp implements Serializable, IsSerializable {
 	@ManyToMany(mappedBy = "participatingGroups")
 	//@JoinTable(name = "group_user", joinColumns = { @JoinColumn(name = "groupId", referencedColumnName = "id") }, inverseJoinColumns = { @JoinColumn(name = "userId", referencedColumnName = "id") })
 	private List<Student> participatingStudents = new ArrayList<Student>();
-
-	@ManyToMany(cascade = CascadeType.ALL)
+	@OneToMany
 	private List<Student> remainingStudents = new ArrayList<Student>();
 
 	public GroupApp() {
@@ -40,6 +39,12 @@ public class GroupApp implements Serializable, IsSerializable {
 	public GroupApp(String name) {
 		this();
 		this.name = name;
+	}
+
+	public GroupApp(String name, Professor professor) {
+		super();
+		this.name = name;
+		this.professor = professor;
 	}
 
 	public Long getId() {
