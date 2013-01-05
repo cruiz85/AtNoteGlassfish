@@ -3701,14 +3701,30 @@ public class GWTServiceImpl extends RemoteServiceServlet implements GWTService {
 			for (ReadingActivity readingActivity : activities) {
 				readingActivity.setBook(null);
 				for (Annotation annotation : readingActivity.getAnnotations()) {
-					annotation.setActivity(null);
-					entityManager.remove(annotation);
+					Annotation annotationToRemove = entityManager.find(Annotation.class, annotation.getId());
+					annotationToRemove.getActivity().getAnnotations().remove(annotationToRemove);
+					entityManager.merge(annotationToRemove.getActivity());
+					annotationToRemove.setActivity(null);
+					annotationToRemove.getCreator().getAnnotations().size();
+					annotationToRemove.getCreator().getAnnotations().remove(annotationToRemove);
+					entityManager.merge(annotationToRemove.getCreator());
+					annotationToRemove.setCreator(null);
+
+					annotationToRemove.getTags().size();
+					for (Tag tag : annotationToRemove.getTags()) {
+						tag.getAnnotations().remove(annotationToRemove);
+					}
+
+					annotationToRemove.setTags(null);
+					entityManager.remove(annotationToRemove);
+		
 				}
 				readingActivity.setAnnotations(null);
 				entityManager.merge(readingActivity);
 			}
 
 			entityManager.remove(book);
+			entityManager.flush();
 			userTransaction.commit();
 		} catch (Exception e) {
 			ServiceManagerUtils.rollback(userTransaction);
