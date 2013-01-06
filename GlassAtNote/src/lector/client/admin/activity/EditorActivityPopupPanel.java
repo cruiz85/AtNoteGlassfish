@@ -256,7 +256,7 @@ public class EditorActivityPopupPanel extends PopupPanel {
 							if (Window
 									.confirm(InformationConstants.ARE_YOU_SURE_TO_SWAP_ONE_ORE_BOTH_CATALOGS)) {
 
-								Window.alert("Under Developer");
+								//Window.alert("Under Developer");
 								StringBuffer SB = new StringBuffer();
 								SB.append("Change Catalog or both and remove activities");
 								if (SelectedCatalogOld != null) {
@@ -307,7 +307,7 @@ public class EditorActivityPopupPanel extends PopupPanel {
 								// }
 								//
 								// public void onSuccess(Integer result) {
-								// SaveacActivitytoServer();
+								 SaveacActivitytoServer();
 								// LoadingPanel.getInstance()
 								// .hide();
 								//
@@ -318,7 +318,7 @@ public class EditorActivityPopupPanel extends PopupPanel {
 						} else if (checkbook()) {
 							if (Window
 									.confirm(InformationConstants.ARE_YOU_SURE_TO_SWAP_BOOK)) {
-								Window.alert("Under Developer");
+								//Window.alert("Under Developer");
 								StringBuffer SB = new StringBuffer();
 								SB.append("Change Book and remove activities");
 								if (SelectedBookOld != null) {
@@ -354,7 +354,7 @@ public class EditorActivityPopupPanel extends PopupPanel {
 								// }
 								//
 								// public void onSuccess(Integer result) {
-								// SaveacActivitytoServer();
+								 SaveacActivitytoServer();
 								// LoadingPanel.getInstance()
 								// .hide();
 								//
