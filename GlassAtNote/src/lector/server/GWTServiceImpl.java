@@ -1709,12 +1709,13 @@ public class GWTServiceImpl extends RemoteServiceServlet implements GWTService {
 			userTransaction.begin();
 			if (annotationThread.getId() == null) {
 				entityManager.persist(annotationThread);
-				entityManager.merge(annotationThread.getAnnotation());
+				
 
 			} else {
 				entityManager.merge(annotationThread);
 
 			}
+			entityManager.merge(annotationThread.getAnnotation());
 			if (annotationThread.getFather() != null) {
 				entityManager.merge(annotationThread.getFather());
 			}
@@ -3325,6 +3326,9 @@ public class GWTServiceImpl extends RemoteServiceServlet implements GWTService {
 			} else {
 				entityManager.merge(readingActivity);
 				for (Annotation annotation : readingActivity.getAnnotations()) {
+//					for (Tag tag : annotation.getTags()) {
+//						entityManager.merge(tag);
+//					}
 					entityManager.merge(annotation);
 				}
 			}
@@ -3381,7 +3385,7 @@ public class GWTServiceImpl extends RemoteServiceServlet implements GWTService {
 		// Catalogo Cerrado = Si Cambia Borrar las anotaciones asociadas a la
 		// actividad.
 		if ((readingActivityClientEntrada.getCloseCatalogo() != null)
-				&& ((readingActivitySalida.getCloseCatalogo() == null) || (readingActivityClientEntrada
+				&& ((readingActivitySalida.getCloseCatalogo() == null) || (!readingActivityClientEntrada
 						.getCloseCatalogo().getId()
 						.equals(readingActivitySalida.getCloseCatalogo()
 								.getId())))) {
@@ -3407,7 +3411,7 @@ public class GWTServiceImpl extends RemoteServiceServlet implements GWTService {
 		// nulo, o del profesor, hay que mirarlo,
 		// lo que es seguro es que se borran las privadas.
 		if ((readingActivityClientEntrada.getGroup() != null)
-				&& ((readingActivitySalida.getGroup() == null) || (readingActivityClientEntrada
+				&& ((readingActivitySalida.getGroup() == null) || (!readingActivityClientEntrada
 						.getGroup().getId().equals(readingActivitySalida
 						.getGroup().getId())))) {
 			if (readingActivitySalida.getAnnotations() != null) {
@@ -3430,7 +3434,7 @@ public class GWTServiceImpl extends RemoteServiceServlet implements GWTService {
 		// Catalogo Abierto = Si Cambia Borrar las anotaciones asociadas a la
 		// actividad.
 		if ((readingActivityClientEntrada.getOpenCatalogo() != null)
-				&& ((readingActivitySalida.getOpenCatalogo() == null) || (readingActivityClientEntrada
+				&& ((readingActivitySalida.getOpenCatalogo() == null) || (!readingActivityClientEntrada
 						.getOpenCatalogo().getId().equals(readingActivitySalida
 						.getOpenCatalogo().getId())))) {
 			if (readingActivitySalida.getAnnotations() != null) {

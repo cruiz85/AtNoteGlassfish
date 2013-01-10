@@ -12,10 +12,12 @@ import javax.transaction.UserTransaction;
 
 import lector.client.book.reader.ExportService;
 import lector.client.controler.Constants;
+import lector.share.model.Annotation;
 import lector.share.model.ExportObject;
 import lector.share.model.GeneralException;
 import lector.share.model.Professor;
 import lector.share.model.ProfessorNotFoundException;
+import lector.share.model.Tag;
 import lector.share.model.Template;
 import lector.share.model.TemplateCategory;
 import lector.share.model.TemplateCategoryNotFoundException;
@@ -48,9 +50,12 @@ public class ExportServiceImpl extends RemoteServiceServlet implements
 				remplaceCamps(templateClient, template);
 
 			} else {
+				Professor professor = findProfessor(templateClient
+						.getProfessor());
 				template = new Template(templateClient.getName(),
 						templateClient.getModifyable() ? (short) 1 : 0,
-						findProfessor(templateClient.getProfessor()));
+						professor);
+				professor.getTemplates().add(template);
 			}
 			saveTemplate(template);
 
@@ -107,12 +112,12 @@ public class ExportServiceImpl extends RemoteServiceServlet implements
 		try {
 			userTransaction.begin();
 			if (template.getId() == null) {
-				template.getProfessor().getTemplates().add(template);
+				entityManager.persist(template);
 				entityManager.merge(template.getProfessor());
 			} else {
 				entityManager.merge(template);
 			}
-
+			entityManager.flush();
 			userTransaction.commit();
 		} catch (Exception e) {
 			ServiceManagerUtils.rollback(userTransaction); // TODO utilizar
@@ -197,16 +202,23 @@ public class ExportServiceImpl extends RemoteServiceServlet implements
 		EntityManager entityManager = emf.createEntityManager();
 
 		try {
+			Template template = entityManager.find(Template.class, templateId);
 			userTransaction.begin();
-			entityManager.createQuery(
-					"DELETE FROM Template s WHERE s.id=" + templateId)
-					.executeUpdate();
+			template.getProfessor().getTemplates().size();
+			template.getProfessor().getTemplates().remove(template);
+			entityManager.merge(template.getProfessor());
+			template.setProfessor(null);
+			entityManager.remove(template);
+			entityManager.flush();
+			// /entityManager.merge(annotation.getActivity());
 			userTransaction.commit();
 		} catch (Exception e) {
 			ServiceManagerUtils.rollback(userTransaction);
-			throw new GeneralException("Exception in method deleteTemplateById"
-					+ e.getMessage(), e.getStackTrace());
+			throw new GeneralException(
+					"Exception in method deleteAnnotationById" + e.getMessage(),
+					e.getStackTrace());
 		}
+
 	}
 
 	@Override
@@ -232,12 +244,12 @@ public class ExportServiceImpl extends RemoteServiceServlet implements
 				father = findTemplateCategory(templateCategoryClient
 						.getFather().getId());
 				father.getSubCategories().add(templateCategory);
-				saveTemplateCategory(father);
+				
 			} else {
 				template.getCategories().add(templateCategory);
-				saveTemplate(template);
+				
 			}
-
+			saveTemplateCategory(father);
 		} catch (TemplateNotFoundException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -262,10 +274,14 @@ public class ExportServiceImpl extends RemoteServiceServlet implements
 			userTransaction.begin();
 			if (templateCategory.getId() == null) {
 				entityManager.persist(templateCategory);
+				
 			} else {
 				entityManager.merge(templateCategory);
 			}
-
+			if (templateCategory.getFather() != null) {
+				entityManager.merge(templateCategory.getFather());
+			}
+			entityManager.merge(templateCategory.getTemplate());
 			userTransaction.commit();
 		} catch (Exception e) {
 			ServiceManagerUtils.rollback(userTransaction);
