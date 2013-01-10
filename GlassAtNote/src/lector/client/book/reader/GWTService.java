@@ -82,6 +82,7 @@ public interface GWTService extends RemoteService {
 
 	public List<StudentClient> getUsersByGroupId(Long groupId)
 			throws GeneralException, GroupNotFoundException;
+	
 
 	public List<StudentClient> getStudents() throws GeneralException,
 			StudentNotFoundException;

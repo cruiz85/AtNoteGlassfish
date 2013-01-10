@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import javax.persistence.CascadeType;
+import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
@@ -13,7 +14,8 @@ import javax.xml.bind.annotation.XmlRootElement;
 import lector.share.model.Book;
 
 @Entity
-@Table(name = "professor")
+//@Table(name = "professor")
+@DiscriminatorValue("PROFESSOR")
 public class Professor extends UserApp implements Serializable {
 	private static final long serialVersionUID = 1L;
 

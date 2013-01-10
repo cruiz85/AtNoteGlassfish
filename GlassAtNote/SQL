@@ -19,5 +19,7 @@ drop table `atnote`.`user_app`;
 
 
 #PARA INCLUIR UN PROFESOR
-INSERT INTO `atnote`.`user_app` (`ID`, `DTYPE`, `CREATEDDATE`, `EMAIL`, `FIRSTNAME`, `ISCONFIRMED`, `LASTNAME`, `PASSWORD`) VALUES ('2', 'Professor', '2013-01-05', 'ce', 'd', '1', 'wd', '33');
+INSERT INTO `atnote`.`user_app` (`ID`, `ENTRY_TYPE`, `CREATEDDATE`, `EMAIL`, `FIRSTNAME`, `ISCONFIRMED`, `LASTNAME`, `PASSWORD`) VALUES ('2', 'PROFESSOR', '2013-01-09', 'ce', 'ce', '1', 'ce', '33');
+
+
 

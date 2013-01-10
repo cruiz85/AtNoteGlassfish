@@ -4,14 +4,17 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+
+import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
 import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 import javax.xml.bind.annotation.XmlRootElement;
 
 @Entity
-@Table(name = "student")
-@XmlRootElement
+//@Table(name = "student")
+//@XmlRootElement
+@DiscriminatorValue("STUDENT")
 public class Student extends UserApp implements Serializable {
 	private static final long serialVersionUID = 1L;
 	@ManyToMany

@@ -14,7 +14,6 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.annotation.Resource;
-import javax.jdo.annotations.Transactional;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
@@ -22,8 +21,6 @@ import javax.transaction.UserTransaction;
 import lector.client.book.reader.ExportService;
 import lector.client.book.reader.GWTService;
 import lector.client.controler.Constants;
-
-import com.google.gwt.dev.jdt.FindDeferredBindingSitesVisitor;
 import com.google.gwt.user.server.rpc.RemoteServiceServlet;
 import lector.share.model.Annotation;
 import lector.share.model.AnnotationNotFoundException;
@@ -924,7 +921,7 @@ public class GWTServiceImpl extends RemoteServiceServlet implements GWTService {
 		try {
 			GroupApp group = findGroup(groupId);
 			Student student = findStudent(userId);
-
+			group.getRemainingStudents().size();
 			if (!group.getRemainingStudents().contains(student)) {
 				group.getRemainingStudents().add(student);
 			}
@@ -962,6 +959,7 @@ public class GWTServiceImpl extends RemoteServiceServlet implements GWTService {
 		try {
 			GroupApp group = findGroup(groupId);
 			UserApp user = findStudent(userId);
+			group.getParticipatingStudents().size();
 			if (group.getParticipatingStudents().contains(user)) {
 				group.getParticipatingStudents().remove(user);
 			}
@@ -1005,14 +1003,17 @@ public class GWTServiceImpl extends RemoteServiceServlet implements GWTService {
 		try {
 			Student student = findStudent(userId);
 			GroupApp group = findGroup(groupId);
+			group.getRemainingStudents().size();
 			if (group.getRemainingStudents().contains(student)) {
 				group.getRemainingStudents().remove(student);
 			} else {
 				throw new GeneralException(
 						"Hey!!! this user was not on the list to be validated from: the remainingList");
 			}
+			group.getParticipatingStudents().size();
 			if (!group.getParticipatingStudents().contains(student)) {
 				group.getParticipatingStudents().add(student);
+				student.getParticipatingGroups().add(group);
 			}
 			saveGroup(group);
 
@@ -1655,11 +1656,11 @@ public class GWTServiceImpl extends RemoteServiceServlet implements GWTService {
 				now = calendar.getTime();
 				Annotation annotation = findAnnotation(annotationThreadClient
 						.getAnnotation().getId());
-				if(annotationThreadClient.getFather() != null){
+				if (annotationThreadClient.getFather() != null) {
 					threadFather = findAnnotationThread(annotationThreadClient
 							.getFather().getId());
 				}
-				
+
 				oldAnnotationThread = new AnnotationThread(threadFather,
 						annotation, annotationThreadClient.getComment(),
 						annotationThreadClient.getUserId(),
@@ -2895,7 +2896,14 @@ public class GWTServiceImpl extends RemoteServiceServlet implements GWTService {
 			folderDB.getRelations().remove(relation);
 			entityManager.merge(folderDB);
 			relation.setFather(null);
-			if (getRelationsByChildId(typeCategoryId).size() > 1) { // no considerre que este colgado del catalogo y de otro folder
+			if (getRelationsByChildId(typeCategoryId).size() > 1) { // no
+																	// considerre
+																	// que este
+																	// colgado
+																	// del
+																	// catalogo
+																	// y de otro
+																	// folder
 				entityManager.merge(relation);
 			} else {
 				entityManager.remove(folderToRemove);
@@ -3281,11 +3289,11 @@ public class GWTServiceImpl extends RemoteServiceServlet implements GWTService {
 				Template defaultTemplate = null;
 				Professor owner = findProfessor(readingActivityClient
 						.getProfessor().getId());
-				
+
 				activity = new ReadingActivity(readingActivityClient.getName(),
-						owner, null, null, null, null,
-						null, Constants.VISUAL_KEY, defaultTemplate,
-						(short) 1, (short)1, defaultTag);
+						owner, null, null, null, null, null,
+						Constants.VISUAL_KEY, defaultTemplate, (short) 1,
+						(short) 1, defaultTag);
 
 				owner.getReadingActivities().add(activity);
 
@@ -3316,6 +3324,9 @@ public class GWTServiceImpl extends RemoteServiceServlet implements GWTService {
 				entityManager.persist(readingActivity);
 			} else {
 				entityManager.merge(readingActivity);
+				for (Annotation annotation : readingActivity.getAnnotations()) {
+					entityManager.merge(annotation);
+				}
 			}
 			entityManager.merge(readingActivity.getProfessor());
 			entityManager.flush();
@@ -3354,19 +3365,19 @@ public class GWTServiceImpl extends RemoteServiceServlet implements GWTService {
 				&& ((readingActivitySalida.getBook() == null) || (!readingActivityClientEntrada
 						.getBook().getId()
 						.equals(readingActivitySalida.getBook().getId())))) {
-			if(readingActivitySalida.getAnnotations() != null){
-				for (Annotation annotation : readingActivitySalida.getAnnotations()) {
+			if (readingActivitySalida.getAnnotations() != null) {
+				for (Annotation annotation : readingActivitySalida
+						.getAnnotations()) {
 					annotation.setActivity(null);
 				}
 				readingActivitySalida.getAnnotations().clear();
-			//	readingActivitySalida.setAnnotations(null);	
+				// readingActivitySalida.setAnnotations(null);
 			}
-			
+
 			readingActivitySalida.setBook(findBook(readingActivityClientEntrada
 					.getBook().getId()));
 		}
-		
-		
+
 		// Catalogo Cerrado = Si Cambia Borrar las anotaciones asociadas a la
 		// actividad.
 		if ((readingActivityClientEntrada.getCloseCatalogo() != null)
@@ -3374,15 +3385,19 @@ public class GWTServiceImpl extends RemoteServiceServlet implements GWTService {
 						.getCloseCatalogo().getId()
 						.equals(readingActivitySalida.getCloseCatalogo()
 								.getId())))) {
-			
-			if(readingActivitySalida.getAnnotations() != null){
-				for (Annotation annotation : readingActivitySalida.getAnnotations()) {
-					annotation.setActivity(null);
+
+			if (readingActivitySalida.getAnnotations() != null) {
+				for (Annotation annotation : readingActivitySalida
+						.getAnnotations()) {
+					for (Tag tag : annotation.getTags()) {
+						tag.getAnnotations().remove(annotation);
+					}
+					annotation.getTags().clear();
 				}
-				readingActivitySalida.getAnnotations().clear();
-				//readingActivitySalida.setAnnotations(null);	
+				// readingActivitySalida.getAnnotations().clear();
+				// readingActivitySalida.setAnnotations(null);
 			}
-			
+
 			readingActivitySalida
 					.setCloseCatalogo(findCatalogo(readingActivityClientEntrada
 							.getCloseCatalogo().getId()));
@@ -3395,14 +3410,15 @@ public class GWTServiceImpl extends RemoteServiceServlet implements GWTService {
 				&& ((readingActivitySalida.getGroup() == null) || (readingActivityClientEntrada
 						.getGroup().getId().equals(readingActivitySalida
 						.getGroup().getId())))) {
-			if(readingActivitySalida.getAnnotations() != null){
-				for (Annotation annotation : readingActivitySalida.getAnnotations()) {
+			if (readingActivitySalida.getAnnotations() != null) {
+				for (Annotation annotation : readingActivitySalida
+						.getAnnotations()) {
 					annotation.setActivity(null);
 				}
 				readingActivitySalida.getAnnotations().clear();
-				//readingActivitySalida.setAnnotations(null);	
+				// readingActivitySalida.setAnnotations(null);
 			}
-			
+
 			readingActivitySalida
 					.setGroup(findGroup(readingActivityClientEntrada.getGroup()
 							.getId()));
@@ -3417,12 +3433,16 @@ public class GWTServiceImpl extends RemoteServiceServlet implements GWTService {
 				&& ((readingActivitySalida.getOpenCatalogo() == null) || (readingActivityClientEntrada
 						.getOpenCatalogo().getId().equals(readingActivitySalida
 						.getOpenCatalogo().getId())))) {
-			if(readingActivitySalida.getAnnotations() != null){
-				for (Annotation annotation : readingActivitySalida.getAnnotations()) {
-					annotation.setActivity(null);
+			if (readingActivitySalida.getAnnotations() != null) {
+				for (Annotation annotation : readingActivitySalida
+						.getAnnotations()) {
+					for (Tag tag : annotation.getTags()) {
+						tag.getAnnotations().remove(annotation);
+					}
+					annotation.getTags().clear();
 				}
-				readingActivitySalida.getAnnotations().clear();
-				//readingActivitySalida.setAnnotations(null);	
+				// readingActivitySalida.getAnnotations().clear();
+				// readingActivitySalida.setAnnotations(null);
 			}
 			readingActivitySalida
 					.setOpenCatalogo(findCatalogo(readingActivityClientEntrada
@@ -3701,12 +3721,15 @@ public class GWTServiceImpl extends RemoteServiceServlet implements GWTService {
 			for (ReadingActivity readingActivity : activities) {
 				readingActivity.setBook(null);
 				for (Annotation annotation : readingActivity.getAnnotations()) {
-					Annotation annotationToRemove = entityManager.find(Annotation.class, annotation.getId());
-					annotationToRemove.getActivity().getAnnotations().remove(annotationToRemove);
+					Annotation annotationToRemove = entityManager.find(
+							Annotation.class, annotation.getId());
+					annotationToRemove.getActivity().getAnnotations()
+							.remove(annotationToRemove);
 					entityManager.merge(annotationToRemove.getActivity());
 					annotationToRemove.setActivity(null);
 					annotationToRemove.getCreator().getAnnotations().size();
-					annotationToRemove.getCreator().getAnnotations().remove(annotationToRemove);
+					annotationToRemove.getCreator().getAnnotations()
+							.remove(annotationToRemove);
 					entityManager.merge(annotationToRemove.getCreator());
 					annotationToRemove.setCreator(null);
 
@@ -3717,7 +3740,7 @@ public class GWTServiceImpl extends RemoteServiceServlet implements GWTService {
 
 					annotationToRemove.setTags(null);
 					entityManager.remove(annotationToRemove);
-		
+
 				}
 				readingActivity.setAnnotations(null);
 				entityManager.merge(readingActivity);

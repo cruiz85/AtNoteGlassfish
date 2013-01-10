@@ -2,12 +2,14 @@ package lector.share.model;
 
 import java.io.Serializable;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
+import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
 import javax.persistence.Table;
@@ -21,7 +23,10 @@ public class Relation implements Serializable {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	@ManyToOne
-	private Entry father;
+	@JoinColumn(name = "FATHER_ID")
+	private FolderDB father;
+	@ManyToOne(cascade={CascadeType.PERSIST, CascadeType.MERGE})
+	@JoinColumn(name = "CHILD_ID")
 	private Entry child;
 	private Long catalogId;
 
@@ -29,7 +34,7 @@ public class Relation implements Serializable {
 
 	}
 
-	public Relation(Entry father, Entry child) {
+	public Relation(FolderDB father, Entry child) {
 		super();
 		this.father = father;
 		this.child = child;
@@ -44,11 +49,11 @@ public class Relation implements Serializable {
 		this.id = id;
 	}
 
-	public Entry getFather() {
+	public FolderDB getFather() {
 		return father;
 	}
 
-	public void setFather(Entry father) {
+	public void setFather(FolderDB father) {
 		this.father = father;
 	}
 

@@ -32,7 +32,9 @@ public class Tag extends Entry implements Serializable, IsSerializable {
 	public Tag(String name) {
 		super(name);
 	}
-
+	public Tag(String name, Catalogo catalogo) {
+		super(name, catalogo);
+	}
 	public List<Annotation> getAnnotations() {
 		return annotations;
 	}
