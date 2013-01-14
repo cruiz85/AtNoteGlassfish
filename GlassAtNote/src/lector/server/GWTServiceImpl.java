@@ -1354,8 +1354,8 @@ public class GWTServiceImpl extends RemoteServiceServlet implements GWTService {
 
 		String sql = "SELECT r FROM Annotation r WHERE r.activity.id="
 				+ readingActivityId + " AND r.activity.book.ISBN='" + bookId
-				+ "' AND r.pageNumber=" + pageNumber + " AND r.creator.id="
-				+ studentId;
+				+ "' AND r.pageNumber=" + pageNumber + " AND (r.creator.id="
+				+ studentId + " OR r.visibility=0)";
 		try {
 			list = entityManager.createQuery(sql).getResultList();
 		} catch (Exception e) {
