@@ -41,7 +41,7 @@ public class AdministradorEntryPoint implements EntryPoint {
 
 	private static final String ADMINISTRATORS_NAME = "Administration Menu";
 	
-	private static final int NCampos=15;
+	private static final int NCampos=14;
 	
 	private static String WELLCOME_MENU = "Welcome to the administrator page : ";
 	private static String BIENVENIDA = "null";
@@ -729,7 +729,6 @@ public class AdministradorEntryPoint implements EntryPoint {
 	public static String toFile() {
 		StringBuffer SB=new StringBuffer();
 		SB.append(WELLCOME_MENU+'\n');
-		SB.append(BIENVENIDA+'\n');
 		SB.append(CLOSE_SESSION_MENU+'\n');
 		SB.append(CATALOG_BUTTON+'\n');
 		SB.append(INTERFACE_LANGUAGE_BUTTON+'\n');
@@ -751,34 +750,46 @@ public class AdministradorEntryPoint implements EntryPoint {
 		if (Lista.length >= NCampos) {
 			if (!Lista[0].isEmpty())
 				WELLCOME_MENU = Lista[0];
+			else WELLCOME_MENU=WELLCOME_MENU_RESET;
 			if (!Lista[1].isEmpty())
-				BIENVENIDA = Lista[1];
+				CLOSE_SESSION_MENU = Lista[1];
+			else WELLCOME_MENU=WELLCOME_MENU_RESET;
 			if (!Lista[2].isEmpty())
-				CLOSE_SESSION_MENU = Lista[2];
+				CATALOG_BUTTON = Lista[2];
+			else CLOSE_SESSION_MENU=CLOSE_SESSION_MENU_RESET;
 			if (!Lista[3].isEmpty())
-				CATALOG_BUTTON = Lista[3];
+				INTERFACE_LANGUAGE_BUTTON = Lista[3];
+			else INTERFACE_LANGUAGE_BUTTON=INTERFACE_LANGUAGE_BUTTON_RESET;
 			if (!Lista[4].isEmpty())
-				INTERFACE_LANGUAGE_BUTTON = Lista[4];
+				EXPORT_TEMPLATES_BUTTON = Lista[4];
+			else EXPORT_TEMPLATES_BUTTON=EXPORT_TEMPLATES_BUTTON_RESET;
 			if (!Lista[5].isEmpty())
-				EXPORT_TEMPLATES_BUTTON = Lista[5];
+				ACTIVITY_BUTTON = Lista[5];
+			else ACTIVITY_BUTTON=ACTIVITY_BUTTON_RESET;
 			if (!Lista[6].isEmpty())
-				ACTIVITY_BUTTON = Lista[6];
+				GROUP_BUTTON = Lista[6];
+			else GROUP_BUTTON=GROUP_BUTTON_RESET;
 			if (!Lista[7].isEmpty())
-				GROUP_BUTTON = Lista[7];
+				USERS_BUTTON = Lista[7];
+			else USERS_BUTTON=USERS_BUTTON_RESET;
 			if (!Lista[8].isEmpty())
-				USERS_BUTTON = Lista[8];
+				ADMINISTRATORS_BUTTON = Lista[8];
+			else ADMINISTRATORS_BUTTON=ADMINISTRATORS_BUTTON_RESET;
 			if (!Lista[9].isEmpty())
-				ADMINISTRATORS_BUTTON = Lista[9];
+				BOOK_MANAGMENT_BUTTON = Lista[9];
+			else BOOK_MANAGMENT_BUTTON=BOOK_MANAGMENT_BUTTON_RESET;
 			if (!Lista[10].isEmpty())
-				BOOK_MANAGMENT_BUTTON = Lista[10];
+				MY_LIBRARY_BUTTON = Lista[10];
+			else MY_LIBRARY_BUTTON=MY_LIBRARY_BUTTON_RESET;
 			if (!Lista[11].isEmpty())
-				MY_LIBRARY_BUTTON = Lista[11];
+				MY_ACTIVITIES_BUTTON = Lista[11];
+			else MY_ACTIVITIES_BUTTON=MY_ACTIVITIES_BUTTON_RESET;
 			if (!Lista[12].isEmpty())
-				MY_ACTIVITIES_BUTTON = Lista[12];
+				MY_PROFILE_BUTTON = Lista[12];
+			else MY_PROFILE_BUTTON=MY_PROFILE_BUTTON_RESET;
 			if (!Lista[13].isEmpty())
-				MY_PROFILE_BUTTON = Lista[13];
-			if (!Lista[14].isEmpty())
-				RETURN_TO_ACTIVITY_BUTTON = Lista[14];
+				RETURN_TO_ACTIVITY_BUTTON = Lista[13];
+			else RETURN_TO_ACTIVITY_BUTTON=RETURN_TO_ACTIVITY_BUTTON_RESET;
 		}
 		else 
 			Logger.GetLogger().severe(EditorActivityPopupPanel.class.toString(), ActualState.getUser().toString(), ErrorConstants.ERROR_LOADING_LANGUAGE_IN  + ADMINISTRATORS_NAME);

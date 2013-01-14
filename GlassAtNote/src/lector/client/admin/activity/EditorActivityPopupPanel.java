@@ -994,46 +994,67 @@ public class EditorActivityPopupPanel extends PopupPanel {
 		if (Lista.length >= NCampos) {
 			if (!Lista[0].isEmpty())
 				MENU_WELLCOME_TEXT = Lista[0];
+			else MENU_WELLCOME_TEXT=MENU_WELLCOME_TEXT_RESET;
 			if (!Lista[1].isEmpty())
 				MENU_SAVE_BUTTON = Lista[1];
+			else MENU_SAVE_BUTTON=MENU_SAVE_BUTTON_RESET;
 			if (!Lista[2].isEmpty())
 				MENU_CANCEL_BUTTON = Lista[2];
+			else MENU_CANCEL_BUTTON=MENU_CANCEL_BUTTON_RESET;
 			if (!Lista[3].isEmpty())
 				TAB_PANEL_LANGUAGE = Lista[3];
+			else TAB_PANEL_LANGUAGE=TAB_PANEL_LANGUAGE_RESET;
 			if (!Lista[4].isEmpty())
 				TAB_PANEL_CATALOG = Lista[4];
+			else TAB_PANEL_CATALOG=TAB_PANEL_CATALOG_RESET;
 			if (!Lista[5].isEmpty())
 				ALLOW_DEFAULT_TYPE = Lista[5];
+			else ALLOW_DEFAULT_TYPE=ALLOW_DEFAULT_TYPE_RESET;
 			if (!Lista[6].isEmpty())
 				BOTON_SELECT_DEFAULT_TYPE = Lista[6];
+			else BOTON_SELECT_DEFAULT_TYPE=BOTON_SELECT_DEFAULT_TYPE_RESET;
 			if (!Lista[7].isEmpty())
 				TAB_PANEL_BOOK = Lista[7];
+			else TAB_PANEL_BOOK=TAB_PANEL_BOOK_RESET;
 			if (!Lista[8].isEmpty())
 				TAB_PANEL_GROUPS = Lista[8];
+			else TAB_PANEL_GROUPS=TAB_PANEL_GROUPS_RESET;
 			if (!Lista[9].isEmpty())
 				TAB_PANEL_TEMPLATES = Lista[9];
+			else TAB_PANEL_TEMPLATES=TAB_PANEL_TEMPLATES_RESET;
 			if (!Lista[10].isEmpty())
 				ALLOW_BLANK_TEMPLATE = Lista[10];
+			else ALLOW_BLANK_TEMPLATE=ALLOW_BLANK_TEMPLATE_RESET;
 			if (!Lista[11].isEmpty())
 				TAB_PANEL_VISUALIZACION = Lista[11];
+			else TAB_PANEL_VISUALIZACION=TAB_PANEL_VISUALIZACION_RESET;
 			if (!Lista[12].isEmpty())
 				LANGUAGE_LABEL = Lista[12];
+			else LANGUAGE_LABEL=LANGUAGE_LABEL_RESET;
 			if (!Lista[13].isEmpty())
 				PRIVATE_CATALOG_LABEL = Lista[13];
+			else PRIVATE_CATALOG_LABEL=PRIVATE_CATALOG_LABEL_RESET;
 			if (!Lista[14].isEmpty())
 				PUBLIC_CATALOG_LABEL = Lista[14];
+			else PUBLIC_CATALOG_LABEL=PUBLIC_CATALOG_LABEL_RESET;
 			if (!Lista[14].isEmpty())
 				DEFAUL_TYPE_LABEL = Lista[15];
+			else DEFAUL_TYPE_LABEL=DEFAUL_TYPE_LABEL_RESET;
 			if (!Lista[14].isEmpty())
 				BOOK_LABEL = Lista[16];
+			else BOOK_LABEL=BOOK_LABEL_RESET;
 			if (!Lista[14].isEmpty())
 				GROUPS_LABEL = Lista[17];
+			else GROUPS_LABEL=GROUPS_LABEL_RESET;
 			if (!Lista[14].isEmpty())
 				TEMPLATE_LABEL = Lista[18];
+			else TEMPLATE_LABEL=TEMPLATE_LABEL_RESET;
 			if (!Lista[14].isEmpty())
 				BLANK_TEMPLATE_ALLOWED = Lista[19];
+			else BLANK_TEMPLATE_ALLOWED=BLANK_TEMPLATE_ALLOWED_RESET;
 			if (!Lista[14].isEmpty())
 				VISUALIZACION_LABEL = Lista[20];
+			else VISUALIZACION_LABEL=VISUALIZACION_LABEL_RESET;
 		}
 		else 
 			Logger.GetLogger().severe(EditorActivityPopupPanel.class.toString(), ActualState.getUser().toString(), ErrorConstants.ERROR_LOADING_LANGUAGE_IN  + EDITORACTIVITY_NAME);	

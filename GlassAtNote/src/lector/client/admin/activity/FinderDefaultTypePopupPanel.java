@@ -159,6 +159,7 @@ public class FinderDefaultTypePopupPanel extends PopupPanel {
 		if (Lista.length >= NCampos) {
 			if (!Lista[0].isEmpty())
 				CLOSE = Lista[0];
+			else CLOSE=CLOSE_RESET;
 		}
 		else 
 			Logger.GetLogger().severe(EditorActivityPopupPanel.class.toString(), ActualState.getUser().toString(), ErrorConstants.ERROR_LOADING_LANGUAGE_IN  + FINDER_DEFAULT_TYPE_NAME);
