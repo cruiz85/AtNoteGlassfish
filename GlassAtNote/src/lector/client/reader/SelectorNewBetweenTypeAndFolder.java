@@ -147,11 +147,12 @@ btnNewButton.addClickHandler(new ClickHandler() {
 				
 				if (Seleccion.equals("Type")){
 				TypeClient F=new TypeClient(textBox.getText());
-		
+				F.setCatalog(finder.getCatalogo());
 				bookReaderServiceHolder.saveType(F, finder.getTopPath().getEntry().getId() , callback);
 				}
 				else {
 					TypeCategoryClient F=new TypeCategoryClient(textBox.getText());
+					F.setCatalog(finder.getCatalogo());
 					bookReaderServiceHolder.saveTypeCategory(F, finder.getTopPath().getEntry().getId(), callback);
 				}
 				hide();

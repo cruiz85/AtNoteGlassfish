@@ -79,7 +79,7 @@ public class NewActivityPopupPanel extends PopupPanel {
 		General.add(verticalPanel,0,0);
 		verticalPanel.setSize("100%", "100%");
 
-		InsertNameLabel = new Label();
+		InsertNameLabel = new Label(INSERT_NAME_LABEL);
 		verticalPanel.add(InsertNameLabel);
 		InsertNameLabel.setSize("100%", "100%");
 

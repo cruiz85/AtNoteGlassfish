@@ -215,7 +215,7 @@ public class ServiceManagerUtils {
 				produceAnnotationClient(a.getAnnotation()), a.getComment(),
 				a.getUserId(), a.getUserName(), a.getCreatedDate());
 		atc.setFather(father);
-		produceAnnotationThreadClients(a.getSubThreads(), atc);
+		atc.setSubThreads(produceAnnotationThreadClients(a.getSubThreads(), atc));
 		return atc;
 	}
 
