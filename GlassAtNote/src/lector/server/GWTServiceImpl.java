@@ -3170,8 +3170,7 @@ public class GWTServiceImpl extends RemoteServiceServlet implements GWTService {
 		List<GroupApp> list;
 		try {
 			Student student = findStudent(userId);
-			String sql = "SELECT r FROM GroupApp AS r WHERE :student MEMBER OF r.participatingStudents="
-					+ student;
+			String sql = "SELECT r FROM GroupApp AS r WHERE :student MEMBER OF r.participatingStudents";	
 			Query query = entityManager.createQuery(sql);
 			query.setParameter("student", student);
 			list = query.getResultList();
