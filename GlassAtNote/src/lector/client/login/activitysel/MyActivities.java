@@ -54,6 +54,7 @@ import com.google.gwt.user.client.ui.HasHorizontalAlignment;
 
 public class MyActivities implements EntryPoint {
 
+	private static String BIENVENIDA;
 	private List<ReadingActivityClient> BooksIDs = new ArrayList<ReadingActivityClient>();
 	private VerticalPanel verticalPanel = new VerticalPanel();
 	static GWTServiceAsync bookReaderServiceHolder = GWT
@@ -74,12 +75,12 @@ public class MyActivities implements EntryPoint {
 		MenuBar menuBar = new MenuBar(false);
 		RootMenu.add(menuBar);
 
-		String Bienvenida;
-		if ((ActualState.getUser().getFirstName()!=null)&&(!ActualState.getUser().getFirstName().isEmpty()))
-		Bienvenida="Welcome " + ActualState.getUser().getFirstName();
-		else 
-		Bienvenida="Welcome " + ActualState.getUser().getEmail();
-		MenuItem menuItem = new MenuItem(Bienvenida, false, (Command) null);
+//		if ((ActualState.getUser().getFirstName()!=null)&&(!ActualState.getUser().getFirstName().isEmpty()))
+//		BIENVENIDA="Welcome " + ActualState.getUser().getFirstName();
+//		else 
+//		BIENVENIDA="Welcome " + ActualState.getUser().getEmail();
+		BIENVENIDA=ActualState.getUser().getFirstName()+ " " + ActualState.getUser().getLastName().charAt(0)+".";
+		MenuItem menuItem = new MenuItem(BIENVENIDA, false, (Command) null);
 		menuItem.setEnabled(false);
 		menuBar.addItem(menuItem);
 		

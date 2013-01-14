@@ -118,12 +118,12 @@ public class AdministradorEntryPoint implements EntryPoint {
 		rootPanel = RootPanel.get();
 		rootPanel.setStyleName("Root");
 		Yo=this;
-		if ((ActualState.getUser().getFirstName() != null)
-				&& (!ActualState.getUser().getFirstName().isEmpty()))
-			BIENVENIDA = ActualState.getUser().getFirstName();
-		else
-			BIENVENIDA = ActualState.getUser().getEmail();
-
+//		if ((ActualState.getUser().getFirstName() != null)
+//				&& (!ActualState.getUser().getFirstName().isEmpty()))
+//			BIENVENIDA = ActualState.getUser().getFirstName();
+//		else
+//			BIENVENIDA = ActualState.getUser().getEmail();
+		BIENVENIDA=ActualState.getUser().getFirstName()+ " " + ActualState.getUser().getLastName().charAt(0)+".";
 		PanelFondoGeneral = new DockPanel();
 		PanelFondoGeneral.setStyleName("fondoLogo");
 		rootPanel.add(PanelFondoGeneral, 0, 0);

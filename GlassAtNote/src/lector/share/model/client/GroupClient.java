@@ -27,7 +27,7 @@ public class GroupClient implements IsSerializable {
 		this.name = name;
 		this.professor = professor;
 		this.participatingUsers = participatingUsers;
-		this.remainingUsers = participatingUsers;
+		this.remainingUsers = remainingUsers;
 	}
 
 	public GroupClient(String name) {
