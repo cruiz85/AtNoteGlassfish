@@ -1709,7 +1709,6 @@ public class GWTServiceImpl extends RemoteServiceServlet implements GWTService {
 			userTransaction.begin();
 			if (annotationThread.getId() == null) {
 				entityManager.persist(annotationThread);
-				
 
 			} else {
 				entityManager.merge(annotationThread);
@@ -3168,10 +3167,11 @@ public class GWTServiceImpl extends RemoteServiceServlet implements GWTService {
 			throws GeneralException, UserNotFoundException {
 		EntityManager entityManager = emf.createEntityManager();
 		List<GroupApp> list;
-
-		String sql = "SELECT r FROM GroupApp r WHERE r.participatingStudents="
-				+ userId + " OR r.remainingStudents=" + userId;
 		try {
+			Student student = findStudent(userId);
+			String sql = "SELECT r FROM GroupApp r WHERE r.participatingStudents="
+					+ student;
+
 			list = entityManager.createQuery(sql).getResultList();
 		} catch (Exception e) {
 			// logger.error ("Exception in method loadUserByName: ", e)
@@ -3326,9 +3326,9 @@ public class GWTServiceImpl extends RemoteServiceServlet implements GWTService {
 			} else {
 				entityManager.merge(readingActivity);
 				for (Annotation annotation : readingActivity.getAnnotations()) {
-//					for (Tag tag : annotation.getTags()) {
-//						entityManager.merge(tag);
-//					}
+					// for (Tag tag : annotation.getTags()) {
+					// entityManager.merge(tag);
+					// }
 					entityManager.merge(annotation);
 				}
 			}
@@ -3386,7 +3386,8 @@ public class GWTServiceImpl extends RemoteServiceServlet implements GWTService {
 		// actividad.
 		if ((readingActivityClientEntrada.getCloseCatalogo() != null)
 				&& ((readingActivitySalida.getCloseCatalogo() == null) || (!readingActivityClientEntrada
-						.getCloseCatalogo().getId()
+						.getCloseCatalogo()
+						.getId()
 						.equals(readingActivitySalida.getCloseCatalogo()
 								.getId())))) {
 
@@ -3412,8 +3413,8 @@ public class GWTServiceImpl extends RemoteServiceServlet implements GWTService {
 		// lo que es seguro es que se borran las privadas.
 		if ((readingActivityClientEntrada.getGroup() != null)
 				&& ((readingActivitySalida.getGroup() == null) || (!readingActivityClientEntrada
-						.getGroup().getId().equals(readingActivitySalida
-						.getGroup().getId())))) {
+						.getGroup().getId()
+						.equals(readingActivitySalida.getGroup().getId())))) {
 			if (readingActivitySalida.getAnnotations() != null) {
 				for (Annotation annotation : readingActivitySalida
 						.getAnnotations()) {
@@ -3435,8 +3436,9 @@ public class GWTServiceImpl extends RemoteServiceServlet implements GWTService {
 		// actividad.
 		if ((readingActivityClientEntrada.getOpenCatalogo() != null)
 				&& ((readingActivitySalida.getOpenCatalogo() == null) || (!readingActivityClientEntrada
-						.getOpenCatalogo().getId().equals(readingActivitySalida
-						.getOpenCatalogo().getId())))) {
+						.getOpenCatalogo()
+						.getId()
+						.equals(readingActivitySalida.getOpenCatalogo().getId())))) {
 			if (readingActivitySalida.getAnnotations() != null) {
 				for (Annotation annotation : readingActivitySalida
 						.getAnnotations()) {
