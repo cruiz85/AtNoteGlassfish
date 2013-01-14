@@ -2376,18 +2376,47 @@ public class GWTServiceImpl extends RemoteServiceServlet implements GWTService {
 
 	@Override
 	public void deleteTag(Long tagId, Long fatherId) throws GeneralException {
-		try {
-			FolderDB folderDB = findFolderDB(fatherId);
-			Relation relation = findRelation(fatherId, tagId);
-			folderDB.getRelations().remove(relation);
-			saveFolderDB(folderDB);
-		} catch (FolderDBNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+		EntityManager entityManager = emf.createEntityManager();
 
-		} catch (RelationNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+		try {
+			Tag tag = findTag(tagId);
+			List<Relation> relations = getRelationsByChildId(tagId);
+			userTransaction.begin();
+
+			if (fatherId == null) { // cuelga del catalogo
+				tag.getCatalog().getEntries().size();
+				tag.getCatalog().getEntries().remove(tag);
+				entityManager.merge(tag.getCatalog());
+				tag.setCatalog(null);
+				if (relations.size() > 0) {
+					entityManager.merge(tag);
+					entityManager.remove(tag);
+				}
+
+			} else { // cuelga del folder
+				FolderDB folderFather = findFolderDB(fatherId);
+				Relation relation = loadRelationByFatherAndSonId(fatherId, tagId);
+				folderFather.getRelations().size();
+				folderFather.getRelations().remove(relation);
+				entityManager.merge(relation.getFather());
+				relation.setFather(null);
+				relation.setChild(null);
+				Relation toBeRemove = entityManager.merge(relation);
+				entityManager.remove(toBeRemove);
+				if (relations.size() < 2) {
+					Tag tagtoBeRemove = entityManager.merge(tag);
+					entityManager.remove(tagtoBeRemove);
+				}
+
+			}
+
+			entityManager.flush();
+			userTransaction.commit();
+			entityManager.clear();
+		} catch (Exception e) {
+			ServiceManagerUtils.rollback(userTransaction);
+			throw new GeneralException("Exception in method deleteFolderDBById"
+					+ e.getMessage(), e.getStackTrace());
 		}
 
 	}
