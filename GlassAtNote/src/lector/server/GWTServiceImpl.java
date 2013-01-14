@@ -17,6 +17,7 @@ import javax.annotation.Resource;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
+import javax.persistence.Query;
 import javax.transaction.UserTransaction;
 import lector.client.book.reader.ExportService;
 import lector.client.book.reader.GWTService;
@@ -3169,10 +3170,11 @@ public class GWTServiceImpl extends RemoteServiceServlet implements GWTService {
 		List<GroupApp> list;
 		try {
 			Student student = findStudent(userId);
-			String sql = "SELECT r FROM GroupApp r WHERE r.participatingStudents="
+			String sql = "SELECT r FROM GroupApp AS r WHERE :student MEMBER OF r.participatingStudents="
 					+ student;
-
-			list = entityManager.createQuery(sql).getResultList();
+			Query query = entityManager.createQuery(sql);
+			query.setParameter("student", student);
+			list = query.getResultList();
 		} catch (Exception e) {
 			// logger.error ("Exception in method loadUserByName: ", e)
 			throw new GeneralException("Exception in method loadUserByName:"
