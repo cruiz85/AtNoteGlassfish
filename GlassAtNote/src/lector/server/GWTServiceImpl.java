@@ -1355,7 +1355,7 @@ public class GWTServiceImpl extends RemoteServiceServlet implements GWTService {
 		String sql = "SELECT r FROM Annotation r WHERE r.activity.id="
 				+ readingActivityId + " AND r.activity.book.ISBN='" + bookId
 				+ "' AND r.pageNumber=" + pageNumber + " AND (r.creator.id="
-				+ studentId + " OR r.visibility=0)";
+				+ studentId + " OR r.visibility=1)";
 		try {
 			list = entityManager.createQuery(sql).getResultList();
 		} catch (Exception e) {
@@ -2389,23 +2389,41 @@ public class GWTServiceImpl extends RemoteServiceServlet implements GWTService {
 				entityManager.merge(tag.getCatalog());
 				tag.setCatalog(null);
 				if (relations.size() > 0) {
+					ReadingActivity activity = loadActivityByDefaultTypeId(tag
+							.getId());
+					if (activity != null) {
+						activity.setDefultTag(null);
+						entityManager.merge(activity);
+
+					}
 					entityManager.merge(tag);
 					entityManager.remove(tag);
 				}
 
 			} else { // cuelga del folder
 				FolderDB folderFather = findFolderDB(fatherId);
-				Relation relation = loadRelationByFatherAndSonId(fatherId, tagId);
-				folderFather.getRelations().size();
-				folderFather.getRelations().remove(relation);
+				Relation relation = loadRelationByFatherAndSonId(fatherId,
+						tagId);
+				for (Relation relationAux : folderFather.getRelations()) {
+					if (relationAux.getId().equals(relation.getId())) {
+						folderFather.getRelations().remove(relationAux);
+					}
+				}
+
 				entityManager.merge(relation.getFather());
 				relation.setFather(null);
 				relation.setChild(null);
 				Relation toBeRemove = entityManager.merge(relation);
 				entityManager.remove(toBeRemove);
 				if (relations.size() < 2) {
+					ReadingActivity activity = loadActivityByDefaultTypeId(tag
+							.getId());
+					if (activity != null) {
+						activity.setDefultTag(null);
+						entityManager.merge(activity);
+
+					}
 					Tag tagtoBeRemove = entityManager.merge(tag);
-				
 					entityManager.remove(tagtoBeRemove);
 				}
 
@@ -2420,6 +2438,34 @@ public class GWTServiceImpl extends RemoteServiceServlet implements GWTService {
 					+ e.getMessage(), e.getStackTrace());
 		}
 
+	}
+
+	private ReadingActivity loadActivityByDefaultTypeId(Long id)
+			throws GeneralException, ReadingActivityNotFoundException {
+		EntityManager entityManager = emf.createEntityManager();
+		List<ReadingActivity> list;
+
+		String sql = "SELECT r FROM ReadingActivity r WHERE r.defultTag.id="
+				+ id;
+		try {
+			list = entityManager.createQuery(sql).getResultList();
+		} catch (Exception e) {
+			// logger.error ("Exception in method loadGroupById: ", e)
+			throw new GeneralException(
+					"Exception in method loadReadingActivityById:"
+							+ e.getMessage(), e.getStackTrace());
+
+		}
+		if (list == null) {
+			// logger.error ("Exception in method loadGroupById: ", e)
+			throw new ReadingActivityNotFoundException(
+					"ReadingActivity not found in method loadReadingActivityById");
+
+		}
+		if (entityManager.isOpen()) {
+			entityManager.close();
+		}
+		return list.get(0);
 	}
 
 	@Override
@@ -3200,7 +3246,7 @@ public class GWTServiceImpl extends RemoteServiceServlet implements GWTService {
 		List<GroupApp> list;
 		try {
 			Student student = findStudent(userId);
-			String sql = "SELECT r FROM GroupApp AS r WHERE :student MEMBER OF r.participatingStudents";	
+			String sql = "SELECT r FROM GroupApp AS r WHERE :student MEMBER OF r.participatingStudents";
 			Query query = entityManager.createQuery(sql);
 			query.setParameter("student", student);
 			list = query.getResultList();
