@@ -2405,6 +2405,7 @@ public class GWTServiceImpl extends RemoteServiceServlet implements GWTService {
 				entityManager.remove(toBeRemove);
 				if (relations.size() < 2) {
 					Tag tagtoBeRemove = entityManager.merge(tag);
+				
 					entityManager.remove(tagtoBeRemove);
 				}
 
@@ -3166,10 +3167,10 @@ public class GWTServiceImpl extends RemoteServiceServlet implements GWTService {
 			throws GroupNotFoundException, GeneralException {
 		EntityManager entityManager = emf.createEntityManager();
 		List<ReadingActivity> list;
-		String sql = "SELECT r FROM ReadingActivity r WHERE r.group="
+		String sql = "SELECT r FROM ReadingActivity r WHERE r.group.id="
 				+ ids.get(0);
 		for (int i = 1; i < ids.size(); i++) {
-			sql += " OR r.group=" + ids.get(i);
+			sql += " OR r.group.id=" + ids.get(i);
 		}
 
 		try {
