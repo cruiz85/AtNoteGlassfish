@@ -2396,8 +2396,9 @@ public class GWTServiceImpl extends RemoteServiceServlet implements GWTService {
 						entityManager.merge(activity);
 
 					}
-					entityManager.merge(tag);
-					entityManager.remove(tag);
+					
+					Tag tagtoBeRemove = entityManager.merge(tag);
+					entityManager.remove(tagtoBeRemove);
 				}
 
 			} else { // cuelga del folder
@@ -2423,6 +2424,7 @@ public class GWTServiceImpl extends RemoteServiceServlet implements GWTService {
 						entityManager.merge(activity);
 
 					}
+				
 					Tag tagtoBeRemove = entityManager.merge(tag);
 					entityManager.remove(tagtoBeRemove);
 				}
