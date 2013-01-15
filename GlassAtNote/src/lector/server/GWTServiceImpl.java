@@ -2408,6 +2408,7 @@ public class GWTServiceImpl extends RemoteServiceServlet implements GWTService {
 				for (Relation relationAux : folderFather.getRelations()) {
 					if (relationAux.getId().equals(relation.getId())) {
 						folderFather.getRelations().remove(relationAux);
+						break;
 					}
 				}
 
@@ -2426,6 +2427,10 @@ public class GWTServiceImpl extends RemoteServiceServlet implements GWTService {
 					}
 				
 					Tag tagtoBeRemove = entityManager.merge(tag);
+					for (Annotation annotation : tagtoBeRemove.getAnnotations()) {
+						annotation.getTags().remove(tagtoBeRemove);
+						entityManager.merge(annotation);
+					}
 					entityManager.remove(tagtoBeRemove);
 				}
 

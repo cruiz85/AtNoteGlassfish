@@ -12,26 +12,36 @@ import javax.persistence.Table;
 import javax.xml.bind.annotation.XmlRootElement;
 
 @Entity
-//@Table(name = "student")
-//@XmlRootElement
+// @Table(name = "student")
+// @XmlRootElement
 @DiscriminatorValue("STUDENT")
 public class Student extends UserApp implements Serializable {
 	private static final long serialVersionUID = 1L;
 	@ManyToMany
 	private List<GroupApp> participatingGroups = new ArrayList<GroupApp>();
 
+	private String confirmationCode;
+
 	public Student() {
 	}
 
 	public Student(Long id, String firstName, String lastName, String email,
-			String password,Date createdDate) {
-		super(id, firstName, lastName, email, password,createdDate);
+			String password, Date createdDate) {
+		super(id, firstName, lastName, email, password, createdDate);
 		// TODO Auto-generated constructor stub
 	}
 
 	public Student(String email) {
 		super(email);
 
+	}
+
+	public String getConfirmationCode() {
+		return confirmationCode;
+	}
+
+	public void setConfirmationCode(String confirmationCode) {
+		this.confirmationCode = confirmationCode;
 	}
 
 	public static long getSerialversionuid() {
