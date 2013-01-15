@@ -29,13 +29,13 @@ public class SeleccionMenuActivity extends PopupPanel {
 	public static String ARE_YOU_SURE_DELETE_READING_ACTIVITY = "Are you sure to delete the Reading Activity?, all the anotations will be delete too";
 	
 	private ActivityBotton BLan;
-	private NewAdminActivities Father;
+	private AdminActivitiesEntryPoint Father;
 	static GWTServiceAsync bookReaderServiceHolder = GWT
 	.create(GWTService.class);
 	
 	
 	
-	public SeleccionMenuActivity(ActivityBotton BL, NewAdminActivities Fatherin) {
+	public SeleccionMenuActivity(ActivityBotton BL, AdminActivitiesEntryPoint Fatherin) {
 		super(true);
 		BLan=BL;
 //		setSize("", "");

@@ -20,6 +20,7 @@ import lector.share.model.client.UserClient;
 
 import com.google.gwt.core.client.EntryPoint;
 import com.google.gwt.core.client.GWT;
+import com.google.gwt.safehtml.shared.SafeHtml;
 import com.google.gwt.user.client.Cookies;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
@@ -54,6 +55,19 @@ import com.google.gwt.user.client.ui.CheckBox;
 
 public class Login implements EntryPoint {
 
+	private static final String LOGIN = "Log In";
+	private static final String USER = "User";
+	private static final String PASSWORD = "Password";
+	private static final String BOTON_SIGN_IN = "Sign in";
+	private static final String REGISTRATION = "Registration";
+	private static final String FIRSTNAME = "First Name";
+	private static final String LAST_NAME = "Last Name";
+	private static final String EMAIL = "Email";
+	private static final String PASSWORD1 = "Enter Password";
+	private static final String PASSWORD2 = "Repeat Password";
+	private static final String REGISTER = "Register";
+	
+	
 	private TextBox User;
 	private GWTServiceAsync bookReaderServiceHolder = GWT
 			.create(GWTService.class);
@@ -133,7 +147,7 @@ public class Login implements EntryPoint {
 		simplePanel.setStyleName("BlancoTransparente");
 		verticalPanel.add(simplePanel);
 
-		Label lblNewLabel = new Label("Log In");
+		Label lblNewLabel = new Label(LOGIN);
 		simplePanel.setWidget(lblNewLabel);
 		lblNewLabel.setStyleName("TituloLogin");
 
@@ -152,7 +166,7 @@ public class Login implements EntryPoint {
 		horizontalPanel.add(verticalPanel_5);
 		verticalPanel_5.setSize("67px", "28px");
 
-		Label lblNewLabel_1 = new Label("User");
+		Label lblNewLabel_1 = new Label(USER);
 		lblNewLabel_1.setStyleName("gwt-LabelMargen2px");
 		verticalPanel_5.add(lblNewLabel_1);
 		lblNewLabel_1.setHorizontalAlignment(HasHorizontalAlignment.ALIGN_LEFT);
@@ -186,7 +200,7 @@ public class Login implements EntryPoint {
 		horizontalPanel_2.add(verticalPanel_6);
 		verticalPanel_6.setHeight("28px");
 
-		Label lblPassword = new Label("Password");
+		Label lblPassword = new Label(PASSWORD);
 		lblPassword.setStyleName("gwt-LabelMargen2px");
 		verticalPanel_6.add(lblPassword);
 
@@ -232,7 +246,7 @@ public class Login implements EntryPoint {
 		verticalPanel_7.setStyleName("BlancoTransparente");
 		verticalPanel_7.setWidth("");
 
-		btnNewButton = new Button("Sign in");
+		btnNewButton = new Button(BOTON_SIGN_IN);
 		verticalPanel_7.add(btnNewButton);
 		btnNewButton.addClickHandler(new ClickHandler() {
 			public void onClick(ClickEvent event) {
@@ -275,7 +289,7 @@ public class Login implements EntryPoint {
 		verticalPanel_2.add(simplePanel_1);
 		simplePanel_1.setSize("100%", "100%");
 
-		Label lblNewLabel_2 = new Label("Registration");
+		Label lblNewLabel_2 = new Label(REGISTRATION);
 		simplePanel_1.setWidget(lblNewLabel_2);
 		lblNewLabel_2.setSize("100%", "100%");
 		lblNewLabel_2.setStyleName("TituloLogin");
@@ -296,7 +310,7 @@ public class Login implements EntryPoint {
 		horizontalPanel_6.add(verticalPanel_8);
 		verticalPanel_8.setSize("76px", "28px");
 
-		Label lblFirstname = new Label("First Name");
+		Label lblFirstname = new Label(FIRSTNAME);
 		lblFirstname.setStyleName("gwt-LabelMargen2px");
 		lblFirstname.setHorizontalAlignment(HasHorizontalAlignment.ALIGN_LEFT);
 		verticalPanel_8.add(lblFirstname);
@@ -317,7 +331,7 @@ public class Login implements EntryPoint {
 		horizontalPanel_7.add(verticalPanel_9);
 		verticalPanel_9.setSize("76px", "28px");
 
-		Label lblLastname = new Label("Last Name");
+		Label lblLastname = new Label(LAST_NAME);
 		lblLastname.setStyleName("gwt-LabelMargen2px");
 		lblLastname.setHorizontalAlignment(HasHorizontalAlignment.ALIGN_LEFT);
 		verticalPanel_9.add(lblLastname);
@@ -339,7 +353,7 @@ public class Login implements EntryPoint {
 		horizontalPanel_8.add(verticalPanel_10);
 		verticalPanel_10.setSize("76px", "28px");
 
-		Label lblEmail = new Label("Email");
+		Label lblEmail = new Label(EMAIL);
 		lblEmail.setStyleName("gwt-LabelMargen2px");
 		lblEmail.setHorizontalAlignment(HasHorizontalAlignment.ALIGN_LEFT);
 		verticalPanel_10.add(lblEmail);
@@ -361,7 +375,7 @@ public class Login implements EntryPoint {
 		horizontalPanel_9.add(verticalPanel_11);
 		verticalPanel_11.setSize("117px", "28px");
 
-		Label lblPassword_1 = new Label("Enter Password");
+		Label lblPassword_1 = new Label(PASSWORD1);
 		lblPassword_1.setStyleName("gwt-LabelMargen2px");
 		lblPassword_1.setHorizontalAlignment(HasHorizontalAlignment.ALIGN_LEFT);
 		verticalPanel_11.add(lblPassword_1);
@@ -391,7 +405,7 @@ public class Login implements EntryPoint {
 		horizontalPanel_12.add(verticalPanel_14);
 		verticalPanel_14.setSize("117px", "28px");
 
-		Label lblRepeatPassword = new Label("Repeat Password");
+		Label lblRepeatPassword = new Label(PASSWORD2);
 		lblRepeatPassword.setStyleName("gwt-LabelMargen2px");
 		lblRepeatPassword
 				.setHorizontalAlignment(HasHorizontalAlignment.ALIGN_LEFT);
@@ -409,7 +423,7 @@ public class Login implements EntryPoint {
 		});
 		horizontalPanel_12.add(PasswordB);
 
-		Verificado = new Image("Free.gif");
+		Verificado = new Image(Constants.FREE_ICON);
 		horizontalPanel_12.add(Verificado);
 		Verificado.setVisible(false);
 
@@ -443,7 +457,7 @@ public class Login implements EntryPoint {
 		horizontalPanel_11.add(verticalPanel_13);
 		verticalPanel_13.setWidth("");
 
-		buttonRegister = new Button("Enter");
+		buttonRegister = new Button(REGISTER);
 		buttonRegister.addClickHandler(new ClickHandler() {
 			public void onClick(ClickEvent event) {
 				if (!PaswordA.getText().equals(PasswordB.getText())) {
@@ -516,7 +530,7 @@ public class Login implements EntryPoint {
 																}-*/;
 
 		});
-		buttonRegister.setText("Register");
+		buttonRegister.setText(REGISTER);
 		buttonRegister.addMouseDownHandler(new MouseDownHandler() {
 			public void onMouseDown(MouseDownEvent event) {
 				((Button) event.getSource())
@@ -540,7 +554,12 @@ public class Login implements EntryPoint {
 		});
 
 		buttonRegister.setStyleName("gwt-ButtonCenter");
-		verticalPanel_13.add(buttonRegister);
+		HorizontalPanel CapchaYBoton=new HorizontalPanel();
+		CapchaYBoton.setSpacing(5);
+		HorizontalPanel CapchaPanel=new HorizontalPanel();
+		CapchaYBoton.add(CapchaPanel);
+		CapchaYBoton.add(buttonRegister);
+		verticalPanel_13.add(CapchaYBoton);
 
 		MenuBar menuBar = new MenuBar(false);
 		dockPanel.add(menuBar, DockPanel.NORTH);

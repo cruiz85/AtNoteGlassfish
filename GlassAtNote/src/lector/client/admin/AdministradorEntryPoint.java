@@ -534,7 +534,7 @@ public class AdministradorEntryPoint implements EntryPoint {
 	public void closeEditPanel()
 	{
 		rootPanel.remove(PanelEdicion);
-		rootPanel.add(PanelEdicion, PanelFondoGeneral.getOffsetWidth()-40, 0);
+		rootPanel.add(PanelEdicion, PanelFondoGeneral.getOffsetWidth()-Constants.TAMANOBOTOBEDITOFF, 0);
 		PanelEdicion.setSize("40px","50px");
 		PanelEdicion.clear();
 		PanelEdicion.setStyleName("");
@@ -559,7 +559,7 @@ public class AdministradorEntryPoint implements EntryPoint {
 		PanelEdicion.clear();
 		PanelEdicion.setStyleName("BlancoTransparente");
 		Button Boton=new Button();
-		PanelEdicion.add(Boton,PanelEdicion.getOffsetWidth()-65, 0);
+		PanelEdicion.add(Boton,PanelEdicion.getOffsetWidth()-Constants.TAMANOBOTOBEDITON, 0);
 		Boton.setHTML(InformationConstants.END_EDIT_BOTTON);
 		Boton.addClickHandler(new ClickHandler() {
 			
@@ -753,10 +753,10 @@ public class AdministradorEntryPoint implements EntryPoint {
 			else WELLCOME_MENU=WELLCOME_MENU_RESET;
 			if (!Lista[1].isEmpty())
 				CLOSE_SESSION_MENU = Lista[1];
-			else WELLCOME_MENU=WELLCOME_MENU_RESET;
+			else CLOSE_SESSION_MENU=CLOSE_SESSION_MENU_RESET;
 			if (!Lista[2].isEmpty())
 				CATALOG_BUTTON = Lista[2];
-			else CLOSE_SESSION_MENU=CLOSE_SESSION_MENU_RESET;
+			else CATALOG_BUTTON=CATALOG_BUTTON_RESET;
 			if (!Lista[3].isEmpty())
 				INTERFACE_LANGUAGE_BUTTON = Lista[3];
 			else INTERFACE_LANGUAGE_BUTTON=INTERFACE_LANGUAGE_BUTTON_RESET;

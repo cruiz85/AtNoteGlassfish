@@ -63,7 +63,7 @@ public class NewActivityPopupPanel extends PopupPanel {
 	
 	private TextBox InsertionTextTextBox;
 	private PopupPanel Yo;
-	private NewAdminActivities Father;
+	private AdminActivitiesEntryPoint Father;
 	private AbsolutePanel GeneralPanel;
 
 	private AbsolutePanel PanelEdicion;
@@ -75,7 +75,7 @@ public class NewActivityPopupPanel extends PopupPanel {
 	static GWTServiceAsync bookReaderServiceHolder = GWT
 			.create(GWTService.class);
 
-	public NewActivityPopupPanel(NewAdminActivities Fatherin) {
+	public NewActivityPopupPanel(AdminActivitiesEntryPoint Fatherin) {
 		super(true);
 		this.Father = Fatherin;
 		Yo = this;

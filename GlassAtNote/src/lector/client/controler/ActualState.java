@@ -6,6 +6,7 @@ import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 
 import lector.client.admin.AdministradorEntryPoint;
+import lector.client.admin.activity.AdminActivitiesEntryPoint;
 import lector.client.admin.activity.EditorActivityPopupPanel;
 import lector.client.admin.activity.FinderDefaultTypePopupPanel;
 import lector.client.admin.activity.NewActivityPopupPanel;
@@ -111,6 +112,7 @@ public class ActualState {
 		EditorActivityPopupPanel.FromFile(ActualLanguage.getEditorActivityLanguageConfiguration());
 		FinderDefaultTypePopupPanel.FromFile(ActualLanguage.getFinderDefaultTypeLanguageConfiguration());
 		NewActivityPopupPanel.FromFile(ActualLanguage.getNewActivityPopupPanelLanguageConfiguration());
+		AdminActivitiesEntryPoint.FromFile(ActualLanguage.getAdminActivitiesEntryPointLanguageConfiguration());
 	}
 
 	public static boolean isLanguageActive() {

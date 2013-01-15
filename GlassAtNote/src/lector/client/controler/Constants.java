@@ -4,6 +4,8 @@
  */
 package lector.client.controler;
 
+import com.google.gwt.resources.client.ImageResource;
+
 public class Constants {
 
 	public static Long ALL = Long.MIN_VALUE;
@@ -36,10 +38,14 @@ public class Constants {
 	public static String VISUAL_ARBOL ="Visualization in Tree";
 	public static String VISUAL_KEY="Visualization in Keys";
 	
+	
 	//TAMANOS
 	public static final String TAMANO_PANEL_EDICION="25px";
 	public static final String PX = "px";
 	public static final int TAMANOBOTOBEDITOFF = 33;
 	public static final int TAMANOBOTOBEDITON = 65;
 	
+	
+	//IMAGENES
+	public static final String FREE_ICON = "Free.gif";
 }

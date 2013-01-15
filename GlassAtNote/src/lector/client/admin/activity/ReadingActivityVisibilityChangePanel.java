@@ -40,10 +40,10 @@ public class ReadingActivityVisibilityChangePanel extends PopupPanel {
 	private static GWTServiceAsync bookReaderServiceHolder = GWT
 			.create(GWTService.class);
 	private ReadingActivityClient readingActivityClient;
-	private NewAdminActivities father;
+	private AdminActivitiesEntryPoint father;
 	private CheckBox chckbxNewCheckBox;
 
-	public ReadingActivityVisibilityChangePanel(ReadingActivityClient readingActivityClientin, NewAdminActivities fatherin) {
+	public ReadingActivityVisibilityChangePanel(ReadingActivityClient readingActivityClientin, AdminActivitiesEntryPoint fatherin) {
 		setGlassEnabled(true);
 		setAnimationEnabled(true);
 		readingActivityClient=readingActivityClientin;
