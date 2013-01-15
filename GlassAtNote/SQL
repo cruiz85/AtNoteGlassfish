@@ -20,6 +20,8 @@ drop table `atnote`.`user_app`;
 
 #PARA INCLUIR UN PROFESOR
 INSERT INTO `atnote`.`user_app` (`ID`, `ENTRY_TYPE`, `CREATEDDATE`, `EMAIL`, `FIRSTNAME`, `ISCONFIRMED`, `LASTNAME`, `PASSWORD`) VALUES ('2', 'PROFESSOR', '2013-01-09', 'ce', 'ce', '1', 'ce', '33');
+INSERT INTO `atnote`.`user_app` (`ID`, `ENTRY_TYPE`, `CREATEDDATE`, `EMAIL`, `FIRSTNAME`, `ISCONFIRMED`, `LASTNAME`, `PASSWORD`) VALUES ('2', 'PROFESSOR', '2013-01-09', 'aa', 'Joaquin', '1', 'Gayoso', 'aa');
 
 
-
+#Sobre verion base de datos 1.0
+ALTER table language add NEWACTIVITYPOPUPPANELLANGUAGECONFIGURATION VARCHAR(255)

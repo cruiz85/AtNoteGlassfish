@@ -165,6 +165,10 @@ public class EditorActivityPopupPanel extends PopupPanel {
 	private Image imageVisualization;
 	
 	private static final int DecoradorWidth = 2;
+
+	private static final int AnchuraOutElements = 150;
+
+	private static final int MargenAlto = 15;
 	
 	private EditorActivityPopupPanel Yo;
 	
@@ -197,6 +201,8 @@ public class EditorActivityPopupPanel extends PopupPanel {
 	private FlowPanel flowPanel;
 
 	private AbsolutePanel GeneralPanel;
+
+	private SimplePanel EditorZone;
 	
 
 	public EditorActivityPopupPanel(ReadingActivityClient RA) {
@@ -214,12 +220,15 @@ public class EditorActivityPopupPanel extends PopupPanel {
 		ActualActivity = RA;
 		Yo = this;
 		GeneralPanel=new AbsolutePanel();
-		GeneralPanel.setSize("794px", "536px");
+		GeneralPanel.setSize("794px", "590px");
 		flowPanel = new FlowPanel();
 		setWidget(GeneralPanel);
 		GeneralPanel.add(flowPanel, 0, 0);
-		flowPanel.setSize("794px", "536px");
-
+		flowPanel.setSize("794px", "590px");
+		EditorZone=new SimplePanel();
+		EditorZone.setHeight(Constants.TAMANO_PANEL_EDICION);
+	//	EditorZone.add(new Button("hola"));
+		flowPanel.add(EditorZone);
 		MenuBar menuBar = new MenuBar(false);
 		flowPanel.add(menuBar);
 
@@ -725,7 +734,6 @@ public class EditorActivityPopupPanel extends PopupPanel {
 		PanelEdicion.clear();
 		PanelEdicion.setStyleName("BlancoTransparente");
 		Button Boton=new Button();
-		PanelEdicion.add(Boton,PanelEdicion.getOffsetWidth()-70, 0);
 		Boton.setHTML(InformationConstants.END_EDIT_BOTTON);
 		Boton.addClickHandler(new ClickHandler() {
 			
@@ -867,16 +875,17 @@ public class EditorActivityPopupPanel extends PopupPanel {
 		PanelEdicion.add(CatalogTabPanelTextBox,  (TabPanelGeneral.getTabBar().getAbsoluteLeft()+Dist*WTabCounter)+SeparacionExtaPorRoun-flowPanel.getAbsoluteLeft()-DecoradorWidth,TabPanelGeneral.getTabBar().getAbsoluteTop()-flowPanel.getAbsoluteTop()-DecoradorWidth);
 		WTabCounter++;
 		
+		
 		AllowDefaulTypeCheckBoxTextBox=new TextBox();
 		AllowDefaulTypeCheckBoxTextBox.setText(ALLOW_DEFAULT_TYPE);
-		AllowDefaulTypeCheckBoxTextBox.setSize(AllowDefaulTypeCheckBox.getOffsetWidth()+"px", AllowDefaulTypeCheckBox.getOffsetHeight()+"px");
-		PanelEdicion.add(AllowDefaulTypeCheckBoxTextBox,TabPanelGeneral.getTabBar().getAbsoluteLeft()-flowPanel.getAbsoluteLeft()-DecoradorWidth, TabPanelGeneral.getAbsoluteTop() + TabPanelGeneral.getOffsetHeight()*HExtraTabCounter -flowPanel.getAbsoluteTop()-DecoradorWidth);
+		AllowDefaulTypeCheckBoxTextBox.setSize(AnchuraOutElements+"px", TabPanelGeneral.getTabBar().getOffsetHeight()+"px");
+		PanelEdicion.add(AllowDefaulTypeCheckBoxTextBox,TabPanelGeneral.getTabBar().getAbsoluteLeft()-flowPanel.getAbsoluteLeft()-DecoradorWidth, TabPanelGeneral.getAbsoluteTop() + TabPanelGeneral.getTabBar().getOffsetHeight()*HExtraTabCounter -flowPanel.getAbsoluteTop()+MargenAlto);
 		HExtraTabCounter++;
 		
 		BotonSelectDefaultTypeTextBox=new TextBox();
 		BotonSelectDefaultTypeTextBox.setText(BOTON_SELECT_DEFAULT_TYPE);
-		BotonSelectDefaultTypeTextBox.setSize(BotonSelectDefaultType.getOffsetWidth()+"px", BotonSelectDefaultType.getOffsetHeight()+"px");
-		PanelEdicion.add(BotonSelectDefaultTypeTextBox, TabPanelGeneral.getTabBar().getAbsoluteLeft()-flowPanel.getAbsoluteLeft()-DecoradorWidth, TabPanelGeneral.getAbsoluteTop() + TabPanelGeneral.getOffsetHeight()*HExtraTabCounter -flowPanel.getAbsoluteTop()-DecoradorWidth);
+		BotonSelectDefaultTypeTextBox.setSize(AnchuraOutElements+"px", TabPanelGeneral.getTabBar().getOffsetHeight()+"px");
+		PanelEdicion.add(BotonSelectDefaultTypeTextBox, TabPanelGeneral.getTabBar().getAbsoluteLeft()-flowPanel.getAbsoluteLeft()-DecoradorWidth, TabPanelGeneral.getAbsoluteTop() + TabPanelGeneral.getTabBar().getOffsetHeight()*HExtraTabCounter -flowPanel.getAbsoluteTop()+MargenAlto);
 		HExtraTabCounter++;
 		
 		BooksTabPanelTextBox=new TextBox();
@@ -899,8 +908,8 @@ public class EditorActivityPopupPanel extends PopupPanel {
 		
 		AllowFreeTemplateCheckBoxTextBox=new TextBox();
 		AllowFreeTemplateCheckBoxTextBox.setText(ALLOW_BLANK_TEMPLATE);
-		AllowFreeTemplateCheckBoxTextBox.setSize(AllowDefaulTypeCheckBox.getOffsetWidth()+"px", AllowDefaulTypeCheckBox.getOffsetHeight()+"px");
-		PanelEdicion.add(AllowFreeTemplateCheckBoxTextBox, TabPanelGeneral.getTabBar().getAbsoluteLeft()-flowPanel.getAbsoluteLeft()-DecoradorWidth, TabPanelGeneral.getAbsoluteTop() + TabPanelGeneral.getOffsetHeight()*HExtraTabCounter-flowPanel.getAbsoluteTop()-DecoradorWidth);
+		AllowFreeTemplateCheckBoxTextBox.setSize(AnchuraOutElements+"px", TabPanelGeneral.getTabBar().getOffsetHeight()+"px");
+		PanelEdicion.add(AllowFreeTemplateCheckBoxTextBox, TabPanelGeneral.getTabBar().getAbsoluteLeft()-flowPanel.getAbsoluteLeft()-DecoradorWidth, TabPanelGeneral.getAbsoluteTop() + TabPanelGeneral.getTabBar().getOffsetHeight()*HExtraTabCounter-flowPanel.getAbsoluteTop()+MargenAlto);
 		HExtraTabCounter++;
 		
 		VisualizacionTabPanelTextBox=new TextBox();
@@ -952,6 +961,7 @@ public class EditorActivityPopupPanel extends PopupPanel {
 		VisualizacionLabelTextBox.setText(VISUALIZACION_LABEL);
 		VisualizacionLabelTextBox.setSize(VisualizacionLabel.getOffsetWidth()+"px", VisualizacionLabel.getOffsetHeight()+"px");
 		PanelEdicion.add(VisualizacionLabelTextBox, VisualizacionLabel.getAbsoluteLeft()-flowPanel.getAbsoluteLeft()-DecoradorWidth, VisualizacionLabel.getAbsoluteTop()-flowPanel.getAbsoluteTop()-DecoradorWidth);
+		PanelEdicion.add(Boton,PanelEdicion.getOffsetWidth()-70, 0);
 		
 	}
 
@@ -1723,8 +1733,12 @@ public class EditorActivityPopupPanel extends PopupPanel {
 	@Override
 	public void center() {
 		super.center();
+		EditorZone.setVisible(false);
 		if (ActualState.isLanguageActive())
+			{
+			EditorZone.setVisible(true);
 			closeEditPanel();
+			}
 	}
 
 }

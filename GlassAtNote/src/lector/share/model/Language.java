@@ -23,6 +23,7 @@ public class Language implements Serializable {
 	private String AdministracionLanguageConfiguration = "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n";
 	private String EditorActivityLanguageConfiguration= "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n"; 
 	private String FinderDefaultTypeLanguageConfiguration= "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n";
+	private String NewActivityPopupPanelLanguageConfiguration="\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n";
 	
 	// MainWindow
 	private String NamePage = "@Note";
@@ -158,16 +159,27 @@ public class Language implements Serializable {
 		FinderDefaultTypeLanguageConfiguration = finderDefaultTypeLanguageConfiguration;
 	}
 	
-	// TODO Generales
+	public String getNewActivityPopupPanelLanguageConfiguration() {
+		return NewActivityPopupPanelLanguageConfiguration;
+	}
+
+	public void setNewActivityPopupPanelLanguageConfiguration(
+			String newActivityPopupPanelLanguageConfiguration) {
+		NewActivityPopupPanelLanguageConfiguration = newActivityPopupPanelLanguageConfiguration;
+	}
+	
+	
 
 
 	
+
+
 
 	public void setNewAdmin(String newAdmin) {
 		NewAdmin = newAdmin;
 	}
 
-	
+	// TODO Generales
 
 	// TODO MainWindow
 	public String getNamePage() {
