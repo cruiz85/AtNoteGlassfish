@@ -1,6 +1,8 @@
 package lector.share.model;
 
 import java.io.Serializable;
+
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -19,11 +21,15 @@ public class Language implements Serializable {
 	private Long id;
 
 	private String name;
-	
+	@Column(columnDefinition = "LONGTEXT")
 	private String AdministracionLanguageConfiguration = "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n";
+	@Column(columnDefinition = "LONGTEXT")
 	private String EditorActivityLanguageConfiguration= "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n"; 
+	@Column(columnDefinition = "LONGTEXT")
 	private String FinderDefaultTypeLanguageConfiguration= "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n";
+	@Column(columnDefinition = "LONGTEXT")
 	private String NewActivityPopupPanelLanguageConfiguration="\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n";
+	@Column(columnDefinition = "LONGTEXT")
 	private String AdminActivitiesEntryPointLanguageConfiguration="\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n";
 	
 	// MainWindow

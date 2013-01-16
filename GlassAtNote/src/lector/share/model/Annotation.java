@@ -20,6 +20,7 @@ import javax.persistence.PreRemove;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.Transient;
+import javax.validation.constraints.Max;
 
 import org.eclipse.persistence.annotations.PrivateOwned;
 
@@ -42,6 +43,7 @@ public class Annotation implements Serializable {
 	private List<AnnotationThread> threads = new ArrayList<AnnotationThread>();
 	@OneToMany(cascade = CascadeType.ALL)
 	private List<TextSelector> textSelectors;
+	@Column(columnDefinition = "LONGTEXT")
 	private String comment;
 	@ManyToOne
 	@JoinColumn(name = "BOOK_ID")

@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -36,6 +37,7 @@ public class AnnotationThread implements Serializable {
 	@ManyToOne
 	@JoinColumn(name = "ANNOTATION_ID")
 	private Annotation annotation;
+	@Column(columnDefinition = "LONGTEXT")
 	private String comment;
 	private Long userId;    
 	private String userName;
