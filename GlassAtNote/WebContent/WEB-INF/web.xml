@@ -31,10 +31,35 @@
         <servlet-name>UploadServlet</servlet-name>
         <servlet-class>lector.server.UploadServlet</servlet-class>
     </servlet>
+    
 	<servlet>
 		<servlet-name>Serve</servlet-name>
 		<servlet-class>lector.server.Serve</servlet-class>
 	</servlet>
+	
+	<!-- captcha -->
+	<servlet>
+    <servlet-name>signupServlet</servlet-name>
+    <servlet-class>lector.server.capcha.CaptchaServiceImpl</servlet-class>
+  </servlet>
+  
+	 <servlet>
+    <servlet-name>SimpleCaptcha</servlet-name>
+    <servlet-class>lector.server.capcha.serverlet.ExtendedCaptchaServlet</servlet-class>
+    <init-param>
+        <param-name>width</param-name>
+        <param-value>200</param-value>
+    </init-param>
+    <init-param>
+        <param-name>height</param-name>
+        <param-value>50</param-value>
+    </init-param>
+  </servlet>
+	
+	<!-- Cierre Captcha -->
+	
+	
+	
 	<servlet-mapping>
 		<servlet-name>UploadServlet</servlet-name>
 		<url-pattern>/upload</url-pattern>
@@ -108,5 +133,19 @@
          <servlet-name>quercus</servlet-name>
          <url-pattern>*.php</url-pattern>
     </servlet-mapping>
+    
+    <!-- captcha Mapping-->
+
+	 <servlet-mapping>
+    <servlet-name>SimpleCaptcha</servlet-name>
+    <url-pattern>/SimpleCaptcha.jpg</url-pattern>
+  </servlet-mapping>
+  
+	 	  <servlet-mapping>
+    <servlet-name>signupServlet</servlet-name>
+    <url-pattern>/BookReader/book.reader/captcha</url-pattern>
+  </servlet-mapping>
+
+	<!-- Cierre Captcha Mapping-->
 
 </web-app>
