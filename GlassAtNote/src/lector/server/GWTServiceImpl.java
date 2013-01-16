@@ -3329,6 +3329,35 @@ public class GWTServiceImpl extends RemoteServiceServlet implements GWTService {
 		return ServiceManagerUtils.produceReadingActivityClients(list);
 	}
 
+	private List<ReadingActivity> getReadingActivitiesByLanguageId(Long languageId)
+			throws GeneralException, ReadingActivityNotFoundException {
+		EntityManager entityManager = emf.createEntityManager();
+		List<ReadingActivity> list;
+
+		String sql = "SELECT a FROM ReadingActivity a WHERE a.language.id="
+				+ languageId;
+		try {
+			list = entityManager.createQuery(sql).getResultList();
+			if (list == null) {
+				// logger.error ("Exception in method loadGroupById: ", e)
+				throw new ReadingActivityNotFoundException(
+						"Professor not found in method getProfessors");
+
+			}
+
+		} catch (Exception e) {
+			// logger.error ("Exception in method loadGroupByEmail: ", e)
+			throw new GeneralException("Exception in method getProfessors:"
+					+ e.getMessage(), e.getStackTrace());
+
+		}
+
+		if (entityManager.isOpen()) {
+			entityManager.close();
+		}
+		return list;
+	}
+	
 	private List<ReadingActivity> getReadingActivitiesByBookId(Long bookId)
 			throws GeneralException, ReadingActivityNotFoundException {
 		EntityManager entityManager = emf.createEntityManager();
@@ -3665,10 +3694,16 @@ public class GWTServiceImpl extends RemoteServiceServlet implements GWTService {
 		EntityManager entityManager = emf.createEntityManager();
 
 		try {
+			Language language = entityManager.find(Language.class, languageId);
 			userTransaction.begin();
-			entityManager.createQuery(
-					"DELETE FROM Language s WHERE s.id=" + languageId)
-					.executeUpdate();
+			List<ReadingActivity> activities = getReadingActivitiesByLanguageId(languageId);
+			for (ReadingActivity readingActivity : activities) {
+				readingActivity.setLanguage(null);
+				entityManager.merge(readingActivity);
+			}
+
+			entityManager.remove(language);
+			entityManager.flush();
 			userTransaction.commit();
 		} catch (Exception e) {
 			ServiceManagerUtils.rollback(userTransaction);
