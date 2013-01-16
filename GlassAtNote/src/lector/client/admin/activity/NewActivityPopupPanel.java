@@ -12,7 +12,6 @@ import lector.share.model.client.ProfessorClient;
 import lector.share.model.client.ReadingActivityClient;
 import lector.client.controler.InformationConstants;
 
-import com.google.gwt.safehtml.shared.SafeHtml;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.AbsolutePanel;
@@ -24,7 +23,6 @@ import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.HasHorizontalAlignment;
 import com.google.gwt.user.client.ui.TextBox;
-import com.google.gwt.user.client.ui.Widget;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.event.dom.client.ClickEvent;
@@ -79,6 +77,7 @@ public class NewActivityPopupPanel extends PopupPanel {
 		super(true);
 		this.Father = Fatherin;
 		Yo = this;
+		setAnimationEnabled(true);
 		GeneralPanel = new AbsolutePanel();
 		PanelActivity = new VerticalPanel();
 		EditorZone=new SimplePanel();

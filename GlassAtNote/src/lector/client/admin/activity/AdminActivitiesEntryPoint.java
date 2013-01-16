@@ -379,17 +379,17 @@ public class AdminActivitiesEntryPoint implements EntryPoint {
 		});
 		
 		ActivityWellcomeMenuItemTextBox=new TextBox();
-		ActivityWellcomeMenuItemTextBox.setText(BACK_MENU);
+		ActivityWellcomeMenuItemTextBox.setText(ACTIVITY_MENU);
 		ActivityWellcomeMenuItemTextBox.setSize(ActivityWellcomeMenuItem.getOffsetWidth()+"px", ActivityWellcomeMenuItem.getOffsetHeight()+"px");
 		PanelEdicion.add(ActivityWellcomeMenuItemTextBox, ActivityWellcomeMenuItem.getAbsoluteLeft(), ActivityWellcomeMenuItem.getAbsoluteTop());
 		
 		NewActivityMenuItemTextBox=new TextBox();
-		NewActivityMenuItemTextBox.setText(ACTIVITY_MENU);
+		NewActivityMenuItemTextBox.setText(NEW_MENU);
 		NewActivityMenuItemTextBox.setSize(NewActivityMenuItem.getOffsetWidth()+"px", NewActivityMenuItem.getOffsetHeight()+"px");
 		PanelEdicion.add(NewActivityMenuItemTextBox, NewActivityMenuItem.getAbsoluteLeft(), NewActivityMenuItem.getAbsoluteTop());
 		
 		BackMenuItemTextBox=new TextBox();
-		BackMenuItemTextBox.setText(NEW_MENU);
+		BackMenuItemTextBox.setText(BACK_MENU);
 		BackMenuItemTextBox.setSize(BackMenuItem.getOffsetWidth()+"px", BackMenuItem.getOffsetHeight()+"px");
 		PanelEdicion.add(BackMenuItemTextBox, BackMenuItem.getAbsoluteLeft(), BackMenuItem.getAbsoluteTop());
 		

@@ -51,7 +51,7 @@ public class FinderDefaultTypePopupPanel extends PopupPanel {
 		setGlassEnabled(true);
 		setModal(false);
 		Yo=this;
-		
+		setAnimationEnabled(true);
 		DockLayoutPanel dockPanel = new DockLayoutPanel(Unit.EM);
 		
 		MenuBar menuBar = new MenuBar(false);

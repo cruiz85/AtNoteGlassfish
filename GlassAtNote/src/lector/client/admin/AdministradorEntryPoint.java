@@ -127,7 +127,7 @@ public class AdministradorEntryPoint implements EntryPoint {
 		PanelFondoGeneral = new DockPanel();
 		PanelFondoGeneral.setStyleName("fondoLogo");
 		rootPanel.add(PanelFondoGeneral, 0, 0);
-		PanelFondoGeneral.setSize("100%", "100%");
+		PanelFondoGeneral.setSize("98%", "100%");
 
 		MenuBar menuBar = new MenuBar(false);
 		PanelFondoGeneral.add(menuBar, DockPanel.NORTH);

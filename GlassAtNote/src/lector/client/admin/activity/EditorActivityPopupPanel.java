@@ -227,7 +227,7 @@ public class EditorActivityPopupPanel extends PopupPanel {
 		flowPanel.setSize("794px", "590px");
 		EditorZone=new SimplePanel();
 		EditorZone.setHeight(Constants.TAMANO_PANEL_EDICION);
-	//	EditorZone.add(new Button("hola"));
+		setAnimationEnabled(true);
 		flowPanel.add(EditorZone);
 		MenuBar menuBar = new MenuBar(false);
 		flowPanel.add(menuBar);
@@ -815,7 +815,7 @@ public class EditorActivityPopupPanel extends PopupPanel {
 				
 				
 				if (!GroupsLabel.getText().isEmpty())
-				GROUPS_LABEL=GroupsLabel.getText();
+				GROUPS_LABEL=GroupsLabelTextBox.getText();
 			else GROUPS_LABEL=GROUPS_LABEL_RESET;
 			
 				
@@ -1047,22 +1047,22 @@ public class EditorActivityPopupPanel extends PopupPanel {
 			if (!Lista[14].isEmpty())
 				PUBLIC_CATALOG_LABEL = Lista[14];
 			else PUBLIC_CATALOG_LABEL=PUBLIC_CATALOG_LABEL_RESET;
-			if (!Lista[14].isEmpty())
+			if (!Lista[15].isEmpty())
 				DEFAUL_TYPE_LABEL = Lista[15];
 			else DEFAUL_TYPE_LABEL=DEFAUL_TYPE_LABEL_RESET;
-			if (!Lista[14].isEmpty())
+			if (!Lista[16].isEmpty())
 				BOOK_LABEL = Lista[16];
 			else BOOK_LABEL=BOOK_LABEL_RESET;
-			if (!Lista[14].isEmpty())
+			if (!Lista[17].isEmpty())
 				GROUPS_LABEL = Lista[17];
 			else GROUPS_LABEL=GROUPS_LABEL_RESET;
-			if (!Lista[14].isEmpty())
+			if (!Lista[18].isEmpty())
 				TEMPLATE_LABEL = Lista[18];
 			else TEMPLATE_LABEL=TEMPLATE_LABEL_RESET;
-			if (!Lista[14].isEmpty())
+			if (!Lista[19].isEmpty())
 				BLANK_TEMPLATE_ALLOWED = Lista[19];
 			else BLANK_TEMPLATE_ALLOWED=BLANK_TEMPLATE_ALLOWED_RESET;
-			if (!Lista[14].isEmpty())
+			if (!Lista[20].isEmpty())
 				VISUALIZACION_LABEL = Lista[20];
 			else VISUALIZACION_LABEL=VISUALIZACION_LABEL_RESET;
 		}
@@ -1255,7 +1255,7 @@ public class EditorActivityPopupPanel extends PopupPanel {
 						public void onClick(ClickEvent event) {
 							Botoncatalogo BCE = (Botoncatalogo) event
 									.getSource();
-							PanelSeleccionCatalogo PSC = new PanelSeleccionCatalogo(
+							SeleccionCatalogoPopupPanel PSC = new SeleccionCatalogoPopupPanel(
 									BCE.getCatalogo(), PrivateCatalogLabel,
 									PublicCatalogLabel, Yo);
 							PSC.showRelativeTo(BCE);
@@ -1292,7 +1292,7 @@ public class EditorActivityPopupPanel extends PopupPanel {
 						public void onClick(ClickEvent event) {
 							Botoncatalogo BCE = (Botoncatalogo) event
 									.getSource();
-							PanelSeleccionCatalogo PSC = new PanelSeleccionCatalogo(
+							SeleccionCatalogoPopupPanel PSC = new SeleccionCatalogoPopupPanel(
 									BCE.getCatalogo(), PrivateCatalogLabel,
 									PublicCatalogLabel, Yo);
 							PSC.showRelativeTo(BCE);

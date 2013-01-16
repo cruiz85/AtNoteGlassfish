@@ -31,6 +31,8 @@ public class Language implements Serializable {
 	private String NewActivityPopupPanelLanguageConfiguration="\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n";
 	@Column(columnDefinition = "LONGTEXT")
 	private String AdminActivitiesEntryPointLanguageConfiguration="\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n";
+	@Column(columnDefinition = "LONGTEXT")
+	private String SeleccionCatalogoPopupPanelLanguageConfiguration="\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n";
 	
 	// MainWindow
 	private String NamePage = "@Note";
@@ -183,6 +185,15 @@ public class Language implements Serializable {
 	public void setAdminActivitiesEntryPointLanguageConfiguration(
 			String adminActivitiesEntryPointLanguageConfiguration) {
 		AdminActivitiesEntryPointLanguageConfiguration = adminActivitiesEntryPointLanguageConfiguration;
+	}
+
+	public String getSeleccionCatalogoPopupPanelLanguageConfiguration() {
+		return SeleccionCatalogoPopupPanelLanguageConfiguration;
+	}
+
+	public void setSeleccionCatalogoPopupPanelLanguageConfiguration(
+			String seleccionCatalogoPopupPanelLanguageConfiguration) {
+		SeleccionCatalogoPopupPanelLanguageConfiguration = seleccionCatalogoPopupPanelLanguageConfiguration;
 	}
 
 	public void setNewAdmin(String newAdmin) {

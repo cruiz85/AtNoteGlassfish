@@ -4,6 +4,8 @@ import java.util.Date;
 
 import lector.client.book.reader.GWTService;
 import lector.client.book.reader.GWTServiceAsync;
+import lector.client.book.reader.CaptchaService;
+import lector.client.book.reader.CaptchaServiceAsync;
 import lector.client.controler.ActualState;
 import lector.client.controler.CalendarNow;
 import lector.client.controler.Constants;
@@ -66,11 +68,16 @@ public class Login implements EntryPoint {
 	private static final String PASSWORD1 = "Enter Password";
 	private static final String PASSWORD2 = "Repeat Password";
 	private static final String REGISTER = "Register";
+	private static final String STAY_SING_IN = "Stay signed in";
+	private static final String VALIDATE = "Validate";
 	
 	
 	private TextBox User;
 	private GWTServiceAsync bookReaderServiceHolder = GWT
 			.create(GWTService.class);
+	private CaptchaServiceAsync CapchaService = GWT
+			.create(CaptchaService.class);
+	
 	private Button btnNewButton;
 	private PasswordTextBox passwordLogin;
 	private Button buttonRegister;
@@ -87,6 +94,10 @@ public class Login implements EntryPoint {
 //	private AbsolutePanel PanelEdicion;
 	private DockPanel dockPanel;
 	private RootPanel rootPanel;
+	private TextBox CaptchaEnter;
+	private Button buttonCapcha;
+	private Image  captchaImage;
+	private HorizontalPanel CapchaPanel;
 
 	public void onModuleLoad() {
 
@@ -215,7 +226,7 @@ public class Login implements EntryPoint {
 		horizontalPanel_14.setStyleName("BlancoTransparente");
 		horizontalPanel_13.add(horizontalPanel_14);
 		
-		KeepConected = new CheckBox("Stay signed in");
+		KeepConected = new CheckBox(STAY_SING_IN);
 		horizontalPanel_14.add(KeepConected);
 
 		HorizontalPanel horizontalPanel_4 = new HorizontalPanel();
@@ -556,9 +567,77 @@ public class Login implements EntryPoint {
 		buttonRegister.setStyleName("gwt-ButtonCenter");
 		HorizontalPanel CapchaYBoton=new HorizontalPanel();
 		CapchaYBoton.setSpacing(5);
-		HorizontalPanel CapchaPanel=new HorizontalPanel();
+		CapchaPanel=new HorizontalPanel();
+		captchaImage = new Image("SimpleCaptcha.jpg");
+		CapchaPanel.add(captchaImage);
+		CaptchaEnter=new TextBox();
+		CapchaPanel.setSpacing(3);
+		CapchaPanel.add(CaptchaEnter);
+		buttonCapcha=new Button();
+		CapchaPanel.add(buttonCapcha);
+		buttonCapcha.setText(VALIDATE);
+		buttonCapcha.addMouseDownHandler(new MouseDownHandler() {
+			public void onMouseDown(MouseDownEvent event) {
+				((Button) event.getSource())
+						.setStyleName("gwt-ButtonCenterPush");
+			}
+		});
+
+		buttonCapcha.addMouseOutHandler(new MouseOutHandler() {
+			public void onMouseOut(MouseOutEvent event) {
+				((Button) event.getSource()).setStyleName("gwt-ButtonCenter");
+			}
+		});
+
+		buttonCapcha.addMouseOverHandler(new MouseOverHandler() {
+			public void onMouseOver(MouseOverEvent event) {
+
+				((Button) event.getSource())
+						.setStyleName("gwt-ButtonCenterOver");
+
+			}
+		});
+
+		buttonCapcha.setStyleName("gwt-ButtonCenter");
+		buttonCapcha.addClickHandler(new ClickHandler() {
+			
+			@Override
+			public void onClick(ClickEvent event) {
+				buttonCapcha.setEnabled(false);
+				if (CaptchaEnter.getText().length()>0)
+					CapchaService.performSignup(CaptchaEnter.getText(), new AsyncCallback<Boolean>() {
+						
+						@Override
+						public void onSuccess(Boolean result) {
+							if (result){
+							buttonRegister.setVisible(true);
+							buttonCapcha.setVisible(false);
+							CaptchaEnter.setVisible(false);
+							captchaImage.setVisible(false);
+							CapchaPanel.setVisible(false);
+							}
+							else 
+							{
+								buttonCapcha.setEnabled(true);
+								Window.alert(ErrorConstants.CAPTCHA_ENTERED_IS_WRONG);
+							}
+							
+						}
+						
+						@Override
+						public void onFailure(Throwable caught) {
+							buttonCapcha.setEnabled(true);
+							Window.alert(ErrorConstants.GENERAL_ERROR_REFRESH);
+							
+						}
+					});
+				else Window.alert(ErrorConstants.CAPTCHA_ENTERED_IS_EMPTY);
+			}
+		});
+		
 		CapchaYBoton.add(CapchaPanel);
 		CapchaYBoton.add(buttonRegister);
+		buttonRegister.setVisible(false);
 		verticalPanel_13.add(CapchaYBoton);
 
 		MenuBar menuBar = new MenuBar(false);

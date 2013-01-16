@@ -101,6 +101,21 @@ public class SeleccionMenu extends PopupPanel {
 		DeleteButton.setSize("100%", "100%");
 		
 		SelectButton = new Button(SeleccionMenu.SELECT);
+		SelectButton.addMouseDownHandler(new MouseDownHandler() {
+			public void onMouseDown(MouseDownEvent event) {
+				((Button)event.getSource()).setStyleName("gwt-ButtonPush");
+			}
+		});
+		SelectButton.addMouseOutHandler(new MouseOutHandler() {
+			public void onMouseOut(MouseOutEvent event) {
+				((Button)event.getSource()).setStyleName("gwt-ButtonTOP");
+			}
+		});
+		SelectButton.addMouseOverHandler(new MouseOverHandler() {
+			public void onMouseOver(MouseOverEvent event) {
+				((Button)event.getSource()).setStyleName("gwt-ButtonTOPOver");
+			}
+		});
 		SelectButton.addClickHandler(new ClickHandler() {
 			public void onClick(ClickEvent event) {
 				Window.alert(InformationConstants.CHANGE_LANGUAGE_WARNING);
