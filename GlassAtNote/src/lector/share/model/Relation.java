@@ -25,7 +25,8 @@ public class Relation implements Serializable {
 	@ManyToOne
 	@JoinColumn(name = "FATHER_ID")
 	private FolderDB father;
-	@ManyToOne(cascade={CascadeType.PERSIST, CascadeType.MERGE})
+	@ManyToOne(cascade = { CascadeType.MERGE, CascadeType.PERSIST,
+			CascadeType.REMOVE })
 	@JoinColumn(name = "CHILD_ID")
 	private Entry child;
 	private Long catalogId;
