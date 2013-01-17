@@ -105,9 +105,10 @@ public Arbolgrafo() {
 		
 		//BG=new BotonGrafo(entrada);
 		PanelNodo.add(BG);
-		BG.setSize("100%", "100%");
+		
 //		if((PanelGrafo.getMultiplicador()>=1.0))
 			BG.setIcon("Folder.gif", entrada.getCatalogName());
+			BG.setSize("100%", "100%");
 	//	PanelNodo.setHeight(50*PanelGrafo.getMultiplicador()+"px");
 		LineasT LT=new LineasT(Linea,PaneLHijos,PanelEnlaceNodo);
 		Lineas.add(LT);

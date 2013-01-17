@@ -46,6 +46,7 @@ import com.google.gwt.core.client.GWT;
 import com.google.gwt.dom.client.Style.Unit;
 import com.google.gwt.user.client.ui.LayoutPanel;
 import com.google.gwt.user.client.ui.DockPanel;
+import com.google.gwt.user.client.ui.AbsolutePanel;
 
 
 public class ElementKey extends Composite{
@@ -77,6 +78,8 @@ public class ElementKey extends Composite{
 			.create(GWTService.class);
 	public static Finder finderAct;
 	private HorizontalPanel horizontalPanel_2;
+	private AbsolutePanel absolutePanel;
+	private HorizontalPanel horizontalPanel_3;
 	
 	public ElementKey(EntityCatalogElements ent) {
 		
@@ -479,12 +482,23 @@ bookReaderServiceHolder.updateCatalog(catalog, new AsyncCallback<Void>() {
 		horizontalPanel_1 = new HorizontalPanel();
 		horizontalPanel_1.setVerticalAlignment(HasVerticalAlignment.ALIGN_MIDDLE);
 		verticalPanel_1.add(horizontalPanel_1);
+		horizontalPanel_1.setHeight("100%");
+		
+		absolutePanel = new AbsolutePanel();
+		horizontalPanel_1.add(absolutePanel);
+		absolutePanel.setSize("40px", "100%");
+		
+		horizontalPanel_3 = new HorizontalPanel();
+		horizontalPanel_3.setVerticalAlignment(HasVerticalAlignment.ALIGN_MIDDLE);
+		horizontalPanel_3.setHorizontalAlignment(HasHorizontalAlignment.ALIGN_CENTER);
+		absolutePanel.add(horizontalPanel_3);
+		horizontalPanel_3.setSize("40px", "100%");
 		
 		LargeN = new Image("TreeKey/13.jpg");
-		horizontalPanel_1.add(LargeN);
+		horizontalPanel_3.add(LargeN);
 		horizontalPanel_1.setCellHorizontalAlignment(LargeN, HasHorizontalAlignment.ALIGN_CENTER);
 		horizontalPanel_1.setCellVerticalAlignment(LargeN, HasVerticalAlignment.ALIGN_MIDDLE);
-		LargeN.setSize("40px", "106%");
+		LargeN.setSize("40px", "100%");
 		
 //		Large = new VerticalPanel();
 //		horizontalPanel.add(Large);
@@ -497,8 +511,9 @@ bookReaderServiceHolder.updateCatalog(catalog, new AsyncCallback<Void>() {
 //				LargeP.setSize("35px", "100%");
 		
 		Compact = new Image("ArbolLineChico.jpg");
-		horizontalPanel_1.add(Compact);
+		horizontalPanel_3.add(Compact);
 		Compact.setSize("10px", "55px");
+		Compact.setVisible(false);
 		
 		NextBotones = new VerticalPanelEspacial(this);
 		horizontalPanel_1.add(NextBotones);
@@ -507,8 +522,8 @@ bookReaderServiceHolder.updateCatalog(catalog, new AsyncCallback<Void>() {
 		
 		Large2 = new Image("TreeKey/15.jpg");
 		verticalPanel_1.add(Large2);
-		Large2.setSize("40px", "100%");
-		Compact.setVisible(false);
+		verticalPanel_1.setCellVerticalAlignment(Large2, HasVerticalAlignment.ALIGN_BOTTOM);
+		Large2.setSize("40px", "106%");
 		
 	}
 

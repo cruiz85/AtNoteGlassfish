@@ -14,6 +14,8 @@ import lector.share.model.client.CatalogoClient;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.AbsolutePanel;
+import com.google.gwt.user.client.ui.HasHorizontalAlignment;
+import com.google.gwt.user.client.ui.HasVerticalAlignment;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.PopupPanel;
 import com.google.gwt.user.client.ui.HorizontalPanel;
@@ -79,14 +81,23 @@ public class SeleccionCatalogoPopupPanel extends PopupPanel {
 		setAnimationEnabled(true);
 		HorizontalPanel PanelActivityH = new HorizontalPanel();
 		PanelActivity = new VerticalPanel();
-		PanelActivity.add(PanelActivityH);
-		PanelActivityH.setSpacing(4);
 		EditorZone=new SimplePanel();
 		EditorZone.setHeight(Constants.TAMANO_PANEL_EDICION);
 		PanelActivity.add(EditorZone);
+		PanelActivity.add(PanelActivityH);
+		PanelActivityH.setVerticalAlignment(HasVerticalAlignment.ALIGN_MIDDLE);
+		PanelActivityH
+				.setHorizontalAlignment(HasHorizontalAlignment.ALIGN_CENTER);
+		PanelActivityH.setSpacing(4);
+		
+		
 		GeneralPanel.add(PanelActivity,0,0);
 		setWidget(GeneralPanel);
 		PanelActivityH.setSize("100%", "100%");
+		PanelActivity.setSize("100%", "100%");
+		PanelActivity.setVerticalAlignment(HasVerticalAlignment.ALIGN_MIDDLE);
+		PanelActivity
+				.setHorizontalAlignment(HasHorizontalAlignment.ALIGN_CENTER);
 		
 		SelectTeacherCatalogButton = new Button(SeleccionCatalogoPopupPanel.BOTTON_TEACHER_CATALOG);
 		SelectTeacherCatalogButton.setSize("100%", "100%");
@@ -170,16 +181,20 @@ public class SeleccionCatalogoPopupPanel extends PopupPanel {
 	}
 
 	@Override
-	public void center() {
-		super.center();
+	public void show() {
+		super.show();
+		GeneralPanel.setSize(400+Constants.PX, 40+Constants.PX);
 		EditorZone.setVisible(false);
 		if (ActualState.isLanguageActive())
 			{
+			GeneralPanel.setHeight(Constants.TAMANO_PANEL_EDICION_INT+40+Constants.PX);
 			EditorZone.setVisible(true);
 			closeEditPanel();
 			}
 	}
 	
+	
+		
 	private void closeEditPanel() {
 		GeneralPanel.remove(PanelEdicion);
 		GeneralPanel.add(PanelEdicion,PanelActivity.getOffsetWidth()-40, 0);

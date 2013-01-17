@@ -272,7 +272,7 @@ public class AdminActivitiesEntryPoint implements EntryPoint {
 							nue.addClickHandler(new ClickHandler() {
 
 								public void onClick(ClickEvent event) {
-									SeleccionMenuActivity panel = new SeleccionMenuActivity(
+									SeleccionMenuActivityPopupPanel panel = new SeleccionMenuActivityPopupPanel(
 											(ActivityBotton) event.getSource(),
 											yo);
 									panel.showRelativeTo((ActivityBotton) event
@@ -309,7 +309,7 @@ public class AdminActivitiesEntryPoint implements EntryPoint {
 							nue.addClickHandler(new ClickHandler() {
 
 								public void onClick(ClickEvent event) {
-									SeleccionMenuActivity panel = new SeleccionMenuActivity(
+									SeleccionMenuActivityPopupPanel panel = new SeleccionMenuActivityPopupPanel(
 											(ActivityBotton) event.getSource(),
 											yo);
 									panel.showRelativeTo((ActivityBotton) event

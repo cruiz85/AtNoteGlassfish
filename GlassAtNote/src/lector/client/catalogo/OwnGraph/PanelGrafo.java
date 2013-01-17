@@ -31,7 +31,7 @@ public class PanelGrafo extends Composite {
 	private Button btnNewButton_2;
 	private CatalogoClient Catalogo;
 	private Arbolgrafo AG;
-	private static float multiplicador=1; 
+	private static float multiplicador=1.3f; 
 	private boolean storedSizes=false;
 
 	public PanelGrafo() {
@@ -85,7 +85,8 @@ public class PanelGrafo extends Composite {
 				AG.storeBGSize();
 				storedSizes=true;
 				}
-				if (multiplicador-0.1f<1.0f) multiplicador=1.0f;
+				multiplicador=multiplicador-0.1f;
+				if (multiplicador<0.3f) multiplicador=0.3f;
 //				Go(Catalogo);
 				AG.changeMultiplicador();
 				AB.setSize(verticalPanel_1.getOffsetWidth()+"px", verticalPanel_1.getOffsetHeight()+"px");

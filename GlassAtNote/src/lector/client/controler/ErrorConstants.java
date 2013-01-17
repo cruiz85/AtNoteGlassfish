@@ -94,7 +94,7 @@ public class ErrorConstants {
 	public static String ERROR_RETRIVING_USERS= "Error Retriving Users";
 	
 	//Posible constante de error del sistema
-	public static String ERROR_LOADING_LANGUAGE_IN= "Error_Loading_Language";
+	public static String ERROR_LOADING_LANGUAGE_IN= "Error_Loading_Language ";
 	public static String CAPTCHA_ENTERED_IS_EMPTY = "Capcha entered in empty";
 	public static String CAPTCHA_ENTERED_IS_WRONG = "incorrect captcha, try again";
 

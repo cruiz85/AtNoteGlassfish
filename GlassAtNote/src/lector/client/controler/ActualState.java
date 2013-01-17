@@ -10,6 +10,7 @@ import lector.client.admin.activity.AdminActivitiesEntryPoint;
 import lector.client.admin.activity.EditorActivityPopupPanel;
 import lector.client.admin.activity.FinderDefaultTypePopupPanel;
 import lector.client.admin.activity.NewActivityPopupPanel;
+import lector.client.admin.activity.ReadingActivityVisibilityPopupPanel;
 import lector.client.admin.activity.SeleccionCatalogoPopupPanel;
 import lector.client.book.reader.GWTService;
 import lector.client.book.reader.GWTServiceAsync;
@@ -115,6 +116,7 @@ public class ActualState {
 		NewActivityPopupPanel.FromFile(ActualLanguage.getNewActivityPopupPanelLanguageConfiguration());
 		AdminActivitiesEntryPoint.FromFile(ActualLanguage.getAdminActivitiesEntryPointLanguageConfiguration());
 		SeleccionCatalogoPopupPanel.FromFile(ActualLanguage.getSeleccionCatalogoPopupPanelLanguageConfiguration());
+		ReadingActivityVisibilityPopupPanel.FromFile(ActualLanguage.getReadingActivityVisibilityPopupPanelLanguageConfiguration());
 	}
 
 	public static boolean isLanguageActive() {
