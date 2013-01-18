@@ -20,8 +20,7 @@ public class Catalogo implements Serializable {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
-	@OneToMany
-	// (mappedBy = "catalog", cascade = CascadeType.ALL)
+	@OneToMany(orphanRemoval=true)
 	private List<Entry> entries = new ArrayList<Entry>();
 	private List<Long> orders = new ArrayList<Long>();
 	// NUEVO

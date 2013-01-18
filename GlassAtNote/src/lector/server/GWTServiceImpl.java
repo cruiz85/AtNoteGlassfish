@@ -2239,60 +2239,20 @@ public class GWTServiceImpl extends RemoteServiceServlet implements GWTService {
 		try {
 			Catalogo catalogo = entityManager.find(Catalogo.class, catalogId);
 			userTransaction.begin();
-			for (Entry entry : catalogo.getEntries()) {
+			List<Entry> listEntry = new CopyOnWriteArrayList<Entry>(
+					catalogo.getEntries());
+			for (Entry entry : listEntry) {
 				Entry entryAux = entityManager.find(Entry.class, entry.getId());
-				if (entryAux instanceof FolderDB) {
-					FolderDB folderDB = (FolderDB) entry;
-					folderDB.getCatalog().getEntries().size();
-					folderDB.getCatalog().getEntries().remove(folderDB);
-					entityManager.merge(folderDB.getCatalog());
-					folderDB.setCatalog(null);
-					for (Relation relationAux : folderDB.getRelations()) {
-						List<Relation> relations = getRelationsByChildId(relationAux
-								.getChild().getId());
-						FolderDB folderFather = entityManager
-								.find(FolderDB.class, relationAux.getFather()
-										.getId());
-						Relation relation = loadRelationByFatherAndSonId(
-								relationAux.getFather().getId(), relationAux
-										.getChild().getId());
-						relation = entityManager.find(Relation.class,
-								relation.getId());
-						folderFather.getRelations().size();
-						folderFather.getRelations().remove(relation);
-						relation.setFather(null);
-						relation.setChild(null);
-						entityManager.merge(relation);
-						entityManager.merge(folderFather);
-						if (folderDB != null) {
-							if (relations.size() > 1) {
-								entityManager.merge(folderDB);
-							} else {
-								List<Relation> list = new CopyOnWriteArrayList<Relation>(
-										folderDB.getRelations());
-								for (Relation relationAux2 : list) {
-									deleteDeepFolderById(entityManager,
-											relationAux2.getChild().getId(),
-											folderDB.getId());
-								}
-								entityManager.remove(folderDB);
-							}
-						} else {
-							deleteTag(entityManager, relationAux.getChild()
-									.getId(), relationAux.getFather().getId());
-						}
 
-					}
+				if (entryAux instanceof FolderDB) {
+					deletePlainFolder(entityManager, entry.getId(),
+							Constants.CATALOGID);
 
 				} else {
-					Tag tag = (Tag) entry;
-					tag.getCatalog().getEntries().size();
-					tag.getCatalog().getEntries().remove(tag);
-					entityManager.merge(tag.getCatalog());
-					tag.setCatalog(null);
+					deleteTag(entityManager, entry.getId(), Constants.CATALOGID);
 				}
 			}
-
+			entityManager.remove(catalogo);
 			entityManager.flush();
 			userTransaction.commit();
 			entityManager.clear();
@@ -2435,63 +2395,8 @@ public class GWTServiceImpl extends RemoteServiceServlet implements GWTService {
 		EntityManager entityManager = emf.createEntityManager();
 
 		try {
-			Tag tag = findTag(tagId);
-			List<Relation> relations = getRelationsByChildId(tagId);
 			userTransaction.begin();
-
-			if (fatherId == null) { // cuelga del catalogo
-				tag.getCatalog().getEntries().size();
-				tag.getCatalog().getEntries().remove(tag);
-				entityManager.merge(tag.getCatalog());
-				tag.setCatalog(null);
-				if (relations.size() > 0) {
-					ReadingActivity activity = loadActivityByDefaultTypeId(tag
-							.getId());
-					if (activity != null) {
-						activity.setDefultTag(null);
-						entityManager.merge(activity);
-
-					}
-
-					Tag tagtoBeRemove = entityManager.merge(tag);
-					entityManager.remove(tagtoBeRemove);
-				}
-
-			} else { // cuelga del folder
-				FolderDB folderFather = findFolderDB(fatherId);
-				Relation relation = loadRelationByFatherAndSonId(fatherId,
-						tagId);
-				for (Relation relationAux : folderFather.getRelations()) {
-					if (relationAux.getId().equals(relation.getId())) {
-						folderFather.getRelations().remove(relationAux);
-						break;
-					}
-				}
-
-				entityManager.merge(relation.getFather());
-				relation.setFather(null);
-				relation.setChild(null);
-				Relation toBeRemove = entityManager.merge(relation);
-				entityManager.remove(toBeRemove);
-				if (relations.size() < 2) {
-					ReadingActivity activity = loadActivityByDefaultTypeId(tag
-							.getId());
-					if (activity != null) {
-						activity.setDefultTag(null);
-						entityManager.merge(activity);
-
-					}
-
-					Tag tagtoBeRemove = entityManager.merge(tag);
-					for (Annotation annotation : tagtoBeRemove.getAnnotations()) {
-						annotation.getTags().remove(tagtoBeRemove);
-						entityManager.merge(annotation);
-					}
-					entityManager.remove(tagtoBeRemove);
-				}
-
-			}
-
+			deleteTag(entityManager, tagId, fatherId);
 			entityManager.flush();
 			userTransaction.commit();
 			entityManager.clear();
@@ -2524,6 +2429,9 @@ public class GWTServiceImpl extends RemoteServiceServlet implements GWTService {
 			throw new ReadingActivityNotFoundException(
 					"ReadingActivity not found in method loadReadingActivityById");
 
+		}
+		if (list.isEmpty()) {
+			return null;
 		}
 		if (entityManager.isOpen()) {
 			entityManager.close();
@@ -3026,48 +2934,12 @@ public class GWTServiceImpl extends RemoteServiceServlet implements GWTService {
 	@Override
 	public void deleteTypeCategory(Long id, Long fatherId)
 			throws GeneralException {
+
 		EntityManager entityManager = emf.createEntityManager();
 
 		try {
-			FolderDB folderDB = entityManager.find(FolderDB.class, id);
-
 			userTransaction.begin();
-
-			if (fatherId == null) { // cuelga del catalogo
-				folderDB.getCatalog().getEntries().size();
-				folderDB.getCatalog().getEntries().remove(folderDB);
-				entityManager.merge(folderDB.getCatalog());
-				folderDB.setCatalog(null);
-			} else {
-				List<Relation> relations = getRelationsByChildId(id);
-				FolderDB folderFather = entityManager.find(FolderDB.class,
-						fatherId);
-				Relation relation = loadRelationByFatherAndSonId(fatherId, id);
-				relation = entityManager.find(Relation.class, relation.getId());
-				folderFather.getRelations().size();
-				folderFather.getRelations().remove(relation);
-				relation.setFather(null);
-				relation.setChild(null);
-				entityManager.merge(relation);
-				entityManager.merge(folderFather);
-				if (folderDB != null) {
-					if (relations.size() > 1) {
-						entityManager.merge(folderDB);
-					} else {
-						List<Relation> list = new CopyOnWriteArrayList<Relation>(
-								folderDB.getRelations());
-						for (Relation relationAux : list) {
-							deleteDeepFolderById(entityManager, relationAux
-									.getChild().getId(), folderDB.getId());
-						}
-						entityManager.remove(folderDB);
-					}
-				} else {
-					deleteTag(entityManager, id, fatherId);
-				}
-
-			}
-
+			deletePlainFolder(entityManager, id, fatherId);
 			entityManager.flush();
 			userTransaction.commit();
 			entityManager.clear();
@@ -3076,6 +2948,62 @@ public class GWTServiceImpl extends RemoteServiceServlet implements GWTService {
 			throw new GeneralException("Exception in method deleteFolderDBById"
 					+ e.getMessage(), e.getStackTrace());
 		}
+	}
+
+	private void deletePlainFolder(EntityManager entityManager, Long id,
+			Long fatherId) throws GeneralException,
+			AnnotationNotFoundException, RelationNotFoundException {
+		FolderDB folderDB = entityManager.find(FolderDB.class, id);
+		if (fatherId.equals(Constants.CATALOGID)) { // cuelga del catalogo
+			folderDB.getCatalog().getEntries().size();
+			folderDB.getCatalog().getEntries().remove(folderDB);
+			entityManager.merge(folderDB.getCatalog());
+			folderDB.setCatalog(null);
+			for (Relation relation : folderDB.getRelations()) {
+				Entry entryToRemove = entityManager.find(Entry.class, relation
+						.getChild().getId());
+				if (entryToRemove instanceof FolderDB) {
+					FolderDB folderToRemove = (FolderDB) entryToRemove;
+					deleteDeepFolderById(entityManager, folderToRemove.getId(),
+							folderDB.getId());
+
+				} else {
+					deleteTag(entityManager, entryToRemove.getId(),
+							folderDB.getId());
+				}
+
+			}
+          
+		} else {
+			List<Relation> relations = getRelationsByChildId(id);
+			FolderDB folderFather = entityManager
+					.find(FolderDB.class, fatherId);
+			Relation relation = loadRelationByFatherAndSonId(fatherId, id);
+			relation = entityManager.find(Relation.class, relation.getId());
+			folderFather.getRelations().size();
+			folderFather.getRelations().remove(relation);
+			relation.setFather(null);
+			relation.setChild(null);
+			entityManager.merge(relation);
+			entityManager.merge(folderFather);
+			if (folderDB != null) {
+				if (relations.size() > 1) {
+					entityManager.merge(folderDB);
+				} else {
+					List<Relation> list = new CopyOnWriteArrayList<Relation>(
+							folderDB.getRelations());
+					for (Relation relationAux : list) {
+						deleteDeepFolderById(entityManager, relationAux
+								.getChild().getId(), folderDB.getId());
+					}
+					entityManager.remove(folderDB);
+				}
+			} else {
+				deleteTag(entityManager, id, fatherId);
+			}
+
+		}
+
 	}
 
 	private void deleteDeepFolderById(EntityManager entityManager, Long id,
@@ -3126,21 +3054,11 @@ public class GWTServiceImpl extends RemoteServiceServlet implements GWTService {
 		Tag tag = entityManager.find(Tag.class, id);
 		List<Relation> relations = getRelationsByChildId(id);
 		try {
-			FolderDB folderFather = findFolderDB(fatherId);
-			Relation relation = loadRelationByFatherAndSonId(fatherId, id);
-			for (Relation relationAux : folderFather.getRelations()) {
-				if (relationAux.getId().equals(relation.getId())) {
-					folderFather.getRelations().remove(relationAux);
-					break;
-				}
-			}
-
-			entityManager.merge(relation.getFather());
-			relation.setFather(null);
-			relation.setChild(null);
-			Relation toBeRemove = entityManager.merge(relation);
-			entityManager.remove(toBeRemove);
-			if (relations.size() < 2) {
+			if (fatherId.equals(Constants.CATALOGID)) {
+				tag.getCatalog().getEntries().size();
+				tag.getCatalog().getEntries().remove(tag);
+				entityManager.merge(tag.getCatalog());
+				tag.setCatalog(null);
 				ReadingActivity activity = loadActivityByDefaultTypeId(tag
 						.getId());
 				if (activity != null) {
@@ -3148,18 +3066,46 @@ public class GWTServiceImpl extends RemoteServiceServlet implements GWTService {
 					entityManager.merge(activity);
 
 				}
-
-				Tag tagtoBeRemove = entityManager.merge(tag);
-				for (Annotation annotation : tagtoBeRemove.getAnnotations()) {
-					annotation.getTags().remove(tagtoBeRemove);
+				for (Annotation annotation : tag.getAnnotations()) {
+					annotation.getTags().remove(tag);
 					entityManager.merge(annotation);
 				}
-				entityManager.remove(tagtoBeRemove);
+				entityManager.remove(tag);
 
-				// entityManager.flush();
-				// userTransaction.commit();
-				// entityManager.clear();
+			} else {
+				FolderDB folderFather = findFolderDB(fatherId);
+				Relation relation = loadRelationByFatherAndSonId(fatherId, id);
+				for (Relation relationAux : folderFather.getRelations()) {
+					if (relationAux.getId().equals(relation.getId())) {
+						folderFather.getRelations().remove(relationAux);
+						break;
+					}
+				}
+
+				entityManager.merge(relation.getFather());
+				relation.setFather(null);
+				relation.setChild(null);
+				Relation toBeRemove = entityManager.merge(relation);
+				entityManager.remove(toBeRemove);
+				if (relations.size() < 2) {
+					ReadingActivity activity = loadActivityByDefaultTypeId(tag
+							.getId());
+					if (activity != null) {
+						activity.setDefultTag(null);
+						entityManager.merge(activity);
+
+					}
+
+					Tag tagtoBeRemove = entityManager.merge(tag);
+					for (Annotation annotation : tagtoBeRemove.getAnnotations()) {
+						annotation.getTags().remove(tagtoBeRemove);
+						entityManager.merge(annotation);
+					}
+					entityManager.remove(tagtoBeRemove);
+
+				}
 			}
+
 		} catch (Exception e) {
 			ServiceManagerUtils.rollback(userTransaction);
 			throw new GeneralException("Exception in method deleteFolderDBById"
