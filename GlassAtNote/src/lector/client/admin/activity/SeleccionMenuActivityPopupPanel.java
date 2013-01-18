@@ -65,6 +65,7 @@ public class SeleccionMenuActivityPopupPanel extends PopupPanel {
 		 PanelActivity = new VerticalPanel();
 		 GeneralPanel = new AbsolutePanel();
 		 EditorZone=new SimplePanel();
+		 EditorZone.setVisible(false);
 		EditorZone.setHeight(Constants.TAMANO_PANEL_EDICION);
 		PanelActivity.add(EditorZone);
 		PanelActivity.setHorizontalAlignment(HasHorizontalAlignment.ALIGN_CENTER);

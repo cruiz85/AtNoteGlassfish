@@ -16,6 +16,7 @@ import lector.share.model.client.ReadingActivityClient;
 
 import com.google.gwt.core.client.EntryPoint;
 import com.google.gwt.core.client.GWT;
+import com.google.gwt.dom.client.Style.Unit;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.event.dom.client.MouseDownEvent;
@@ -29,13 +30,13 @@ import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.AbsolutePanel;
 import com.google.gwt.user.client.ui.Button;
+import com.google.gwt.user.client.ui.DockLayoutPanel;
 import com.google.gwt.user.client.ui.MenuBar;
 import com.google.gwt.user.client.ui.MenuItem;
 import com.google.gwt.user.client.ui.MenuItemSeparator;
 import com.google.gwt.user.client.ui.RootPanel;
 import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.VerticalPanel;
-import com.google.gwt.user.client.ui.HasHorizontalAlignment;
 import com.google.gwt.user.client.ui.HorizontalPanel;
 
 public class AdminActivitiesEntryPoint implements EntryPoint {
@@ -62,7 +63,7 @@ public class AdminActivitiesEntryPoint implements EntryPoint {
 	
 	
 	private AbsolutePanel PanelEdicion;
-	private VerticalPanel PanelFondoGeneral;
+	private VerticalPanel PanelBotones;
 	
 	private VerticalPanel Actual;
 	private AdminActivitiesEntryPoint yo;
@@ -70,19 +71,24 @@ public class AdminActivitiesEntryPoint implements EntryPoint {
 			.create(GWTService.class);
 	private RootPanel rootPanel;
 
+	private DockLayoutPanel PanelFondoGeneral;
+
 	
 	public void onModuleLoad() {
 		rootPanel = RootPanel.get();
-		RootPanel RootMenu = RootPanel.get("Menu");
 		rootPanel.setSize("100%", "100%");
-		RootMenu.setStyleName("Root");
 		rootPanel.setStyleName("Root");
 
 		yo = this;
 
+		PanelFondoGeneral = new DockLayoutPanel(Unit.PX);
+		PanelFondoGeneral.setStyleName("fondoLogo");
+		rootPanel.add(PanelFondoGeneral, 0, 0);
+		PanelFondoGeneral.setSize("100%", "100%");
+		
 		MenuBar menuBar = new MenuBar(false);
-		RootMenu.add(menuBar);
-		menuBar.setWidth("100%");
+		PanelFondoGeneral.addNorth(menuBar, 25);
+		//menuBar.setWidth("100%");
 
 		ActivityWellcomeMenuItem = new MenuItem(ACTIVITY_MENU, false, (Command) null);
 		ActivityWellcomeMenuItem.setHTML(ACTIVITY_MENU);
@@ -112,17 +118,21 @@ public class AdminActivitiesEntryPoint implements EntryPoint {
 		});
 		menuBar.addItem(BackMenuItem);
 
-		PanelFondoGeneral = new VerticalPanel();
-		PanelFondoGeneral.setSpacing(10);
-		PanelFondoGeneral.setStyleName("fondoLogo");
-		PanelFondoGeneral
-				.setHorizontalAlignment(HasHorizontalAlignment.ALIGN_CENTER);
-		rootPanel.add(PanelFondoGeneral, 0, 27);
-		PanelFondoGeneral.setSize("100%", "100%");
+		PanelBotones = new VerticalPanel();
+		PanelBotones.setSpacing(10);
+		//PanelBotones.setStyleName("fondoLogo");
+//		PanelBotones
+//				.setHorizontalAlignment(HasHorizontalAlignment.ALIGN_CENTER);
+	//	rootPanel.add(PanelBotones, 0, 27);
+		HorizontalPanel SP= new HorizontalPanel();
+		SP.add(PanelBotones);
+		SP.setHeight(Constants.P100);
+		PanelFondoGeneral.add(SP);
+		PanelBotones.setSize("100%", "100%");
 
 		HorizontalPanel horizontalPanel = new HorizontalPanel();
 		horizontalPanel.setSpacing(6);
-		PanelFondoGeneral.add(horizontalPanel);
+		PanelBotones.add(horizontalPanel);
 		horizontalPanel.setWidth("100%");
 
 		HorizontalPanel horizontalPanel_1 = new HorizontalPanel();
@@ -327,7 +337,7 @@ public class AdminActivitiesEntryPoint implements EntryPoint {
 	public void closeEditPanel()
 	{
 		rootPanel.remove(PanelEdicion);
-		rootPanel.add(PanelEdicion, PanelFondoGeneral.getOffsetWidth()-Constants.TAMANOBOTOBEDITOFF, 0);
+		rootPanel.add(PanelEdicion, PanelBotones.getOffsetWidth()-Constants.TAMANOBOTOBEDITOFF, 0);
 		PanelEdicion.setSize("40px","50px");
 		PanelEdicion.clear();
 		PanelEdicion.setStyleName("");
@@ -348,7 +358,7 @@ public class AdminActivitiesEntryPoint implements EntryPoint {
 	public void OpenEditPanel() {
 		rootPanel.remove(PanelEdicion);
 		rootPanel.add(PanelEdicion, 0, 0);
-		PanelEdicion.setSize(PanelFondoGeneral.getOffsetWidth()+"px",PanelFondoGeneral.getOffsetHeight()+"px");
+		PanelEdicion.setSize(PanelBotones.getOffsetWidth()+"px",PanelBotones.getOffsetHeight()+"px");
 		PanelEdicion.clear();
 		PanelEdicion.setStyleName("BlancoTransparente");
 		Button Boton=new Button();

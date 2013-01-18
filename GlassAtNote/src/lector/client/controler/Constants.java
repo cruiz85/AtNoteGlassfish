@@ -50,4 +50,5 @@ public class Constants {
 	
 	//IMAGENES
 	public static final String FREE_ICON = "Free.gif";
+	public static final String P100 = "100%";
 }

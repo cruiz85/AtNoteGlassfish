@@ -14,8 +14,11 @@ import lector.share.model.client.ReadingActivityClient;
 
 import com.google.gwt.core.client.EntryPoint;
 import com.google.gwt.core.client.GWT;
+import com.google.gwt.dom.client.Style.Unit;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.AbsolutePanel;
+import com.google.gwt.user.client.ui.DockLayoutPanel;
+import com.google.gwt.user.client.ui.HasVerticalAlignment;
 import com.google.gwt.user.client.ui.RootPanel;
 import com.google.gwt.user.client.ui.MenuBar;
 import com.google.gwt.user.client.ui.MenuItem;
@@ -36,6 +39,7 @@ import com.google.gwt.event.dom.client.MouseOutEvent;
 import com.google.gwt.event.dom.client.MouseDownHandler;
 import com.google.gwt.event.dom.client.MouseDownEvent;
 import com.google.gwt.user.client.ui.DockPanel;
+import com.google.gwt.user.client.ui.HasVerticalAlignment.VerticalAlignmentConstant;
 
 public class AdministradorEntryPoint implements EntryPoint {
 
@@ -109,14 +113,14 @@ public class AdministradorEntryPoint implements EntryPoint {
 			.create(GWTService.class);
 
 	private RootPanel rootPanel;
-	private DockPanel PanelFondoGeneral;
+	private DockLayoutPanel PanelFondoGeneral;
 	private AbsolutePanel PanelEdicion;
 	private AdministradorEntryPoint Yo;
 
 
 	public void onModuleLoad() {
 		rootPanel = RootPanel.get();
-		rootPanel.setStyleName("Root");
+		//rootPanel.setStyleName("Root");
 		Yo=this;
 //		if ((ActualState.getUser().getFirstName() != null)
 //				&& (!ActualState.getUser().getFirstName().isEmpty()))
@@ -124,14 +128,14 @@ public class AdministradorEntryPoint implements EntryPoint {
 //		else
 //			BIENVENIDA = ActualState.getUser().getEmail();
 		BIENVENIDA=ActualState.getUser().getFirstName()+ " " + ActualState.getUser().getLastName().charAt(0)+".";
-		PanelFondoGeneral = new DockPanel();
+		PanelFondoGeneral = new DockLayoutPanel(Unit.PX);
 		PanelFondoGeneral.setStyleName("fondoLogo");
 		rootPanel.add(PanelFondoGeneral, 0, 0);
-		PanelFondoGeneral.setSize("98%", "100%");
+		PanelFondoGeneral.setSize("100%", "100%");
 
 		MenuBar menuBar = new MenuBar(false);
-		PanelFondoGeneral.add(menuBar, DockPanel.NORTH);
-		menuBar.setSize("100%", "24px");
+		PanelFondoGeneral.addNorth(menuBar, 24);
+		//menuBar.setSize("100%", "24px");
 
 		WellcomeButtonMenu = new MenuItem(AdministradorEntryPoint.WELLCOME_MENU
 				+ BIENVENIDA, false, (Command) null);
@@ -158,8 +162,9 @@ public class AdministradorEntryPoint implements EntryPoint {
 		menuBar.addItem(CloseSessionMenu);
 
 		HorizontalPanel horizontalPanel = new HorizontalPanel();
-		PanelFondoGeneral.add(horizontalPanel, DockPanel.CENTER);
+		PanelFondoGeneral.add(horizontalPanel);
 		horizontalPanel.setSpacing(12);
+		horizontalPanel.setVerticalAlignment(HasVerticalAlignment.ALIGN_MIDDLE);
 		horizontalPanel.setSize("100%", "100%");
 
 		VerticalPanel verticalPanel = new VerticalPanel();

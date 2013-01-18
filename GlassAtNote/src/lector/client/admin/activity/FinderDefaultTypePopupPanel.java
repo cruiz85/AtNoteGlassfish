@@ -52,10 +52,10 @@ public class FinderDefaultTypePopupPanel extends PopupPanel {
 		setModal(false);
 		Yo=this;
 		setAnimationEnabled(true);
-		DockLayoutPanel dockPanel = new DockLayoutPanel(Unit.EM);
+		DockLayoutPanel dockPanel = new DockLayoutPanel(Unit.PX);
 		
 		MenuBar menuBar = new MenuBar(false);
-        dockPanel.addNorth(menuBar, 1.9);
+        dockPanel.addNorth(menuBar, 20);
         menuBar.setSize("100%", "20px");
         CloseButton = new MenuItem("New item", false, new Command() {
         	public void execute() {
