@@ -7,6 +7,7 @@ import lector.client.catalogo.OwnGraph.PanelGrafo;
 import lector.client.catalogo.client.EntityCatalogElements;
 import lector.client.controler.ActualState;
 import lector.client.controler.ErrorConstants;
+import lector.client.controler.InformationConstants;
 
 import lector.client.logger.Logger;
 import lector.client.reader.LoadingPanel;
@@ -80,7 +81,7 @@ public class FinderOwnGrafo extends Finder {
 public void RefrescaLosDatos() {
 	LoadingPanel.getInstance().center();
 	if (InReadingActivity)  LoadingPanel.getInstance().setLabelTexto(ActualState.getLanguage().getLoading());
-	else LoadingPanel.getInstance().setLabelTexto("Loading...");
+	else LoadingPanel.getInstance().setLabelTexto(InformationConstants.LOADING);
 	bookReaderServiceHolder.loadCatalogById(C.getId(),new AsyncCallback<CatalogoClient>(){
 
 		@Override
