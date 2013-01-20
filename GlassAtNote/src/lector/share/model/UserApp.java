@@ -22,7 +22,7 @@ import com.google.gwt.user.client.rpc.IsSerializable;
 @Entity
 @Table(name = "user_app")
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
-@DiscriminatorColumn(name="ENTRY_TYPE")
+@DiscriminatorColumn(name="DTYPE")
 public class UserApp implements Serializable, IsSerializable {
 
 	@Id

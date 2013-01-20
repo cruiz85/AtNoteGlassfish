@@ -886,7 +886,7 @@ public class GWTServiceImpl extends RemoteServiceServlet implements GWTService {
 		Catalogo a = entityManager.find(Catalogo.class, id);
 		if (a == null) {
 			throw new CatalogoNotFoundException(
-					"Catalogo not found in method loadCatalogoById");
+					"Catalogo not found in method findCatalogo");
 		}
 		entityManager.close();
 		return a;
@@ -2959,21 +2959,24 @@ public class GWTServiceImpl extends RemoteServiceServlet implements GWTService {
 			folderDB.getCatalog().getEntries().remove(folderDB);
 			entityManager.merge(folderDB.getCatalog());
 			folderDB.setCatalog(null);
-			for (Relation relation : folderDB.getRelations()) {
-				Entry entryToRemove = entityManager.find(Entry.class, relation
-						.getChild().getId());
-				if (entryToRemove instanceof FolderDB) {
+			entityManager.remove(folderDB);
+			List<Relation> list = new CopyOnWriteArrayList<Relation>(
+					folderDB.getRelations());
+			for (Relation relation : list) {
+				FolderDB entryToRemove = entityManager.find(FolderDB.class,
+						relation.getChild().getId());
+				if (entryToRemove != null) {
 					FolderDB folderToRemove = (FolderDB) entryToRemove;
 					deleteDeepFolderById(entityManager, folderToRemove.getId(),
 							folderDB.getId());
 
 				} else {
-					deleteTag(entityManager, entryToRemove.getId(),
+					deleteTag(entityManager, relation.getChild().getId(),
 							folderDB.getId());
 				}
 
 			}
-          
+
 		} else {
 			List<Relation> relations = getRelationsByChildId(id);
 			FolderDB folderFather = entityManager
