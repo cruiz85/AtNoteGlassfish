@@ -10,6 +10,7 @@ import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.PopupPanel;
 import com.google.gwt.user.client.ui.MenuBar;
+import com.google.gwt.user.client.ui.ScrollPanel;
 import com.google.gwt.user.client.ui.SimplePanel;
 import com.google.gwt.user.client.ui.VerticalPanel;
 import com.google.gwt.user.client.ui.MenuItem;
@@ -69,7 +70,7 @@ public class SelectorTypePopUpAnnotacionAdministracion extends PopupPanel {
         mntmNewItem_1.setHTML(ActualState.getLanguage().getCancel());
         menuBar.addItem(mntmNewItem_1);
         
-        SimplePanel scrollPanel = new SimplePanel();
+        ScrollPanel scrollPanel = new ScrollPanel();
         dockPanel.add(scrollPanel, DockPanel.CENTER);
        // scrollPanel.setSize(Window.getClientWidth()-100+"px", Window.getClientHeight()-100+"px");
         dockPanel.setSize(Window.getClientWidth()-100+"px", Window.getClientHeight()-100+"px");
