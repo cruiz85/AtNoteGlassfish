@@ -78,6 +78,10 @@ public interface GWTService extends RemoteService {
 	// public UserClient loadUserByEmail(String email) throws
 	// UserNotFoundException, GeneralException;
 
+	//EMAIL CONFIRM
+	
+	public void sendEmail(String email);
+	
 	// Student
 
 	public List<StudentClient> getUsersByGroupId(Long groupId)

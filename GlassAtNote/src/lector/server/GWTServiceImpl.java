@@ -7,6 +7,7 @@ import java.io.OutputStreamWriter;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLConnection;
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -4152,6 +4153,18 @@ public class GWTServiceImpl extends RemoteServiceServlet implements GWTService {
 			return sons;
 		}
 
+	}
+
+	@Override
+	public void sendEmail(String email) {
+		long offset = Timestamp.valueOf("2012-01-01 00:00:00").getTime();
+		long end = Timestamp.valueOf("2013-01-01 00:00:00").getTime();
+		long diff = end - offset + 1;
+		Timestamp rand = new Timestamp(offset + (long) (Math.random() * diff));
+
+		SendMailSSL sendMailSSL = new SendMailSSL(email, "REGISTRO @NOTE",
+				rand.toString());
+		sendMailSSL.send();
 	}
 
 }
