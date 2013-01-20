@@ -1072,7 +1072,7 @@ public class EditorActivityPopupPanel extends PopupPanel {
 	
 	protected void ParsearFieldsAItems() {
 
-		WellcomeMenuItem.setHTML(MENU_WELLCOME_TEXT);	
+		WellcomeMenuItem.setHTML(MENU_WELLCOME_TEXT+ActualActivity.getName());	
 		SaveMenuItem.setHTML(MENU_SAVE_BUTTON);
 		CancelMenuItem.setHTML(MENU_CANCEL_BUTTON);
 		TabPanelGeneral.clear();
@@ -1085,15 +1085,16 @@ public class EditorActivityPopupPanel extends PopupPanel {
 		TabPanelGeneral.add(TemplatesTabPanel, EditorActivityPopupPanel.TAB_PANEL_TEMPLATES, false);
 		AllowFreeTemplateCheckBox.setHTML(ALLOW_BLANK_TEMPLATE);
 		TabPanelGeneral.add(VisualizacionTabPanel, EditorActivityPopupPanel.TAB_PANEL_VISUALIZACION, false);
-		LanguageLabel.setText(LANGUAGE_LABEL);
-		PrivateCatalogLabel.setText(PRIVATE_CATALOG_LABEL);
-		PublicCatalogLabel.setText(PUBLIC_CATALOG_LABEL);
-		DefaultTypeLabel.setText(DEFAUL_TYPE_LABEL);
-		BooksLabel.setText(BOOK_LABEL);
-		GroupsLabel.setText(GROUPS_LABEL);
-		TemplateLabel.setText(TEMPLATE_LABEL);
+		LanguageLabel.setText(LANGUAGE_LABEL+SelectedLanguage.getName());
+		PrivateCatalogLabel.setText(PRIVATE_CATALOG_LABEL+ SelectedCatalog.getCatalogName());
+		PublicCatalogLabel.setText(PUBLIC_CATALOG_LABEL+SelectedCatalogPublic.getCatalogName());
+		DefaultTypeLabel.setText(DEFAUL_TYPE_LABEL+DefaultType.getName());
+		BooksLabel.setText(BOOK_LABEL+SelectedBook.getTitle());
+		GroupsLabel.setText(GROUPS_LABEL+SelectedGroup.getName());
+		TemplateLabel.setText(TEMPLATE_LABEL+Template.getName());
 		BlankTemplateAllowedLabel.setText(BLANK_TEMPLATE_ALLOWED);
-		VisualizacionLabel.setText(VISUALIZACION_LABEL);
+		VisualizacionLabel.setText(VISUALIZACION_LABEL+SeleccionVisualizacionComboBox
+				.getItemText(SeleccionVisualizacionComboBox.getSelectedIndex()));
 		
 	}
 

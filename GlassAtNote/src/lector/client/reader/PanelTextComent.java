@@ -140,6 +140,7 @@ public class PanelTextComent extends Composite {
 				finder = new SelectorTypePopUpAnnotacionPublic(PenelBotonesTipo,ActualState.getReadingActivityOpenCatalog(),CatalogTipo.Catalog2);
 				finder.center();
 				finder.setModal(true);
+				finder.RefrescaLosDatos();
 				((Button)event.getSource()).setStyleName("gwt-ButtonCenter");
 			}
 		});

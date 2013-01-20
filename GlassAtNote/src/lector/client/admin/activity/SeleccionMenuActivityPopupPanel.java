@@ -13,6 +13,7 @@ import com.google.gwt.user.client.ui.AbsolutePanel;
 import com.google.gwt.user.client.ui.HasHorizontalAlignment;
 import com.google.gwt.user.client.ui.PopupPanel;
 import com.google.gwt.user.client.ui.SimplePanel;
+import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.VerticalPanel;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.core.client.GWT;
@@ -38,9 +39,18 @@ public class SeleccionMenuActivityPopupPanel extends PopupPanel {
 	private static String CHANGE_VISIBILITY = "Edit Visibility";
 	private static String EDIT="Edit";
 	
+	private static String DELETE_RESET="Delete";
+	public static String ARE_YOU_SURE_DELETE_READING_ACTIVITY_RESET = "Are you sure to delete the Reading Activity?, all the anotations will be delete too";
+	private static String CHANGE_VISIBILITY_RESET = "Edit Visibility";
+	private static String EDIT_RESET="Edit";
+	
 	private Button DeleteButton;
 	private Button EditVisivitlityButton;
 	private Button EditButton;
+	
+	private TextBox DeleteButtonTextBox;
+	private TextBox EditVisivitlityButtonTextBox;
+	private TextBox EditButtonTextBox;
 	
 	private ActivityBotton BLan;
 	private AdminActivitiesEntryPoint Father;

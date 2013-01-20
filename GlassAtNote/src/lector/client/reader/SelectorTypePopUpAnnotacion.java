@@ -50,6 +50,7 @@ public class SelectorTypePopUpAnnotacion extends PopupPanel {
 	public SelectorTypePopUpAnnotacion(HorizontalPanel penelBotonesTipo,CatalogoClient Catain, CatalogTipo catalog2) {
 		super(true);
 		CT=catalog2;
+		setModal(true);
 		panelBotonesTipo=penelBotonesTipo;
 		Cata=Catain;
 //		SimplePanel verticalPanel = new SimplePanel();

@@ -65,7 +65,7 @@ public class Finder extends Composite {
 	protected static ClickHandler clickHandler;
 	protected static BotonesStackPanelMio buttonMio;
 	private Tree ArbolDeNavegacion;
-	private Finder Yo;
+	Finder Yo;
 	
 	public Finder() {
 		

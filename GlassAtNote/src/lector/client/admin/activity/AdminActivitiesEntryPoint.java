@@ -337,7 +337,7 @@ public class AdminActivitiesEntryPoint implements EntryPoint {
 	public void closeEditPanel()
 	{
 		rootPanel.remove(PanelEdicion);
-		rootPanel.add(PanelEdicion, PanelBotones.getOffsetWidth()-Constants.TAMANOBOTOBEDITOFF, 0);
+		rootPanel.add(PanelEdicion, PanelFondoGeneral.getOffsetWidth()-Constants.TAMANOBOTOBEDITOFF, 0);
 		PanelEdicion.setSize("40px","50px");
 		PanelEdicion.clear();
 		PanelEdicion.setStyleName("");
@@ -358,7 +358,7 @@ public class AdminActivitiesEntryPoint implements EntryPoint {
 	public void OpenEditPanel() {
 		rootPanel.remove(PanelEdicion);
 		rootPanel.add(PanelEdicion, 0, 0);
-		PanelEdicion.setSize(PanelBotones.getOffsetWidth()+"px",PanelBotones.getOffsetHeight()+"px");
+		PanelEdicion.setSize(PanelFondoGeneral.getOffsetWidth()+"px",PanelFondoGeneral.getOffsetHeight()+"px");
 		PanelEdicion.clear();
 		PanelEdicion.setStyleName("BlancoTransparente");
 		Button Boton=new Button();
