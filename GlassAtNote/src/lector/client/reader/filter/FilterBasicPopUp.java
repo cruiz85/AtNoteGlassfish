@@ -5,11 +5,11 @@ import java.util.ArrayList;
 
 import lector.client.book.reader.GWTService;
 import lector.client.book.reader.GWTServiceAsync;
-import lector.client.catalogo.client.Entity;
 import lector.client.catalogo.client.Folder;
 import lector.client.controler.ActualState;
 import lector.client.controler.Constants;
 import lector.client.controler.Controlador;
+import lector.client.controler.EntitdadObject;
 import lector.client.reader.MainEntryPoint;
 import lector.share.model.Language;
 import lector.share.model.UserApp;

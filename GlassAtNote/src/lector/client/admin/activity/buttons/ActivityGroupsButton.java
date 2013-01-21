@@ -5,12 +5,12 @@ import lector.share.model.client.GroupClient;
 
 import com.google.gwt.user.client.ui.Button;
 
-public class Botongroups extends Button {
+public class ActivityGroupsButton extends Button {
  
 	
 	private GroupClient grupo;
 	
-	public Botongroups(GroupClient grupoin) {
+	public ActivityGroupsButton(GroupClient grupoin) {
 		super(grupoin.getName());
 		grupo=grupoin;
 		

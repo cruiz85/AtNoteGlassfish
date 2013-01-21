@@ -3,12 +3,13 @@ package lector.client.catalogo;
 
 import java.util.ArrayList;
 
-import lector.client.admin.admins.EntidadAdmin;
+import lector.client.admin.admins.AdministradorEntidadObjeto;
 import lector.client.admin.book.EntidadLibro;
 import lector.client.admin.users.EntidadUser;
-import lector.client.catalogo.client.Entity;
 import lector.client.catalogo.client.File;
 import lector.client.catalogo.client.Folder;
+import lector.client.controler.EntitdadObject;
+
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.event.dom.client.MouseDownEvent;
@@ -264,7 +265,7 @@ public class StackPanelMio extends StackPanel {
         
 	}
 	
-	public void addBoton(Entity S) {
+	public void addBoton(EntitdadObject S) {
 		if (S.getName().isEmpty()) Window.alert("el string jamas deberia ser vacio");
 		VerticalPanel Actual;
 		char Orden=S.getName().charAt(0);
@@ -363,7 +364,7 @@ public class StackPanelMio extends StackPanel {
 			else if (S instanceof Folder)Act.setIcon("Folder.gif",S.getName());
 			else if (S instanceof EntidadLibro) Act.setIcon("Book.gif",S.getName());
 			else if (S instanceof EntidadUser) Act.setIcon("Users.gif",S.getName());
-			else if (S instanceof EntidadAdmin) Act.setIcon("Admin.gif",S.getName());
+			else if (S instanceof AdministradorEntidadObjeto) Act.setIcon("Admin.gif",S.getName());
 			
 			Act.setActual(Actual);
 			Act.addClickHandler(BotonClick);
@@ -415,7 +416,7 @@ public class StackPanelMio extends StackPanel {
 				Act.setWidth("100%");
 				Act.setHeight("100%");
 				
-				ArrayList<Entity> ListaRep=new ArrayList<Entity>();
+				ArrayList<EntitdadObject> ListaRep=new ArrayList<EntitdadObject>();
 			for (int i = 0; i < Actual.getWidgetCount(); i++) {
 				Widget W=Actual.getWidget(i);
 				BotonesStackPanelMio BSPM=(BotonesStackPanelMio)W;
@@ -423,7 +424,7 @@ public class StackPanelMio extends StackPanel {
 			}
 			sortStringExchange(ListaRep);
 			Actual.clear();
-			for (Entity A:ListaRep) {
+			for (EntitdadObject A:ListaRep) {
 				
 				Act = BotonTipo.Clone();
 				Act.setEntidad(A);
@@ -433,7 +434,7 @@ public class StackPanelMio extends StackPanel {
 				else if (A instanceof Folder)Act.setIcon("Folder.gif",A.getName());
 				else if (A instanceof EntidadLibro) Act.setIcon("Book.gif",A.getName());
 				else if (A instanceof EntidadUser) Act.setIcon("Users.gif",A.getName());
-				else if (A instanceof EntidadAdmin) Act.setIcon("Admin.gif",A.getName());
+				else if (A instanceof AdministradorEntidadObjeto) Act.setIcon("Admin.gif",A.getName());
 				
 				Act.setActual(Actual);
 				Act.addClickHandler(BotonClick);
@@ -489,10 +490,10 @@ public class StackPanelMio extends StackPanel {
 
 	}
 	
-	 public void sortStringExchange( ArrayList<Entity>  x )
+	 public void sortStringExchange( ArrayList<EntitdadObject>  x )
      {
            int i, j;
-           Entity temp;
+           EntitdadObject temp;
 
            for ( i = 0;  i < x.size() - 1;  i++ )
            {
@@ -510,7 +511,7 @@ public class StackPanelMio extends StackPanel {
      } 
 
 	
-	public void addBotonLessTen(Entity S) {
+	public void addBotonLessTen(EntitdadObject S) {
 		if (S.getName().isEmpty()) Window.alert("el string jamas deberia ser vacio");
 		BotonesStackPanelMio Act = BotonTipo.Clone();
 		Act.setEntidad(S);
@@ -520,7 +521,7 @@ public class StackPanelMio extends StackPanel {
 		else if (S instanceof Folder)Act.setIcon("Folder.gif",S.getName());
 		else if (S instanceof EntidadLibro) Act.setIcon("Book.gif",S.getName());
 		else if (S instanceof EntidadUser) Act.setIcon("Users.gif",S.getName());
-		else if (S instanceof EntidadAdmin) Act.setIcon("Admin.gif",S.getName());
+		else if (S instanceof AdministradorEntidadObjeto) Act.setIcon("Admin.gif",S.getName());
 		
 		Act.setActual(ALL);
 		Act.addClickHandler(BotonClick);

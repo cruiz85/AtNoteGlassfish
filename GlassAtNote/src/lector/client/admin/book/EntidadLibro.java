@@ -1,9 +1,9 @@
 package lector.client.admin.book;
 
-import lector.client.catalogo.client.Entity;
+import lector.client.controler.EntitdadObject;
 import lector.share.model.client.BookClient;
 
-public class EntidadLibro extends Entity {
+public class EntidadLibro extends EntitdadObject {
 
 	private BookClient book;
 	

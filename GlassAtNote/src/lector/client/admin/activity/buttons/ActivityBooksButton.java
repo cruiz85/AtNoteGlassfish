@@ -4,12 +4,12 @@ import lector.share.model.client.BookClient;
 
 import com.google.gwt.user.client.ui.Button;
 
-public class Botonbooks extends Button {
+public class ActivityBooksButton extends Button {
  
 	
 	private BookClient book;
 	
-	public Botonbooks(BookClient bookin) {
+	public ActivityBooksButton(BookClient bookin) {
 		super(bookin.getTitle());
 		book=bookin;
 		

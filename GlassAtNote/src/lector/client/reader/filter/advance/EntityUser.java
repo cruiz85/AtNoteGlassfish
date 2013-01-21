@@ -1,10 +1,10 @@
 package lector.client.reader.filter.advance;
 
-import lector.client.catalogo.client.Entity;
 import lector.client.controler.ActualState;
+import lector.client.controler.EntitdadObject;
 import lector.share.model.client.UserClient;
 
-public class EntityUser extends Entity {
+public class EntityUser extends EntitdadObject {
 
 	private UserClient AU;
 	

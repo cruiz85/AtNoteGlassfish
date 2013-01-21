@@ -1,9 +1,9 @@
 package lector.client.admin.users;
 
-import lector.client.catalogo.client.Entity;
+import lector.client.controler.EntitdadObject;
 import lector.share.model.client.StudentClient;
 
-public class EntidadUser extends Entity {
+public class EntidadUser extends EntitdadObject {
 
 private StudentClient Admin;
 	

@@ -14,8 +14,8 @@ import com.google.gwt.user.client.ui.VerticalPanel;
 import lector.client.admin.generalPanels.BotonesStackPanelAdministracionMio;
 import lector.client.catalogo.BotonesStackPanelMio;
 import lector.client.catalogo.Finder;
-import lector.client.catalogo.client.Entity;
 import lector.client.catalogo.client.EntityCatalogElements;
+import lector.client.controler.EntitdadObject;
 import lector.client.reader.ButtonTipo;
 import lector.client.reader.browser.Browser.CatalogTipo;
 

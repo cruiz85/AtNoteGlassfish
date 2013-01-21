@@ -73,32 +73,32 @@ public Arbolgrafo() {
 			BG.addClickHandler(AccionAsociada);
 		BG.setCatalogo(entrada);
 		BG.getEntry().setId(Constants.CATALOGID);
-		BG.setStyleName("gwt-ButtonCenter");
+		BG.setStyleName("gwt-ButtonCenterGrafoFolder");
 		
 		BG.addClickHandler(new ClickHandler() {
 			
 			public void onClick(ClickEvent event) {
-				((Button)event.getSource()).setStyleName("gwt-ButtonCenter");
+				((Button)event.getSource()).setStyleName("gwt-ButtonCenterGrafoFolder");
 				
 			}
 		});
 
 		BG.addMouseDownHandler(new MouseDownHandler() {
 			public void onMouseDown(MouseDownEvent event) {
-				((Button)event.getSource()).setStyleName("gwt-ButtonCenterPush");
+				((Button)event.getSource()).setStyleName("gwt-ButtonCenterGrafoFolderPush");
 			}
 		});
 		
 		BG.addMouseOutHandler(new MouseOutHandler() {
 			public void onMouseOut(MouseOutEvent event) {
-				((Button)event.getSource()).setStyleName("gwt-ButtonCenter");
+				((Button)event.getSource()).setStyleName("gwt-ButtonCenterGrafoFolder");
 		}
 		});
 		
 		BG.addMouseOverHandler(new MouseOverHandler() {
 			public void onMouseOver(MouseOverEvent event) {
 				
-				((Button)event.getSource()).setStyleName("gwt-ButtonCenterOver");
+				((Button)event.getSource()).setStyleName("gwt-ButtonCenterGrafoFolderOver");
 			
 		}
 		});
@@ -107,7 +107,8 @@ public Arbolgrafo() {
 		PanelNodo.add(BG);
 		
 //		if((PanelGrafo.getMultiplicador()>=1.0))
-			BG.setIcon("Folder.gif", entrada.getCatalogName());
+			BG.setHTML(entrada.getCatalogName());
+			
 			BG.setSize("100%", "100%");
 	//	PanelNodo.setHeight(50*PanelGrafo.getMultiplicador()+"px");
 		LineasT LT=new LineasT(Linea,PaneLHijos,PanelEnlaceNodo);
@@ -266,45 +267,77 @@ public Arbolgrafo() {
 		if (AccionAsociada!=null)
 			BG.addClickHandler(AccionAsociada);
 		BG.setEntry(entryClient);
-		BG.setStyleName("gwt-ButtonCenterGraph");
+		//BG.setStyleName("gwt-ButtonCenterGraph");
 		PanelNodo.add(BG);
 		BG.setSize("100%", "100%");
 		//BG.setSize((BG.getOffsetWidth()*PanelGrafo.getMultiplicador())+"px",(BG.getOffsetHeight()*PanelGrafo.getMultiplicador())+"px");
 	//	PanelNodo.setHeight(50*PanelGrafo.getMultiplicador()+"px");
-		if ((entryClient instanceof TypeClient)&&(PanelGrafo.getMultiplicador()>=1.0))
-			BG.setIcon("File.gif", entryClient.getName());
-		else if ((entryClient instanceof TypeCategoryClient)&&(PanelGrafo.getMultiplicador()>=1.0))
-			BG.setIcon("Folder.gif", entryClient.getName());
+		if (entryClient instanceof TypeClient)
+			{
+			BG.setHTML(entryClient.getName());
+			BG.setStyleName("gwt-ButtonCenterGrafoFile");
+			BG.addClickHandler(new ClickHandler() {
+				
+				public void onClick(ClickEvent event) {
+					((Button)event.getSource()).setStyleName("gwt-ButtonCenterGrafoFile");
+					
+				}
+			});
+
+			BG.addMouseDownHandler(new MouseDownHandler() {
+				public void onMouseDown(MouseDownEvent event) {
+					((Button)event.getSource()).setStyleName("gwt-ButtonCenterGrafoFilePush");
+				}
+			});
+			
+			BG.addMouseOutHandler(new MouseOutHandler() {
+				public void onMouseOut(MouseOutEvent event) {
+					((Button)event.getSource()).setStyleName("gwt-ButtonCenterGrafoFile");
+			}
+			});
+			
+			BG.addMouseOverHandler(new MouseOverHandler() {
+				public void onMouseOver(MouseOverEvent event) {
+					
+					((Button)event.getSource()).setStyleName("gwt-ButtonCenterGrafoFileOver");
+				
+			}
+			});
+			}
+		else if (entryClient instanceof TypeCategoryClient){
+			BG.setHTML(entryClient.getName());
+			BG.setStyleName("gwt-ButtonCenterGrafoFolder");
+	BG.addClickHandler(new ClickHandler() {
+				
+				public void onClick(ClickEvent event) {
+					((Button)event.getSource()).setStyleName("gwt-ButtonCenterGrafoFolder");
+					
+				}
+			});
+
+			BG.addMouseDownHandler(new MouseDownHandler() {
+				public void onMouseDown(MouseDownEvent event) {
+					((Button)event.getSource()).setStyleName("gwt-ButtonCenterGrafoFolderPush");
+				}
+			});
+			
+			BG.addMouseOutHandler(new MouseOutHandler() {
+				public void onMouseOut(MouseOutEvent event) {
+					((Button)event.getSource()).setStyleName("gwt-ButtonCenterGrafoFolder");
+			}
+			});
+			
+			BG.addMouseOverHandler(new MouseOverHandler() {
+				public void onMouseOver(MouseOverEvent event) {
+					
+					((Button)event.getSource()).setStyleName("gwt-ButtonCenterGrafoFolderOver");
+				
+			}
+			});
+		}
+			
 //		BG.setWidth(BG.getOffsetWidth()*PanelGrafo.getMultiplicador()+"px");
 //		BG.setHeight(BG.getOffsetHeight()*PanelGrafo.getMultiplicador()+"px");
-		
-BG.addClickHandler(new ClickHandler() {
-			
-			public void onClick(ClickEvent event) {
-				((Button)event.getSource()).setStyleName("gwt-ButtonCenterGraph");
-				
-			}
-		});
-
-		BG.addMouseDownHandler(new MouseDownHandler() {
-			public void onMouseDown(MouseDownEvent event) {
-				((Button)event.getSource()).setStyleName("gwt-ButtonCenterGraphPush");
-			}
-		});
-		
-		BG.addMouseOutHandler(new MouseOutHandler() {
-			public void onMouseOut(MouseOutEvent event) {
-				((Button)event.getSource()).setStyleName("gwt-ButtonCenterGraph");
-		}
-		});
-		
-		BG.addMouseOverHandler(new MouseOverHandler() {
-			public void onMouseOver(MouseOverEvent event) {
-				
-				((Button)event.getSource()).setStyleName("gwt-ButtonCenterGraphOver");
-			
-		}
-		});
 		
 		if (entryClient instanceof TypeCategoryClient){
 			if (!((TypeCategoryClient)entryClient).getChildren().isEmpty()){

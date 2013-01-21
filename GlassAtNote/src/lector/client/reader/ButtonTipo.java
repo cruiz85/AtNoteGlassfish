@@ -1,7 +1,7 @@
 package lector.client.reader;
 
-import lector.client.catalogo.client.Entity;
 import lector.client.catalogo.client.EntityCatalogElements;
+import lector.client.controler.EntitdadObject;
 import lector.share.model.client.EntryClient;
 
 import com.google.gwt.user.client.ui.Button;

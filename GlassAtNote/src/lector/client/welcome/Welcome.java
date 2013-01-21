@@ -99,6 +99,7 @@ public class Welcome implements EntryPoint {
 
 		RootPanel rootPanel = RootPanel.get();
 		Footer = RootPanel.get("footer");
+		Footer.clear();
 		rootPanel.setSize("100%", "100%");
 		rootPanel.setStyleName("Root");
 

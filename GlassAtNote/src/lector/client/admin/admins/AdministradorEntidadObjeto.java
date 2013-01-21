@@ -1,13 +1,13 @@
 package lector.client.admin.admins;
 
-import lector.client.catalogo.client.Entity;
+import lector.client.controler.EntitdadObject;
 import lector.share.model.client.ProfessorClient;
 
-public class EntidadAdmin extends Entity {
+public class AdministradorEntidadObjeto extends EntitdadObject {
 
 	private ProfessorClient Admin;
 	
-	public EntidadAdmin(ProfessorClient Admin) {
+	public AdministradorEntidadObjeto(ProfessorClient Admin) {
 		super(Admin.getFirstName() + " "+ Admin.getLastName()+ " : " +Admin.getEmail());
 		this.Admin=Admin;
 	}

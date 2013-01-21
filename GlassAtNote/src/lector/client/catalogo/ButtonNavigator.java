@@ -1,22 +1,22 @@
 package lector.client.catalogo;
 
-import lector.client.catalogo.client.Entity;
+import lector.client.controler.EntitdadObject;
 
 import com.google.gwt.user.client.ui.Button;
 
 public class ButtonNavigator extends Button {
 
-	Entity elemento;
+	EntitdadObject elemento;
 	
 	public ButtonNavigator(String name) {
 		super(name);
 	}
 
-	public void setElemento(Entity elemento) {
+	public void setElemento(EntitdadObject elemento) {
 		this.elemento = elemento;
 	}
 	
-	public Entity getElemento() {
+	public EntitdadObject getElemento() {
 		return elemento;
 	}
 }

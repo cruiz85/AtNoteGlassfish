@@ -5,9 +5,9 @@ import java.util.ArrayList;
 import lector.client.admin.generalPanels.BotonesStackPanelAdministracionMio;
 import lector.client.book.reader.GWTService;
 import lector.client.book.reader.GWTServiceAsync;
-import lector.client.catalogo.client.Entity;
 import lector.client.catalogo.client.File;
 import lector.client.catalogo.client.Folder;
+import lector.client.controler.EntitdadObject;
 import lector.client.reader.LoadingPanel;
 import lector.share.model.IlegalFolderFusionException;
 import lector.share.model.client.CatalogoClient;
@@ -97,7 +97,7 @@ public class MergeSelector extends PopupPanel {
 							counter++;
 						}
 						counter--;
-						Entity DestinoEn = ListaCombo.get(counter).getEntidad();
+						EntitdadObject DestinoEn = ListaCombo.get(counter).getEntidad();
 						for (BotonesStackPanelAdministracionMio texto : ListaCombo) {
 							if (!(texto.getText().equals(Destino))) {
 								UnirTypos(texto.getEntidad(), DestinoEn);
@@ -107,7 +107,7 @@ public class MergeSelector extends PopupPanel {
 
 					}
 
-					private void UnirTypos(Entity entity, Entity destinoEn) {
+					private void UnirTypos(EntitdadObject entity, EntitdadObject destinoEn) {
 						AsyncCallback<Void> callback = new AsyncCallback<Void>() {
 
 							public void onFailure(Throwable caught) {

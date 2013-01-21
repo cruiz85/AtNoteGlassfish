@@ -4,11 +4,11 @@ import lector.share.model.Language;
 
 import com.google.gwt.user.client.ui.Button;
 
-public class Botonlanguage extends Button {
+public class ActivityLanguageButton extends Button {
  
 	
 	private Language language;
-	public Botonlanguage(Language languagein) {
+	public ActivityLanguageButton(Language languagein) {
 		super(languagein.getName());
 		language=languagein;
 		

@@ -5,8 +5,8 @@ package lector.client.admin.generalPanels;
 import lector.client.admin.book.EntidadLibro;
 import lector.client.catalogo.BotonesStackPanelMio;
 import lector.client.catalogo.Finder;
-import lector.client.catalogo.client.Entity;
 import lector.client.catalogo.client.EntityCatalogElements;
+import lector.client.controler.EntitdadObject;
 import lector.share.model.GeneralException;
 
 import com.google.gwt.user.client.ui.VerticalPanel;
@@ -87,9 +87,9 @@ public class BotonesStackPanelAdministracionMio extends BotonesStackPanelMio{
 	}
 
 	protected boolean EstainSelected(){
-		if (((Entity)super.getEntidad()) instanceof EntityCatalogElements)
+		if (((EntitdadObject)super.getEntidad()) instanceof EntityCatalogElements)
 			return processCatalem();
-		if (((Entity)super.getEntidad()) instanceof EntidadLibro )
+		if (((EntitdadObject)super.getEntidad()) instanceof EntidadLibro )
 			return processLibro();
 		return false;
 	}

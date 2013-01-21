@@ -6,11 +6,11 @@ import lector.share.model.client.TemplateClient;
 
 import com.google.gwt.user.client.ui.Button;
 
-public class BotonTemplates extends Button {
+public class ActivityTemplatesButton extends Button {
  
 	
 	private TemplateClient template;
-	public BotonTemplates(TemplateClient templatein) {
+	public ActivityTemplatesButton(TemplateClient templatein) {
 		super(templatein.getName());
 		template=templatein;
 		

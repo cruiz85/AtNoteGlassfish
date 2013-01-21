@@ -1,6 +1,6 @@
 package lector.client.admin.tagstypes;
 
-import lector.client.catalogo.client.Entity;
+import lector.client.controler.EntitdadObject;
 import lector.share.model.client.CatalogoClient;
 import lector.share.model.client.EntryClient;
 

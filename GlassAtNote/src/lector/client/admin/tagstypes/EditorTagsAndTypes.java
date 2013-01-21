@@ -8,11 +8,12 @@ import lector.client.book.reader.GWTServiceAsync;
 import lector.client.catalogo.Finder;
 import lector.client.catalogo.FinderKeys;
 import lector.client.catalogo.StackPanelMio;
-import lector.client.catalogo.client.Entity;
 import lector.client.catalogo.client.EntityCatalogElements;
 import lector.client.catalogo.client.File;
 import lector.client.catalogo.client.Folder;
+import lector.client.controler.Constants;
 import lector.client.controler.Controlador;
+import lector.client.controler.EntitdadObject;
 import lector.client.controler.ErrorConstants;
 import lector.client.controler.InformationConstants;
 import lector.client.reader.LoadingPanel;
@@ -24,6 +25,7 @@ import lector.share.model.client.EntryClient;
 
 import com.google.gwt.core.client.EntryPoint;
 import com.google.gwt.core.client.GWT;
+import com.google.gwt.dom.client.Style.Unit;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.user.client.ui.RootPanel;
@@ -32,6 +34,7 @@ import com.google.gwt.user.client.ui.MenuItem;
 import com.google.gwt.user.client.Command;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
+import com.google.gwt.user.client.ui.DockLayoutPanel;
 import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.SplitLayoutPanel;
 import com.google.gwt.user.client.ui.VerticalPanel;
@@ -113,16 +116,14 @@ public class EditorTagsAndTypes implements EntryPoint {
 	public void onModuleLoad() {
 
 		RootPanel RootTXOriginal = RootPanel.get();
-		RootPanel RootMenu = RootPanel.get("Menu");
 		RootTXOriginal.setSize("100%", "100%");
-		RootMenu.setStyleName("Root");
 		RootTXOriginal.setStyleName("Root");
 
 		finder.setCatalogo(catalogo);
 		Selected.clear();
 		
 		MenuBar menuBar = new MenuBar(false);
-		RootMenu.add(menuBar);
+	//	RootMenu.add(menuBar);
 
 		MenuItem mntmTypesTags = new MenuItem(
 				"Types & Tags Administration for Catalog: "
@@ -224,7 +225,7 @@ public class EditorTagsAndTypes implements EntryPoint {
 				else Window.alert("Destiny cannot be a Type. It always has to be a Category");
 			}
 
-			private void moverTypos(Entity entidad) {
+			private void moverTypos(EntitdadObject entidad) {
 				AsyncCallback<Void> callback = new AsyncCallback<Void>() {
 
 					public void onFailure(Throwable caught) {
@@ -342,39 +343,6 @@ public class EditorTagsAndTypes implements EntryPoint {
 
 		MenuItemSeparator separator = new MenuItemSeparator();
 		menuBar.addSeparator(separator);
-		// MenuBar menuBar_1 = new MenuBar(true);
-
-		// mntmMenuTipos = new MenuItem("Types", false, menuBar_1);
-		// mntmMenuTipos.setEnabled(false);
-		// mntmMenuTipos.setHTML("Types");
-		//
-		// mntmTypes = new MenuItem("Types", false, new Command() {
-		//
-		// public void execute() {
-		// myState = state.Typos;
-		// mntmMenuTipos.setHTML("Types");
-		// LoadBasicTypes();
-		// mntmNewItem_1.setEnabled(true);
-		// mntmTypes.setEnabled(false);
-		// }
-		// });
-		//
-		// menuBar_1.addItem(mntmTypes);
-		// mntmTypes.setEnabled(false);
-		//
-		// mntmNewItem_1 = new MenuItem("Tags", false, new Command() {
-		//
-		// public void execute() {
-		// myState = state.Tags;
-		// mntmMenuTipos.setHTML("Tags");
-		// LoadBasicTags();
-		// mntmNewItem_1.setEnabled(false);
-		// mntmTypes.setEnabled(true);
-		// }
-		// });
-		//
-		// menuBar_1.addItem(mntmNewItem_1);
-		// menuBar.addItem(mntmMenuTipos);
 
 		MenuItem mntmSearcher = new MenuItem("Back", false, new Command() {
 
@@ -385,14 +353,16 @@ public class EditorTagsAndTypes implements EntryPoint {
 		mntmSearcher.setHTML("Back");
 		menuBar.addItem(mntmSearcher);
 
-		SimplePanel simplePanel_2 = new SimplePanel();
+		DockLayoutPanel simplePanel_2 = new DockLayoutPanel(Unit.PX);
 		simplePanel_2.setStyleName("fondoLogo");
-		RootTXOriginal.add(simplePanel_2, 0, 20);
+		
+		RootTXOriginal.add(simplePanel_2, 0, 0);
 		// RootTXOriginal.add(simplePanel_2);
-		simplePanel_2.setSize("100%", "97%");
+		simplePanel_2.addNorth(menuBar, 25);
+		simplePanel_2.setSize("100%", "100%");
 
 		SplitLayoutPanel splitLayoutPanel = new SplitLayoutPanel();
-		simplePanel_2.setWidget(splitLayoutPanel);
+		simplePanel_2.add(splitLayoutPanel);
 		splitLayoutPanel.setSize("100%", "100%");
 		
 				SimplePanel simplePanel_1 = new SimplePanel();
@@ -406,9 +376,12 @@ public class EditorTagsAndTypes implements EntryPoint {
 						
 						inicial.add(label);
 						
-
+//						ScrollPanel SP=new ScrollPanel();
+//						SP.setSize(Constants.P100, Constants.P100);
 		splitLayoutPanel.add(Actual);
-
+//						SP.add(Actual);
+//						SP.setAlwaysShowScrollBars(true);
+//						splitLayoutPanel.add(SP);
 		Actual.setStyleName("BlancoTransparente");
 		Actual.setSize("100%", "100%");
 

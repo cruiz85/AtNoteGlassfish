@@ -83,6 +83,7 @@ public class SeleccionCatalogoPopupPanel extends PopupPanel {
 		PanelActivity = new VerticalPanel();
 		EditorZone=new SimplePanel();
 		EditorZone.setHeight(Constants.TAMANO_PANEL_EDICION);
+		EditorZone.setVisible(false);
 		PanelActivity.add(EditorZone);
 		PanelActivity.add(PanelActivityH);
 		PanelActivityH.setVerticalAlignment(HasVerticalAlignment.ALIGN_MIDDLE);
@@ -93,8 +94,9 @@ public class SeleccionCatalogoPopupPanel extends PopupPanel {
 		
 		GeneralPanel.add(PanelActivity,0,0);
 		setWidget(GeneralPanel);
-		PanelActivityH.setSize("100%", "100%");
-		PanelActivity.setSize("100%", "100%");
+		GeneralPanel.setSize(Window.getClientWidth()+Constants.PX, Window.getClientHeight()+Constants.PX);
+		//PanelActivityH.setSize("100%", "100%");
+		//PanelActivity.setSize("100%", "100%");
 		PanelActivity.setVerticalAlignment(HasVerticalAlignment.ALIGN_MIDDLE);
 		PanelActivity
 				.setHorizontalAlignment(HasHorizontalAlignment.ALIGN_CENTER);
@@ -183,8 +185,10 @@ public class SeleccionCatalogoPopupPanel extends PopupPanel {
 	@Override
 	public void show() {
 		super.show();
-		GeneralPanel.setSize(400+Constants.PX, 40+Constants.PX);
+//		GeneralPanel.setSize(400+Constants.PX, 40+Constants.PX);
 		EditorZone.setVisible(false);
+		GeneralPanel.setSize(PanelActivity.getOffsetWidth()+Constants.PX, PanelActivity.getOffsetHeight()+Constants.PX);
+		
 		if (ActualState.isLanguageActive())
 			{
 			GeneralPanel.setHeight(Constants.TAMANO_PANEL_EDICION_INT+40+Constants.PX);

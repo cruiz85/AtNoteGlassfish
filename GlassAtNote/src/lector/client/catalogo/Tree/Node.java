@@ -2,8 +2,8 @@ package lector.client.catalogo.Tree;
 
 import com.google.gwt.user.client.ui.TreeItem;
 
-import lector.client.catalogo.client.Entity;
 import lector.client.catalogo.client.EntityCatalogElements;
+import lector.client.controler.EntitdadObject;
 
 public class Node extends TreeItem{
 

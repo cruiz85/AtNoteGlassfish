@@ -284,7 +284,7 @@ public class NewAdminAdministrator implements EntryPoint {
 		// simplePanel.add(stackPanel_1);
 
 		stackPanel_1.setBotonTipo(new BotonesStackPanelAdminsMio(
-				new EntidadAdmin(new ProfessorClient("prototipo")),
+				new AdministradorEntidadObjeto(new ProfessorClient("prototipo")),
 				new VerticalPanel()));
 		stackPanel_1.setBotonClick(new ClickHandler() {
 
@@ -292,7 +292,7 @@ public class NewAdminAdministrator implements EntryPoint {
 
 			public void onClick(ClickEvent event) {
 
-				Ident = ((EntidadAdmin) ((BotonesStackPanelAdminsMio) event
+				Ident = ((AdministradorEntidadObjeto) ((BotonesStackPanelAdminsMio) event
 						.getSource()).getEntidad()).getAdmin();
 				// if
 				// ((ActualUser.getUser().getName()!=null)&&(!ActualUser.getUser().getName().isEmpty()))
@@ -430,13 +430,13 @@ public class NewAdminAdministrator implements EntryPoint {
 						if (result.size() < 10) {
 							for (ProfessorClient User1 : result) {
 
-								EntidadAdmin E = new EntidadAdmin(User1);
+								AdministradorEntidadObjeto E = new AdministradorEntidadObjeto(User1);
 								stackPanel_1.addBotonLessTen(E);
 							}
 
 						} else {
 							for (ProfessorClient User1 : result) {
-								EntidadAdmin E = new EntidadAdmin(User1);
+								AdministradorEntidadObjeto E = new AdministradorEntidadObjeto(User1);
 								stackPanel_1.addBoton(E);
 							}
 						}
@@ -468,13 +468,13 @@ public class NewAdminAdministrator implements EntryPoint {
 						if (result.size() < 10) {
 							for (ProfessorClient User1 : result) {
 
-								EntidadAdmin E = new EntidadAdmin(User1);
+								AdministradorEntidadObjeto E = new AdministradorEntidadObjeto(User1);
 								stackPanel_1.addBotonLessTen(E);
 							}
 
 						} else {
 							for (ProfessorClient User1 : result) {
-								EntidadAdmin E = new EntidadAdmin(User1);
+								AdministradorEntidadObjeto E = new AdministradorEntidadObjeto(User1);
 								stackPanel_1.addBoton(E);
 							}
 						}

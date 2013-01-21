@@ -22,11 +22,14 @@ import lector.share.model.client.UserClient;
 
 import com.google.gwt.core.client.EntryPoint;
 import com.google.gwt.core.client.GWT;
+import com.google.gwt.dom.client.Style.Unit;
 import com.google.gwt.safehtml.shared.SafeHtml;
 import com.google.gwt.user.client.Cookies;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.AbsolutePanel;
+import com.google.gwt.user.client.ui.DockLayoutPanel;
+import com.google.gwt.user.client.ui.HasVerticalAlignment.VerticalAlignmentConstant;
 import com.google.gwt.user.client.ui.RootPanel;
 import com.google.gwt.user.client.ui.VerticalPanel;
 import com.google.gwt.user.client.ui.HasHorizontalAlignment;
@@ -70,14 +73,13 @@ public class Login implements EntryPoint {
 	private static final String REGISTER = "Register";
 	private static final String STAY_SING_IN = "Stay signed in";
 	private static final String VALIDATE = "Validate";
-	
-	
+
 	private TextBox User;
 	private GWTServiceAsync bookReaderServiceHolder = GWT
 			.create(GWTService.class);
 	private CaptchaServiceAsync CapchaService = GWT
 			.create(CaptchaService.class);
-	
+
 	private Button btnNewButton;
 	private PasswordTextBox passwordLogin;
 	private Button buttonRegister;
@@ -90,59 +92,79 @@ public class Login implements EntryPoint {
 	private Login Yo;
 	private UserClient newStudent;
 	private CheckBox KeepConected;
-	private final long SemillaPrimo=999983;
-//	private AbsolutePanel PanelEdicion;
-	private DockPanel dockPanel;
+	private final long SemillaPrimo = 999983;
+	// private AbsolutePanel PanelEdicion;
+	private DockLayoutPanel dockPanel;
 	private RootPanel rootPanel;
 	private TextBox CaptchaEnter;
 	private Button buttonCapcha;
-	private Image  captchaImage;
+	private Image captchaImage;
 	private HorizontalPanel CapchaPanel;
 
 	public void onModuleLoad() {
 
-		String UserCookie=Cookies.getCookie(Constants.COOKIE_NAME);
-		if (UserCookie!=null)
-			{
-			Long L=(Long.parseLong(UserCookie)/(CalendarNow.GetDateNowInt()*SemillaPrimo));
+		String UserCookie = Cookies.getCookie(Constants.COOKIE_NAME);
+		if (UserCookie != null) {
+			Long L = (Long.parseLong(UserCookie) / (CalendarNow.GetDateNowInt() * SemillaPrimo));
 			LoadingPanel.getInstance().setLabelTexto(
 					InformationConstants.LOADING);
 			LoadingPanel.getInstance().center();
-			bookReaderServiceHolder.loadUserById(L, new AsyncCallback<UserClient>() {
-				
-				@Override
-				public void onSuccess(UserClient result) {
-					LoadingPanel.getInstance().hide();
-					ActualState.setUser(result);
-					Logger.GetLogger().info(
-							this.getClass().getName(),
-							ActualState.getUser().toString(),
-							"Log In");
-					if (result instanceof StudentClient)
-						Controlador.change2MyActivities();
-					else if (result instanceof ProfessorClient)
-						Controlador.change2Administrator();
-					
-				}
-				
-				@Override
-				public void onFailure(Throwable caught) {
-					LoadingPanel.getInstance().hide();
-					}
-			});
-			}
-		
+			bookReaderServiceHolder.loadUserById(L,
+					new AsyncCallback<UserClient>() {
+
+						@Override
+						public void onSuccess(UserClient result) {
+							LoadingPanel.getInstance().hide();
+							ActualState.setUser(result);
+							Logger.GetLogger().info(this.getClass().getName(),
+									ActualState.getUser().toString(), "Log In");
+							if (result instanceof StudentClient)
+								Controlador.change2MyActivities();
+							else if (result instanceof ProfessorClient)
+								Controlador.change2Administrator();
+
+						}
+
+						@Override
+						public void onFailure(Throwable caught) {
+							LoadingPanel.getInstance().hide();
+						}
+					});
+		}
+
 		rootPanel = RootPanel.get();
 		rootPanel.setStyleName("Root");
 		Yo = this;
 
-		dockPanel = new DockPanel();
+		dockPanel = new DockLayoutPanel(Unit.PX);
 		dockPanel.setStyleName("fondoLogo");
+		
+		 MenuBar menuBar = new MenuBar(false);
+		 dockPanel.addNorth(menuBar, 24);
+		 
 		rootPanel.add(dockPanel, 0, 0);
 		dockPanel.setSize("100%", "100%");
 
+		HorizontalPanel horizontalPanel_15 = new HorizontalPanel();
+		horizontalPanel_15
+				.setVerticalAlignment(HasVerticalAlignment.ALIGN_MIDDLE);
+		horizontalPanel_15
+				.setHorizontalAlignment(HasHorizontalAlignment.ALIGN_CENTER);
+		dockPanel.add(horizontalPanel_15);
+		horizontalPanel_15.setSize("100%", "100%");
+
+		
+		// / menuBar.setHeight("24px");
+
+		VerticalPanel VP = new VerticalPanel();
+		horizontalPanel_15.add(VP);
+		VP.setSize("100%", "");
+		VP.setHorizontalAlignment(HasHorizontalAlignment.ALIGN_CENTER);
+		VP.setVerticalAlignment(HasVerticalAlignment.ALIGN_MIDDLE);
+
 		HorizontalPanel horizontalPanel_1 = new HorizontalPanel();
-		dockPanel.add(horizontalPanel_1, DockPanel.CENTER);
+
+		VP.add(horizontalPanel_1);
 		horizontalPanel_1.setSize("100%", "100%");
 
 		HorizontalPanel horizontalPanel_3 = new HorizontalPanel();
@@ -217,15 +239,15 @@ public class Login implements EntryPoint {
 
 		passwordLogin = new PasswordTextBox();
 		horizontalPanel_2.add(passwordLogin);
-		
+
 		HorizontalPanel horizontalPanel_13 = new HorizontalPanel();
 		horizontalPanel_13.setSpacing(10);
 		verticalPanel_1.add(horizontalPanel_13);
-		
+
 		HorizontalPanel horizontalPanel_14 = new HorizontalPanel();
 		horizontalPanel_14.setStyleName("BlancoTransparente");
 		horizontalPanel_13.add(horizontalPanel_14);
-		
+
 		KeepConected = new CheckBox(STAY_SING_IN);
 		horizontalPanel_14.add(KeepConected);
 
@@ -482,8 +504,8 @@ public class Login implements EntryPoint {
 				} else if (!isValidEmail(email.getText())) {
 					Window.alert(ErrorConstants.IT_IS_NOT_A_EMAIL);
 				} else {
-					//TODO
-				//	ProfessorClient UC = new ProfessorClient();
+					// TODO
+					// ProfessorClient UC = new ProfessorClient();
 					StudentClient UC = new StudentClient();
 					UC.setFirstName(FirstName.getText());
 					UC.setLastName(lastName.getText());
@@ -492,7 +514,7 @@ public class Login implements EntryPoint {
 					LoadingPanel.getInstance().center();
 					LoadingPanel.getInstance().setLabelTexto(
 							InformationConstants.SAVING);
-					newStudent=UC;
+					newStudent = UC;
 					bookReaderServiceHolder.saveUser(UC,
 							new AsyncCallback<Void>() {
 
@@ -504,21 +526,24 @@ public class Login implements EntryPoint {
 											Yo.getClass().toString(),
 											null,
 											"New User created:  "
-													+ newStudent.toString(),new AsyncCallback<Void>() {
-														
-														@Override
-														public void onSuccess(Void result) {
-															Window.Location.reload();
-															
-														}
-														
-														@Override
-														public void onFailure(Throwable caught) {
-															Logger.callbackfailture();
-															
-														}
-													});
-//									Window.Location.reload();
+													+ newStudent.toString(),
+											new AsyncCallback<Void>() {
+
+												@Override
+												public void onSuccess(
+														Void result) {
+													Window.Location.reload();
+
+												}
+
+												@Override
+												public void onFailure(
+														Throwable caught) {
+													Logger.callbackfailture();
+
+												}
+											});
+									// Window.Location.reload();
 								}
 
 								@Override
@@ -565,15 +590,15 @@ public class Login implements EntryPoint {
 		});
 
 		buttonRegister.setStyleName("gwt-ButtonCenter");
-		HorizontalPanel CapchaYBoton=new HorizontalPanel();
+		HorizontalPanel CapchaYBoton = new HorizontalPanel();
 		CapchaYBoton.setSpacing(5);
-		CapchaPanel=new HorizontalPanel();
+		CapchaPanel = new HorizontalPanel();
 		captchaImage = new Image("SimpleCaptcha.jpg");
 		CapchaPanel.add(captchaImage);
-		CaptchaEnter=new TextBox();
+		CaptchaEnter = new TextBox();
 		CapchaPanel.setSpacing(3);
 		CapchaPanel.add(CaptchaEnter);
-		buttonCapcha=new Button();
+		buttonCapcha = new Button();
 		CapchaPanel.add(buttonCapcha);
 		buttonCapcha.setText(VALIDATE);
 		buttonCapcha.addMouseDownHandler(new MouseDownHandler() {
@@ -600,55 +625,47 @@ public class Login implements EntryPoint {
 
 		buttonCapcha.setStyleName("gwt-ButtonCenter");
 		buttonCapcha.addClickHandler(new ClickHandler() {
-			
+
 			@Override
 			public void onClick(ClickEvent event) {
 				buttonCapcha.setEnabled(false);
-				if (CaptchaEnter.getText().length()>0)
-					CapchaService.performSignup(CaptchaEnter.getText(), new AsyncCallback<Boolean>() {
-						
-						@Override
-						public void onSuccess(Boolean result) {
-							if (result){
-							buttonRegister.setVisible(true);
-							buttonCapcha.setVisible(false);
-							CaptchaEnter.setVisible(false);
-							captchaImage.setVisible(false);
-							CapchaPanel.setVisible(false);
-							}
-							else 
-							{
-								buttonCapcha.setEnabled(true);
-								Window.alert(ErrorConstants.CAPTCHA_ENTERED_IS_WRONG);
-							}
-							
-						}
-						
-						@Override
-						public void onFailure(Throwable caught) {
-							buttonCapcha.setEnabled(true);
-							Window.alert(ErrorConstants.GENERAL_ERROR_REFRESH);
-							
-						}
-					});
-				else Window.alert(ErrorConstants.CAPTCHA_ENTERED_IS_EMPTY);
+				if (CaptchaEnter.getText().length() > 0)
+					CapchaService.performSignup(CaptchaEnter.getText(),
+							new AsyncCallback<Boolean>() {
+
+								@Override
+								public void onSuccess(Boolean result) {
+									if (result) {
+										buttonRegister.setVisible(true);
+										buttonCapcha.setVisible(false);
+										CaptchaEnter.setVisible(false);
+										captchaImage.setVisible(false);
+										CapchaPanel.setVisible(false);
+									} else {
+										buttonCapcha.setEnabled(true);
+										Window.alert(ErrorConstants.CAPTCHA_ENTERED_IS_WRONG);
+									}
+
+								}
+
+								@Override
+								public void onFailure(Throwable caught) {
+									buttonCapcha.setEnabled(true);
+									Window.alert(ErrorConstants.GENERAL_ERROR_REFRESH);
+
+								}
+							});
+				else
+					Window.alert(ErrorConstants.CAPTCHA_ENTERED_IS_EMPTY);
 			}
 		});
-		
+
 		CapchaYBoton.add(CapchaPanel);
 		CapchaYBoton.add(buttonRegister);
 		buttonRegister.setVisible(false);
 		verticalPanel_13.add(CapchaYBoton);
 
-		MenuBar menuBar = new MenuBar(false);
-		dockPanel.add(menuBar, DockPanel.NORTH);
-		menuBar.setHeight("24px");
-		
-		
-		
 	}
-
-	
 
 	protected void revisarTextboxAndEnter() {
 		String nombre = User.getText();
@@ -665,27 +682,23 @@ public class Login implements EntryPoint {
 
 						public void onFailure(Throwable caught) {
 							LoadingPanel.getInstance().hide();
-							if (caught instanceof UserNotFoundException)
-								{
+							if (caught instanceof UserNotFoundException) {
 								Window.alert(ErrorConstants.YOU_USER_NOT_EXIST);
-								Logger.GetLogger().severe(Yo.getClass().toString(),
-										null,
-										ErrorConstants.YOU_USER_NOT_EXIST);	
-								}
-							else if (caught instanceof NotAuthenticatedException)
-								{
+								Logger.GetLogger().severe(
+										Yo.getClass().toString(), null,
+										ErrorConstants.YOU_USER_NOT_EXIST);
+							} else if (caught instanceof NotAuthenticatedException) {
 								Window.alert(ErrorConstants.YOU_ARE_NO_AUTORIZED);
-								Logger.GetLogger().severe(Yo.getClass().toString(),
-										null,
-										ErrorConstants.YOU_ARE_NO_AUTORIZED);	
-								}
-							else {
+								Logger.GetLogger().severe(
+										Yo.getClass().toString(), null,
+										ErrorConstants.YOU_ARE_NO_AUTORIZED);
+							} else {
 								Window.alert(ErrorConstants.GENERAL_ERROR_REFRESH);
-								Logger.GetLogger().severe(Yo.getClass().toString(),
-										null,
-										ErrorConstants.GENERAL_ERROR_REFRESH);	
-								}
-							
+								Logger.GetLogger().severe(
+										Yo.getClass().toString(), null,
+										ErrorConstants.GENERAL_ERROR_REFRESH);
+							}
+
 							btnNewButton.setEnabled(true);
 						}
 
@@ -693,19 +706,24 @@ public class Login implements EntryPoint {
 							LoadingPanel.getInstance().hide();
 							if (result == null) {
 								Window.alert(ErrorConstants.YOU_ARE_NO_AUTORIZED);
-								Logger.GetLogger().severe(Yo.getClass().toString(),
-										null,
+								Logger.GetLogger().severe(
+										Yo.getClass().toString(), null,
 										ErrorConstants.YOU_ARE_NO_AUTORIZED);
 								btnNewButton.setEnabled(true);
 							} else {
 								ActualState.setUser(result);
-								if (KeepConected.getValue())
-									{
-									 int caduca = 1000*60*60*24;
-									 Date expira = new Date(new Date().getTime() + caduca);
-//									 Cookies.setCookie(Constants.COOKIE_NAME, Long.toString(result.getId()), expira);
-									 Cookies.setCookie(Constants.COOKIE_NAME, Long.toString(result.getId()*CalendarNow.GetDateNowInt()*SemillaPrimo), expira);
-									}
+								if (KeepConected.getValue()) {
+									int caduca = 1000 * 60 * 60 * 24;
+									Date expira = new Date(new Date().getTime()
+											+ caduca);
+									// Cookies.setCookie(Constants.COOKIE_NAME,
+									// Long.toString(result.getId()), expira);
+									Cookies.setCookie(Constants.COOKIE_NAME,
+											Long.toString(result.getId()
+													* CalendarNow
+															.GetDateNowInt()
+													* SemillaPrimo), expira);
+								}
 								Logger.GetLogger().info(
 										this.getClass().getName(),
 										ActualState.getUser().toString(),

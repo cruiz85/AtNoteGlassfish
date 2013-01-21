@@ -1,6 +1,6 @@
 package lector.client.reader.filter.advance;
 
-import lector.client.catalogo.client.Entity;
+import lector.client.controler.EntitdadObject;
 import lector.share.model.client.EntryClient;
 
 import com.google.gwt.user.client.ui.Composite;
@@ -25,7 +25,7 @@ public class AssertRule extends Composite {
 	private boolean stateImage;
 	private Button btnNewButton;
 
-	public AssertRule(String Name,VerticalPanel Parentin,Entity Id, Tiposids TI) {
+	public AssertRule(String Name,VerticalPanel Parentin,EntitdadObject Id, Tiposids TI) {
 		setStateImage(false);
 		Parental=Parentin;
 		FlowPanel horizontalPanel = new FlowPanel();

@@ -12,6 +12,7 @@ import lector.client.admin.activity.FinderDefaultTypePopupPanel;
 import lector.client.admin.activity.NewActivityPopupPanel;
 import lector.client.admin.activity.ReadingActivityVisibilityPopupPanel;
 import lector.client.admin.activity.SeleccionCatalogoPopupPanel;
+import lector.client.admin.activity.SeleccionMenuActivityPopupPanel;
 import lector.client.book.reader.GWTService;
 import lector.client.book.reader.GWTServiceAsync;
 import lector.client.logger.Logger;
@@ -110,13 +111,16 @@ public class ActualState {
 
 	private static void ChangeLanguage() {
 		//Reaccion en cadena a todos los elementos con Lenguaje editable
-		AdministradorEntryPoint.FromFile(ActualLanguage.getAdministracionLanguageConfiguration());
+		//package lector.client.admin;
+		AdministradorEntryPoint.FromFile(ActualLanguage.getAdministradorEntryPointLanguageConfiguration());
+		//package lector.client.admin.activity;
+		AdminActivitiesEntryPoint.FromFile(ActualLanguage.getAdminActivitiesEntryPointLanguageConfiguration());
 		EditorActivityPopupPanel.FromFile(ActualLanguage.getEditorActivityLanguageConfiguration());
 		FinderDefaultTypePopupPanel.FromFile(ActualLanguage.getFinderDefaultTypeLanguageConfiguration());
 		NewActivityPopupPanel.FromFile(ActualLanguage.getNewActivityPopupPanelLanguageConfiguration());
-		AdminActivitiesEntryPoint.FromFile(ActualLanguage.getAdminActivitiesEntryPointLanguageConfiguration());
-		SeleccionCatalogoPopupPanel.FromFile(ActualLanguage.getSeleccionCatalogoPopupPanelLanguageConfiguration());
 		ReadingActivityVisibilityPopupPanel.FromFile(ActualLanguage.getReadingActivityVisibilityPopupPanelLanguageConfiguration());
+		SeleccionCatalogoPopupPanel.FromFile(ActualLanguage.getSeleccionCatalogoPopupPanelLanguageConfiguration());
+		SeleccionMenuActivityPopupPanel.FromFile(ActualLanguage.getSeleccionMenuActivityPopupPanelLanguageConfiguration());
 	}
 
 	public static boolean isLanguageActive() {

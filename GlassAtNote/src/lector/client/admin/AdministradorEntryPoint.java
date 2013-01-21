@@ -706,8 +706,8 @@ public class AdministradorEntryPoint implements EntryPoint {
 	
 	protected void SaveChages() {
 		Language LanguageActual = ActualState.getActualLanguage();
-			String AdministracionLanguageConfiguration=toFile();
-		LanguageActual.setAdministracionLanguageConfiguration(AdministracionLanguageConfiguration);
+			String administradorEntryPointLanguageConfiguration=toFile();
+		LanguageActual.setAdministradorEntryPointLanguageConfiguration(administradorEntryPointLanguageConfiguration);
 		ActualState.saveLanguageActual(LanguageActual);
 	}
 

@@ -1,6 +1,6 @@
 package lector.client.catalogo;
 
-import lector.client.catalogo.client.Entity;
+import lector.client.controler.EntitdadObject;
 
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.VerticalPanel;
@@ -9,10 +9,10 @@ public abstract class BotonesStackPanelMio extends Button {
 	
 	
 	protected VerticalPanel Actual;
-	protected Entity Entidad;
+	protected EntitdadObject Entidad;
 	protected String Text;
 	
-	public BotonesStackPanelMio(Entity Entidad) {
+	public BotonesStackPanelMio(EntitdadObject Entidad) {
 		super(Entidad.getName());
 		Text=Entidad.getName();
 		this.Entidad=Entidad;
@@ -37,11 +37,11 @@ public abstract class BotonesStackPanelMio extends Button {
 		return Actual;
 	}
 	
-	public Entity getEntidad() {
+	public EntitdadObject getEntidad() {
 		return Entidad;
 	}
 	
-	public void setEntidad(Entity entidad) {
+	public void setEntidad(EntitdadObject entidad) {
 		Entidad = entidad;
 	}
 	

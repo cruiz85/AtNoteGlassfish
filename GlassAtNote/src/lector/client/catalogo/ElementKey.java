@@ -4,11 +4,11 @@ import java.util.ArrayList;
 
 import lector.client.book.reader.GWTService;
 import lector.client.book.reader.GWTServiceAsync;
-import lector.client.catalogo.client.Entity;
 import lector.client.catalogo.client.EntityCatalogElements;
 import lector.client.catalogo.client.File;
 import lector.client.catalogo.client.Folder;
 import lector.client.controler.Constants;
+import lector.client.controler.EntitdadObject;
 import lector.client.controler.ErrorConstants;
 import lector.share.model.client.CatalogoClient;
 import lector.share.model.client.EntryClient;
@@ -80,6 +80,8 @@ public class ElementKey extends Composite{
 	private HorizontalPanel horizontalPanel_2;
 	private AbsolutePanel absolutePanel;
 	private HorizontalPanel horizontalPanel_3;
+	private Button Icon;
+	private HorizontalPanel horizontalPanel_4;
 	
 	public ElementKey(EntityCatalogElements ent) {
 		
@@ -107,11 +109,15 @@ public class ElementKey extends Composite{
 		BotonT.setSize("100%", "100%");
 		
 		horizontalPanel_2 = new HorizontalPanel();
+		horizontalPanel_2.setVerticalAlignment(HasVerticalAlignment.ALIGN_MIDDLE);
+		horizontalPanel_2.setHorizontalAlignment(HasHorizontalAlignment.ALIGN_CENTER);
 		BotonT.add(horizontalPanel_2);
 		horizontalPanel_2.setHeight("100%");
 		
 		BotonUp = new Button("<img src=\"BotonesTemplate/Arriba.gif\" alt=\"<-\">");
 		horizontalPanel_2.add(BotonUp);
+		horizontalPanel_2.setCellVerticalAlignment(BotonUp, HasVerticalAlignment.ALIGN_MIDDLE);
+		horizontalPanel_2.setCellHorizontalAlignment(BotonUp, HasHorizontalAlignment.ALIGN_CENTER);
 		BotonUp.addClickHandler(new ClickHandler() {
 			public void onClick(ClickEvent event) {
 				TypeCategoryClient EC=(TypeCategoryClient)Entidad.getFatherIdCreador();
@@ -183,7 +189,7 @@ bookReaderServiceHolder.updateCatalog(catalog, new AsyncCallback<Void>() {
 
 
 		});
-		BotonUp.setSize("100%", "43px");
+		BotonUp.setSize("100%", "100%");
 		
 		BotonUp.setStyleName("gwt-ButtonCenterContinuoIzqEnd");
 		BotonUp.addMouseOutHandler(new MouseOutHandler() {
@@ -209,6 +215,8 @@ bookReaderServiceHolder.updateCatalog(catalog, new AsyncCallback<Void>() {
 		
 		BotonDown = new Button("<img src=\"BotonesTemplate/Abajo.gif\" alt=\"<-\">");
 		horizontalPanel_2.add(BotonDown);
+		horizontalPanel_2.setCellVerticalAlignment(BotonDown, HasVerticalAlignment.ALIGN_MIDDLE);
+		horizontalPanel_2.setCellHorizontalAlignment(BotonDown, HasHorizontalAlignment.ALIGN_CENTER);
 		BotonDown.addClickHandler(new ClickHandler() {
 			public void onClick(ClickEvent event) {
 				TypeCategoryClient EC=(TypeCategoryClient)Entidad.getFatherIdCreador();
@@ -280,7 +288,7 @@ bookReaderServiceHolder.updateCatalog(catalog, new AsyncCallback<Void>() {
 
 
 		});
-		BotonDown.setSize("100%", "43px");
+		BotonDown.setSize("100%", "100%");
 		BotonDown.setStyleName("gwt-ButtonCenterContinuoIzq");
 		BotonDown.addMouseOutHandler(new MouseOutHandler() {
 			public void onMouseOut(MouseOutEvent event) {
@@ -303,68 +311,85 @@ bookReaderServiceHolder.updateCatalog(catalog, new AsyncCallback<Void>() {
 			}
 		});
 		
+		horizontalPanel_4 = new HorizontalPanel();
+		horizontalPanel_4.setVerticalAlignment(HasVerticalAlignment.ALIGN_MIDDLE);
+		horizontalPanel_4.setHorizontalAlignment(HasHorizontalAlignment.ALIGN_CENTER);
+		BotonT.add(horizontalPanel_4);
+		horizontalPanel_4.setSize("100%", "100%");
+		
+		Icon = new Button("");
+		horizontalPanel_4.add(Icon);
+		Icon.setStyleName("gwt-ButtonCenterContinuoNoBorder");
+		Icon.setSize("100%", "100%");
+		
 		Label = new ButtonKey("New button",this);
-		//Label = new ButtonKey("New button",null);
-		BotonT.add(Label);
-		Label.setSize("100%", "43px");
-//		Label.setStyleName("gwt-ButtonIzquierdaMIN");
-//		Label.addMouseOutHandler(new MouseOutHandler() {
-//			public void onMouseOut(MouseOutEvent event) {
-//				if (!Selected)
-//				((Button)event.getSource()).setStyleName("gwt-ButtonIzquierdaMIN");
-//			}
-//		});
-//		Label.addMouseOverHandler(new MouseOverHandler() {
-//			public void onMouseOver(MouseOverEvent event) {
-//				if (!Selected)
-//				((Button)event.getSource()).setStyleName("gwt-ButtonIzquierdaOverMIN");
-//			}
-//		});
-//		Label.addMouseDownHandler(new MouseDownHandler() {
-//			public void onMouseDown(MouseDownEvent event) {
-//				((Button)event.getSource()).setStyleName("gwt-ButtonIzquierdaPushMIN");
-//			}
-//		});
-//		Label.addMouseUpHandler(new MouseUpHandler() {
-//			public void onMouseUp(MouseUpEvent event) {
-//				((Button)event.getSource()).setStyleName("gwt-ButtonIzquierdaMIN");
-//			}
-//		});
-		
-		Label.setStyleName("gwt-ButtonCenterContinuoDoble");
-
-		Label.addMouseDownHandler(new MouseDownHandler() {
-			public void onMouseDown(MouseDownEvent event) {
-					((Button)event.getSource()).setStyleName("gwt-ButtonCenterContinuoDoblePush");
-			}
-		});
-		
-		Label.addMouseOutHandler(new MouseOutHandler() {
-			public void onMouseOut(MouseOutEvent event) {
-				if (!Selected)
-					((Button)event.getSource()).setStyleName("gwt-ButtonCenterContinuoDoble");
-		}
-		});
-		
-		Label.addMouseOverHandler(new MouseOverHandler() {
-			public void onMouseOver(MouseOverEvent event) {
-				if (!Selected)
-					((Button)event.getSource()).setStyleName("gwt-ButtonCenterContinuoDobleOver");
-			
-		}
+		horizontalPanel_4.add(Label);
+		Label.setSize("100%", "100%");
+		//		Label.setStyleName("gwt-ButtonIzquierdaMIN");
+		//		Label.addMouseOutHandler(new MouseOutHandler() {
+		//			public void onMouseOut(MouseOutEvent event) {
+		//				if (!Selected)
+		//				((Button)event.getSource()).setStyleName("gwt-ButtonIzquierdaMIN");
+		//			}
+		//		});
+		//		Label.addMouseOverHandler(new MouseOverHandler() {
+		//			public void onMouseOver(MouseOverEvent event) {
+		//				if (!Selected)
+		//				((Button)event.getSource()).setStyleName("gwt-ButtonIzquierdaOverMIN");
+		//			}
+		//		});
+		//		Label.addMouseDownHandler(new MouseDownHandler() {
+		//			public void onMouseDown(MouseDownEvent event) {
+		//				((Button)event.getSource()).setStyleName("gwt-ButtonIzquierdaPushMIN");
+		//			}
+		//		});
+		//		Label.addMouseUpHandler(new MouseUpHandler() {
+		//			public void onMouseUp(MouseUpEvent event) {
+		//				((Button)event.getSource()).setStyleName("gwt-ButtonIzquierdaMIN");
+		//			}
+		//		});
+				
+				Label.setStyleName("gwt-ButtonCenterContinuoDoble");
+				
+						Label.addMouseDownHandler(new MouseDownHandler() {
+							public void onMouseDown(MouseDownEvent event) {
+									((Button)event.getSource()).setStyleName("gwt-ButtonCenterContinuoDoblePush");
+							}
+						});
+						
+						Label.addMouseOutHandler(new MouseOutHandler() {
+							public void onMouseOut(MouseOutEvent event) {
+								if (!Selected)
+									((Button)event.getSource()).setStyleName("gwt-ButtonCenterContinuoDoble");
+						}
+						});
+						
+						Label.addMouseOverHandler(new MouseOverHandler() {
+							public void onMouseOver(MouseOverEvent event) {
+								if (!Selected)
+									((Button)event.getSource()).setStyleName("gwt-ButtonCenterContinuoDobleOver");
+							
+						}
 	});
-		
-		Label.addMouseUpHandler(new MouseUpHandler() {
-		public void onMouseUp(MouseUpEvent event) {
-			((Button)event.getSource()).setStyleName("gwt-ButtonCenterContinuoDoble");
-		}
+						
+						Label.addMouseUpHandler(new MouseUpHandler() {
+						public void onMouseUp(MouseUpEvent event) {
+							((Button)event.getSource()).setStyleName("gwt-ButtonCenterContinuoDoble");
+						}
 	});
 		
 		Mas = new ButtonKey("-",this);
-		//Mas = new ButtonKey("+",null);
-		BotonT.add(Mas);
-		Mas.setSize("48px", "43px");
+		horizontalPanel_4.add(Mas);
+		Mas.setSize("48px", "100%");
 		Mas.setStyleName("gwt-ButtonDerechaMIN");
+		
+		
+		NoSOns = new Button(" ");
+		horizontalPanel_4.add(NoSOns);
+		NoSOns.setSize("48px", "100%");
+		NoSOns.setStyleName("gwt-ButtonDerecha");
+		
+		NoSOns.setVisible(false);
 		Mas.addClickHandler(new ClickHandler() {
 					
 					public void onClick(ClickEvent event) {
@@ -418,14 +443,6 @@ bookReaderServiceHolder.updateCatalog(catalog, new AsyncCallback<Void>() {
 				((Button)event.getSource()).setStyleName("gwt-ButtonDerechaMIN");
 			}
 		});
-		
-		
-		NoSOns = new Button(" ");
-		BotonT.add(NoSOns);
-		NoSOns.setSize("48px", "43px");
-		NoSOns.setStyleName("gwt-ButtonDerecha");
-		
-		NoSOns.setVisible(false);
 		
 		Others = new Label("Press to show others");
 		Others.addMouseOutHandler(new MouseOutHandler() {
@@ -589,7 +606,10 @@ bookReaderServiceHolder.updateCatalog(catalog, new AsyncCallback<Void>() {
 	}
 	
 	public void setHTML(String S,String Text) {
-		Label.setHTML("<img src=\""+ S +"\">"+ Text);
+		Label.setHTML(Text);
+		Label.setStyleName("gwt-ButtonCenterContinuoDoble");
+		Label.setSize("100%", "100%");
+		Icon.setHTML("<img src=\""+ S +"\">");
 	}
 
 	public void addItem(ElementKey a) {

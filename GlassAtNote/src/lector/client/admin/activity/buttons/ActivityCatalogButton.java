@@ -4,11 +4,11 @@ import lector.share.model.client.CatalogoClient;
 
 import com.google.gwt.user.client.ui.Button;
 
-public class Botoncatalogo extends Button {
+public class ActivityCatalogButton extends Button {
  
 	
 	private CatalogoClient catalogo;
-	public Botoncatalogo(CatalogoClient catalogin) {
+	public ActivityCatalogButton(CatalogoClient catalogin) {
 		super(catalogin.getCatalogName());
 		if (catalogin.getIsPrivate()) setHTML("<b>*"+catalogin.getCatalogName()+"</b>");
 		catalogo=catalogin;

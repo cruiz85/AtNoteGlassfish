@@ -2,11 +2,11 @@ package lector.client.admin.activity;
 
 import java.util.List;
 
-import lector.client.admin.activity.buttons.BotonTemplates;
-import lector.client.admin.activity.buttons.Botonbooks;
-import lector.client.admin.activity.buttons.Botoncatalogo;
-import lector.client.admin.activity.buttons.Botongroups;
-import lector.client.admin.activity.buttons.Botonlanguage;
+import lector.client.admin.activity.buttons.ActivityTemplatesButton;
+import lector.client.admin.activity.buttons.ActivityBooksButton;
+import lector.client.admin.activity.buttons.ActivityCatalogButton;
+import lector.client.admin.activity.buttons.ActivityGroupsButton;
+import lector.client.admin.activity.buttons.ActivityLanguageButton;
 import lector.client.book.reader.ExportService;
 import lector.client.book.reader.ExportServiceAsync;
 import lector.client.book.reader.GWTService;
@@ -1248,13 +1248,13 @@ public class EditorActivityPopupPanel extends PopupPanel {
 				for (int i = 0; i < result.size() - 1; i++) {
 
 					CatalogoClient catalog = result.get(i);
-					Botoncatalogo BC = new Botoncatalogo(catalog);
+					ActivityCatalogButton BC = new ActivityCatalogButton(catalog);
 					BC.setSize("100%", "100%");
 					CatalogPanel.add(BC);
 					BC.addClickHandler(new ClickHandler() {
 
 						public void onClick(ClickEvent event) {
-							Botoncatalogo BCE = (Botoncatalogo) event
+							ActivityCatalogButton BCE = (ActivityCatalogButton) event
 									.getSource();
 							SeleccionCatalogoPopupPanel PSC = new SeleccionCatalogoPopupPanel(
 									BCE.getCatalogo(), PrivateCatalogLabel,
@@ -1285,13 +1285,13 @@ public class EditorActivityPopupPanel extends PopupPanel {
 				}
 				if (!result.isEmpty()) {
 					CatalogoClient catalog = result.get(result.size() - 1);
-					Botoncatalogo BC = new Botoncatalogo(catalog);
+					ActivityCatalogButton BC = new ActivityCatalogButton(catalog);
 					BC.setSize("100%", "100%");
 					CatalogPanel.add(BC);
 					BC.addClickHandler(new ClickHandler() {
 
 						public void onClick(ClickEvent event) {
-							Botoncatalogo BCE = (Botoncatalogo) event
+							ActivityCatalogButton BCE = (ActivityCatalogButton) event
 									.getSource();
 							SeleccionCatalogoPopupPanel PSC = new SeleccionCatalogoPopupPanel(
 									BCE.getCatalogo(), PrivateCatalogLabel,
@@ -1340,13 +1340,13 @@ public class EditorActivityPopupPanel extends PopupPanel {
 
 					public void onSuccess(List<Language> result) {
 						for (int i = 0; i < result.size() - 1; i++) {
-							Botonlanguage BC = new Botonlanguage(result.get(i));
+							ActivityLanguageButton BC = new ActivityLanguageButton(result.get(i));
 							BC.setSize("100%", "100%");
 							LanguagePanel.add(BC);
 							BC.addClickHandler(new ClickHandler() {
 
 								public void onClick(ClickEvent event) {
-									Botonlanguage BCE = (Botonlanguage) event
+									ActivityLanguageButton BCE = (ActivityLanguageButton) event
 											.getSource();
 									LanguageLabel.setText(EditorActivityPopupPanel.LANGUAGE_LABEL
 											+ BCE.getLanguage().getName());
@@ -1376,14 +1376,14 @@ public class EditorActivityPopupPanel extends PopupPanel {
 
 						}
 						if (!result.isEmpty()) {
-							Botonlanguage BC = new Botonlanguage(result
+							ActivityLanguageButton BC = new ActivityLanguageButton(result
 									.get(result.size() - 1));
 							BC.setSize("100%", "100%");
 							LanguagePanel.add(BC);
 							BC.addClickHandler(new ClickHandler() {
 
 								public void onClick(ClickEvent event) {
-									Botonlanguage BCE = (Botonlanguage) event
+									ActivityLanguageButton BCE = (ActivityLanguageButton) event
 											.getSource();
 									LanguageLabel.setText(EditorActivityPopupPanel.LANGUAGE_LABEL
 											+ BCE.getLanguage().getName());
@@ -1437,13 +1437,13 @@ public class EditorActivityPopupPanel extends PopupPanel {
 					public void onSuccess(List<BookClient> result) {
 
 						for (int i = 0; i < result.size() - 1; i++) {
-							Botonbooks BC = new Botonbooks(result.get(i));
+							ActivityBooksButton BC = new ActivityBooksButton(result.get(i));
 							BC.setSize("100%", "100%");
 							BooksPanel.add(BC);
 							BC.addClickHandler(new ClickHandler() {
 
 								public void onClick(ClickEvent event) {
-									Botonbooks BCE = (Botonbooks) event
+									ActivityBooksButton BCE = (ActivityBooksButton) event
 											.getSource();
 									BooksLabel.setText(EditorActivityPopupPanel.BOOK_LABEL
 											+ BCE.getBook().getTitle());
@@ -1472,14 +1472,14 @@ public class EditorActivityPopupPanel extends PopupPanel {
 							BC.setStyleName("gwt-ButtonTOP");
 						}
 						if (!result.isEmpty()) {
-							Botonbooks BC = new Botonbooks(result.get(result
+							ActivityBooksButton BC = new ActivityBooksButton(result.get(result
 									.size() - 1));
 							BC.setSize("100%", "100%");
 							BooksPanel.add(BC);
 							BC.addClickHandler(new ClickHandler() {
 
 								public void onClick(ClickEvent event) {
-									Botonbooks BCE = (Botonbooks) event
+									ActivityBooksButton BCE = (ActivityBooksButton) event
 											.getSource();
 									BooksLabel.setText(EditorActivityPopupPanel.BOOK_LABEL
 											+ BCE.getBook().getTitle());
@@ -1528,13 +1528,13 @@ public class EditorActivityPopupPanel extends PopupPanel {
 
 					public void onSuccess(List<GroupClient> result) {
 						for (int i = 0; i < result.size() - 1; i++) {
-							Botongroups BC = new Botongroups(result.get(i));
+							ActivityGroupsButton BC = new ActivityGroupsButton(result.get(i));
 							BC.setSize("100%", "100%");
 							GroupsPanel.add(BC);
 							BC.addClickHandler(new ClickHandler() {
 
 								public void onClick(ClickEvent event) {
-									Botongroups BCE = (Botongroups) event
+									ActivityGroupsButton BCE = (ActivityGroupsButton) event
 											.getSource();
 									GroupsLabel.setText(EditorActivityPopupPanel.GROUPS_LABEL
 											+ BCE.getGrupo().getName());
@@ -1562,14 +1562,14 @@ public class EditorActivityPopupPanel extends PopupPanel {
 							BC.setStyleName("gwt-ButtonTOP");
 						}
 						if (!result.isEmpty()) {
-							Botongroups BC = new Botongroups(result.get(result
+							ActivityGroupsButton BC = new ActivityGroupsButton(result.get(result
 									.size() - 1));
 							BC.setSize("100%", "100%");
 							GroupsPanel.add(BC);
 							BC.addClickHandler(new ClickHandler() {
 
 								public void onClick(ClickEvent event) {
-									Botongroups BCE = (Botongroups) event
+									ActivityGroupsButton BCE = (ActivityGroupsButton) event
 											.getSource();
 									GroupsLabel.setText(EditorActivityPopupPanel.GROUPS_LABEL
 											+ BCE.getGrupo().getName());
@@ -1616,14 +1616,14 @@ public class EditorActivityPopupPanel extends PopupPanel {
 
 					public void onSuccess(List<TemplateClient> result) {
 						for (int i = 0; i < result.size() - 1; i++) {
-							BotonTemplates BC = new BotonTemplates(result
+							ActivityTemplatesButton BC = new ActivityTemplatesButton(result
 									.get(i));
 							BC.setSize("100%", "100%");
 							TemplatePanel.add(BC);
 							BC.addClickHandler(new ClickHandler() {
 
 								public void onClick(ClickEvent event) {
-									BotonTemplates BCE = (BotonTemplates) event
+									ActivityTemplatesButton BCE = (ActivityTemplatesButton) event
 											.getSource();
 									Template = BCE.getTemplate();
 									TemplateLabel.setText(EditorActivityPopupPanel.TEMPLATE_LABEL
@@ -1651,14 +1651,14 @@ public class EditorActivityPopupPanel extends PopupPanel {
 							BC.setStyleName("gwt-ButtonTOP");
 						}
 						if (!result.isEmpty()) {
-							BotonTemplates BC = new BotonTemplates(result
+							ActivityTemplatesButton BC = new ActivityTemplatesButton(result
 									.get(result.size() - 1));
 							BC.setSize("100%", "100%");
 							TemplatePanel.add(BC);
 							BC.addClickHandler(new ClickHandler() {
 
 								public void onClick(ClickEvent event) {
-									BotonTemplates BCE = (BotonTemplates) event
+									ActivityTemplatesButton BCE = (ActivityTemplatesButton) event
 											.getSource();
 									Template = BCE.getTemplate();
 									TemplateLabel.setText(EditorActivityPopupPanel.TEMPLATE_LABEL

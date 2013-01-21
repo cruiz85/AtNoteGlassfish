@@ -22,7 +22,7 @@ public class Language implements Serializable {
 
 	private String name;
 	@Column(columnDefinition = "LONGTEXT")
-	private String AdministracionLanguageConfiguration = "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n";
+	private String AdministradorEntryPointLanguageConfiguration = "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n";
 	@Column(columnDefinition = "LONGTEXT")
 	private String EditorActivityLanguageConfiguration= "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n"; 
 	@Column(columnDefinition = "LONGTEXT")
@@ -35,6 +35,8 @@ public class Language implements Serializable {
 	private String SeleccionCatalogoPopupPanelLanguageConfiguration="\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n";
 	@Column(columnDefinition = "LONGTEXT")
 	private String ReadingActivityVisibilityPopupPanelLanguageConfiguration="\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n";
+	@Column(columnDefinition = "LONGTEXT")
+	private String SeleccionMenuActivityPopupPanelLanguageConfiguration="\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n";
 	
 	// MainWindow
 	private String NamePage = "@Note";
@@ -143,13 +145,13 @@ public class Language implements Serializable {
 		this.id = id;
 	}
 	
-	public String getAdministracionLanguageConfiguration() {
-		return AdministracionLanguageConfiguration;
+	public String getAdministradorEntryPointLanguageConfiguration() {
+		return AdministradorEntryPointLanguageConfiguration;
 	}
 
-	public void setAdministracionLanguageConfiguration(
-			String administracionLanguageConfiguration) {
-		AdministracionLanguageConfiguration = administracionLanguageConfiguration;
+	public void setAdministradorEntryPointLanguageConfiguration(
+			String administradorEntryPointLanguageConfiguration) {
+		AdministradorEntryPointLanguageConfiguration = administradorEntryPointLanguageConfiguration;
 	}
 	
 	public String getEditorActivityLanguageConfiguration() {
@@ -205,6 +207,15 @@ public class Language implements Serializable {
 	public void setReadingActivityVisibilityPopupPanelLanguageConfiguration(
 			String readingActivityVisibilityPopupPanelLanguageConfiguration) {
 		ReadingActivityVisibilityPopupPanelLanguageConfiguration = readingActivityVisibilityPopupPanelLanguageConfiguration;
+	}
+
+	public String getSeleccionMenuActivityPopupPanelLanguageConfiguration() {
+		return SeleccionMenuActivityPopupPanelLanguageConfiguration;
+	}
+
+	public void setSeleccionMenuActivityPopupPanelLanguageConfiguration(
+			String seleccionMenuActivityPopupPanelLanguageConfiguration) {
+		SeleccionMenuActivityPopupPanelLanguageConfiguration = seleccionMenuActivityPopupPanelLanguageConfiguration;
 	}
 
 	public void setNewAdmin(String newAdmin) {

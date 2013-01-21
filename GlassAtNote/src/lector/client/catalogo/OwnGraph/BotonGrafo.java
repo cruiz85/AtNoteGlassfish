@@ -94,4 +94,9 @@ public class BotonGrafo extends BotonesStackPanelAdministracionMio {
 	public Panel getSelectionPanel() {
 		return SelectionPanel;
 	}
+	
+	@Override
+	public void setIcon(String S, String Text) {
+		super.setHTML(Text);
+	}
 }

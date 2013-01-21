@@ -3,11 +3,12 @@ package lector.client.catalogo.client;
 import java.io.Serializable;
 import java.util.ArrayList;
 
+import lector.client.controler.EntitdadObject;
 import lector.share.model.FileException;
 import lector.share.model.client.CatalogoClient;
 import lector.share.model.client.EntryClient;
 
-public abstract class EntityCatalogElements extends Entity implements Serializable {
+public abstract class EntityCatalogElements extends EntitdadObject implements Serializable {
 
 	private CatalogoClient catalogId;
 	private EntryClient Entry;
