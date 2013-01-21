@@ -480,6 +480,7 @@ background: transparent url('BotonesLista/BotonAbajoGris.jpg') no-repeat center 
 	text-decoration: none;
 	border: 0px solid;
 	font-size: 24px;
+	min-height:33px;
 }
 .gwt-ButtonDerechaOver {
  background: transparent url('BotonesSueltos/BotonDer.jpg') no-repeat  center center;
@@ -491,6 +492,7 @@ background: transparent url('BotonesLista/BotonAbajoGris.jpg') no-repeat center 
 	font-size: 24px;
 	text-decoration: none;
 		border: 0px solid;
+		min-height:33px;
 }
 
 .gwt-ButtonDerechaSelect {
@@ -503,6 +505,7 @@ background: transparent url('BotonesSueltos/BotonDer.jpg') no-repeat center cent
 	text-decoration: none;
 		border: 0px solid;
 		  background-size:  100% 100%;
+		  min-height:33px;
 }
 
 .gwt-ButtonDerechaPush {
@@ -515,6 +518,7 @@ background: transparent url('BotonesSueltos/BotonDer.jpg') no-repeat center cent
 	font-size: 24px;
 	text-decoration: none;
 	background-color: White;
+	min-height:33px;
 }
 
 .gwt-ButtonIzquierda {
@@ -750,6 +754,7 @@ background: transparent url('BotonesSueltos/Boton.jpg') no-repeat center center;
 	color: White;
 	text-decoration: none;
 	border: 0px solid;
+	min-height:33px;
 }
 .gwt-ButtonDerechaOverMIN {
  background: transparent url('BotonesSueltos/BotonDer.jpg') no-repeat  center center;
@@ -760,6 +765,7 @@ background: transparent url('BotonesSueltos/Boton.jpg') no-repeat center center;
 	color: Scrollbar;
 	text-decoration: none;
 		border: 0px solid;
+		min-height:33px;
 }
 
 .gwt-ButtonDerechaSelectMIN {
@@ -771,6 +777,7 @@ background: transparent url('BotonesSueltos/BotonDer.jpg') no-repeat center cent
 	text-decoration: none;
 		border: 0px solid;
 		  background-size:  100% 100%;
+		  min-height:33px;
 }
 
 .gwt-ButtonDerechaPushMIN {
@@ -782,6 +789,7 @@ background: transparent url('BotonesSueltos/BotonDer.jpg') no-repeat center cent
 	border: 0px solid;
 	text-decoration: none;
 	background-color: White;
+	min-height:33px;
 }
 
 .gwt-ButtonIzquierdaMIN {
@@ -1131,6 +1139,8 @@ background: transparent url('Direccionales/BotonIzqIzq.jpg') no-repeat center ce
 	text-decoration: none;
 	border: 0px solid;
 	font-size: 24px;
+	min-height:33px;
+	max-height:100%;
 }
 .gwt-ButtonCenterContinuoDobleOver {
  background: transparent url('Direccionales/BotonCentro.jpg') no-repeat  center center;
@@ -1142,6 +1152,7 @@ background: transparent url('Direccionales/BotonIzqIzq.jpg') no-repeat center ce
 	font-size: 24px;
 	text-decoration: none;
 		border: 0px solid;
+		min-height:33px;
 }
 
 .gwt-ButtonCenterContinuoDobleSelect {
@@ -1154,6 +1165,7 @@ background: transparent url('Direccionales/BotonCentro.jpg') no-repeat center ce
 	text-decoration: none;
 		border: 0px solid;
 		  background-size:  100% 100%;
+		  min-height:33px;
 }
 
 .gwt-ButtonCenterContinuoDoblePush {
@@ -1166,6 +1178,7 @@ background: transparent url('Direccionales/BotonCentro.jpg') no-repeat center ce
 	font-size: 24px;
 	text-decoration: none;
 	background-color: White;
+	min-height:33px;
 }
 .TituloLogin {
 
@@ -1190,4 +1203,152 @@ background-color: rgba(255, 255, 255, 0.50);
 }
 .gwt-LabelMargen2px {
   margin: 0px 5px 0px;
+}
+.focusNoBorder {
+outline:0;
+}
+
+.gwt-ButtonCenterContinuoNoBorder {
+ background: transparent url('BotonesSueltos/BotonsinBordeBlanco.jpg') no-repeat center center;
+ display: block;
+    float: left;
+    font: normal 12px arial, sans-serif;
+     background-size:  100% 100%;
+	color: White;
+	text-decoration: none;
+	border: 0px solid;
+	font-size: 24px;
+	min-height:33px;
+}
+.gwt-ButtonCenterContinuoNoBorderOver {
+ background: transparent url('BotonesSueltos/BotonsinBordeBlanco.jpg') no-repeat  center center;
+ display: block;
+    float: left;
+    font: normal 12px arial, sans-serif;
+		    background-size:  100% 100%;
+	color: Scrollbar;
+	font-size: 24px;
+	text-decoration: none;
+		border: 0px solid;
+		min-height:33px;
+}
+
+.gwt-ButtonCenterContinuoNoBorderSelect {
+background: transparent url('BotonesSueltos/BotonsinBordeBlanco.jpg') no-repeat center center;
+ display: block;
+    float: left;
+    font: normal 12px arial, sans-serif;
+	color: red;
+	font-size: 24px;
+	text-decoration: none;
+		border: 0px solid;
+		  background-size:  100% 100%;
+		  min-height:33px;
+}
+
+.gwt-ButtonCenterContinuoNoBorderPush {
+ display: block;
+    float: left;
+    font: normal 12px arial, sans-serif;
+		    background-size:  100% 100%;
+	color: royalblue;
+	border: 0px solid;
+	font-size: 24px;
+	text-decoration: none;
+	background-color: White;
+	min-height:33px;
+}
+
+.gwt-ButtonCenterGrafoFolder {
+ background: transparent url('BotonesGrafo/BotonFolder.jpg') no-repeat center center;
+ display: block;
+    float: left;
+    font: normal 12px arial, sans-serif;
+     background-size:  100% 100%;
+	color: White;
+	text-decoration: none;
+	border: 0px solid;
+	font-size: 24px;
+}
+.gwt-ButtonCenterGrafoFolderOver {
+ background: transparent url('BotonesGrafo/BotonFolder.jpg') no-repeat  center center;
+ display: block;
+    float: left;
+    font: normal 12px arial, sans-serif;
+		    background-size:  100% 100%;
+	color: Scrollbar;
+	font-size: 24px;
+	text-decoration: none;
+		border: 0px solid;
+}
+
+.gwt-ButtonCenterGrafoFolderSelect {
+background: transparent url('BotonesGrafo/BotonFolder.jpg') no-repeat center center;
+ display: block;
+    float: left;
+    font: normal 12px arial, sans-serif;
+	color: red;
+	font-size: 24px;
+	text-decoration: none;
+		border: 0px solid;
+		  background-size:  100% 100%;
+}
+
+.gwt-ButtonCenterGrafoFolderPush {
+ display: block;
+    float: left;
+    font: normal 12px arial, sans-serif;
+		    background-size:  100% 100%;
+	color: royalblue;
+	border: 0px solid;
+	font-size: 24px;
+	text-decoration: none;
+	background-color: White;
+}
+
+.gwt-ButtonCenterGrafoFile {
+ background: transparent url('BotonesGrafo/BotonFile.jpg') no-repeat center center;
+ display: block;
+    float: left;
+    font: normal 12px arial, sans-serif;
+     background-size:  100% 100%;
+	color: White;
+	text-decoration: none;
+	border: 0px solid;
+	font-size: 24px;
+}
+.gwt-ButtonCenterGrafoFileOver {
+ background: transparent url('BotonesGrafo/BotonFile.jpg') no-repeat  center center;
+ display: block;
+    float: left;
+    font: normal 12px arial, sans-serif;
+		    background-size:  100% 100%;
+	color: Scrollbar;
+	font-size: 24px;
+	text-decoration: none;
+		border: 0px solid;
+}
+
+.gwt-ButtonCenterGrafoFileSelect {
+background: transparent url('BotonesGrafo/BotonFile.jpg') no-repeat center center;
+ display: block;
+    float: left;
+    font: normal 12px arial, sans-serif;
+	color: red;
+	font-size: 24px;
+	text-decoration: none;
+		border: 0px solid;
+		  background-size:  100% 100%;
+}
+
+.gwt-ButtonCenterGrafoFilePush {
+ display: block;
+    float: left;
+    font: normal 12px arial, sans-serif;
+		    background-size:  100% 100%;
+	color: royalblue;
+	border: 0px solid;
+	font-size: 24px;
+	text-decoration: none;
+	background-color: White;
 }
