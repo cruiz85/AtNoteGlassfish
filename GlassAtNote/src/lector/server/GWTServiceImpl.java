@@ -2946,7 +2946,7 @@ public class GWTServiceImpl extends RemoteServiceServlet implements GWTService {
 			entityManager.clear();
 		} catch (Exception e) {
 			ServiceManagerUtils.rollback(userTransaction);
-			throw new GeneralException("Exception in method deleteFolderDBById"
+			throw new GeneralException("Exception in method deleteFolderDBBYid"
 					+ e.getMessage(), e.getStackTrace());
 		}
 	}
@@ -2960,13 +2960,13 @@ public class GWTServiceImpl extends RemoteServiceServlet implements GWTService {
 			folderDB.getCatalog().getEntries().remove(folderDB);
 			entityManager.merge(folderDB.getCatalog());
 			folderDB.setCatalog(null);
-			entityManager.remove(folderDB);
+			// entityManager.remove(folderDB);
 			List<Relation> list = new CopyOnWriteArrayList<Relation>(
 					folderDB.getRelations());
 			for (Relation relation : list) {
-				FolderDB entryToRemove = entityManager.find(FolderDB.class,
-						relation.getChild().getId());
-				if (entryToRemove != null) {
+				Long childId = relation.getChild().getId();
+				Entry entryToRemove = entityManager.find(Entry.class, childId);
+				if (entryToRemove instanceof FolderDB) {
 					FolderDB folderToRemove = (FolderDB) entryToRemove;
 					deleteDeepFolderById(entityManager, folderToRemove.getId(),
 							folderDB.getId());
@@ -3015,10 +3015,8 @@ public class GWTServiceImpl extends RemoteServiceServlet implements GWTService {
 		try {
 
 			FolderDB folderDB = entityManager.find(FolderDB.class, id);
-
 			List<Relation> relations = getRelationsByChildId(id);
-			FolderDB folderFather = entityManager
-					.find(FolderDB.class, fatherId);
+			FolderDB folderFather = entityManager.find(FolderDB.class, fatherId);
 			Relation relation = loadRelationByFatherAndSonId(fatherId, id);
 			relation = entityManager.find(Relation.class, relation.getId());
 			folderFather.getRelations().size();
@@ -3052,6 +3050,52 @@ public class GWTServiceImpl extends RemoteServiceServlet implements GWTService {
 
 	}
 
+	private Relation loadRelationById(EntityManager entityManager,Long id) throws RelationNotFoundException,
+			GeneralException {
+		
+		List<Relation> list;
+		String sql = "SELECT r FROM Relation r WHERE r.id=" + id;
+		try {
+			list = entityManager.createQuery(sql).getResultList();
+		} catch (Exception e) {
+			// logger.error ("Exception in method loadRelationByEmail: ", e)
+			throw new GeneralException("Exception in method loadRelationByEmail:"
+					+ e.getMessage(), e.getStackTrace());
+
+		}
+		if (list == null || list.isEmpty()) {
+			// logger.error ("Exception in method loadRelationById: ", e)
+			throw new RelationNotFoundException(
+					"Relation not found in method loadRelationByEmail");
+
+		}
+	
+		return list.get(0);
+	}
+
+	private FolderDB loadFolderById(EntityManager entityManager,Long id) throws FolderDBNotFoundException,
+	GeneralException {
+
+List<FolderDB> list;
+String sql = "SELECT r FROM FolderDB r WHERE r.id=" + id;
+try {
+	list = entityManager.createQuery(sql).getResultList();
+} catch (Exception e) {
+	// logger.error ("Exception in method loadFolderByEmail: ", e)
+	throw new GeneralException("Exception in method loadFolderByEmail:"
+			+ e.getMessage(), e.getStackTrace());
+
+}
+if (list == null || list.isEmpty()) {
+	// logger.error ("Exception in method loadFolderById: ", e)
+	throw new FolderDBNotFoundException(
+			"Folder not found in method loadFolderByEmail");
+
+}
+
+return list.get(0);
+}
+	
 	private void deleteTag(EntityManager entityManager, Long id, Long fatherId)
 			throws GeneralException, AnnotationNotFoundException,
 			RelationNotFoundException {
