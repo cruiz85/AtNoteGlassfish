@@ -3,7 +3,7 @@ package lector.client.login.activitysel;
 import java.util.ArrayList;
 import java.util.List;
 
-import lector.client.admin.generalPanels.PublicPrivatePanel;
+import lector.client.admin.generalPanels.PublicPrivatePanelComposite;
 import lector.client.book.reader.GWTService;
 import lector.client.book.reader.GWTServiceAsync;
 import lector.client.book.reader.ImageService;
@@ -241,7 +241,7 @@ public class MyActivities implements EntryPoint {
 	}
 
 	private void setealibrosProfessor() {
-		PublicPrivatePanel PPPanel= new PublicPrivatePanel();
+		PublicPrivatePanelComposite PPPanel= new PublicPrivatePanelComposite();
 		verticalPanel.add(PPPanel);
 		for (int i = 0; i < BooksIDs.size()-1; i++) {
 

@@ -14,6 +14,8 @@ import lector.client.admin.activity.ReadingActivityVisibilityPopupPanel;
 import lector.client.admin.activity.SeleccionCatalogoPopupPanel;
 import lector.client.admin.activity.SeleccionMenuActivityPopupPanel;
 import lector.client.admin.admins.AdminAdministratorEntryPoint;
+import lector.client.admin.book.BookAdministrationEntryPoint;
+import lector.client.admin.generalPanels.PublicPrivatePanelComposite;
 import lector.client.book.reader.GWTService;
 import lector.client.book.reader.GWTServiceAsync;
 import lector.client.logger.Logger;
@@ -124,6 +126,11 @@ public class ActualState {
 		SeleccionMenuActivityPopupPanel.FromFile(ActualLanguage.getSeleccionMenuActivityPopupPanelLanguageConfiguration());
 		//package lector.client.admin.admins;
 		AdminAdministratorEntryPoint.FromFile(ActualLanguage.getAdminAdministratorEntryPointLanguageConfiguration());
+		//package lector.client.admin.book;
+		BookAdministrationEntryPoint.FromFile(ActualLanguage.getBookAdministrationEntryPointLanguageConfiguration());
+		
+		//package lector.client.admin.generalPanels;
+		PublicPrivatePanelComposite.FromFile(ActualLanguage.getPublicPrivatePanelCompositeLanguageConfiguration());
 	}
 
 	public static boolean isLanguageActive() {

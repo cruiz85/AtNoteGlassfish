@@ -2,7 +2,7 @@ package lector.client.admin.generalPanels;
 
 
 
-import lector.client.admin.book.EntidadLibro;
+import lector.client.admin.book.BookEntidadObject;
 import lector.client.catalogo.BotonesStackPanelMio;
 import lector.client.catalogo.Finder;
 import lector.client.catalogo.client.EntityCatalogElements;
@@ -89,7 +89,7 @@ public class BotonesStackPanelAdministracionMio extends BotonesStackPanelMio{
 	protected boolean EstainSelected(){
 		if (((EntitdadObject)super.getEntidad()) instanceof EntityCatalogElements)
 			return processCatalem();
-		if (((EntitdadObject)super.getEntidad()) instanceof EntidadLibro )
+		if (((EntitdadObject)super.getEntidad()) instanceof BookEntidadObject )
 			return processLibro();
 		return false;
 	}
@@ -97,7 +97,7 @@ public class BotonesStackPanelAdministracionMio extends BotonesStackPanelMio{
 	private boolean processLibro() {
 		for (int i = 0; i < Selected.getWidgetCount(); i++) {
 			BotonesStackPanelAdministracionMio BSM= (BotonesStackPanelAdministracionMio)Selected.getWidget(i);
-			if (((EntidadLibro)BSM.getEntidad()).getBook().getId().intValue()==((EntidadLibro)super.getEntidad()).getBook().getId().intValue()) return true;
+			if (((BookEntidadObject)BSM.getEntidad()).getBook().getId().intValue()==((BookEntidadObject)super.getEntidad()).getBook().getId().intValue()) return true;
 		}
 		return false;
 	}

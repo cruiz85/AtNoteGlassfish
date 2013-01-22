@@ -3,11 +3,11 @@ package lector.client.admin.book;
 import lector.client.controler.EntitdadObject;
 import lector.share.model.client.BookClient;
 
-public class EntidadLibro extends EntitdadObject {
+public class BookEntidadObject extends EntitdadObject {
 
 	private BookClient book;
 	
-	public EntidadLibro(BookClient bookin) {
+	public BookEntidadObject(BookClient bookin) {
 		super(bookin.getTitle());
 		book=bookin;
 	}

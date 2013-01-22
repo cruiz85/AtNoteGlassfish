@@ -125,15 +125,17 @@ public class AdminAdministratorEntryPoint implements EntryPoint {
 
 		PanelFondoGeneral = new DockLayoutPanel(Unit.PX);
 		rootPanel.add(PanelFondoGeneral, 0, 0);
-		SimplePanel PanelCentralBotones = new SimplePanel();
+		
 		PanelFondoGeneral.setStyleName("fondoLogo");
 
 		PanelFondoGeneral.setSize(Constants.P100, Constants.P100);
-		PanelCentralBotones.setSize(Constants.P100, Constants.P100);
+	
 
 		MenuBar menuBar = new MenuBar(false);
 
 		PanelFondoGeneral.addNorth(menuBar, 25);
+		SimplePanel PanelCentralBotones = new SimplePanel();
+		PanelCentralBotones.setSize(Constants.P100, Constants.P100);
 		PanelFondoGeneral.add(PanelCentralBotones);
 		menuBar.setWidth("100%");
 
@@ -346,7 +348,7 @@ public class AdminAdministratorEntryPoint implements EntryPoint {
 
 		stackPanel_1
 				.setBotonTipo(new BotonesStackPanelAdminsMio(
-						new AdministradorEntidadObjeto(new ProfessorClient(
+						new AdministradorEntidadObject(new ProfessorClient(
 								"prototipo")), new VerticalPanel()));
 		stackPanel_1.setBotonClick(new ClickHandler() {
 
@@ -354,7 +356,7 @@ public class AdminAdministratorEntryPoint implements EntryPoint {
 
 			public void onClick(ClickEvent event) {
 
-				Ident = ((AdministradorEntidadObjeto) ((BotonesStackPanelAdminsMio) event
+				Ident = ((AdministradorEntidadObject) ((BotonesStackPanelAdminsMio) event
 						.getSource()).getEntidad()).getAdmin();
 				if (Window
 						.confirm(InformationConstants.ARE_YOU_SURE_DELETE_ADMIN
@@ -539,14 +541,14 @@ public class AdminAdministratorEntryPoint implements EntryPoint {
 						if (result.size() < 10) {
 							for (ProfessorClient User1 : result) {
 
-								AdministradorEntidadObjeto E = new AdministradorEntidadObjeto(
+								AdministradorEntidadObject E = new AdministradorEntidadObject(
 										User1);
 								stackPanel_1.addBotonLessTen(E);
 							}
 
 						} else {
 							for (ProfessorClient User1 : result) {
-								AdministradorEntidadObjeto E = new AdministradorEntidadObjeto(
+								AdministradorEntidadObject E = new AdministradorEntidadObject(
 										User1);
 								stackPanel_1.addBoton(E);
 							}

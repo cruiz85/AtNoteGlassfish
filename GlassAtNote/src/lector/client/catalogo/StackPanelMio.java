@@ -3,8 +3,8 @@ package lector.client.catalogo;
 
 import java.util.ArrayList;
 
-import lector.client.admin.admins.AdministradorEntidadObjeto;
-import lector.client.admin.book.EntidadLibro;
+import lector.client.admin.admins.AdministradorEntidadObject;
+import lector.client.admin.book.BookEntidadObject;
 import lector.client.admin.users.EntidadUser;
 import lector.client.catalogo.client.File;
 import lector.client.catalogo.client.Folder;
@@ -362,9 +362,9 @@ public class StackPanelMio extends StackPanel {
 			
 			if (S instanceof File) Act.setIcon("File.gif",S.getName());
 			else if (S instanceof Folder)Act.setIcon("Folder.gif",S.getName());
-			else if (S instanceof EntidadLibro) Act.setIcon("Book.gif",S.getName());
+			else if (S instanceof BookEntidadObject) Act.setIcon("Book.gif",S.getName());
 			else if (S instanceof EntidadUser) Act.setIcon("Users.gif",S.getName());
-			else if (S instanceof AdministradorEntidadObjeto) Act.setIcon("Admin.gif",S.getName());
+			else if (S instanceof AdministradorEntidadObject) Act.setIcon("Admin.gif",S.getName());
 			
 			Act.setActual(Actual);
 			Act.addClickHandler(BotonClick);
@@ -432,9 +432,9 @@ public class StackPanelMio extends StackPanel {
 				
 				if (A instanceof File) Act.setIcon("File.gif",A.getName());
 				else if (A instanceof Folder)Act.setIcon("Folder.gif",A.getName());
-				else if (A instanceof EntidadLibro) Act.setIcon("Book.gif",A.getName());
+				else if (A instanceof BookEntidadObject) Act.setIcon("Book.gif",A.getName());
 				else if (A instanceof EntidadUser) Act.setIcon("Users.gif",A.getName());
-				else if (A instanceof AdministradorEntidadObjeto) Act.setIcon("Admin.gif",A.getName());
+				else if (A instanceof AdministradorEntidadObject) Act.setIcon("Admin.gif",A.getName());
 				
 				Act.setActual(Actual);
 				Act.addClickHandler(BotonClick);
@@ -519,9 +519,9 @@ public class StackPanelMio extends StackPanel {
 		
 		if (S instanceof File) Act.setIcon("File.gif",S.getName());
 		else if (S instanceof Folder)Act.setIcon("Folder.gif",S.getName());
-		else if (S instanceof EntidadLibro) Act.setIcon("Book.gif",S.getName());
+		else if (S instanceof BookEntidadObject) Act.setIcon("Book.gif",S.getName());
 		else if (S instanceof EntidadUser) Act.setIcon("Users.gif",S.getName());
-		else if (S instanceof AdministradorEntidadObjeto) Act.setIcon("Admin.gif",S.getName());
+		else if (S instanceof AdministradorEntidadObject) Act.setIcon("Admin.gif",S.getName());
 		
 		Act.setActual(ALL);
 		Act.addClickHandler(BotonClick);

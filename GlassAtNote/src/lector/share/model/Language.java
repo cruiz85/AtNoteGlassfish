@@ -39,6 +39,10 @@ public class Language implements Serializable {
 	private String SeleccionMenuActivityPopupPanelLanguageConfiguration="\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n";
 	@Column(columnDefinition = "LONGTEXT")
 	private String AdminAdministratorEntryPointLanguageConfiguration="\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n";
+	@Column(columnDefinition = "LONGTEXT")
+	private String BookAdministrationEntryPointLanguageConfiguration="\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n";
+	@Column(columnDefinition = "LONGTEXT")
+	private String PublicPrivatePanelCompositeLanguageConfiguration="\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n";
 	
 	// MainWindow
 	private String NamePage = "@Note";
@@ -227,6 +231,24 @@ public class Language implements Serializable {
 	public void setAdminAdministratorEntryPointLanguageConfiguration(
 			String adminAdministratorEntryPointLanguageConfiguration) {
 		AdminAdministratorEntryPointLanguageConfiguration = adminAdministratorEntryPointLanguageConfiguration;
+	}
+
+	public String getBookAdministrationEntryPointLanguageConfiguration() {
+		return BookAdministrationEntryPointLanguageConfiguration;
+	}
+
+	public void setBookAdministrationEntryPointLanguageConfiguration(
+			String bookAdministrationEntryPointLanguageConfiguration) {
+		BookAdministrationEntryPointLanguageConfiguration = bookAdministrationEntryPointLanguageConfiguration;
+	}
+
+	public String getPublicPrivatePanelCompositeLanguageConfiguration() {
+		return PublicPrivatePanelCompositeLanguageConfiguration;
+	}
+
+	public void setPublicPrivatePanelCompositeLanguageConfiguration(
+			String publicPrivatePanelCompositeLanguageConfiguration) {
+		PublicPrivatePanelCompositeLanguageConfiguration = publicPrivatePanelCompositeLanguageConfiguration;
 	}
 
 	public void setNewAdmin(String newAdmin) {

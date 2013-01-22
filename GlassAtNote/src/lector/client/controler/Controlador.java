@@ -7,7 +7,7 @@ import lector.client.login.Login;
 import lector.client.admin.BookUpload.BookLoader;
 import lector.client.admin.activity.AdminActivitiesEntryPoint;
 import lector.client.admin.admins.AdminAdministratorEntryPoint;
-import lector.client.admin.book.BookAdministration;
+import lector.client.admin.book.BookAdministrationEntryPoint;
 import lector.client.admin.catalog.NewAdminCatalogs;
 import lector.client.admin.export.NewAdminTemplate;
 import lector.client.admin.export.admin.EditTemplate;
@@ -41,7 +41,7 @@ public class Controlador implements EntryPoint {
     private static AdministradorEntryPoint Admin = new AdministradorEntryPoint();
     private static EditorTagsAndTypes AdminTagsAndTypes = new EditorTagsAndTypes();
     private static Login LoginPage=new Login();
-    private static BookAdministration bookAdministrador=new BookAdministration();
+    private static BookAdministrationEntryPoint bookAdministrador=new BookAdministrationEntryPoint();
     private static MyBooks MyBooksUser=new MyBooks();
     private static Groupadministration GroupAdmin = new Groupadministration();
     private static NewUserAdministrator UserAdmin = new NewUserAdministrator();
