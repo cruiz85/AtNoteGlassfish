@@ -1,7 +1,5 @@
 package lector.client.admin.activity.buttons;
 
-import lector.share.model.Language;
-import lector.share.model.Template;
 import lector.share.model.client.TemplateClient;
 
 import com.google.gwt.user.client.ui.Button;
