@@ -243,13 +243,14 @@ public class ExportServiceImpl extends RemoteServiceServlet implements
 			if (templateCategoryClient.getFather() != null) {
 				father = findTemplateCategory(templateCategoryClient
 						.getFather().getId());
+				templateCategory.setFather(father); 
 				father.getSubCategories().add(templateCategory);
 				
 			} else {
 				template.getCategories().add(templateCategory);
 				
 			}
-			saveTemplateCategory(father);
+			saveTemplateCategory(templateCategory);
 		} catch (TemplateNotFoundException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

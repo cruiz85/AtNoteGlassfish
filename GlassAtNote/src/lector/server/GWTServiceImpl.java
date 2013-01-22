@@ -2449,6 +2449,8 @@ public class GWTServiceImpl extends RemoteServiceServlet implements GWTService {
 		return null;
 	}
 
+	
+	
 	@Override
 	public void fusionTypes(Long typeFromId, Long typeToId)
 			throws GeneralException, NullParameterException {
@@ -2465,7 +2467,7 @@ public class GWTServiceImpl extends RemoteServiceServlet implements GWTService {
 			List<Relation> relationsFrom = getRelationsByChildId(tagFrom
 					.getId());
 			List<Relation> relationFathers = new ArrayList<Relation>();
-			List<Relation> relationsTo = getRelationsByChildId(tagFrom.getId());
+			List<Relation> relationsTo = getRelationsByChildId(tagTo.getId());
 			if (!relationsFrom.isEmpty()) {
 
 				for (Relation relationFrom : relationsFrom) {
@@ -2580,14 +2582,14 @@ public class GWTServiceImpl extends RemoteServiceServlet implements GWTService {
 	}
 
 	@Override
-	public void moveType(Long typeCategoryFromId, Long typeId,
+	public void moveType(Long typeCategoryFromId, Long typeCategoryId,
 			Long typeCategoryToId) throws GeneralException {
 		try {
 
-			Tag tag = findTag(typeId);
+			Tag tag = findTag(typeCategoryId);
 			if (!typeCategoryFromId.equals(Constants.CATALOGID)) {
 				Relation relation = loadRelationByFatherAndSonId(
-						typeCategoryFromId, typeId);
+						typeCategoryFromId, typeCategoryId);
 
 				if (!typeCategoryToId.equals(Constants.CATALOGID)) {
 					FolderDB typeCategoryTo = findFolderDB(typeCategoryToId);
@@ -3016,7 +3018,8 @@ public class GWTServiceImpl extends RemoteServiceServlet implements GWTService {
 
 			FolderDB folderDB = entityManager.find(FolderDB.class, id);
 			List<Relation> relations = getRelationsByChildId(id);
-			FolderDB folderFather = entityManager.find(FolderDB.class, fatherId);
+			FolderDB folderFather = entityManager
+					.find(FolderDB.class, fatherId);
 			Relation relation = loadRelationByFatherAndSonId(fatherId, id);
 			relation = entityManager.find(Relation.class, relation.getId());
 			folderFather.getRelations().size();
@@ -3050,17 +3053,18 @@ public class GWTServiceImpl extends RemoteServiceServlet implements GWTService {
 
 	}
 
-	private Relation loadRelationById(EntityManager entityManager,Long id) throws RelationNotFoundException,
-			GeneralException {
-		
+	private Relation loadRelationById(EntityManager entityManager, Long id)
+			throws RelationNotFoundException, GeneralException {
+
 		List<Relation> list;
 		String sql = "SELECT r FROM Relation r WHERE r.id=" + id;
 		try {
 			list = entityManager.createQuery(sql).getResultList();
 		} catch (Exception e) {
 			// logger.error ("Exception in method loadRelationByEmail: ", e)
-			throw new GeneralException("Exception in method loadRelationByEmail:"
-					+ e.getMessage(), e.getStackTrace());
+			throw new GeneralException(
+					"Exception in method loadRelationByEmail:" + e.getMessage(),
+					e.getStackTrace());
 
 		}
 		if (list == null || list.isEmpty()) {
@@ -3069,33 +3073,33 @@ public class GWTServiceImpl extends RemoteServiceServlet implements GWTService {
 					"Relation not found in method loadRelationByEmail");
 
 		}
-	
+
 		return list.get(0);
 	}
 
-	private FolderDB loadFolderById(EntityManager entityManager,Long id) throws FolderDBNotFoundException,
-	GeneralException {
+	private FolderDB loadFolderById(EntityManager entityManager, Long id)
+			throws FolderDBNotFoundException, GeneralException {
 
-List<FolderDB> list;
-String sql = "SELECT r FROM FolderDB r WHERE r.id=" + id;
-try {
-	list = entityManager.createQuery(sql).getResultList();
-} catch (Exception e) {
-	// logger.error ("Exception in method loadFolderByEmail: ", e)
-	throw new GeneralException("Exception in method loadFolderByEmail:"
-			+ e.getMessage(), e.getStackTrace());
+		List<FolderDB> list;
+		String sql = "SELECT r FROM FolderDB r WHERE r.id=" + id;
+		try {
+			list = entityManager.createQuery(sql).getResultList();
+		} catch (Exception e) {
+			// logger.error ("Exception in method loadFolderByEmail: ", e)
+			throw new GeneralException("Exception in method loadFolderByEmail:"
+					+ e.getMessage(), e.getStackTrace());
 
-}
-if (list == null || list.isEmpty()) {
-	// logger.error ("Exception in method loadFolderById: ", e)
-	throw new FolderDBNotFoundException(
-			"Folder not found in method loadFolderByEmail");
+		}
+		if (list == null || list.isEmpty()) {
+			// logger.error ("Exception in method loadFolderById: ", e)
+			throw new FolderDBNotFoundException(
+					"Folder not found in method loadFolderByEmail");
 
-}
+		}
 
-return list.get(0);
-}
-	
+		return list.get(0);
+	}
+
 	private void deleteTag(EntityManager entityManager, Long id, Long fatherId)
 			throws GeneralException, AnnotationNotFoundException,
 			RelationNotFoundException {
@@ -3292,17 +3296,53 @@ return list.get(0);
 	public void moveFolderDB(Long typeCategoryId, Long typeCategoryFromId,
 			Long typeCategoryToId) throws GeneralException, DecendanceException {
 		try {
-			FolderDB typeCategoryTo = findFolderDB(typeCategoryToId);
-			Relation relation = loadRelationByFatherAndSonId(
-					typeCategoryFromId, typeCategoryId);
-			relation.setFather(typeCategoryTo);
-			saveRelation(relation);
+
+			FolderDB folderDB = findFolderDB(typeCategoryId);
+			if (!typeCategoryFromId.equals(Constants.CATALOGID)) {
+				Relation relation = loadRelationByFatherAndSonId(
+						typeCategoryFromId, typeCategoryId);
+
+				if (!typeCategoryToId.equals(Constants.CATALOGID)) {
+					FolderDB typeCategoryTo = findFolderDB(typeCategoryToId);
+					relation.setFather(typeCategoryTo);
+					typeCategoryTo.getRelations().add(relation);
+					saveFolderDB(typeCategoryTo);
+				} else {
+
+					FolderDB folderFrom = findFolderDB(typeCategoryFromId);
+					Relation tmp = findRelation(relation.getId());
+					for (Relation relationToRemove : folderFrom.getRelations()) {
+						if (relationToRemove.getId().equals(tmp.getId())) {
+							folderFrom.getRelations().remove(relationToRemove);
+							break;
+						}
+					}
+
+					Catalogo catalogo = folderDB.getCatalog();
+					catalogo.getEntries().add(folderDB);
+					callForMultiplePersist(folderFrom, catalogo);
+
+				}
+
+			} else {
+				if (!typeCategoryToId.equals(Constants.CATALOGID)) {
+					Catalogo catalogo = folderDB.getCatalog();
+					catalogo.getEntries().remove(folderDB);
+					FolderDB typeCategoryTo = findFolderDB(typeCategoryToId);
+					Relation relation = new Relation(typeCategoryTo, folderDB);
+					typeCategoryTo.getRelations().add(relation);
+					callForMultiplePersist(typeCategoryTo, catalogo);
+				}
+
+			}
+
 		} catch (FolderDBNotFoundException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (RelationNotFoundException rnfe) {
 			rnfe.printStackTrace();
 		}
+
 	}
 
 	@Override
