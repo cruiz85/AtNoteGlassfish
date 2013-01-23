@@ -283,4 +283,25 @@ public class ImageServiceImpl extends RemoteServiceServlet implements
 		return hex.toString();
 	}
 
+	@Override
+	public String loadHTMLStringForExport(
+			ArrayList<lector.share.model.ExportObject> exportObjects) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public String loadHTMLStringForExportUni(
+			lector.share.model.ExportObject exportObject) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public String loadRTFStringForExportUni(
+			lector.share.model.ExportObject exportObject) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 }
