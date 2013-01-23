@@ -15,6 +15,7 @@ import lector.client.controler.ErrorConstants;
 import lector.client.reader.export.EnvioExportacion;
 import lector.client.reader.export.PanelSeleccionExportacion;
 import lector.client.reader.export.arbitroLlamadas;
+import lector.share.model.ExportObject;
 import lector.share.model.client.TemplateCategoryClient;
 import lector.share.model.client.TemplateClient;
 

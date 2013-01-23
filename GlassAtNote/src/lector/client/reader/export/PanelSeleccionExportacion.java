@@ -3,7 +3,8 @@ package lector.client.reader.export;
 import java.util.ArrayList;
 import java.util.Stack;
 
-import lector.client.reader.ExportObject;
+import lector.share.model.ExportObject;
+
 
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;

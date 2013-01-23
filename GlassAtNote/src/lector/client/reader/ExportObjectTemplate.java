@@ -1,5 +1,7 @@
 package lector.client.reader;
 
+import lector.share.model.ExportObject;
+
 public class ExportObjectTemplate extends ExportObject {
 
 	private int profundidad;

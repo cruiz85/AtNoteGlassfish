@@ -7,8 +7,8 @@ import java.util.Stack;
 import lector.client.book.reader.ImageService;
 import lector.client.book.reader.ImageServiceAsync;
 import lector.client.controler.InformationConstants;
-import lector.client.reader.ExportObject;
 import lector.client.reader.LoadingPanel;
+import lector.share.model.ExportObject;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.user.client.Window;

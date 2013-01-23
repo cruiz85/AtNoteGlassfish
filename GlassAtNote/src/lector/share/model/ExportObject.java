@@ -3,10 +3,11 @@ package lector.share.model;
 import java.io.Serializable;
 
 import lector.share.model.Annotation;
+import lector.share.model.client.AnnotationClient;
 
 public class ExportObject implements Serializable {
 
-	private Annotation annotation;
+	private AnnotationClient annotation;
 	private String imageURL;
 	private int width;
 	private int height;
@@ -17,7 +18,7 @@ public class ExportObject implements Serializable {
 		super();
 	}
 
-	public ExportObject(Annotation annotation, String imageURL, int width, int height) {
+	public ExportObject(AnnotationClient annotation, String imageURL, int width, int height) {
 		super();
 		this.annotation = annotation;
 		this.imageURL = imageURL;
@@ -25,7 +26,7 @@ public class ExportObject implements Serializable {
 		this.height = height;
 	}
 
-	public ExportObject(Annotation annotation, String imageURL, int width,
+	public ExportObject(AnnotationClient annotation, String imageURL, int width,
 			int height, String authorName, String date) {
 		super();
 		this.annotation = annotation;
@@ -36,11 +37,11 @@ public class ExportObject implements Serializable {
 		this.date = date;
 	}
 
-	public Annotation getAnnotation() {
+	public AnnotationClient getAnnotation() {
 		return annotation;
 	}
 
-	public void setAnnotation(Annotation annotation) {
+	public void setAnnotation(AnnotationClient annotation) {
 		this.annotation = annotation;
 	}
 
