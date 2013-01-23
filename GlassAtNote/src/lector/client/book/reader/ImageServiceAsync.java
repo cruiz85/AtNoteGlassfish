@@ -9,6 +9,7 @@ import java.util.List;
 
 import lector.share.model.Book;
 
+import lector.share.model.ExportObject;
 import lector.share.model.LocalBook;
 import lector.share.model.TextSelector;
 import lector.share.model.client.BookClient;
@@ -25,5 +26,14 @@ public interface ImageServiceAsync {
 
 	void getBookByUserId(Long userAppId,
 			AsyncCallback<List<BookClient>> callback);
+
+	void loadHTMLStringForExport(ArrayList<ExportObject> exportObjects,
+			AsyncCallback<String> callback);
+
+	void loadHTMLStringForExportUni(ExportObject exportObject,
+			AsyncCallback<String> callback);
+
+	void loadRTFStringForExportUni(ExportObject exportObject,
+			AsyncCallback<String> callback);
 
 }

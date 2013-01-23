@@ -24,15 +24,20 @@ import com.google.gwt.user.client.rpc.RemoteServiceRelativePath;
 @RemoteServiceRelativePath("book.reader/imageservice")
 public interface ImageService extends RemoteService {
 
-	//Carga de Libros en Blob  // Se modificara completamente
-	
+	// Carga de Libros en Blob // Se modificara completamente
+
 	public BookClient loadBookById(Long id) throws BookNotFoundException;
 
 	public List<BookClient> getBookByUserId(Long userAppId);
 
+	public String loadHTMLStringForExport(ArrayList<ExportObject> exportObjects);
 
-//	public LocalBook loadBookBlobById(Long id);
-//
-//	public void saveBookBlob(LocalBook bookBlob);
+	public String loadHTMLStringForExportUni(ExportObject exportObject);
+
+	public String loadRTFStringForExportUni(ExportObject exportObject);
+
+	// public LocalBook loadBookBlobById(Long id);
+	//
+	// public void saveBookBlob(LocalBook bookBlob);
 
 }
