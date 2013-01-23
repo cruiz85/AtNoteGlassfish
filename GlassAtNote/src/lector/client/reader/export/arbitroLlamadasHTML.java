@@ -75,19 +75,19 @@ public class arbitroLlamadasHTML {
 			else
 			{
 //				TODO FAlta codigo Cesar
-//			imageServiceHolder.loadHTMLStringForExportUni(E,
-//					new AsyncCallback<String>() {
-//
-//						public void onSuccess(String result) {
-//							Result.append(result);
-//							llamadaBucle();
-//						}
-//
-//						public void onFailure(Throwable caught) {
-//							llamadaBucle();
-//
-//						}
-//					});
+			imageServiceHolder.loadHTMLStringForExportUni(E,
+					new AsyncCallback<String>() {
+
+						public void onSuccess(String result) {
+							Result.append(result);
+							llamadaBucle();
+						}
+
+						public void onFailure(Throwable caught) {
+							llamadaBucle();
+
+						}
+					});
 			}
 
 		}else
