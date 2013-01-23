@@ -88,19 +88,19 @@ public class arbitroLlamadasRTF {
 			else
 			{
 				//TODO FAlta codigo Cesar
-//			imageServiceHolder.loadRTFStringForExportUni(E,
-//					new AsyncCallback<String>() {
-//
-//						public void onSuccess(String result) {
-//							Result.append(result);
-//							llamadaBucle();
-//						}
-//
-//						public void onFailure(Throwable caught) {
-//							llamadaBucle();
-//
-//						}
-//					});
+			imageServiceHolder.loadRTFStringForExportUni(E,
+					new AsyncCallback<String>() {
+
+						public void onSuccess(String result) {
+							Result.append(result);
+							llamadaBucle();
+						}
+
+						public void onFailure(Throwable caught) {
+							llamadaBucle();
+
+						}
+					});
 			}
 
 		}else
