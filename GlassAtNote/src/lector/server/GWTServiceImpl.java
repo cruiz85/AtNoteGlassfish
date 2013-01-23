@@ -2757,35 +2757,35 @@ public class GWTServiceImpl extends RemoteServiceServlet implements GWTService {
 		return ServiceManagerUtils.produceTypeClientsLazy(list);
 	}
 
-	@Override
-	public List<String> getTypesNamesByIds(List<Long> typeIds)
-			throws TagNotFoundException, GeneralException {
-		EntityManager entityManager = emf.createEntityManager();
-		List<Tag> list;
-		String sql = "SELECT r FROM Tag r WHERE r.id=" + typeIds.get(0);
-		for (int i = 1; i < typeIds.size(); i++) {
-			sql += " OR r.id=" + typeIds.get(i);
-		}
-
-		try {
-			list = entityManager.createQuery(sql).getResultList();
-		} catch (Exception e) {
-			// logger.error ("Exception in method loadTagById: ", e)
-			throw new GeneralException("Exception in method loadTagById:"
-					+ e.getMessage(), e.getStackTrace());
-
-		}
-		if (list == null || list.isEmpty()) {
-			// logger.error ("Exception in method loadTagById: ", e)
-			throw new TagNotFoundException(
-					"Tag not found in method loadTagById");
-
-		}
-		if (entityManager.isOpen()) {
-			entityManager.close();
-		}
-		return getStringFromTags(list);
-	}
+//	@Override
+//	public List<String> getTypesNamesByIds(List<Long> typeIds)
+//			throws TagNotFoundException, GeneralException {
+//		EntityManager entityManager = emf.createEntityManager();
+//		List<Tag> list;
+//		String sql = "SELECT r FROM Tag r WHERE r.id=" + typeIds.get(0);
+//		for (int i = 1; i < typeIds.size(); i++) {
+//			sql += " OR r.id=" + typeIds.get(i);
+//		}
+//
+//		try {
+//			list = entityManager.createQuery(sql).getResultList();
+//		} catch (Exception e) {
+//			// logger.error ("Exception in method loadTagById: ", e)
+//			throw new GeneralException("Exception in method loadTagById:"
+//					+ e.getMessage(), e.getStackTrace());
+//
+//		}
+//		if (list == null || list.isEmpty()) {
+//			// logger.error ("Exception in method loadTagById: ", e)
+//			throw new TagNotFoundException(
+//					"Tag not found in method loadTagById");
+//
+//		}
+//		if (entityManager.isOpen()) {
+//			entityManager.close();
+//		}
+//		return getStringFromTags(list);
+//	}
 
 	private List<String> getStringFromTags(List<Tag> tags) {
 		List<String> names = new ArrayList<String>();

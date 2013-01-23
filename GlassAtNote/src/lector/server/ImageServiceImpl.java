@@ -20,10 +20,11 @@ import org.apache.commons.codec.binary.Base64;
 
 import lector.client.book.reader.GWTService;
 import lector.client.book.reader.ImageService;
-import lector.client.reader.ExportObject;
 import lector.share.model.Book;
 import lector.share.model.BookNotFoundException;
+import lector.share.model.ExportObject;
 import lector.share.model.GeneralException;
+import lector.share.model.Tag;
 import lector.share.model.TagNotFoundException;
 import lector.share.model.TextSelector;
 import lector.share.model.client.BookClient;
@@ -91,12 +92,12 @@ public class ImageServiceImpl extends RemoteServiceServlet implements
 		for (ExportObject exportObject : exportObjects) {
 			html.append("<tr><hr><table align=\"center\" width=\"80%\" border=\"1\" bordercolor=\"blue\">");
 			String imageURL = exportObject.getImageURL();
-			List<TextSelectorClient> anchors = exportObject.getAnnotation()
-					.getTextSelectors();
+			List<TextSelector> anchors = exportObject.getAnnotation().getTextSelectors();
+			List<TextSelectorClient> anchorsClient = ServiceManagerUtils.produceTextSelectors(anchors);
 			int imageWidth = exportObject.getWidth();
 			int imageHeight = exportObject.getHeight();
 			html.append("<td rowspan=\"3\"><p>"
-					+ produceCutImagesList(imageURL, anchors, imageWidth,
+					+ produceCutImagesList(imageURL, anchorsClient, imageWidth,
 							imageHeight, false)
 					+ "</p></td><td colspan=\"2\"><p>");
 			String Clear;
@@ -105,9 +106,7 @@ public class ImageServiceImpl extends RemoteServiceServlet implements
 						.getBytes(), "UTF-8");
 
 				html.append(Clear + "</p></td></tr><tr>");
-				List<String> fileNames = generalAppService
-						.getTypesNamesByIds(getTypeClientIds(exportObject
-								.getAnnotation().getTags()));
+				List<String> fileNames = getTypesNames(exportObject.getAnnotation().getTags());
 
 				html.append("<td colspan=\"2\"><p>");
 				for (String fileName : fileNames) {
@@ -121,11 +120,7 @@ public class ImageServiceImpl extends RemoteServiceServlet implements
 				html.append("</table>");
 			} catch (UnsupportedEncodingException e) {
 				Clear = exportObject.getAnnotation().getComment();
-			} catch (TagNotFoundException tnfe) {
-				tnfe.printStackTrace();
-			} catch (GeneralException ge) {
-				ge.printStackTrace();
-			}
+			} 
 		}
 		html.append("</body></html>");
 
@@ -139,24 +134,20 @@ public class ImageServiceImpl extends RemoteServiceServlet implements
 
 	}
 
+	private List<String> getTypesNames(List<Tag> tags) {
+		List<String> strings = new ArrayList<String>();
+		for (Tag tag : tags) {
+			strings.add(tag.getName());
+		}
+		return strings;
+	}
+
 	private List<Long> getTypeClientIds(List<TypeClient> typeClients) {
 		List<Long> ids = new ArrayList<Long>();
 		for (TypeClient typeClient : typeClients) {
 			ids.add(typeClient.getId());
 		}
 		return ids;
-	}
-
-	private String produceCutImagesList(String imageURL,
-			List<TextSelectorClient> anchors, int imageWidth, int imageHeight,
-			boolean isRTF) {
-		List<String> images = new ArrayList<String>();
-		for (TextSelectorClient anchor : anchors) {
-			images.add(imageTransformed(imageURL, anchor, imageWidth,
-					imageHeight, isRTF));
-		}
-
-		return produceImagesFormatted(images, isRTF);
 	}
 
 	private String produceImagesFormatted(List<String> images, boolean isRTF) {
@@ -293,10 +284,78 @@ public class ImageServiceImpl extends RemoteServiceServlet implements
 	@Override
 	public String loadHTMLStringForExportUni(
 			lector.share.model.ExportObject exportObject) {
-		// TODO Auto-generated method stub
-		return null;
+		StringBuffer html = new StringBuffer();
+		/*
+		 * StringBuffer html = new StringBuffer(
+		 * "<html><head><meta http-equiv=\"Content-Type\" content=\"text/html; charset=utf-8\"></head>"
+		 * ); html.append("<title>Export:"); html.append(System.nanoTime());
+		 * html
+		 * .append("</title><body><table width=\"100%\"><tr><td><h1>Export:");
+		 * html.append(System.nanoTime());
+		 * html.append("</h1></td><td align=\"right\">"
+		 * +logoImage()+"</td></tr></table>"); for (ExportObject exportObject :
+		 * exportObjects) {
+		 */
+		html.append("<tr><hr><table align=\"center\" width=\"80%\" border=\"1\" bordercolor=\"blue\">");
+		String imageURL = exportObject.getImageURL();
+		List<TextSelector> anchors = exportObject.getAnnotation().getTextSelectors();
+		List<TextSelectorClient> anchorsClient = ServiceManagerUtils.produceTextSelectors(anchors);
+		int imageWidth = exportObject.getWidth();
+		int imageHeight = exportObject.getHeight();
+		html.append("<td rowspan=\"4\"><p>"
+				+ produceCutImagesList(imageURL, anchorsClient, imageWidth,
+						imageHeight,false) + "</p></td><td colspan=\"2\"><p>");
+		String clear;
+		clear = exportObject.getAnnotation().getComment();
+		// try {
+		// Clear = new String(exportObject.getAnnotation().getComment()
+		// .getValue().getBytes(), "UTF-8");
+		// } catch (UnsupportedEncodingException e) {
+		// Clear = exportObject.getAnnotation().getComment().getValue();
+		// }
+
+		html.append(clear + "</p></td></tr><tr>");
+		List<String> fileNames = getTypesNames(exportObject.getAnnotation().getTags());
+		html.append("<td colspan=\"2\"><p>");
+		for (String fileName : fileNames) {
+			html.append(fileName + ", ");
+		}
+		html.append("</p></td>");
+		html.append("</tr><tr><td><p>" + exportObject.getAuthorName()
+				+ "</p></td><td><p>" + exportObject.getDate()
+				+ "</p></td></tr>");
+		html.append("<tr><td colspan=\"2\"></td></tr>");
+		html.append("</table>");
+		/* } */
+
+		// try {
+		// String htmlUTF = new String(html.toString().getBytes(), "UTF-8");
+		// return htmlUTF;
+		// } catch (UnsupportedEncodingException e) {
+		//
+		// return html.toString();
+		// }
+		return html.toString();
 	}
 
+	private String produceCutImagesList(String imageURL,List<TextSelectorClient> anchors, int imageWidth, int imageHeight, boolean isRTF) {
+		List<String> images = new ArrayList<String>();
+//		if (imageURL.startsWith("/serve")) {
+//			for (TextSelector anchor : anchors) {
+//				images.add(imageFromBlob(imageURL, anchor, imageWidth,
+//						imageHeight,isRTF));
+//			}
+//
+//		} else {
+			for (TextSelectorClient anchor : anchors) {
+				images.add(imageTransformed(imageURL, anchor, imageWidth,
+						imageHeight, isRTF));
+			}
+//		}
+
+		return produceImagesFormatted(images,isRTF);
+	}
+	
 	@Override
 	public String loadRTFStringForExportUni(
 			lector.share.model.ExportObject exportObject) {

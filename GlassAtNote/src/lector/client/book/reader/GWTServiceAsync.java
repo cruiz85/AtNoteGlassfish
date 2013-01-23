@@ -226,9 +226,6 @@ public interface GWTServiceAsync {
 	void getTypesByIds(List<Long> typeIds,
 			AsyncCallback<List<TypeClient>> callback);
 
-	void getTypesNamesByIds(List<Long> typeIds,
-			AsyncCallback<List<String>> callback);
-
 	void updateCatalog(CatalogoClient catalogClient,
 			AsyncCallback<Void> callback);
 

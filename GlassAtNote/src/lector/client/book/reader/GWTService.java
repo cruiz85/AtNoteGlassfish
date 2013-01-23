@@ -272,8 +272,8 @@ public interface GWTService extends RemoteService {
 	public List<TypeClient> getTypesByIds(List<Long> typeIds)
 			throws GeneralException;
 
-	public List<String> getTypesNamesByIds(List<Long> typeIds)
-			throws GeneralException, TagNotFoundException;
+//	public List<String> getTypesNamesByIds(List<Long> typeIds)
+//			throws GeneralException, TagNotFoundException;
 
 	public void addChildEntry(Long entryId, Long fatherTypeCategory)throws TwinBrotherException, GeneralException;
 
