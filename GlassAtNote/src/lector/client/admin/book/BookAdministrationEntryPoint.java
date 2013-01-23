@@ -51,29 +51,29 @@ public class BookAdministrationEntryPoint implements EntryPoint {
 	private static final String BOOK_ADMINISTRATION_NAME = "BookA dministration Menu";
 
 	private static final int NCampos = 4;
-	
+
 	private static String GET_A_BOOK_WELLCOME = "Book Management";
 	private static String UPLOAD_A_TEXT = "Upload your own Text";
 	private static String GET_A_BOOK = "Get a book from Google Library";
-	private static String DELETE_SELECTED_LABEL="Delete Selected Books";
-	
+	private static String DELETE_SELECTED_LABEL = "Delete Selected Books";
+
 	private static String GET_A_BOOK_WELLCOME_RESET = "Book Management";
 	private static String UPLOAD_A_TEXT_RESET = "Upload your own Text";
 	private static String GET_A_BOOK_RESET = "Get a book from Google Library";
-	private static String DELETE_SELECTED_LABEL_RESET="Delete Selected Books";
-	
+	private static String DELETE_SELECTED_LABEL_RESET = "Delete Selected Books";
+
 	private MenuItem GetABookWellcomeMenuItem;
 	private MenuItem UploadATextMenuItem;
 	private MenuItem GetABookFromGoogleMenuItem;
 	private MenuItem DeleteSelectedMenuItem;
-	
+
 	private TextBox GetABookWellcomeMenuItemTextBox;
 	private TextBox UploadATextMenuItemTextBox;
 	private TextBox GetABookFromGoogleMenuItemTextBox;
 	private TextBox DeleteSelectedMenuItemTextBox;
-	
+
 	public static String CONFIRM_REMOVE_BOOK = "Are you sure to remove the book?, The activities asociates to the book will be removed. Book to remove: ";
-	
+
 	private PublicPrivatePanelComposite PanelPublicPrivatePanel;
 	private VerticalPanel Selected;
 	private VerticalPanel simplePanel;
@@ -86,9 +86,8 @@ public class BookAdministrationEntryPoint implements EntryPoint {
 	private AbsolutePanel PanelEdicion;
 	private RootPanel rootPanel;
 
-
 	public void onModuleLoad() {
-		Yo=this;
+		Yo = this;
 		rootPanel = RootPanel.get();
 		rootPanel.setSize("100%", "100%");
 		rootPanel.setStyleName("Root");
@@ -96,95 +95,102 @@ public class BookAdministrationEntryPoint implements EntryPoint {
 		PanelFondoGeneral = new DockLayoutPanel(Unit.PX);
 		PanelFondoGeneral.setStyleName("fondoLogo");
 		rootPanel.add(PanelFondoGeneral, 0, 0);
-		
-		MenuBar menuBar = new MenuBar(false);
-		PanelFondoGeneral.addNorth(menuBar,25);
-		//menuBar.setSize("100%", "");
+		PanelFondoGeneral.setSize("100%", "100%");
 
-		GetABookWellcomeMenuItem = new MenuItem(GET_A_BOOK_WELLCOME, false, (Command) null);
-		GetABookWellcomeMenuItem.setHTML(BookAdministrationEntryPoint.GET_A_BOOK_WELLCOME);
+		MenuBar menuBar = new MenuBar(false);
+		PanelFondoGeneral.addNorth(menuBar, 25);
+		menuBar.setSize("100%", "100%");
+
+		GetABookWellcomeMenuItem = new MenuItem(GET_A_BOOK_WELLCOME, false,
+				(Command) null);
+		GetABookWellcomeMenuItem
+				.setHTML(BookAdministrationEntryPoint.GET_A_BOOK_WELLCOME);
 		GetABookWellcomeMenuItem.setEnabled(false);
 		menuBar.addItem(GetABookWellcomeMenuItem);
 
 		MenuItemSeparator separator = new MenuItemSeparator();
 		menuBar.addSeparator(separator);
-		
-		UploadATextMenuItem = new MenuItem(UPLOAD_A_TEXT, false, new Command(){
+
+		UploadATextMenuItem = new MenuItem(UPLOAD_A_TEXT, false, new Command() {
 
 			@Override
 			public void execute() {
 				Controlador.change2LoadABook();
-				
-			}});
+
+			}
+		});
 		UploadATextMenuItem.setHTML(BookAdministrationEntryPoint.UPLOAD_A_TEXT);
 		menuBar.addItem(UploadATextMenuItem);
 
-
-		GetABookFromGoogleMenuItem = new MenuItem(BookAdministrationEntryPoint.GET_A_BOOK, false, new Command() {
-			public void execute() {
-				Controlador.change2Searcher();
-			}
-		});
+		GetABookFromGoogleMenuItem = new MenuItem(
+				BookAdministrationEntryPoint.GET_A_BOOK, false, new Command() {
+					public void execute() {
+						Controlador.change2Searcher();
+					}
+				});
 		menuBar.addItem(GetABookFromGoogleMenuItem);
 
-		DeleteSelectedMenuItem = new MenuItem(DELETE_SELECTED_LABEL, false, new Command() {
+		DeleteSelectedMenuItem = new MenuItem(DELETE_SELECTED_LABEL, false,
+				new Command() {
 
-			private AsyncCallback<Void> callback;
+					private AsyncCallback<Void> callback;
 
-			public void execute() {
-				int SelectedWidgetCount = Selected.getWidgetCount();
-				Aborrar = new Stack<Long>();
-				for (int i = 0; i < SelectedWidgetCount; i++) {
-					BotonesStackPanelAdministracionMio BDPM = (BotonesStackPanelAdministracionMio) Selected
-							.getWidget(i);
-					if (Window.confirm(BookAdministrationEntryPoint.CONFIRM_REMOVE_BOOK + ((BookEntidadObject) BDPM.getEntidad()).getBook().getTitle()))
-						Aborrar.add(((BookEntidadObject) BDPM.getEntidad()).getBook()
-								.getId());
-				}
-
-				Selected.clear();
-
-				callback = new AsyncCallback<Void>() {
-
-					public void onSuccess(Void result) {
-						if (!Aborrar.isEmpty()) {
-							bookToBeRemoved = Aborrar.pop();
-							bookReaderServiceHolder.deleteBookById(
-									bookToBeRemoved, callback);
+					public void execute() {
+						int SelectedWidgetCount = Selected.getWidgetCount();
+						Aborrar = new Stack<Long>();
+						for (int i = 0; i < SelectedWidgetCount; i++) {
+							BotonesStackPanelAdministracionMio BDPM = (BotonesStackPanelAdministracionMio) Selected
+									.getWidget(i);
+							if (Window
+									.confirm(BookAdministrationEntryPoint.CONFIRM_REMOVE_BOOK
+											+ ((BookEntidadObject) BDPM
+													.getEntidad()).getBook()
+													.getTitle()))
+								Aborrar.add(((BookEntidadObject) BDPM
+										.getEntidad()).getBook().getId());
 						}
 
-						else
-							{
-							Selected.clear();
-							RefreshUserAndBooks();
+						Selected.clear();
+
+						callback = new AsyncCallback<Void>() {
+
+							public void onSuccess(Void result) {
+								if (!Aborrar.isEmpty()) {
+									bookToBeRemoved = Aborrar.pop();
+									bookReaderServiceHolder.deleteBookById(
+											bookToBeRemoved, callback);
+								}
+
+								else {
+									Selected.clear();
+									RefreshUserAndBooks();
+								}
 							}
+
+							public void onFailure(Throwable caught) {
+								Window.alert(ErrorConstants.ERROR_REMOVING_BOOK);
+								Logger.GetLogger().severe(
+										Yo.getClass().toString(),
+										ActualState.getUser().toString(),
+										ErrorConstants.ERROR_REMOVING_BOOK);
+
+							}
+						};
+
+						if (!Aborrar.isEmpty()) {
+							bookToBeRemoved = Aborrar.pop();
+							((ProfessorClient) ActualState.getUser())
+									.getBooks().remove(bookToBeRemoved);
+							bookReaderServiceHolder.deleteBookById(
+									bookToBeRemoved, callback);
+						} else {
+							List<Long> ListaIDsLibros = ((ProfessorClient) ActualState
+									.getUser()).getBooks();
+							if (!ListaIDsLibros.isEmpty())
+								refresh(ListaIDsLibros);
+						}
 					}
-
-					public void onFailure(Throwable caught) {
-						Window.alert(ErrorConstants.ERROR_REMOVING_BOOK);
-						Logger.GetLogger()
-						.severe(Yo.getClass().toString(),
-								ActualState.getUser().toString(),
-								ErrorConstants.ERROR_REMOVING_BOOK);
-
-					}
-				};
-
-				if (!Aborrar.isEmpty()) {
-					bookToBeRemoved = Aborrar.pop();
-					((ProfessorClient) ActualState.getUser()).getBooks().remove(
-							bookToBeRemoved);
-					bookReaderServiceHolder.deleteBookById(bookToBeRemoved,
-							callback);
-				}
-				else{
-					List<Long> ListaIDsLibros = ((ProfessorClient) ActualState.getUser())
-							.getBooks();
-					if (!ListaIDsLibros.isEmpty())
-						refresh(ListaIDsLibros);
-				}
-			}
-		});
+				});
 		DeleteSelectedMenuItem.setHTML(DELETE_SELECTED_LABEL);
 		menuBar.addItem(DeleteSelectedMenuItem);
 
@@ -199,13 +205,13 @@ public class BookAdministrationEntryPoint implements EntryPoint {
 		menuBar.addItem(mntmNewItem_2);
 
 		SplitLayoutPanel splitLayoutPanel = new SplitLayoutPanel();
-		rootPanel.add(splitLayoutPanel, 0, 0);
+		PanelFondoGeneral.add(splitLayoutPanel);
 		splitLayoutPanel.setSize("100%", "100%");
 
 		simplePanel = new VerticalPanel();
 		splitLayoutPanel.addWest(simplePanel, 500.0);
 		simplePanel.setWidth("100%");
-		
+
 		HorizontalPanel horizontalPanel_2 = new HorizontalPanel();
 		horizontalPanel_2.setSpacing(5);
 		simplePanel.add(horizontalPanel_2);
@@ -216,7 +222,7 @@ public class BookAdministrationEntryPoint implements EntryPoint {
 		horizontalPanel.setStyleName("AzulTransparente");
 		horizontalPanel.setSpacing(10);
 		horizontalPanel.setSize("100%", "100%");
-		
+
 		HorizontalPanel horizontalPanel_1 = new HorizontalPanel();
 		horizontalPanel_1.setStyleName("BlancoTransparente");
 		horizontalPanel.add(horizontalPanel_1);
@@ -225,7 +231,7 @@ public class BookAdministrationEntryPoint implements EntryPoint {
 
 		PanelPublicPrivatePanel = new PublicPrivatePanelComposite();
 		horizontalPanel_1.add(PanelPublicPrivatePanel);
-		
+
 		SimplePanel simplePanel_1 = new SimplePanel();
 		splitLayoutPanel.add(simplePanel_1);
 		simplePanel_1.setSize("100%", "100%");
@@ -233,114 +239,117 @@ public class BookAdministrationEntryPoint implements EntryPoint {
 		Selected = new VerticalPanel();
 		simplePanel_1.setWidget(Selected);
 		Selected.setWidth("100%");
-		
-	
+
 		List<Long> ListaIDsLibros = ((ProfessorClient) ActualState.getUser())
 				.getBooks();
 		if (!ListaIDsLibros.isEmpty())
 			refresh(ListaIDsLibros);
-		
+
 		PanelPublicPrivatePanel.setSize("100%", "100%");
 		PanelPublicPrivatePanel.ClearEmpty();
-		
+
 		PanelEdicion = new AbsolutePanel();
 		if (ActualState.isLanguageActive())
 			closeEditPanel();
-		
-		
+
 	}
-	
-	protected void RefreshUserAndBooks()
-	{
-		bookReaderServiceHolder.loadUserById(ActualState.getUser().getId(), new AsyncCallback<UserClient>() {
-			
-			@Override
-			public void onSuccess(UserClient result) {
-				ActualState.setUser(result);
-				List<Long> ListaIDsLibros = ((ProfessorClient) ActualState.getUser())
-						.getBooks();
-				if (!ListaIDsLibros.isEmpty())
-					refresh(ListaIDsLibros);
-				
-			}
-			
-			@Override
-			public void onFailure(Throwable caught) {
-				Window.alert(ErrorConstants.ERROR_LOADING_USER);
-				
-			}
-		});
+
+	protected void RefreshUserAndBooks() {
+		bookReaderServiceHolder.loadUserById(ActualState.getUser().getId(),
+				new AsyncCallback<UserClient>() {
+
+					@Override
+					public void onSuccess(UserClient result) {
+						ActualState.setUser(result);
+						List<Long> ListaIDsLibros = ((ProfessorClient) ActualState
+								.getUser()).getBooks();
+						if (!ListaIDsLibros.isEmpty())
+							refresh(ListaIDsLibros);
+
+					}
+
+					@Override
+					public void onFailure(Throwable caught) {
+						Window.alert(ErrorConstants.ERROR_LOADING_USER);
+
+					}
+				});
 	}
-	
-	public void refresh(List<Long> listaIDsLibros)
-	{
-		//TODO CAMBIAR POR UN CARGADOR DE TODOS LOS LIBROS
+
+	public void refresh(List<Long> listaIDsLibros) {
+		// TODO CAMBIAR POR UN CARGADOR DE TODOS LOS LIBROS
 		bookReaderServiceHolder.getBookClientsByIds(listaIDsLibros,
 				new AsyncCallback<List<BookClient>>() {
 
 					@Override
 					public void onSuccess(List<BookClient> result) {
-						
+
 						for (BookClient Book : result) {
 							BookEntidadObject E = new BookEntidadObject(Book);
-							BotonesStackPanelAdministracionSimple BSPS=new BotonesStackPanelAdministracionSimple(E.getName(), PanelPublicPrivatePanel.getPrivate(), Selected);
+							BotonesStackPanelAdministracionSimple BSPS = new BotonesStackPanelAdministracionSimple(
+									E.getName(), PanelPublicPrivatePanel
+											.getPrivate(), Selected);
 							BSPS.setEntidad(E);
 							BSPS.addClickHandler(new ClickHandler() {
-								
+
 								public void onClick(ClickEvent event) {
-									((Button)event.getSource()).setStyleName("gwt-ButtonCenter");
-									
+									((Button) event.getSource())
+											.setStyleName("gwt-ButtonCenter");
+
 								}
 							});
-							
+
 							BSPS.addMouseDownHandler(new MouseDownHandler() {
-									public void onMouseDown(MouseDownEvent event) {
-										((Button)event.getSource()).setStyleName("gwt-ButtonCenterPush");
-									}});
-							
+								public void onMouseDown(MouseDownEvent event) {
+									((Button) event.getSource())
+											.setStyleName("gwt-ButtonCenterPush");
+								}
+							});
+
 							BSPS.addMouseOutHandler(new MouseOutHandler() {
 								public void onMouseOut(MouseOutEvent event) {
-									((Button)event.getSource()).setStyleName("gwt-ButtonCenter");
-							}});
-							
+									((Button) event.getSource())
+											.setStyleName("gwt-ButtonCenter");
+								}
+							});
 
 							BSPS.addMouseOverHandler(new MouseOverHandler() {
 								public void onMouseOver(MouseOverEvent event) {
-									
-									((Button)event.getSource()).setStyleName("gwt-ButtonCenterOver");
-								
-							}});
-							
+
+									((Button) event.getSource())
+											.setStyleName("gwt-ButtonCenterOver");
+
+								}
+							});
+
 							BSPS.setStyleName("gwt-ButtonCenter");
 							BSPS.setWidth("100%");
-							
+
 							BSPS.addClickHandler(new ClickHandler() {
-								
+
 								@Override
 								public void onClick(ClickEvent event) {
-									BotonesStackPanelAdministracionSimple BSPM = (BotonesStackPanelAdministracionSimple) event.getSource();
+									BotonesStackPanelAdministracionSimple BSPM = (BotonesStackPanelAdministracionSimple) event
+											.getSource();
 									BSPM.setSelected(Selected);
 									BSPM.Swap();
-									
-									
-									
-									
+
 								}
 							});
 						}
-						
-//						if (result.size() < 10) {
-//							for (BookClient Book : result) {
-//								EntidadLibro E = new EntidadLibro(Book);
-//								stackPanel_1.addBotonLessTen(E);
-//							}
-//
-//						} else {
-//							for (BookClient Book : result) {
-//								EntidadLibro E = new EntidadLibro(Book);
-//								stackPanel_1.addBoton(E);
-//							}
-//						}
+
+						// if (result.size() < 10) {
+						// for (BookClient Book : result) {
+						// EntidadLibro E = new EntidadLibro(Book);
+						// stackPanel_1.addBotonLessTen(E);
+						// }
+						//
+						// } else {
+						// for (BookClient Book : result) {
+						// EntidadLibro E = new EntidadLibro(Book);
+						// stackPanel_1.addBoton(E);
+						// }
+						// }
 						PanelPublicPrivatePanel.ClearEmpty();
 
 					}
@@ -348,15 +357,14 @@ public class BookAdministrationEntryPoint implements EntryPoint {
 					@Override
 					public void onFailure(Throwable caught) {
 						Window.alert(ErrorConstants.ERROR_RETRIVING_THE_BOOKS);
-						Logger.GetLogger()
-						.severe(Yo.getClass().toString(),
+						Logger.GetLogger().severe(Yo.getClass().toString(),
 								ActualState.getUser().toString(),
 								ErrorConstants.ERROR_RETRIVING_THE_BOOKS);
 
 					}
 				});
 	}
-	
+
 	public void closeEditPanel() {
 		rootPanel.remove(PanelEdicion);
 		rootPanel.add(PanelEdicion, PanelFondoGeneral.getOffsetWidth()
@@ -395,70 +403,81 @@ public class BookAdministrationEntryPoint implements EntryPoint {
 			public void onClick(ClickEvent event) {
 				closeEditPanel();
 
-				 if (!GetABookWellcomeMenuItemTextBox.getText().isEmpty())
-					 GET_A_BOOK_WELLCOME=GetABookWellcomeMenuItemTextBox.getText();
-				 else GET_A_BOOK_WELLCOME=GET_A_BOOK_WELLCOME_RESET;
-				
-				 if (!UploadATextMenuItemTextBox.getText().isEmpty())
-					 UPLOAD_A_TEXT=UploadATextMenuItemTextBox.getText();
-				 else UPLOAD_A_TEXT=UPLOAD_A_TEXT_RESET;
-				
-				 if (!GetABookFromGoogleMenuItemTextBox.getText().isEmpty())
-					 GET_A_BOOK=GetABookFromGoogleMenuItemTextBox.getText();
-				 else GET_A_BOOK=GET_A_BOOK_RESET;
+				if (!GetABookWellcomeMenuItemTextBox.getText().isEmpty())
+					GET_A_BOOK_WELLCOME = GetABookWellcomeMenuItemTextBox
+							.getText();
+				else
+					GET_A_BOOK_WELLCOME = GET_A_BOOK_WELLCOME_RESET;
 
-				 if (!DeleteSelectedMenuItemTextBox.getText().isEmpty())
-					 DELETE_SELECTED_LABEL=DeleteSelectedMenuItemTextBox.getText();
-					 else DELETE_SELECTED_LABEL=DELETE_SELECTED_LABEL_RESET;
-				 
-				 PanelPublicPrivatePanel.OpenEditPanelonClick();		
-				 
+				if (!UploadATextMenuItemTextBox.getText().isEmpty())
+					UPLOAD_A_TEXT = UploadATextMenuItemTextBox.getText();
+				else
+					UPLOAD_A_TEXT = UPLOAD_A_TEXT_RESET;
+
+				if (!GetABookFromGoogleMenuItemTextBox.getText().isEmpty())
+					GET_A_BOOK = GetABookFromGoogleMenuItemTextBox.getText();
+				else
+					GET_A_BOOK = GET_A_BOOK_RESET;
+
+				if (!DeleteSelectedMenuItemTextBox.getText().isEmpty())
+					DELETE_SELECTED_LABEL = DeleteSelectedMenuItemTextBox
+							.getText();
+				else
+					DELETE_SELECTED_LABEL = DELETE_SELECTED_LABEL_RESET;
+
+				PanelPublicPrivatePanel.OpenEditPanelonClick();
+
 				ParsearFieldsAItems();
 				SaveChages();
 			}
 		});
 
-		GetABookWellcomeMenuItemTextBox=new TextBox();
+		GetABookWellcomeMenuItemTextBox = new TextBox();
 		GetABookWellcomeMenuItemTextBox.setText(GET_A_BOOK_WELLCOME);
-		GetABookWellcomeMenuItemTextBox.setSize(GetABookWellcomeMenuItem.getOffsetWidth()+"px",
-				GetABookWellcomeMenuItem.getOffsetHeight()+"px");
-		 PanelEdicion.add(GetABookWellcomeMenuItemTextBox,
-				 GetABookWellcomeMenuItem.getAbsoluteLeft(),
-				 GetABookWellcomeMenuItem.getAbsoluteTop());
-		
-		 UploadATextMenuItemTextBox=new TextBox();
-		 UploadATextMenuItemTextBox.setText(UPLOAD_A_TEXT);
-		 UploadATextMenuItemTextBox.setSize(UploadATextMenuItem.getOffsetWidth()+"px",
-				 UploadATextMenuItem.getOffsetHeight()+"px");
-		 PanelEdicion.add(UploadATextMenuItemTextBox,
-				 UploadATextMenuItem.getAbsoluteLeft(),
-				 UploadATextMenuItem.getAbsoluteTop());
-		
-		 GetABookFromGoogleMenuItemTextBox=new TextBox();
-		 GetABookFromGoogleMenuItemTextBox.setText(GET_A_BOOK);
-		 GetABookFromGoogleMenuItemTextBox.setSize(GetABookFromGoogleMenuItem.getOffsetWidth()+"px",
-				 GetABookFromGoogleMenuItem.getOffsetHeight()+"px");
-		 PanelEdicion.add(GetABookFromGoogleMenuItemTextBox, GetABookFromGoogleMenuItem.getAbsoluteLeft(),
-				 GetABookFromGoogleMenuItem.getAbsoluteTop());
-		 
-		 DeleteSelectedMenuItemTextBox=new TextBox();
-		 DeleteSelectedMenuItemTextBox.setText(DELETE_SELECTED_LABEL);
-		 DeleteSelectedMenuItemTextBox.setSize(DeleteSelectedMenuItem.getOffsetWidth()+"px",
-				 DeleteSelectedMenuItem.getOffsetHeight()+"px");
-		 PanelEdicion.add(DeleteSelectedMenuItemTextBox, DeleteSelectedMenuItem.getAbsoluteLeft(),
-				 DeleteSelectedMenuItem.getAbsoluteTop());
-		 
-		 PanelPublicPrivatePanel.OpenEditPanel(PanelEdicion);
-		
+		GetABookWellcomeMenuItemTextBox.setSize(
+				GetABookWellcomeMenuItem.getOffsetWidth() + "px",
+				GetABookWellcomeMenuItem.getOffsetHeight() + "px");
+		PanelEdicion.add(GetABookWellcomeMenuItemTextBox,
+				GetABookWellcomeMenuItem.getAbsoluteLeft(),
+				GetABookWellcomeMenuItem.getAbsoluteTop());
+
+		UploadATextMenuItemTextBox = new TextBox();
+		UploadATextMenuItemTextBox.setText(UPLOAD_A_TEXT);
+		UploadATextMenuItemTextBox.setSize(UploadATextMenuItem.getOffsetWidth()
+				+ "px", UploadATextMenuItem.getOffsetHeight() + "px");
+		PanelEdicion.add(UploadATextMenuItemTextBox,
+				UploadATextMenuItem.getAbsoluteLeft(),
+				UploadATextMenuItem.getAbsoluteTop());
+
+		GetABookFromGoogleMenuItemTextBox = new TextBox();
+		GetABookFromGoogleMenuItemTextBox.setText(GET_A_BOOK);
+		GetABookFromGoogleMenuItemTextBox.setSize(
+				GetABookFromGoogleMenuItem.getOffsetWidth() + "px",
+				GetABookFromGoogleMenuItem.getOffsetHeight() + "px");
+		PanelEdicion.add(GetABookFromGoogleMenuItemTextBox,
+				GetABookFromGoogleMenuItem.getAbsoluteLeft(),
+				GetABookFromGoogleMenuItem.getAbsoluteTop());
+
+		DeleteSelectedMenuItemTextBox = new TextBox();
+		DeleteSelectedMenuItemTextBox.setText(DELETE_SELECTED_LABEL);
+		DeleteSelectedMenuItemTextBox.setSize(
+				DeleteSelectedMenuItem.getOffsetWidth() + "px",
+				DeleteSelectedMenuItem.getOffsetHeight() + "px");
+		PanelEdicion.add(DeleteSelectedMenuItemTextBox,
+				DeleteSelectedMenuItem.getAbsoluteLeft(),
+				DeleteSelectedMenuItem.getAbsoluteTop());
+
+		PanelPublicPrivatePanel.OpenEditPanel(PanelEdicion);
 
 	}
 
 	protected void SaveChages() {
-		 Language LanguageActual = ActualState.getActualLanguage();
-		 String BookAdministrationEntryPointLanguageConfiguration=toFile();
-		 LanguageActual.setBookAdministrationEntryPointLanguageConfiguration(BookAdministrationEntryPointLanguageConfiguration);
-		 ActualState.saveLanguageActual(LanguageActual);
-		 PanelPublicPrivatePanel.SaveChages();
+		Language LanguageActual = ActualState.getActualLanguage();
+		String BookAdministrationEntryPointLanguageConfiguration = toFile();
+		LanguageActual
+				.setBookAdministrationEntryPointLanguageConfiguration(BookAdministrationEntryPointLanguageConfiguration);
+		ActualState.saveLanguageActual(LanguageActual);
+		PanelPublicPrivatePanel.SaveChages();
 	}
 
 	public void ParsearFieldsAItems() {
@@ -472,36 +491,39 @@ public class BookAdministrationEntryPoint implements EntryPoint {
 
 	public static String toFile() {
 		StringBuffer SB = new StringBuffer();
-		 SB.append(GET_A_BOOK_WELLCOME+'\n');
-		 SB.append(UPLOAD_A_TEXT+'\n');
-		 SB.append(GET_A_BOOK+'\n');
-		 SB.append(DELETE_SELECTED_LABEL+'\n');
+		SB.append(GET_A_BOOK_WELLCOME + '\n');
+		SB.append(UPLOAD_A_TEXT + '\n');
+		SB.append(GET_A_BOOK + '\n');
+		SB.append(DELETE_SELECTED_LABEL + '\n');
 		return SB.toString();
 	}
 
 	public static void FromFile(String Entrada) {
-		 String[] Lista = Entrada.split("\n");
-		 if (Lista.length >= NCampos) {
-		 if (!Lista[0].isEmpty())
-			 GET_A_BOOK_WELLCOME = Lista[0];
-		 else GET_A_BOOK_WELLCOME=GET_A_BOOK_WELLCOME_RESET;
-		 if (!Lista[1].isEmpty())
-			 UPLOAD_A_TEXT = Lista[1];
-		 else UPLOAD_A_TEXT=UPLOAD_A_TEXT_RESET;
-		 if (!Lista[2].isEmpty())
-			 GET_A_BOOK = Lista[2];
-		 else GET_A_BOOK=GET_A_BOOK_RESET;
-		 if (!Lista[3].isEmpty())
-			 DELETE_SELECTED_LABEL = Lista[3];
-			 else DELETE_SELECTED_LABEL=DELETE_SELECTED_LABEL_RESET;
-		 //TODO METE EL FRomfile en la actual state DEL PublicPrivatePanel
-		 }
-		 else
-		 Logger.GetLogger().severe(BookAdministrationEntryPoint.class.toString(),
-		 ActualState.getUser().toString(),
-		 ErrorConstants.ERROR_LOADING_LANGUAGE_IN +
-		 BOOK_ADMINISTRATION_NAME);
-		
+		String[] Lista = Entrada.split("\n");
+		if (Lista.length >= NCampos) {
+			if (!Lista[0].isEmpty())
+				GET_A_BOOK_WELLCOME = Lista[0];
+			else
+				GET_A_BOOK_WELLCOME = GET_A_BOOK_WELLCOME_RESET;
+			if (!Lista[1].isEmpty())
+				UPLOAD_A_TEXT = Lista[1];
+			else
+				UPLOAD_A_TEXT = UPLOAD_A_TEXT_RESET;
+			if (!Lista[2].isEmpty())
+				GET_A_BOOK = Lista[2];
+			else
+				GET_A_BOOK = GET_A_BOOK_RESET;
+			if (!Lista[3].isEmpty())
+				DELETE_SELECTED_LABEL = Lista[3];
+			else
+				DELETE_SELECTED_LABEL = DELETE_SELECTED_LABEL_RESET;
+			// TODO METE EL FRomfile en la actual state DEL PublicPrivatePanel
+		} else
+			Logger.GetLogger().severe(
+					BookAdministrationEntryPoint.class.toString(),
+					ActualState.getUser().toString(),
+					ErrorConstants.ERROR_LOADING_LANGUAGE_IN
+							+ BOOK_ADMINISTRATION_NAME);
 
 	}
 
