@@ -1,6 +1,5 @@
 package lector.client.reader.export;
 
-import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.Stack;
 
@@ -14,7 +13,9 @@ import lector.share.model.ExportObject;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
+import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.FormPanel;
+import com.google.gwt.user.client.ui.RootPanel;
 import com.google.gwt.user.client.ui.TextArea;
 import com.google.gwt.user.client.ui.VerticalPanel;
 
@@ -22,6 +23,8 @@ public class arbitroLlamadasRTF {
 
 	private Stack<ExportObject> pendientes;
 	private StringBuffer Result;
+	private FormPanel formPanel;
+	private Button Submit;
 	static ImageServiceAsync imageServiceHolder = GWT
 	.create(ImageService.class);
 	
@@ -105,16 +108,25 @@ public class arbitroLlamadasRTF {
 		}else
 		{
 			
+			
+			
+			
+			
 			LoadingPanel.getInstance().hide();
+				
 		//	Result.append("</body></html>");
 //			RichTextArea textArea1 = new RichTextArea();
 //			textArea1.setHTML(Result.toString());	
-			FormPanel formPanel = new FormPanel();
+			formPanel = new FormPanel("_blank");
+			formPanel
+			.setAction("../RTF.php");
 			formPanel
 					.setEncoding(FormPanel.ENCODING_URLENCODED);
 			formPanel.setMethod(FormPanel.METHOD_POST);
 			TextArea textArea = new TextArea();
 			textArea.setText(Result.toString());
+			textArea.setSize("100%", "100%");
+			textArea.setReadOnly(true);
 //			try {
 //				textArea.setText(new String(Result.toString().getBytes("UTF-8")));
 //				
@@ -123,10 +135,15 @@ public class arbitroLlamadasRTF {
 //			}
 			textArea.setName("html");
 			textArea.getValue();
-			VerticalPanel V=new VerticalPanel();
-			formPanel.add(V);
+//			formPanel.add(textArea);
+			//AQUI
+			VerticalPanel V=new VerticalPanel();		
 			V.add(textArea);
+			V.setSize("100%", "100%");
+			
 			TextArea textArea2 = new TextArea();
+			textArea2.setSize("100%", "100%");
+			textArea2.setReadOnly(true);
 			textArea2.setText(Long.toString(System.currentTimeMillis()));
 //			try {
 //				textArea.setText(new String(Result.toString().getBytes("UTF-8")));
@@ -136,16 +153,37 @@ public class arbitroLlamadasRTF {
 //			}
 			textArea2.setName("ExportN");
 			textArea2.getValue();
+			
+			//AQUI
 			V.add(textArea2);
-			formPanel
-					.setAction("../RTF.php");
+
+
 //			formPanel
 //			.setAction("http://phpconvertservice.netne.net");
 			
+			//Window.alert(InformationConstants.WAIT_RESULTS);
+			formPanel.add(V);
+
+			RootPanel RP=RootPanel.get();
+			formPanel.setVisible(false);
+			RP.add(formPanel);
 			Window.alert(InformationConstants.WAIT_RESULTS);
 			formPanel.submit();
+//			if (!Window.Navigator.getUserAgent().contains("Chrome"))
+//				{
+//				PopUpExportConfirm PopUpExportConfirm =new PopUpExportConfirm(formPanel);
+//				PopUpExportConfirm.center();
+//				}
+//			else
+//				{
+//				formPanel.submit();
+//				Window.alert(InformationConstants.WAIT_RESULTS);
+//				}
+			
 		}			
 		
 	}
+
+	
 
 }
