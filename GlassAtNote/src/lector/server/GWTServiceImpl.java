@@ -772,7 +772,7 @@ public class GWTServiceImpl extends RemoteServiceServlet implements GWTService {
 	}
 
 	// TODO LANZAR EXCEPCIÓN
-	private Annotation findAnnotation(Long id)
+	public Annotation findAnnotation(Long id)
 			throws AnnotationNotFoundException {
 		EntityManager entityManager = emf.createEntityManager();
 		Annotation a = entityManager.find(Annotation.class, id);

@@ -54,10 +54,4 @@ public interface ExportService extends RemoteService {
 	public List<TemplateClient> getTemplatesByIds(List<Long> ids);
 	//Exportacion 	
 	
-	public String loadHTMLStringForExport(List<ExportObject> exportObjects);
-
-	public String loadHTMLStringForExportUni(ExportObject exportObject);
-
-	public String loadRTFStringForExportUni(ExportObject exportObject);
-
 }

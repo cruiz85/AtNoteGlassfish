@@ -38,16 +38,6 @@ public interface ExportServiceAsync {
 	void swapCategoryWeight(Long movingCategoryId, Long staticCategoryId,
 			AsyncCallback<Void> callback);
 
-	void loadHTMLStringForExport(
-			List<lector.share.model.ExportObject> exportObjects,
-			AsyncCallback<String> callback);
-
-	void loadHTMLStringForExportUni(ExportObject exportObject,
-			AsyncCallback<String> callback);
-
-	void loadRTFStringForExportUni(ExportObject exportObject,
-			AsyncCallback<String> callback);
-
 	void deleteTemplate(Long templateId, AsyncCallback<Void> callback);
 
 

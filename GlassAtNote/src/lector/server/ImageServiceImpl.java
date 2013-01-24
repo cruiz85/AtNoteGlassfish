@@ -1,14 +1,18 @@
 package lector.server;
 
+import java.io.BufferedReader;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.io.UnsupportedEncodingException;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLConnection;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import javax.annotation.Resource;
 import javax.persistence.EntityManager;
@@ -20,6 +24,7 @@ import org.apache.commons.codec.binary.Base64;
 
 import lector.client.book.reader.GWTService;
 import lector.client.book.reader.ImageService;
+import lector.share.model.Annotation;
 import lector.share.model.Book;
 import lector.share.model.BookNotFoundException;
 import lector.share.model.ExportObject;
@@ -35,7 +40,7 @@ import com.google.appengine.api.images.Image;
 import com.google.appengine.api.images.ImagesService;
 import com.google.appengine.api.images.ImagesServiceFactory;
 import com.google.appengine.api.images.Transform;
-import com.google.gwt.user.server.rpc.RemoteServiceServlet;
+import com.google.gwt.user.server.rpc.RemoteServiceServlet;   
 
 /**
  * The server side implementation of the RPC service.
@@ -81,6 +86,7 @@ public class ImageServiceImpl extends RemoteServiceServlet implements
 	}
 
 	public String loadHTMLStringForExport(List<ExportObject> exportObjects) {
+		EntityManager entityManager = EMF.get().createEntityManager();
 		StringBuffer html = new StringBuffer(
 				"<html><head><meta http-equiv=\"Content-Type\" content=\"text/html; charset=utf-8\"></head>");
 		html.append("<title>Export:");
@@ -92,7 +98,8 @@ public class ImageServiceImpl extends RemoteServiceServlet implements
 		for (ExportObject exportObject : exportObjects) {
 			html.append("<tr><hr><table align=\"center\" width=\"80%\" border=\"1\" bordercolor=\"blue\">");
 			String imageURL = exportObject.getImageURL();
-			List<TextSelector> anchors = exportObject.getAnnotation().getTextSelectors();
+			Annotation annotation = entityManager.find(Annotation.class, exportObject.getAnnotation().getId());
+			List<TextSelector> anchors = annotation.getTextSelectors();
 			List<TextSelectorClient> anchorsClient = ServiceManagerUtils.produceTextSelectors(anchors);
 			int imageWidth = exportObject.getWidth();
 			int imageHeight = exportObject.getHeight();
@@ -106,7 +113,7 @@ public class ImageServiceImpl extends RemoteServiceServlet implements
 						.getBytes(), "UTF-8");
 
 				html.append(Clear + "</p></td></tr><tr>");
-				List<String> fileNames = getTypesNames(exportObject.getAnnotation().getTags());
+				List<String> fileNames = getTypesNames(annotation.getTags());
 
 				html.append("<td colspan=\"2\"><p>");
 				for (String fileName : fileNames) {
@@ -169,7 +176,8 @@ public class ImageServiceImpl extends RemoteServiceServlet implements
 		float prop = height / 830;
 		float widthResize = (width / prop);
 		String contentType = getImageContentType(imageURL);
-		byte[] oldImageData = getImageData(imageURL);
+		String urlWithoutHeader = imageURL.substring(41);  
+		byte[] oldImageData = getImageDataService(urlWithoutHeader);
 		ImagesService imagesService = ImagesServiceFactory.getImagesService();
 
 		Image oldImage = ImagesServiceFactory.makeImage(oldImageData);
@@ -232,11 +240,43 @@ public class ImageServiceImpl extends RemoteServiceServlet implements
 
 	}
 
+	private byte[] getImageDataService(String id) {
+		URL url;
+		URLConnection connection;
+		String line;
+		StringBuilder builder = new StringBuilder();
+		BufferedReader reader;
+		try {
+			url = new URL("http://a-note.appspot.com/rs/AtNote/google/book/image"
+					+ id);
+			connection = url.openConnection();
+			connection.addRequestProperty("Referer",
+					"http://kido180020783.appspot.com/");
+			reader = new BufferedReader(new InputStreamReader(
+					connection.getInputStream()));
+			while ((line = reader.readLine()) != null) {
+				builder.append(line);
+			}
+		} catch (MalformedURLException ex) {
+			Logger.getLogger(GWTServiceImpl.class.getName()).log(Level.SEVERE,
+					null, ex);
+		} catch (IOException ex) {
+			Logger.getLogger(GWTServiceImpl.class.getName()).log(Level.SEVERE,
+					null, ex);
+		}
+		return builder.toString().getBytes();
+	}
+	
 	private byte[] getImageData(String urlImage) {
 		byte[] data = null;
 		try {
 			URL url = new URL(urlImage);
+//			String loginPassword = "cruiz85@gmail.com:15148785ba";  
+//			String encoded = new sun.misc.BASE64Encoder().encode (loginPassword.getBytes());
+//			URLConnection conn = url.openConnection();
+//			conn.setRequestProperty ("Authorization", "Basic " + encoded);
 			InputStream inputStream = url.openStream();
+//			InputStream inputStream = conn.getInputStream();
 			ByteArrayOutputStream output = new ByteArrayOutputStream();
 			byte[] buffer = new byte[1024];
 
@@ -284,6 +324,7 @@ public class ImageServiceImpl extends RemoteServiceServlet implements
 	@Override
 	public String loadHTMLStringForExportUni(
 			lector.share.model.ExportObject exportObject) {
+		EntityManager entityManager = emf.createEntityManager();
 		StringBuffer html = new StringBuffer();
 		/*
 		 * StringBuffer html = new StringBuffer(
@@ -298,24 +339,25 @@ public class ImageServiceImpl extends RemoteServiceServlet implements
 		 */
 		html.append("<tr><hr><table align=\"center\" width=\"80%\" border=\"1\" bordercolor=\"blue\">");
 		String imageURL = exportObject.getImageURL();
-		List<TextSelector> anchors = exportObject.getAnnotation().getTextSelectors();
+		Annotation annotation = entityManager.find(Annotation.class, exportObject.getAnnotation().getId());
+		List<TextSelector> anchors = annotation.getTextSelectors();
 		List<TextSelectorClient> anchorsClient = ServiceManagerUtils.produceTextSelectors(anchors);
 		int imageWidth = exportObject.getWidth();
 		int imageHeight = exportObject.getHeight();
 		html.append("<td rowspan=\"4\"><p>"
 				+ produceCutImagesList(imageURL, anchorsClient, imageWidth,
 						imageHeight,false) + "</p></td><td colspan=\"2\"><p>");
-		String clear;
+		String clear;    
 		clear = exportObject.getAnnotation().getComment();
 		// try {
 		// Clear = new String(exportObject.getAnnotation().getComment()
 		// .getValue().getBytes(), "UTF-8");
 		// } catch (UnsupportedEncodingException e) {
 		// Clear = exportObject.getAnnotation().getComment().getValue();
-		// }
+		// }       
 
 		html.append(clear + "</p></td></tr><tr>");
-		List<String> fileNames = getTypesNames(exportObject.getAnnotation().getTags());
+		List<String> fileNames = getTypesNames(annotation.getTags());
 		html.append("<td colspan=\"2\"><p>");
 		for (String fileName : fileNames) {
 			html.append(fileName + ", ");

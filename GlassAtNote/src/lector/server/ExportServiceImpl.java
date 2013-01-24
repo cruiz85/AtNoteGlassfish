@@ -421,24 +421,6 @@ public class ExportServiceImpl extends RemoteServiceServlet implements
 		return templateClients;
 	}
 
-	@Override
-	public String loadHTMLStringForExport(List<ExportObject> exportObjects) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public String loadHTMLStringForExportUni(ExportObject exportObject) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public String loadRTFStringForExportUni(ExportObject exportObject) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
 	private void persistObjectsForCategoryMove(Template template,
 			TemplateCategory toCategory, TemplateCategory fromCategory) {
 		int flag = 1;
