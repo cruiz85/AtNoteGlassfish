@@ -4,30 +4,14 @@ import lector.client.book.reader.GWTService;
 import lector.client.book.reader.GWTServiceAsync;
 import lector.client.book.reader.ImageService;
 import lector.client.book.reader.ImageServiceAsync;
-import lector.client.controler.ActualState;
-import lector.client.controler.Constants;
 import lector.client.controler.Controlador;
-import lector.client.logger.Logger;
-import lector.share.model.LocalBook;
-import lector.share.model.Professor;
-import lector.share.model.Student;
-import lector.share.model.UserApp;
-import lector.share.model.client.ProfessorClient;
-import lector.share.model.client.StudentClient;
-import lector.share.model.client.UserClient;
-
-import com.google.appengine.api.datastore.Text;
 import com.google.gwt.core.client.EntryPoint;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.user.client.Window;
-import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.FormPanel;
-import com.google.gwt.user.client.ui.PopupPanel;
 import com.google.gwt.user.client.ui.RootPanel;
 import com.google.gwt.user.client.ui.Image;
 import com.google.gwt.user.client.ui.SimplePanel;
-import com.google.gwt.user.client.ui.TextArea;
-import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.VerticalPanel;
 import com.google.gwt.user.client.ui.HasHorizontalAlignment;
 import com.google.gwt.user.client.ui.Label;
@@ -42,8 +26,6 @@ import com.google.gwt.event.dom.client.MouseOverEvent;
 import com.google.gwt.event.dom.client.MouseOverHandler;
 import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.HasVerticalAlignment;
-import com.google.gwt.user.client.ui.FocusPanel;
-import com.google.gwt.util.PreventSpuriousRebuilds;
 
 public class Welcome implements EntryPoint {
 	static GWTServiceAsync bookReaderServiceHolder = GWT
