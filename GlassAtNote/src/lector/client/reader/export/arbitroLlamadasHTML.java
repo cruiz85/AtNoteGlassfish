@@ -35,7 +35,8 @@ public class arbitroLlamadasHTML {
 	Result.append(System.currentTimeMillis());
 	Result.append("</title><body><table width=\"100%\"><tr><td><h1>Export:");
 	Result.append(System.currentTimeMillis());
-	Result.append("</h1></td><td align=\"right\"><img src=\"http://a-note.appspot.com/logo_200_400.jpg\" alt=\"atnote\" height=\"200\" width=\"400\" /> </td></tr></table>");;
+	//TODO Que la combierta Cesar a codigo binario y nos la quitamos
+	Result.append("</h1></td><td align=\"right\"><img src=\"http://horchata.fdi.ucm.es/GlassAtNote/logo_200_400.jpg\" alt=\"atnote\" height=\"200\" width=\"400\" /> </td></tr></table>");;
 	
 	LoadingPanel.getInstance().center();
 	LoadingPanel.getInstance().setLabelTexto("Loading...");
@@ -131,7 +132,7 @@ public class arbitroLlamadasHTML {
 				textArea2.getValue();
 				V.add(textArea2);
 				formPanel
-						.setAction("../HTML.php");
+						.setAction("HTML.php");
 //				formPanel
 //				.setAction("http://phpconvertservice.netne.net");
 				

@@ -119,7 +119,7 @@ public class arbitroLlamadasRTF {
 //			textArea1.setHTML(Result.toString());	
 			formPanel = new FormPanel("_blank");
 			formPanel
-			.setAction("../RTF.php");
+			.setAction("RTF.php");
 			formPanel
 					.setEncoding(FormPanel.ENCODING_URLENCODED);
 			formPanel.setMethod(FormPanel.METHOD_POST);
