@@ -137,13 +137,13 @@ public class PublicPrivatePanelComposite extends Composite {
 	
 	public String toFile() {
 		StringBuffer SB = new StringBuffer();
-		 SB.append(PUBLIC_BUTTON+'\n');
-		 SB.append(PRIVATE_BUTTON+'\n');
+		 SB.append(PUBLIC_BUTTON+"\r\n");
+		 SB.append(PRIVATE_BUTTON+"\r\n");
 		return SB.toString();
 	}
 	
 	public static void FromFile(String Entrada) {
-		 String[] Lista = Entrada.split("\n");
+		 String[] Lista = Entrada.split("\r\n");
 		 if (Lista.length >= NCampos) {
 		 if (!Lista[0].isEmpty())
 			 PUBLIC_BUTTON = Lista[0];
@@ -158,8 +158,13 @@ public class PublicPrivatePanelComposite extends Composite {
 		 ErrorConstants.ERROR_LOADING_LANGUAGE_IN +
 		 PUBLIC_PRIVATE_PANEL_COMPOSITE);
 		
-
+		 ParsearFieldsAItemsRESET();
 	}
-
+	
+	private static void ParsearFieldsAItemsRESET() {
+		PUBLIC_BUTTON=PUBLIC_BUTTON_RESET;
+		PRIVATE_BUTTON=PRIVATE_BUTTON_RESET;
+		
+	}
 	
 }

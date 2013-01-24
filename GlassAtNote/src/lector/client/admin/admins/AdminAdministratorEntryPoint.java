@@ -730,20 +730,20 @@ public class AdminAdministratorEntryPoint implements EntryPoint {
 
 	public static String toFile() {
 		StringBuffer SB = new StringBuffer();
-		 SB.append(ADMINISTRATION_WELLCOME+'\n');
-		 SB.append(BACK_MENUITEM+'\n');
-		 SB.append(ADD_NEW_USER_LABEL+'\n');
-		 SB.append(FIRSTNAME_LABEL+'\n');
-		 SB.append(LASTNAME_LABEL+'\n');
-		 SB.append(EMAIL_LABEL+'\n');
-		 SB.append(ENTER_PASSWORD_LABEL+'\n');
-		 SB.append(REPEAT_PASSWORD_LABEL+'\n');
-		 SB.append(SAVE_NEW_ADMINISTRATOR+'\n');
+		 SB.append(ADMINISTRATION_WELLCOME+"\r\n");
+		 SB.append(BACK_MENUITEM+"\r\n");
+		 SB.append(ADD_NEW_USER_LABEL+"\r\n");
+		 SB.append(FIRSTNAME_LABEL+"\r\n");
+		 SB.append(LASTNAME_LABEL+"\r\n");
+		 SB.append(EMAIL_LABEL+"\r\n");
+		 SB.append(ENTER_PASSWORD_LABEL+"\r\n");
+		 SB.append(REPEAT_PASSWORD_LABEL+"\r\n");
+		 SB.append(SAVE_NEW_ADMINISTRATOR+"\r\n");
 		return SB.toString();
 	}
 
 	public static void FromFile(String Entrada) {
-		 String[] Lista = Entrada.split("\n");
+		 String[] Lista = Entrada.split("\r\n");
 		 if (Lista.length >= NCampos) {
 		 if (!Lista[0].isEmpty())
 			 ADMINISTRATION_WELLCOME = Lista[0];
@@ -778,8 +778,22 @@ public class AdminAdministratorEntryPoint implements EntryPoint {
 		 ActualState.getUser().toString(),
 		 ErrorConstants.ERROR_LOADING_LANGUAGE_IN +
 		 ADINISTRAATOR_ADMINISTRATION_NAME);
-		
-
+		 ParsearFieldsAItemsRESET();
 	}
+	
+	private static void ParsearFieldsAItemsRESET() {
+		ADMINISTRATION_WELLCOME=ADMINISTRATION_WELLCOME_RESET;
+		BACK_MENUITEM=BACK_MENUITEM_RESET;
+		ADD_NEW_USER_LABEL=ADD_NEW_USER_LABEL_RESET;
+		FIRSTNAME_LABEL=FIRSTNAME_LABEL_RESET;
+		LASTNAME_LABEL=LASTNAME_LABEL_RESET;
+		EMAIL_LABEL=EMAIL_LABEL_RESET;
+		ENTER_PASSWORD_LABEL=ENTER_PASSWORD_LABEL_RESET;
+		REPEAT_PASSWORD_LABEL=REPEAT_PASSWORD_LABEL_RESET;
+		SAVE_NEW_ADMINISTRATOR=SAVE_NEW_ADMINISTRATOR_RESET;
+		
+	}
+
+	
 
 }

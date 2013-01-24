@@ -312,15 +312,15 @@ CancelButton.setStyleName("gwt-ButtonCenter");
 
 	public String toFile() {
 		StringBuffer SB=new StringBuffer();
-		SB.append(USE_CHECK_BOX_BELOW_TO_SET_PRIVICY_TO_YOUR_ACTIVITY + '\n');
-		SB.append( PRIVATE_CHECK_BOX + '\n' );
-		SB.append( ACCEPT + '\n' );
-		SB.append( CANCEL + '\n' );
+		SB.append(USE_CHECK_BOX_BELOW_TO_SET_PRIVICY_TO_YOUR_ACTIVITY + "\r\n");
+		SB.append( PRIVATE_CHECK_BOX + "\r\n" );
+		SB.append( ACCEPT + "\r\n" );
+		SB.append( CANCEL + "\r\n" );
 		return SB.toString();
 	}
 
 	public static void FromFile(String Entrada) {
-		String[] Lista = Entrada.split("\n");
+		String[] Lista = Entrada.split("\r\n");
 		if (Lista.length >= NCampos) {
 			if (!Lista[0].isEmpty())
 				USE_CHECK_BOX_BELOW_TO_SET_PRIVICY_TO_YOUR_ACTIVITY = Lista[0];
@@ -336,7 +336,16 @@ CancelButton.setStyleName("gwt-ButtonCenter");
 			else CANCEL=CANCEL_RESET;
 		}
 		else 
-			Logger.GetLogger().severe(EditorActivityPopupPanel.class.toString(), ActualState.getUser().toString(), ErrorConstants.ERROR_LOADING_LANGUAGE_IN  + READING_ACTIVITY_VISIVILITY);	
+			Logger.GetLogger().severe(ReadingActivityVisibilityPopupPanel.class.toString(), ActualState.getUser().toString(), ErrorConstants.ERROR_LOADING_LANGUAGE_IN  + READING_ACTIVITY_VISIVILITY);	
+		ParsearFieldsAItemsRESET();
+	}
+	
+	private static void ParsearFieldsAItemsRESET() {
+		USE_CHECK_BOX_BELOW_TO_SET_PRIVICY_TO_YOUR_ACTIVITY=USE_CHECK_BOX_BELOW_TO_SET_PRIVICY_TO_YOUR_ACTIVITY_RESET;
+		PRIVATE_CHECK_BOX=PRIVATE_CHECK_BOX_RESET;
+		ACCEPT=ACCEPT_RESET;
+		CANCEL=CANCEL_RESET;
+		
 	}
 	
 	protected void ParsearFieldsAItems() {

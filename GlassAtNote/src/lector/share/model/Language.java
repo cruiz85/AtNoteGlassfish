@@ -22,27 +22,27 @@ public class Language implements Serializable {
 
 	private String name;
 	@Column(columnDefinition = "LONGTEXT")
-	private String AdministradorEntryPointLanguageConfiguration = "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n";
+	private String AdministradorEntryPointLanguageConfiguration = "";
 	@Column(columnDefinition = "LONGTEXT")
-	private String EditorActivityLanguageConfiguration= "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n"; 
+	private String EditorActivityLanguageConfiguration= ""; 
 	@Column(columnDefinition = "LONGTEXT")
-	private String FinderDefaultTypeLanguageConfiguration= "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n";
+	private String FinderDefaultTypeLanguageConfiguration= "";
 	@Column(columnDefinition = "LONGTEXT")
-	private String NewActivityPopupPanelLanguageConfiguration="\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n";
+	private String NewActivityPopupPanelLanguageConfiguration="";
 	@Column(columnDefinition = "LONGTEXT")
-	private String AdminActivitiesEntryPointLanguageConfiguration="\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n";
+	private String AdminActivitiesEntryPointLanguageConfiguration="";
 	@Column(columnDefinition = "LONGTEXT")
-	private String SeleccionCatalogoPopupPanelLanguageConfiguration="\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n";
+	private String SeleccionCatalogoPopupPanelLanguageConfiguration="";
 	@Column(columnDefinition = "LONGTEXT")
-	private String ReadingActivityVisibilityPopupPanelLanguageConfiguration="\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n";
+	private String ReadingActivityVisibilityPopupPanelLanguageConfiguration="";
 	@Column(columnDefinition = "LONGTEXT")
-	private String SeleccionMenuActivityPopupPanelLanguageConfiguration="\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n";
+	private String SeleccionMenuActivityPopupPanelLanguageConfiguration="";
 	@Column(columnDefinition = "LONGTEXT")
-	private String AdminAdministratorEntryPointLanguageConfiguration="\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n";
+	private String AdminAdministratorEntryPointLanguageConfiguration="";
 	@Column(columnDefinition = "LONGTEXT")
-	private String BookAdministrationEntryPointLanguageConfiguration="\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n";
+	private String BookAdministrationEntryPointLanguageConfiguration="";
 	@Column(columnDefinition = "LONGTEXT")
-	private String PublicPrivatePanelCompositeLanguageConfiguration="\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n";
+	private String PublicPrivatePanelCompositeLanguageConfiguration="";
 	
 	// MainWindow
 	private String NamePage = "@Note";

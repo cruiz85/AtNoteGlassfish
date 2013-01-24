@@ -346,14 +346,14 @@ public class AdminActivitiesEntryPoint implements EntryPoint {
 	
 	public static String toFile() {
 		StringBuffer SB=new StringBuffer();
-		SB.append(ACTIVITY_MENU+'\n');
-		SB.append(NEW_MENU+'\n');
-		SB.append(BACK_MENU+'\n');
+		SB.append(ACTIVITY_MENU+"\r\n");
+		SB.append(NEW_MENU+"\r\n");
+		SB.append(BACK_MENU+"\r\n");
 		return SB.toString();
 	}
 	
 	public static void FromFile(String Entrada) {
-		String[] Lista = Entrada.split("\n");
+		String[] Lista = Entrada.split("\r\n");
 		if (Lista.length >= NCampos) {
 			if (!Lista[0].isEmpty())
 				ACTIVITY_MENU = Lista[0];
@@ -366,10 +366,16 @@ public class AdminActivitiesEntryPoint implements EntryPoint {
 			else BACK_MENU=BACK_MENU_RESET;
 		}
 		else 
-			Logger.GetLogger().severe(EditorActivityPopupPanel.class.toString(), ActualState.getUser().toString(), ErrorConstants.ERROR_LOADING_LANGUAGE_IN  + ACTIVITY_ADMINISTRATION_NAME);
-			
+			Logger.GetLogger().severe(AdminActivitiesEntryPoint.class.toString(), ActualState.getUser().toString(), ErrorConstants.ERROR_LOADING_LANGUAGE_IN  + ACTIVITY_ADMINISTRATION_NAME);
+		ParsearFieldsAItemsRESET();
 			
 		
+	}
+
+	private static void ParsearFieldsAItemsRESET() {
+		ACTIVITY_MENU=ACTIVITY_MENU_RESET;
+		NEW_MENU=NEW_MENU_RESET;
+		BACK_MENU=BACK_MENU_RESET;
 	}
 
 }

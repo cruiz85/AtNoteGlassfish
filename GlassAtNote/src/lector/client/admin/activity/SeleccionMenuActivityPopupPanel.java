@@ -286,14 +286,14 @@ public class SeleccionMenuActivityPopupPanel extends PopupPanel {
 
 	public String toFile() {
 		StringBuffer SB=new StringBuffer();
-		SB.append(DELETE + '\n');
-		SB.append( CHANGE_VISIBILITY + '\n' );
-		SB.append( EDIT + '\n' );
+		SB.append(DELETE + "\r\n");
+		SB.append( CHANGE_VISIBILITY + "\r\n" );
+		SB.append( EDIT + "\r\n" );
 		return SB.toString();
 	}
 
 	public static void FromFile(String Entrada) {
-		String[] Lista = Entrada.split("\n");
+		String[] Lista = Entrada.split("\r\n");
 		if (Lista.length >= NCampos) {
 			if (!Lista[0].isEmpty())
 				DELETE = Lista[0];
@@ -306,7 +306,15 @@ public class SeleccionMenuActivityPopupPanel extends PopupPanel {
 			else EDIT=EDIT_RESET;
 		}
 		else 
-			Logger.GetLogger().severe(EditorActivityPopupPanel.class.toString(), ActualState.getUser().toString(), ErrorConstants.ERROR_LOADING_LANGUAGE_IN  + SELECTION_MENU_ACTIVITY);	
+			Logger.GetLogger().severe(SeleccionMenuActivityPopupPanel.class.toString(), ActualState.getUser().toString(), ErrorConstants.ERROR_LOADING_LANGUAGE_IN  + SELECTION_MENU_ACTIVITY);	
+		ParsearFieldsAItemsRESET();
+	}
+	
+	private static void ParsearFieldsAItemsRESET() {
+		DELETE=DELETE_RESET;
+		CHANGE_VISIBILITY=CHANGE_VISIBILITY_RESET;
+		EDIT=EDIT_RESET;
+		
 	}
 	
 	protected void ParsearFieldsAItems() {

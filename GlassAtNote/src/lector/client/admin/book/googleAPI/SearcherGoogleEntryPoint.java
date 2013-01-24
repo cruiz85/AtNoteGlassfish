@@ -1,6 +1,5 @@
-package lector.client.search;
+package lector.client.admin.book.googleAPI;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import lector.client.book.reader.GWTService;
@@ -10,7 +9,6 @@ import lector.client.controler.ErrorConstants;
 import lector.client.controler.InformationConstants;
 import lector.client.reader.LoadingPanel;
 import lector.share.model.Book;
-import lector.share.model.client.BookClient;
 import lector.share.model.client.GoogleBookClient;
 
 import com.google.gwt.core.client.EntryPoint;
@@ -48,20 +46,30 @@ import com.google.gwt.user.client.ui.MenuItem;
 import com.google.gwt.user.client.Command;
 import com.google.gwt.user.client.ui.MenuItemSeparator;
 
-public class Searcher implements EntryPoint, HistoryListener {
+public class SearcherGoogleEntryPoint implements EntryPoint, HistoryListener {
 
+	
+
+	private static String SEARCH_INICIAL_BUTTON = "Search";
+	private static String NEXT_BUTTON = ">";
+	private static String PREVIOUS_BUTTON = "<";
+	
+	private Button searchInicialButton;
+	private Button searchNextButton;
+	private Button searchPrevious;
+	
+	
 	static GWTServiceAsync bookReaderServiceHolder = GWT
 			.create(GWTService.class);
 	private VerticalPanel Panel = new VerticalPanel();
 	private HorizontalPanel bookSearcherWidget = new HorizontalPanel();
 	private TextBox searcherField = new TextBox();
-	private Button searchButton = new Button("Search");
+	
 	private Hyperlink[] bookLinks = new Hyperlink[8];
 	private Label labelTester = new Label("Tester");
 	private VerticalPanel hyperlinksPanel = new VerticalPanel();
 	private static boolean linkTrigger = false;
-	private Button searchNext = new Button(">");
-	private Button searchPrevious = new Button("<");
+	
 	private static int pos = 0;
 	private final Image image_1 = new Image("Logo.jpg");
 	private final Image image_2 = new Image("IconoLogo.JPG");
@@ -71,26 +79,32 @@ public class Searcher implements EntryPoint, HistoryListener {
 	private MenuItem mntmAddBookAdministration;
 	private MenuItemSeparator separator = new MenuItemSeparator();
 	private MenuItem mntmNewItem;
+	
 
-	public Searcher() {
-		searchNext.setSize("100%", "100%");
-		searchNext.setStyleName("gwt-ButtonCenter");
-		searchNext.addMouseOutHandler(new MouseOutHandler() {
+	public SearcherGoogleEntryPoint() {
+		
+		searchInicialButton = new Button(SEARCH_INICIAL_BUTTON);
+		searchNextButton = new Button(NEXT_BUTTON);
+		searchPrevious = new Button(PREVIOUS_BUTTON );
+		
+		searchNextButton.setSize("100%", "100%");
+		searchNextButton.setStyleName("gwt-ButtonCenter");
+		searchNextButton.addMouseOutHandler(new MouseOutHandler() {
 			public void onMouseOut(MouseOutEvent event) {
 				((Button)event.getSource()).setStyleName("gwt-ButtonCenter");
 			}
 		});
-		searchNext.addMouseOverHandler(new MouseOverHandler() {
+		searchNextButton.addMouseOverHandler(new MouseOverHandler() {
 			public void onMouseOver(MouseOverEvent event) {
 				((Button)event.getSource()).setStyleName("gwt-ButtonCenterOver");
 			}
 		});
-		searchNext.addMouseDownHandler(new MouseDownHandler() {
+		searchNextButton.addMouseDownHandler(new MouseDownHandler() {
 			public void onMouseDown(MouseDownEvent event) {
 				((Button)event.getSource()).setStyleName("gwt-ButtonCenterPush");
 			}
 		});
-		searchNext.addClickHandler(new ClickHandler() {
+		searchNextButton.addClickHandler(new ClickHandler() {
 
 			public void onClick(ClickEvent event) {
 				if (pos == 0) {
@@ -111,7 +125,7 @@ public class Searcher implements EntryPoint, HistoryListener {
 						cleanHyperLinks();
 						if (result.size() == 0) {
 							lblNewLabel.setText(InformationConstants.NO_MORE_RESULTS);
-							searchNext.setVisible(false);
+							searchNextButton.setVisible(false);
 						}
 						for (int i = 0; i < result.size(); i++) {
 							bookLinks[i] = new Hyperlink("", "#");
@@ -171,8 +185,8 @@ public class Searcher implements EntryPoint, HistoryListener {
 				if (pos == 0) {
 					searchPrevious.setVisible(false);
 				}
-				if (!searchNext.isVisible())
-					searchNext.setVisible(true);
+				if (!searchNextButton.isVisible())
+					searchNextButton.setVisible(true);
 				AsyncCallback<List<GoogleBookClient>> callback = new AsyncCallback<List<GoogleBookClient>>() {
 
 					public void onFailure(Throwable caught) {
@@ -220,24 +234,24 @@ public class Searcher implements EntryPoint, HistoryListener {
 						callback);
 			}
 		});
-		searchButton.setSize("100%", "100%");
-		searchButton.setStyleName("gwt-ButtonCenter");
-		searchButton.addMouseOutHandler(new MouseOutHandler() {
+		searchInicialButton.setSize("100%", "100%");
+		searchInicialButton.setStyleName("gwt-ButtonCenter");
+		searchInicialButton.addMouseOutHandler(new MouseOutHandler() {
 			public void onMouseOut(MouseOutEvent event) {
 				((Button)event.getSource()).setStyleName("gwt-ButtonCenter");
 			}
 		});
-		searchButton.addMouseOverHandler(new MouseOverHandler() {
+		searchInicialButton.addMouseOverHandler(new MouseOverHandler() {
 			public void onMouseOver(MouseOverEvent event) {
 				((Button)event.getSource()).setStyleName("gwt-ButtonCenterOver");
 			}
 		});
-		searchButton.addMouseDownHandler(new MouseDownHandler() {
+		searchInicialButton.addMouseDownHandler(new MouseDownHandler() {
 			public void onMouseDown(MouseDownEvent event) {
 				((Button)event.getSource()).setStyleName("gwt-ButtonCenterPush");
 			}
 		});
-		searchButton.addClickHandler(new ClickHandler() {
+		searchInicialButton.addClickHandler(new ClickHandler() {
 
 			public void onClick(ClickEvent event) {
 				image_1.setVisible(false);
@@ -257,11 +271,11 @@ public class Searcher implements EntryPoint, HistoryListener {
 						String bookLinkString = "";
 						cleanHyperLinks();
 						hyperlinksPanel.clear();
-						searchNext.setVisible(true);
+						searchNextButton.setVisible(true);
 						searchPrevious.setVisible(false);
 						if (result.size() == 0) {
 							lblNewLabel.setText(InformationConstants.NO_RESULTS);
-							searchNext.setVisible(false);
+							searchNextButton.setVisible(false);
 						}
 						for (int i = 0; i < result.size(); i++) {
 							bookLinks[i] = new Hyperlink("", "#");
@@ -318,11 +332,11 @@ public class Searcher implements EntryPoint, HistoryListener {
 							String bookLinkString = "";
 							cleanHyperLinks();
 							hyperlinksPanel.clear();
-							searchNext.setVisible(true);
+							searchNextButton.setVisible(true);
 							searchPrevious.setVisible(false);
 							if (result.size() == 0) {
 								lblNewLabel.setText("No results found");
-								searchNext.setVisible(false);
+								searchNextButton.setVisible(false);
 							}
 							for (int i = 0; i < result.size(); i++) {
 								bookLinks[i] = new Hyperlink("", "#");
@@ -376,7 +390,7 @@ public class Searcher implements EntryPoint, HistoryListener {
 		}
 		cleanHyperLinks();
 		hyperlinksPanel.clear();
-		searchNext.setVisible(false);
+		searchNextButton.setVisible(false);
 		searchPrevious.setVisible(false);
 
 		String token = History.getToken();
@@ -396,9 +410,10 @@ public class Searcher implements EntryPoint, HistoryListener {
 		bookSearcherWidget.add(searcherField);
 		searcherField.setWidth("617px");
 		searcherField.setText("");
-		bookSearcherWidget.add(searchButton);
+		searchInicialButton.setHTML(SEARCH_INICIAL_BUTTON);
+		bookSearcherWidget.add(searchInicialButton);
 		bookSearcherWidget.add(searchPrevious);
-		bookSearcherWidget.add(searchNext);
+		bookSearcherWidget.add(searchNextButton);
 	
 		Panel.setVerticalAlignment(HasVerticalAlignment.ALIGN_MIDDLE);
 		Panel.setHorizontalAlignment(HasHorizontalAlignment.ALIGN_CENTER);
@@ -471,7 +486,7 @@ public class Searcher implements EntryPoint, HistoryListener {
 		 // MainEntryPoint.getTechnicalSpecs().setBook(result);
 */		 
 
-			 VisorSearcher VS = new VisorSearcher(result);
+			 VisorSearcherGoogleBookPopupPanel VS = new VisorSearcherGoogleBookPopupPanel(result);
 			 VS.center();
 			
 		

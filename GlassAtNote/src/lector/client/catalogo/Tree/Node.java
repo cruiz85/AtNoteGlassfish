@@ -25,7 +25,6 @@ public class Node extends TreeItem{
 	}
 	
 	public void setTextNodo(String text) {
-		// TODO Auto-generated method stub
 		super.setText(text);
 	}
 	
@@ -37,7 +36,6 @@ public class Node extends TreeItem{
 	
 	@Override
 	public String getText() {
-		// TODO Auto-generated method stub
 		return Text;
 	}
 

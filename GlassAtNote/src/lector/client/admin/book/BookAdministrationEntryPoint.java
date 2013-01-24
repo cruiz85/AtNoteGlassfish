@@ -491,15 +491,15 @@ public class BookAdministrationEntryPoint implements EntryPoint {
 
 	public static String toFile() {
 		StringBuffer SB = new StringBuffer();
-		SB.append(GET_A_BOOK_WELLCOME + '\n');
-		SB.append(UPLOAD_A_TEXT + '\n');
-		SB.append(GET_A_BOOK + '\n');
-		SB.append(DELETE_SELECTED_LABEL + '\n');
+		SB.append(GET_A_BOOK_WELLCOME + "\r\n");
+		SB.append(UPLOAD_A_TEXT + "\r\n");
+		SB.append(GET_A_BOOK + "\r\n");
+		SB.append(DELETE_SELECTED_LABEL + "\r\n");
 		return SB.toString();
 	}
 
 	public static void FromFile(String Entrada) {
-		String[] Lista = Entrada.split("\n");
+		String[] Lista = Entrada.split("\r\n");
 		if (Lista.length >= NCampos) {
 			if (!Lista[0].isEmpty())
 				GET_A_BOOK_WELLCOME = Lista[0];
@@ -524,7 +524,15 @@ public class BookAdministrationEntryPoint implements EntryPoint {
 					ActualState.getUser().toString(),
 					ErrorConstants.ERROR_LOADING_LANGUAGE_IN
 							+ BOOK_ADMINISTRATION_NAME);
-
+		ParsearFieldsAItemsRESET();
+	}
+	
+	private static void ParsearFieldsAItemsRESET() {
+		GET_A_BOOK_WELLCOME = GET_A_BOOK_WELLCOME_RESET;
+		UPLOAD_A_TEXT = UPLOAD_A_TEXT_RESET;
+		GET_A_BOOK = GET_A_BOOK_RESET;
+		DELETE_SELECTED_LABEL = DELETE_SELECTED_LABEL_RESET;
+		
 	}
 
 }

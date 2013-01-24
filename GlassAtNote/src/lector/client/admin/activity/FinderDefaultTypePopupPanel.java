@@ -150,19 +150,24 @@ public class FinderDefaultTypePopupPanel extends PopupPanel {
 	
 	public static String toFile() {
 		StringBuffer SB=new StringBuffer();
-		SB.append(CLOSE+'\n');
+		SB.append(CLOSE+"\r\n");
 		return SB.toString();
 	}
 	
 	public static void FromFile(String Entrada) {
-		String[] Lista = Entrada.split("\n");
+		String[] Lista = Entrada.split("\r\n");
 		if (Lista.length >= NCampos) {
 			if (!Lista[0].isEmpty())
 				CLOSE = Lista[0];
 			else CLOSE=CLOSE_RESET;
 		}
 		else 
-			Logger.GetLogger().severe(EditorActivityPopupPanel.class.toString(), ActualState.getUser().toString(), ErrorConstants.ERROR_LOADING_LANGUAGE_IN  + FINDER_DEFAULT_TYPE_NAME);
+			Logger.GetLogger().severe(FinderDefaultTypePopupPanel.class.toString(), ActualState.getUser().toString(), ErrorConstants.ERROR_LOADING_LANGUAGE_IN  + FINDER_DEFAULT_TYPE_NAME);
+		ParsearFieldsAItemsRESET();
+	}
+	
+	private static void ParsearFieldsAItemsRESET() {
+		 CLOSE=CLOSE_RESET;
 		
 	}
 	

@@ -87,7 +87,6 @@ public class arbitroLlamadasRTF {
 			}
 			else
 			{
-				//TODO FAlta codigo Cesar
 			imageServiceHolder.loadRTFStringForExportUni(E,
 					new AsyncCallback<String>() {
 

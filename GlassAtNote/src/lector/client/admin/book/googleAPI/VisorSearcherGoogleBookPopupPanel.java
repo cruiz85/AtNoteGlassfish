@@ -1,4 +1,4 @@
-package lector.client.search;
+package lector.client.admin.book.googleAPI;
 
 
 import lector.client.book.reader.GWTService;
@@ -29,16 +29,17 @@ import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.MenuItemSeparator;
 import com.google.gwt.user.client.ui.TextBox;
 
-public class VisorSearcher extends PopupPanel {
+public class VisorSearcherGoogleBookPopupPanel extends PopupPanel {
 
-	public String BookId="8topAAAAYAAJ";
-	public VisorSearcher Yo;
+	public String BookId="";
+	public VisorSearcherGoogleBookPopupPanel Yo;
 	static GWTServiceAsync bookReaderServiceHolder = GWT
 			.create(GWTService.class);
 	public GoogleBookClient Entrada;
 	
-	public VisorSearcher(GoogleBookClient entrada) {
+	public VisorSearcherGoogleBookPopupPanel(GoogleBookClient entrada) {
 		super(false);
+		setAnimationEnabled(true);
 		BookId=entrada.getWebLinks().get(0);
 		entrada.setImagesPath(BookId);
 		Yo=this;

@@ -278,14 +278,14 @@ public class NewActivityPopupPanel extends PopupPanel {
 
 	public String toFile() {
 		StringBuffer SB=new StringBuffer();
-		SB.append(INSERT_NAME_LABEL + '\n');
-		SB.append( CREATE_BUTTON + '\n' );
-		SB.append( CANCEL_BUTTON + '\n' );
+		SB.append(INSERT_NAME_LABEL + "\r\n");
+		SB.append( CREATE_BUTTON + "\r\n" );
+		SB.append( CANCEL_BUTTON + "\r\n" );
 		return SB.toString();
 	}
 
 	public static void FromFile(String Entrada) {
-		String[] Lista = Entrada.split("\n");
+		String[] Lista = Entrada.split("\r\n");
 		if (Lista.length >= NCampos) {
 			if (!Lista[0].isEmpty())
 				INSERT_NAME_LABEL = Lista[0];
@@ -298,7 +298,15 @@ public class NewActivityPopupPanel extends PopupPanel {
 			else CANCEL_BUTTON=CANCEL_BUTTON_RESET;
 		}
 		else 
-			Logger.GetLogger().severe(EditorActivityPopupPanel.class.toString(), ActualState.getUser().toString(), ErrorConstants.ERROR_LOADING_LANGUAGE_IN  + ACTIVITY_ADMINISTRATION);	
+			Logger.GetLogger().severe(NewActivityPopupPanel.class.toString(), ActualState.getUser().toString(), ErrorConstants.ERROR_LOADING_LANGUAGE_IN  + ACTIVITY_ADMINISTRATION);	
+		ParsearFieldsAItemsRESET();
+	}
+	
+	private static void ParsearFieldsAItemsRESET() {
+		INSERT_NAME_LABEL=INSERT_NAME_LABEL_RESET;
+		CREATE_BUTTON=CREATE_BUTTON_RESET;
+		CANCEL_BUTTON=CANCEL_BUTTON_RESET;
+		
 	}
 	
 	protected void ParsearFieldsAItems() {

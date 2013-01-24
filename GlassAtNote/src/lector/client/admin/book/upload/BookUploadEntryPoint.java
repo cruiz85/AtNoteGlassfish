@@ -1,4 +1,4 @@
-package lector.client.admin.BookUpload;
+package lector.client.admin.book.upload;
 
 import java.util.ArrayList;
 
@@ -42,7 +42,7 @@ import lector.client.book.reader.ImageServiceAsync;
 import lector.client.book.reader.ImageService;
 import lector.share.model.client.UserClient;
 
-public class BookLoader implements EntryPoint {
+public class BookUploadEntryPoint implements EntryPoint {
 
 	static ImageServiceAsync userImageService = GWT.create(ImageService.class);
 	static GWTServiceAsync bookReaderServiceHolder = GWT
@@ -334,26 +334,6 @@ public class BookLoader implements EntryPoint {
 				results=results.replaceAll("\\<.*?\\>","");
 				if ((event.getResults()!=null)&&!(results.isEmpty()))
 					Window.alert(event.getResults());
-				/*
-				 * userImageService.getBookBlobsByUserId(ActualUser.getUser().getId
-				 * (), new AsyncCallback<ArrayList<BookBlob>>() {
-				 * 
-				 * public void onFailure(Throwable caught) { // TODO
-				 * Auto-generated method stub
-				 * 
-				 * }
-				 * 
-				 * public void onSuccess(ArrayList<BookBlob> result) { Image
-				 * image = new Image(); String imgURL =
-				 * result.get(0).getWebLinks() .get(0); image.setUrl(imgURL);
-				 * 
-				 * final PopupPanel imagePopup = new PopupPanel( true);
-				 * imagePopup.setWidget(image); imagePopup.center();
-				 * form.reset();
-				 * 
-				 * 
-				 * } });
-				 */
 				bookReaderServiceHolder.loadUserById(ActualState.getUser()
 						.getId(), new AsyncCallback<UserClient>() {
 

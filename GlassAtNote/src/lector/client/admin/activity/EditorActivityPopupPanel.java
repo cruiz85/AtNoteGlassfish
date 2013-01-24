@@ -975,32 +975,32 @@ public class EditorActivityPopupPanel extends PopupPanel {
 
 	public String toFile() {
 		StringBuffer SB=new StringBuffer();
-		SB.append(MENU_WELLCOME_TEXT + '\n');
-		SB.append( MENU_SAVE_BUTTON + '\n' );
-		SB.append( MENU_CANCEL_BUTTON + '\n' );
-		SB.append( TAB_PANEL_LANGUAGE + '\n' );
-		SB.append( TAB_PANEL_CATALOG + '\n' );
-		SB.append( ALLOW_DEFAULT_TYPE + '\n' );
-		SB.append( BOTON_SELECT_DEFAULT_TYPE + '\n' );
-		SB.append( TAB_PANEL_BOOK + '\n' );
-		SB.append( TAB_PANEL_GROUPS + '\n' );
-		SB.append( TAB_PANEL_TEMPLATES + '\n' );
-		SB.append( ALLOW_BLANK_TEMPLATE + '\n' );
-		SB.append( TAB_PANEL_VISUALIZACION + '\n' );
-		SB.append( LANGUAGE_LABEL + '\n' );
-		SB.append( PRIVATE_CATALOG_LABEL + '\n' );
-		SB.append( PUBLIC_CATALOG_LABEL + '\n' );
-		SB.append( DEFAUL_TYPE_LABEL + '\n' );
-		SB.append( BOOK_LABEL + '\n' );
-		SB.append( GROUPS_LABEL + '\n' );
-		SB.append( TEMPLATE_LABEL + '\n' );
-		SB.append( BLANK_TEMPLATE_ALLOWED + '\n' );
-		SB.append( VISUALIZACION_LABEL + '\n' );
+		SB.append(MENU_WELLCOME_TEXT + "\r\n");
+		SB.append( MENU_SAVE_BUTTON + "\r\n" );
+		SB.append( MENU_CANCEL_BUTTON + "\r\n" );
+		SB.append( TAB_PANEL_LANGUAGE + "\r\n" );
+		SB.append( TAB_PANEL_CATALOG + "\r\n" );
+		SB.append( ALLOW_DEFAULT_TYPE + "\r\n" );
+		SB.append( BOTON_SELECT_DEFAULT_TYPE + "\r\n" );
+		SB.append( TAB_PANEL_BOOK + "\r\n" );
+		SB.append( TAB_PANEL_GROUPS + "\r\n" );
+		SB.append( TAB_PANEL_TEMPLATES + "\r\n" );
+		SB.append( ALLOW_BLANK_TEMPLATE + "\r\n" );
+		SB.append( TAB_PANEL_VISUALIZACION + "\r\n" );
+		SB.append( LANGUAGE_LABEL + "\r\n" );
+		SB.append( PRIVATE_CATALOG_LABEL + "\r\n" );
+		SB.append( PUBLIC_CATALOG_LABEL + "\r\n" );
+		SB.append( DEFAUL_TYPE_LABEL + "\r\n" );
+		SB.append( BOOK_LABEL + "\r\n" );
+		SB.append( GROUPS_LABEL + "\r\n" );
+		SB.append( TEMPLATE_LABEL + "\r\n" );
+		SB.append( BLANK_TEMPLATE_ALLOWED + "\r\n" );
+		SB.append( VISUALIZACION_LABEL + "\r\n" );
 		return SB.toString();
 	}
 
 	public static void FromFile(String Entrada) {
-		String[] Lista = Entrada.split("\n");
+		String[] Lista = Entrada.split("\r\n");
 		if (Lista.length >= NCampos) {
 			if (!Lista[0].isEmpty())
 				MENU_WELLCOME_TEXT = Lista[0];
@@ -1068,8 +1068,34 @@ public class EditorActivityPopupPanel extends PopupPanel {
 		}
 		else 
 			Logger.GetLogger().severe(EditorActivityPopupPanel.class.toString(), ActualState.getUser().toString(), ErrorConstants.ERROR_LOADING_LANGUAGE_IN  + EDITORACTIVITY_NAME);	
+		ParsearFieldsAItemsRESET();
 	}
 	
+	private static void ParsearFieldsAItemsRESET() {
+		MENU_WELLCOME_TEXT=MENU_WELLCOME_TEXT_RESET;
+		MENU_SAVE_BUTTON=MENU_SAVE_BUTTON_RESET;
+		MENU_CANCEL_BUTTON=MENU_CANCEL_BUTTON_RESET;
+		TAB_PANEL_LANGUAGE=TAB_PANEL_LANGUAGE_RESET;
+		TAB_PANEL_CATALOG=TAB_PANEL_CATALOG_RESET;
+		ALLOW_DEFAULT_TYPE=ALLOW_DEFAULT_TYPE_RESET;
+		BOTON_SELECT_DEFAULT_TYPE=BOTON_SELECT_DEFAULT_TYPE_RESET;
+		TAB_PANEL_BOOK=TAB_PANEL_BOOK_RESET;
+		TAB_PANEL_GROUPS=TAB_PANEL_GROUPS_RESET;
+		TAB_PANEL_TEMPLATES=TAB_PANEL_TEMPLATES_RESET;
+		ALLOW_BLANK_TEMPLATE=ALLOW_BLANK_TEMPLATE_RESET;
+		TAB_PANEL_VISUALIZACION=TAB_PANEL_VISUALIZACION_RESET;
+		LANGUAGE_LABEL=LANGUAGE_LABEL_RESET;
+		PRIVATE_CATALOG_LABEL=PRIVATE_CATALOG_LABEL_RESET;
+		PUBLIC_CATALOG_LABEL=PUBLIC_CATALOG_LABEL_RESET;
+		DEFAUL_TYPE_LABEL=DEFAUL_TYPE_LABEL_RESET;
+		BOOK_LABEL=BOOK_LABEL_RESET;
+		GROUPS_LABEL=GROUPS_LABEL_RESET;
+		TEMPLATE_LABEL=TEMPLATE_LABEL_RESET;
+		BLANK_TEMPLATE_ALLOWED=BLANK_TEMPLATE_ALLOWED_RESET;
+		VISUALIZACION_LABEL=VISUALIZACION_LABEL_RESET;
+		
+	}
+
 	protected void ParsearFieldsAItems() {
 
 		WellcomeMenuItem.setHTML(MENU_WELLCOME_TEXT+ActualActivity.getName());	

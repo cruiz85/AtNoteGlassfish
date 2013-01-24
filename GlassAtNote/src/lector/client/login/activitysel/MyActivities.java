@@ -121,7 +121,6 @@ public class MyActivities implements EntryPoint {
 		
 		MenuItem menuItem_4 = new MenuItem("Delete My User", false, new Command() {
 			public void execute() {
-				//TODO Pedir Contrasena
 				if (Window.confirm(InformationConstants.DO_YOU_WANT_SURE_DELETE_USER))
 				{
 					LoadingPanel.getInstance().center();

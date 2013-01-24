@@ -504,8 +504,6 @@ public class Login implements EntryPoint {
 				} else if (!isValidEmail(email.getText())) {
 					Window.alert(ErrorConstants.IT_IS_NOT_A_EMAIL);
 				} else {
-					// TODO
-					// ProfessorClient UC = new ProfessorClient();
 					StudentClient UC = new StudentClient();
 					UC.setFirstName(FirstName.getText());
 					UC.setLastName(lastName.getText());

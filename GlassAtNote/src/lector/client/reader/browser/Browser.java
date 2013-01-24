@@ -512,7 +512,7 @@ Tipos.add(((EntityCatalogElements)BSM.getEntidad()).getEntry()) ;
 
 	protected void filterAndAdd(ArrayList<TypeClient> result) {
 		
-		//TODO
+		//TODO Test
 		Window.alert(result.toString());
 		
 		

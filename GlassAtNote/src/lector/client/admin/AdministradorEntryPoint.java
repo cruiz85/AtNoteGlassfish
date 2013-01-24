@@ -725,31 +725,32 @@ public class AdministradorEntryPoint implements EntryPoint {
 	MyActivitiesButton.setHTML(MY_ACTIVITIES_BUTTON);
 	MyProfileButton.setHTML(MY_PROFILE_BUTTON);
 	ReturnToActivityButton.setHTML(RETURN_TO_ACTIVITY_BUTTON);
-	
-	
 	}
 	
 	public static String toFile() {
 		StringBuffer SB=new StringBuffer();
-		SB.append(WELLCOME_MENU+'\n');
-		SB.append(CLOSE_SESSION_MENU+'\n');
-		SB.append(CATALOG_BUTTON+'\n');
-		SB.append(INTERFACE_LANGUAGE_BUTTON+'\n');
-		SB.append(EXPORT_TEMPLATES_BUTTON+'\n');
-		SB.append(ACTIVITY_BUTTON+'\n');
-		SB.append(GROUP_BUTTON+'\n');
-		SB.append(USERS_BUTTON+'\n');
-		SB.append(ADMINISTRATORS_BUTTON+'\n');
-		SB.append(BOOK_MANAGMENT_BUTTON+'\n');
-		SB.append(MY_LIBRARY_BUTTON+'\n');
-		SB.append(MY_ACTIVITIES_BUTTON+'\n');
-		SB.append(MY_PROFILE_BUTTON+'\n');
-		SB.append(RETURN_TO_ACTIVITY_BUTTON+'\n');
+		SB.append(WELLCOME_MENU+"\r\n");
+		SB.append(CLOSE_SESSION_MENU+"\r\n");
+		SB.append(CATALOG_BUTTON+"\r\n");
+		SB.append(INTERFACE_LANGUAGE_BUTTON+"\r\n");
+		SB.append(EXPORT_TEMPLATES_BUTTON+"\r\n");
+		SB.append(ACTIVITY_BUTTON+"\r\n");
+		SB.append(GROUP_BUTTON+"\r\n");
+		SB.append(USERS_BUTTON+"\r\n");
+		SB.append(ADMINISTRATORS_BUTTON+"\r\n");
+		SB.append(BOOK_MANAGMENT_BUTTON+"\r\n");
+		SB.append(MY_LIBRARY_BUTTON+"\r\n");
+		SB.append(MY_ACTIVITIES_BUTTON+"\r\n");
+		SB.append(MY_PROFILE_BUTTON+"\r\n");
+		SB.append(RETURN_TO_ACTIVITY_BUTTON+"\r\n");
 		return SB.toString();
 	}
 	
 	public static void FromFile(String Entrada) {
-		String[] Lista = Entrada.split("\n");
+		if (Entrada.length()==0) ParsearFieldsAItemsRESET();
+		else
+		{
+		String[] Lista = Entrada.split("\r\n");
 		if (Lista.length >= NCampos) {
 			if (!Lista[0].isEmpty())
 				WELLCOME_MENU = Lista[0];
@@ -795,9 +796,31 @@ public class AdministradorEntryPoint implements EntryPoint {
 			else RETURN_TO_ACTIVITY_BUTTON=RETURN_TO_ACTIVITY_BUTTON_RESET;
 		}
 		else 
+			{
 			Logger.GetLogger().severe(EditorActivityPopupPanel.class.toString(), ActualState.getUser().toString(), ErrorConstants.ERROR_LOADING_LANGUAGE_IN  + ADMINISTRATORS_NAME);
-			
-			
+			ParsearFieldsAItemsRESET();
+			}
 		
+		}
+		
+	}
+	
+	private static void ParsearFieldsAItemsRESET()
+	{
+	WELLCOME_MENU=WELLCOME_MENU_RESET;
+	CLOSE_SESSION_MENU=CLOSE_SESSION_MENU_RESET;
+	CATALOG_BUTTON=CATALOG_BUTTON_RESET;
+	INTERFACE_LANGUAGE_BUTTON=INTERFACE_LANGUAGE_BUTTON_RESET;
+	EXPORT_TEMPLATES_BUTTON=EXPORT_TEMPLATES_BUTTON_RESET;
+	ACTIVITY_BUTTON=ACTIVITY_BUTTON_RESET;
+	GROUP_BUTTON=GROUP_BUTTON_RESET;
+	USERS_BUTTON=USERS_BUTTON_RESET;
+	ADMINISTRATORS_BUTTON=ADMINISTRATORS_BUTTON_RESET;
+	BOOK_MANAGMENT_BUTTON=BOOK_MANAGMENT_BUTTON_RESET;
+	MY_LIBRARY_BUTTON = MY_LIBRARY_BUTTON_RESET;
+	MY_ACTIVITIES_BUTTON=MY_ACTIVITIES_BUTTON_RESET;
+	MY_PROFILE_BUTTON=MY_PROFILE_BUTTON_RESET;
+	RETURN_TO_ACTIVITY_BUTTON=RETURN_TO_ACTIVITY_BUTTON_RESET;
+	
 	}
 }
