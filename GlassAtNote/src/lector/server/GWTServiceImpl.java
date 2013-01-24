@@ -1851,11 +1851,31 @@ public class GWTServiceImpl extends RemoteServiceServlet implements GWTService {
 		StringBuilder builder = new StringBuilder();
 		BufferedReader reader;
 		try {
-			url = new URL("http://a-note.appspot.com/rs/AtNote/google/book/"
-					+ id);
+			url = new URL(
+					"http://books.google.com/ebooks/reader?id="
+							+ id
+							+ "&pg=PP0&key=ABQIAAAAgGfd0Syld4wI6M_8-PchExQ_l6-Ytnm_KJl3gFahMrxfvqMmehRrB92flZ-iJptRd3l62UsasikVhg");
 			connection = url.openConnection();
-			connection.addRequestProperty("Referer",
-					"http://kido180020783.appspot.com/");
+			connection.addRequestProperty("GET", url.toString());
+			connection.addRequestProperty(
+					"User-Agent",
+					"Mozilla/5.0 (Windows; U; Windows NT 6.1; en-US) AppleWebKit/533.4 (KHTML, like Gecko) Chrome/5.0.375.70 Safari/533.4");
+			connection.addRequestProperty(
+					"Accept",
+					"application/xml,application/xhtml+xml,text/html;q=0.9,text/plain;q=0.8,image/png,*/*;q=0.5");
+			connection.addRequestProperty("Accept-Charset",
+					"ISO-8859-1,utf-8;q=0.7,*;q=0.7");
+			connection.addRequestProperty("Accept-Language",
+					"es-es,es;q=0.8,en-us;q=0.5,en;q=0.3");
+			// connection.addRequestProperty("Cookie","PREF=ID=893be4845a4c5aec:TM=1271533549:LM=12715335 49:S=KCvKQcyJS2SjNm-5");
+			connection.addRequestProperty("Cookie",
+					"PREF=ID=28face613556316e:TM=1184620070:LM=1184620070:S=DkEaab7_F7PtM3ZX");
+			connection.addRequestProperty("Host", "books.google.com");
+			connection.addRequestProperty("Connection", "keep-alive");
+			// connection.setConnectTimeout(3000);
+			
+//			connection.addRequestProperty("Referer",
+//					"http://kido180020783.appspot.com/");
 			reader = new BufferedReader(new InputStreamReader(
 					connection.getInputStream()));
 			while ((line = reader.readLine()) != null) {

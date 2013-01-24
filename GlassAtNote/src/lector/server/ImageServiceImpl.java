@@ -1,11 +1,11 @@
 package lector.server;
 
+import java.awt.image.BufferedImage;
 import java.io.BufferedReader;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.io.UnsupportedEncodingException;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLConnection;
@@ -13,34 +13,28 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-
 import javax.annotation.Resource;
+import javax.imageio.ImageIO;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 import javax.transaction.UserTransaction;
-
 import org.apache.commons.codec.binary.Base64;
-
 import lector.client.book.reader.GWTService;
 import lector.client.book.reader.ImageService;
 import lector.share.model.Annotation;
 import lector.share.model.Book;
 import lector.share.model.BookNotFoundException;
 import lector.share.model.ExportObject;
-import lector.share.model.GeneralException;
 import lector.share.model.Tag;
-import lector.share.model.TagNotFoundException;
 import lector.share.model.TextSelector;
 import lector.share.model.client.BookClient;
 import lector.share.model.client.TextSelectorClient;
-import lector.share.model.client.TypeClient;
-
 import com.google.appengine.api.images.Image;
 import com.google.appengine.api.images.ImagesService;
 import com.google.appengine.api.images.ImagesServiceFactory;
 import com.google.appengine.api.images.Transform;
-import com.google.gwt.user.server.rpc.RemoteServiceServlet;   
+import com.google.gwt.user.server.rpc.RemoteServiceServlet;
 
 /**
  * The server side implementation of the RPC service.
@@ -85,76 +79,12 @@ public class ImageServiceImpl extends RemoteServiceServlet implements
 		return ServiceManagerUtils.produceBookClients(list);
 	}
 
-	public String loadHTMLStringForExport(List<ExportObject> exportObjects) {
-		EntityManager entityManager = EMF.get().createEntityManager();
-		StringBuffer html = new StringBuffer(
-				"<html><head><meta http-equiv=\"Content-Type\" content=\"text/html; charset=utf-8\"></head>");
-		html.append("<title>Export:");
-		html.append(System.nanoTime());
-		html.append("</title><body><table width=\"100%\"><tr><td><h1>Export:");
-		html.append(System.nanoTime());
-		html.append("</h1></td><td align=\"right\">" // TODO IMAGEPATH
-				+ "</td></tr></table>");
-		for (ExportObject exportObject : exportObjects) {
-			html.append("<tr><hr><table align=\"center\" width=\"80%\" border=\"1\" bordercolor=\"blue\">");
-			String imageURL = exportObject.getImageURL();
-			Annotation annotation = entityManager.find(Annotation.class, exportObject.getAnnotation().getId());
-			List<TextSelector> anchors = annotation.getTextSelectors();
-			List<TextSelectorClient> anchorsClient = ServiceManagerUtils.produceTextSelectors(anchors);
-			int imageWidth = exportObject.getWidth();
-			int imageHeight = exportObject.getHeight();
-			html.append("<td rowspan=\"3\"><p>"
-					+ produceCutImagesList(imageURL, anchorsClient, imageWidth,
-							imageHeight, false)
-					+ "</p></td><td colspan=\"2\"><p>");
-			String Clear;
-			try {
-				Clear = new String(exportObject.getAnnotation().getComment()
-						.getBytes(), "UTF-8");
-
-				html.append(Clear + "</p></td></tr><tr>");
-				List<String> fileNames = getTypesNames(annotation.getTags());
-
-				html.append("<td colspan=\"2\"><p>");
-				for (String fileName : fileNames) {
-					html.append(fileName + ", ");
-				}
-				html.append("</p></td>");
-				html.append("</tr><tr><td><p>" + exportObject.getAuthorName()
-						+ "</p></td><td><p>" + exportObject.getDate()
-						+ "</p></td></tr>");
-				html.append("<tr><td colspan=\"2\"></td></tr>");
-				html.append("</table>");
-			} catch (UnsupportedEncodingException e) {
-				Clear = exportObject.getAnnotation().getComment();
-			} 
-		}
-		html.append("</body></html>");
-
-		try {
-			String htmlUTF = new String(html.toString().getBytes(), "UTF-8");
-			return htmlUTF;
-		} catch (UnsupportedEncodingException e) {
-
-			return html.toString();
-		}
-
-	}
-
 	private List<String> getTypesNames(List<Tag> tags) {
 		List<String> strings = new ArrayList<String>();
 		for (Tag tag : tags) {
 			strings.add(tag.getName());
 		}
 		return strings;
-	}
-
-	private List<Long> getTypeClientIds(List<TypeClient> typeClients) {
-		List<Long> ids = new ArrayList<Long>();
-		for (TypeClient typeClient : typeClients) {
-			ids.add(typeClient.getId());
-		}
-		return ids;
 	}
 
 	private String produceImagesFormatted(List<String> images, boolean isRTF) {
@@ -176,23 +106,39 @@ public class ImageServiceImpl extends RemoteServiceServlet implements
 		float prop = height / 830;
 		float widthResize = (width / prop);
 		String contentType = getImageContentType(imageURL);
-		String urlWithoutHeader = imageURL.substring(41);  
-		byte[] oldImageData = getImageDataService(urlWithoutHeader);
-		ImagesService imagesService = ImagesServiceFactory.getImagesService();
-
-		Image oldImage = ImagesServiceFactory.makeImage(oldImageData);
-		Transform resize = ImagesServiceFactory.makeResize((int) widthResize,
-				(int) 830);
-		float leftX = anchor.getX() / widthResize;
-		float topY = anchor.getY() / 830f;
-		float rightX = (anchor.getX() + anchor.getWidth()) / widthResize;
-		float bottomY = (anchor.getY() + anchor.getHeight()) / 830f;
-
-		Transform crop = ImagesServiceFactory.makeCrop(leftX, topY, rightX,
-				bottomY);
-		Image newImage = imagesService.applyTransform(resize, oldImage);
-		newImage = imagesService.applyTransform(crop, newImage);
-		byte[] newImageData = newImage.getImageData();
+//		String urlWithoutHeader = imageURL.substring(41);
+//		byte[] oldImageData = getImageDataService(urlWithoutHeader);
+//		ImagesService imagesService = ImagesServiceFactory.getImagesService();
+//		Image oldImage = ImagesServiceFactory.makeImage(oldImageData);
+		
+		BufferedImage originalImage = ServiceManagerUtils.readImageFromURL(imageURL);
+		int type = originalImage.getType() == 0? BufferedImage.TYPE_INT_ARGB : originalImage.getType();
+		BufferedImage newImage = ServiceManagerUtils.resizeImage(originalImage, (int)widthResize, 830, type);
+//		Transform resize = ImagesServiceFactory.makeResize((int) widthResize,
+//				(int) 830);
+		float leftX = anchor.getX();
+		float topY = anchor.getY();
+		float rightX = (anchor.getX() + anchor.getWidth());
+		float bottomY = (anchor.getY() + anchor.getHeight());
+		byte[] newImageData = null;
+		try {
+			BufferedImage processedImage = ServiceManagerUtils.cropMyImage(newImage, Math.round(anchor.getWidth()), Math.round(anchor.getHeight()), Math.round(anchor.getX()), Math.round(anchor.getY()));
+			ByteArrayOutputStream baos = new ByteArrayOutputStream();
+			ImageIO.write(processedImage, "jpg", baos );
+			baos.flush();
+			newImageData = baos.toByteArray();
+			baos.close();
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	
+//		Transform crop = ImagesServiceFactory.makeCrop(leftX, topY, rightX,
+//				bottomY);
+//		Image newImage = imagesService.applyTransform(resize, oldImage);
+	//	newImage = imagesService.applyTransform(crop, newImage);
+	//	byte[] newImageData = newImage.getImageData();
+		
 		if (isRTF) {
 
 			StringBuffer sb = new StringBuffer();
@@ -247,8 +193,9 @@ public class ImageServiceImpl extends RemoteServiceServlet implements
 		StringBuilder builder = new StringBuilder();
 		BufferedReader reader;
 		try {
-			url = new URL("http://a-note.appspot.com/rs/AtNote/google/book/image"
-					+ id);
+			url = new URL(
+					"http://a-note.appspot.com/rs/AtNote/google/book/image"
+							+ id);
 			connection = url.openConnection();
 			connection.addRequestProperty("Referer",
 					"http://kido180020783.appspot.com/");
@@ -266,39 +213,6 @@ public class ImageServiceImpl extends RemoteServiceServlet implements
 		}
 		return builder.toString().getBytes();
 	}
-	
-	private byte[] getImageData(String urlImage) {
-		byte[] data = null;
-		try {
-			URL url = new URL(urlImage);
-//			String loginPassword = "cruiz85@gmail.com:15148785ba";  
-//			String encoded = new sun.misc.BASE64Encoder().encode (loginPassword.getBytes());
-//			URLConnection conn = url.openConnection();
-//			conn.setRequestProperty ("Authorization", "Basic " + encoded);
-			InputStream inputStream = url.openStream();
-//			InputStream inputStream = conn.getInputStream();
-			ByteArrayOutputStream output = new ByteArrayOutputStream();
-			byte[] buffer = new byte[1024];
-
-			int n = 0;
-			while (-1 != (n = inputStream.read(buffer))) {
-				output.write(buffer, 0, n);
-			}
-			inputStream.close();
-
-			// Here's the content of the image...
-			data = output.toByteArray();
-
-		} catch (MalformedURLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		return data;
-
-	}
 
 	static final String HEXES = "0123456789ABCDEF";
 
@@ -315,15 +229,7 @@ public class ImageServiceImpl extends RemoteServiceServlet implements
 	}
 
 	@Override
-	public String loadHTMLStringForExport(
-			ArrayList<lector.share.model.ExportObject> exportObjects) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public String loadHTMLStringForExportUni(
-			lector.share.model.ExportObject exportObject) {
+	public String loadHTMLStringForExportUni(ExportObject exportObject) {
 		EntityManager entityManager = emf.createEntityManager();
 		StringBuffer html = new StringBuffer();
 		/*
@@ -339,22 +245,24 @@ public class ImageServiceImpl extends RemoteServiceServlet implements
 		 */
 		html.append("<tr><hr><table align=\"center\" width=\"80%\" border=\"1\" bordercolor=\"blue\">");
 		String imageURL = exportObject.getImageURL();
-		Annotation annotation = entityManager.find(Annotation.class, exportObject.getAnnotation().getId());
+		Annotation annotation = entityManager.find(Annotation.class,
+				exportObject.getAnnotation().getId());
 		List<TextSelector> anchors = annotation.getTextSelectors();
-		List<TextSelectorClient> anchorsClient = ServiceManagerUtils.produceTextSelectors(anchors);
+		List<TextSelectorClient> anchorsClient = ServiceManagerUtils
+				.produceTextSelectors(anchors);
 		int imageWidth = exportObject.getWidth();
 		int imageHeight = exportObject.getHeight();
 		html.append("<td rowspan=\"4\"><p>"
 				+ produceCutImagesList(imageURL, anchorsClient, imageWidth,
-						imageHeight,false) + "</p></td><td colspan=\"2\"><p>");
-		String clear;    
+						imageHeight, false) + "</p></td><td colspan=\"2\"><p>");
+		String clear;
 		clear = exportObject.getAnnotation().getComment();
 		// try {
 		// Clear = new String(exportObject.getAnnotation().getComment()
 		// .getValue().getBytes(), "UTF-8");
 		// } catch (UnsupportedEncodingException e) {
 		// Clear = exportObject.getAnnotation().getComment().getValue();
-		// }       
+		// }
 
 		html.append(clear + "</p></td></tr><tr>");
 		List<String> fileNames = getTypesNames(annotation.getTags());
@@ -380,29 +288,59 @@ public class ImageServiceImpl extends RemoteServiceServlet implements
 		return html.toString();
 	}
 
-	private String produceCutImagesList(String imageURL,List<TextSelectorClient> anchors, int imageWidth, int imageHeight, boolean isRTF) {
+	private String produceCutImagesList(String imageURL,
+			List<TextSelectorClient> anchors, int imageWidth, int imageHeight,
+			boolean isRTF) {
 		List<String> images = new ArrayList<String>();
-//		if (imageURL.startsWith("/serve")) {
-//			for (TextSelector anchor : anchors) {
-//				images.add(imageFromBlob(imageURL, anchor, imageWidth,
-//						imageHeight,isRTF));
-//			}
-//
-//		} else {
-			for (TextSelectorClient anchor : anchors) {
-				images.add(imageTransformed(imageURL, anchor, imageWidth,
-						imageHeight, isRTF));
-			}
-//		}
+		// if (imageURL.startsWith("/serve")) {
+		// for (TextSelector anchor : anchors) {
+		// images.add(imageFromBlob(imageURL, anchor, imageWidth,
+		// imageHeight,isRTF));
+		// }
+		//
+		// } else {
+		for (TextSelectorClient anchor : anchors) {
+			images.add(imageTransformed(imageURL, anchor, imageWidth,
+					imageHeight, isRTF));
+		}
+		// }
 
-		return produceImagesFormatted(images,isRTF);
+		return produceImagesFormatted(images, isRTF);
 	}
-	
+
 	@Override
-	public String loadRTFStringForExportUni(
-			lector.share.model.ExportObject exportObject) {
-		// TODO Auto-generated method stub
-		return null;
+	public String loadRTFStringForExportUni(ExportObject exportObject) {
+		StringBuffer rtf = new StringBuffer();
+		String imageURL = exportObject.getImageURL();
+		EntityManager entityManager = emf.createEntityManager();
+		Annotation annotation = entityManager.find(Annotation.class,
+				exportObject.getAnnotation().getId());
+		List<TextSelectorClient> anchors = exportObject.getAnnotation().getTextSelectors();
+		int imageWidth = exportObject.getWidth();
+		int imageHeight = exportObject.getHeight();
+		String clear = exportObject.getAnnotation().getComment();
+		clear=clear.replace("<div>", "\\par ");
+		clear=ParserHTML2RTF.parser(clear);
+//		String Links =findLinks(clear);
+//		String Image =StractImage(clear);
+//		clear=clear.replace("<div>", "\\par ");
+//		clear=clear.replaceAll("\\<a.*?/a\\>", "");
+//		clear=clear.replaceAll("\\<.*?\\>","");
+//		clear=clear+Links+Image;
+		rtf.append("\\trowd\\trgaph15\\trleft-15\\trqc\\trbrdrl\\brdrdash\\brdrw15\\brdrcf2 \\trbrdrt\\brdrdash\\brdrw15\\brdrcf2 \\trbrdrr\\brdrdash\\brdrw15\\brdrcf2 \\trbrdrb\\brdrdash\\brdrw15\\brdrcf2 \\trpaddl15\\trpaddr15\\trpaddfl3\\trpaddfr3"
+				+ "\\clvmgf\\clvertalc\\clbrdrl\\brdrw15\\brdrs\\brdrcf2\\clbrdrt\\brdrw15\\brdrs\\brdrcf2\\clbrdrr\\brdrw15\\brdrs\\brdrcf2\\clbrdrb\\brdrw15\\brdrs\\brdrcf2 \\cellx2066\\clvertalc\\clbrdrl\\brdrw15\\brdrs\\brdrcf2\\clbrdrt\\brdrw15\\brdrs\\brdrcf2\\clbrdrr\\brdrw15\\brdrs\\brdrcf2\\clbrdrb\\brdrw15\\brdrs\\brdrcf2 \\cellx7151\\pard\\intbl\\nowidctlpar\\sb100\\sa100\\cf1\\fs27"
+				+ produceCutImagesList(imageURL, anchors, imageWidth,
+						imageHeight,true)
+				+ "\\cell "
+				+ clear
+				+ "\\cell\\row\\trowd\\trgaph15\\trleft-15\\trqc\\trbrdrl\\brdrdash\\brdrw15\\brdrcf2 \\trbrdrt\\brdrdash\\brdrw15\\brdrcf2 \\trbrdrr\\brdrdash\\brdrw15\\brdrcf2 \\trbrdrb\\brdrdash\\brdrw15\\brdrcf2 \\trpaddl15\\trpaddr15\\trpaddfl3\\trpaddfr3"
+				+ "\\clvmrg\\clvertalc\\clbrdrl\\brdrw15\\brdrs\\brdrcf2\\clbrdrt\\brdrw15\\brdrs\\brdrcf2\\clbrdrr\\brdrw15\\brdrs\\brdrcf2\\clbrdrb\\brdrw15\\brdrs\\brdrcf2 \\cellx2066\\clvertalc\\clbrdrl\\brdrw15\\brdrs\\brdrcf2\\clbrdrt\\brdrw15\\brdrs\\brdrcf2\\clbrdrr\\brdrw15\\brdrs\\brdrcf2\\clbrdrb\\brdrw15\\brdrs\\brdrcf2 \\cellx7151\\pard\\intbl\\nowidctlpar\\cell\\pard\\intbl\\nowidctlpar\\sb100\\sa100"
+				+ getTypesNames(annotation.getTags())
+				+ "\\cell\\row\\trowd\\trgaph15\\trleft-15\\trqc\\trbrdrl\\brdrdash\\brdrw15\\brdrcf2 \\trbrdrt\\brdrdash\\brdrw15\\brdrcf2 \\trbrdrr\\brdrdash\\brdrw15\\brdrcf2 \\trbrdrb\\brdrdash\\brdrw15\\brdrcf2 \\trpaddl15\\trpaddr15\\trpaddfl3\\trpaddfr3"
+				+ "\\clvmrg\\clvertalc\\clbrdrl\\brdrw15\\brdrs\\brdrcf2\\clbrdrt\\brdrw15\\brdrs\\brdrcf2\\clbrdrr\\brdrw15\\brdrs\\brdrcf2\\clbrdrb\\brdrw15\\brdrs\\brdrcf2 \\cellx2066\\clvertalc\\clbrdrl\\brdrw15\\brdrs\\brdrcf2\\clbrdrt\\brdrw15\\brdrs\\brdrcf2\\clbrdrr\\brdrw15\\brdrs\\brdrcf2\\clbrdrb\\brdrw15\\brdrs\\brdrcf2 \\cellx4722\\clvertalc\\clbrdrl\\brdrw15\\brdrs\\brdrcf2\\clbrdrt\\brdrw15\\brdrs\\brdrcf2\\clbrdrr\\brdrw15\\brdrs\\brdrcf2\\clbrdrb\\brdrw15\\brdrs\\brdrcf2 \\cellx7151\\pard\\intbl\\nowidctlpar\\cell\\pard\\intbl\\nowidctlpar\\sb100\\sa100 " + exportObject.getAuthorName() + " \\cell " +exportObject.getDate() + "\\cell\\row\\trowd\\trgaph15\\trleft-15\\trqc\\trbrdrl\\brdrdash\\brdrw15\\brdrcf2 \\trbrdrt\\brdrdash\\brdrw15\\brdrcf2 \\trbrdrr\\brdrdash\\brdrw15\\brdrcf2 \\trbrdrb\\brdrdash\\brdrw15\\brdrcf2 \\trpaddl15\\trpaddr15\\trpaddfl3\\trpaddfr3"
+				+ "\\clvmrg\\clvertalc\\clbrdrl\\brdrw15\\brdrs\\brdrcf2\\clbrdrt\\brdrw15\\brdrs\\brdrcf2\\clbrdrr\\brdrw15\\brdrs\\brdrcf2\\clbrdrb\\brdrw15\\brdrs\\brdrcf2 \\cellx2066\\clvertalc\\clbrdrl\\brdrw15\\brdrs\\brdrcf2\\clbrdrt\\brdrw15\\brdrs\\brdrcf2\\clbrdrr\\brdrw15\\brdrs\\brdrcf2\\clbrdrb\\brdrw15\\brdrs\\brdrcf2 \\cellx4722\\clvertalc\\clbrdrr\\brdrw15\\brdrs\\brdrcf2\\clbrdrb\\brdrw15\\brdrs\\brdrcf2 \\cellx7151\\pard\\intbl\\nowidctlpar\\cell\\cf0\\fs24\\cell\\fs20\\cell\\row\\pard\\nowidctlpar\\fs24\\par");
+		
+		return rtf.toString();
 	}
 
 }

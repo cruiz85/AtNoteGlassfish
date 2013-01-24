@@ -1,9 +1,24 @@
 package lector.server;
 
+import java.awt.Dimension;
+import java.awt.Graphics;
+import java.awt.Graphics2D;
+import java.awt.Image;
+import java.awt.Rectangle;
+import java.awt.image.BufferedImage;
+import java.awt.image.RasterFormatException;
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.IOException;
+import java.io.InputStream;
+import java.net.URL;
+import java.net.URLConnection;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.StringTokenizer;
 
+import javax.imageio.ImageIO;
 import javax.persistence.EntityTransaction;
 import javax.transaction.SystemException;
 import javax.transaction.UserTransaction;
@@ -53,7 +68,7 @@ public class ServiceManagerUtils {
 	// }
 	//
 	// }
-
+	static Rectangle clip;
 	public static void rollback(UserTransaction userTransaction) {
 		try {
 			userTransaction.rollback();
@@ -407,5 +422,172 @@ public class ServiceManagerUtils {
 
 		return templateCategoryClient;
 	}
+	
+	
+	
+// PROCESAMIENTO DE IMAGENES
+	
+	public static BufferedImage cropMyImage(BufferedImage img, int cropWidth,
+			int cropHeight, int cropStartX, int cropStartY) throws Exception {
+		BufferedImage clipped = null;
+		Dimension size = new Dimension(cropWidth, cropHeight);
+
+		createClip(img, size, cropStartX, cropStartY);
+
+		try {
+			int w = clip.width;
+			int h = clip.height;
+			clipped = img.getSubimage(clip.x, clip.y, w, h);
+
+			// System.out.println("Image Cropped. <span id="IL_AD3" class="IL_AD">New Image</span> Dimension: "+
+			// clipped.getWidth() + "w X " + clipped.getHeight() + "h");
+		} catch (RasterFormatException rfe) {
+			System.out.println("Raster format error: " + rfe.getMessage());
+			return null;
+		}
+		return clipped;
+	}
+
+	private static void createClip(BufferedImage img, Dimension size,
+			int clipX, int clipY) throws Exception {
+		
+		boolean isClipAreaAdjusted = false;
+
+		/** Checking for negative X Co-ordinate **/
+		if (clipX < 0) {
+			clipX = 0;
+			isClipAreaAdjusted = true;
+		}
+		/** Checking for negative Y Co-ordinate **/
+		if (clipY < 0) {
+			clipY = 0;
+			isClipAreaAdjusted = true;
+		}
+
+		/** Checking if the clip area lies outside the rectangle **/
+		if ((size.width + clipX) <= img.getWidth()
+				&& (size.height + clipY) <= img.getHeight()) {
+
+			/**
+			 * <span id="IL_AD10" class="IL_AD">Setting up a</span> clip
+			 * rectangle when clip area lies within the image.
+			 */
+
+			clip = new Rectangle(size);
+			clip.x = clipX;
+			clip.y = clipY;
+		} else {
+
+			/**
+			 * Checking if the width of the clip area lies outside the image. If
+			 * so, making the image width boundary as the clip width.
+			 */
+			if ((size.width + clipX) > img.getWidth())
+				size.width = img.getWidth() - clipX;
+
+			/**
+			 * Checking if the height of the clip area lies outside the image.
+			 * If so, making the image height boundary as the clip height.
+			 */
+			if ((size.height + clipY) > img.getHeight())
+				size.height = img.getHeight() - clipY;
+
+			/** Setting up the clip are based on our clip area size adjustment **/
+			clip = new Rectangle(size);
+			clip.x = clipX;
+			clip.y = clipY;
+
+			isClipAreaAdjusted = true;
+
+		}
+		if (isClipAreaAdjusted)
+			System.out.println("Crop Area Lied Outside The Image."
+					+ " Adjusted The Clip Rectangle\n");
+	}
+
+	public static BufferedImage readImageFromURL(String urlLocation) {
+		URLConnection yc = null;
+		BufferedImage bufferedImage = null;
+		try {
+			URL url = new URL(urlLocation);
+			yc = url.openConnection();
+			yc.addRequestProperty("GET", url.toString());
+			yc.addRequestProperty(
+					"User-Agent",
+					"Mozilla/5.0 (Windows; U; Windows NT 6.1; en-US) AppleWebKit/533.4 (KHTML, like Gecko) Chrome/5.0.375.70 Safari/533.4");
+			yc.addRequestProperty(
+					"Accept",
+					"application/xml,application/xhtml+xml,text/html;q=0.9,text/plain;q=0.8,image/png,*/*;q=0.5");
+			yc.addRequestProperty("Accept-Charset",
+					"ISO-8859-1,utf-8;q=0.7,*;q=0.7");
+			yc.addRequestProperty("Accept-Language",
+					"es-es,es;q=0.8,en-us;q=0.5,en;q=0.3");
+			// yc.addRequestProperty("Cookie","PREF=ID=893be4845a4c5aec:TM=1271533549:LM=12715335 49:S=KCvKQcyJS2SjNm-5");
+			yc.addRequestProperty("Cookie",
+					"PREF=ID=28face613556316e:TM=1184620070:LM=1184620070:S=DkEaab7_F7PtM3ZX");
+			yc.addRequestProperty("Host", "books.google.com");
+			yc.addRequestProperty("Connection", "keep-alive");
+			// yc.setConnectTimeout(3000);
+			InputStream is = yc.getInputStream();
+			ByteArrayOutputStream outputStream = new ByteArrayOutputStream(1024);
+			byte[] array = new byte[1000];
+			int leido = is.read(array);
+			while (leido > 0) {
+				outputStream.write(array, 0, leido);
+				leido = is.read(array);
+			}
+
+			InputStream in = new ByteArrayInputStream(
+					outputStream.toByteArray());
+			bufferedImage = ImageIO.read(in);
+
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		return bufferedImage;
+	}
+
+	public static BufferedImage imageToBufferedImage(Image im) {
+		BufferedImage bi = new BufferedImage(im.getWidth(null),
+				im.getHeight(null), BufferedImage.TYPE_INT_RGB);
+		Graphics bg = bi.getGraphics();
+		bg.drawImage(im, 0, 0, null);
+		bg.dispose();
+		return bi;
+	}
+
+	public static BufferedImage readImage(String fileLocation) {
+		BufferedImage img = null;
+		try {
+			img = ImageIO.read(new File(fileLocation));
+			System.out.println("Image Read. Image Dimension: " + img.getWidth()
+					+ "w X " + img.getHeight() + "h");
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		return img;
+	}
+	
+	public static void writeImage(BufferedImage img, String fileLocation,
+			String extension) {
+		try {
+			BufferedImage bi = img;
+			File outputfile = new File(fileLocation);
+			ImageIO.write(bi, extension, outputfile);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+
+	public static BufferedImage resizeImage(BufferedImage originalImage,
+			int width, int height, int type) {
+		BufferedImage resizedImage = new BufferedImage(width, height, type);
+		Graphics2D g = resizedImage.createGraphics();
+		g.drawImage(originalImage, 0, 0, width, height, null);
+		g.dispose();
+
+		return resizedImage;
+	}
+	
 
 }

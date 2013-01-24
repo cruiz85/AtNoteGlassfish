@@ -30,8 +30,6 @@ public interface ImageService extends RemoteService {
 
 	public List<BookClient> getBookByUserId(Long userAppId);
 
-	public String loadHTMLStringForExport(ArrayList<ExportObject> exportObjects);
-
 	public String loadHTMLStringForExportUni(ExportObject exportObject);
 
 	public String loadRTFStringForExportUni(ExportObject exportObject);

@@ -27,9 +27,6 @@ public interface ImageServiceAsync {
 	void getBookByUserId(Long userAppId,
 			AsyncCallback<List<BookClient>> callback);
 
-	void loadHTMLStringForExport(ArrayList<ExportObject> exportObjects,
-			AsyncCallback<String> callback);
-
 	void loadHTMLStringForExportUni(ExportObject exportObject,
 			AsyncCallback<String> callback);
 
