@@ -320,6 +320,10 @@ CancelButton.setStyleName("gwt-ButtonCenter");
 	}
 
 	public static void FromFile(String Entrada) {
+		if (Entrada.length()==0) 
+			ParsearFieldsAItemsRESET();
+		else
+		{
 		String[] Lista = Entrada.split("\r\n");
 		if (Lista.length >= NCampos) {
 			if (!Lista[0].isEmpty())
@@ -338,6 +342,7 @@ CancelButton.setStyleName("gwt-ButtonCenter");
 		else 
 			Logger.GetLogger().severe(ReadingActivityVisibilityPopupPanel.class.toString(), ActualState.getUser().toString(), ErrorConstants.ERROR_LOADING_LANGUAGE_IN  + READING_ACTIVITY_VISIVILITY);	
 		ParsearFieldsAItemsRESET();
+		}
 	}
 	
 	private static void ParsearFieldsAItemsRESET() {

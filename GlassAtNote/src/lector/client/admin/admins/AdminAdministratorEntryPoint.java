@@ -743,6 +743,10 @@ public class AdminAdministratorEntryPoint implements EntryPoint {
 	}
 
 	public static void FromFile(String Entrada) {
+		if (Entrada.length()==0) 
+			ParsearFieldsAItemsRESET();
+		else
+		{
 		 String[] Lista = Entrada.split("\r\n");
 		 if (Lista.length >= NCampos) {
 		 if (!Lista[0].isEmpty())
@@ -779,6 +783,7 @@ public class AdminAdministratorEntryPoint implements EntryPoint {
 		 ErrorConstants.ERROR_LOADING_LANGUAGE_IN +
 		 ADINISTRAATOR_ADMINISTRATION_NAME);
 		 ParsearFieldsAItemsRESET();
+		}
 	}
 	
 	private static void ParsearFieldsAItemsRESET() {

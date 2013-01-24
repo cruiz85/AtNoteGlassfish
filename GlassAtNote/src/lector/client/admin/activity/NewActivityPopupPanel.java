@@ -285,6 +285,10 @@ public class NewActivityPopupPanel extends PopupPanel {
 	}
 
 	public static void FromFile(String Entrada) {
+		if (Entrada.length()==0) 
+			ParsearFieldsAItemsRESET();
+		else
+		{
 		String[] Lista = Entrada.split("\r\n");
 		if (Lista.length >= NCampos) {
 			if (!Lista[0].isEmpty())
@@ -300,6 +304,7 @@ public class NewActivityPopupPanel extends PopupPanel {
 		else 
 			Logger.GetLogger().severe(NewActivityPopupPanel.class.toString(), ActualState.getUser().toString(), ErrorConstants.ERROR_LOADING_LANGUAGE_IN  + ACTIVITY_ADMINISTRATION);	
 		ParsearFieldsAItemsRESET();
+		}
 	}
 	
 	private static void ParsearFieldsAItemsRESET() {

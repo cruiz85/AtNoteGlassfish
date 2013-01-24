@@ -499,6 +499,10 @@ public class BookAdministrationEntryPoint implements EntryPoint {
 	}
 
 	public static void FromFile(String Entrada) {
+		if (Entrada.length()==0) 
+			ParsearFieldsAItemsRESET();
+		else
+		{
 		String[] Lista = Entrada.split("\r\n");
 		if (Lista.length >= NCampos) {
 			if (!Lista[0].isEmpty())
@@ -525,6 +529,7 @@ public class BookAdministrationEntryPoint implements EntryPoint {
 					ErrorConstants.ERROR_LOADING_LANGUAGE_IN
 							+ BOOK_ADMINISTRATION_NAME);
 		ParsearFieldsAItemsRESET();
+		}
 	}
 	
 	private static void ParsearFieldsAItemsRESET() {

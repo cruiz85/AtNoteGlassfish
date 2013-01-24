@@ -747,7 +747,8 @@ public class AdministradorEntryPoint implements EntryPoint {
 	}
 	
 	public static void FromFile(String Entrada) {
-		if (Entrada.length()==0) ParsearFieldsAItemsRESET();
+		if (Entrada.length()==0) 
+			ParsearFieldsAItemsRESET();
 		else
 		{
 		String[] Lista = Entrada.split("\r\n");
