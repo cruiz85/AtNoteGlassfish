@@ -1857,25 +1857,28 @@ public class GWTServiceImpl extends RemoteServiceServlet implements GWTService {
 							+ "&pg=PP0&key=ABQIAAAAgGfd0Syld4wI6M_8-PchExQ_l6-Ytnm_KJl3gFahMrxfvqMmehRrB92flZ-iJptRd3l62UsasikVhg");
 			connection = url.openConnection();
 			connection.addRequestProperty("GET", url.toString());
-			connection.addRequestProperty(
-					"User-Agent",
-					"Mozilla/5.0 (Windows; U; Windows NT 6.1; en-US) AppleWebKit/533.4 (KHTML, like Gecko) Chrome/5.0.375.70 Safari/533.4");
-			connection.addRequestProperty(
-					"Accept",
-					"application/xml,application/xhtml+xml,text/html;q=0.9,text/plain;q=0.8,image/png,*/*;q=0.5");
+			connection
+					.addRequestProperty(
+							"User-Agent",
+							"Mozilla/5.0 (Windows; U; Windows NT 6.1; en-US) AppleWebKit/533.4 (KHTML, like Gecko) Chrome/5.0.375.70 Safari/533.4");
+			connection
+					.addRequestProperty(
+							"Accept",
+							"application/xml,application/xhtml+xml,text/html;q=0.9,text/plain;q=0.8,image/png,*/*;q=0.5");
 			connection.addRequestProperty("Accept-Charset",
 					"ISO-8859-1,utf-8;q=0.7,*;q=0.7");
 			connection.addRequestProperty("Accept-Language",
 					"es-es,es;q=0.8,en-us;q=0.5,en;q=0.3");
 			// connection.addRequestProperty("Cookie","PREF=ID=893be4845a4c5aec:TM=1271533549:LM=12715335 49:S=KCvKQcyJS2SjNm-5");
-			connection.addRequestProperty("Cookie",
-					"PREF=ID=28face613556316e:TM=1184620070:LM=1184620070:S=DkEaab7_F7PtM3ZX");
+			connection
+					.addRequestProperty("Cookie",
+							"PREF=ID=28face613556316e:TM=1184620070:LM=1184620070:S=DkEaab7_F7PtM3ZX");
 			connection.addRequestProperty("Host", "books.google.com");
 			connection.addRequestProperty("Connection", "keep-alive");
 			// connection.setConnectTimeout(3000);
-			
-//			connection.addRequestProperty("Referer",
-//					"http://kido180020783.appspot.com/");
+
+			// connection.addRequestProperty("Referer",
+			// "http://kido180020783.appspot.com/");
 			reader = new BufferedReader(new InputStreamReader(
 					connection.getInputStream()));
 			while ((line = reader.readLine()) != null) {
@@ -2469,110 +2472,117 @@ public class GWTServiceImpl extends RemoteServiceServlet implements GWTService {
 		return null;
 	}
 
-	
-	
 	@Override
-	public void fusionTypes(Long typeFromId, Long typeToId)
+	public void fusionTypes(Long tagFromId, Long tagToId)
 			throws GeneralException, NullParameterException {
-		if (typeFromId == null || typeToId == null) {
+		if (tagFromId == null || tagToId == null) {
 			throw new NullParameterException(
 					"Parameter cant be null in method deleteDnServices");
 		}
-
-		try {
-			Tag tagFrom = findTag(typeFromId);
-			Tag tagTo = findTag(typeToId);
-			Catalogo catalogo = tagTo.getCatalog();
-			tagTo.getAnnotations().addAll(tagFrom.getAnnotations());
-			List<Relation> relationsFrom = getRelationsByChildId(tagFrom
-					.getId());
-			List<Relation> relationFathers = new ArrayList<Relation>();
-			List<Relation> relationsTo = getRelationsByChildId(tagTo.getId());
-			if (!relationsFrom.isEmpty()) {
-
-				for (Relation relationFrom : relationsFrom) {
-					for (Relation relationTo : relationsTo) {
-						if (!relationFrom.getFather().getId()
-								.equals(relationTo.getFather().getId())) {
-							relationFrom.setChild(tagTo);
-							relationsTo.add(relationFrom);
-
-						} else {
-							relationFathers.add(relationFrom);
-
-						}
-
-					}
-				}
-			}
-			Entry tagToTemp = null;
-			Entry tagFromTemp = null;
-			for (Entry entry : catalogo.getEntries()) {
-				if (entry.getId().equals(tagFrom.getId())) {
-					tagFromTemp = (Tag) entry;
-				}
-				if (entry.getId().equals(tagTo.getId())) {
-					tagToTemp = (Tag) entry;
-				}
-			}
-			if (tagFromTemp != null) {
-				catalogo.getEntries().remove(tagFromTemp);
-				if (tagToTemp != null) {
-					catalogo.getEntries().remove(tagToTemp);
-				}
-				catalogo.getEntries().add(tagToTemp);
-
-			}
-
-			callForMultiplePersist(relationsTo, tagFrom, catalogo,
-					relationFathers);
-
-		} catch (TagNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (RelationNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-	}
-
-	private void callForMultiplePersist(List<Relation> relationsTo,
-			Tag tagFrom, Catalogo catalogo, List<Relation> relationFathers) {
 		EntityManager entityManager = emf.createEntityManager();
 		try {
 			userTransaction.begin();
-			for (Relation relation : relationsTo) {
-				if (relation.getId() != null) {
-					entityManager.merge(relation);
-				} else {
-					entityManager.persist(relation);
+			Tag tagTo = entityManager.find(Tag.class, tagToId);
+			Tag tagFrom = entityManager.find(Tag.class, tagFromId);
+
+			ReadingActivity activity = loadActivityByDefaultTypeId(tagFromId);
+			if (activity != null) {
+				activity.setDefultTag(tagTo);
+				entityManager.merge(activity);
+
+			}
+			for (Annotation annotation : tagFrom.getAnnotations()) {
+				entityManager.merge(annotation);
+				annotation.getTags().remove(tagFrom);
+				if (!annotation.getTags().contains(tagTo)) {
+					annotation.getTags().add(tagTo);
+					tagTo.getAnnotations().add(annotation);
 				}
 			}
-			for (Relation relationRem : relationFathers) {
-
-				FolderDB folderFrom = (FolderDB) relationRem.getFather();
-				for (Relation relation : folderFrom.getRelations()) {
-					if (relation.getId().equals(relationRem.getId())) {
-						folderFrom.getRelations().remove(relation);
-						break;
-					}
-
-				}
-				entityManager.merge(folderFrom);
-				entityManager.merge(relationRem);
-			}
-			// entityManager.merge(tagFrom);
-			// entityManager.remove(tagFrom);
-			entityManager.merge(catalogo);
+			tagFrom.setAnnotations(null);
+			changeParentsRelations(entityManager, tagFromId, tagTo, tagFrom
+					.getCatalog().getId());
+			entityManager.remove(tagFrom);
+			entityManager.flush();
 			userTransaction.commit();
 		} catch (Exception e) {
 			ServiceManagerUtils.rollback(userTransaction);
+
 		}
-		if (entityManager.isOpen()) {
-			entityManager.close();
+	}
+
+	private void changeParentsRelations(EntityManager entityManager,
+			Long entryFromId, Entry tagTo, Long catalogId)
+			throws GeneralException, AnnotationNotFoundException,
+			RelationNotFoundException {
+
+		List<Relation> relations = getRelationsByChildId(entryFromId);
+		if (relations == null) { // cuelga del catalogo
+			Catalogo catalogo = entityManager.find(Catalogo.class, catalogId);
+			if (!catalogo.getEntries().contains(tagTo)) {
+				catalogo.getEntries().add(tagTo);
+			}
+		} else {
+
+			List<Relation> list = new CopyOnWriteArrayList<Relation>(relations);
+			for (Relation relationFrom : list) {
+				relationFrom = entityManager.find(Relation.class,
+						relationFrom.getId());
+				FolderDB folderFrom = entityManager.find(FolderDB.class,
+						relationFrom.getFather().getId());
+				List<Relation> listAux = new CopyOnWriteArrayList<Relation>(
+						folderFrom.getRelations());
+				for (Relation relationTo : listAux) {
+					if (!relationTo.getChild().getId().equals(tagTo.getId())) {
+						Relation relationAux = new Relation(folderFrom, tagTo);
+						folderFrom.getRelations().add(relationAux);
+						entityManager.merge(folderFrom);
+					}
+					relationFrom.setChild(null);
+					entityManager.remove(relationFrom);  
+				}
+			}
 		}
 
 	}
+
+	// private void callForMultiplePersist(List<Relation> relationsTo,
+	// Tag tagFrom, Catalogo catalogo, List<Relation> relationFathers) {
+	// EntityManager entityManager = emf.createEntityManager();
+	// try {
+	// userTransaction.begin();
+	// for (Relation relation : relationsTo) {
+	// if (relation.getId() != null) {
+	// entityManager.merge(relation);
+	// } else {
+	// entityManager.persist(relation);
+	// }
+	// }
+	// for (Relation relationRem : relationFathers) {
+	//
+	// FolderDB folderFrom = (FolderDB) relationRem.getFather();
+	// for (Relation relation : folderFrom.getRelations()) {
+	// if (relation.getId().equals(relationRem.getId())) {
+	// folderFrom.getRelations().remove(relation);
+	// break;
+	// }
+	//
+	// }
+	// entityManager.merge(folderFrom);
+	// entityManager.merge(relationRem);
+	// }
+	// // entityManager.merge(tagFrom);
+	// // entityManager.remove(tagFrom);
+	// entityManager.merge(catalogo);
+	// userTransaction.commit();
+	// } catch (Exception e) {
+	// ServiceManagerUtils.rollback(userTransaction);
+	// }
+	// if (entityManager.isOpen()) {
+	// entityManager.close();
+	// }
+	//
+	// }
 
 	private List<Relation> getRelationsByChildId(Long id)
 			throws GeneralException, RelationNotFoundException {
@@ -2602,35 +2612,30 @@ public class GWTServiceImpl extends RemoteServiceServlet implements GWTService {
 	}
 
 	@Override
-	public void moveType(Long typeCategoryFromId, Long typeCategoryId,
+	public void moveType(Long typeCategoryFromId, Long typeId,
 			Long typeCategoryToId) throws GeneralException {
 		try {
 
-			Tag tag = findTag(typeCategoryId);
+			Tag tag = findTag(typeId);
 			if (!typeCategoryFromId.equals(Constants.CATALOGID)) {
-				Relation relation = loadRelationByFatherAndSonId(
-						typeCategoryFromId, typeCategoryId);
-
+				Relation relation = findRelation((loadRelationByFatherAndSonId(
+						typeCategoryFromId, typeId)).getId());
+				FolderDB folderFrom = findFolderDB(typeCategoryFromId);
+				for (Relation relationToRemove : folderFrom.getRelations()) {
+					if (relationToRemove.getId().equals(relation.getId())) {
+						folderFrom.getRelations().remove(relationToRemove);
+						break;
+					}
+				}       
 				if (!typeCategoryToId.equals(Constants.CATALOGID)) {
 					FolderDB typeCategoryTo = findFolderDB(typeCategoryToId);
 					relation.setFather(typeCategoryTo);
 					typeCategoryTo.getRelations().add(relation);
 					saveFolderDB(typeCategoryTo);
 				} else {
-
-					FolderDB folderFrom = findFolderDB(typeCategoryFromId);
-					Relation tmp = findRelation(relation.getId());
-					for (Relation relationToRemove : folderFrom.getRelations()) {
-						if (relationToRemove.getId().equals(tmp.getId())) {
-							folderFrom.getRelations().remove(relationToRemove);
-							break;
-						}
-					}
-
 					Catalogo catalogo = tag.getCatalog();
 					catalogo.getEntries().add(tag);
 					callForMultiplePersist(folderFrom, catalogo);
-
 				}
 
 			} else {
@@ -2777,35 +2782,35 @@ public class GWTServiceImpl extends RemoteServiceServlet implements GWTService {
 		return ServiceManagerUtils.produceTypeClientsLazy(list);
 	}
 
-//	@Override
-//	public List<String> getTypesNamesByIds(List<Long> typeIds)
-//			throws TagNotFoundException, GeneralException {
-//		EntityManager entityManager = emf.createEntityManager();
-//		List<Tag> list;
-//		String sql = "SELECT r FROM Tag r WHERE r.id=" + typeIds.get(0);
-//		for (int i = 1; i < typeIds.size(); i++) {
-//			sql += " OR r.id=" + typeIds.get(i);
-//		}
-//
-//		try {
-//			list = entityManager.createQuery(sql).getResultList();
-//		} catch (Exception e) {
-//			// logger.error ("Exception in method loadTagById: ", e)
-//			throw new GeneralException("Exception in method loadTagById:"
-//					+ e.getMessage(), e.getStackTrace());
-//
-//		}
-//		if (list == null || list.isEmpty()) {
-//			// logger.error ("Exception in method loadTagById: ", e)
-//			throw new TagNotFoundException(
-//					"Tag not found in method loadTagById");
-//
-//		}
-//		if (entityManager.isOpen()) {
-//			entityManager.close();
-//		}
-//		return getStringFromTags(list);
-//	}
+	// @Override
+	// public List<String> getTypesNamesByIds(List<Long> typeIds)
+	// throws TagNotFoundException, GeneralException {
+	// EntityManager entityManager = emf.createEntityManager();
+	// List<Tag> list;
+	// String sql = "SELECT r FROM Tag r WHERE r.id=" + typeIds.get(0);
+	// for (int i = 1; i < typeIds.size(); i++) {
+	// sql += " OR r.id=" + typeIds.get(i);
+	// }
+	//
+	// try {
+	// list = entityManager.createQuery(sql).getResultList();
+	// } catch (Exception e) {
+	// // logger.error ("Exception in method loadTagById: ", e)
+	// throw new GeneralException("Exception in method loadTagById:"
+	// + e.getMessage(), e.getStackTrace());
+	//
+	// }
+	// if (list == null || list.isEmpty()) {
+	// // logger.error ("Exception in method loadTagById: ", e)
+	// throw new TagNotFoundException(
+	// "Tag not found in method loadTagById");
+	//
+	// }
+	// if (entityManager.isOpen()) {
+	// entityManager.close();
+	// }
+	// return getStringFromTags(list);
+	// }
 
 	private List<String> getStringFromTags(List<Tag> tags) {
 		List<String> names = new ArrayList<String>();
@@ -3298,8 +3303,11 @@ public class GWTServiceImpl extends RemoteServiceServlet implements GWTService {
 
 			} else {
 				entityManager.merge(folder);
+				for (Relation relation : folder.getRelations()) {
+					entityManager.merge(relation);
+				}
 			}
-
+			entityManager.flush();
 			userTransaction.commit();
 		} catch (Exception e) {
 			ServiceManagerUtils.rollback(userTransaction);
@@ -3313,7 +3321,7 @@ public class GWTServiceImpl extends RemoteServiceServlet implements GWTService {
 	}
 
 	@Override
-	public void moveFolderDB(Long typeCategoryId, Long typeCategoryFromId,
+	public void moveFolderDB(Long typeCategoryFromId, Long typeCategoryId,
 			Long typeCategoryToId) throws GeneralException, DecendanceException {
 		try {
 
@@ -3322,21 +3330,21 @@ public class GWTServiceImpl extends RemoteServiceServlet implements GWTService {
 				Relation relation = loadRelationByFatherAndSonId(
 						typeCategoryFromId, typeCategoryId);
 
+				FolderDB folderFrom = findFolderDB(typeCategoryFromId);
+				Relation tmp = findRelation(relation.getId());
+				for (Relation relationToRemove : folderFrom.getRelations()) {
+					if (relationToRemove.getId().equals(tmp.getId())) {
+						folderFrom.getRelations().remove(relationToRemove);
+						break;
+					}
+				}   
+
 				if (!typeCategoryToId.equals(Constants.CATALOGID)) {
 					FolderDB typeCategoryTo = findFolderDB(typeCategoryToId);
 					relation.setFather(typeCategoryTo);
 					typeCategoryTo.getRelations().add(relation);
 					saveFolderDB(typeCategoryTo);
 				} else {
-
-					FolderDB folderFrom = findFolderDB(typeCategoryFromId);
-					Relation tmp = findRelation(relation.getId());
-					for (Relation relationToRemove : folderFrom.getRelations()) {
-						if (relationToRemove.getId().equals(tmp.getId())) {
-							folderFrom.getRelations().remove(relationToRemove);
-							break;
-						}
-					}
 
 					Catalogo catalogo = folderDB.getCatalog();
 					catalogo.getEntries().add(folderDB);
