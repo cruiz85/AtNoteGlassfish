@@ -531,6 +531,7 @@ background: transparent url('BotonesSueltos/BotonDer.jpg') no-repeat center cent
 	text-decoration: none;
 	border: 0px solid;
 	font-size: 24px;
+	min-height: 33px;
 }
 .gwt-ButtonIzquierdaOver {
  background: transparent url('BotonesSueltos/BotonIzq.jpg') no-repeat  center center;
@@ -542,6 +543,7 @@ background: transparent url('BotonesSueltos/BotonDer.jpg') no-repeat center cent
 	font-size: 24px;
 	text-decoration: none;
 		border: 0px solid;
+		min-height: 33px;
 }
 
 .gwt-ButtonIzquierdaSelect {
@@ -554,6 +556,7 @@ background: transparent url('BotonesSueltos/BotonIzq.jpg') no-repeat center cent
 	text-decoration: none;
 		border: 0px solid;
 		  background-size:  100% 100%;
+		  min-height: 33px;
 }
 
 .gwt-ButtonIzquierdaPush {
@@ -566,6 +569,7 @@ background: transparent url('BotonesSueltos/BotonIzq.jpg') no-repeat center cent
 	font-size: 24px;
 	text-decoration: none;
 	background-color: White;
+	min-height: 33px;
 }
 .Dialog {
 max-width:600px;
@@ -951,6 +955,7 @@ background: transparent url('Direccionales/BotonDerAbajo.jpg') no-repeat center 
 	text-decoration: none;
 	border: 0px solid;
 	font-size: 24px;
+	min-height: 33px;
 }
 .gwt-ButtonCenterContinuoOver {
  background: transparent url('Direccionales/BotonCentroDer.jpg') no-repeat  center center;
@@ -962,6 +967,7 @@ background: transparent url('Direccionales/BotonDerAbajo.jpg') no-repeat center 
 	font-size: 24px;
 	text-decoration: none;
 		border: 0px solid;
+		min-height: 33px;
 }
 
 .gwt-ButtonCenterContinuoSelect {
@@ -974,6 +980,7 @@ background: transparent url('Direccionales/BotonCentroDer.jpg') no-repeat center
 	text-decoration: none;
 		border: 0px solid;
 		  background-size:  100% 100%;
+		  min-height: 33px;
 }
 
 .gwt-ButtonCenterContinuoPush {
@@ -986,6 +993,7 @@ background: transparent url('Direccionales/BotonCentroDer.jpg') no-repeat center
 	font-size: 24px;
 	text-decoration: none;
 	background-color: White;
+	min-height: 33px;
 }
 
 .gwt-ButtonCenterContinuoEnd {
@@ -998,6 +1006,7 @@ background: transparent url('Direccionales/BotonCentroDer.jpg') no-repeat center
 	text-decoration: none;
 	border: 0px solid;
 	font-size: 24px;
+	min-height: 33px;
 }
 .gwt-ButtonCenterContinuoEndOver {
  background: transparent url('Direccionales/BotonCentroEnd.jpg') no-repeat  center center;
@@ -1009,6 +1018,7 @@ background: transparent url('Direccionales/BotonCentroDer.jpg') no-repeat center
 	font-size: 24px;
 	text-decoration: none;
 		border: 0px solid;
+		min-height: 33px;
 }
 
 .gwt-ButtonCenterContinuoEndSelect {
@@ -1021,6 +1031,7 @@ background: transparent url('Direccionales/BotonCentroEnd.jpg') no-repeat center
 	text-decoration: none;
 		border: 0px solid;
 		  background-size:  100% 100%;
+		  min-height: 33px;
 }
 
 .gwt-ButtonCenterContinuoEndPush {
@@ -1033,6 +1044,7 @@ background: transparent url('Direccionales/BotonCentroEnd.jpg') no-repeat center
 	font-size: 24px;
 	text-decoration: none;
 	background-color: White;
+	min-height: 33px;
 }
 
 .gwt-ButtonCenterContinuoIzq {

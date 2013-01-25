@@ -1195,7 +1195,7 @@ pageBack.addMouseDownHandler(new MouseDownHandler() {
 		if (state == State.AllAnnotations) {
 			verticalAnnotationsPanel.clear();
 			List<AnnotationClient> Result = anotaciones_Actuales;
-			FiltraAnotaciones(Result);
+			Result=FiltraAnotaciones(Result);
 			insertrefreshedAnot(Result);
 		}
 	}
