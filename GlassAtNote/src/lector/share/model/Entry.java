@@ -21,7 +21,7 @@ import javax.persistence.Table;
 @Table(name = "entry")
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
 @DiscriminatorColumn(name="ENTRY_TYPE")
-public abstract class Entry implements Serializable {
+public class Entry implements Serializable {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)

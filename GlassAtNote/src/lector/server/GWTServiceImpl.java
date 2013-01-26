@@ -516,7 +516,7 @@ public class GWTServiceImpl extends RemoteServiceServlet implements GWTService {
 		EntityManager entityManager = emf.createEntityManager();
 		List<UserApp> list;
 		List<Professor> professorList = new ArrayList<Professor>();
-		String sql = "SELECT a.creator FROM Annotation a WHERE a.activity="
+		String sql = "SELECT a.creator FROM Annotation a WHERE a.activity.id="
 				+ activityId;
 		try {
 			list = entityManager.createQuery(sql).getResultList();
@@ -530,7 +530,7 @@ public class GWTServiceImpl extends RemoteServiceServlet implements GWTService {
 				if (user instanceof Professor)
 					professorList.add((Professor) user);
 			}
-		} catch (Exception e) {
+		} catch (Exception e) {   
 			// logger.error ("Exception in method loadGroupByEmail: ", e)
 			throw new GeneralException("Exception in method getProfessors:"
 					+ e.getMessage(), e.getStackTrace());
@@ -2500,7 +2500,7 @@ public class GWTServiceImpl extends RemoteServiceServlet implements GWTService {
 				}
 			}
 			tagFrom.setAnnotations(null);
-			changeParentsRelations(entityManager, tagFromId, tagTo, tagFrom
+			changeParentsRelations(entityManager, tagFromId, tagTo.getId(), tagFrom
 					.getCatalog().getId());
 			entityManager.remove(tagFrom);
 			entityManager.flush();
@@ -2512,16 +2512,19 @@ public class GWTServiceImpl extends RemoteServiceServlet implements GWTService {
 	}
 
 	private void changeParentsRelations(EntityManager entityManager,
-			Long entryFromId, Entry tagTo, Long catalogId)
+			Long entryFromId, Long entryToId, Long catalogId)
 			throws GeneralException, AnnotationNotFoundException,
 			RelationNotFoundException {
-
+		Entry entryTo = entityManager.find(Entry.class, entryToId);
+		Entry entryFrom = entityManager.find(Entry.class, entryFromId);
 		List<Relation> relations = getRelationsByChildId(entryFromId);
-		if (relations == null) { // cuelga del catalogo
+		if (relations == null || relations.isEmpty()) { // cuelga del catalogo
 			Catalogo catalogo = entityManager.find(Catalogo.class, catalogId);
-			if (!catalogo.getEntries().contains(tagTo)) {
-				catalogo.getEntries().add(tagTo);
+			if (!catalogo.getEntries().contains(entryTo)) {
+				catalogo.getEntries().add(entryTo);
 			}
+			catalogo.getEntries().remove(entryFrom);
+			entryFrom.setCatalog(null);
 		} else {
 
 			List<Relation> list = new CopyOnWriteArrayList<Relation>(relations);
@@ -2533,13 +2536,13 @@ public class GWTServiceImpl extends RemoteServiceServlet implements GWTService {
 				List<Relation> listAux = new CopyOnWriteArrayList<Relation>(
 						folderFrom.getRelations());
 				for (Relation relationTo : listAux) {
-					if (!relationTo.getChild().getId().equals(tagTo.getId())) {
-						Relation relationAux = new Relation(folderFrom, tagTo);
+					if (!relationTo.getChild().getId().equals(entryTo.getId())) {
+						Relation relationAux = new Relation(folderFrom, entryTo);
 						folderFrom.getRelations().add(relationAux);
 						entityManager.merge(folderFrom);
 					}
 					relationFrom.setChild(null);
-					entityManager.remove(relationFrom);  
+					entityManager.remove(relationFrom);
 				}
 			}
 		}
@@ -2626,7 +2629,7 @@ public class GWTServiceImpl extends RemoteServiceServlet implements GWTService {
 						folderFrom.getRelations().remove(relationToRemove);
 						break;
 					}
-				}       
+				}
 				if (!typeCategoryToId.equals(Constants.CATALOGID)) {
 					FolderDB typeCategoryTo = findFolderDB(typeCategoryToId);
 					relation.setFather(typeCategoryTo);
@@ -3337,7 +3340,7 @@ public class GWTServiceImpl extends RemoteServiceServlet implements GWTService {
 						folderFrom.getRelations().remove(relationToRemove);
 						break;
 					}
-				}   
+				}
 
 				if (!typeCategoryToId.equals(Constants.CATALOGID)) {
 					FolderDB typeCategoryTo = findFolderDB(typeCategoryToId);
