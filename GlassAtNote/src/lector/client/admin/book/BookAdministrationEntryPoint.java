@@ -48,7 +48,7 @@ import com.google.gwt.user.client.ui.HorizontalPanel;
 
 public class BookAdministrationEntryPoint implements EntryPoint {
 
-	private static final String BOOK_ADMINISTRATION_NAME = "BookA dministration Menu";
+	private static final String BOOK_ADMINISTRATION_NAME = "Book Administration Menu";
 
 	private static final int NCampos = 4;
 

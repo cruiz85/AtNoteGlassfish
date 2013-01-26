@@ -43,6 +43,8 @@ public class Language implements Serializable {
 	private String BookAdministrationEntryPointLanguageConfiguration="";
 	@Column(columnDefinition = "LONGTEXT")
 	private String PublicPrivatePanelCompositeLanguageConfiguration="";
+	@Column(columnDefinition = "LONGTEXT")
+	private String SearcherGoogleEntryPointLanguageConfiguration="";
 	
 	// MainWindow
 	private String NamePage = "@Note";
@@ -249,6 +251,15 @@ public class Language implements Serializable {
 	public void setPublicPrivatePanelCompositeLanguageConfiguration(
 			String publicPrivatePanelCompositeLanguageConfiguration) {
 		PublicPrivatePanelCompositeLanguageConfiguration = publicPrivatePanelCompositeLanguageConfiguration;
+	}
+
+	public String getSearcherGoogleEntryPointLanguageConfiguration() {
+		return SearcherGoogleEntryPointLanguageConfiguration;
+	}
+
+	public void setSearcherGoogleEntryPointLanguageConfiguration(
+			String searcherGoogleEntryPointLanguageConfiguration) {
+		SearcherGoogleEntryPointLanguageConfiguration = searcherGoogleEntryPointLanguageConfiguration;
 	}
 
 	public void setNewAdmin(String newAdmin) {
