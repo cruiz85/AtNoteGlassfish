@@ -1,5 +1,6 @@
 package lector.server;
 
+import java.awt.image.BufferedImage;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
@@ -7,8 +8,7 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLConnection;
 
-import com.google.appengine.api.images.Image;
-import com.google.appengine.api.images.ImagesServiceFactory;
+import javax.imageio.ImageIO;
 
 public class ParserHTML2RTF {
 
@@ -168,11 +168,24 @@ public class ParserHTML2RTF {
 	private static Object produceCutImagesListsmall(String imageURL) {
 
 		String contentType = getImageContentType(imageURL);
-		byte[] oldImageData = getImageData(imageURL);
-		Image oldImage = ImagesServiceFactory.makeImage(oldImageData);
-		Image newImage = oldImage;
-		byte[] newImageData = newImage.getImageData();
+//		byte[] oldImageData = getImageData(imageURL);
+		
+//		
+//		Image oldImage = ImagesServiceFactory.makeImage(oldImageData);
+//		Image newImage = oldImage;
+//		
+		BufferedImage newImage = ServiceManagerUtils.readImageFromURL(imageURL);
+			
+//		byte[] newImageData = newImage.getImageData();
 
+		byte[] newImageData = null;
+		try {
+			
+			ByteArrayOutputStream baos = new ByteArrayOutputStream();
+			ImageIO.write(newImage, "jpg", baos );
+			baos.flush();
+			newImageData = baos.toByteArray();
+			baos.close();
 
 			StringBuffer sb = new StringBuffer();
 
@@ -191,6 +204,11 @@ public class ParserHTML2RTF {
 			
 			sb.append("\n}}");
 			return sb.toString();
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return null;
 	}
 	
 	private static String getImageContentType(String urlImage) {

@@ -17,12 +17,12 @@ import lector.share.model.ExportObject;
 import lector.share.model.GeneralException;
 import lector.share.model.Professor;
 import lector.share.model.ProfessorNotFoundException;
-import lector.share.model.Tag;
+
 import lector.share.model.Template;
 import lector.share.model.TemplateCategory;
 import lector.share.model.TemplateCategoryNotFoundException;
 import lector.share.model.TemplateNotFoundException;
-import lector.share.model.TwinBrotherException;
+
 import lector.share.model.client.TemplateCategoryClient;
 import lector.share.model.client.TemplateClient;
 

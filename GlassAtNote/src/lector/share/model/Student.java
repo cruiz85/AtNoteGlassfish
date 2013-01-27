@@ -31,6 +31,13 @@ public class Student extends UserApp implements Serializable {
 		// TODO Auto-generated constructor stub
 	}
 
+	public Student(Long id, String firstName, String lastName, String email,
+			String password, Date createdDate, String confirmationCode) {
+		super(id, firstName, lastName, email, password, createdDate);
+		this.confirmationCode = confirmationCode;
+
+	}
+
 	public Student(String email) {
 		super(email);
 

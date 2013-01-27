@@ -30,10 +30,6 @@ import lector.share.model.Tag;
 import lector.share.model.TextSelector;
 import lector.share.model.client.BookClient;
 import lector.share.model.client.TextSelectorClient;
-import com.google.appengine.api.images.Image;
-import com.google.appengine.api.images.ImagesService;
-import com.google.appengine.api.images.ImagesServiceFactory;
-import com.google.appengine.api.images.Transform;
 import com.google.gwt.user.server.rpc.RemoteServiceServlet;
 
 /**
@@ -225,7 +221,7 @@ public class ImageServiceImpl extends RemoteServiceServlet implements
 			hex.append(HEXES.charAt((b & 0xF0) >> 4)).append(
 					HEXES.charAt((b & 0x0F)));
 		}
-		return hex.toString();
+		return hex.toString();    
 	}
 
 	@Override

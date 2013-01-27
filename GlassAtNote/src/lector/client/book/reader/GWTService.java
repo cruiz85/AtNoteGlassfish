@@ -80,7 +80,7 @@ public interface GWTService extends RemoteService {
 
 	//EMAIL CONFIRM
 	
-	public void sendEmail(String email);
+//	public void sendEmail(String email);
 	
 	// Student
 

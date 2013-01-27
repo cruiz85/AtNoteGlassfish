@@ -1,21 +1,9 @@
 package lector.server;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
-import javax.persistence.EntityManager;
-import javax.persistence.EntityTransaction;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-
-import lector.client.book.reader.ImageService;
 import lector.client.book.reader.LoggerService;
-import lector.share.model.LocalBook;
 
-import com.google.appengine.api.blobstore.BlobstoreService;
-import com.google.appengine.api.blobstore.BlobstoreServiceFactory;
+
 import com.google.gwt.user.server.rpc.RemoteServiceServlet;
 
 /**

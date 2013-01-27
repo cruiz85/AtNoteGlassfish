@@ -4,6 +4,7 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
+import java.io.UnsupportedEncodingException;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLConnection;
@@ -12,10 +13,19 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+import java.util.Properties;
 import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.annotation.Resource;
+import javax.mail.Authenticator;
+import javax.mail.Message;
+import javax.mail.MessagingException;
+import javax.mail.PasswordAuthentication;
+import javax.mail.Session;
+import javax.mail.Transport;
+import javax.mail.internet.InternetAddress;
+import javax.mail.internet.MimeMessage;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
@@ -201,10 +211,12 @@ public class GWTServiceImpl extends RemoteServiceServlet implements GWTService {
 				Date now = new Date();
 				Calendar calendar = Calendar.getInstance();
 				now = calendar.getTime();
+				String confirmationCode = generateCode();
 				saveUser(new Student(pClient.getId(), pClient.getFirstName(),
 						pClient.getLastName(), pClient.getEmail(),
-						pClient.getPassword(), now));
+						pClient.getPassword(), now, confirmationCode));
 				isNew = true;
+				sendEmail(pClient.getEmail(), confirmationCode);
 			}
 
 		} catch (StudentNotFoundException e) {
@@ -530,7 +542,7 @@ public class GWTServiceImpl extends RemoteServiceServlet implements GWTService {
 				if (user instanceof Professor)
 					professorList.add((Professor) user);
 			}
-		} catch (Exception e) {   
+		} catch (Exception e) {
 			// logger.error ("Exception in method loadGroupByEmail: ", e)
 			throw new GeneralException("Exception in method getProfessors:"
 					+ e.getMessage(), e.getStackTrace());
@@ -2500,8 +2512,8 @@ public class GWTServiceImpl extends RemoteServiceServlet implements GWTService {
 				}
 			}
 			tagFrom.setAnnotations(null);
-			changeParentsRelations(entityManager, tagFromId, tagTo.getId(), tagFrom
-					.getCatalog().getId());
+			changeParentsRelations(entityManager, tagFromId, tagTo.getId(),
+					tagFrom.getCatalog().getId());
 			entityManager.remove(tagFrom);
 			entityManager.flush();
 			userTransaction.commit();
@@ -4270,16 +4282,73 @@ public class GWTServiceImpl extends RemoteServiceServlet implements GWTService {
 
 	}
 
-	@Override
-	public void sendEmail(String email) {
+	private void sendEmail(String email, String code) {
+
+		boolean debug = true;
+		// Setup mail server
+		try {
+
+			Properties props = System.getProperties();
+			props.put("mail.transport.protocol", "smtp");
+			props.put("mail.smtp.starttls.enable", "true"); // added this line
+			props.put("mail.smtp.port", "587"); // smtp port
+			props.put("mail.smtp.host", "smtp.gmail.com");
+			props.put("mail.smtp.auth", "true");
+
+			Authenticator auth = new javax.mail.Authenticator() {
+
+				@Override
+				public PasswordAuthentication getPasswordAuthentication() {
+
+					return new PasswordAuthentication("cruiz84", "15148785a");
+				}
+			};
+
+			// Get a mail session
+			// Session session = Session.getDefaultInstance(props, auth);
+			Session session = Session.getInstance(props, auth);
+			session.setDebug(debug);
+			// Define a new mail message
+			Message message = new MimeMessage(session);
+
+			message.setFrom(new InternetAddress("cruiz84@gmail.com", "AtNote"));
+			message.addRecipient(Message.RecipientType.TO, new InternetAddress(
+					"cruiz85@gmail.com"));
+			message.setSubject("subject");
+
+			// Create a message part to represent the body text
+			// BodyPart messageBodyPart = new MimeBodyPart();
+			// messageBodyPart.setText(messageBody);
+
+			// String mail = "<strong>Nombre:</strong>" + name + "<br/>"
+			//
+			// + "<strong>e-mail:</strong>" + email + "<br/><br/><br/>";
+			// String messageBody = "Mensaje cuerpo de la historia";
+			// mail += "<strong>Mensaje:</strong><br/>" + messageBody;
+			String mail = code;
+			message.setContent(mail, "text/html");
+
+			// Send the message
+
+			Transport.send(message);
+		} catch (MessagingException ex) {
+			System.out.println(ex);
+		} catch (UnsupportedEncodingException uee) {
+			System.out.println(uee);
+		}
+	}
+
+	private String generateCode() {
 		long offset = Timestamp.valueOf("2012-01-01 00:00:00").getTime();
 		long end = Timestamp.valueOf("2013-01-01 00:00:00").getTime();
 		long diff = end - offset + 1;
 		Timestamp rand = new Timestamp(offset + (long) (Math.random() * diff));
-
-		SendMailSSL sendMailSSL = new SendMailSSL(email, "REGISTRO @NOTE",
-				rand.toString());
-		sendMailSSL.send();
+		return rand.toString();
 	}
+
+	long offset = Timestamp.valueOf("2012-01-01 00:00:00").getTime();
+	long end = Timestamp.valueOf("2013-01-01 00:00:00").getTime();
+	long diff = end - offset + 1;
+	Timestamp rand = new Timestamp(offset + (long) (Math.random() * diff));
 
 }

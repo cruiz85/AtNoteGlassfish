@@ -257,8 +257,5 @@ public interface GWTServiceAsync {
 	void getProfessorsAnnotatorsByActivityId(Long activityId,
 			AsyncCallback<List<ProfessorClient>> callback);
 
-	void sendEmail(String email, AsyncCallback<Void> callback);
-
-	
 
 }
