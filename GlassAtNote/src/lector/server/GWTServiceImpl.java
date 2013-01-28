@@ -4300,7 +4300,7 @@ public class GWTServiceImpl extends RemoteServiceServlet implements GWTService {
 				@Override
 				public PasswordAuthentication getPasswordAuthentication() {
 
-					return new PasswordAuthentication("cruiz84", "15148785a");
+					return new PasswordAuthentication("at.note.mail.service", "1234567ba");
 				}
 			};
 
@@ -4311,9 +4311,8 @@ public class GWTServiceImpl extends RemoteServiceServlet implements GWTService {
 			// Define a new mail message
 			Message message = new MimeMessage(session);
 
-			message.setFrom(new InternetAddress("cruiz84@gmail.com", "AtNote"));
-			message.addRecipient(Message.RecipientType.TO, new InternetAddress(
-					"cruiz85@gmail.com"));
+			message.setFrom(new InternetAddress("at.note.mail.service@gmail.com", "AtNote"));
+			message.addRecipient(Message.RecipientType.TO, new InternetAddress(email));
 			message.setSubject("subject");
 
 			// Create a message part to represent the body text
