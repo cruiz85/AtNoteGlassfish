@@ -628,7 +628,7 @@ public class GWTServiceImpl extends RemoteServiceServlet implements GWTService {
 		} catch (Exception e) {
 			ServiceManagerUtils.rollback(userTransaction);
 			throw new GeneralException(
-					"Error when saving the Group, the transaction will be rolled back and no entity will be persisted");
+					"Error when saving the Group, the transaction will be rolled back and no entity will    be persisted");
 		}
 		if (entityManager.isOpen()) {
 			entityManager.close();
@@ -3019,6 +3019,7 @@ public class GWTServiceImpl extends RemoteServiceServlet implements GWTService {
 				}
 
 			}
+			entityManager.remove(folderDB);
 
 		} else {
 			List<Relation> relations = getRelationsByChildId(id);
@@ -3030,8 +3031,8 @@ public class GWTServiceImpl extends RemoteServiceServlet implements GWTService {
 			folderFather.getRelations().remove(relation);
 			relation.setFather(null);
 			relation.setChild(null);
-			entityManager.merge(relation);
-			entityManager.merge(folderFather);
+			// entityManager.merge(relation);
+			// entityManager.merge(folderFather);
 			if (folderDB != null) {
 				if (relations.size() > 1) {
 					entityManager.merge(folderDB);
@@ -3057,18 +3058,25 @@ public class GWTServiceImpl extends RemoteServiceServlet implements GWTService {
 		try {
 
 			FolderDB folderDB = entityManager.find(FolderDB.class, id);
-			List<Relation> relations = getRelationsByChildId(id);
-			FolderDB folderFather = entityManager
-					.find(FolderDB.class, fatherId);
-			Relation relation = loadRelationByFatherAndSonId(fatherId, id);
-			relation = entityManager.find(Relation.class, relation.getId());
-			folderFather.getRelations().size();
-			folderFather.getRelations().remove(relation);
-			relation.setFather(null);
-			relation.setChild(null);
-			entityManager.merge(relation);
-			entityManager.merge(folderFather);
 			if (folderDB != null) {
+				List<Relation> relations = getRelationsByChildId(id);
+				FolderDB folderFather = entityManager.find(FolderDB.class,
+						fatherId);
+				Relation relation = loadRelationByFatherAndSonId(fatherId, id);
+				relation = entityManager.find(Relation.class, relation.getId());
+				folderFather.getRelations().size();
+				folderFather.getRelations().remove(relation);
+				relation.setFather(null);
+				relation.setChild(null);
+				if (folderDB.getCatalog().getEntries().contains(folderDB)) {
+					folderDB.getCatalog().getEntries().remove(folderDB);
+					entityManager.merge(folderDB.getCatalog());
+					folderDB.setCatalog(null);
+				}
+
+				// entityManager.merge(relation);
+				// entityManager.merge(folderFather);
+
 				if (relations.size() > 1) {
 					entityManager.merge(folderDB);
 				} else {
@@ -3389,8 +3397,86 @@ public class GWTServiceImpl extends RemoteServiceServlet implements GWTService {
 	}
 
 	@Override
-	public void fusionFolder(Long typeCategoryFromId, Long typeCategoryToId)
+	public void fusionFolder(Long folderFromId, Long folderToId)
 			throws IlegalFolderFusionException, GeneralException {
+		EntityManager entityManager = emf.createEntityManager();
+		try {
+			userTransaction.begin();
+			FolderDB folderTo = entityManager.find(FolderDB.class, folderToId);
+			FolderDB folderFrom = entityManager.find(FolderDB.class,
+					folderFromId);
+			changeParentsRelations(entityManager, folderFromId, folderTo,
+					folderFrom.getCatalog().getId());
+
+			giveChildrenInAdoption(entityManager, folderFrom, folderTo);
+			entityManager.remove(folderFrom);
+			entityManager.flush();
+			userTransaction.commit();
+		} catch (Exception e) {
+			ServiceManagerUtils.rollback(userTransaction);
+
+		}
+
+	}
+
+	private void giveChildrenInAdoption(EntityManager entityManager,
+			FolderDB folderFrom, FolderDB folderTo) throws GeneralException,
+			AnnotationNotFoundException, RelationNotFoundException {
+		for (Relation relation : folderFrom.getRelations()) {
+			boolean flag = false;
+			relation = entityManager.find(Relation.class, relation.getId());
+			List<Relation> relationsOfChild = getRelationsByChildId(relation
+					.getChild().getId());
+			for (Relation relationAux : relationsOfChild) {
+				if (relationAux.getFather().getId().equals(folderTo.getId())) {
+					flag = true;
+				}
+			}
+
+			if (!flag) {
+				Relation newRelation = new Relation(folderTo,
+						relation.getChild());
+				folderTo.getRelations().add(newRelation);
+				entityManager.merge(folderTo);
+			}
+			relation.setFather(null);
+			relation.setChild(null);
+		}
+	}
+
+	private void changeParentsRelations(EntityManager entityManager,
+			Long entryFromId, Entry tagTo, Long catalogId)
+			throws GeneralException, AnnotationNotFoundException,
+			RelationNotFoundException {
+
+		List<Relation> relations = getRelationsByChildId(entryFromId);
+		if (relations == null || relations.isEmpty()) { // cuelga del catalogo
+			Catalogo catalogo = entityManager.find(Catalogo.class, catalogId);
+			if (!catalogo.getEntries().contains(tagTo)) {
+				catalogo.getEntries().add(tagTo);
+			}
+			catalogo.getEntries().remove(
+					entityManager.find(Entry.class, entryFromId));
+		} else {
+
+			List<Relation> list = new CopyOnWriteArrayList<Relation>(relations);
+			for (Relation relationFrom : list) {
+				relationFrom = entityManager.find(Relation.class,
+						relationFrom.getId());
+				FolderDB folderFrom = entityManager.find(FolderDB.class,
+						relationFrom.getFather().getId());
+				List<Relation> listAux = new CopyOnWriteArrayList<Relation>(
+						folderFrom.getRelations());
+				for (Relation relationTo : listAux) {
+					if (!relationTo.getChild().getId().equals(tagTo.getId())) {
+						Relation relationAux = new Relation(folderFrom, tagTo);
+						folderFrom.getRelations().add(relationAux);
+						entityManager.merge(folderFrom);
+					}
+					relationFrom.setChild(null);
+				}
+			}
+		}
 
 	}
 
@@ -4120,8 +4206,9 @@ public class GWTServiceImpl extends RemoteServiceServlet implements GWTService {
 			userTransaction.commit();
 		} catch (Exception e) {
 			ServiceManagerUtils.rollback(userTransaction);
-			throw new GeneralException("Exception in method deleteBookById"
-					+ e.getMessage(), e.getStackTrace());
+			throw new GeneralException(
+					"Exception in sss method vvvdeleteBookById      "
+							+ e.getMessage(), e.getStackTrace());
 		}
 	}
 
@@ -4300,7 +4387,8 @@ public class GWTServiceImpl extends RemoteServiceServlet implements GWTService {
 				@Override
 				public PasswordAuthentication getPasswordAuthentication() {
 
-					return new PasswordAuthentication("at.note.mail.service", "1234567ba");
+					return new PasswordAuthentication("at.note.mail.service",
+							"1234567ba");
 				}
 			};
 
@@ -4311,8 +4399,10 @@ public class GWTServiceImpl extends RemoteServiceServlet implements GWTService {
 			// Define a new mail message
 			Message message = new MimeMessage(session);
 
-			message.setFrom(new InternetAddress("at.note.mail.service@gmail.com", "AtNote"));
-			message.addRecipient(Message.RecipientType.TO, new InternetAddress(email));
+			message.setFrom(new InternetAddress(
+					"at.note.mail.service@gmail.com", "AtNote"));
+			message.addRecipient(Message.RecipientType.TO, new InternetAddress(
+					email));
 			message.setSubject("subject");
 
 			// Create a message part to represent the body text
