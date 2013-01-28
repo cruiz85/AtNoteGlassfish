@@ -4386,9 +4386,7 @@ public class GWTServiceImpl extends RemoteServiceServlet implements GWTService {
 
 				@Override
 				public PasswordAuthentication getPasswordAuthentication() {
-
-					return new PasswordAuthentication("at.note.mail.service",
-							"1234567ba");
+					return new PasswordAuthentication(Constants.MAIL_SENDER,Constants.SENDER_PASS);
 				}
 			};
 
@@ -4399,22 +4397,21 @@ public class GWTServiceImpl extends RemoteServiceServlet implements GWTService {
 			// Define a new mail message
 			Message message = new MimeMessage(session);
 
-			message.setFrom(new InternetAddress(
-					"at.note.mail.service@gmail.com", "AtNote"));
+			message.setFrom(new InternetAddress(Constants.MAIL_SENDER_ADDRESS, "AtNote"));
 			message.addRecipient(Message.RecipientType.TO, new InternetAddress(
 					email));
-			message.setSubject("subject");
+			message.setSubject(Constants.MAIL_SUBJECT);
 
 			// Create a message part to represent the body text
 			// BodyPart messageBodyPart = new MimeBodyPart();
 			// messageBodyPart.setText(messageBody);
 
-			// String mail = "<strong>Nombre:</strong>" + name + "<br/>"
-			//
-			// + "<strong>e-mail:</strong>" + email + "<br/><br/><br/>";
-			// String messageBody = "Mensaje cuerpo de la historia";
-			// mail += "<strong>Mensaje:</strong><br/>" + messageBody;
-			String mail = code;
+//			 String mail = "<strong>Nombre:</strong>" + name + "<br/>"
+//			
+//			 + "<strong>e-mail:</strong>" + email + "<br/><br/><br/>";
+//			 String messageBody = "Mensaje cuerpo de la historia";
+//			 mail += "<strong>Mensaje:</strong><br/>" + messageBody;
+			String mail = "<strong>"+Constants.MAIL_BODY_TEXT+"</strong><br/><br/><a href=\"http://atnote.ucm.es?confirmationCode=\"" + code + ">Accede a Atnote!!!</a> ";
 			message.setContent(mail, "text/html");
 
 			// Send the message

@@ -51,4 +51,14 @@ public class Constants {
 	//IMAGENES
 	public static final String FREE_ICON = "Free.gif";
 	public static final String P100 = "100%";
+	
+	//EMAILS
+	public static final String MAIL_SENDER = "at.note.mail.service";
+	public static final String SENDER_PASS = "1234567ba";
+	public static final String MAIL_SENDER_ADDRESS = "at.note.mail.service@gmail.com";
+	public static final String FROM_NAME = "CENTRO DE REGISTRO ATNOTE";
+	public static final String MAIL_SUBJECT = "Gracias por registrarse en @note...";
+	public static final String MAIL_BODY_TEXT = "Gracias por registrarse en @note. <br /> Este correo usted lo ha recibido" +
+			" por motivo de una verificación de cuenta, si usted desconoce el emisor de este correo haga caso omiso, sino, por favor pulse el link que se encuentra debajo";
+	
 }
