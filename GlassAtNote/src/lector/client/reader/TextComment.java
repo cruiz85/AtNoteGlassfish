@@ -18,7 +18,6 @@ import lector.share.model.client.BookClient;
 import lector.share.model.client.TextSelectorClient;
 import lector.share.model.client.TypeClient;
 
-import com.google.appengine.api.datastore.Text;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.user.client.ui.DialogBox;
 import com.google.gwt.user.client.ui.MenuBar;
@@ -116,7 +115,7 @@ public class TextComment extends DialogBox {
 			}
 
 			private void saveDataAnnotacion() {
-				Text comment = new Text(PanelTexto.getRichTextArea().getHTML());
+				String comment = new String(PanelTexto.getRichTextArea().getHTML());
 //				LoadingPanel.getInstance().setLabelTexto(ActualLang.getSaving());
 //				LoadingPanel.getInstance().center();
 				boolean visivility;
