@@ -4386,7 +4386,8 @@ public class GWTServiceImpl extends RemoteServiceServlet implements GWTService {
 
 				@Override
 				public PasswordAuthentication getPasswordAuthentication() {
-					return new PasswordAuthentication(Constants.MAIL_SENDER,Constants.SENDER_PASS);
+					return new PasswordAuthentication(Constants.MAIL_SENDER,
+							Constants.SENDER_PASS);
 				}
 			};
 
@@ -4397,7 +4398,8 @@ public class GWTServiceImpl extends RemoteServiceServlet implements GWTService {
 			// Define a new mail message
 			Message message = new MimeMessage(session);
 
-			message.setFrom(new InternetAddress(Constants.MAIL_SENDER_ADDRESS, "AtNote"));
+			message.setFrom(new InternetAddress(Constants.MAIL_SENDER_ADDRESS,
+					"AtNote"));
 			message.addRecipient(Message.RecipientType.TO, new InternetAddress(
 					email));
 			message.setSubject(Constants.MAIL_SUBJECT);
@@ -4406,14 +4408,16 @@ public class GWTServiceImpl extends RemoteServiceServlet implements GWTService {
 			// BodyPart messageBodyPart = new MimeBodyPart();
 			// messageBodyPart.setText(messageBody);
 
-//			 String mail = "<strong>Nombre:</strong>" + name + "<br/>"
-//			
-//			 + "<strong>e-mail:</strong>" + email + "<br/><br/><br/>";
-//			 String messageBody = "Mensaje cuerpo de la historia";
-//			 mail += "<strong>Mensaje:</strong><br/>" + messageBody;
-			String mail = "<strong>"+Constants.MAIL_BODY_TEXT+"</strong><br/><br/><a href=\"http://localhost:8080/GlassAtNote/Validator.php?confirmationCode=" + code + "\">Accede a Atnote!!!</a> ";
+			// String mail = "<strong>Nombre:</strong>" + name + "<br/>"
+			//
+			// + "<strong>e-mail:</strong>" + email + "<br/><br/><br/>";
+			// String messageBody = "Mensaje cuerpo de la historia";
+			// String mail = "hola   ";
+			String mail = "<strong>"
+					+ Constants.MAIL_BODY_TEXT
+					+ "</strong><br/><br/><a href=\"http://localhost:8080/GlassAtNote/Validator.php?confirmationCode="
+					+ code + "\">Accede a Atnote!!!</a> ";
 			message.setContent(mail, "text/html");
-
 			// Send the message
 
 			Transport.send(message);
