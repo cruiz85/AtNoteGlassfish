@@ -2,7 +2,7 @@
 $usuario=$_GET[confirmationCode];
 //echo "<script type=\"text/javascript\">window.alert(\"".$usuario."\")</script>";
 
-$conexion = mysql_connect("horchata.fdi.ucm.es", "ilsaserver", "platano");
+$conexion = mysql_connect("147.96.80.89", "ilsaserver", "platano");
 
 mysql_select_db("atnote", $conexion);
 

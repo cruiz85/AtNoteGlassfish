@@ -3592,7 +3592,7 @@ public class GWTServiceImpl extends RemoteServiceServlet implements GWTService {
 					+ e.getMessage(), e.getStackTrace());
 
 		}
-		if (list == null || list.isEmpty()) {
+		if (list == null) {
 			// logger.error ("Exception in method loadUserById: ", e)
 			throw new UserNotFoundException(
 					"User not found in method loadUserByName");
@@ -4415,7 +4415,7 @@ public class GWTServiceImpl extends RemoteServiceServlet implements GWTService {
 			// String mail = "hola   ";
 			String mail = "<strong>"
 					+ Constants.MAIL_BODY_TEXT
-					+ "</strong><br/><br/><a href=\"http://localhost:8080/GlassAtNote/Validator.php?confirmationCode="
+					+ "</strong><br/><br/><a href=\"http://horchata.fdi.ucm.es/GlassAtNote/Validator.php?confirmationCode="
 					+ code + "\">Accede a Atnote!!!</a> ";
 			message.setContent(mail, "text/html");
 			// Send the message
