@@ -4411,7 +4411,7 @@ public class GWTServiceImpl extends RemoteServiceServlet implements GWTService {
 //			 + "<strong>e-mail:</strong>" + email + "<br/><br/><br/>";
 //			 String messageBody = "Mensaje cuerpo de la historia";
 //			 mail += "<strong>Mensaje:</strong><br/>" + messageBody;
-			String mail = "<strong>"+Constants.MAIL_BODY_TEXT+"</strong><br/><br/><a href=\"http://atnote.ucm.es?confirmationCode=\"" + code + ">Accede a Atnote!!!</a> ";
+			String mail = "<strong>"+Constants.MAIL_BODY_TEXT+"</strong><br/><br/><a href=\"horchata.fdi.ucm.es?confirmationCode=\"" + code + ">Accede a Atnote!!!</a> ";
 			message.setContent(mail, "text/html");
 
 			// Send the message
