@@ -1,17 +1,20 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?><web-app xmlns="http://java.sun.com/xml/ns/javaee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" version="2.5" xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd">
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<web-app xmlns="http://java.sun.com/xml/ns/javaee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	version="2.5"
+	xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd">
 	<servlet>
 		<servlet-name>GWTService</servlet-name>
 		<servlet-class>lector.server.GWTServiceImpl</servlet-class>
 	</servlet>
-  	<servlet>
+	<servlet>
 		<servlet-name>ServletAdaptor</servlet-name>
 		<servlet-class>com.sun.jersey.spi.container.servlet.ServletContainer</servlet-class>
-	</servlet> 
+	</servlet>
 	<servlet>
 		<servlet-name>ImageService</servlet-name>
 		<servlet-class>lector.server.ImageServiceImpl</servlet-class>
 	</servlet>
-	
+
 	<servlet>
 		<servlet-name>LoggerService</servlet-name>
 		<servlet-class>lector.server.LoggerServiceImpl</servlet-class>
@@ -20,54 +23,59 @@
 		<servlet-name>ExportService</servlet-name>
 		<servlet-class>lector.server.ExportServiceImpl</servlet-class>
 	</servlet>
-	<servlet>
-		<servlet-name>Upload</servlet-name>
-		<servlet-class>lector.server.Upload</servlet-class>
-	</servlet>
+	<!-- <servlet> -->
+	<!-- <servlet-name>Upload</servlet-name> -->
+	<!-- <servlet-class>lector.server.Upload</servlet-class> -->
+	<!-- </servlet> -->
 	<!-- nuevo upload -->
 	<servlet>
-        <description></description>
-        <display-name>UploadServlet</display-name>
-        <servlet-name>UploadServlet</servlet-name>
-        <servlet-class>lector.server.UploadServlet</servlet-class>
-    </servlet>
-    
-	<servlet>
-		<servlet-name>Serve</servlet-name>
-		<servlet-class>lector.server.Serve</servlet-class>
+		<description></description>
+		<display-name>UploadServlet</display-name>
+		<servlet-name>UploadServlet</servlet-name>
+		<servlet-class>lector.server.UploadServlet</servlet-class>
 	</servlet>
-	
+	<servlet>
+		<description></description>
+		<display-name>PDF2PNGServlet</display-name>
+		<servlet-name>PDF2PNGServlet</servlet-name>
+		<servlet-class>lector.server.PDF2PNGServlet</servlet-class>
+	</servlet>
+	<!-- <servlet> -->
+	<!-- <servlet-name>Serve</servlet-name> -->
+	<!-- <servlet-class>lector.server.Serve</servlet-class> -->
+	<!-- </servlet> -->
+
 	<!-- captcha -->
 	<servlet>
-    <servlet-name>signupServlet</servlet-name>
-    <servlet-class>lector.server.capcha.CaptchaServiceImpl</servlet-class>
-  </servlet>
-  
-	 <servlet>
-    <servlet-name>SimpleCaptcha</servlet-name>
-    <servlet-class>lector.server.capcha.serverlet.ExtendedCaptchaServlet</servlet-class>
-    <init-param>
-        <param-name>width</param-name>
-        <param-value>200</param-value>
-    </init-param>
-    <init-param>
-        <param-name>height</param-name>
-        <param-value>50</param-value>
-    </init-param>
-  </servlet>
-	
+		<servlet-name>signupServlet</servlet-name>
+		<servlet-class>lector.server.capcha.CaptchaServiceImpl</servlet-class>
+	</servlet>
+
+	<servlet>
+		<servlet-name>SimpleCaptcha</servlet-name>
+		<servlet-class>lector.server.capcha.serverlet.ExtendedCaptchaServlet</servlet-class>
+		<init-param>
+			<param-name>width</param-name>
+			<param-value>200</param-value>
+		</init-param>
+		<init-param>
+			<param-name>height</param-name>
+			<param-value>50</param-value>
+		</init-param>
+	</servlet>
+
 	<!-- Cierre Captcha -->
-	
-	
-	
+
+
+
 	<servlet-mapping>
 		<servlet-name>UploadServlet</servlet-name>
 		<url-pattern>/upload</url-pattern>
 	</servlet-mapping>
 	<servlet-mapping>
-        <servlet-name>UploadServlet</servlet-name>
-        <url-pattern>/UploadServlet</url-pattern>
-    </servlet-mapping>
+		<servlet-name>UploadServlet</servlet-name>
+		<url-pattern>/UploadServlet</url-pattern>
+	</servlet-mapping>
 	<servlet-mapping>
 		<servlet-name>Serve</servlet-name>
 		<url-pattern>/serve</url-pattern>
@@ -95,7 +103,7 @@
 	<session-config>
 		<session-timeout>30</session-timeout>
 	</session-config>
-  	<persistence-context-ref>
+	<persistence-context-ref>
 		<persistence-context-ref-name>persistence/System</persistence-context-ref-name>
 		<persistence-unit-name>System</persistence-unit-name>
 	</persistence-context-ref>
@@ -110,42 +118,42 @@
 
 
 
-  <servlet>
-    <servlet-name>SystemServiceServlet</servlet-name>
-    <servlet-class>com.google.api.server.spi.SystemServiceServlet</servlet-class>
-    <init-param>
-      <param-name>services</param-name>
-      <param-value/>
-    </init-param>
-  </servlet>
+	<servlet>
+		<servlet-name>SystemServiceServlet</servlet-name>
+		<servlet-class>com.google.api.server.spi.SystemServiceServlet</servlet-class>
+		<init-param>
+			<param-name>services</param-name>
+			<param-value />
+		</init-param>
+	</servlet>
 
-  <servlet-mapping>
-    <servlet-name>SystemServiceServlet</servlet-name>
-    <url-pattern>/_ah/spi/*</url-pattern>
-  </servlet-mapping>
-  
-   <servlet>
-         <servlet-name>quercus</servlet-name>
-         <servlet-class>com.caucho.quercus.servlet.GoogleQuercusServlet</servlet-class>
-    </servlet>
-    
-    <servlet-mapping>
-         <servlet-name>quercus</servlet-name>
-         <url-pattern>*.php</url-pattern>
-    </servlet-mapping>
-    
-    <!-- captcha Mapping-->
+	<servlet-mapping>
+		<servlet-name>SystemServiceServlet</servlet-name>
+		<url-pattern>/_ah/spi/*</url-pattern>
+	</servlet-mapping>
 
-	 <servlet-mapping>
-    <servlet-name>SimpleCaptcha</servlet-name>
-    <url-pattern>/SimpleCaptcha.jpg</url-pattern>
-  </servlet-mapping>
-  
-	 	  <servlet-mapping>
-    <servlet-name>signupServlet</servlet-name>
-    <url-pattern>/BookReader/book.reader/captcha</url-pattern>
-  </servlet-mapping>
+	<servlet>
+		<servlet-name>quercus</servlet-name>
+		<servlet-class>com.caucho.quercus.servlet.GoogleQuercusServlet</servlet-class>
+	</servlet>
 
-	<!-- Cierre Captcha Mapping-->
+	<servlet-mapping>
+		<servlet-name>quercus</servlet-name>
+		<url-pattern>*.php</url-pattern>
+	</servlet-mapping>
+
+	<!-- captcha Mapping -->
+
+	<servlet-mapping>
+		<servlet-name>SimpleCaptcha</servlet-name>
+		<url-pattern>/SimpleCaptcha.jpg</url-pattern>
+	</servlet-mapping>
+
+	<servlet-mapping>
+		<servlet-name>signupServlet</servlet-name>
+		<url-pattern>/BookReader/book.reader/captcha</url-pattern>
+	</servlet-mapping>
+
+	<!-- Cierre Captcha Mapping -->
 
 </web-app>
