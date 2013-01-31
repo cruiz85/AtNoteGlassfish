@@ -2,6 +2,7 @@ package lector.client.admin.activity;
 
 import lector.client.catalogo.FinderKeys;
 import lector.client.controler.ActualState;
+import lector.client.controler.Constants;
 import lector.client.controler.ErrorConstants;
 import lector.client.controler.InformationConstants;
 import lector.client.logger.Logger;
@@ -89,7 +90,7 @@ public class FinderDefaultTypePopupPanel extends PopupPanel {
 	{
 		GeneralPanel.remove(PanelEdicion);
 		GeneralPanel.add(PanelEdicion, GeneralPanel.getOffsetWidth()-40, 0);
-		PanelEdicion.setSize("40px","50px");
+		PanelEdicion.setSize(Constants.TAMANOBOTOBEDITOFF+Constants.PX,"50px");
 		PanelEdicion.clear();
 		PanelEdicion.setStyleName("");
 		Button Boton=new Button();

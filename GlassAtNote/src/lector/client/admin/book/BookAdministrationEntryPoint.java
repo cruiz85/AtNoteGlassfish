@@ -50,27 +50,31 @@ public class BookAdministrationEntryPoint implements EntryPoint {
 
 	private static final String BOOK_ADMINISTRATION_NAME = "Book Administration Menu";
 
-	private static final int NCampos = 4;
+	private static final int NCampos = 5;
 
 	private static String GET_A_BOOK_WELLCOME = "Book Management";
 	private static String UPLOAD_A_TEXT = "Upload your own Text";
 	private static String GET_A_BOOK = "Get a book from Google Library";
 	private static String DELETE_SELECTED_LABEL = "Delete Selected Books";
+	private static String BACK_LABEL="Back";
 
 	private static String GET_A_BOOK_WELLCOME_RESET = "Book Management";
 	private static String UPLOAD_A_TEXT_RESET = "Upload your own Text";
 	private static String GET_A_BOOK_RESET = "Get a book from Google Library";
 	private static String DELETE_SELECTED_LABEL_RESET = "Delete Selected Books";
-
+	private static String BACK_LABEL_RESET="Back";
+	
 	private MenuItem GetABookWellcomeMenuItem;
 	private MenuItem UploadATextMenuItem;
 	private MenuItem GetABookFromGoogleMenuItem;
 	private MenuItem DeleteSelectedMenuItem;
+	private MenuItem BackMenuItem;
 
 	private TextBox GetABookWellcomeMenuItemTextBox;
 	private TextBox UploadATextMenuItemTextBox;
 	private TextBox GetABookFromGoogleMenuItemTextBox;
 	private TextBox DeleteSelectedMenuItemTextBox;
+	private TextBox BackMenuItemTextBox;
 
 	public static String CONFIRM_REMOVE_BOOK = "Are you sure to remove the book?, The activities asociates to the book will be removed. Book to remove: ";
 
@@ -85,6 +89,8 @@ public class BookAdministrationEntryPoint implements EntryPoint {
 	private DockLayoutPanel PanelFondoGeneral;
 	private AbsolutePanel PanelEdicion;
 	private RootPanel rootPanel;
+
+	
 
 	public void onModuleLoad() {
 		Yo = this;
@@ -197,12 +203,12 @@ public class BookAdministrationEntryPoint implements EntryPoint {
 		MenuItemSeparator separator_1 = new MenuItemSeparator();
 		menuBar.addSeparator(separator_1);
 
-		MenuItem mntmNewItem_2 = new MenuItem("Back", false, new Command() {
+		BackMenuItem = new MenuItem(BACK_LABEL, false, new Command() {
 			public void execute() {
 				Controlador.change2Administrator();
 			}
 		});
-		menuBar.addItem(mntmNewItem_2);
+		menuBar.addItem(BackMenuItem);
 
 		SplitLayoutPanel splitLayoutPanel = new SplitLayoutPanel();
 		PanelFondoGeneral.add(splitLayoutPanel);
@@ -369,7 +375,7 @@ public class BookAdministrationEntryPoint implements EntryPoint {
 		rootPanel.remove(PanelEdicion);
 		rootPanel.add(PanelEdicion, PanelFondoGeneral.getOffsetWidth()
 				- Constants.TAMANOBOTOBEDITOFF, 0);
-		PanelEdicion.setSize("40px", "50px");
+		PanelEdicion.setSize(Constants.TAMANOBOTOBEDITOFF+Constants.PX, "50px");
 		PanelEdicion.clear();
 		PanelEdicion.setStyleName("");
 		Button Boton = new Button();
@@ -425,8 +431,17 @@ public class BookAdministrationEntryPoint implements EntryPoint {
 				else
 					DELETE_SELECTED_LABEL = DELETE_SELECTED_LABEL_RESET;
 
+				if (!BackMenuItemTextBox.getText().isEmpty())
+					BACK_LABEL = BackMenuItemTextBox
+							.getText();
+				else
+					BACK_LABEL = BACK_LABEL_RESET;
+				
 				PanelPublicPrivatePanel.OpenEditPanelonClick();
 
+				
+				
+				
 				ParsearFieldsAItems();
 				SaveChages();
 			}
@@ -467,6 +482,15 @@ public class BookAdministrationEntryPoint implements EntryPoint {
 				DeleteSelectedMenuItem.getAbsoluteLeft(),
 				DeleteSelectedMenuItem.getAbsoluteTop());
 
+		BackMenuItemTextBox = new TextBox();
+		BackMenuItemTextBox.setText(BACK_LABEL);
+		BackMenuItemTextBox.setSize(
+				BackMenuItem.getOffsetWidth() + "px",
+				BackMenuItem.getOffsetHeight() + "px");
+		PanelEdicion.add(BackMenuItemTextBox,
+				BackMenuItem.getAbsoluteLeft(),
+				BackMenuItem.getAbsoluteTop());
+		
 		PanelPublicPrivatePanel.OpenEditPanel(PanelEdicion);
 
 	}
@@ -485,6 +509,7 @@ public class BookAdministrationEntryPoint implements EntryPoint {
 		UploadATextMenuItem.setHTML(UPLOAD_A_TEXT);
 		GetABookFromGoogleMenuItem.setText(GET_A_BOOK);
 		DeleteSelectedMenuItem.setText(DELETE_SELECTED_LABEL);
+		BackMenuItem.setText(BACK_LABEL);
 		PanelPublicPrivatePanel.ParsearFieldsAItems();
 
 	}
@@ -495,6 +520,7 @@ public class BookAdministrationEntryPoint implements EntryPoint {
 		SB.append(UPLOAD_A_TEXT + "\r\n");
 		SB.append(GET_A_BOOK + "\r\n");
 		SB.append(DELETE_SELECTED_LABEL + "\r\n");
+		SB.append(BACK_LABEL + "\r\n");
 		return SB.toString();
 	}
 
@@ -521,7 +547,11 @@ public class BookAdministrationEntryPoint implements EntryPoint {
 				DELETE_SELECTED_LABEL = Lista[3];
 			else
 				DELETE_SELECTED_LABEL = DELETE_SELECTED_LABEL_RESET;
-			// TODO METE EL FRomfile en la actual state DEL PublicPrivatePanel
+			
+			if (!Lista[4].isEmpty())
+				BACK_LABEL = Lista[4];
+			else
+				BACK_LABEL = BACK_LABEL_RESET;
 		} else
 			Logger.GetLogger().severe(
 					BookAdministrationEntryPoint.class.toString(),
@@ -537,6 +567,7 @@ public class BookAdministrationEntryPoint implements EntryPoint {
 		UPLOAD_A_TEXT = UPLOAD_A_TEXT_RESET;
 		GET_A_BOOK = GET_A_BOOK_RESET;
 		DELETE_SELECTED_LABEL = DELETE_SELECTED_LABEL_RESET;
+		BACK_LABEL = BACK_LABEL_RESET;
 		
 	}
 

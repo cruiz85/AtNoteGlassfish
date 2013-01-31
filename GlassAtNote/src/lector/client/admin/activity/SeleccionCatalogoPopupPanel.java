@@ -202,7 +202,7 @@ public class SeleccionCatalogoPopupPanel extends PopupPanel {
 	private void closeEditPanel() {
 		GeneralPanel.remove(PanelEdicion);
 		GeneralPanel.add(PanelEdicion,PanelActivity.getOffsetWidth()-40, 0);
-		PanelEdicion.setSize("40px","50px");
+		PanelEdicion.setSize(Constants.TAMANOBOTOBEDITOFF+Constants.PX,"50px");
 		PanelEdicion.clear();
 		PanelEdicion.setStyleName("");
 		Button Boton=new Button();

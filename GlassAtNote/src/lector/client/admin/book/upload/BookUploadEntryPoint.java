@@ -9,6 +9,7 @@ import lector.client.controler.ErrorConstants;
 
 import com.google.gwt.core.client.EntryPoint;
 import com.google.gwt.core.client.GWT;
+import com.google.gwt.safehtml.shared.SafeHtml;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.RootPanel;
 import com.google.gwt.user.client.ui.TextBox;
@@ -18,6 +19,7 @@ import com.google.gwt.user.client.ui.MenuItem;
 import com.google.gwt.user.client.Command;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.FormPanel.SubmitCompleteEvent;
+import com.google.gwt.user.client.ui.FormPanel.SubmitCompleteHandler;
 import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.HasHorizontalAlignment;
 import com.google.gwt.user.client.ui.HasVerticalAlignment;
@@ -25,6 +27,7 @@ import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.FormPanel;
 import com.google.gwt.user.client.ui.FileUpload;
 import com.google.gwt.user.client.ui.Button;
+import com.google.gwt.user.client.ui.RadioButton;
 import com.google.gwt.user.client.ui.Widget;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.event.dom.client.ClickEvent;
@@ -44,6 +47,10 @@ import lector.share.model.client.UserClient;
 
 public class BookUploadEntryPoint implements EntryPoint {
 
+	
+	private String RADIO_BUTTON_SIMPLE_LABEL="Simple";
+	private String RADIO_BUTTON_PDF_LABEL="PDF";
+	
 	static ImageServiceAsync userImageService = GWT.create(ImageService.class);
 	static GWTServiceAsync bookReaderServiceHolder = GWT
 			.create(GWTService.class);
@@ -59,7 +66,12 @@ public class BookUploadEntryPoint implements EntryPoint {
 	private FileUpload FU1;
 	private FileUpload FU2;
 	private FileUpload FU3;
+	private RadioButton SimpleRadioButton;
+	private RadioButton PDFRadioButton;
+	
 
+	private static final String radioButtonGroup="RBGroup";
+	
 	public void onModuleLoad() {
 
 		RootPanel RP = RootPanel.get();
@@ -111,10 +123,50 @@ public class BookUploadEntryPoint implements EntryPoint {
 		verticalPanel.add(verticalPanel_2);
 		verticalPanel_2.setWidth("200px");
 
+		HorizontalPanel horizontalPanelRadioButton = new HorizontalPanel();
+		verticalPanel_2.add(horizontalPanelRadioButton);
+		horizontalPanelRadioButton.setWidth("100%");
+		
+		SimpleRadioButton =new RadioButton(BookUploadEntryPoint.radioButtonGroup, RADIO_BUTTON_SIMPLE_LABEL);
+		PDFRadioButton =new RadioButton(BookUploadEntryPoint.radioButtonGroup, RADIO_BUTTON_PDF_LABEL);
+		
+		ClickHandler event=new ClickHandler() {
+			public void onClick(ClickEvent event) {
+				if (event.getSource() == PDFRadioButton){
+				//Poner Panel Simple
+					actualFiles=1;
+					PanelUploaders.remove(FU1);
+					PanelUploaders.remove(FU2);
+					PanelUploaders.remove(FU3);
+					submitButton.setEnabled(false);
+					startNewBlobstoreSessionSimple();
+					
+				}
+				else 
+				{
+					actualFiles=4;
+					PanelUploaders.add(FU1);
+					PanelUploaders.add(FU2);
+					PanelUploaders.add(FU3);
+					submitButton.setEnabled(false);
+					startNewBlobstoreSessionPDF();
+				}
+			}
+		};
+		
+		SimpleRadioButton.addClickHandler(event);
+		PDFRadioButton.addClickHandler(event);
+		
+		horizontalPanelRadioButton.add(SimpleRadioButton);
+		horizontalPanelRadioButton.add(PDFRadioButton);
+		SimpleRadioButton.setValue(true);
+		
+		
+		
 		HorizontalPanel horizontalPanel_2 = new HorizontalPanel();
 		verticalPanel_2.add(horizontalPanel_2);
 		horizontalPanel_2.setWidth("100%");
-
+		
 		Label lblAutor = new Label("Autor:");
 		lblAutor.setStyleName("gwt-LabelLoad");
 		horizontalPanel_2.add(lblAutor);
@@ -254,7 +306,6 @@ public class BookUploadEntryPoint implements EntryPoint {
 		submitButton.addClickHandler(new ClickHandler() {
 			public void onClick(ClickEvent event) {
 				ArrayList<Widget> Listanueva = new ArrayList<Widget>();
-				ArrayList<Widget> ListaIncompatibles = new ArrayList<Widget>();
 				for (Widget widget : PanelUploaders) {
 					FileUpload T = (FileUpload) widget;
 					if (!T.getFilename().isEmpty()) {
@@ -324,8 +375,8 @@ public class BookUploadEntryPoint implements EntryPoint {
 		//
 		// }
 		// });
-
-		form.addSubmitCompleteHandler(new FormPanel.SubmitCompleteHandler() {
+		
+		SubmitCompleteHandler Simple = new FormPanel.SubmitCompleteHandler() {
 
 			public void onSubmitComplete(SubmitCompleteEvent event) {
 
@@ -351,20 +402,35 @@ public class BookUploadEntryPoint implements EntryPoint {
 				});
 
 			}
-		});
+		};
+		
+		
+		
+		
 
-		startNewBlobstoreSession();
+		
 
 		actualFiles = 4;
-
+		SimpleRadioButton.setValue(true);
+		form.addSubmitCompleteHandler(Simple);
+		startNewBlobstoreSessionSimple();
 	}
 
-	private void startNewBlobstoreSession() {
+	private void startNewBlobstoreSessionSimple() {
 		String A=GWT.getHostPageBaseURL();
 		
 		A=A+"upload";
 				form.setAction(A);
 				submitButton.setText("Upload");
+				submitButton.setEnabled(true);
+
+	}
+	
+	private void startNewBlobstoreSessionPDF() {
+		String A=GWT.getHostPageBaseURL();
+		
+		A=A+"/pdf2pngserverlet";
+				form.setAction(A);
 				submitButton.setEnabled(true);
 
 	}

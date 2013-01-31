@@ -2,7 +2,6 @@ package lector.client.admin.book.googleAPI;
 
 import java.util.List;
 
-import lector.client.admin.book.BookAdministrationEntryPoint;
 import lector.client.book.reader.GWTService;
 import lector.client.book.reader.GWTServiceAsync;
 import lector.client.controler.ActualState;
@@ -12,7 +11,6 @@ import lector.client.controler.ErrorConstants;
 import lector.client.controler.InformationConstants;
 import lector.client.logger.Logger;
 import lector.client.reader.LoadingPanel;
-import lector.share.model.Book;
 import lector.share.model.Language;
 import lector.share.model.client.GoogleBookClient;
 
@@ -61,13 +59,13 @@ public class SearcherGoogleEntryPoint implements EntryPoint, HistoryListener {
 	private static final int NCampos = 5;
 	
 	private static String GOOGLE_LOADER_SYSTEM_MENUITEM = "Google Book loader system";
-	private static String BACK_MENUITEM="back";
+	private static String BACK_MENUITEM="Back";
 	private static String SEARCH_INICIAL_BUTTON = "Search";
 	private static String NEXT_BUTTON = ">";
 	private static String PREVIOUS_BUTTON = "<";
 	
 	private static String GOOGLE_LOADER_SYSTEM_MENUITEM_RESET = "Google Book loader system";
-	private static String BACK_MENUITEM_RESET="back";
+	private static String BACK_MENUITEM_RESET="Back";
 	private static String SEARCH_INICIAL_BUTTON_RESET = "Search";
 	private static String NEXT_BUTTON_RESET = ">";
 	private static String PREVIOUS_BUTTON_RESET = "<";
@@ -563,7 +561,7 @@ public class SearcherGoogleEntryPoint implements EntryPoint, HistoryListener {
 		rootPanel.remove(PanelEdicion);
 		rootPanel.add(PanelEdicion, PanelFondoGeneral.getOffsetWidth()
 				- Constants.TAMANOBOTOBEDITOFF, 0);
-		PanelEdicion.setSize("40px", "50px");
+		PanelEdicion.setSize(Constants.TAMANOBOTOBEDITOFF+Constants.PX, "50px");
 		PanelEdicion.clear();
 		PanelEdicion.setStyleName("");
 		Button Boton = new Button();

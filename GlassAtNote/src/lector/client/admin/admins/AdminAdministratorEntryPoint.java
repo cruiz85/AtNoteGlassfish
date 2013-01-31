@@ -565,7 +565,7 @@ public class AdminAdministratorEntryPoint implements EntryPoint {
 		rootPanel.remove(PanelEdicion);
 		rootPanel.add(PanelEdicion, PanelFondoGeneral.getOffsetWidth()
 				- Constants.TAMANOBOTOBEDITOFF, 0);
-		PanelEdicion.setSize("40px", "50px");
+		PanelEdicion.setSize(Constants.TAMANOBOTOBEDITOFF+Constants.PX, "50px");
 		PanelEdicion.clear();
 		PanelEdicion.setStyleName("");
 		Button Boton = new Button();
