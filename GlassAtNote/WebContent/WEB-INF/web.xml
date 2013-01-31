@@ -76,10 +76,11 @@
 		<servlet-name>PDF2PNGServlet</servlet-name>
 		<url-pattern>/pdf2pngserverlet</url-pattern>
 	</servlet-mapping>
-	<servlet-mapping>
+<!-- 	<servlet-mapping>
 		<servlet-name>Serve</servlet-name>
 		<url-pattern>/serve</url-pattern>
 	</servlet-mapping>
+	 -->
 	<servlet-mapping>
 		<servlet-name>GWTService</servlet-name>
 		<url-pattern>/BookReader/book.reader/gwtservice</url-pattern>

@@ -1,8 +1,6 @@
 package lector.client.catalogo.OwnGraph;
 
 import lector.client.admin.generalPanels.BotonesStackPanelAdministracionMio;
-import lector.client.catalogo.BotonesStackPanelMio;
-import lector.client.catalogo.BotonesStackPanelMioGrafo;
 import lector.client.catalogo.Finder;
 import lector.client.catalogo.client.EntityCatalogElements;
 import lector.client.catalogo.client.File;
@@ -12,9 +10,6 @@ import lector.share.model.client.EntryClient;
 import lector.share.model.client.TypeCategoryClient;
 import lector.share.model.client.TypeClient;
 
-import com.caucho.amber.entity.Entity;
-import com.google.gwt.user.client.ui.Button;
-import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.Panel;
 import com.google.gwt.user.client.ui.VerticalPanel;
 
