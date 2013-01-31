@@ -139,7 +139,8 @@ public class BookUploadEntryPoint implements EntryPoint {
 					PanelUploaders.remove(FU2);
 					PanelUploaders.remove(FU3);
 					submitButton.setEnabled(false);
-					startNewBlobstoreSessionSimple();
+					startNewBlobstoreSessionPDF();
+					
 					
 				}
 				else 
@@ -149,7 +150,7 @@ public class BookUploadEntryPoint implements EntryPoint {
 					PanelUploaders.add(FU2);
 					PanelUploaders.add(FU3);
 					submitButton.setEnabled(false);
-					startNewBlobstoreSessionPDF();
+					startNewBlobstoreSessionSimple();
 				}
 			}
 		};
@@ -325,7 +326,37 @@ public class BookUploadEntryPoint implements EntryPoint {
 				if ((!Listanueva.isEmpty()) && !title.getText().isEmpty())
 					form.submit();
 				else
+					{
 					Window.alert(ErrorConstants.TEXT_NULL_OR_NO_IMAGEN);
+					restarPanelOld();
+					}
+			}
+
+			private void restarPanelOld() {
+				PanelUploaders.clear();
+				if (PDFRadioButton.getValue()){
+					//Poner Panel Simple
+						actualFiles=1;
+						PanelUploaders.add(FU);
+						PanelUploaders.remove(FU1);
+						PanelUploaders.remove(FU2);
+						PanelUploaders.remove(FU3);
+						submitButton.setEnabled(false);
+						startNewBlobstoreSessionPDF();
+						
+						
+					}
+					else 
+					{
+						actualFiles=4;
+						PanelUploaders.add(FU);
+						PanelUploaders.add(FU1);
+						PanelUploaders.add(FU2);
+						PanelUploaders.add(FU3);
+						submitButton.setEnabled(false);
+						startNewBlobstoreSessionSimple();
+					}
+				
 			}
 		});
 		verticalPanel_2.add(submitButton);
