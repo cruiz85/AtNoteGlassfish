@@ -460,7 +460,7 @@ public class BookUploadEntryPoint implements EntryPoint {
 	private void startNewBlobstoreSessionPDF() {
 		String A=GWT.getHostPageBaseURL();
 		
-		A=A+"/pdf2pngserverlet";
+		A=A+"pdf2pngserverlet";
 				form.setAction(A);
 				submitButton.setEnabled(true);
 
