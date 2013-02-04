@@ -103,7 +103,8 @@ public class PDF2PNGServlet extends javax.servlet.http.HttpServlet implements
 
 					// saves the file to upload directory
 					item.write(uploadedFile);
-					webLinks.add(fileRelPath.replace("\\", "/"));
+					String finalPath = fileRelPath.replace("//", "/");
+					webLinks.add(finalPath);
 				} else {
 					if (item.getFieldName().equals(
 							Constants.BLOB_PUBLISHED_YEAR)) {
@@ -126,20 +127,21 @@ public class PDF2PNGServlet extends javax.servlet.http.HttpServlet implements
 						userAppId = Long.parseLong(item.getString());
 					}
 
-				}
+				}    
 			}
 
 			Professor professor = ((GWTServiceImpl) gwtServiceImpl)
 					.findProfessor(userAppId);
 			LocalBook localBook = new LocalBook(professor, author, isbn,
 					pagesCount, publishedYear, title);
-			localBook.setWebLinks(webLinks);
-			professor.getBooks().add(localBook);
+			List<String> imagesWebLinks = getImagesFromPDF(webLinks.get(0));
+			localBook.setWebLinks(imagesWebLinks);
+			professor.getBooks().add(localBook);    
 			saveUser((Professor) professor);
 			// displays done.jsp page after upload finished
 			// getServletContext().getRequestDispatcher("/done.jsp").forward(request,
-			// response);
-
+			// response);    
+      
 		} catch (FileUploadException ex) {
 			throw new ServletException(ex);
 		} catch (ProfessorNotFoundException pnfe) {
@@ -151,16 +153,22 @@ public class PDF2PNGServlet extends javax.servlet.http.HttpServlet implements
 
 	private List<String> getImagesFromPDF(String pdfLocation)throws Exception {
 		PDFDocument document = new PDFDocument();
-		document.load(new File("C:/prueba/test.pdf"));
+	//	document.load(new File("C:/prueba/test.pdf"));
+		
+		String uploadFolderRel = getServletContext().getContextPath()
+				+ File.separator + DATA_DIRECTORY;
+		String fileName = pdfLocation.substring(18);
+		document.load(new File("C:/glassfish3.2/glassfish3/glassfish/domains/domain1/eclipseApps/GlassAtNote/data/" + fileName));  // aquí debería ser pdfLocation
 		SimpleRenderer renderer = new SimpleRenderer();
 
 		// set resolution (in DPI)
 		renderer.setResolution(300);
+		System.load("C:/Users/Cesar/Documents/GitHub/AtNoteGlassfish/GlassAtNote/gsdll32.dll");
 		List<Image> images = renderer.render(document);
 		List<String> webLinks = new ArrayList<String>();
 		
 		for (int i = 0; i < images.size(); i++) {
-			String webLink ="C:/prueba/" + (i + 1) + ".png" ;
+			String webLink = uploadFolderRel + (i + 1) + ".png" ;
 			webLinks.add(webLink);
 			ImageIO.write((RenderedImage) images.get(i), "png", new File(webLink));
 		}
