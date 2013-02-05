@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
+import java.util.regex.Pattern;
 
 import javax.annotation.Resource;
 import javax.imageio.ImageIO;
@@ -73,7 +74,7 @@ public class PDF2PNGServlet extends javax.servlet.http.HttpServlet implements
 		// String uploadFolder = getServletContext().getRealPath("")
 		// + File.separator + DATA_DIRECTORY;
 
-		String[] route = getServletContext().getRealPath("").split("\\\\");
+		String[] route = getServletContext().getRealPath("").split(Pattern.quote(File.separator));
 		StringBuffer uploadFolderSb = new StringBuffer();
 		// uploadFolderSb.append(File.separator);
 		for (int i = 0; i < route.length - 2; i++) {
@@ -223,7 +224,7 @@ public class PDF2PNGServlet extends javax.servlet.http.HttpServlet implements
 			userTransaction.commit();
 		} catch (Exception e) {
 			ServiceManagerUtils.rollback(userTransaction); // TODO utilizar
-															// método de
+															// mï¿½todo de
 															// logger
 		}
 		if (entityManager.isOpen()) {

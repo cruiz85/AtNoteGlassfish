@@ -148,9 +148,8 @@ public class Visor extends PopupPanel {
 				actualpagina++;
 				PaginaInt.setValue(actualpagina);
 				if (actualpagina>=Book.getWebLinks().size()-1)
-				{
 					Adelante.setEnabled(false);	
-				}
+				
 				Atras.setEnabled(true);
 				Pagina1.setUrl(Book.getWebLinks().get(actualpagina-2).replace("\\", "/"));
 				Pagina2.setUrl(Book.getWebLinks().get(actualpagina-1).replace("\\", "/"));
@@ -243,7 +242,7 @@ public class Visor extends PopupPanel {
 		});
 		}
 
-		if (Book.getWebLinks().size()<2)
+		if (Book.getWebLinks().size()<3)
 			Adelante.setEnabled(false);	
 		Atras.setEnabled(false);
 		PaginaInt.setValue(actualpagina);		
