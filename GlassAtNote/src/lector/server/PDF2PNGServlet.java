@@ -73,9 +73,17 @@ public class PDF2PNGServlet extends javax.servlet.http.HttpServlet implements
 		// String uploadFolder = getServletContext().getRealPath("")
 		// + File.separator + DATA_DIRECTORY;
 
-		String uploadFolder = getServletContext().getRealPath("").substring(0,
-				52)
-				+ File.separator + "docroot" + File.separator + DATA_DIRECTORY;
+		String[] route = getServletContext().getRealPath("").split("\\\\");
+		StringBuffer uploadFolderSb = new StringBuffer();
+		// uploadFolderSb.append(File.separator);
+		for (int i = 0; i < route.length - 2; i++) {
+			uploadFolderSb.append(route[i]);
+			uploadFolderSb.append(File.separator);
+		}
+
+		uploadFolderSb.append("docroot");
+		uploadFolderSb.append(File.separator + DATA_DIRECTORY);
+		String uploadFolder = uploadFolderSb.toString();
 
 		// String uploadFolderRel = getServletContext().getContextPath()
 		// + File.separator + DATA_DIRECTORY;
@@ -141,9 +149,7 @@ public class PDF2PNGServlet extends javax.servlet.http.HttpServlet implements
 					pagesCount, publishedYear, title);
 			String absPath = getServletContext().getRealPath("").substring(0,
 					52)
-					+ File.separator
-					+ "docroot"
-					+ File.separator;
+					+ File.separator + "docroot" + File.separator;
 			List<String> imagesWebLinks = convert(absPath
 					+ webLinks.get(0).substring(1));
 			localBook.setWebLinks(imagesWebLinks);
