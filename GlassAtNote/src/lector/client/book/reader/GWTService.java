@@ -75,18 +75,21 @@ public interface GWTService extends RemoteService {
 	public UserClient loadUserById(Long userId) throws UserNotFoundException,
 			GeneralException;
 
+	public boolean updateUser(Long userId, String password) throws GeneralException;
+
+	public boolean deleteUserWithPassword(Long userId, String password) throws GeneralException;
+
 	// public UserClient loadUserByEmail(String email) throws
 	// UserNotFoundException, GeneralException;
 
-	//EMAIL CONFIRM
-	
-//	public void sendEmail(String email);
-	
+	// EMAIL CONFIRM
+
+	// public void sendEmail(String email);
+
 	// Student
 
 	public List<StudentClient> getUsersByGroupId(Long groupId)
 			throws GeneralException, GroupNotFoundException;
-	
 
 	public List<StudentClient> getStudents() throws GeneralException,
 			StudentNotFoundException;
@@ -97,9 +100,10 @@ public interface GWTService extends RemoteService {
 
 	public List<ProfessorClient> getProfessors() throws GeneralException,
 			ProfessorNotFoundException;
-	
-	public List<ProfessorClient> getProfessorsAnnotatorsByActivityId(Long activityId) throws GeneralException,
-	UserNotFoundException;
+
+	public List<ProfessorClient> getProfessorsAnnotatorsByActivityId(
+			Long activityId) throws GeneralException, UserNotFoundException;
+
 	public void deleteProfessorById(Long professorId) throws GeneralException;
 
 	// void deleteBookFromUser(String bookId, Long userId); no debe ser
@@ -141,7 +145,8 @@ public interface GWTService extends RemoteService {
 
 	// Annotations
 
-	public void saveAnnotation(AnnotationClient annotationClient) throws GeneralException;
+	public void saveAnnotation(AnnotationClient annotationClient)
+			throws GeneralException;
 
 	public List<AnnotationClient> getAnnotationsByBookId(Long activityId,
 			String bookId) throws GeneralException,
@@ -166,22 +171,26 @@ public interface GWTService extends RemoteService {
 
 	public List<AnnotationClient> getAnnotationsByTeacherIds(List<Long> ids,
 			Long readingActivityId);
-	
-	public List<AnnotationClient> getAnnotationsByTypeClientIdsForProfessor(List<Long> ids, Long readingActivityId, Long professorId) throws GeneralException,
-			TagNotFoundException;
-	
-	public List<AnnotationClient> getAnnotationsByTypeClientIdsForStudent(List<Long> ids, Long readingActivityId, Long studentId) throws GeneralException,
-	TagNotFoundException;
+
+	public List<AnnotationClient> getAnnotationsByTypeClientIdsForProfessor(
+			List<Long> ids, Long readingActivityId, Long professorId)
+			throws GeneralException, TagNotFoundException;
+
+	public List<AnnotationClient> getAnnotationsByTypeClientIdsForStudent(
+			List<Long> ids, Long readingActivityId, Long studentId)
+			throws GeneralException, TagNotFoundException;
+
 	public List<AnnotationClient> getAnnotationsForStudentId(List<Long> ids,
-			Long Student)throws GeneralException, AnnotationNotFoundException;
+			Long Student) throws GeneralException, AnnotationNotFoundException;
 
 	public void deleteAnnotation(Long annotationId) throws GeneralException,
 			AnnotationNotFoundException;
 
-		// Annotations Threads
+	// Annotations Threads
 
 	public void saveAnnotationThread(
-			AnnotationThreadClient annotationThreadClient) throws GeneralException;
+			AnnotationThreadClient annotationThreadClient)
+			throws GeneralException;
 
 	public void deleteAnnotationThread(Long annotationThreadId)
 			throws GeneralException;
@@ -189,7 +198,7 @@ public interface GWTService extends RemoteService {
 	public List<AnnotationThreadClient> getAnnotationThreadsByItsAnnotation(
 			Long annotationId) throws GeneralException,
 			AnnotationThreadNotFoundException;
-	
+
 	// Books
 
 	public BookClient loadBookClientById(Long id) throws BookNotFoundException,
@@ -198,7 +207,8 @@ public interface GWTService extends RemoteService {
 	public List<BookClient> getBookClientsByIds(List<Long> ids)
 			throws BookNotFoundException, GeneralException;
 
-	public void addBookToUser(BookClient bookClient, Long userId) throws GeneralException;
+	public void addBookToUser(BookClient bookClient, Long userId)
+			throws GeneralException;
 
 	// Carga un libro desde la factoria.
 
@@ -218,10 +228,12 @@ public interface GWTService extends RemoteService {
 
 	// Catalog
 
-	public void saveCatalog(CatalogoClient catalogClient) throws GeneralException;
-	
-	public void updateCatalog(CatalogoClient catalogClient) throws CatalogoNotFoundException, GeneralException;
-	
+	public void saveCatalog(CatalogoClient catalogClient)
+			throws GeneralException;
+
+	public void updateCatalog(CatalogoClient catalogClient)
+			throws CatalogoNotFoundException, GeneralException;
+
 	public CatalogoClient loadCatalogById(Long catalogId);
 
 	public List<CatalogoClient> getCatalogs() throws GeneralException,
@@ -233,7 +245,8 @@ public interface GWTService extends RemoteService {
 
 	public void deleteCatalog(Long catalogId) throws GeneralException;
 
-	public void addChildToCatalog(EntryClient entryClient, Long catalogId) throws TwinBrotherException, GeneralException;
+	public void addChildToCatalog(EntryClient entryClient, Long catalogId)
+			throws TwinBrotherException, GeneralException;
 
 	// Entity
 
@@ -250,10 +263,11 @@ public interface GWTService extends RemoteService {
 	public TypeClient loadTypeByNameAndCatalogId(String typeName, Long catalogId)
 			throws TagNotFoundException, GeneralException;
 
-	public void saveType(TypeClient typesys, Long fatherEntry) throws GeneralException;
+	public void saveType(TypeClient typesys, Long fatherEntry)
+			throws GeneralException;
 
 	public void updateType(TypeClient typesys) throws TagNotFoundException;
-	
+
 	public void deleteTag(Long typeId, Long fatherId) throws GeneralException;;
 
 	public Integer getAnnotationsNumberByTagName(String annotationTagName)
@@ -272,10 +286,11 @@ public interface GWTService extends RemoteService {
 	public List<TypeClient> getTypesByIds(List<Long> typeIds)
 			throws GeneralException;
 
-//	public List<String> getTypesNamesByIds(List<Long> typeIds)
-//			throws GeneralException, TagNotFoundException;
+	// public List<String> getTypesNamesByIds(List<Long> typeIds)
+	// throws GeneralException, TagNotFoundException;
 
-	public void addChildEntry(Long entryId, Long fatherTypeCategory)throws TwinBrotherException, GeneralException;
+	public void addChildEntry(Long entryId, Long fatherTypeCategory)
+			throws TwinBrotherException, GeneralException;
 
 	// TypeCategory
 
@@ -295,8 +310,9 @@ public interface GWTService extends RemoteService {
 
 	public void saveTypeCategory(TypeCategoryClient typeCategoryClient,
 			Long fatherEntry) throws GeneralException;
-	
-	public void updateTypeCategory(TypeCategoryClient typeCategoryClient) throws FolderDBNotFoundException;
+
+	public void updateTypeCategory(TypeCategoryClient typeCategoryClient)
+			throws FolderDBNotFoundException;
 
 	public void moveFolderDB(Long typeCategoryId, Long typeCategoryFromId,
 			Long typeCategoryToId) throws GeneralException, DecendanceException;;
@@ -323,6 +339,7 @@ public interface GWTService extends RemoteService {
 
 	public void saveReadingActivity(ReadingActivityClient readingActivityClient)
 			throws GeneralException;
+
 	// Language
 
 	public void saveLanguage(Language language) throws GeneralException;

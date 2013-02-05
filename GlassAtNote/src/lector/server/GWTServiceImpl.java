@@ -188,6 +188,42 @@ public class GWTServiceImpl extends RemoteServiceServlet implements GWTService {
 
 	}
 
+	@Override
+	public boolean updateUser(Long userId, String password)
+			throws GeneralException {
+		EntityManager entityManager = emf.createEntityManager();
+		UserApp user = entityManager.find(UserApp.class, userId);
+		boolean isTheRealUser = true;
+		if (!user.getPassword().equals(password)) {
+			isTheRealUser = false;
+		} else {
+			saveUser(user);
+		}
+		return isTheRealUser;
+	}
+
+	@Override
+	public boolean deleteUserWithPassword(Long userId, String password)
+			throws GeneralException {
+		EntityManager entityManager = emf.createEntityManager();
+		UserApp user = entityManager.find(UserApp.class, userId);
+		boolean isTheRealUser = true;
+		if (!user.getPassword().equals(password)) {
+			isTheRealUser = false;
+		} else {
+			deleteUser(user);
+		}
+		return isTheRealUser;
+	}
+
+	private void deleteUser(UserApp user) throws GeneralException {
+		if (user instanceof Professor) {
+			deleteProfessorById(user.getId());
+		} else {
+			deleteStudentById(user.getId());
+		}
+	}
+
 	private void saveStudent(StudentClient pClient)
 			throws UserNotFoundException, GeneralException {
 		boolean isNew = false;

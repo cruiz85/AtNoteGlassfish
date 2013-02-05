@@ -257,5 +257,11 @@ public interface GWTServiceAsync {
 	void getProfessorsAnnotatorsByActivityId(Long activityId,
 			AsyncCallback<List<ProfessorClient>> callback);
 
+	void updateUser(Long userId, String password,
+			AsyncCallback<Boolean> callback);
+
+	void deleteUserWithPassword(Long userId, String password,
+			AsyncCallback<Boolean> callback);
+
 
 }
