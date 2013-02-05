@@ -1,8 +1,16 @@
-/build
-/classes
-*.jar
 *.class
-*~
-*/WebContent/gwt
-*/WebContent/WEB-INF/classes
-target
+
+# Package Files #
+*.jar
+*.war
+
+# gwt caches and compiled units #
+war/gwt_bree/
+gwt-unitCache/
+
+# boilerplate generated classes #
+.apt_generated/
+
+# more caches and things from deploy #
+WebContent/WEB-INF/deploy/
+WebContent/WEB-INF/classes/
