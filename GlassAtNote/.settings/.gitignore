@@ -1,1 +1,8 @@
-/com.google.appengine.eclipse.core.prefs
+/build
+/classes
+*.jar
+*.class
+*~
+*/WebContent/gwt
+*/WebContent/WEB-INF/classes
+target
