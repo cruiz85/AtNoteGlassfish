@@ -111,7 +111,9 @@ public class PDF2PNGServlet extends javax.servlet.http.HttpServlet implements
 				if (!item.isFormField()) {
 					String fileName = new File(item.getName()).getName();
 					String filePath = uploadFolder + File.separator + fileName;
-					String fileRelPath = uploadFolderRel + File.separator
+					String fileRelPath = 
+							//uploadFolderRel + 
+							File.separator
 							+ fileName;
 					File uploadedFile = new File(filePath);
 
@@ -148,11 +150,11 @@ public class PDF2PNGServlet extends javax.servlet.http.HttpServlet implements
 					.findProfessor(userAppId);
 			LocalBook localBook = new LocalBook(professor, author, isbn,
 					pagesCount, publishedYear, title);
-			String absPath = getServletContext().getRealPath("").substring(0,
-					52)
-					+ File.separator + "docroot" + File.separator;
-			List<String> imagesWebLinks = convert(absPath
-					+ webLinks.get(0).substring(1));
+//			String absPath = getServletContext().getRealPath("").substring(0,
+//					52)
+//					+ File.separator + "docroot" + File.separator;
+			List<String> imagesWebLinks = convert(uploadFolder
+					+ webLinks.get(0),uploadFolder);
 			localBook.setWebLinks(imagesWebLinks);
 			professor.getBooks().add(localBook);
 			saveUser((Professor) professor);
@@ -169,23 +171,44 @@ public class PDF2PNGServlet extends javax.servlet.http.HttpServlet implements
 		}
 	}
 
-	private List<String> convert(String directory) throws IOException,
+	private List<String> convert(String directory,String rootfolder) throws IOException,
 			InterruptedException {
 		Date date = new Date();
 		Long id = (Long) date.getTime();
 		String idString = id.toString();
-		String cmd = "\"C:\\Program Files\\gs\\gs9.06\\bin\\gswin32c\" -sDEVICE=jpeg -dBATCH -r50 "
-				+ "-dNOPAUSE -sOutputFile=\"C:\\glassfish3.2\\glassfish3\\glassfish\\domains\\domain1\\docroot\\data\\"
-				+ idString + "%01d.jpg\" " + directory;
-
+		String cmd;
+		String cmdPagesCount;
 		String winDirectory = directory.replace("\\", "/"); // posiblemente se
-															// tnenga que
-															// remover para Unix
-		String cmdPagesCount = "\"C:\\Program Files\\gs\\gs9.06\\bin\\gswin32c\" -q -dNODISPLAY -c (\""
-				+ winDirectory
-				+ ")"
-				+ " (r) file runpdfbegin pdfpagecount = quit\"";
+		 if (System.getProperty("os.name").startsWith("Windows")) {
+			 cmd = "\"C:\\Program Files\\gs\\gs9.06\\bin\\gswin32c\" -sDEVICE=jpeg -dBATCH -r50 "
+						+ "-dNOPAUSE -sOutputFile=\"C:\\glassfish3.2\\glassfish3\\glassfish\\domains\\domain1\\docroot\\data\\"
+						+ idString + "%01d.jpg\" " + "\"" + directory + "\"";
+
+				
+				cmdPagesCount = "\"C:\\Program Files\\gs\\gs9.06\\bin\\gswin32c\" -q -dNODISPLAY -c (\""
+						+ winDirectory
+						+ ")"
+						+ " (r) file runpdfbegin pdfpagecount = quit\"";
+		 }else{
+		        // everything else
+		    cmd = "\"/usr/bin/ghostscript\" -sDEVICE=jpeg -dBATCH -r50 "+ "-dNOPAUSE -sOutputFile=\""+rootfolder+"/"
+				+ idString + "%01d.jpg\" " +  "\"" +directory+ "\"";
+			
+			// tnenga que
+			cmdPagesCount= "\"/usr/bin/ghostscript\" -q -dNODISPLAY -c (\""
+					+ winDirectory
+					+ ")"
+					+ " (r) file runpdfbegin pdfpagecount = quit\"";
+		    } 
+		
+		
+
+	
+		 
+		
 		// System.out.println(cmd);
+		ProcessBuilder P=new ProcessBuilder(cmd);
+		P.start();
 		Process p = Runtime.getRuntime().exec(cmd);
 		new Dumper(p.getInputStream()).start();
 		new Dumper(p.getErrorStream()).start();
