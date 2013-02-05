@@ -1,11 +1,11 @@
 package lector.server;
 
-
 import java.awt.Image;
 import java.awt.image.RenderedImage;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
 
@@ -70,11 +70,16 @@ public class PDF2PNGServlet extends javax.servlet.http.HttpServlet implements
 		factory.setRepository(new File(System.getProperty("java.io.tmpdir")));
 
 		// constructs the folder where uploaded file will be stored
-		String uploadFolder = getServletContext().getRealPath("")
-				+ File.separator + DATA_DIRECTORY;
-		String uploadFolderRel = getServletContext().getContextPath()
-				+ File.separator + DATA_DIRECTORY;
+		// String uploadFolder = getServletContext().getRealPath("")
+		// + File.separator + DATA_DIRECTORY;
 
+		String uploadFolder = getServletContext().getRealPath("").substring(0,
+				52)
+				+ File.separator + "docroot" + File.separator + DATA_DIRECTORY;
+
+		// String uploadFolderRel = getServletContext().getContextPath()
+		// + File.separator + DATA_DIRECTORY;
+		String uploadFolderRel = "\\" + DATA_DIRECTORY;
 		// Create a new file upload handler
 		ServletFileUpload upload = new ServletFileUpload(factory);
 
@@ -127,21 +132,27 @@ public class PDF2PNGServlet extends javax.servlet.http.HttpServlet implements
 						userAppId = Long.parseLong(item.getString());
 					}
 
-				}    
+				}
 			}
 
 			Professor professor = ((GWTServiceImpl) gwtServiceImpl)
 					.findProfessor(userAppId);
 			LocalBook localBook = new LocalBook(professor, author, isbn,
 					pagesCount, publishedYear, title);
-			List<String> imagesWebLinks = getImagesFromPDF(webLinks.get(0));
+			String absPath = getServletContext().getRealPath("").substring(0,
+					52)
+					+ File.separator
+					+ "docroot"
+					+ File.separator;
+			List<String> imagesWebLinks = convert(absPath
+					+ webLinks.get(0).substring(1));
 			localBook.setWebLinks(imagesWebLinks);
-			professor.getBooks().add(localBook);    
+			professor.getBooks().add(localBook);
 			saveUser((Professor) professor);
 			// displays done.jsp page after upload finished
 			// getServletContext().getRequestDispatcher("/done.jsp").forward(request,
-			// response);    
-      
+			// response);
+
 		} catch (FileUploadException ex) {
 			throw new ServletException(ex);
 		} catch (ProfessorNotFoundException pnfe) {
@@ -151,28 +162,45 @@ public class PDF2PNGServlet extends javax.servlet.http.HttpServlet implements
 		}
 	}
 
-	private List<String> getImagesFromPDF(String pdfLocation)throws Exception {
-		PDFDocument document = new PDFDocument();
-	//	document.load(new File("C:/prueba/test.pdf"));
-		
-		String uploadFolderRel = getServletContext().getContextPath()
-				+ File.separator + DATA_DIRECTORY;
-		String fileName = pdfLocation.substring(18);
-		document.load(new File("C:/glassfish3.2/glassfish3/glassfish/domains/domain1/eclipseApps/GlassAtNote/data/" + fileName));  // aquí debería ser pdfLocation
-		SimpleRenderer renderer = new SimpleRenderer();
+	private List<String> convert(String directory) throws IOException,
+			InterruptedException {
+		Date date = new Date();
+		Long id = (Long) date.getTime();
+		String idString = id.toString();
+		String cmd = "\"C:\\Program Files\\gs\\gs9.06\\bin\\gswin32c\" -sDEVICE=jpeg -dBATCH -r50 "
+				+ "-dNOPAUSE -sOutputFile=\"C:\\glassfish3.2\\glassfish3\\glassfish\\domains\\domain1\\docroot\\data\\"
+				+ idString + "%01d.jpg\" " + directory;
 
-		// set resolution (in DPI)
-		renderer.setResolution(300);
-		System.load("C:/Users/Cesar/Documents/GitHub/AtNoteGlassfish/GlassAtNote/gsdll32.dll");
-		List<Image> images = renderer.render(document);
+		String winDirectory = directory.replace("\\", "/"); // posiblemente se
+															// tnenga que
+															// remover para Unix
+		String cmdPagesCount = "\"C:\\Program Files\\gs\\gs9.06\\bin\\gswin32c\" -q -dNODISPLAY -c (\""
+				+ winDirectory
+				+ ")"
+				+ " (r) file runpdfbegin pdfpagecount = quit\"";
+		// System.out.println(cmd);
+		Process p = Runtime.getRuntime().exec(cmd);
+		new Dumper(p.getInputStream()).start();
+		new Dumper(p.getErrorStream()).start();
+		int pagesCount = getPagesCount(cmdPagesCount);
+		p.waitFor();
+		// HACER LA FUNCION QUE GENERA LOS LINKS
+
+		List<String> webLinks = generateLinks(idString, pagesCount);
+		return webLinks;
+	}
+
+	private static List<String> generateLinks(String pattern, int pagesCount) {
 		List<String> webLinks = new ArrayList<String>();
-		
-		for (int i = 0; i < images.size(); i++) {
-			String webLink = uploadFolderRel + (i + 1) + ".png" ;
-			webLinks.add(webLink);
-			ImageIO.write((RenderedImage) images.get(i), "png", new File(webLink));
+		for (int i = 1; i <= pagesCount; i++) {
+			webLinks.add("/data/" + pattern + i + ".jpg");
 		}
 		return webLinks;
+	}
+
+	private int getPagesCount(String cmd) throws IOException {
+		Process p2 = Runtime.getRuntime().exec(cmd);
+		return Character.getNumericValue((char) p2.getInputStream().read());
 	}
 
 	private void saveUser(UserApp user) throws GeneralException {
