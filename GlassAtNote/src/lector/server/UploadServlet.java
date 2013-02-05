@@ -61,10 +61,10 @@ public class UploadServlet extends javax.servlet.http.HttpServlet implements
         factory.setRepository(new File(System.getProperty("java.io.tmpdir")));
         
         // constructs the folder where uploaded file will be stored
-        String uploadFolder = getServletContext().getRealPath("")
-                                    + File.separator + DATA_DIRECTORY;
-        String uploadFolderRel = getServletContext().getContextPath()
-                + File.separator + DATA_DIRECTORY;
+        String uploadFolder = getServletContext().getRealPath("").substring(0,
+				52)
+				+ File.separator + "docroot" + File.separator + DATA_DIRECTORY;
+        String uploadFolderRel = "\\" + DATA_DIRECTORY;
  
         // Create a new file upload handler
         ServletFileUpload upload = new ServletFileUpload(factory);
