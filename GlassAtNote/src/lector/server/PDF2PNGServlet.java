@@ -4,6 +4,8 @@ import java.awt.Image;
 import java.awt.image.RenderedImage;
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.Iterator;
@@ -178,6 +180,7 @@ public class PDF2PNGServlet extends javax.servlet.http.HttpServlet implements
 		String idString = id.toString();
 		String cmd;
 		String cmdPagesCount;
+		int pagesCount;
 		String winDirectory = directory.replace("\\", "/"); // posiblemente se
 		 if (System.getProperty("os.name").startsWith("Windows")) {
 			 cmd = "\"C:\\Program Files\\gs\\gs9.06\\bin\\gswin32c\" -sDEVICE=jpeg -dBATCH -r50 "
@@ -189,16 +192,34 @@ public class PDF2PNGServlet extends javax.servlet.http.HttpServlet implements
 						+ winDirectory
 						+ ")"
 						+ " (r) file runpdfbegin pdfpagecount = quit\"";
+				 Process p = Runtime.getRuntime().exec(cmd);
+					new Dumper(p.getInputStream()).start();
+					new Dumper(p.getErrorStream()).start();
+					pagesCount = getPagesCount(cmdPagesCount);
+					p.waitFor();
 		 }else{
 		        // everything else
-		    cmd = "\"/usr/bin/ghostscript\" -sDEVICE=jpeg -dBATCH -r50 "+ "-dNOPAUSE -sOutputFile=\""+rootfolder+"/"
-				+ idString + "%01d.jpg\" " +  "\"" +directory+ "\"";
+		    cmd = "gs -sDEVICE=jpeg -dBATCH -r50 "+ "-dNOPAUSE -sOutputFile=\""+rootfolder+"/"
+				+ idString + "%01d.jpg\" \"" +directory+ "\"";
 			
 			// tnenga que
-			cmdPagesCount= "\"/usr/bin/ghostscript\" -q -dNODISPLAY -c (\""
+			cmdPagesCount= "gs -q -dNODISPLAY -c \"("
 					+ winDirectory
 					+ ")"
 					+ " (r) file runpdfbegin pdfpagecount = quit\"";
+//			
+//		 String[] cmd2={"gs", "-sDEVICE=jpeg", "-dBATCH", "-r50", "-dNOPAUSE", "-sOutputFile= \""+rootfolder+"\\"
+//					+ idString + "%01d.jpg\" ", "\"" +directory+ "\""};
+			
+		 
+		 	
+		 	Process p = Runtime.getRuntime().exec(new String[] {"sh",  "-c", cmd});
+			new Dumper(p.getInputStream()).start();
+			new Dumper(p.getErrorStream()).start();
+			pagesCount = getPagesCountUnix(cmdPagesCount);
+			p.waitFor();
+			
+		
 		    } 
 		
 		
@@ -207,13 +228,8 @@ public class PDF2PNGServlet extends javax.servlet.http.HttpServlet implements
 		 
 		
 		// System.out.println(cmd);
-		ProcessBuilder P=new ProcessBuilder(cmd);
-		P.start();
-		Process p = Runtime.getRuntime().exec(cmd);
-		new Dumper(p.getInputStream()).start();
-		new Dumper(p.getErrorStream()).start();
-		int pagesCount = getPagesCount(cmdPagesCount);
-		p.waitFor();
+		
+		
 		// HACER LA FUNCION QUE GENERA LOS LINKS
 
 		List<String> webLinks = generateLinks(idString, pagesCount);
@@ -233,6 +249,11 @@ public class PDF2PNGServlet extends javax.servlet.http.HttpServlet implements
 		return Character.getNumericValue((char) p2.getInputStream().read());
 	}
 
+	private int getPagesCountUnix(String cmd) throws IOException {
+		Process p2 = Runtime.getRuntime().exec(new String[] {"sh",  "-c",cmd});
+		return Character.getNumericValue((char) p2.getInputStream().read());
+	}
+	
 	private void saveUser(UserApp user) throws GeneralException {
 		EntityManager entityManager = emf.createEntityManager();
 
