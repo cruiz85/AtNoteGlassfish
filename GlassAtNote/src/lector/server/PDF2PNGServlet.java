@@ -2,9 +2,11 @@ package lector.server;
 
 import java.awt.Image;
 import java.awt.image.RenderedImage;
+import java.io.BufferedReader;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.Date;
@@ -46,8 +48,8 @@ public class PDF2PNGServlet extends javax.servlet.http.HttpServlet implements
 	private EntityManagerFactory emf = Persistence
 			.createEntityManagerFactory(PERSISTENCE_UNIT_NAME);
 	private static final String DATA_DIRECTORY = "data";
-	private static final int MAX_MEMORY_SIZE = 1024 * 1024 * 2;
-	private static final int MAX_REQUEST_SIZE = 1024 * 1024;
+	private static final int MAX_MEMORY_SIZE = 10240 * 1024 * 2;
+	private static final int MAX_REQUEST_SIZE = 10240 * 1024;
 	private GWTService gwtServiceImpl = new GWTServiceImpl();
 
 	protected void doPost(HttpServletRequest request,
@@ -199,7 +201,9 @@ public class PDF2PNGServlet extends javax.servlet.http.HttpServlet implements
 					p.waitFor();
 		 }else{
 		        // everything else
-		    cmd = "gs -sDEVICE=jpeg -dBATCH -r50 "+ "-dNOPAUSE -sOutputFile=\""+rootfolder+"/"
+		    cmd = "gs -sDEVICE=jpeg -dBATCH " +
+		    		"-r200 "+
+		    		"-dNOPAUSE -sOutputFile=\""+rootfolder+"/"
 				+ idString + "%01d.jpg\" \"" +directory+ "\"";
 			
 			// tnenga que
@@ -216,9 +220,8 @@ public class PDF2PNGServlet extends javax.servlet.http.HttpServlet implements
 		 	Process p = Runtime.getRuntime().exec(new String[] {"sh",  "-c", cmd});
 			new Dumper(p.getInputStream()).start();
 			new Dumper(p.getErrorStream()).start();
-			pagesCount = getPagesCountUnix(cmdPagesCount);
 			p.waitFor();
-			
+			pagesCount = getPagesCountUnix(cmdPagesCount);
 		
 		    } 
 		
@@ -249,9 +252,13 @@ public class PDF2PNGServlet extends javax.servlet.http.HttpServlet implements
 		return Character.getNumericValue((char) p2.getInputStream().read());
 	}
 
-	private int getPagesCountUnix(String cmd) throws IOException {
+	private int getPagesCountUnix(String cmd) throws IOException, InterruptedException {
 		Process p2 = Runtime.getRuntime().exec(new String[] {"sh",  "-c",cmd});
-		return Character.getNumericValue((char) p2.getInputStream().read());
+		p2.waitFor();
+		InputStream is = p2.getInputStream(); 
+		BufferedReader br = new BufferedReader (new InputStreamReader (is));
+		String S=br.readLine();
+		return Integer.parseInt(S);
 	}
 	
 	private void saveUser(UserApp user) throws GeneralException {

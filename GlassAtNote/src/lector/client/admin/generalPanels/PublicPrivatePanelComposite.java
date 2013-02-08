@@ -166,5 +166,11 @@ public class PublicPrivatePanelComposite extends Composite {
 		PRIVATE_BUTTON=PRIVATE_BUTTON_RESET;
 		
 	}
+
+	public void ClearALL() {
+		Public.clear();
+		Private.clear();
+		
+	}
 	
 }

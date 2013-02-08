@@ -261,6 +261,7 @@ public class BookAdministrationEntryPoint implements EntryPoint {
 	}
 
 	protected void RefreshUserAndBooks() {
+		PanelPublicPrivatePanel.ClearALL();
 		bookReaderServiceHolder.loadUserById(ActualState.getUser().getId(),
 				new AsyncCallback<UserClient>() {
 

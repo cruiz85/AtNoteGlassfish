@@ -147,7 +147,7 @@ public class Visor extends PopupPanel {
 			public void onClick(ClickEvent event) {
 				actualpagina++;
 				PaginaInt.setValue(actualpagina);
-				if (actualpagina>=Book.getWebLinks().size()-1)
+				if (actualpagina>=Book.getWebLinks().size())
 					Adelante.setEnabled(false);	
 				
 				Atras.setEnabled(true);

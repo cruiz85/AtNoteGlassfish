@@ -2,6 +2,7 @@ package lector.client.controler;
 
 public class InformationConstants {
 	
+	public static String UPLOADING = "Uploading";
 	public static String INSERT_ID_OF_THE_GROUP = "Insert the Key of the Group";
 	public static String CREATE_NEW_TEMPLATECATEGORY = "Insert the name for the new Template category in ";
 	public static String  ORDER_EDITABLE = "Editable Structure";
