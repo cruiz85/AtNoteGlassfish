@@ -7,14 +7,14 @@ import javax.swing.ButtonGroup;
 
 import lector.client.book.reader.GWTService;
 import lector.client.book.reader.GWTServiceAsync;
-import lector.client.catalogo.Finder;
-import lector.client.catalogo.FinderKeys;
-import lector.client.catalogo.FinderOwnGrafo;
-import lector.client.catalogo.OwnGraph.BotonGrafo;
 import lector.client.controler.ActualState;
 import lector.client.controler.Constants;
 import lector.client.controler.Controlador;
 import lector.client.controler.EntitdadObject;
+import lector.client.controler.catalogo.Finder;
+import lector.client.controler.catalogo.FinderKeys;
+import lector.client.controler.catalogo.FinderOwnGrafo;
+import lector.client.controler.catalogo.graph.BotonGrafo;
 import lector.client.reader.BotonesStackPanelReaderSelectMio;
 import lector.client.reader.ClickHandlerMioSelector;
 import lector.client.reader.MainEntryPoint;

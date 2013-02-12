@@ -2,8 +2,8 @@ package lector.client.admin.tagstypes;
 
 import lector.client.book.reader.GWTService;
 import lector.client.book.reader.GWTServiceAsync;
-import lector.client.catalogo.FinderKeys;
 import lector.client.controler.ErrorConstants;
+import lector.client.controler.catalogo.FinderKeys;
 import lector.share.model.client.CatalogoClient;
 
 import com.google.gwt.core.client.GWT;

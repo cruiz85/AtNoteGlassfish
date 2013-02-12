@@ -5,9 +5,9 @@ import java.util.ArrayList;
 import lector.client.admin.generalPanels.BotonesStackPanelAdministracionMio;
 import lector.client.book.reader.GWTService;
 import lector.client.book.reader.GWTServiceAsync;
-import lector.client.catalogo.client.File;
-import lector.client.catalogo.client.Folder;
 import lector.client.controler.EntitdadObject;
+import lector.client.controler.catalogo.client.File;
+import lector.client.controler.catalogo.client.Folder;
 import lector.client.reader.LoadingPanel;
 import lector.share.model.IlegalFolderFusionException;
 import lector.share.model.client.CatalogoClient;
@@ -118,7 +118,7 @@ public class MergeSelector extends PopupPanel {
 								} else {
 									Window.alert("Error in Merge");
 								}
-								// lo añadi
+								// lo aï¿½adi
 								LoadingPanel.getInstance().hide();
 							//	Yo.hide();
 							}

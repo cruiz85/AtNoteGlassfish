@@ -13,10 +13,10 @@ import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.HorizontalPanel;
 
 import lector.client.admin.tagstypes.ClickHandlerMio;
-import lector.client.catalogo.BotonesStackPanelMio;
-import lector.client.catalogo.client.EntityCatalogElements;
-import lector.client.catalogo.client.File;
 import lector.client.controler.ActualState;
+import lector.client.controler.catalogo.BotonesStackPanelMio;
+import lector.client.controler.catalogo.client.EntityCatalogElements;
+import lector.client.controler.catalogo.client.File;
 import lector.client.reader.PanelTextComent.CatalogTipo;
 
 public class ClickHandlerMioSelector extends ClickHandlerMio {

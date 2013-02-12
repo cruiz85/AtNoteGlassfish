@@ -1,7 +1,7 @@
 package lector.client.admin.tagstypes;
 
 import lector.client.admin.generalPanels.BotonesStackPanelAdministracionMio;
-import lector.client.catalogo.BotonesStackPanelMio;
+import lector.client.controler.catalogo.BotonesStackPanelMio;
 
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;

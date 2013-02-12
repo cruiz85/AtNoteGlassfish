@@ -12,10 +12,10 @@ import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.VerticalPanel;
 
 import lector.client.admin.generalPanels.BotonesStackPanelAdministracionMio;
-import lector.client.catalogo.BotonesStackPanelMio;
-import lector.client.catalogo.Finder;
-import lector.client.catalogo.client.EntityCatalogElements;
 import lector.client.controler.EntitdadObject;
+import lector.client.controler.catalogo.BotonesStackPanelMio;
+import lector.client.controler.catalogo.Finder;
+import lector.client.controler.catalogo.client.EntityCatalogElements;
 import lector.client.reader.ButtonTipo;
 import lector.client.reader.browser.Browser.CatalogTipo;
 

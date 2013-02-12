@@ -15,7 +15,6 @@ import lector.client.controler.Controlador;
 import lector.client.controler.ErrorConstants;
 import lector.client.controler.InformationConstants;
 import lector.client.logger.Logger;
-import lector.client.login.bookselec.ButtonActivityReader;
 import lector.client.reader.LoadingPanel;
 import lector.client.reader.MainEntryPoint;
 import lector.share.model.Language;

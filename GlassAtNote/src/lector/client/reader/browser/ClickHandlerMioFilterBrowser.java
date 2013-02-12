@@ -1,10 +1,10 @@
 package lector.client.reader.browser;
 
 import lector.client.admin.tagstypes.ClickHandlerMio;
-import lector.client.catalogo.BotonesStackPanelMio;
-import lector.client.catalogo.Finder;
-import lector.client.catalogo.client.EntityCatalogElements;
 import lector.client.controler.EntitdadObject;
+import lector.client.controler.catalogo.BotonesStackPanelMio;
+import lector.client.controler.catalogo.Finder;
+import lector.client.controler.catalogo.client.EntityCatalogElements;
 import lector.share.model.client.EntryClient;
 
 import com.google.gwt.event.dom.client.ClickHandler;

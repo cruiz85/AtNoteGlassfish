@@ -7,9 +7,9 @@ import java.util.List;
 
 import lector.client.book.reader.GWTService;
 import lector.client.book.reader.GWTServiceAsync;
-import lector.client.catalogo.client.EntityCatalogElements;
 import lector.client.controler.ActualState;
 import lector.client.controler.Constants;
+import lector.client.controler.catalogo.client.EntityCatalogElements;
 import lector.share.model.client.AnnotationClient;
 import lector.share.model.client.EntryClient;
 import lector.share.model.client.StudentClient;

@@ -2,8 +2,8 @@ package lector.client.admin.tagstypes;
 
 
 import lector.client.admin.generalPanels.BotonesStackPanelAdministracionMio;
-import lector.client.catalogo.Finder;
-import lector.client.catalogo.FinderKeys;
+import lector.client.controler.catalogo.Finder;
+import lector.client.controler.catalogo.FinderKeys;
 import lector.share.model.client.CatalogoClient;
 import lector.share.model.client.EntryClient;
 

@@ -7,9 +7,9 @@ import java.util.List;
 
 import lector.client.book.reader.GWTService;
 import lector.client.book.reader.GWTServiceAsync;
-import lector.client.catalogo.client.File;
 import lector.client.controler.ActualState;
 import lector.client.controler.Constants;
+import lector.client.controler.catalogo.client.File;
 import lector.client.reader.hilocomentarios.ReplyDialog;
 import lector.share.model.client.AnnotationClient;
 import lector.share.model.client.TextSelectorClient;
@@ -202,12 +202,12 @@ public enum CatalogTipo {
                     if (panel.getOffsetHeight()>174)
                     {
                     	ScrollPanel.setHeight("174px");
-                    //	Window.alert("Tamaño reducido");
+                    //	Window.alert("Tamaï¿½o reducido");
                     }
                     if (panel.getOffsetHeight()<1)
                     {
                     	ScrollPanel.setHeight("20px");
-                    //	Window.alert("Tamaño reducido");
+                    //	Window.alert("Tamaï¿½o reducido");
                     } 
                     	//  button.setVisible(true);
 //                    richTextAreaBoton.setVisible(false);

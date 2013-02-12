@@ -5,7 +5,7 @@ import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.VerticalPanel;
 
 import lector.client.admin.generalPanels.BotonesStackPanelAdministracionMio;
-import lector.client.catalogo.BotonesStackPanelMio;
+import lector.client.controler.catalogo.BotonesStackPanelMio;
 
 public class BotonesStackPanelReaderSelectMio extends BotonesStackPanelAdministracionMio {
 

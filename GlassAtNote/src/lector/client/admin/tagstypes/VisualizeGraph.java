@@ -2,7 +2,7 @@ package lector.client.admin.tagstypes;
 
 import lector.client.book.reader.GWTService;
 import lector.client.book.reader.GWTServiceAsync;
-import lector.client.catalogo.OwnGraph.PanelGrafo;
+import lector.client.controler.catalogo.graph.PanelGrafo;
 import lector.share.model.client.CatalogoClient;
 
 import com.google.gwt.user.client.Window;

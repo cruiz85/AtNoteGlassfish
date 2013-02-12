@@ -3,10 +3,10 @@ package lector.client.admin.generalPanels;
 
 
 import lector.client.admin.book.BookEntidadObject;
-import lector.client.catalogo.BotonesStackPanelMio;
-import lector.client.catalogo.Finder;
-import lector.client.catalogo.client.EntityCatalogElements;
 import lector.client.controler.EntitdadObject;
+import lector.client.controler.catalogo.BotonesStackPanelMio;
+import lector.client.controler.catalogo.Finder;
+import lector.client.controler.catalogo.client.EntityCatalogElements;
 import lector.share.model.GeneralException;
 
 import com.google.gwt.user.client.ui.VerticalPanel;

@@ -2,10 +2,10 @@ package lector.client.reader;
 
 import lector.client.book.reader.GWTService;
 import lector.client.book.reader.GWTServiceAsync;
-import lector.client.catalogo.Finder;
-import lector.client.catalogo.client.File;
-import lector.client.catalogo.client.Folder;
 import lector.client.controler.ActualState;
+import lector.client.controler.catalogo.Finder;
+import lector.client.controler.catalogo.client.File;
+import lector.client.controler.catalogo.client.Folder;
 import lector.share.model.FileException;
 import lector.share.model.FolderException;
 import lector.share.model.client.TypeCategoryClient;

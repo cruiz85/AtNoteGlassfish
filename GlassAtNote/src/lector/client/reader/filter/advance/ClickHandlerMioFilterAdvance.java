@@ -1,8 +1,8 @@
 package lector.client.reader.filter.advance;
 
 import lector.client.admin.tagstypes.ClickHandlerMio;
-import lector.client.catalogo.BotonesStackPanelMio;
-import lector.client.catalogo.client.EntityCatalogElements;
+import lector.client.controler.catalogo.BotonesStackPanelMio;
+import lector.client.controler.catalogo.client.EntityCatalogElements;
 import lector.client.reader.browser.BotonesStackPanelBrowser;
 
 import com.google.gwt.event.dom.client.ClickHandler;

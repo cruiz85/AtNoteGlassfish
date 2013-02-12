@@ -2,7 +2,7 @@ package lector.client.admin.users;
 
 import com.google.gwt.user.client.ui.VerticalPanel;
 
-import lector.client.catalogo.BotonesStackPanelMio;
+import lector.client.controler.catalogo.BotonesStackPanelMio;
 import lector.share.model.client.UserClient;
 
 public class BotonesStackPanelUsersMio extends BotonesStackPanelMio {

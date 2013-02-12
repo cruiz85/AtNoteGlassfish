@@ -1,10 +1,10 @@
 package lector.client.admin.activity;
 
-import lector.client.catalogo.FinderKeys;
 import lector.client.controler.ActualState;
 import lector.client.controler.Constants;
 import lector.client.controler.ErrorConstants;
 import lector.client.controler.InformationConstants;
+import lector.client.controler.catalogo.FinderKeys;
 import lector.client.logger.Logger;
 import lector.client.reader.BotonesStackPanelReaderSelectMio;
 import lector.share.model.Language;

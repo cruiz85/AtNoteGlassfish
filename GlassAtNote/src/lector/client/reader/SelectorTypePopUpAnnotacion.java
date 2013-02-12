@@ -1,15 +1,15 @@
 package lector.client.reader;
 
-import lector.client.catalogo.Finder;
-import lector.client.catalogo.FinderKeys;
-import lector.client.catalogo.FinderOwnGrafo;
-import lector.client.catalogo.OwnGraph.BotonGrafo;
-import lector.client.catalogo.client.EntityCatalogElements;
-import lector.client.catalogo.client.File;
-import lector.client.catalogo.client.Folder;
 import lector.client.controler.ActualState;
 import lector.client.controler.Constants;
 import lector.client.controler.EntitdadObject;
+import lector.client.controler.catalogo.Finder;
+import lector.client.controler.catalogo.FinderKeys;
+import lector.client.controler.catalogo.FinderOwnGrafo;
+import lector.client.controler.catalogo.client.EntityCatalogElements;
+import lector.client.controler.catalogo.client.File;
+import lector.client.controler.catalogo.client.Folder;
+import lector.client.controler.catalogo.graph.BotonGrafo;
 import lector.client.reader.PanelTextComent.CatalogTipo;
 import lector.share.model.client.CatalogoClient;
 import lector.share.model.client.ProfessorClient;

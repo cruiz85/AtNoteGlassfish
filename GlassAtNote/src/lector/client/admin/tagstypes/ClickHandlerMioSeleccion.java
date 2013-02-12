@@ -3,10 +3,10 @@ package lector.client.admin.tagstypes;
 import lector.client.admin.generalPanels.BotonesStackPanelAdministracionMio;
 import lector.client.book.reader.GWTService;
 import lector.client.book.reader.GWTServiceAsync;
-import lector.client.catalogo.BotonesStackPanelMio;
-import lector.client.catalogo.client.EntityCatalogElements;
 import lector.client.controler.Constants;
 import lector.client.controler.EntitdadObject;
+import lector.client.controler.catalogo.BotonesStackPanelMio;
+import lector.client.controler.catalogo.client.EntityCatalogElements;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;

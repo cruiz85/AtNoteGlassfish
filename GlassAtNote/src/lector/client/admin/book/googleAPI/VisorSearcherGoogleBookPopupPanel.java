@@ -10,6 +10,7 @@ import lector.client.controler.ErrorConstants;
 import lector.client.controler.InformationConstants;
 import lector.client.logger.Logger;
 import lector.client.reader.LoadingPanel;
+import lector.share.model.Language;
 import lector.share.model.client.GoogleBookClient;
 import lector.share.model.client.ProfessorClient;
 import lector.share.model.client.UserClient;
@@ -268,12 +269,12 @@ public class VisorSearcherGoogleBookPopupPanel extends PopupPanel {
 	}
 
 	protected void SaveChages() {
-//		TODO
+//		TODO InsertIn language
 		Window.alert("now under development");
-//		Language LanguageActual = ActualState.getActualLanguage();
-//		String EditorActivityLanguageConfiguration=toFile();
-//		LanguageActual.setEditorActivityLanguageConfiguration(EditorActivityLanguageConfiguration);
-//		ActualState.saveLanguageActual(LanguageActual);
+		Language LanguageActual = ActualState.getActualLanguage();
+//		String VisorSearcherGoogleBookPopupPanelLanguageConfiguration=toFile();
+//		LanguageActual.setVisorSearcherGoogleBookPopupPanelLanguageConfiguration(VisorSearcherGoogleBookPopupPanelLanguageConfiguration);
+		ActualState.saveLanguageActual(LanguageActual);
 		
 	}
 

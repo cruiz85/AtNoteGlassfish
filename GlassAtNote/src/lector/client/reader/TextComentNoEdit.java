@@ -5,8 +5,8 @@ import java.util.List;
 
 import lector.client.book.reader.GWTService;
 import lector.client.book.reader.GWTServiceAsync;
-import lector.client.catalogo.client.File;
 import lector.client.controler.ActualState;
+import lector.client.controler.catalogo.client.File;
 import lector.client.reader.PanelTextComent.CatalogTipo;
 import lector.share.model.Language;
 import lector.share.model.client.AnnotationClient;

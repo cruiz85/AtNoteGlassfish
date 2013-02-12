@@ -1,8 +1,8 @@
 package lector.client.reader;
 
-import lector.client.catalogo.Finder;
-import lector.client.catalogo.FinderKeys;
 import lector.client.controler.ActualState;
+import lector.client.controler.catalogo.Finder;
+import lector.client.controler.catalogo.FinderKeys;
 import lector.share.model.client.CatalogoClient;
 
 import com.google.gwt.event.dom.client.ClickEvent;
