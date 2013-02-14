@@ -269,11 +269,9 @@ public class VisorSearcherGoogleBookPopupPanel extends PopupPanel {
 	}
 
 	protected void SaveChages() {
-//		TODO InsertIn language
-		Window.alert("now under development");
 		Language LanguageActual = ActualState.getActualLanguage();
-//		String VisorSearcherGoogleBookPopupPanelLanguageConfiguration=toFile();
-//		LanguageActual.setVisorSearcherGoogleBookPopupPanelLanguageConfiguration(VisorSearcherGoogleBookPopupPanelLanguageConfiguration);
+		String VisorSearcherGoogleBookPopupPanelLanguageConfiguration=toFile();
+		LanguageActual.setVisorSearcherGoogleBookPopupPanelLanguageConfiguration(VisorSearcherGoogleBookPopupPanelLanguageConfiguration);
 		ActualState.saveLanguageActual(LanguageActual);
 		
 	}

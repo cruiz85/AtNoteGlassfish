@@ -16,6 +16,7 @@ import lector.client.admin.activity.SeleccionMenuActivityPopupPanel;
 import lector.client.admin.admins.AdminAdministratorEntryPoint;
 import lector.client.admin.book.BookAdministrationEntryPoint;
 import lector.client.admin.book.googleAPI.SearcherGoogleEntryPoint;
+import lector.client.admin.book.googleAPI.VisorSearcherGoogleBookPopupPanel;
 import lector.client.admin.generalPanels.PublicPrivatePanelComposite;
 import lector.client.book.reader.GWTService;
 import lector.client.book.reader.GWTServiceAsync;
@@ -131,8 +132,10 @@ public class ActualState {
 		BookAdministrationEntryPoint.FromFile(ActualLanguage.getBookAdministrationEntryPointLanguageConfiguration());
 		//package lector.client.admin.book.googleAPI;
 		SearcherGoogleEntryPoint.FromFile(ActualLanguage.getSearcherGoogleEntryPointLanguageConfiguration());
+		VisorSearcherGoogleBookPopupPanel.FromFile(ActualLanguage.getVisorSearcherGoogleBookPopupPanelLanguageConfiguration());
 		//package lector.client.admin.generalPanels;
 		PublicPrivatePanelComposite.FromFile(ActualLanguage.getPublicPrivatePanelCompositeLanguageConfiguration());
+	
 	}
 
 	public static boolean isLanguageActive() {
