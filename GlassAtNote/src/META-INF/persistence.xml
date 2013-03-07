@@ -51,8 +51,8 @@
             <property name="eclipselink.ddl-generation.output-mode" value="database"/>  
             <property name="eclipselink.jdbc.password" value="root"/>
 			<property name="eclipselink.jdbc.user" value="root"/>-->
-            <property name="javax.persistence.jdbc.password" value="15148785"/>
-			<property name="javax.persistence.jdbc.user" value="root"/>
+            <property name="javax.persistence.jdbc.password" value="platano"/>
+			<property name="javax.persistence.jdbc.user" value="ilsaserver"/>
 			<property name="javax.persistence.jdbc.driver" value="com.mysql.jdbc.Driver"/>
 			<property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost:3306/atnote"/>
           <!--     <property name="eclipselink.logging.level" value="FINEST"/> 
@@ -65,7 +65,7 @@
 
 	<!--<property name="eclipselink.ddl-generation" value="create-or-extend-tables" /> -->
             	
-  		  <property name="eclipselink.ddl-generation" value="create-or-extend-tables" />
+  		  <property name="eclipselink.ddl-generation" value="create-tables" />
       		<property name="eclipselink.ddl-generation.output-mode" value="database" />
             
         </properties>
