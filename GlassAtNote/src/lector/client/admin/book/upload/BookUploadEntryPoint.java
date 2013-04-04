@@ -49,9 +49,21 @@ import lector.share.model.client.UserClient;
 
 public class BookUploadEntryPoint implements EntryPoint {
 
+private static final String BOOKUPLOADENTRYPOINT = "Book upoload entry point";
 	
-	private String RADIO_BUTTON_SIMPLE_LABEL="Simple";
-	private String RADIO_BUTTON_PDF_LABEL="PDF";
+	private static final int NCampos=2;
+	
+	private static final int DecoradorWidth = 2;
+	
+	private static String MENUITEMCLOSE = "Close";
+	private static String RADIO_BUTTON_SIMPLE_LABEL="Simple";
+	private static String RADIO_BUTTON_PDF_LABEL="PDF";
+	private static String AUTORLABEL = "Autor:";
+	private static String PUBLISHYEARLABEL = "Published Year:";
+	private static String TITTLELABEL = "Title:";
+	
+	
+	private static String UPLOAD= "Upload";
 	
 	static ImageServiceAsync userImageService = GWT.create(ImageService.class);
 	static GWTServiceAsync bookReaderServiceHolder = GWT
@@ -71,11 +83,20 @@ public class BookUploadEntryPoint implements EntryPoint {
 	private RadioButton SimpleRadioButton;
 	private RadioButton PDFRadioButton;
 	private Button PlusButton;
-	private String UPLOAD= "Upload";
+	private String Accepnow;
+	
+	private static final String AcceptJPG="image/png, image/gif,image/jpeg";
+	private static final String AcceptPDF="application/pdf";
+	private static final String radioButtonGroup="RBGroup";
+	private static final String PLUS = "+";
+
 	
 
-	private static final String radioButtonGroup="RBGroup";
 	
+	
+	/**
+	 * Metodo de entrada que pinta la ventana para el entry point
+	 */
 	public void onModuleLoad() {
 
 		RootPanel RP = RootPanel.get();
@@ -85,7 +106,7 @@ public class BookUploadEntryPoint implements EntryPoint {
 		RP.add(menuBar,0,0);
 		menuBar.setWidth("100%");
 
-		MenuItem mntmNewItem = new MenuItem("Close", false, new Command() {
+		MenuItem mntmNewItem = new MenuItem(MENUITEMCLOSE, false, new Command() {
 
 			public void execute() {
 				Controlador.change2BookAdminstrator();
@@ -147,7 +168,8 @@ public class BookUploadEntryPoint implements EntryPoint {
 					submitButton.setEnabled(false);
 					startNewBlobstoreSessionPDF();
 					PlusButton.setVisible(false);
-					
+					Accepnow=AcceptPDF;
+					putacceptInFileUploaders();	
 				}
 				else 
 				{
@@ -160,6 +182,8 @@ public class BookUploadEntryPoint implements EntryPoint {
 					submitButton.setEnabled(false);
 					startNewBlobstoreSessionSimple();
 					PlusButton.setVisible(true);
+					Accepnow=AcceptJPG;
+					putacceptInFileUploaders();
 				}
 			}
 		};
@@ -177,7 +201,7 @@ public class BookUploadEntryPoint implements EntryPoint {
 		verticalPanel_2.add(horizontalPanel_2);
 		horizontalPanel_2.setWidth("100%");
 		
-		Label lblAutor = new Label("Autor:");
+		Label lblAutor = new Label(AUTORLABEL);
 		lblAutor.setStyleName("gwt-LabelLoad");
 		horizontalPanel_2.add(lblAutor);
 
@@ -196,7 +220,7 @@ public class BookUploadEntryPoint implements EntryPoint {
 		HorizontalPanel horizontalPanel_5 = new HorizontalPanel();
 		verticalPanel_2.add(horizontalPanel_5);
 
-		Label lblNewLabel = new Label("Published Year:");
+		Label lblNewLabel = new Label(PUBLISHYEARLABEL);
 		lblNewLabel.setStyleName("gwt-LabelLoad");
 		horizontalPanel_5.add(lblNewLabel);
 
@@ -213,7 +237,7 @@ public class BookUploadEntryPoint implements EntryPoint {
 		HorizontalPanel horizontalPanel_8 = new HorizontalPanel();
 		verticalPanel_2.add(horizontalPanel_8);
 
-		Label lblNewLabel_1 = new Label("Title:");
+		Label lblNewLabel_1 = new Label(TITTLELABEL);
 		lblNewLabel_1.setStyleName("gwt-LabelLoad");
 		horizontalPanel_8.add(lblNewLabel_1);
 
@@ -263,11 +287,15 @@ public class BookUploadEntryPoint implements EntryPoint {
 		PanelUploaders.add(FU3);
 		FU3.setSize("100%", "100%");
 
+		Accepnow=AcceptJPG;
+		putacceptInFileUploaders();
+		
+		
 		SimplePanel simplePanel = new SimplePanel();
 		verticalPanel_3.add(simplePanel);
 		simplePanel.setSize("100%", "100%");
 
-		PlusButton = new Button("+");
+		PlusButton = new Button(PLUS);
 		simplePanel.setWidget(PlusButton);
 		PlusButton.addClickHandler(new ClickHandler() {
 			public void onClick(ClickEvent event) {
@@ -276,6 +304,7 @@ public class BookUploadEntryPoint implements EntryPoint {
 				fileUploadMove.setName(Integer.toString(actualFiles));
 				PanelUploaders.add(fileUploadMove);
 				fileUploadMove.setSize("100%", "100%");
+				fileUploadMove.getElement().setAttribute("accept", Accepnow);
 
 			}
 		});
@@ -315,6 +344,8 @@ public class BookUploadEntryPoint implements EntryPoint {
 		submitButton = new Button(UPLOAD);
 		submitButton.addClickHandler(new ClickHandler() {
 			public void onClick(ClickEvent event) {
+				
+				//Recorro los uploaders para ver cuales estan llenos
 				ArrayList<Widget> Listanueva = new ArrayList<Widget>();
 				for (Widget widget : PanelUploaders) {
 					FileUpload T = (FileUpload) widget;
@@ -323,15 +354,20 @@ public class BookUploadEntryPoint implements EntryPoint {
 						Listanueva.add(T);
 					}
 				}
+				
+				//Elimino todos
 				PanelUploaders.clear();
+				
+				//Relleno con los que estan llenos y los numero
 				int i = 0;
 				for (Widget widget : Listanueva) {
 					FileUpload T = (FileUpload) widget;
 					T.setName(Integer.toString(i));
 					PanelUploaders.add(widget);
-					// Window.alert(T.getFilename() + " : " + i);
 					i++;
 				}
+				
+				//A subir!!!
 				if ((!Listanueva.isEmpty()) && !title.getText().isEmpty())
 					{
 					LoadingPanel.getInstance().center();
@@ -343,8 +379,12 @@ public class BookUploadEntryPoint implements EntryPoint {
 					Window.alert(ErrorConstants.TEXT_NULL_OR_NO_IMAGEN);
 					restarPanelOld();
 					}
+				
 			}
 
+			/**
+			 * Recupera los paneles al estado antes de la subida
+			 */
 			private void restarPanelOld() {
 				PanelUploaders.clear();
 				if (PDFRadioButton.getValue()){
@@ -357,6 +397,9 @@ public class BookUploadEntryPoint implements EntryPoint {
 						submitButton.setEnabled(false);
 						startNewBlobstoreSessionPDF();
 						PlusButton.setVisible(false);
+						Accepnow=AcceptPDF;
+						putacceptInFileUploaders();
+						
 						
 					}
 					else 
@@ -369,6 +412,9 @@ public class BookUploadEntryPoint implements EntryPoint {
 						submitButton.setEnabled(false);
 						startNewBlobstoreSessionSimple();
 						PlusButton.setVisible(true);
+						Accepnow=AcceptJPG;
+						putacceptInFileUploaders();
+						
 					}
 				
 			}
@@ -408,18 +454,6 @@ public class BookUploadEntryPoint implements EntryPoint {
 
 		submitButton.setStyleName("gwt-ButtonCenter");
 
-		// form.addSubmitHandler(new FormPanel.SubmitHandler() {
-		// public void onSubmit(SubmitEvent event) {
-		// if (!"".equalsIgnoreCase(fileUpload.getFilename())) {
-		// GWT.log("UPLOADING FILE????" + fileUpload.getFilename(),
-		// null);
-		// // NOW WHAT????
-		// } else {
-		// event.cancel(); // cancel the event
-		// }
-		//
-		// }
-		// });
 		
 		SubmitCompleteHandler Simple = new FormPanel.SubmitCompleteHandler() {
 
@@ -468,6 +502,19 @@ public class BookUploadEntryPoint implements EntryPoint {
 		startNewBlobstoreSessionSimple();
 	}
 
+	/**
+	 * Pone el tipo de elementos aceptados en el fileupload
+	 */
+	protected void putacceptInFileUploaders() {
+		for (Widget uploader : PanelUploaders) {
+			((FileUpload)uploader).getElement().setAttribute("accept", Accepnow);
+		}
+		
+	}
+
+	/**
+	 * Inicia el sistema para subir archivos para la carga en JPG
+	 */
 	private void startNewBlobstoreSessionSimple() {
 		String A=GWT.getHostPageBaseURL();
 		
@@ -477,6 +524,9 @@ public class BookUploadEntryPoint implements EntryPoint {
 
 	}
 	
+	/**
+	 * Inicial el sistema para subir archivos en PDF
+	 */
 	private void startNewBlobstoreSessionPDF() {
 		String A=GWT.getHostPageBaseURL();
 		

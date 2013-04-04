@@ -107,6 +107,8 @@ public class SearcherGoogleEntryPoint implements EntryPoint, HistoryListener {
 	private final HorizontalPanel horizontalPanel2 = new HorizontalPanel();
 
 	private AbsolutePanel PanelEdicion;
+	private final VerticalPanel GlueBlue = new VerticalPanel();
+	private final VerticalPanel GlueWhite = new VerticalPanel();
 	
 	
 
@@ -419,7 +421,6 @@ public class SearcherGoogleEntryPoint implements EntryPoint, HistoryListener {
 			bookLinks[i] = new Hyperlink("", "#");
 		}
 		cleanHyperLinks();
-		hyperlinksPanel.clear();
 
 		String token = History.getToken();
 		if (token.length() == 0) {
@@ -488,9 +489,21 @@ public class SearcherGoogleEntryPoint implements EntryPoint, HistoryListener {
 		lblNewLabel.setSize("100%", "100%");
 
 		lblNewLabel.setText("");
-		hyperlinksPanel.setStyleName("Root");
+		GlueBlue.setVerticalAlignment(HasVerticalAlignment.ALIGN_MIDDLE);
+		GlueBlue.setStyleName("AzulTransparente");
+		GlueBlue.setSpacing(10);
+		
+		Panel.add(GlueBlue);
+		GlueBlue.setWidth("");
+		GlueWhite.setSpacing(6);
+		GlueWhite.setStyleName("BlancoTransparente");
+		
+		GlueBlue.add(GlueWhite);
+		GlueWhite.add(hyperlinksPanel);
+		hyperlinksPanel.setWidth("");
+		hyperlinksPanel.clear();
+		hyperlinksPanel.setStyleName("BlancoTransparente");
 		hyperlinksPanel.setVerticalAlignment(HasVerticalAlignment.ALIGN_MIDDLE);
-		Panel.add(hyperlinksPanel);
 		PanelFondoGeneral.add(Panel);
 		Panel.setSize("100%", "100%");
 		// add(Panel);
