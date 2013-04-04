@@ -1,6 +1,2 @@
 # Module BookReader
 # RPC service class, partial path of RPC policy file
-lector.client.book.reader.LoggerService, 98198F0502AD59DACE5C4E15C6AA4435.gwt.rpc
-lector.client.book.reader.ImageService, 96B8D6DF324CDFC240699AFC86C3833C.gwt.rpc
-lector.client.book.reader.GWTService, E6925FFF7F66B39D43726C173B6736E2.gwt.rpc
-lector.client.book.reader.ExportService, 5B4FCAB6126576BAC238685E249064F4.gwt.rpc
