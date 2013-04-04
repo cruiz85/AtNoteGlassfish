@@ -11,8 +11,8 @@ import lector.client.book.reader.GWTServiceAsync;
 import lector.client.controler.ActualState;
 import lector.client.controler.Constants;
 import lector.client.controler.Controlador;
-import lector.client.controler.ErrorConstants;
-import lector.client.controler.InformationConstants;
+import lector.client.controler.ConstantsError;
+import lector.client.controler.ConstantsInformation;
 import lector.client.logger.Logger;
 import lector.share.model.Language;
 import lector.share.model.client.BookClient;
@@ -174,11 +174,11 @@ public class BookAdministrationEntryPoint implements EntryPoint {
 							}
 
 							public void onFailure(Throwable caught) {
-								Window.alert(ErrorConstants.ERROR_REMOVING_BOOK);
+								Window.alert(ConstantsError.ERROR_REMOVING_BOOK);
 								Logger.GetLogger().severe(
 										Yo.getClass().toString(),
 										ActualState.getUser().toString(),
-										ErrorConstants.ERROR_REMOVING_BOOK);
+										ConstantsError.ERROR_REMOVING_BOOK);
 
 							}
 						};
@@ -277,7 +277,7 @@ public class BookAdministrationEntryPoint implements EntryPoint {
 
 					@Override
 					public void onFailure(Throwable caught) {
-						Window.alert(ErrorConstants.ERROR_LOADING_USER);
+						Window.alert(ConstantsError.ERROR_LOADING_USER);
 
 					}
 				});
@@ -363,10 +363,10 @@ public class BookAdministrationEntryPoint implements EntryPoint {
 
 					@Override
 					public void onFailure(Throwable caught) {
-						Window.alert(ErrorConstants.ERROR_RETRIVING_THE_BOOKS);
+						Window.alert(ConstantsError.ERROR_RETRIVING_THE_BOOKS);
 						Logger.GetLogger().severe(Yo.getClass().toString(),
 								ActualState.getUser().toString(),
-								ErrorConstants.ERROR_RETRIVING_THE_BOOKS);
+								ConstantsError.ERROR_RETRIVING_THE_BOOKS);
 
 					}
 				});
@@ -381,7 +381,7 @@ public class BookAdministrationEntryPoint implements EntryPoint {
 		PanelEdicion.setStyleName("");
 		Button Boton = new Button();
 		PanelEdicion.add(Boton, 0, 0);
-		Boton.setHTML(InformationConstants.EDIT_BOTTON);
+		Boton.setHTML(ConstantsInformation.EDIT_BOTTON);
 		Boton.addClickHandler(new ClickHandler() {
 
 			@Override
@@ -403,7 +403,7 @@ public class BookAdministrationEntryPoint implements EntryPoint {
 		Button Boton = new Button();
 		PanelEdicion.add(Boton, PanelEdicion.getOffsetWidth()
 				- Constants.TAMANOBOTOBEDITON, 0);
-		Boton.setHTML(InformationConstants.END_EDIT_BOTTON);
+		Boton.setHTML(ConstantsInformation.END_EDIT_BOTTON);
 		Boton.addClickHandler(new ClickHandler() {
 
 			@Override
@@ -557,7 +557,7 @@ public class BookAdministrationEntryPoint implements EntryPoint {
 			Logger.GetLogger().severe(
 					BookAdministrationEntryPoint.class.toString(),
 					ActualState.getUser().toString(),
-					ErrorConstants.ERROR_LOADING_LANGUAGE_IN
+					ConstantsError.ERROR_LOADING_LANGUAGE_IN
 							+ BOOK_ADMINISTRATION_NAME);
 		ParsearFieldsAItemsRESET();
 		}

@@ -3,7 +3,7 @@ package lector.client.admin.export.admin;
 
 import lector.client.book.reader.ExportService;
 import lector.client.book.reader.ExportServiceAsync;
-import lector.client.controler.ErrorConstants;
+import lector.client.controler.ConstantsError;
 import lector.client.reader.LoadingPanel;
 import lector.share.model.Template;
 import lector.share.model.TemplateCategory;
@@ -105,19 +105,19 @@ public class RepresentacionTemplateCategory extends Composite {
 							
 							public void onFailure(Throwable caught) {
 								LoadingPanel.getInstance().hide();
-								Window.alert(ErrorConstants.ERROR_ON_MOVE_CATEGORY_PROMOTING);	
+								Window.alert(ConstantsError.ERROR_ON_MOVE_CATEGORY_PROMOTING);	
 								
 							}
 						});
 						
 					}else
 					{
-					Window.alert(ErrorConstants.ERROR_TOP_LEVEL_TEMPLATECATEGORY);	
+					Window.alert(ConstantsError.ERROR_TOP_LEVEL_TEMPLATECATEGORY);	
 					}
 					
 				}else
 				{
-				Window.alert(ErrorConstants.ERROR_THIS_IS_A_TEMPLATE);	
+				Window.alert(ConstantsError.ERROR_THIS_IS_A_TEMPLATE);	
 				}
 				
 			}
@@ -169,18 +169,18 @@ public class RepresentacionTemplateCategory extends Composite {
 							
 							public void onFailure(Throwable caught) {
 								LoadingPanel.getInstance().hide();
-								Window.alert(ErrorConstants.ERROR_ON_MOVE_CATEGORY_DEGRADING);	
+								Window.alert(ConstantsError.ERROR_ON_MOVE_CATEGORY_DEGRADING);	
 								
 							}
 						});
 					}
 						else
 						{
-							Window.alert(ErrorConstants.ERROR_THERE_ARE_NOT_UP_BROTHER_TO_DEGRADE);	
+							Window.alert(ConstantsError.ERROR_THERE_ARE_NOT_UP_BROTHER_TO_DEGRADE);	
 						}
 				}else
 				{
-				Window.alert(ErrorConstants.ERROR_THIS_IS_A_TEMPLATE);	
+				Window.alert(ConstantsError.ERROR_THIS_IS_A_TEMPLATE);	
 				}
 				
 			}
@@ -278,7 +278,7 @@ public class RepresentacionTemplateCategory extends Composite {
 
 							public void onFailure(Throwable caught) {
 								LoadingPanel.getInstance().hide();
-								Window.alert(ErrorConstants.ERROR_ON_MOVE_CATEGORY_ASCENDESCEN);	
+								Window.alert(ConstantsError.ERROR_ON_MOVE_CATEGORY_ASCENDESCEN);	
 								
 							}
 
@@ -292,11 +292,11 @@ public class RepresentacionTemplateCategory extends Composite {
 						} );
 					}else 
 					{
-						Window.alert(ErrorConstants.ERROR_THERE_ARE_NOT_UP_BROTHER);		
+						Window.alert(ConstantsError.ERROR_THERE_ARE_NOT_UP_BROTHER);		
 					}					
 				}else
 				{
-				Window.alert(ErrorConstants.ERROR_THIS_IS_A_TEMPLATE);	
+				Window.alert(ConstantsError.ERROR_THIS_IS_A_TEMPLATE);	
 				}
 				
 			}
@@ -359,7 +359,7 @@ public class RepresentacionTemplateCategory extends Composite {
 
 							public void onFailure(Throwable caught) {
 								LoadingPanel.getInstance().hide();
-								Window.alert(ErrorConstants.ERROR_ON_MOVE_CATEGORY_ASCENDESCEN);	
+								Window.alert(ConstantsError.ERROR_ON_MOVE_CATEGORY_ASCENDESCEN);	
 								
 							}
 
@@ -371,11 +371,11 @@ public class RepresentacionTemplateCategory extends Composite {
 						});
 					}else 
 					{
-						Window.alert(ErrorConstants.ERROR_THERE_ARE_NOT_DOWN_BROTHER);		
+						Window.alert(ConstantsError.ERROR_THERE_ARE_NOT_DOWN_BROTHER);		
 					}		
 				}else
 				{
-				Window.alert(ErrorConstants.ERROR_THIS_IS_A_TEMPLATE);	
+				Window.alert(ConstantsError.ERROR_THIS_IS_A_TEMPLATE);	
 				}
 				
 			}

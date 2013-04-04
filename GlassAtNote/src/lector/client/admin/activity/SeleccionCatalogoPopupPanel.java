@@ -4,8 +4,8 @@ import lector.client.book.reader.GWTService;
 import lector.client.book.reader.GWTServiceAsync;
 import lector.client.controler.ActualState;
 import lector.client.controler.Constants;
-import lector.client.controler.ErrorConstants;
-import lector.client.controler.InformationConstants;
+import lector.client.controler.ConstantsError;
+import lector.client.controler.ConstantsInformation;
 import lector.client.logger.Logger;
 import lector.client.reader.LoadingPanel;
 import lector.share.model.Language;
@@ -124,7 +124,7 @@ public class SeleccionCatalogoPopupPanel extends PopupPanel {
 				LPrivate.setText("Teacher Catalog :"
 						+ Catalogo.getCatalogName());
 				LoadingPanel.getInstance().center();
-				LoadingPanel.getInstance().setLabelTexto(InformationConstants.LOADING);
+				LoadingPanel.getInstance().setLabelTexto(ConstantsInformation.LOADING);
 				bookReaderServiceHolder.loadCatalogById(Catalogo.getId(), new AsyncCallback<CatalogoClient>() {
 					
 					@Override
@@ -141,7 +141,7 @@ public class SeleccionCatalogoPopupPanel extends PopupPanel {
 					public void onFailure(Throwable caught) {
 						LoadingPanel.getInstance()
 						.hide();
-						Window.alert(ErrorConstants.ERROR_LOADING_CATALOG);
+						Window.alert(ConstantsError.ERROR_LOADING_CATALOG);
 						hide();
 						
 					}
@@ -207,7 +207,7 @@ public class SeleccionCatalogoPopupPanel extends PopupPanel {
 		PanelEdicion.setStyleName("");
 		Button Boton=new Button();
 		PanelEdicion.add(Boton,0,0);
-		Boton.setHTML(InformationConstants.EDIT_BOTTON);
+		Boton.setHTML(ConstantsInformation.EDIT_BOTTON);
 		Boton.addClickHandler(new ClickHandler() {
 			
 			@Override
@@ -227,7 +227,7 @@ public class SeleccionCatalogoPopupPanel extends PopupPanel {
 		PanelEdicion.setStyleName("BlancoTransparente");
 		Button Boton=new Button();
 		
-		Boton.setHTML(InformationConstants.END_EDIT_BOTTON);
+		Boton.setHTML(ConstantsInformation.END_EDIT_BOTTON);
 		Boton.addClickHandler(new ClickHandler() {
 			
 			@Override
@@ -289,7 +289,7 @@ public class SeleccionCatalogoPopupPanel extends PopupPanel {
 			else BOTTON_OPEN_CATALOG=BOTTON_OPEN_CATALOG_RESET;
 		}
 		else 
-			Logger.GetLogger().severe(SeleccionCatalogoPopupPanel.class.toString(), ActualState.getUser().toString(), ErrorConstants.ERROR_LOADING_LANGUAGE_IN  + SelectionCatalogPopupPanel);	
+			Logger.GetLogger().severe(SeleccionCatalogoPopupPanel.class.toString(), ActualState.getUser().toString(), ConstantsError.ERROR_LOADING_LANGUAGE_IN  + SelectionCatalogPopupPanel);	
 		ParsearFieldsAItemsRESET();
 		}
 	}

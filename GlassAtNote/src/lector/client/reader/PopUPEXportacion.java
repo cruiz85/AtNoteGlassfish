@@ -11,7 +11,7 @@ import lector.client.book.reader.ImageService;
 import lector.client.book.reader.ImageServiceAsync;
 import lector.client.controler.ActualState;
 import lector.client.controler.Controlador;
-import lector.client.controler.ErrorConstants;
+import lector.client.controler.ConstantsError;
 import lector.client.reader.export.EnvioExportacion;
 import lector.client.reader.export.PanelSeleccionExportacion;
 import lector.client.reader.export.arbitroLlamadas;
@@ -217,7 +217,7 @@ exportServiceHolder.loadTemplateById(Template.getId(), new AsyncCallback<Templat
 			
 			@Override
 			public void onFailure(Throwable caught) {
-				Window.alert(ErrorConstants.ERROR_LOADING_TEMPLATE);
+				Window.alert(ConstantsError.ERROR_LOADING_TEMPLATE);
 				
 			}
 		});

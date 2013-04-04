@@ -5,7 +5,7 @@ import lector.client.book.reader.GWTServiceAsync;
 import lector.client.controler.ActualState;
 import lector.client.controler.Constants;
 import lector.client.controler.Controlador;
-import lector.client.controler.ErrorConstants;
+import lector.client.controler.ConstantsError;
 import lector.client.reader.LoadingPanel;
 import lector.share.model.UserApp;
 import lector.share.model.client.ProfessorClient;
@@ -199,7 +199,7 @@ public class UserEdition implements EntryPoint {
 
 											
 											public void onFailure(Throwable caught) {
-												Window.alert(ErrorConstants.ERROR_UPDATING_USER_DATA);
+												Window.alert(ConstantsError.ERROR_UPDATING_USER_DATA);
 												LoadingPanel.getInstance().hide();
 												
 											}

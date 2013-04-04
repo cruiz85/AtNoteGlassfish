@@ -5,8 +5,8 @@ import java.util.Stack;
 import lector.client.book.reader.ExportService;
 import lector.client.book.reader.ExportServiceAsync;
 import lector.client.controler.Controlador;
-import lector.client.controler.ErrorConstants;
-import lector.client.controler.InformationConstants;
+import lector.client.controler.ConstantsError;
+import lector.client.controler.ConstantsInformation;
 import lector.client.reader.LoadingPanel;
 import lector.share.model.Template;
 import lector.share.model.TemplateCategory;
@@ -198,12 +198,12 @@ public class EditTemplate implements EntryPoint {
 								if (TCP!=null)
 								{
 									LoadingPanel.getInstance().center();
-									LoadingPanel.getInstance().setLabelTexto(InformationConstants.SAVING);
+									LoadingPanel.getInstance().setLabelTexto(ConstantsInformation.SAVING);
 									exportServiceHolder.deleteTemplateCategory(TC.getT().getId(), new AsyncCallback<Void>() {
 
 										public void onFailure(Throwable caught) {
 											LoadingPanel.getInstance().hide();
-											Window.alert(ErrorConstants.ERROR_DELETING_TEMPLATE_CATEGORY);
+											Window.alert(ConstantsError.ERROR_DELETING_TEMPLATE_CATEGORY);
 											
 										}
 
@@ -218,7 +218,7 @@ public class EditTemplate implements EntryPoint {
 									
 								}else
 								{
-									Window.alert(ErrorConstants.ERROR_THIS_IS_A_TEMPLATE_DELETE);	
+									Window.alert(ConstantsError.ERROR_THIS_IS_A_TEMPLATE_DELETE);	
 								}
 								
 							}

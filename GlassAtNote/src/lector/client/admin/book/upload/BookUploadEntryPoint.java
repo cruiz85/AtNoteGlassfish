@@ -5,8 +5,8 @@ import java.util.ArrayList;
 import lector.client.controler.ActualState;
 import lector.client.controler.Constants;
 import lector.client.controler.Controlador;
-import lector.client.controler.ErrorConstants;
-import lector.client.controler.InformationConstants;
+import lector.client.controler.ConstantsError;
+import lector.client.controler.ConstantsInformation;
 import lector.client.logger.Logger;
 import lector.client.reader.LoadingPanel;
 
@@ -171,7 +171,7 @@ public class BookUploadEntryPoint implements EntryPoint {
 					Window.alert(event.getResults());
 				LoadingPanel.getInstance().center();
 				LoadingPanel.getInstance().setLabelTexto(
-						InformationConstants.LOADING);
+						ConstantsInformation.LOADING);
 				bookReaderServiceHolder.loadUserById(ActualState.getUser()
 						.getId(), new AsyncCallback<UserClient>() {
 
@@ -184,7 +184,7 @@ public class BookUploadEntryPoint implements EntryPoint {
 					}
 
 					public void onFailure(Throwable caught) {
-						Window.alert(ErrorConstants.ERROR_LOAD_FORCE_LOGIN);
+						Window.alert(ConstantsError.ERROR_LOAD_FORCE_LOGIN);
 						Window.Location.reload();
 						LoadingPanel.getInstance().hide();
 					}
@@ -436,10 +436,10 @@ public class BookUploadEntryPoint implements EntryPoint {
 						&& !TitleTextBox.getText().isEmpty()) {
 					LoadingPanel.getInstance().center();
 					LoadingPanel.getInstance().setLabelTexto(
-							InformationConstants.UPLOADING);
+							ConstantsInformation.UPLOADING);
 					form.submit();
 				} else {
-					Window.alert(ErrorConstants.TEXT_NULL_OR_NO_IMAGEN);
+					Window.alert(ConstantsError.TEXT_NULL_OR_NO_IMAGEN);
 					restarPanelOld();
 				}
 
@@ -569,7 +569,7 @@ public class BookUploadEntryPoint implements EntryPoint {
 		PanelEdicion.setStyleName("");
 		Button Boton = new Button();
 		PanelEdicion.add(Boton, 0, 0);
-		Boton.setHTML(InformationConstants.EDIT_BOTTON);
+		Boton.setHTML(ConstantsInformation.EDIT_BOTTON);
 		Boton.addClickHandler(new ClickHandler() {
 
 			@Override
@@ -594,7 +594,7 @@ public class BookUploadEntryPoint implements EntryPoint {
 		Button Boton = new Button();
 		PanelEdicion.add(Boton, PanelEdicion.getOffsetWidth()
 				- Constants.TAMANOBOTOBEDITON, 0);
-		Boton.setHTML(InformationConstants.END_EDIT_BOTTON);
+		Boton.setHTML(ConstantsInformation.END_EDIT_BOTTON);
 		Boton.addClickHandler(new ClickHandler() {
 
 			@Override
@@ -800,7 +800,7 @@ public class BookUploadEntryPoint implements EntryPoint {
 			Logger.GetLogger().severe(
 					BookUploadEntryPoint.class.toString(),
 					ActualState.getUser().toString(),
-					ErrorConstants.ERROR_LOADING_LANGUAGE_IN
+					ConstantsError.ERROR_LOADING_LANGUAGE_IN
 							+ BOOKUPLOADENTRYPOINT);
 		ParsearFieldsAItemsRESET();
 		}

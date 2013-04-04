@@ -1,6 +1,6 @@
 package lector.client.controler;
 
-public class ErrorConstants {
+public class ConstantsError {
 	
 	public static String ERROR_RETRIVING_GROUPS = "Error Retriving catalog, please reload";
 	public static String ERROR_IN_ADDITION_TO_A_GROUP = "Error additing user to a group ";

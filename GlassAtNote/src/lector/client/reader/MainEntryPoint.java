@@ -42,7 +42,7 @@ import lector.client.book.reader.GWTServiceAsync;
 import lector.client.controler.ActualState;
 import lector.client.controler.Constants;
 import lector.client.controler.Controlador;
-import lector.client.controler.ErrorConstants;
+import lector.client.controler.ConstantsError;
 import lector.client.controler.HelpMessage;
 import lector.client.reader.hilocomentarios.ArbitroThreads;
 import lector.client.reader.filter.FilterBasicPopUp;
@@ -1389,7 +1389,7 @@ pageBack.addMouseDownHandler(new MouseDownHandler() {
 					if (isSelectionMode){
 						if (!selectorvacio(popUpSelectoract))
 							popUpSelector.add(popUpSelectoract);
-						else Window.alert(ErrorConstants.ERROR_SELECTION_TOO_SLOW);
+						else Window.alert(ConstantsError.ERROR_SELECTION_TOO_SLOW);
 						
 						if (!event.isShiftKeyDown())
 						{

@@ -4,8 +4,8 @@ import lector.client.book.reader.GWTService;
 import lector.client.book.reader.GWTServiceAsync;
 import lector.client.controler.ActualState;
 import lector.client.controler.CalendarNow;
-import lector.client.controler.ErrorConstants;
-import lector.client.controler.InformationConstants;
+import lector.client.controler.ConstantsError;
+import lector.client.controler.ConstantsInformation;
 import lector.client.logger.Logger;
 import lector.client.reader.LoadingPanel;
 import lector.share.model.Catalogo;
@@ -102,7 +102,7 @@ public class NewCatalogPopupPanel extends PopupPanel {
 					C.setProfessorId(ActualState.getUser().getId());
 					C.setIsPrivate(chckbxNewCheckBox.getValue());
 					LoadingPanel.getInstance().center();
-					LoadingPanel.getInstance().setLabelTexto(InformationConstants.SAVING);
+					LoadingPanel.getInstance().setLabelTexto(ConstantsInformation.SAVING);
 					NuevoC=C;
 					bookReaderServiceHolder.saveCatalog(C,
 							new AsyncCallback<Void>() {
@@ -118,7 +118,7 @@ public class NewCatalogPopupPanel extends PopupPanel {
 
 								public void onFailure(Throwable caught) {
 									LoadingPanel.getInstance().hide();
-									Window.alert(ErrorConstants.ERROR_SAVING_CATALOG);
+									Window.alert(ConstantsError.ERROR_SAVING_CATALOG);
 									Logger.GetLogger().severe(this.getClass().getName(),
 											ActualState.getUser().toString(),
 											"Create a catalog " + NuevoC.getCatalogName());

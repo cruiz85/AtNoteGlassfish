@@ -4,8 +4,8 @@ import lector.client.book.reader.GWTService;
 import lector.client.book.reader.GWTServiceAsync;
 import lector.client.controler.ActualState;
 import lector.client.controler.CalendarNow;
-import lector.client.controler.ErrorConstants;
-import lector.client.controler.InformationConstants;
+import lector.client.controler.ConstantsError;
+import lector.client.controler.ConstantsInformation;
 import lector.client.logger.Logger;
 import lector.client.reader.LoadingPanel;
 import lector.share.model.client.CatalogoClient;
@@ -41,7 +41,7 @@ public class ChangeVisivilityPopupPanel extends PopupPanel {
 		
 		if (!Cin.getProfessorId().equals(ActualState.getUser().getId()))
 			{
-			Window.alert(InformationConstants.CANTPRIVATICE_A_CATALOG_THAT_YOU_DONT_CREATE);
+			Window.alert(ConstantsInformation.CANTPRIVATICE_A_CATALOG_THAT_YOU_DONT_CREATE);
 			hide();
 			}
 		
@@ -91,10 +91,10 @@ public class ChangeVisivilityPopupPanel extends PopupPanel {
 					
 					@Override
 					public void onFailure(Throwable caught) {
-						Window.alert(ErrorConstants.ERROR_CHANGE_VISIVILITY_OF_CATALOG);
+						Window.alert(ConstantsError.ERROR_CHANGE_VISIVILITY_OF_CATALOG);
 						Logger.GetLogger().severe(this.getClass().getName(),
 						ActualState.getUser().toString(),
-						ErrorConstants.ERROR_CHANGE_VISIVILITY_OF_CATALOG);
+						ConstantsError.ERROR_CHANGE_VISIVILITY_OF_CATALOG);
 						LoadingPanel.getInstance().hide();
 						
 					}

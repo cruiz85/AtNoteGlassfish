@@ -13,8 +13,8 @@ import lector.client.book.reader.GWTService;
 import lector.client.book.reader.GWTServiceAsync;
 import lector.client.controler.ActualState;
 import lector.client.controler.Constants;
-import lector.client.controler.ErrorConstants;
-import lector.client.controler.InformationConstants;
+import lector.client.controler.ConstantsError;
+import lector.client.controler.ConstantsInformation;
 import lector.client.logger.Logger;
 import lector.client.reader.LoadingPanel;
 import lector.share.model.Language;
@@ -251,7 +251,7 @@ public class EditorActivityPopupPanel extends PopupPanel {
 								|| SelectedLanguage == null
 								|| SelectedCatalogPublic == null)
 							if (Window
-									.confirm(InformationConstants.BLANK_ATRIBUTES))
+									.confirm(ConstantsInformation.BLANK_ATRIBUTES))
 								saveActivity();
 							else {
 							}
@@ -263,7 +263,7 @@ public class EditorActivityPopupPanel extends PopupPanel {
 					private void saveActivity() {
 						if (checkcatalog()) {
 							if (Window
-									.confirm(InformationConstants.ARE_YOU_SURE_TO_SWAP_ONE_ORE_BOTH_CATALOGS)) {
+									.confirm(ConstantsInformation.ARE_YOU_SURE_TO_SWAP_ONE_ORE_BOTH_CATALOGS)) {
 
 								//Window.alert("Under Developer");
 								StringBuffer SB = new StringBuffer();
@@ -326,7 +326,7 @@ public class EditorActivityPopupPanel extends PopupPanel {
 							}
 						} else if (checkbook()) {
 							if (Window
-									.confirm(InformationConstants.ARE_YOU_SURE_TO_SWAP_BOOK)) {
+									.confirm(ConstantsInformation.ARE_YOU_SURE_TO_SWAP_BOOK)) {
 								//Window.alert("Under Developer");
 								StringBuffer SB = new StringBuffer();
 								SB.append("Change Book and remove activities");
@@ -422,13 +422,13 @@ public class EditorActivityPopupPanel extends PopupPanel {
 							ActualActivity.setDefaultType(DefaultType.getId());
 						LoadingPanel.getInstance().center();
 						LoadingPanel.getInstance().setLabelTexto(
-								InformationConstants.SAVING);
+								ConstantsInformation.SAVING);
 						bookReaderServiceHolder.saveReadingActivity(
 								ActualActivity, new AsyncCallback<Void>() {
 
 									public void onFailure(Throwable caught) {
-										Window.alert(ErrorConstants.ERROR_SAVING_ACTIVITY);
-										Logger.GetLogger().severe(Yo.getClass().toString(), ActualState.getUser().toString(), ErrorConstants.ERROR_SAVING_ACTIVITY);
+										Window.alert(ConstantsError.ERROR_SAVING_ACTIVITY);
+										Logger.GetLogger().severe(Yo.getClass().toString(), ActualState.getUser().toString(), ConstantsError.ERROR_SAVING_ACTIVITY);
 										LoadingPanel.getInstance().hide();
 
 									}
@@ -599,7 +599,7 @@ public class EditorActivityPopupPanel extends PopupPanel {
 				else if (Template != null)
 					BlankTemplateAllowedLabel.setVisible(false);
 				else {
-					Window.alert(ErrorConstants.TEMPLATES_CAT_BE_EMPTY);
+					Window.alert(ConstantsError.TEMPLATES_CAT_BE_EMPTY);
 					AllowFreeTemplateCheckBox.setValue(true, false);
 				}
 			}
@@ -715,7 +715,7 @@ public class EditorActivityPopupPanel extends PopupPanel {
 		PanelEdicion.setStyleName("");
 		Button Boton=new Button();
 		PanelEdicion.add(Boton,0,0);
-		Boton.setHTML(InformationConstants.EDIT_BOTTON);
+		Boton.setHTML(ConstantsInformation.EDIT_BOTTON);
 		Boton.addClickHandler(new ClickHandler() {
 			
 			@Override
@@ -734,7 +734,7 @@ public class EditorActivityPopupPanel extends PopupPanel {
 		PanelEdicion.clear();
 		PanelEdicion.setStyleName("BlancoTransparente");
 		Button Boton=new Button();
-		Boton.setHTML(InformationConstants.END_EDIT_BOTTON);
+		Boton.setHTML(ConstantsInformation.END_EDIT_BOTTON);
 		Boton.addClickHandler(new ClickHandler() {
 			
 			@Override
@@ -1071,7 +1071,7 @@ public class EditorActivityPopupPanel extends PopupPanel {
 			else VISUALIZACION_LABEL=VISUALIZACION_LABEL_RESET;
 		}
 		else 
-			Logger.GetLogger().severe(EditorActivityPopupPanel.class.toString(), ActualState.getUser().toString(), ErrorConstants.ERROR_LOADING_LANGUAGE_IN  + EDITORACTIVITY_NAME);	
+			Logger.GetLogger().severe(EditorActivityPopupPanel.class.toString(), ActualState.getUser().toString(), ConstantsError.ERROR_LOADING_LANGUAGE_IN  + EDITORACTIVITY_NAME);	
 		ParsearFieldsAItemsRESET();
 		}
 	}
@@ -1170,8 +1170,8 @@ public class EditorActivityPopupPanel extends PopupPanel {
 					@Override
 					public void onFailure(Throwable caught) {
 						generalangaugeOld();
-						Window.alert(ErrorConstants.ERROR_RETRIVING_DEFAULT_TYPE_FROM_CATALOG);
-						Logger.GetLogger().severe(Yo.getClass().toString(), ActualState.getUser().toString(), ErrorConstants.ERROR_RETRIVING_DEFAULT_TYPE_FROM_CATALOG);
+						Window.alert(ConstantsError.ERROR_RETRIVING_DEFAULT_TYPE_FROM_CATALOG);
+						Logger.GetLogger().severe(Yo.getClass().toString(), ActualState.getUser().toString(), ConstantsError.ERROR_RETRIVING_DEFAULT_TYPE_FROM_CATALOG);
 					}
 				});
 
@@ -1356,8 +1356,8 @@ public class EditorActivityPopupPanel extends PopupPanel {
 			}
 
 			public void onFailure(Throwable caught) {
-				Window.alert(ErrorConstants.ERROR_RETRIVING_CATALOG);
-				Logger.GetLogger().severe(Yo.getClass().toString(), ActualState.getUser().toString(), ErrorConstants.ERROR_RETRIVING_CATALOG);
+				Window.alert(ConstantsError.ERROR_RETRIVING_CATALOG);
+				Logger.GetLogger().severe(Yo.getClass().toString(), ActualState.getUser().toString(), ConstantsError.ERROR_RETRIVING_CATALOG);
 				GeneratepanelsLang();
 
 			}
@@ -1448,8 +1448,8 @@ public class EditorActivityPopupPanel extends PopupPanel {
 					}
 
 					public void onFailure(Throwable caught) {
-						Window.alert(ErrorConstants.ERROR_RETRIVING_LANGUAGES);
-						Logger.GetLogger().severe(Yo.getClass().toString(), ActualState.getUser().toString(), ErrorConstants.ERROR_RETRIVING_LANGUAGES);
+						Window.alert(ConstantsError.ERROR_RETRIVING_LANGUAGES);
+						Logger.GetLogger().severe(Yo.getClass().toString(), ActualState.getUser().toString(), ConstantsError.ERROR_RETRIVING_LANGUAGES);
 						Generatepanelsbooks();
 
 					}
@@ -1543,8 +1543,8 @@ public class EditorActivityPopupPanel extends PopupPanel {
 
 					@Override
 					public void onFailure(Throwable caught) {
-						Window.alert(ErrorConstants.ERROR_RETRIVING_THE_BOOKS);
-						Logger.GetLogger().severe(Yo.getClass().toString(), ActualState.getUser().toString(), ErrorConstants.ERROR_RETRIVING_LANGUAGES);
+						Window.alert(ConstantsError.ERROR_RETRIVING_THE_BOOKS);
+						Logger.GetLogger().severe(Yo.getClass().toString(), ActualState.getUser().toString(), ConstantsError.ERROR_RETRIVING_LANGUAGES);
 						Generatepanelsgroup();
 					}
 
@@ -1632,7 +1632,7 @@ public class EditorActivityPopupPanel extends PopupPanel {
 					}
 
 					public void onFailure(Throwable caught) {
-						Window.alert(ErrorConstants.ERROR_RETRIVING_GROUPS);
+						Window.alert(ConstantsError.ERROR_RETRIVING_GROUPS);
 						GenerateTemplates();
 
 					}
@@ -1720,7 +1720,7 @@ public class EditorActivityPopupPanel extends PopupPanel {
 					}
 
 					public void onFailure(Throwable caught) {
-						Window.alert(ErrorConstants.ERROR_RETRIVING_TEMPLATES);
+						Window.alert(ConstantsError.ERROR_RETRIVING_TEMPLATES);
 
 					}
 				});

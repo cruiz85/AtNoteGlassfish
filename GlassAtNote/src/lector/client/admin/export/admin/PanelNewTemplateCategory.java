@@ -6,8 +6,8 @@ import lector.client.book.reader.ExportService;
 import lector.client.book.reader.ExportServiceAsync;
 import lector.client.controler.ActualState;
 import lector.client.controler.Constants;
-import lector.client.controler.ErrorConstants;
-import lector.client.controler.InformationConstants;
+import lector.client.controler.ConstantsError;
+import lector.client.controler.ConstantsInformation;
 import lector.client.logger.Logger;
 import lector.client.reader.LoadingPanel;
 import lector.share.model.client.TemplateCategoryClient;
@@ -56,7 +56,7 @@ public class PanelNewTemplateCategory extends PopupPanel {
 		setWidget(verticalPanel);
 		verticalPanel.setSize("340px", "155px");
 		
-		Label lblNewLabel = new Label(InformationConstants.CREATE_NEW_TEMPLATECATEGORY + TC.getName());
+		Label lblNewLabel = new Label(ConstantsInformation.CREATE_NEW_TEMPLATECATEGORY + TC.getName());
 		verticalPanel.add(lblNewLabel);
 		
 		HorizontalPanel horizontalPanel = new HorizontalPanel();
@@ -64,7 +64,7 @@ public class PanelNewTemplateCategory extends PopupPanel {
 		horizontalPanel.setHorizontalAlignment(HasHorizontalAlignment.ALIGN_CENTER);
 		verticalPanel.add(horizontalPanel);
 		
-		Label lblNewLabel_1 = new Label(InformationConstants.NAME);
+		Label lblNewLabel_1 = new Label(ConstantsInformation.NAME);
 		horizontalPanel.add(lblNewLabel_1);
 		
 		textBox = new TextBox();
@@ -115,7 +115,7 @@ public class PanelNewTemplateCategory extends PopupPanel {
 						T=new TemplateCategoryClient(textBox.getText(), new ArrayList<TemplateCategoryClient>(), new ArrayList<Long>(), null, TC.getTemplate());
 					else T=new TemplateCategoryClient(textBox.getText(), new ArrayList<TemplateCategoryClient>(), new ArrayList<Long>(), TC, TC.getTemplate());
 					LoadingPanel.getInstance().center();
-					LoadingPanel.getInstance().setLabelTexto(InformationConstants.SAVING);
+					LoadingPanel.getInstance().setLabelTexto(ConstantsInformation.SAVING);
 					exportServiceHolder.saveTemplateCategory(T , new AsyncCallback<Void>() {
 						
 						public void onSuccess(Void result) {
@@ -130,11 +130,11 @@ public class PanelNewTemplateCategory extends PopupPanel {
 						
 						public void onFailure(Throwable caught) {
 							LoadingPanel.getInstance().hide();
-							Window.alert(ErrorConstants.ERROR_SAVING_NEW_TEMPLATE_CATEGORY);
+							Window.alert(ConstantsError.ERROR_SAVING_NEW_TEMPLATE_CATEGORY);
 							Logger.GetLogger()
 							.severe(Yo.getClass().toString(),
 									ActualState.getUser().toString(),
-									ErrorConstants.ERROR_SAVING_NEW_TEMPLATE_CATEGORY);
+									ConstantsError.ERROR_SAVING_NEW_TEMPLATE_CATEGORY);
 							
 						}
 					});

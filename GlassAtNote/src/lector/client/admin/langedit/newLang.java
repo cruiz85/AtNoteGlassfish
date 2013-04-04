@@ -5,7 +5,7 @@ import java.util.List;
 import lector.client.book.reader.GWTService;
 import lector.client.book.reader.GWTServiceAsync;
 import lector.client.controler.ActualState;
-import lector.client.controler.ErrorConstants;
+import lector.client.controler.ConstantsError;
 import lector.client.logger.Logger;
 import lector.client.reader.LoadingPanel;
 import lector.share.model.Language;
@@ -119,10 +119,10 @@ public class newLang extends PopupPanel {
 
 								public void onFailure(Throwable caught) {
 									LoadingPanel.getInstance().hide();
-									Window.alert(ErrorConstants.ERROR_SAVING_LANGUAGE);
+									Window.alert(ConstantsError.ERROR_SAVING_LANGUAGE);
 									Logger.GetLogger().severe(this.getClass().getName(), 
 											ActualState.getUser().toString(),
-											ErrorConstants.ERROR_RETRIVING_LANGUAGES);
+											ConstantsError.ERROR_RETRIVING_LANGUAGES);
 									
 								}
 
@@ -148,10 +148,10 @@ public class newLang extends PopupPanel {
 						
 						public void onFailure(Throwable caught) {
 							LoadingPanel.getInstance().hide();
-							Window.alert(ErrorConstants.ERROR_RETRIVING_LANGUAGES);
+							Window.alert(ConstantsError.ERROR_RETRIVING_LANGUAGES);
 							Logger.GetLogger().severe(this.getClass().getName(), 
 									ActualState.getUser().toString(),
-									ErrorConstants.ERROR_RETRIVING_LANGUAGES);
+									ConstantsError.ERROR_RETRIVING_LANGUAGES);
 							
 						}
 					});

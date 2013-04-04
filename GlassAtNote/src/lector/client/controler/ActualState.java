@@ -161,7 +161,7 @@ public class ActualState {
 	public static void saveLanguageActual(Language languageActual) {
 		ActualLanguage=languageActual;
 		LoadingPanel.getInstance().setLabelTexto(
-				InformationConstants.LOADING);
+				ConstantsInformation.LOADING);
 		LoadingPanel.getInstance().center();
 		bookReaderServiceHolder.saveLanguage(languageActual, new AsyncCallback<Void>() {
 			
@@ -174,8 +174,8 @@ public class ActualState {
 			@Override
 			public void onFailure(Throwable caught) {
 				LoadingPanel.getInstance().hide();
-				Window.alert(ErrorConstants.ERROR_SAVING_LANGUAGE);
-				Logger.GetLogger().severe(ActualState.class.toString(),getUser().toString(), ErrorConstants.ERROR_SAVING_LANGUAGE);
+				Window.alert(ConstantsError.ERROR_SAVING_LANGUAGE);
+				Logger.GetLogger().severe(ActualState.class.toString(),getUser().toString(), ConstantsError.ERROR_SAVING_LANGUAGE);
 				
 			}
 		});

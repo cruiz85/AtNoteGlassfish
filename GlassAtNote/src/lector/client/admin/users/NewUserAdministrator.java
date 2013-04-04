@@ -6,8 +6,8 @@ import lector.client.book.reader.GWTServiceAsync;
 import lector.client.controler.ActualState;
 import lector.client.controler.CalendarNow;
 import lector.client.controler.Controlador;
-import lector.client.controler.ErrorConstants;
-import lector.client.controler.InformationConstants;
+import lector.client.controler.ConstantsError;
+import lector.client.controler.ConstantsInformation;
 import lector.client.controler.catalogo.StackPanelMio;
 import lector.client.logger.Logger;
 import lector.client.reader.LoadingPanel;
@@ -70,11 +70,11 @@ public class NewUserAdministrator implements EntryPoint {
 
 					public void onFailure(Throwable caught) {
 						LoadingPanel.getInstance().hide();
-						Window.alert(ErrorConstants.ERROR_RETRIVING_USERS);
+						Window.alert(ConstantsError.ERROR_RETRIVING_USERS);
 						Logger.GetLogger().severe(
 								Yo.getClass().toString(),
 								ActualState.getUser().toString(),
-								ErrorConstants.ERROR_RETRIVING_USERS);
+								ConstantsError.ERROR_RETRIVING_USERS);
 
 					}
 
@@ -137,11 +137,11 @@ public class NewUserAdministrator implements EntryPoint {
 				// else Name=((BotonesStackPanelAdminsMio)
 				// event.getSource()).getEntidad().getName();
 				if (Window
-						.confirm(InformationConstants.ARE_YOU_SURE_DELETE_USER
+						.confirm(ConstantsInformation.ARE_YOU_SURE_DELETE_USER
 								+ Ident.getFirstName()
 								+ " "
 								+ Ident.getLastName()
-								+ InformationConstants.ARE_YOU_SURE_DELETE_USER2)) {
+								+ ConstantsInformation.ARE_YOU_SURE_DELETE_USER2)) {
 					LoadingPanel.getInstance().center();
 					LoadingPanel.getInstance().setLabelTexto("Loading...");
 
@@ -152,11 +152,11 @@ public class NewUserAdministrator implements EntryPoint {
 							new AsyncCallback<Void>() {
 
 								public void onFailure(Throwable caught) {
-									Window.alert(ErrorConstants.ERROR_USER_CAN_NOT_BE_REMOVED);
+									Window.alert(ConstantsError.ERROR_USER_CAN_NOT_BE_REMOVED);
 									Logger.GetLogger().severe(
 											Yo.getClass().toString(),
 											ActualState.getUser().toString(),
-											ErrorConstants.ERROR_USER_CAN_NOT_BE_REMOVED);
+											ConstantsError.ERROR_USER_CAN_NOT_BE_REMOVED);
 
 								}
 

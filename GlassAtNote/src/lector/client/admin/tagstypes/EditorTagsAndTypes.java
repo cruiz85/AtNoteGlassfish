@@ -8,8 +8,8 @@ import lector.client.book.reader.GWTServiceAsync;
 import lector.client.controler.Constants;
 import lector.client.controler.Controlador;
 import lector.client.controler.EntitdadObject;
-import lector.client.controler.ErrorConstants;
-import lector.client.controler.InformationConstants;
+import lector.client.controler.ConstantsError;
+import lector.client.controler.ConstantsInformation;
 import lector.client.controler.catalogo.Finder;
 import lector.client.controler.catalogo.FinderKeys;
 import lector.client.controler.catalogo.StackPanelMio;
@@ -158,7 +158,7 @@ public class EditorTagsAndTypes implements EntryPoint {
 //					 SBFF.center();
 //					 SBFF.setModal(true);
 				} else
-					Window.alert(ErrorConstants.TYPES_CANNOT_HAVE_SUBTYPES);
+					Window.alert(ConstantsError.TYPES_CANNOT_HAVE_SUBTYPES);
 			}
 
 		});
@@ -196,10 +196,10 @@ public class EditorTagsAndTypes implements EntryPoint {
 					MS.center();
 					MS.setModal(true);
 					}else {
-						Window.alert(InformationConstants.ELEMENTS_SHOULD_BE_THE_SAME_TYPE);
+						Window.alert(ConstantsInformation.ELEMENTS_SHOULD_BE_THE_SAME_TYPE);
 					}
 				} else {
-					Window.alert(InformationConstants.SHOULD_ME_MORE_THAN1 + minimuunElements + InformationConstants.SHOULD_ME_MORE_THAN2);
+					Window.alert(ConstantsInformation.SHOULD_ME_MORE_THAN1 + minimuunElements + ConstantsInformation.SHOULD_ME_MORE_THAN2);
 				}
 
 			}
@@ -305,7 +305,7 @@ public class EditorTagsAndTypes implements EntryPoint {
 
 					public void onFailure(Throwable caught) {
 						LoadingPanel.getInstance().hide();
-						Window.alert(ErrorConstants.ERROR_DELETING_TYPE);
+						Window.alert(ConstantsError.ERROR_DELETING_TYPE);
 
 					}
 
@@ -323,7 +323,7 @@ public class EditorTagsAndTypes implements EntryPoint {
 					 */
 				{
 					LoadingPanel.getInstance().center();
-				LoadingPanel.getInstance().setLabelTexto(InformationConstants.DELETING);
+				LoadingPanel.getInstance().setLabelTexto(ConstantsInformation.DELETING);
 				
 					bookReaderServiceHolder.deleteTypeCategory(delete.getEntry().getId(), delete.getFatherIdCreador().getId(), callback);
 				}else{
@@ -333,7 +333,7 @@ public class EditorTagsAndTypes implements EntryPoint {
 					 * callback); else
 					 */
 					LoadingPanel.getInstance().center();
-				LoadingPanel.getInstance().setLabelTexto(InformationConstants.DELETING);
+				LoadingPanel.getInstance().setLabelTexto(ConstantsInformation.DELETING);
 					bookReaderServiceHolder.deleteTag(delete.getEntry().getId(), delete.getFatherIdCreador().getId(), callback);
 				}
 			}

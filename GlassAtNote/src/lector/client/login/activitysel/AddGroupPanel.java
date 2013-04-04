@@ -3,8 +3,8 @@ package lector.client.login.activitysel;
 import lector.client.book.reader.GWTService;
 import lector.client.book.reader.GWTServiceAsync;
 import lector.client.controler.ActualState;
-import lector.client.controler.ErrorConstants;
-import lector.client.controler.InformationConstants;
+import lector.client.controler.ConstantsError;
+import lector.client.controler.ConstantsInformation;
 import lector.client.logger.Logger;
 import lector.client.reader.LoadingPanel;
 
@@ -49,7 +49,7 @@ public class AddGroupPanel extends PopupPanel {
 		verticalPanel.setSize("100%", "100%");
 
 		Label lblNewLabel = new Label(
-				InformationConstants.INSERT_ID_OF_THE_GROUP);
+				ConstantsInformation.INSERT_ID_OF_THE_GROUP);
 		verticalPanel.add(lblNewLabel);
 
 		textBox = new LongBox();
@@ -64,14 +64,14 @@ public class AddGroupPanel extends PopupPanel {
 				Long I = textBox.getValue();
 				LoadingPanel.getInstance().center();
 				LoadingPanel.getInstance().setLabelTexto(
-						InformationConstants.ADDING_TO_GROUP);
+						ConstantsInformation.ADDING_TO_GROUP);
 				bookReaderServiceHolder.addStudentToBeValidated(ActualState
 						.getUser().getId(), I, new AsyncCallback<Void>() {
 
 					@Override
 					public void onSuccess(Void result) {
 						LoadingPanel.getInstance().hide();
-						Window.alert(InformationConstants.YOUR_ADD_WAS_CORRECT_WAIT_FOR_TEACHER);
+						Window.alert(ConstantsInformation.YOUR_ADD_WAS_CORRECT_WAIT_FOR_TEACHER);
 						Logger.GetLogger().info(
 								Yo.getClass().toString(),
 								ActualState.getUser().toString(),
@@ -83,11 +83,11 @@ public class AddGroupPanel extends PopupPanel {
 					@Override
 					public void onFailure(Throwable caught) {
 						LoadingPanel.getInstance().hide();
-						Window.alert(ErrorConstants.ERROR_IN_ADDITION_TO_A_GROUP);
+						Window.alert(ConstantsError.ERROR_IN_ADDITION_TO_A_GROUP);
 						Logger.GetLogger().severe(
 								Yo.getClass().toString(),
 								ActualState.getUser().toString(),
-								ErrorConstants.ERROR_IN_ADDITION_TO_A_GROUP
+								ConstantsError.ERROR_IN_ADDITION_TO_A_GROUP
 										+ textBox.getValue());
 						hide();
 					}

@@ -7,8 +7,8 @@ import lector.client.book.reader.GWTService;
 import lector.client.book.reader.GWTServiceAsync;
 import lector.client.controler.ActualState;
 import lector.client.controler.CalendarNow;
-import lector.client.controler.ErrorConstants;
-import lector.client.controler.InformationConstants;
+import lector.client.controler.ConstantsError;
+import lector.client.controler.ConstantsInformation;
 import lector.client.logger.Logger;
 import lector.client.reader.LoadingPanel;
 import lector.share.model.GroupApp;
@@ -75,17 +75,17 @@ public class GroupAndUserPanel extends Composite {
 		
 		MenuItem mntmNewItem_2 = new MenuItem("Delete Group", false, new Command() {
 			public void execute() {
-				if (Window.confirm(InformationConstants.ARE_YOU_SURE_DELETE_GROUP))
+				if (Window.confirm(ConstantsInformation.ARE_YOU_SURE_DELETE_GROUP))
 				{
 					LoadingPanel.getInstance().center();
 				LoadingPanel.getInstance().setLabelTexto("Deleting...");
 				bookReaderServiceHolder.deleteGroup(Mygroup.getId(), new AsyncCallback<Void>() {
 					public void onFailure(Throwable caught) {
 						LoadingPanel.getInstance().hide();
-						Window.alert(ErrorConstants.ERROR_DELETING_GROUP);
+						Window.alert(ConstantsError.ERROR_DELETING_GROUP);
 						Logger.GetLogger().severe(this.getClass().getName(),
 								ActualState.getUser().toString(),
-								ErrorConstants.ERROR_DELETING_GROUP);
+								ConstantsError.ERROR_DELETING_GROUP);
 						
 					}
 
@@ -179,10 +179,10 @@ public class GroupAndUserPanel extends Composite {
 
 							public void onFailure(Throwable caught) {
 								LoadingPanel.getInstance().hide();
-								Window.alert(ErrorConstants.ERROR_DELETING_USER1  + Borrar + ErrorConstants.ERROR_DELETING_USER2 + Mygroup.getName() );
+								Window.alert(ConstantsError.ERROR_DELETING_USER1  + Borrar + ConstantsError.ERROR_DELETING_USER2 + Mygroup.getName() );
 								Logger.GetLogger().severe(this.getClass().getName(), 
 														ActualState.getUser().toString(),
-														ErrorConstants.ERROR_DELETING_USER1  + Borrar + ErrorConstants.ERROR_DELETING_USER2 + Mygroup.getName());
+														ConstantsError.ERROR_DELETING_USER1  + Borrar + ConstantsError.ERROR_DELETING_USER2 + Mygroup.getName());
 								
 							}
 
@@ -245,10 +245,10 @@ public class GroupAndUserPanel extends Composite {
 
 						public void onFailure(Throwable caught) {
 							LoadingPanel.getInstance().hide();
-							Window.alert(ErrorConstants.ERROR_DELETING_USER1  + Borrar + ErrorConstants.ERROR_DELETING_USER2 + Mygroup.getName() );
+							Window.alert(ConstantsError.ERROR_DELETING_USER1  + Borrar + ConstantsError.ERROR_DELETING_USER2 + Mygroup.getName() );
 							Logger.GetLogger().severe(this.getClass().getName(), 
 													ActualState.getUser().toString(),
-													ErrorConstants.ERROR_DELETING_USER1  + Borrar + ErrorConstants.ERROR_DELETING_USER2 + Mygroup.getName());
+													ConstantsError.ERROR_DELETING_USER1  + Borrar + ConstantsError.ERROR_DELETING_USER2 + Mygroup.getName());
 							
 						}
 
@@ -283,7 +283,7 @@ public class GroupAndUserPanel extends Composite {
 		Panel_Usuarios.clear();
 		
 		LoadingPanel.getInstance().center();
-		LoadingPanel.getInstance().setLabelTexto(InformationConstants.LOADING);
+		LoadingPanel.getInstance().setLabelTexto(ConstantsInformation.LOADING);
 		bookReaderServiceHolder.loadGroupById(Mygroup.getId(),
 				new AsyncCallback<GroupClient>() {
 
@@ -296,7 +296,7 @@ public class GroupAndUserPanel extends Composite {
 
 					public void onFailure(Throwable caught) {
 						LoadingPanel.getInstance().hide();
-						Window.alert(ErrorConstants.ERROR_REFRESH_GROUP + Mygroup.getName());
+						Window.alert(ConstantsError.ERROR_REFRESH_GROUP + Mygroup.getName());
 
 					}
 				});

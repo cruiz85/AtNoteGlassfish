@@ -4,8 +4,8 @@ import lector.client.book.reader.GWTService;
 import lector.client.book.reader.GWTServiceAsync;
 import lector.client.controler.ActualState;
 import lector.client.controler.Controlador;
-import lector.client.controler.ErrorConstants;
-import lector.client.controler.InformationConstants;
+import lector.client.controler.ConstantsError;
+import lector.client.controler.ConstantsInformation;
 import lector.client.logger.Logger;
 
 import com.google.gwt.user.client.Window;
@@ -57,7 +57,7 @@ public class SeleccionMenu extends PopupPanel {
 		DeleteButton.addClickHandler(new ClickHandler() {
 			public void onClick(ClickEvent event) {
 				if (Window
-						.confirm(InformationConstants.ARE_YOU_SURE_DELETE_LANGUAGE + BotonLangPressed.getLanguage().getName()))
+						.confirm(ConstantsInformation.ARE_YOU_SURE_DELETE_LANGUAGE + BotonLangPressed.getLanguage().getName()))
 				{
 				bookReaderServiceHolder.deleteLanguage(BotonLangPressed.getLanguage().getId(), new AsyncCallback<Void>() {
 					
@@ -71,10 +71,10 @@ public class SeleccionMenu extends PopupPanel {
 					}
 					
 					public void onFailure(Throwable caught) {
-						Window.alert(ErrorConstants.ERROR_DELETING_LANGUAGE);
+						Window.alert(ConstantsError.ERROR_DELETING_LANGUAGE);
 						Logger.GetLogger().severe(this.getClass().getName(),
 								ActualState.getUser().toString(),
-								ErrorConstants.ERROR_DELETING_LANGUAGE);
+								ConstantsError.ERROR_DELETING_LANGUAGE);
 						
 					}
 				});
@@ -118,7 +118,7 @@ public class SeleccionMenu extends PopupPanel {
 		});
 		SelectButton.addClickHandler(new ClickHandler() {
 			public void onClick(ClickEvent event) {
-				Window.alert(InformationConstants.CHANGE_LANGUAGE_WARNING);
+				Window.alert(ConstantsInformation.CHANGE_LANGUAGE_WARNING);
 						ActualState.setActualLanguage(BotonLangPressed.getLanguage());
 				hide();
 			}

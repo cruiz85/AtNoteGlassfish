@@ -1,7 +1,7 @@
 package lector.client.admin.Library;
 
 
-import lector.client.controler.ErrorConstants;
+import lector.client.controler.ConstantsError;
 import lector.share.model.client.BookClient;
 
 import com.google.gwt.event.dom.client.LoadEvent;
@@ -208,7 +208,7 @@ public class Visor extends PopupPanel {
 			});
 		}else
 		{
-		Window.alert(ErrorConstants.ERROR_BOOK_EMPTY);	
+		Window.alert(ConstantsError.ERROR_BOOK_EMPTY);	
 		hide();
 		}
 		if (Book.getWebLinks().size()>1)

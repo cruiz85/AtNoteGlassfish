@@ -4,8 +4,8 @@ package lector.client.controler.catalogo;
 import lector.client.book.reader.GWTService;
 import lector.client.book.reader.GWTServiceAsync;
 import lector.client.controler.ActualState;
-import lector.client.controler.ErrorConstants;
-import lector.client.controler.InformationConstants;
+import lector.client.controler.ConstantsError;
+import lector.client.controler.ConstantsInformation;
 import lector.client.controler.catalogo.client.EntityCatalogElements;
 import lector.client.controler.catalogo.graph.PanelGrafo;
 
@@ -81,13 +81,13 @@ public class FinderOwnGrafo extends Finder {
 public void RefrescaLosDatos() {
 	LoadingPanel.getInstance().center();
 	if (InReadingActivity)  LoadingPanel.getInstance().setLabelTexto(ActualState.getLanguage().getLoading());
-	else LoadingPanel.getInstance().setLabelTexto(InformationConstants.LOADING);
+	else LoadingPanel.getInstance().setLabelTexto(ConstantsInformation.LOADING);
 	bookReaderServiceHolder.loadCatalogById(C.getId(),new AsyncCallback<CatalogoClient>(){
 
 		@Override
 		public void onFailure(Throwable caught) {
-			Window.alert(ErrorConstants.ERROR_LOADING_CATALOG);
-			Logger.GetLogger().severe(Yo.getClass().toString(),ActualState.getUser().toString(), ErrorConstants.ERROR_LOADING_CATALOG);
+			Window.alert(ConstantsError.ERROR_LOADING_CATALOG);
+			Logger.GetLogger().severe(Yo.getClass().toString(),ActualState.getUser().toString(), ConstantsError.ERROR_LOADING_CATALOG);
 			LoadingPanel.getInstance().hide();			
 		}
 

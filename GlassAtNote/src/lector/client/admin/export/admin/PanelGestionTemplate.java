@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import lector.client.book.reader.ExportService;
 import lector.client.book.reader.ExportServiceAsync;
 import lector.client.controler.Constants;
-import lector.client.controler.ErrorConstants;
+import lector.client.controler.ConstantsError;
 import lector.client.reader.LoadingPanel;
 import lector.share.model.client.TemplateCategoryClient;
 import lector.share.model.client.TemplateClient;
@@ -217,7 +217,7 @@ public class PanelGestionTemplate extends Composite {
 			
 			public void onFailure(Throwable caught) {
 				LoadingPanel.getInstance().hide();
-				Window.alert(ErrorConstants.ERROR_REFRESH_TEMPLATES);
+				Window.alert(ConstantsError.ERROR_REFRESH_TEMPLATES);
 				
 			}
 		});

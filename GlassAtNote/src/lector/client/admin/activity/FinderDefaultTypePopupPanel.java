@@ -2,8 +2,8 @@ package lector.client.admin.activity;
 
 import lector.client.controler.ActualState;
 import lector.client.controler.Constants;
-import lector.client.controler.ErrorConstants;
-import lector.client.controler.InformationConstants;
+import lector.client.controler.ConstantsError;
+import lector.client.controler.ConstantsInformation;
 import lector.client.controler.catalogo.FinderKeys;
 import lector.client.logger.Logger;
 import lector.client.reader.BotonesStackPanelReaderSelectMio;
@@ -95,7 +95,7 @@ public class FinderDefaultTypePopupPanel extends PopupPanel {
 		PanelEdicion.setStyleName("");
 		Button Boton=new Button();
 		PanelEdicion.add(Boton,0, 0);
-		Boton.setHTML(InformationConstants.EDIT_BOTTON);
+		Boton.setHTML(ConstantsInformation.EDIT_BOTTON);
 		Boton.addClickHandler(new ClickHandler() {
 			
 			@Override
@@ -115,7 +115,7 @@ public class FinderDefaultTypePopupPanel extends PopupPanel {
 		PanelEdicion.setStyleName("BlancoTransparente");
 		Button Boton=new Button();
 		PanelEdicion.add(Boton,PanelEdicion.getOffsetWidth()-65, 0);
-		Boton.setHTML(InformationConstants.END_EDIT_BOTTON);
+		Boton.setHTML(ConstantsInformation.END_EDIT_BOTTON);
 		Boton.addClickHandler(new ClickHandler() {
 			
 			@Override
@@ -167,7 +167,7 @@ public class FinderDefaultTypePopupPanel extends PopupPanel {
 			else CLOSE=CLOSE_RESET;
 		}
 		else 
-			Logger.GetLogger().severe(FinderDefaultTypePopupPanel.class.toString(), ActualState.getUser().toString(), ErrorConstants.ERROR_LOADING_LANGUAGE_IN  + FINDER_DEFAULT_TYPE_NAME);
+			Logger.GetLogger().severe(FinderDefaultTypePopupPanel.class.toString(), ActualState.getUser().toString(), ConstantsError.ERROR_LOADING_LANGUAGE_IN  + FINDER_DEFAULT_TYPE_NAME);
 		ParsearFieldsAItemsRESET();
 		}
 	}

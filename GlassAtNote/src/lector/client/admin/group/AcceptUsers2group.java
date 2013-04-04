@@ -7,8 +7,8 @@ import lector.client.admin.users.EntidadUser;
 import lector.client.book.reader.GWTService;
 import lector.client.book.reader.GWTServiceAsync;
 import lector.client.controler.ActualState;
-import lector.client.controler.ErrorConstants;
-import lector.client.controler.InformationConstants;
+import lector.client.controler.ConstantsError;
+import lector.client.controler.ConstantsInformation;
 import lector.client.logger.Logger;
 import lector.client.reader.LoadingPanel;
 import lector.share.model.client.StudentClient;
@@ -123,7 +123,7 @@ public class AcceptUsers2group extends PopupPanel {
 						
 				}
 				LoadingPanel.getInstance().center();
-				LoadingPanel.getInstance().setLabelTexto(InformationConstants.VALIDATING);
+				LoadingPanel.getInstance().setLabelTexto(ConstantsInformation.VALIDATING);
 				bookReaderServiceHolder.validateStudentsToBeInGroup(userIds, GAUP.getMygroup().getId(), new AsyncCallback<Void>() {
 					
 					@Override
@@ -139,10 +139,10 @@ public class AcceptUsers2group extends PopupPanel {
 					@Override
 					public void onFailure(Throwable caught) {
 						LoadingPanel.getInstance().hide();
-						Window.alert(ErrorConstants.ERROR_IN_VALIDATION);
+						Window.alert(ConstantsError.ERROR_IN_VALIDATION);
 						Logger.GetLogger().severe(Yo.getClass().toString(), 
 												  ActualState.getUser().toString(),
-												  ErrorConstants.ERROR_IN_VALIDATION + " " + GAUP.getMygroup().getName() +  ErrorConstants.ERROR_IN_VALIDATION2  +userIdsName);
+												  ConstantsError.ERROR_IN_VALIDATION + " " + GAUP.getMygroup().getName() +  ConstantsError.ERROR_IN_VALIDATION2  +userIdsName);
 						hide();	
 					}
 				});

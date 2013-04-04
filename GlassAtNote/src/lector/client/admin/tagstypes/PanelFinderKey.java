@@ -2,7 +2,7 @@ package lector.client.admin.tagstypes;
 
 import lector.client.book.reader.GWTService;
 import lector.client.book.reader.GWTServiceAsync;
-import lector.client.controler.ErrorConstants;
+import lector.client.controler.ConstantsError;
 import lector.client.controler.catalogo.FinderKeys;
 import lector.share.model.client.CatalogoClient;
 
@@ -37,7 +37,7 @@ public class PanelFinderKey extends Composite {
 			}
 			
 			public void onFailure(Throwable caught) {
-				Window.alert(ErrorConstants.ERROR_RETRIVING_CATALOG);
+				Window.alert(ConstantsError.ERROR_RETRIVING_CATALOG);
 				
 			}
 		});

@@ -1,6 +1,6 @@
 package lector.client.controler;
 
-public class InformationConstants {
+public class ConstantsInformation {
 	
 	public static String UPLOADING = "Uploading";
 	public static String INSERT_ID_OF_THE_GROUP = "Insert the Key of the Group";

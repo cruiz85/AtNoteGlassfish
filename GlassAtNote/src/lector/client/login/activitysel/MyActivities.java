@@ -12,8 +12,8 @@ import lector.client.controler.ActualState;
 import lector.client.controler.CalendarNow;
 import lector.client.controler.Constants;
 import lector.client.controler.Controlador;
-import lector.client.controler.ErrorConstants;
-import lector.client.controler.InformationConstants;
+import lector.client.controler.ConstantsError;
+import lector.client.controler.ConstantsInformation;
 import lector.client.logger.Logger;
 import lector.client.reader.LoadingPanel;
 import lector.client.reader.MainEntryPoint;
@@ -120,16 +120,16 @@ public class MyActivities implements EntryPoint {
 		
 		MenuItem menuItem_4 = new MenuItem("Delete My User", false, new Command() {
 			public void execute() {
-				if (Window.confirm(InformationConstants.DO_YOU_WANT_SURE_DELETE_USER))
+				if (Window.confirm(ConstantsInformation.DO_YOU_WANT_SURE_DELETE_USER))
 				{
 					LoadingPanel.getInstance().center();
-					LoadingPanel.getInstance().setLabelTexto(InformationConstants.VALIDATING);
+					LoadingPanel.getInstance().setLabelTexto(ConstantsInformation.VALIDATING);
 					bookReaderServiceHolder.deleteStudentById(ActualState.getUser().getId(), new AsyncCallback<Void>() {
 						
 						@Override
 						public void onSuccess(Void result) {
 							LoadingPanel.getInstance().hide();
-							Window.alert(InformationConstants.GOODBYE);
+							Window.alert(ConstantsInformation.GOODBYE);
 							Logger.GetLogger().info(Yo.getClass().toString(),
 									 ActualState.getUser().toString(),
 									 "Delete him self ");
@@ -139,10 +139,10 @@ public class MyActivities implements EntryPoint {
 						@Override
 						public void onFailure(Throwable caught) {
 							LoadingPanel.getInstance().hide();
-							Window.alert(ErrorConstants.ERROR_DELETING_USER);
+							Window.alert(ConstantsError.ERROR_DELETING_USER);
 							Logger.GetLogger().severe(Yo.getClass().toString(),
 									ActualState.getUser().toString(),
-									ErrorConstants.ERROR_DELETING_USER + ActualState.getUser().toString());
+									ConstantsError.ERROR_DELETING_USER + ActualState.getUser().toString());
 						}
 					});
 				}
@@ -209,7 +209,7 @@ public class MyActivities implements EntryPoint {
 
 						public void onFailure(Throwable caught) {
 							LoadingPanel.getInstance().hide();
-							Window.alert(ErrorConstants.ERROR_RETRIVING_ACTIVITIES);
+							Window.alert(ConstantsError.ERROR_RETRIVING_ACTIVITIES);
 
 						}
 					});
@@ -230,7 +230,7 @@ public class MyActivities implements EntryPoint {
 
 						public void onFailure(Throwable caught) {
 							LoadingPanel.getInstance().hide();
-							Window.alert(ErrorConstants.ERROR_RETRIVING_ACTIVITIES);
+							Window.alert(ConstantsError.ERROR_RETRIVING_ACTIVITIES);
 
 						}
 					});

@@ -7,8 +7,8 @@ import lector.client.book.reader.GWTServiceAsync;
 import lector.client.controler.ActualState;
 import lector.client.controler.Constants;
 import lector.client.controler.Controlador;
-import lector.client.controler.ErrorConstants;
-import lector.client.controler.InformationConstants;
+import lector.client.controler.ConstantsError;
+import lector.client.controler.ConstantsInformation;
 import lector.client.logger.Logger;
 import lector.client.reader.LoadingPanel;
 import lector.share.model.Language;
@@ -158,14 +158,14 @@ public class AdminActivitiesEntryPoint implements EntryPoint {
 	public void refresh() {
 		Actual.clear();
 		LoadingPanel.getInstance().center();
-		LoadingPanel.getInstance().setLabelTexto(InformationConstants.LOADING);
+		LoadingPanel.getInstance().setLabelTexto(ConstantsInformation.LOADING);
 		bookReaderServiceHolder.getReadingActivitiesByProfessorId(ActualState
 				.getUser().getId(),
 				new AsyncCallback<List<ReadingActivityClient>>() {
 
 					public void onFailure(Throwable caught) {
 						LoadingPanel.getInstance().hide();
-						Window.alert(ErrorConstants.ERROR_RETRIVING_ACTIVITIES);
+						Window.alert(ConstantsError.ERROR_RETRIVING_ACTIVITIES);
 
 					}
 
@@ -260,7 +260,7 @@ public class AdminActivitiesEntryPoint implements EntryPoint {
 		PanelEdicion.setStyleName("");
 		Button Boton=new Button();
 		PanelEdicion.add(Boton,0, 0);
-		Boton.setHTML(InformationConstants.EDIT_BOTTON);
+		Boton.setHTML(ConstantsInformation.EDIT_BOTTON);
 		Boton.addClickHandler(new ClickHandler() {
 			
 			@Override
@@ -280,7 +280,7 @@ public class AdminActivitiesEntryPoint implements EntryPoint {
 		PanelEdicion.setStyleName("BlancoTransparente");
 		Button Boton=new Button();
 		PanelEdicion.add(Boton,PanelEdicion.getOffsetWidth()-Constants.TAMANOBOTOBEDITON, 0);
-		Boton.setHTML(InformationConstants.END_EDIT_BOTTON);
+		Boton.setHTML(ConstantsInformation.END_EDIT_BOTTON);
 		Boton.addClickHandler(new ClickHandler() {
 			
 			@Override
@@ -370,7 +370,7 @@ public class AdminActivitiesEntryPoint implements EntryPoint {
 			else BACK_MENU=BACK_MENU_RESET;
 		}
 		else 
-			Logger.GetLogger().severe(AdminActivitiesEntryPoint.class.toString(), ActualState.getUser().toString(), ErrorConstants.ERROR_LOADING_LANGUAGE_IN  + ACTIVITY_ADMINISTRATION_NAME);
+			Logger.GetLogger().severe(AdminActivitiesEntryPoint.class.toString(), ActualState.getUser().toString(), ConstantsError.ERROR_LOADING_LANGUAGE_IN  + ACTIVITY_ADMINISTRATION_NAME);
 		ParsearFieldsAItemsRESET();
 			
 		}

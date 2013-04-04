@@ -4,8 +4,8 @@ import lector.client.book.reader.GWTService;
 import lector.client.book.reader.GWTServiceAsync;
 import lector.client.controler.ActualState;
 import lector.client.controler.Constants;
-import lector.client.controler.ErrorConstants;
-import lector.client.controler.InformationConstants;
+import lector.client.controler.ConstantsError;
+import lector.client.controler.ConstantsInformation;
 import lector.client.logger.Logger;
 import lector.client.reader.LoadingPanel;
 import lector.share.model.Language;
@@ -119,7 +119,7 @@ public class ReadingActivityVisibilityPopupPanel extends PopupPanel {
 			public void onClick(ClickEvent event) {
 				readingActivityClient.setPrivacy(PrivateAcceptCheckBox.getValue());
 				LoadingPanel.getInstance().center();
-				LoadingPanel.getInstance().setLabelTexto(InformationConstants.SAVING);
+				LoadingPanel.getInstance().setLabelTexto(ConstantsInformation.SAVING);
 				bookReaderServiceHolder.saveReadingActivity(readingActivityClient, new AsyncCallback<Void>() {
 					
 					@Override
@@ -133,7 +133,7 @@ public class ReadingActivityVisibilityPopupPanel extends PopupPanel {
 					@Override
 					public void onFailure(Throwable caught) {
 						LoadingPanel.getInstance().hide();
-						Window.alert(ErrorConstants.ERROR_SAVING_ACTIVITY);
+						Window.alert(ConstantsError.ERROR_SAVING_ACTIVITY);
 					}
 				});
 			}
@@ -229,7 +229,7 @@ CancelButton.setStyleName("gwt-ButtonCenter");
 		PanelEdicion.setStyleName("");
 		Button Boton=new Button();
 		PanelEdicion.add(Boton,0,0);
-		Boton.setHTML(InformationConstants.EDIT_BOTTON);
+		Boton.setHTML(ConstantsInformation.EDIT_BOTTON);
 		Boton.addClickHandler(new ClickHandler() {
 			
 			@Override
@@ -249,7 +249,7 @@ CancelButton.setStyleName("gwt-ButtonCenter");
 		PanelEdicion.setStyleName("BlancoTransparente");
 		Button Boton=new Button();
 		
-		Boton.setHTML(InformationConstants.END_EDIT_BOTTON);
+		Boton.setHTML(ConstantsInformation.END_EDIT_BOTTON);
 		Boton.addClickHandler(new ClickHandler() {
 			
 			@Override
@@ -340,7 +340,7 @@ CancelButton.setStyleName("gwt-ButtonCenter");
 			else CANCEL=CANCEL_RESET;
 		}
 		else 
-			Logger.GetLogger().severe(ReadingActivityVisibilityPopupPanel.class.toString(), ActualState.getUser().toString(), ErrorConstants.ERROR_LOADING_LANGUAGE_IN  + READING_ACTIVITY_VISIVILITY);	
+			Logger.GetLogger().severe(ReadingActivityVisibilityPopupPanel.class.toString(), ActualState.getUser().toString(), ConstantsError.ERROR_LOADING_LANGUAGE_IN  + READING_ACTIVITY_VISIVILITY);	
 		ParsearFieldsAItemsRESET();
 		}
 	}

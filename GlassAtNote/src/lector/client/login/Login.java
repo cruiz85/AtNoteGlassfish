@@ -10,8 +10,8 @@ import lector.client.controler.ActualState;
 import lector.client.controler.CalendarNow;
 import lector.client.controler.Constants;
 import lector.client.controler.Controlador;
-import lector.client.controler.ErrorConstants;
-import lector.client.controler.InformationConstants;
+import lector.client.controler.ConstantsError;
+import lector.client.controler.ConstantsInformation;
 import lector.client.logger.Logger;
 import lector.client.reader.LoadingPanel;
 import lector.share.model.NotAuthenticatedException;
@@ -107,7 +107,7 @@ public class Login implements EntryPoint {
 		if (UserCookie != null) {
 			Long L = (Long.parseLong(UserCookie) / (CalendarNow.GetDateNowInt() * SemillaPrimo));
 			LoadingPanel.getInstance().setLabelTexto(
-					InformationConstants.LOADING);
+					ConstantsInformation.LOADING);
 			LoadingPanel.getInstance().center();
 			bookReaderServiceHolder.loadUserById(L,
 					new AsyncCallback<UserClient>() {
@@ -496,13 +496,13 @@ public class Login implements EntryPoint {
 				if (!PaswordA.getText().equals(PasswordB.getText())) {
 					PaswordA.setText("");
 					PasswordB.setText("");
-					Window.alert(ErrorConstants.ERROR_PASSWORDS_NOT_MATCH);
+					Window.alert(ConstantsError.ERROR_PASSWORDS_NOT_MATCH);
 				} else if (FirstName.getText().isEmpty()) {
-					Window.alert(ErrorConstants.FIRST_NAME_IS_EMPTY);
+					Window.alert(ConstantsError.FIRST_NAME_IS_EMPTY);
 				} else if (lastName.getText().isEmpty()) {
-					Window.alert(ErrorConstants.LAST_NAME_IS_EMPTY);
+					Window.alert(ConstantsError.LAST_NAME_IS_EMPTY);
 				} else if (!isValidEmail(email.getText())) {
-					Window.alert(ErrorConstants.IT_IS_NOT_A_EMAIL);
+					Window.alert(ConstantsError.IT_IS_NOT_A_EMAIL);
 				} else {
 					StudentClient UC = new StudentClient();
 					UC.setFirstName(FirstName.getText());
@@ -511,7 +511,7 @@ public class Login implements EntryPoint {
 					UC.setPassword(PaswordA.getText());
 					LoadingPanel.getInstance().center();
 					LoadingPanel.getInstance().setLabelTexto(
-							InformationConstants.SAVING);
+							ConstantsInformation.SAVING);
 					newStudent = UC;
 					bookReaderServiceHolder.saveUser(UC,
 							new AsyncCallback<Void>() {
@@ -519,7 +519,7 @@ public class Login implements EntryPoint {
 								@Override
 								public void onSuccess(Void result) {
 									LoadingPanel.getInstance().hide();
-									Window.alert(InformationConstants.A_EMAIL_BE_SEND_TO_YOUR_EMAIL_FOR_CONFIRM_THE_REGISTRATION);
+									Window.alert(ConstantsInformation.A_EMAIL_BE_SEND_TO_YOUR_EMAIL_FOR_CONFIRM_THE_REGISTRATION);
 									Logger.GetLogger().info(
 											Yo.getClass().toString(),
 											null,
@@ -547,11 +547,11 @@ public class Login implements EntryPoint {
 								@Override
 								public void onFailure(Throwable caught) {
 									LoadingPanel.getInstance().hide();
-									Window.alert(ErrorConstants.ERROR_IN_REGISTERATION);
+									Window.alert(ConstantsError.ERROR_IN_REGISTERATION);
 									Logger.GetLogger()
 											.severe(Yo.getClass().toString(),
 													null,
-													ErrorConstants.ERROR_IN_REGISTERATION);
+													ConstantsError.ERROR_IN_REGISTERATION);
 								}
 							});
 				}
@@ -641,7 +641,7 @@ public class Login implements EntryPoint {
 										CapchaPanel.setVisible(false);
 									} else {
 										buttonCapcha.setEnabled(true);
-										Window.alert(ErrorConstants.CAPTCHA_ENTERED_IS_WRONG);
+										Window.alert(ConstantsError.CAPTCHA_ENTERED_IS_WRONG);
 									}
 
 								}
@@ -649,12 +649,12 @@ public class Login implements EntryPoint {
 								@Override
 								public void onFailure(Throwable caught) {
 									buttonCapcha.setEnabled(true);
-									Window.alert(ErrorConstants.GENERAL_ERROR_REFRESH);
+									Window.alert(ConstantsError.GENERAL_ERROR_REFRESH);
 
 								}
 							});
 				else
-					Window.alert(ErrorConstants.CAPTCHA_ENTERED_IS_EMPTY);
+					Window.alert(ConstantsError.CAPTCHA_ENTERED_IS_EMPTY);
 			}
 		});
 
@@ -669,32 +669,32 @@ public class Login implements EntryPoint {
 		String nombre = User.getText();
 		String contrasena = passwordLogin.getText();
 		if (nombre.isEmpty() || contrasena.isEmpty()) {
-			Window.alert(ErrorConstants.ERROR_PASS_OR_USER_EMPTY);
+			Window.alert(ConstantsError.ERROR_PASS_OR_USER_EMPTY);
 			btnNewButton.setEnabled(true);
 		} else {
 			LoadingPanel.getInstance().center();
 			LoadingPanel.getInstance().setLabelTexto(
-					InformationConstants.LOGGING);
+					ConstantsInformation.LOGGING);
 			bookReaderServiceHolder.login(nombre, contrasena,
 					new AsyncCallback<UserClient>() {
 
 						public void onFailure(Throwable caught) {
 							LoadingPanel.getInstance().hide();
 							if (caught instanceof UserNotFoundException) {
-								Window.alert(ErrorConstants.YOU_USER_NOT_EXIST);
+								Window.alert(ConstantsError.YOU_USER_NOT_EXIST);
 								Logger.GetLogger().severe(
 										Yo.getClass().toString(), null,
-										ErrorConstants.YOU_USER_NOT_EXIST);
+										ConstantsError.YOU_USER_NOT_EXIST);
 							} else if (caught instanceof NotAuthenticatedException) {
-								Window.alert(ErrorConstants.YOU_ARE_NO_AUTORIZED);
+								Window.alert(ConstantsError.YOU_ARE_NO_AUTORIZED);
 								Logger.GetLogger().severe(
 										Yo.getClass().toString(), null,
-										ErrorConstants.YOU_ARE_NO_AUTORIZED);
+										ConstantsError.YOU_ARE_NO_AUTORIZED);
 							} else {
-								Window.alert(ErrorConstants.GENERAL_ERROR_REFRESH);
+								Window.alert(ConstantsError.GENERAL_ERROR_REFRESH);
 								Logger.GetLogger().severe(
 										Yo.getClass().toString(), null,
-										ErrorConstants.GENERAL_ERROR_REFRESH);
+										ConstantsError.GENERAL_ERROR_REFRESH);
 							}
 
 							btnNewButton.setEnabled(true);
@@ -703,10 +703,10 @@ public class Login implements EntryPoint {
 						public void onSuccess(UserClient result) {
 							LoadingPanel.getInstance().hide();
 							if (result == null) {
-								Window.alert(ErrorConstants.YOU_ARE_NO_AUTORIZED);
+								Window.alert(ConstantsError.YOU_ARE_NO_AUTORIZED);
 								Logger.GetLogger().severe(
 										Yo.getClass().toString(), null,
-										ErrorConstants.YOU_ARE_NO_AUTORIZED);
+										ConstantsError.YOU_ARE_NO_AUTORIZED);
 								btnNewButton.setEnabled(true);
 							} else {
 								ActualState.setUser(result);

@@ -4,13 +4,13 @@ import lector.client.book.reader.GWTService;
 import lector.client.book.reader.GWTServiceAsync;
 import lector.client.controler.ActualState;
 import lector.client.controler.Constants;
-import lector.client.controler.ErrorConstants;
+import lector.client.controler.ConstantsError;
 import lector.client.logger.Logger;
 import lector.client.reader.LoadingPanel;
 import lector.share.model.Language;
 import lector.share.model.client.ProfessorClient;
 import lector.share.model.client.ReadingActivityClient;
-import lector.client.controler.InformationConstants;
+import lector.client.controler.ConstantsInformation;
 
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
@@ -129,7 +129,7 @@ public class NewActivityPopupPanel extends PopupPanel {
 
 				String S = InsertionTextTextBox.getText();
 				if (S.isEmpty())
-					Window.alert(InformationConstants.THE_NAME_CAN_NOT_BE_EMPTY);
+					Window.alert(ConstantsInformation.THE_NAME_CAN_NOT_BE_EMPTY);
 				else {
 					ReadingActivityClient A = new ReadingActivityClient();
 					A.setName(S);
@@ -137,12 +137,12 @@ public class NewActivityPopupPanel extends PopupPanel {
 					A.setIsFreeTemplateAllowed(true);
 					A.setVisualization(Constants.VISUAL_ARBOL);
 					LoadingPanel.getInstance().center();
-					LoadingPanel.getInstance().setLabelTexto(InformationConstants.SAVING);
+					LoadingPanel.getInstance().setLabelTexto(ConstantsInformation.SAVING);
 					bookReaderServiceHolder.saveReadingActivity(A,
 							new AsyncCallback<Void>() {
 
 								public void onFailure(Throwable caught) {
-									Window.alert(ErrorConstants.ERROR_SAVING_ACTIVITY);
+									Window.alert(ConstantsError.ERROR_SAVING_ACTIVITY);
 									LoadingPanel.getInstance().hide();
 								}
 
@@ -206,7 +206,7 @@ public class NewActivityPopupPanel extends PopupPanel {
 		PanelEdicion.setStyleName("");
 		Button Boton=new Button();
 		PanelEdicion.add(Boton,0,0);
-		Boton.setHTML(InformationConstants.EDIT_BOTTON);
+		Boton.setHTML(ConstantsInformation.EDIT_BOTTON);
 		Boton.addClickHandler(new ClickHandler() {
 			
 			@Override
@@ -226,7 +226,7 @@ public class NewActivityPopupPanel extends PopupPanel {
 		PanelEdicion.setStyleName("BlancoTransparente");
 		Button Boton=new Button();
 		
-		Boton.setHTML(InformationConstants.END_EDIT_BOTTON);
+		Boton.setHTML(ConstantsInformation.END_EDIT_BOTTON);
 		Boton.addClickHandler(new ClickHandler() {
 			
 			@Override
@@ -302,7 +302,7 @@ public class NewActivityPopupPanel extends PopupPanel {
 			else CANCEL_BUTTON=CANCEL_BUTTON_RESET;
 		}
 		else 
-			Logger.GetLogger().severe(NewActivityPopupPanel.class.toString(), ActualState.getUser().toString(), ErrorConstants.ERROR_LOADING_LANGUAGE_IN  + ACTIVITY_ADMINISTRATION);	
+			Logger.GetLogger().severe(NewActivityPopupPanel.class.toString(), ActualState.getUser().toString(), ConstantsError.ERROR_LOADING_LANGUAGE_IN  + ACTIVITY_ADMINISTRATION);	
 		ParsearFieldsAItemsRESET();
 		}
 	}

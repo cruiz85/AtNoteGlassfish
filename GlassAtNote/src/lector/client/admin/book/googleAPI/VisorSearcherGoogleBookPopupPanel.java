@@ -6,8 +6,8 @@ import lector.client.book.reader.GWTServiceAsync;
 import lector.client.controler.ActualState;
 import lector.client.controler.Constants;
 import lector.client.controler.Controlador;
-import lector.client.controler.ErrorConstants;
-import lector.client.controler.InformationConstants;
+import lector.client.controler.ConstantsError;
+import lector.client.controler.ConstantsInformation;
 import lector.client.logger.Logger;
 import lector.client.reader.LoadingPanel;
 import lector.share.model.Language;
@@ -122,7 +122,7 @@ public class VisorSearcherGoogleBookPopupPanel extends PopupPanel {
 				//Window.alert("Works");
 				ProfessorClient PC=(ProfessorClient) ActualState.getUser();
 				LoadingPanel.getInstance().center();
-				LoadingPanel.getInstance().setLabelTexto(InformationConstants.SAVING);
+				LoadingPanel.getInstance().setLabelTexto(ConstantsInformation.SAVING);
 				bookReaderServiceHolder.addBookToUser(Entrada,PC.getId(), new AsyncCallback<Void>() {
 					
 					@Override
@@ -133,7 +133,7 @@ public class VisorSearcherGoogleBookPopupPanel extends PopupPanel {
 						Logger.GetLogger()
 						.info(Yo.getClass().toString(),
 								ActualState.getUser().toString(),
-								InformationConstants.ADDED_BOOK1+Entrada.getTitle()+InformationConstants.ADDED_BOOK1);
+								ConstantsInformation.ADDED_BOOK1+Entrada.getTitle()+ConstantsInformation.ADDED_BOOK1);
 						
 					}
 					
@@ -153,11 +153,11 @@ public class VisorSearcherGoogleBookPopupPanel extends PopupPanel {
 							@Override
 							public void onFailure(Throwable caught) {
 								LoadingPanel.getInstance().hide();
-								Window.alert(ErrorConstants.ERROR_RELOADING_USER_REFRESH);
+								Window.alert(ConstantsError.ERROR_RELOADING_USER_REFRESH);
 								Logger.GetLogger()
 								.severe(Yo.getClass().toString(),
 										ActualState.getUser().toString(),
-										ErrorConstants.ERROR_RELOADING_USER_REFRESH);
+										ConstantsError.ERROR_RELOADING_USER_REFRESH);
 								Window.Location.reload();
 								
 							}
@@ -168,11 +168,11 @@ public class VisorSearcherGoogleBookPopupPanel extends PopupPanel {
 					@Override
 					public void onFailure(Throwable caught) {
 						LoadingPanel.getInstance().hide();
-						Window.alert(ErrorConstants.ERROR_SAVING_BOOK1+Entrada.getTitle()+ErrorConstants.ERROR_SAVING_BOOK2);
+						Window.alert(ConstantsError.ERROR_SAVING_BOOK1+Entrada.getTitle()+ConstantsError.ERROR_SAVING_BOOK2);
 						Logger.GetLogger()
 						.severe(Yo.getClass().toString(),
 								ActualState.getUser().toString(),
-								ErrorConstants.ERROR_SAVING_BOOK1+Entrada.getTitle()+ErrorConstants.ERROR_SAVING_BOOK2);
+								ConstantsError.ERROR_SAVING_BOOK1+Entrada.getTitle()+ConstantsError.ERROR_SAVING_BOOK2);
 					}
 				});
 			}
@@ -213,7 +213,7 @@ public class VisorSearcherGoogleBookPopupPanel extends PopupPanel {
 		PanelEdicion.setStyleName("");
 		Button Boton=new Button();
 		PanelEdicion.add(Boton,0,0);
-		Boton.setHTML(InformationConstants.EDIT_BOTTON);
+		Boton.setHTML(ConstantsInformation.EDIT_BOTTON);
 		Boton.addClickHandler(new ClickHandler() {
 			
 			@Override
@@ -232,7 +232,7 @@ public class VisorSearcherGoogleBookPopupPanel extends PopupPanel {
 		PanelEdicion.clear();
 		PanelEdicion.setStyleName("BlancoTransparente");
 		Button Boton=new Button();
-		Boton.setHTML(InformationConstants.END_EDIT_BOTTON);
+		Boton.setHTML(ConstantsInformation.END_EDIT_BOTTON);
 		Boton.addClickHandler(new ClickHandler() {
 			
 			@Override
@@ -299,7 +299,7 @@ public class VisorSearcherGoogleBookPopupPanel extends PopupPanel {
 
 		}
 		else 
-			Logger.GetLogger().severe(VisorSearcherGoogleBookPopupPanel.class.toString(), ActualState.getUser().toString(), ErrorConstants.ERROR_LOADING_LANGUAGE_IN  + VISORGOOGLESEARCH);	
+			Logger.GetLogger().severe(VisorSearcherGoogleBookPopupPanel.class.toString(), ActualState.getUser().toString(), ConstantsError.ERROR_LOADING_LANGUAGE_IN  + VISORGOOGLESEARCH);	
 		ParsearFieldsAItemsRESET();
 		}
 	}

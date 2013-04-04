@@ -8,8 +8,8 @@ import lector.client.book.reader.GWTServiceAsync;
 import lector.client.controler.ActualState;
 import lector.client.controler.Constants;
 import lector.client.controler.Controlador;
-import lector.client.controler.ErrorConstants;
-import lector.client.controler.InformationConstants;
+import lector.client.controler.ConstantsError;
+import lector.client.controler.ConstantsInformation;
 import lector.client.controler.catalogo.StackPanelMio;
 import lector.client.logger.Logger;
 import lector.client.reader.LoadingPanel;
@@ -359,11 +359,11 @@ public class AdminAdministratorEntryPoint implements EntryPoint {
 				Ident = ((AdministradorEntidadObject) ((BotonesStackPanelAdminsMio) event
 						.getSource()).getEntidad()).getAdmin();
 				if (Window
-						.confirm(InformationConstants.ARE_YOU_SURE_DELETE_ADMIN
+						.confirm(ConstantsInformation.ARE_YOU_SURE_DELETE_ADMIN
 								+ Ident.getFirstName()
 								+ " "
 								+ Ident.getLastName()
-								+ InformationConstants.ARE_YOU_SURE_DELETE_ADMIN2)) {
+								+ ConstantsInformation.ARE_YOU_SURE_DELETE_ADMIN2)) {
 
 					LoadingPanel.getInstance().center();
 					LoadingPanel.getInstance().setLabelTexto("Loading...");
@@ -375,7 +375,7 @@ public class AdminAdministratorEntryPoint implements EntryPoint {
 							new AsyncCallback<Void>() {
 
 								public void onFailure(Throwable caught) {
-									Window.alert(ErrorConstants.ERROR_USER_CAN_NOT_BE_REMOVED);
+									Window.alert(ConstantsError.ERROR_USER_CAN_NOT_BE_REMOVED);
 
 								}
 
@@ -391,7 +391,7 @@ public class AdminAdministratorEntryPoint implements EntryPoint {
 										ActualState
 												.setReadingActivityBook(null);
 										ActualState.setReadingactivity(null);
-										Window.alert(InformationConstants.GOODBYE);
+										Window.alert(ConstantsInformation.GOODBYE);
 										Window.Location.reload();
 									}
 									refreshPanel();
@@ -414,16 +414,16 @@ public class AdminAdministratorEntryPoint implements EntryPoint {
 						PasswordBTextBox.getText())) {
 					PaswordATextBox.setText("");
 					PasswordBTextBox.setText("");
-					Window.alert(ErrorConstants.ERROR_PASSWORDS_NOT_MATCH);
+					Window.alert(ConstantsError.ERROR_PASSWORDS_NOT_MATCH);
 					SaveAdminsButton.setEnabled(true);
 				} else if (FirstNameTextBox.getText().isEmpty()) {
-					Window.alert(ErrorConstants.FIRST_NAME_IS_EMPTY);
+					Window.alert(ConstantsError.FIRST_NAME_IS_EMPTY);
 					SaveAdminsButton.setEnabled(true);
 				} else if (LastNameTextBox.getText().isEmpty()) {
-					Window.alert(ErrorConstants.LAST_NAME_IS_EMPTY);
+					Window.alert(ConstantsError.LAST_NAME_IS_EMPTY);
 					SaveAdminsButton.setEnabled(true);
 				} else if (!isValidEmail(EmailTextBox.getText())) {
-					Window.alert(ErrorConstants.IT_IS_NOT_A_EMAIL);
+					Window.alert(ConstantsError.IT_IS_NOT_A_EMAIL);
 					SaveAdminsButton.setEnabled(true);
 				} else {
 					ProfessorClient UC = new ProfessorClient();
@@ -433,7 +433,7 @@ public class AdminAdministratorEntryPoint implements EntryPoint {
 					UC.setPassword(PaswordATextBox.getText());
 					LoadingPanel.getInstance().center();
 					LoadingPanel.getInstance().setLabelTexto(
-							InformationConstants.SAVING);
+							ConstantsInformation.SAVING);
 					newStudent = UC;
 					bookReaderServiceHolder.saveUser(UC,
 							new AsyncCallback<Void>() {
@@ -454,12 +454,12 @@ public class AdminAdministratorEntryPoint implements EntryPoint {
 								public void onFailure(Throwable caught) {
 									SaveAdminsButton.setEnabled(true);
 									LoadingPanel.getInstance().hide();
-									Window.alert(ErrorConstants.ERROR_IN_REGISTERATION);
+									Window.alert(ConstantsError.ERROR_IN_REGISTERATION);
 									Logger.GetLogger()
 											.severe(Yo.getClass().toString(),
 													ActualState.getUser()
 															.toString(),
-													ErrorConstants.ERROR_IN_REGISTERATION);
+													ConstantsError.ERROR_IN_REGISTERATION);
 								}
 							});
 				}
@@ -524,16 +524,16 @@ public class AdminAdministratorEntryPoint implements EntryPoint {
 		stackPanel_1.Clear();
 		// Profesores
 		LoadingPanel.getInstance().center();
-		LoadingPanel.getInstance().setLabelTexto(InformationConstants.LOADING);
+		LoadingPanel.getInstance().setLabelTexto(ConstantsInformation.LOADING);
 		bookReaderServiceHolder
 				.getProfessors(new AsyncCallback<List<ProfessorClient>>() {
 
 					public void onFailure(Throwable caught) {
 						LoadingPanel.getInstance().hide();
-						Window.alert(ErrorConstants.ERROR_LOADING_USERS);
+						Window.alert(ConstantsError.ERROR_LOADING_USERS);
 						Logger.GetLogger().severe(Yo.getClass().toString(),
 								ActualState.getUser().toString(),
-								ErrorConstants.ERROR_LOADING_USERS);
+								ConstantsError.ERROR_LOADING_USERS);
 					}
 
 					public void onSuccess(List<ProfessorClient> result) {
@@ -570,7 +570,7 @@ public class AdminAdministratorEntryPoint implements EntryPoint {
 		PanelEdicion.setStyleName("");
 		Button Boton = new Button();
 		PanelEdicion.add(Boton, 0, 0);
-		Boton.setHTML(InformationConstants.EDIT_BOTTON);
+		Boton.setHTML(ConstantsInformation.EDIT_BOTTON);
 		Boton.addClickHandler(new ClickHandler() {
 
 			@Override
@@ -592,7 +592,7 @@ public class AdminAdministratorEntryPoint implements EntryPoint {
 		Button Boton = new Button();
 		PanelEdicion.add(Boton, PanelEdicion.getOffsetWidth()
 				- Constants.TAMANOBOTOBEDITON, 0);
-		Boton.setHTML(InformationConstants.END_EDIT_BOTTON);
+		Boton.setHTML(ConstantsInformation.END_EDIT_BOTTON);
 		Boton.addClickHandler(new ClickHandler() {
 
 			@Override
@@ -780,7 +780,7 @@ public class AdminAdministratorEntryPoint implements EntryPoint {
 		 else
 		 Logger.GetLogger().severe(AdminAdministratorEntryPoint.class.toString(),
 		 ActualState.getUser().toString(),
-		 ErrorConstants.ERROR_LOADING_LANGUAGE_IN +
+		 ConstantsError.ERROR_LOADING_LANGUAGE_IN +
 		 ADINISTRAATOR_ADMINISTRATION_NAME);
 		 ParsearFieldsAItemsRESET();
 		}

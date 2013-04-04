@@ -1,7 +1,7 @@
 package lector.client.admin.generalPanels;
 
 import lector.client.controler.ActualState;
-import lector.client.controler.ErrorConstants;
+import lector.client.controler.ConstantsError;
 import lector.client.logger.Logger;
 import lector.share.model.Language;
 
@@ -155,7 +155,7 @@ public class PublicPrivatePanelComposite extends Composite {
 		 else
 		 Logger.GetLogger().severe(PublicPrivatePanelComposite.class.toString(),
 		 ActualState.getUser().toString(),
-		 ErrorConstants.ERROR_LOADING_LANGUAGE_IN +
+		 ConstantsError.ERROR_LOADING_LANGUAGE_IN +
 		 PUBLIC_PRIVATE_PANEL_COMPOSITE);
 		
 		 ParsearFieldsAItemsRESET();

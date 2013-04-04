@@ -7,7 +7,7 @@ import lector.client.book.reader.ExportServiceAsync;
 import lector.client.controler.ActualState;
 import lector.client.controler.CalendarNow;
 import lector.client.controler.Controlador;
-import lector.client.controler.ErrorConstants;
+import lector.client.controler.ConstantsError;
 import lector.client.logger.Logger;
 import lector.client.reader.LoadingPanel;
 import lector.share.model.client.TemplateClient;
@@ -144,11 +144,11 @@ public class NewAdminTemplate implements EntryPoint  {
 			
 			public void onFailure(Throwable caught) {
 				LoadingPanel.getInstance().hide();
-				Window.alert(ErrorConstants.ERROR_REFRESH_TEMPLATES);
+				Window.alert(ConstantsError.ERROR_REFRESH_TEMPLATES);
 				Logger.GetLogger()
 				.severe(yo.getClass().toString(),
 						 ActualState.getUser().toString(),
-						ErrorConstants.ERROR_REFRESH_TEMPLATES);
+						ConstantsError.ERROR_REFRESH_TEMPLATES);
 				
 			}
 		});

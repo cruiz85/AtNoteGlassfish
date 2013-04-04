@@ -10,7 +10,7 @@ import com.google.gwt.user.client.rpc.AsyncCallback;
 
 import lector.client.book.reader.GWTService;
 import lector.client.book.reader.GWTServiceAsync;
-import lector.client.controler.ErrorConstants;
+import lector.client.controler.ConstantsError;
 import lector.share.model.AnnotationThread;
 import lector.share.model.client.AnnotationClient;
 import lector.share.model.client.AnnotationThreadClient;
@@ -76,7 +76,7 @@ public class ArbitroThreads {
 				@Override
 				public void onFailure(Throwable caught) {
 					ParesLlamada error=Llamadas.pop();
-					Window.alert(ErrorConstants.ERROR_LOADING_THREAD1 + error.getIDPadre().getId() + ErrorConstants.ERROR_LOADING_THREAD2 + error.getIDPadre());
+					Window.alert(ConstantsError.ERROR_LOADING_THREAD1 + error.getIDPadre().getId() + ConstantsError.ERROR_LOADING_THREAD2 + error.getIDPadre());
 					
 				}
 			});

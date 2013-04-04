@@ -9,8 +9,8 @@ import lector.client.controler.ActualState;
 import lector.client.controler.CalendarNow;
 import lector.client.controler.Constants;
 import lector.client.controler.Controlador;
-import lector.client.controler.ErrorConstants;
-import lector.client.controler.InformationConstants;
+import lector.client.controler.ConstantsError;
+import lector.client.controler.ConstantsInformation;
 import lector.client.logger.Logger;
 import lector.client.reader.LoadingPanel;
 import lector.share.model.client.BookClient;
@@ -118,7 +118,7 @@ public class MyBooks implements EntryPoint {
 			BooksIDs = ((ProfessorClient) User).getBooks();
 			LoadingPanel.getInstance().center();
 			LoadingPanel.getInstance().setLabelTexto(
-					InformationConstants.LOADING);
+					ConstantsInformation.LOADING);
 			bookReaderServiceHolder.getBookClientsByIds(BooksIDs, new AsyncCallback<List<BookClient>>() {
 				
 				@Override
@@ -131,11 +131,11 @@ public class MyBooks implements EntryPoint {
 				@Override
 				public void onFailure(Throwable caught) {
 					LoadingPanel.getInstance().hide();
-					Window.alert(ErrorConstants.ERROR_LOADING_BOOKS + ActualState.getUser().getEmail());
+					Window.alert(ConstantsError.ERROR_LOADING_BOOKS + ActualState.getUser().getEmail());
 					Logger.GetLogger().severe(
 							Yo.getClass().toString(),
 							ActualState.getUser().toString(),
-							ErrorConstants.ERROR_LOADING_BOOKS);
+							ConstantsError.ERROR_LOADING_BOOKS);
 					
 				}
 			});

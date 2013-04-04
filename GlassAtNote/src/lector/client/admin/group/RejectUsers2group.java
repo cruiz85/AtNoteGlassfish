@@ -7,8 +7,8 @@ import lector.client.admin.users.EntidadUser;
 import lector.client.book.reader.GWTService;
 import lector.client.book.reader.GWTServiceAsync;
 import lector.client.controler.ActualState;
-import lector.client.controler.ErrorConstants;
-import lector.client.controler.InformationConstants;
+import lector.client.controler.ConstantsError;
+import lector.client.controler.ConstantsInformation;
 import lector.client.logger.Logger;
 import lector.client.reader.LoadingPanel;
 import lector.share.model.client.StudentClient;
@@ -122,7 +122,7 @@ public class RejectUsers2group extends PopupPanel {
 					}
 				}
 				LoadingPanel.getInstance().center();
-				LoadingPanel.getInstance().setLabelTexto(InformationConstants.REJECTING);
+				LoadingPanel.getInstance().setLabelTexto(ConstantsInformation.REJECTING);
 				bookReaderServiceHolder.removeStudentsToBeValidated(userIds, GAUP.getMygroup().getId(), new AsyncCallback<Void>() {
 					
 					@Override
@@ -138,10 +138,10 @@ public class RejectUsers2group extends PopupPanel {
 					@Override
 					public void onFailure(Throwable caught) {
 						LoadingPanel.getInstance().hide();
-						Window.alert(ErrorConstants.ERROR_IN_REJECTION);
+						Window.alert(ConstantsError.ERROR_IN_REJECTION);
 						Logger.GetLogger().severe(Yo.getClass().toString(),
 								ActualState.getUser().toString(),
-								ErrorConstants.ERROR_IN_REJECTION  + GAUP.getMygroup().getName() + " Users : " +userIdsName);
+								ConstantsError.ERROR_IN_REJECTION  + GAUP.getMygroup().getName() + " Users : " +userIdsName);
 						
 					}
 				});

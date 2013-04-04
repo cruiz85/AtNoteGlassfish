@@ -7,8 +7,8 @@ import lector.client.book.reader.GWTServiceAsync;
 import lector.client.controler.ActualState;
 import lector.client.controler.Constants;
 import lector.client.controler.Controlador;
-import lector.client.controler.ErrorConstants;
-import lector.client.controler.InformationConstants;
+import lector.client.controler.ConstantsError;
+import lector.client.controler.ConstantsInformation;
 import lector.client.logger.Logger;
 import lector.client.reader.LoadingPanel;
 import lector.share.model.Language;
@@ -147,7 +147,7 @@ public class SearcherGoogleEntryPoint implements EntryPoint, HistoryListener {
 					public void onFailure(Throwable caught) {
 						LoadingPanel.getInstance().hide();
 						throw new UnsupportedOperationException(
-								ErrorConstants.ERROR_RETRIVING_NEW_BOOKS);
+								ConstantsError.ERROR_RETRIVING_NEW_BOOKS);
 					}
 
 					public void onSuccess(List<GoogleBookClient> result) {
@@ -155,7 +155,7 @@ public class SearcherGoogleEntryPoint implements EntryPoint, HistoryListener {
 						String bookLinkString = "";
 						cleanHyperLinks();
 						if (result.size() == 0) {
-							lblNewLabel.setText(InformationConstants.NO_MORE_RESULTS);
+							lblNewLabel.setText(ConstantsInformation.NO_MORE_RESULTS);
 							searchNextButton.setVisible(false);
 						}
 						for (int i = 0; i < result.size(); i++) {
@@ -187,7 +187,7 @@ public class SearcherGoogleEntryPoint implements EntryPoint, HistoryListener {
 				};
 				LoadingPanel.getInstance().center();
 				LoadingPanel.getInstance().setLabelTexto(
-						InformationConstants.LOADING);
+						ConstantsInformation.LOADING);
 				bookReaderServiceHolder.getBookClients(searcherField.getText(), pos,
 						callback);
 			}
@@ -223,7 +223,7 @@ public class SearcherGoogleEntryPoint implements EntryPoint, HistoryListener {
 					public void onFailure(Throwable caught) {
 						LoadingPanel.getInstance().hide();
 						throw new UnsupportedOperationException(
-								ErrorConstants.ERROR_RETRIVING_OLD_BOOKS);
+								ConstantsError.ERROR_RETRIVING_OLD_BOOKS);
 					}
 
 					public void onSuccess(List<GoogleBookClient> result) {
@@ -260,7 +260,7 @@ public class SearcherGoogleEntryPoint implements EntryPoint, HistoryListener {
 					}
 				};
 				LoadingPanel.getInstance().setLabelTexto(
-						InformationConstants.LOADING);
+						ConstantsInformation.LOADING);
 				bookReaderServiceHolder.getBookClients(searcherField.getText(), pos,
 						callback);
 			}
@@ -292,7 +292,7 @@ public class SearcherGoogleEntryPoint implements EntryPoint, HistoryListener {
 					public void onFailure(Throwable caught) {
 						LoadingPanel.getInstance().hide();
 						throw new UnsupportedOperationException(
-								ErrorConstants.ERROR_SEARCHING_BOOKS);
+								ConstantsError.ERROR_SEARCHING_BOOKS);
 					}
 
 					public void onSuccess(List<GoogleBookClient> result) {
@@ -303,7 +303,7 @@ public class SearcherGoogleEntryPoint implements EntryPoint, HistoryListener {
 						searchNextButton.setVisible(true);
 						searchPrevious.setVisible(false);
 						if (result.size() == 0) {
-							lblNewLabel.setText(InformationConstants.NO_RESULTS);
+							lblNewLabel.setText(ConstantsInformation.NO_RESULTS);
 							searchNextButton.setVisible(false);
 						}
 						for (int i = 0; i < result.size(); i++) {
@@ -334,7 +334,7 @@ public class SearcherGoogleEntryPoint implements EntryPoint, HistoryListener {
 					}
 				};
 				LoadingPanel.getInstance().setLabelTexto(
-						InformationConstants.LOADING);
+						ConstantsInformation.LOADING);
 				bookReaderServiceHolder.getGoogleBookClients(searcherField.getText(),
 						callback);
 			}
@@ -351,7 +351,7 @@ public class SearcherGoogleEntryPoint implements EntryPoint, HistoryListener {
 						public void onFailure(Throwable caught) {
 							LoadingPanel.getInstance().hide();
 							throw new UnsupportedOperationException(
-									ErrorConstants.ERROR_SEARCHING_BOOKS);
+									ConstantsError.ERROR_SEARCHING_BOOKS);
 						}
 
 						public void onSuccess(List<GoogleBookClient> result) {
@@ -362,7 +362,7 @@ public class SearcherGoogleEntryPoint implements EntryPoint, HistoryListener {
 							searchNextButton.setVisible(true);
 							searchPrevious.setVisible(false);
 							if (result.size() == 0) {
-								lblNewLabel.setText(InformationConstants.NO_RESULTS);
+								lblNewLabel.setText(ConstantsInformation.NO_RESULTS);
 								searchNextButton.setVisible(false);
 							}
 							for (int i = 0; i < result.size(); i++) {
@@ -394,7 +394,7 @@ public class SearcherGoogleEntryPoint implements EntryPoint, HistoryListener {
 						}
 					};
 					LoadingPanel.getInstance().setLabelTexto(
-							InformationConstants.LOADING);
+							ConstantsInformation.LOADING);
 					bookReaderServiceHolder.getGoogleBookClients(searcherField.getText(),
 							callback);
 				}
@@ -533,7 +533,7 @@ public class SearcherGoogleEntryPoint implements EntryPoint, HistoryListener {
 		
 		 public void onFailure(Throwable caught) {
 			 LoadingPanel.getInstance().hide();
-		 Window.alert(ErrorConstants.NOT_SUPPORTED);
+		 Window.alert(ConstantsError.NOT_SUPPORTED);
 		 //throw new UnsupportedOperationException("Not supported yet.");
 		
 		 }
@@ -558,7 +558,7 @@ public class SearcherGoogleEntryPoint implements EntryPoint, HistoryListener {
 			// bookReaderServiceHolder.getBookImageInHathiByISBN(historyToken,
 			// callback);
 			LoadingPanel.getInstance().setLabelTexto(
-					InformationConstants.LOADING);
+					ConstantsInformation.LOADING);
 			LoadingPanel.getInstance().center();
 			 bookReaderServiceHolder.loadFullBookInGoogle(historyToken,
 			 callback);
@@ -579,7 +579,7 @@ public class SearcherGoogleEntryPoint implements EntryPoint, HistoryListener {
 		PanelEdicion.setStyleName("");
 		Button Boton = new Button();
 		PanelEdicion.add(Boton, 0, 0);
-		Boton.setHTML(InformationConstants.EDIT_BOTTON);
+		Boton.setHTML(ConstantsInformation.EDIT_BOTTON);
 		Boton.addClickHandler(new ClickHandler() {
 
 			@Override
@@ -601,7 +601,7 @@ public class SearcherGoogleEntryPoint implements EntryPoint, HistoryListener {
 		Button Boton = new Button();
 		PanelEdicion.add(Boton, PanelEdicion.getOffsetWidth()
 				- Constants.TAMANOBOTOBEDITON, 0);
-		Boton.setHTML(InformationConstants.END_EDIT_BOTTON);
+		Boton.setHTML(ConstantsInformation.END_EDIT_BOTTON);
 		Boton.addClickHandler(new ClickHandler() {
 
 			@Override
@@ -748,7 +748,7 @@ public class SearcherGoogleEntryPoint implements EntryPoint, HistoryListener {
 			Logger.GetLogger().severe(
 					SearcherGoogleEntryPoint.class.toString(),
 					ActualState.getUser().toString(),
-					ErrorConstants.ERROR_LOADING_LANGUAGE_IN
+					ConstantsError.ERROR_LOADING_LANGUAGE_IN
 							+ GOOGLE_SEARCH_NAME);
 		ParsearFieldsAItemsRESET();
 		}

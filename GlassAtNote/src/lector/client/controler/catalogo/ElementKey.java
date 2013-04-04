@@ -6,7 +6,7 @@ import lector.client.book.reader.GWTService;
 import lector.client.book.reader.GWTServiceAsync;
 import lector.client.controler.Constants;
 import lector.client.controler.EntitdadObject;
-import lector.client.controler.ErrorConstants;
+import lector.client.controler.ConstantsError;
 import lector.client.controler.catalogo.client.EntityCatalogElements;
 import lector.client.controler.catalogo.client.File;
 import lector.client.controler.catalogo.client.Folder;
@@ -163,7 +163,7 @@ public class ElementKey extends Composite{
 					
 					@Override
 					public void onFailure(Throwable caught) {
-						Window.alert(ErrorConstants.ERROR_ON_MOVE);
+						Window.alert(ConstantsError.ERROR_ON_MOVE);
 						finderAct.RefrescaLosDatos();
 					}
 				});
@@ -181,7 +181,7 @@ bookReaderServiceHolder.updateCatalog(catalog, new AsyncCallback<Void>() {
 					
 					@Override
 					public void onFailure(Throwable caught) {
-						Window.alert(ErrorConstants.ERROR_ON_MOVE);
+						Window.alert(ConstantsError.ERROR_ON_MOVE);
 						finderAct.RefrescaLosDatos();
 					}
 				});
@@ -262,7 +262,7 @@ bookReaderServiceHolder.updateCatalog(catalog, new AsyncCallback<Void>() {
 					
 					@Override
 					public void onFailure(Throwable caught) {
-						Window.alert(ErrorConstants.ERROR_ON_MOVE);
+						Window.alert(ConstantsError.ERROR_ON_MOVE);
 						finderAct.RefrescaLosDatos();
 					}
 				});
@@ -280,7 +280,7 @@ bookReaderServiceHolder.updateCatalog(catalog, new AsyncCallback<Void>() {
 					
 					@Override
 					public void onFailure(Throwable caught) {
-						Window.alert(ErrorConstants.ERROR_ON_MOVE);
+						Window.alert(ConstantsError.ERROR_ON_MOVE);
 						finderAct.RefrescaLosDatos();
 					}
 				});

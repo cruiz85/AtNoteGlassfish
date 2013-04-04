@@ -38,11 +38,26 @@ import com.google.gwt.user.client.ui.Image;
 
 public class AdmintracionCatalogosEntryPoint implements EntryPoint {
 
+	private static final String BOOKUPLOADENTRYPOINT = "Book upoload entry point";
+
+	private static final int NCampos = 7;
+
+	
+	
 	private VerticalPanel Actual;
 	private AdmintracionCatalogosEntryPoint yo;
 	private GWTServiceAsync bookReaderServiceHolder = GWT
 	.create(GWTService.class);
 
+	
+
+	private static String CATALOGEMENUITEM="Catalogue Administration";
+	private static String NEWCATALOGMENUITEM = "New";
+	private static String BACKMENUITEM="Back";
+
+	/**
+	 * Metodo de entrada que pinta la ventana para el entry point
+	 */
 	public void onModuleLoad() {
 		RootPanel RootTXOriginal = RootPanel.get();
 		RootPanel RootMenu = RootPanel.get("Menu");
@@ -56,32 +71,33 @@ public class AdmintracionCatalogosEntryPoint implements EntryPoint {
 		RootMenu.add(menuBar);
 		menuBar.setWidth("100%");
 		
-		MenuItem menuItem = new MenuItem("Catalogue", false, (Command) null);
-		menuItem.setHTML("Catalogue Administration");
+		MenuItem menuItem = new MenuItem(CATALOGEMENUITEM, false, (Command) null);
+		menuItem.setHTML(CATALOGEMENUITEM);
 		menuItem.setEnabled(false);
 		menuBar.addItem(menuItem);
 		
 		MenuItemSeparator separator = new MenuItemSeparator();
 		menuBar.addSeparator(separator);
 		
-		MenuItem mntmNewItem = new MenuItem("New item", false, new Command() {
+		MenuItem mntmNewItem = new MenuItem(NEWCATALOGMENUITEM, false, new Command() {
 			public void execute() {
 				NewCatalogPopupPanel NL=new NewCatalogPopupPanel(yo);
 				NL.center();
 				
 			}
 		});
-		mntmNewItem.setHTML("New");
+		mntmNewItem.setHTML(NEWCATALOGMENUITEM);
 		menuBar.addItem(mntmNewItem);
 		
 		MenuItemSeparator separator_2 = new MenuItemSeparator();
 		menuBar.addSeparator(separator_2);
 		
-		MenuItem mntmBack = new MenuItem("Back", false, new Command() {
+		MenuItem mntmBack = new MenuItem(BACKMENUITEM, false, new Command() {
 			public void execute() {
 				Controlador.change2Administrator();
 			}
 		});
+		mntmBack.setHTML(BACKMENUITEM);
 		menuBar.addItem(mntmBack);
 		
 		VerticalPanel verticalPanel = new VerticalPanel();

@@ -9,7 +9,7 @@ import lector.client.book.reader.GWTService;
 import lector.client.book.reader.GWTServiceAsync;
 import lector.client.controler.ActualState;
 import lector.client.controler.Constants;
-import lector.client.controler.ErrorConstants;
+import lector.client.controler.ConstantsError;
 import lector.client.controler.catalogo.client.EntityCatalogElements;
 import lector.client.controler.catalogo.client.File;
 import lector.client.controler.catalogo.client.Folder;
@@ -228,8 +228,8 @@ public class FinderKeys extends Finder {
 
 			@Override
 			public void onFailure(Throwable caught) {
-				Window.alert(ErrorConstants.ERROR_LOADING_CATALOG);
-				Logger.GetLogger().severe(Yo.getClass().toString(),ActualState.getUser().toString(), ErrorConstants.ERROR_LOADING_CATALOG);
+				Window.alert(ConstantsError.ERROR_LOADING_CATALOG);
+				Logger.GetLogger().severe(Yo.getClass().toString(),ActualState.getUser().toString(), ConstantsError.ERROR_LOADING_CATALOG);
 				LoadingPanel.getInstance().hide();
 			}
 

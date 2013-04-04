@@ -4,8 +4,8 @@ import lector.client.book.reader.ExportService;
 import lector.client.book.reader.ExportServiceAsync;
 import lector.client.controler.ActualState;
 import lector.client.controler.CalendarNow;
-import lector.client.controler.ErrorConstants;
-import lector.client.controler.InformationConstants;
+import lector.client.controler.ConstantsError;
+import lector.client.controler.ConstantsInformation;
 import lector.client.logger.Logger;
 import lector.client.reader.LoadingPanel;
 import lector.share.model.Template;
@@ -85,7 +85,7 @@ public class EditTemplateOptiones extends PopupPanel {
 		horizontalPanel.add(textBox);
 		textBox.setText(T.getName());
 		
-		checkBox = new CheckBox(InformationConstants.ORDER_EDITABLE);
+		checkBox = new CheckBox(ConstantsInformation.ORDER_EDITABLE);
 		verticalPanel.add(checkBox);
 		checkBox.setValue(T.getModifyable());
 		
@@ -109,10 +109,10 @@ public class EditTemplateOptiones extends PopupPanel {
 					
 					public void onFailure(Throwable caught) {
 						LoadingPanel.getInstance().hide();		
-						Window.alert(ErrorConstants.ERROR_UPDATING_TEMPLATE);
+						Window.alert(ConstantsError.ERROR_UPDATING_TEMPLATE);
 						Logger.GetLogger().severe(this.getClass().getName(),
 								ActualState.getUser().toString(),
-								ErrorConstants.ERROR_UPDATING_TEMPLATE);
+								ConstantsError.ERROR_UPDATING_TEMPLATE);
 					}
 				});
 				

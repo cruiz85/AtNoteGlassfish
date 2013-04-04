@@ -7,8 +7,8 @@ import lector.client.book.reader.GWTService;
 import lector.client.book.reader.GWTServiceAsync;
 import lector.client.controler.ActualState;
 import lector.client.controler.CalendarNow;
-import lector.client.controler.ErrorConstants;
-import lector.client.controler.InformationConstants;
+import lector.client.controler.ConstantsError;
+import lector.client.controler.ConstantsInformation;
 import lector.client.logger.Logger;
 import lector.client.reader.LoadingPanel;
 import lector.share.model.Template;
@@ -54,7 +54,7 @@ public class newTemplate extends PopupPanel {
 		verticalPanel.setSize("253px", "131px");
 		Yo=yo;
 		
-		Label lblNewLabel = new Label(InformationConstants.TYPE_NAME_FOR_THE_NEW_EXPORT_TEMPLATE);
+		Label lblNewLabel = new Label(ConstantsInformation.TYPE_NAME_FOR_THE_NEW_EXPORT_TEMPLATE);
 		lblNewLabel.setHorizontalAlignment(HasHorizontalAlignment.ALIGN_CENTER);
 		verticalPanel.add(lblNewLabel);
 		verticalPanel.setCellVerticalAlignment(lblNewLabel, HasVerticalAlignment.ALIGN_MIDDLE);
@@ -76,7 +76,7 @@ public class newTemplate extends PopupPanel {
 		verticalPanel.add(horizontalPanel_2);
 		horizontalPanel_2.setSize("100%", "100%");
 		
-		chckbxNewCheckBox = new CheckBox(InformationConstants.ORDER_EDITABLE);
+		chckbxNewCheckBox = new CheckBox(ConstantsInformation.ORDER_EDITABLE);
 		horizontalPanel_2.add(chckbxNewCheckBox);
 		chckbxNewCheckBox.setSize("240px", "19px");
 		
@@ -112,11 +112,11 @@ public class newTemplate extends PopupPanel {
 					
 					public void onFailure(Throwable caught) {
 						LoadingPanel.getInstance().hide();
-						Window.alert(ErrorConstants.ERROR_SAVING_TEMPLATE);
+						Window.alert(ConstantsError.ERROR_SAVING_TEMPLATE);
 						Logger.GetLogger()
 						.severe(Yo.getClass().toString(),
 								ActualState.getUser().toString(),
-								ErrorConstants.ERROR_SAVING_TEMPLATE);
+								ConstantsError.ERROR_SAVING_TEMPLATE);
 						
 					}
 				});

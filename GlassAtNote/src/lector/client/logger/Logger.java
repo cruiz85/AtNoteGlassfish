@@ -3,7 +3,7 @@ package lector.client.logger;
 import lector.client.book.reader.LoggerService;
 import lector.client.book.reader.LoggerServiceAsync;
 import lector.client.controler.CalendarNow;
-import lector.client.controler.ErrorConstants;
+import lector.client.controler.ConstantsError;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;

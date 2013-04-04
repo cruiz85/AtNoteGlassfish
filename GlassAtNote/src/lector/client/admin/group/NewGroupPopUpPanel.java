@@ -4,7 +4,7 @@ import lector.client.book.reader.GWTService;
 import lector.client.book.reader.GWTServiceAsync;
 import lector.client.controler.ActualState;
 import lector.client.controler.CalendarNow;
-import lector.client.controler.ErrorConstants;
+import lector.client.controler.ConstantsError;
 import lector.client.logger.Logger;
 import lector.client.reader.LoadingPanel;
 import lector.share.model.GroupApp;
@@ -141,10 +141,10 @@ public class NewGroupPopUpPanel extends PopupPanel {
 					
 					public void onFailure(Throwable caught) {
 						LoadingPanel.getInstance().hide();
-					Window.alert(ErrorConstants.THE_GROUP_COULD_NOT_BE_SAVED);
+					Window.alert(ConstantsError.THE_GROUP_COULD_NOT_BE_SAVED);
 					Logger.GetLogger().info(this.getClass().getName(), 
 							ActualState.getUser().toString(),
-							ErrorConstants.THE_GROUP_COULD_NOT_BE_SAVED);
+							ConstantsError.THE_GROUP_COULD_NOT_BE_SAVED);
 						
 					}
 				});

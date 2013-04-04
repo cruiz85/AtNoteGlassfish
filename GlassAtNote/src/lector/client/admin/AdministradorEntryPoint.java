@@ -6,8 +6,8 @@ import lector.client.book.reader.GWTServiceAsync;
 import lector.client.controler.ActualState;
 import lector.client.controler.Constants;
 import lector.client.controler.Controlador;
-import lector.client.controler.ErrorConstants;
-import lector.client.controler.InformationConstants;
+import lector.client.controler.ConstantsError;
+import lector.client.controler.ConstantsInformation;
 import lector.client.logger.Logger;
 import lector.share.model.Language;
 import lector.share.model.client.ReadingActivityClient;
@@ -482,7 +482,7 @@ public class AdministradorEntryPoint implements EntryPoint {
 								} else {
 									ReturnToActivityButton.setEnabled(false);
 									ActualState.setReadingactivity(null);
-									Window.alert(InformationConstants.ACTIVITY_CHANGES_AND_ARE_NOW_NOT_ACCESIBLE);
+									Window.alert(ConstantsInformation.ACTIVITY_CHANGES_AND_ARE_NOW_NOT_ACCESIBLE);
 								}
 							}
 
@@ -498,7 +498,7 @@ public class AdministradorEntryPoint implements EntryPoint {
 							public void onFailure(Throwable caught) {
 								ActualState.setReadingactivity(null);
 								ReturnToActivityButton.setEnabled(false);
-								Window.alert(ErrorConstants.ERROR_ACTIVITY_DONT_EXIST_OR_ARE_UNREACHEABLE);
+								Window.alert(ConstantsError.ERROR_ACTIVITY_DONT_EXIST_OR_ARE_UNREACHEABLE);
 
 							}
 						});
@@ -552,7 +552,7 @@ public class AdministradorEntryPoint implements EntryPoint {
 		PanelEdicion.setStyleName("");
 		Button Boton=new Button();
 		PanelEdicion.add(Boton,0, 0);
-		Boton.setHTML(InformationConstants.EDIT_BOTTON);
+		Boton.setHTML(ConstantsInformation.EDIT_BOTTON);
 		Boton.addClickHandler(new ClickHandler() {
 			
 			@Override
@@ -572,7 +572,7 @@ public class AdministradorEntryPoint implements EntryPoint {
 		PanelEdicion.setStyleName("BlancoTransparente");
 		Button Boton=new Button();
 		PanelEdicion.add(Boton,PanelEdicion.getOffsetWidth()-Constants.TAMANOBOTOBEDITON, 0);
-		Boton.setHTML(InformationConstants.END_EDIT_BOTTON);
+		Boton.setHTML(ConstantsInformation.END_EDIT_BOTTON);
 		Boton.addClickHandler(new ClickHandler() {
 			
 			@Override
@@ -807,7 +807,7 @@ public class AdministradorEntryPoint implements EntryPoint {
 		}
 		else 
 			{
-			Logger.GetLogger().severe(EditorActivityPopupPanel.class.toString(), ActualState.getUser().toString(), ErrorConstants.ERROR_LOADING_LANGUAGE_IN  + ADMINISTRATORS_NAME);
+			Logger.GetLogger().severe(EditorActivityPopupPanel.class.toString(), ActualState.getUser().toString(), ConstantsError.ERROR_LOADING_LANGUAGE_IN  + ADMINISTRATORS_NAME);
 			ParsearFieldsAItemsRESET();
 			}
 		

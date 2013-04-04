@@ -2,8 +2,8 @@ package lector.client.admin.export.admin;
 
 import lector.client.book.reader.ExportService;
 import lector.client.book.reader.ExportServiceAsync;
-import lector.client.controler.ErrorConstants;
-import lector.client.controler.InformationConstants;
+import lector.client.controler.ConstantsError;
+import lector.client.controler.ConstantsInformation;
 import lector.client.reader.LoadingPanel;
 import lector.share.model.client.TemplateCategoryClient;
 
@@ -46,7 +46,7 @@ public class NewPanelRename extends PopupPanel {
 		setWidget(verticalPanel);
 		verticalPanel.setSize("340px", "155px");
 		
-		Label lblNewLabel = new Label(InformationConstants.RENAME_TEMPLATE_CATEGORY + TC.getName());
+		Label lblNewLabel = new Label(ConstantsInformation.RENAME_TEMPLATE_CATEGORY + TC.getName());
 		verticalPanel.add(lblNewLabel);
 		
 		HorizontalPanel horizontalPanel = new HorizontalPanel();
@@ -54,7 +54,7 @@ public class NewPanelRename extends PopupPanel {
 		horizontalPanel.setHorizontalAlignment(HasHorizontalAlignment.ALIGN_CENTER);
 		verticalPanel.add(horizontalPanel);
 		
-		Label lblNewLabel_1 = new Label(InformationConstants.NAME);
+		Label lblNewLabel_1 = new Label(ConstantsInformation.NAME);
 		horizontalPanel.add(lblNewLabel_1);
 		
 		textBox = new TextBox();
@@ -104,7 +104,7 @@ public class NewPanelRename extends PopupPanel {
 //					TemplateCategory T=new TemplateCategory(textBox.getText(), new ArrayList<Long>(), new ArrayList<Long>(), TC.getId(), TC.getTemplateId());
 //					TC.setOrder(TC.getSubCategories().size()+1);
 					LoadingPanel.getInstance().center();
-					LoadingPanel.getInstance().setLabelTexto(InformationConstants.SAVING);
+					LoadingPanel.getInstance().setLabelTexto(ConstantsInformation.SAVING);
 					exportServiceHolder.saveTemplateCategory(TC , new AsyncCallback<Void>() {
 						
 						public void onSuccess(Void result) {
@@ -116,7 +116,7 @@ public class NewPanelRename extends PopupPanel {
 						
 						public void onFailure(Throwable caught) {
 							LoadingPanel.getInstance().hide();
-							Window.alert(ErrorConstants.ERROR_SAVING_NEW_TEMPLATE_CATEGORY);
+							Window.alert(ConstantsError.ERROR_SAVING_NEW_TEMPLATE_CATEGORY);
 							
 						}
 					});

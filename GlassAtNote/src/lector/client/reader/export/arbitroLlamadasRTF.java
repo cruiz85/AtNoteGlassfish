@@ -5,7 +5,7 @@ import java.util.Stack;
 
 import lector.client.book.reader.ImageService;
 import lector.client.book.reader.ImageServiceAsync;
-import lector.client.controler.InformationConstants;
+import lector.client.controler.ConstantsInformation;
 import lector.client.reader.ExportObjectTemplate;
 import lector.client.reader.LoadingPanel;
 import lector.share.model.ExportObject;
@@ -167,7 +167,7 @@ public class arbitroLlamadasRTF {
 			RootPanel RP=RootPanel.get();
 			formPanel.setVisible(false);
 			RP.add(formPanel);
-			Window.alert(InformationConstants.WAIT_RESULTS);
+			Window.alert(ConstantsInformation.WAIT_RESULTS);
 			formPanel.submit();
 //			if (!Window.Navigator.getUserAgent().contains("Chrome"))
 //				{

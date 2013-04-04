@@ -4,8 +4,8 @@ import lector.client.book.reader.GWTService;
 import lector.client.book.reader.GWTServiceAsync;
 import lector.client.controler.ActualState;
 import lector.client.controler.Constants;
-import lector.client.controler.ErrorConstants;
-import lector.client.controler.InformationConstants;
+import lector.client.controler.ConstantsError;
+import lector.client.controler.ConstantsInformation;
 import lector.client.logger.Logger;
 import lector.client.reader.LoadingPanel;
 import lector.share.model.Language;
@@ -97,7 +97,7 @@ public class SeleccionMenuActivityPopupPanel extends PopupPanel {
 				//TODO Mensaje en Informacion
 				if (Window.confirm(SeleccionMenuActivityPopupPanel.ARE_YOU_SURE_DELETE_READING_ACTIVITY)){
 				LoadingPanel.getInstance().center();
-				LoadingPanel.getInstance().setLabelTexto(InformationConstants.DELETING);
+				LoadingPanel.getInstance().setLabelTexto(ConstantsInformation.DELETING);
 				bookReaderServiceHolder.deleteReadingActivity(BLan.getReadingActivity().getId(), new AsyncCallback<Void>() {
 					
 					public void onSuccess(Void result) {
@@ -108,7 +108,7 @@ public class SeleccionMenuActivityPopupPanel extends PopupPanel {
 					
 					public void onFailure(Throwable caught) {
 						LoadingPanel.getInstance().hide();
-					Window.alert(ErrorConstants.ERROR_DELETING_READING_ACTIVITY);
+					Window.alert(ConstantsError.ERROR_DELETING_READING_ACTIVITY);
 						
 					}
 				});
@@ -215,7 +215,7 @@ public class SeleccionMenuActivityPopupPanel extends PopupPanel {
 		PanelEdicion.setStyleName("");
 		Button Boton=new Button();
 		PanelEdicion.add(Boton,0,0);
-		Boton.setHTML(InformationConstants.EDIT_BOTTON);
+		Boton.setHTML(ConstantsInformation.EDIT_BOTTON);
 		Boton.addClickHandler(new ClickHandler() {
 			
 			@Override
@@ -235,7 +235,7 @@ public class SeleccionMenuActivityPopupPanel extends PopupPanel {
 		PanelEdicion.setStyleName("BlancoTransparente");
 		Button Boton=new Button();
 		
-		Boton.setHTML(InformationConstants.END_EDIT_BOTTON);
+		Boton.setHTML(ConstantsInformation.END_EDIT_BOTTON);
 		Boton.addClickHandler(new ClickHandler() {
 			
 			@Override
@@ -310,7 +310,7 @@ public class SeleccionMenuActivityPopupPanel extends PopupPanel {
 			else EDIT=EDIT_RESET;
 		}
 		else 
-			Logger.GetLogger().severe(SeleccionMenuActivityPopupPanel.class.toString(), ActualState.getUser().toString(), ErrorConstants.ERROR_LOADING_LANGUAGE_IN  + SELECTION_MENU_ACTIVITY);	
+			Logger.GetLogger().severe(SeleccionMenuActivityPopupPanel.class.toString(), ActualState.getUser().toString(), ConstantsError.ERROR_LOADING_LANGUAGE_IN  + SELECTION_MENU_ACTIVITY);	
 		ParsearFieldsAItemsRESET();
 		}
 	}

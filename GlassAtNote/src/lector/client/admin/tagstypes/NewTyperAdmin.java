@@ -26,7 +26,7 @@ import lector.client.controler.ActualState;
 import lector.client.controler.CalendarNow;
 import lector.client.controler.Constants;
 import lector.client.controler.EntitdadObject;
-import lector.client.controler.ErrorConstants;
+import lector.client.controler.ConstantsError;
 import lector.client.controler.catalogo.client.File;
 import lector.client.controler.catalogo.client.Folder;
 import lector.client.logger.Logger;
@@ -125,10 +125,10 @@ public class NewTyperAdmin extends PopupPanel {
 								Window.alert(((FolderException) caught)   // Se ataja cuando se guarda un folder con un nombre que ya existe en su mismo nivel.
 										.getMessage());
 							} else {
-								Window.alert(ErrorConstants.ERROR_SAVING_ENTRY);
+								Window.alert(ConstantsError.ERROR_SAVING_ENTRY);
 								Logger.GetLogger().severe(this.getClass().getName(), 
 										ActualState.getUser().toString(),
-										ErrorConstants.ERROR_SAVING_ENTRY);
+										ConstantsError.ERROR_SAVING_ENTRY);
 							}
 
 							LoadingPanel.getInstance().hide();

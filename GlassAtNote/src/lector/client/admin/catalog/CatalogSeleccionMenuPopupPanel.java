@@ -6,11 +6,11 @@ import lector.client.book.reader.GWTServiceAsync;
 import lector.client.controler.ActualState;
 import lector.client.controler.CalendarNow;
 import lector.client.controler.Controlador;
-import lector.client.controler.ErrorConstants;
+import lector.client.controler.ConstantsError;
 
 import lector.client.logger.Logger;
 import lector.client.reader.LoadingPanel;
-import lector.client.controler.InformationConstants;
+import lector.client.controler.ConstantsInformation;
 
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
@@ -57,7 +57,7 @@ public class CatalogSeleccionMenuPopupPanel extends PopupPanel {
 			public void onClick(ClickEvent event) {
 				
 				if (Window
-						.confirm(InformationConstants.ARE_YOU_SURE_DELETE_CATALOG
+						.confirm(ConstantsInformation.ARE_YOU_SURE_DELETE_CATALOG
 								+ BLan.getCatalog().getCatalogName()))
 				{
 				hide();
@@ -75,10 +75,10 @@ public class CatalogSeleccionMenuPopupPanel extends PopupPanel {
 					
 					public void onFailure(Throwable caught) {
 						LoadingPanel.getInstance().hide();
-					Window.alert(ErrorConstants.ERROR_DELETING_CATALOG);
+					Window.alert(ConstantsError.ERROR_DELETING_CATALOG);
 					Logger.GetLogger().severe(this.getClass().getName(),
 							ActualState.getUser().toString(),
-							ErrorConstants.ERROR_DELETING_CATALOG);
+							ConstantsError.ERROR_DELETING_CATALOG);
 						
 					}
 				});
