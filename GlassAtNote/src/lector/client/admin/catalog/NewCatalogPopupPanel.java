@@ -36,14 +36,14 @@ public class NewCatalogPopupPanel extends PopupPanel {
 	public static String INSERT_NAME_NEW_CATALOG_LABEL="Insert the name for the new Catalogue and Visibility\r\n";
 	
 	private PopupPanel Me;
-	private AdmintracionCatalogosEntryPoint Father;
+	private CatalogAdmintrationEntryPoint Father;
 	private TextBox textBox;
 	private CheckBox chckbxNewCheckBox;
 	static GWTServiceAsync bookReaderServiceHolder = GWT
 			.create(GWTService.class);
 	private CatalogoClient NuevoC;
 
-	public NewCatalogPopupPanel(AdmintracionCatalogosEntryPoint Fatherin) {
+	public NewCatalogPopupPanel(CatalogAdmintrationEntryPoint Fatherin) {
 		super(true);
 		this.Father = Fatherin;
 		Me = this;

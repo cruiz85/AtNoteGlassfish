@@ -30,11 +30,11 @@ import com.google.gwt.event.dom.client.MouseOverHandler;
 public class CatalogSeleccionMenuPopupPanel extends PopupPanel {
 
 	private CatalogButton BLan;
-	private AdmintracionCatalogosEntryPoint Father;
+	private CatalogAdmintrationEntryPoint Father;
 	static GWTServiceAsync bookReaderServiceHolder = GWT
 	.create(GWTService.class);
 	
-	public CatalogSeleccionMenuPopupPanel(CatalogButton BL, AdmintracionCatalogosEntryPoint Fatherin) {
+	public CatalogSeleccionMenuPopupPanel(CatalogButton BL, CatalogAdmintrationEntryPoint Fatherin) {
 		super(true);
 		BLan=BL;
 		setSize("100%", "100%");

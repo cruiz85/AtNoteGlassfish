@@ -6,6 +6,8 @@ import java.util.List;
 import lector.client.book.reader.GWTService;
 import lector.client.book.reader.GWTServiceAsync;
 import lector.client.controler.ActualState;
+import lector.client.controler.ConstantsError;
+import lector.client.controler.ConstantsInformation;
 import lector.client.controler.Controlador;
 
 import lector.client.reader.LoadingPanel;
@@ -36,20 +38,16 @@ import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.HasVerticalAlignment;
 import com.google.gwt.user.client.ui.Image;
 
-public class AdmintracionCatalogosEntryPoint implements EntryPoint {
+public class CatalogAdmintrationEntryPoint implements EntryPoint {
 
-	private static final String BOOKUPLOADENTRYPOINT = "Book upoload entry point";
+	private static final String ADMINISTRATIONCATALOGENTRYPOINT = "Catalog Administration entry point";
 
 	private static final int NCampos = 7;
-
-	
 	
 	private VerticalPanel Actual;
-	private AdmintracionCatalogosEntryPoint yo;
+	private CatalogAdmintrationEntryPoint yo;
 	private GWTServiceAsync bookReaderServiceHolder = GWT
 	.create(GWTService.class);
-
-	
 
 	private static String CATALOGEMENUITEM="Catalogue Administration";
 	private static String NEWCATALOGMENUITEM = "New";
@@ -135,7 +133,7 @@ public class AdmintracionCatalogosEntryPoint implements EntryPoint {
 		
 
 		LoadingPanel.getInstance().center();
-		LoadingPanel.getInstance().setLabelTexto("Loading...");
+		LoadingPanel.getInstance().setLabelTexto(ConstantsInformation.LOADING);
 bookReaderServiceHolder.getVisbibleCatalogsByProfessorId(ActualState.getUser().getId(), new AsyncCallback<List<CatalogoClient>>() {
 
 	public void onFailure(Throwable caught) {
@@ -213,19 +211,18 @@ bookReaderServiceHolder.getVisbibleCatalogsByProfessorId(ActualState.getUser().g
 		
 	}
 	
-	
+	/**
+	 * Refresca los botones de catalogo asociados
+	 */
 	public void refresh()
 	{
 		Actual.clear();
-//		HorizontalPanel horizontalPanel = new HorizontalPanel();
-//		Actual.add(horizontalPanel);
-//		horizontalPanel.setHeight("20px");
 		LoadingPanel.getInstance().center();
-		LoadingPanel.getInstance().setLabelTexto("Loading...");
+		LoadingPanel.getInstance().setLabelTexto(ConstantsInformation.LOADING);
 bookReaderServiceHolder.getVisbibleCatalogsByProfessorId(ActualState.getUser().getId(), new AsyncCallback<List<CatalogoClient>>() {
 
 	public void onFailure(Throwable caught) {
-		Window.alert("There was a problem encounter while loading the catalogs, please try again later");
+		Window.alert(ConstantsError.ERROR_LOADING_CATALOG_VISIBLE_PROFESOR);
 		LoadingPanel.getInstance().hide();
 		
 	}

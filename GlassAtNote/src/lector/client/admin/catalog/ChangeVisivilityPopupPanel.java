@@ -29,13 +29,13 @@ public class ChangeVisivilityPopupPanel extends PopupPanel {
 
 	private CheckBox chckbxNewCheckBox;
 	private PopupPanel Yo;
-	private AdmintracionCatalogosEntryPoint Father;
+	private CatalogAdmintrationEntryPoint Father;
 	static GWTServiceAsync bookReaderServiceHolder = GWT
 			.create(GWTService.class);
 	private CatalogoClient C;
 
 
-	public ChangeVisivilityPopupPanel(CatalogoClient Cin,AdmintracionCatalogosEntryPoint Fatherin) {
+	public ChangeVisivilityPopupPanel(CatalogoClient Cin,CatalogAdmintrationEntryPoint Fatherin) {
 		super(false);
 		setModal(true);
 		

@@ -10,7 +10,7 @@ import lector.client.admin.admins.AdminAdministratorEntryPoint;
 import lector.client.admin.book.BookAdministrationEntryPoint;
 import lector.client.admin.book.googleAPI.SearcherGoogleEntryPoint;
 import lector.client.admin.book.upload.BookUploadEntryPoint;
-import lector.client.admin.catalog.AdmintracionCatalogosEntryPoint;
+import lector.client.admin.catalog.CatalogAdmintrationEntryPoint;
 import lector.client.admin.export.NewAdminTemplate;
 import lector.client.admin.export.admin.EditTemplate;
 import lector.client.admin.group.Groupadministration;
@@ -48,7 +48,7 @@ public class Controlador implements EntryPoint {
     private static AdminAdministratorEntryPoint AdminAdmin = new AdminAdministratorEntryPoint();
     private static EditordeLenguajes EditorLenguaje = new EditordeLenguajes();
     private static NewAdminLangs AdminLenguaje = new NewAdminLangs();
-    private static AdmintracionCatalogosEntryPoint CatalogAdmin= new AdmintracionCatalogosEntryPoint();
+    private static CatalogAdmintrationEntryPoint CatalogAdmin= new CatalogAdmintrationEntryPoint();
     private static AdminActivitiesEntryPoint Activitys= new AdminActivitiesEntryPoint();
     private static MyActivities MyActivities= new MyActivities();
     private static Browser Browser=new Browser();

@@ -82,6 +82,7 @@ public class ConstantsError {
 	public static String ERROR_DELETING_READING_ACTIVITY="Error Deleting Reading Activity";
 	public static String ERROR_LOADING_USER= "Error Loading user";
 	public static String ERROR_ACTIVITY_DONT_EXIST_OR_ARE_UNREACHEABLE="The activity don't exist or are unreacheable now, may be because was removed recently, if don't, try again";
+	public static String ERROR_LOADING_CATALOG_VISIBLE_PROFESOR="There was a problem encounter while loading the catalogs, please try again later";
 	
 	//Posible deprecated
 	public static String ERROR_LOADING_CATALOG_IN= "Error Loading Catalog in : ";
@@ -97,6 +98,9 @@ public class ConstantsError {
 	public static String ERROR_LOADING_LANGUAGE_IN= "Error_Loading_Language ";
 	public static String CAPTCHA_ENTERED_IS_EMPTY = "Capcha entered in empty";
 	public static String CAPTCHA_ENTERED_IS_WRONG = "incorrect captcha, try again";
+	
+	
+	
 
 	
 }
