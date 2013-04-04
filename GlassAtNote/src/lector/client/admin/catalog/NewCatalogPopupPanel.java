@@ -31,19 +31,19 @@ import com.google.gwt.event.dom.client.MouseOverEvent;
 import com.google.gwt.event.dom.client.MouseOverHandler;
 import com.google.gwt.user.client.ui.CheckBox;
 
-public class newCatalog extends PopupPanel {
+public class NewCatalogPopupPanel extends PopupPanel {
 
 	public static String INSERT_NAME_NEW_CATALOG_LABEL="Insert the name for the new Catalogue and Visibility\r\n";
 	
 	private PopupPanel Me;
-	private NewAdminCatalogs Father;
+	private AdmintracionCatalogosEntryPoint Father;
 	private TextBox textBox;
 	private CheckBox chckbxNewCheckBox;
 	static GWTServiceAsync bookReaderServiceHolder = GWT
 			.create(GWTService.class);
 	private CatalogoClient NuevoC;
 
-	public newCatalog(NewAdminCatalogs Fatherin) {
+	public NewCatalogPopupPanel(AdmintracionCatalogosEntryPoint Fatherin) {
 		super(true);
 		this.Father = Fatherin;
 		Me = this;
@@ -53,7 +53,7 @@ public class newCatalog extends PopupPanel {
 		setWidget(verticalPanel);
 		verticalPanel.setSize("100%", "100%");
 
-		Label lblInsertTheName = new Label(newCatalog.INSERT_NAME_NEW_CATALOG_LABEL);
+		Label lblInsertTheName = new Label(NewCatalogPopupPanel.INSERT_NAME_NEW_CATALOG_LABEL);
 		verticalPanel.add(lblInsertTheName);
 		lblInsertTheName.setSize("100%", "100%");
 

@@ -27,14 +27,14 @@ import com.google.gwt.event.dom.client.MouseOutHandler;
 import com.google.gwt.event.dom.client.MouseOverEvent;
 import com.google.gwt.event.dom.client.MouseOverHandler;
 
-public class SeleccionMenuCatalog extends PopupPanel {
+public class CatalogSeleccionMenuPopupPanel extends PopupPanel {
 
-	private BottonCatalog BLan;
-	private NewAdminCatalogs Father;
+	private CatalogButton BLan;
+	private AdmintracionCatalogosEntryPoint Father;
 	static GWTServiceAsync bookReaderServiceHolder = GWT
 	.create(GWTService.class);
 	
-	public SeleccionMenuCatalog(BottonCatalog BL, NewAdminCatalogs Fatherin) {
+	public CatalogSeleccionMenuPopupPanel(CatalogButton BL, AdmintracionCatalogosEntryPoint Fatherin) {
 		super(true);
 		BLan=BL;
 		setSize("100%", "100%");
@@ -141,7 +141,7 @@ public class SeleccionMenuCatalog extends PopupPanel {
 		btnNewButton_3.addClickHandler(new ClickHandler() {
 			public void onClick(ClickEvent event) {
 				hide();
-				Change_Visivility Nuevo=new Change_Visivility(BLan.getCatalog(), Father);
+				ChangeVisivilityPopupPanel Nuevo=new ChangeVisivilityPopupPanel(BLan.getCatalog(), Father);
 				Nuevo.center();
 			}
 		});

@@ -36,10 +36,10 @@ import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.HasVerticalAlignment;
 import com.google.gwt.user.client.ui.Image;
 
-public class NewAdminCatalogs implements EntryPoint {
+public class AdmintracionCatalogosEntryPoint implements EntryPoint {
 
 	private VerticalPanel Actual;
-	private NewAdminCatalogs yo;
+	private AdmintracionCatalogosEntryPoint yo;
 	private GWTServiceAsync bookReaderServiceHolder = GWT
 	.create(GWTService.class);
 
@@ -66,7 +66,7 @@ public class NewAdminCatalogs implements EntryPoint {
 		
 		MenuItem mntmNewItem = new MenuItem("New item", false, new Command() {
 			public void execute() {
-				newCatalog NL=new newCatalog(yo);
+				NewCatalogPopupPanel NL=new NewCatalogPopupPanel(yo);
 				NL.center();
 				
 			}
@@ -132,14 +132,14 @@ bookReaderServiceHolder.getVisbibleCatalogsByProfessorId(ActualState.getUser().g
 		List<CatalogoClient> CatalogMostrar=result;
 		for (int i = 0; i < CatalogMostrar.size()-1; i++) {
 			CatalogoClient C=CatalogMostrar.get(i);
-			BottonCatalog nue=new BottonCatalog(Actual,new VerticalPanel(),C);
+			CatalogButton nue=new CatalogButton(Actual,new VerticalPanel(),C);
 			nue.setSize("100%", "100%");
 
 			nue.addClickHandler(new ClickHandler() {
 				
 				public void onClick(ClickEvent event) {
-					SeleccionMenuCatalog panel=new SeleccionMenuCatalog((BottonCatalog)event.getSource(),yo);
-					panel.showRelativeTo((BottonCatalog)event.getSource());
+					CatalogSeleccionMenuPopupPanel panel=new CatalogSeleccionMenuPopupPanel((CatalogButton)event.getSource(),yo);
+					panel.showRelativeTo((CatalogButton)event.getSource());
 				}
 			});
 			nue.setStyleName("gwt-ButtonTOP");
@@ -162,14 +162,14 @@ bookReaderServiceHolder.getVisbibleCatalogsByProfessorId(ActualState.getUser().g
 		if (!CatalogMostrar.isEmpty())
 		{
 			CatalogoClient C=CatalogMostrar.get(CatalogMostrar.size()-1);
-			BottonCatalog nue=new BottonCatalog(Actual,new VerticalPanel(),C);
+			CatalogButton nue=new CatalogButton(Actual,new VerticalPanel(),C);
 			nue.setSize("100%", "100%");
 
 			nue.addClickHandler(new ClickHandler() {
 				
 				public void onClick(ClickEvent event) {
-					SeleccionMenuCatalog panel=new SeleccionMenuCatalog((BottonCatalog)event.getSource(),yo);
-					panel.showRelativeTo((BottonCatalog)event.getSource());
+					CatalogSeleccionMenuPopupPanel panel=new CatalogSeleccionMenuPopupPanel((CatalogButton)event.getSource(),yo);
+					panel.showRelativeTo((CatalogButton)event.getSource());
 				}
 			});
 			nue.setStyleName("gwt-ButtonBotton");
@@ -219,14 +219,14 @@ bookReaderServiceHolder.getVisbibleCatalogsByProfessorId(ActualState.getUser().g
 		List<CatalogoClient> CatalogMostrar=result;
 		for (int i = 0; i < CatalogMostrar.size()-1; i++) {
 			CatalogoClient C=CatalogMostrar.get(i);
-			BottonCatalog nue=new BottonCatalog(Actual,new VerticalPanel(),C);
+			CatalogButton nue=new CatalogButton(Actual,new VerticalPanel(),C);
 			nue.setSize("100%", "100%");
 
 			nue.addClickHandler(new ClickHandler() {
 				
 				public void onClick(ClickEvent event) {
-					SeleccionMenuCatalog panel=new SeleccionMenuCatalog((BottonCatalog)event.getSource(),yo);
-					panel.showRelativeTo((BottonCatalog)event.getSource());
+					CatalogSeleccionMenuPopupPanel panel=new CatalogSeleccionMenuPopupPanel((CatalogButton)event.getSource(),yo);
+					panel.showRelativeTo((CatalogButton)event.getSource());
 				}
 			});
 			nue.setStyleName("gwt-ButtonTOP");
@@ -249,14 +249,14 @@ bookReaderServiceHolder.getVisbibleCatalogsByProfessorId(ActualState.getUser().g
 		if (!CatalogMostrar.isEmpty())
 		{
 			CatalogoClient C=CatalogMostrar.get(CatalogMostrar.size()-1);
-			BottonCatalog nue=new BottonCatalog(Actual,new VerticalPanel(),C);
+			CatalogButton nue=new CatalogButton(Actual,new VerticalPanel(),C);
 			nue.setSize("100%", "100%");;
 
 			nue.addClickHandler(new ClickHandler() {
 				
 				public void onClick(ClickEvent event) {
-					SeleccionMenuCatalog panel=new SeleccionMenuCatalog((BottonCatalog)event.getSource(),yo);
-					panel.showRelativeTo((BottonCatalog)event.getSource());
+					CatalogSeleccionMenuPopupPanel panel=new CatalogSeleccionMenuPopupPanel((CatalogButton)event.getSource(),yo);
+					panel.showRelativeTo((CatalogButton)event.getSource());
 				}
 			});
 			nue.setStyleName("gwt-ButtonBotton");

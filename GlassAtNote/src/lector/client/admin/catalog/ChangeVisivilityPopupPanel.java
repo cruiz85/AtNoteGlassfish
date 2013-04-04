@@ -25,17 +25,17 @@ import com.google.gwt.core.client.GWT;
 import com.google.gwt.user.client.ui.MenuItemSeparator;
 
 
-public class Change_Visivility extends PopupPanel {
+public class ChangeVisivilityPopupPanel extends PopupPanel {
 
 	private CheckBox chckbxNewCheckBox;
 	private PopupPanel Yo;
-	private NewAdminCatalogs Father;
+	private AdmintracionCatalogosEntryPoint Father;
 	static GWTServiceAsync bookReaderServiceHolder = GWT
 			.create(GWTService.class);
 	private CatalogoClient C;
 
 
-	public Change_Visivility(CatalogoClient Cin,NewAdminCatalogs Fatherin) {
+	public ChangeVisivilityPopupPanel(CatalogoClient Cin,AdmintracionCatalogosEntryPoint Fatherin) {
 		super(false);
 		setModal(true);
 		
