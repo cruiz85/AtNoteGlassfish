@@ -17,6 +17,7 @@ import lector.client.admin.admins.AdminAdministratorEntryPoint;
 import lector.client.admin.book.BookAdministrationEntryPoint;
 import lector.client.admin.book.googleAPI.SearcherGoogleEntryPoint;
 import lector.client.admin.book.googleAPI.VisorSearcherGoogleBookPopupPanel;
+import lector.client.admin.book.upload.BookUploadEntryPoint;
 import lector.client.admin.generalPanels.PublicPrivatePanelComposite;
 import lector.client.book.reader.GWTService;
 import lector.client.book.reader.GWTServiceAsync;
@@ -114,6 +115,9 @@ public class ActualState {
 		}
 	}
 
+	/**
+	 * Reaccion en cadena de carga de lenguaje a todos los elementos con Lenguaje editable
+	 */
 	private static void ChangeLanguage() {
 		//Reaccion en cadena a todos los elementos con Lenguaje editable
 		//package lector.client.admin;
@@ -133,16 +137,27 @@ public class ActualState {
 		//package lector.client.admin.book.googleAPI;
 		SearcherGoogleEntryPoint.FromFile(ActualLanguage.getSearcherGoogleEntryPointLanguageConfiguration());
 		VisorSearcherGoogleBookPopupPanel.FromFile(ActualLanguage.getVisorSearcherGoogleBookPopupPanelLanguageConfiguration());
+		//package lector.client.admin.book.upload;
+		BookUploadEntryPoint.FromFile(ActualLanguage.getBookUploadEntryPointLanguageConfiguration());
+	
 		//package lector.client.admin.generalPanels;
 		PublicPrivatePanelComposite.FromFile(ActualLanguage.getPublicPrivatePanelCompositeLanguageConfiguration());
 	
 	}
 
+	/**
+	 * Retorna si el lenguaje esta activo
+	 * @return
+	 */
 	public static boolean isLanguageActive() {
 		return ActualLanguage!=null;
 		//return true;
 	}
 
+	/**
+	 * Salva el lenguaje Actual
+	 * @param languageActual Lenguaje a salvar
+	 */
 	public static void saveLanguageActual(Language languageActual) {
 		ActualLanguage=languageActual;
 		LoadingPanel.getInstance().setLabelTexto(

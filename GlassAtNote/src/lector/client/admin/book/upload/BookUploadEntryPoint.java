@@ -7,11 +7,11 @@ import lector.client.controler.Constants;
 import lector.client.controler.Controlador;
 import lector.client.controler.ErrorConstants;
 import lector.client.controler.InformationConstants;
+import lector.client.logger.Logger;
 import lector.client.reader.LoadingPanel;
 
 import com.google.gwt.core.client.EntryPoint;
 import com.google.gwt.core.client.GWT;
-import com.google.gwt.safehtml.shared.SafeHtml;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.RootPanel;
 import com.google.gwt.user.client.ui.TextBox;
@@ -22,6 +22,7 @@ import com.google.gwt.user.client.Command;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.FormPanel.SubmitCompleteEvent;
 import com.google.gwt.user.client.ui.FormPanel.SubmitCompleteHandler;
+import com.google.gwt.user.client.ui.AbsolutePanel;
 import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.HasHorizontalAlignment;
 import com.google.gwt.user.client.ui.HasVerticalAlignment;
@@ -45,32 +46,50 @@ import lector.client.book.reader.GWTService;
 import lector.client.book.reader.GWTServiceAsync;
 import lector.client.book.reader.ImageServiceAsync;
 import lector.client.book.reader.ImageService;
+import lector.share.model.Language;
 import lector.share.model.client.UserClient;
+import com.google.gwt.user.client.ui.DockLayoutPanel;
+import com.google.gwt.dom.client.Style.Unit;
 
 public class BookUploadEntryPoint implements EntryPoint {
 
-private static final String BOOKUPLOADENTRYPOINT = "Book upoload entry point";
-	
-	private static final int NCampos=2;
-	
-	private static final int DecoradorWidth = 2;
-	
+	private static final String BOOKUPLOADENTRYPOINT = "Book upoload entry point";
+
+	private static final int NCampos = 7;
+
 	private static String MENUITEMCLOSE = "Close";
-	private static String RADIO_BUTTON_SIMPLE_LABEL="Simple";
-	private static String RADIO_BUTTON_PDF_LABEL="PDF";
+	private static String RADIO_BUTTON_SIMPLE_LABEL = "Simple";
+	private static String RADIO_BUTTON_PDF_LABEL = "PDF";
 	private static String AUTORLABEL = "Autor:";
 	private static String PUBLISHYEARLABEL = "Published Year:";
 	private static String TITTLELABEL = "Title:";
-	private static String UPLOAD= "Upload";
-	
+	private static String UPLOAD = "Upload";
+
 	private static final String MENUITEMCLOSE_RESET = "Close";
-	private static final String RADIO_BUTTON_SIMPLE_LABEL_RESET="Simple";
-	private static final String RADIO_BUTTON_PDF_LABEL_RESET="PDF";
+	private static final String RADIO_BUTTON_SIMPLE_LABEL_RESET = "Simple";
+	private static final String RADIO_BUTTON_PDF_LABEL_RESET = "PDF";
 	private static final String AUTORLABEL_RESET = "Autor:";
 	private static final String PUBLISHYEARLABEL_RESET = "Published Year:";
 	private static final String TITTLELABEL_RESET = "Title:";
-	private static final String UPLOAD_RESET= "Upload";
+	private static final String UPLOAD_RESET = "Upload";
 	
+	private MenuItem CloseMenuItem;
+	private RadioButton SimpleRadioButton;
+	private RadioButton PDFRadioButton;
+	private Label AuthotLabel;
+	private Label PublishYearLabel;
+	private Label TittleLabel;
+	private Button SubmitButton;
+
+	private TextBox CloseMenuItemTextBox;
+	private TextBox SimpleRadioButtonTextBox;
+	private TextBox PDFRadioButtonTextBox;
+	private TextBox AuthotLabelTextBox;
+	private TextBox PublishYearLabelTextBox;
+	private TextBox TittleLabelTextBox;
+	private TextBox SubmitButtonTextBox;
+	
+
 	static ImageServiceAsync userImageService = GWT.create(ImageService.class);
 	static GWTServiceAsync bookReaderServiceHolder = GWT
 			.create(GWTService.class);
@@ -88,42 +107,100 @@ private static final String BOOKUPLOADENTRYPOINT = "Book upoload entry point";
 	private Button PlusButton;
 	private String Accepnow;
 
-	private MenuItem CloseMenuItem;
-	private RadioButton SimpleRadioButton;
-	private RadioButton PDFRadioButton;
-	private Label AuthotLabel;
-	private Label PublishYearLabel;
-	private Label TittleLabel;
-	private Button SubmitButton;
-
-	private TextBox CloseMenuItemTextBox;
-	private TextBox SimpleRadioButtonTextBox;
-	private TextBox PDFRadioButtonTextBox;
-	private TextBox AuthotLabelTextBox;
-	private TextBox PublishYearLabelTextBox;
-	private TextBox TittleLabelTextBox;
-	private TextBox SubmitButtonTextBox;
-	
-	
-	private static final String AcceptJPG="image/png, image/gif,image/jpeg";
-	private static final String AcceptPDF="application/pdf";
-	private static final String radioButtonGroup="RBGroup";
+	private static final String AcceptJPG = "image/png, image/gif,image/jpeg";
+	private static final String AcceptPDF = "application/pdf";
+	private static final String radioButtonGroup = "RBGroup";
 	private static final String PLUS = "+";
+	private DockLayoutPanel PanelFondoGeneral;
 
-	
+	private AbsolutePanel PanelEdicion;
+	private RootPanel rootPanel;
 
-	
-	
 	/**
 	 * Metodo de entrada que pinta la ventana para el entry point
 	 */
 	public void onModuleLoad() {
 
-		RootPanel RP = RootPanel.get();
-		RP.setSize("100%", "100%");
+		rootPanel = RootPanel.get();
+		rootPanel.setSize("100%", "100%");
+
+		ClickHandler event = new ClickHandler() {
+			public void onClick(ClickEvent event) {
+				if (event.getSource() == PDFRadioButton) {
+					// Poner Panel Simple
+					actualFiles = 1;
+					PanelUploaders.clear();
+					PanelUploaders.add(FU);
+					PanelUploaders.remove(FU1);
+					PanelUploaders.remove(FU2);
+					PanelUploaders.remove(FU3);
+					SubmitButton.setEnabled(false);
+					startNewBlobstoreSessionPDF();
+					PlusButton.setVisible(false);
+					Accepnow = AcceptPDF;
+					putacceptInFileUploaders();
+				} else {
+					actualFiles = 4;
+					PanelUploaders.clear();
+					PanelUploaders.add(FU);
+					PanelUploaders.add(FU1);
+					PanelUploaders.add(FU2);
+					PanelUploaders.add(FU3);
+					SubmitButton.setEnabled(false);
+					startNewBlobstoreSessionSimple();
+					PlusButton.setVisible(true);
+					Accepnow = AcceptJPG;
+					putacceptInFileUploaders();
+				}
+			}
+		};
+
+		Accepnow = AcceptJPG;
+		putacceptInFileUploaders();
+
+		SubmitCompleteHandler Simple = new FormPanel.SubmitCompleteHandler() {
+
+			public void onSubmitComplete(SubmitCompleteEvent event) {
+
+				LoadingPanel.getInstance().hide();
+
+				// startNewBlobstoreSession();
+				String results = event.getResults();
+				results = results.replaceAll("\\<.*?\\>", "");
+				if ((event.getResults() != null) && !(results.isEmpty()))
+					Window.alert(event.getResults());
+				LoadingPanel.getInstance().center();
+				LoadingPanel.getInstance().setLabelTexto(
+						InformationConstants.LOADING);
+				bookReaderServiceHolder.loadUserById(ActualState.getUser()
+						.getId(), new AsyncCallback<UserClient>() {
+
+					public void onSuccess(UserClient result) {
+						ActualState.setUser(result);
+						Controlador.change2BookAdminstrator();
+						// form.reset();
+						LoadingPanel.getInstance().hide();
+
+					}
+
+					public void onFailure(Throwable caught) {
+						Window.alert(ErrorConstants.ERROR_LOAD_FORCE_LOGIN);
+						Window.Location.reload();
+						LoadingPanel.getInstance().hide();
+					}
+				});
+
+			}
+		};
+
+		actualFiles = 4;
+
+		PanelFondoGeneral = new DockLayoutPanel(Unit.PX);
+		rootPanel.add(PanelFondoGeneral);
+		PanelFondoGeneral.setSize("100%", "100%");
 
 		MenuBar menuBar = new MenuBar(false);
-		RP.add(menuBar,0,0);
+		PanelFondoGeneral.addNorth(menuBar, 25.0);
 		menuBar.setWidth("100%");
 
 		CloseMenuItem = new MenuItem(MENUITEMCLOSE, false, new Command() {
@@ -137,8 +214,8 @@ private static final String BOOKUPLOADENTRYPOINT = "Book upoload entry point";
 		CloseMenuItem.setHTML(MENUITEMCLOSE);
 
 		HorizontalPanel horizontalPanel = new HorizontalPanel();
+		PanelFondoGeneral.add(horizontalPanel);
 		horizontalPanel.setStyleName("fondoLogo");
-		RP.add(horizontalPanel,0,25);
 		horizontalPanel.setSize("100%", "100%");
 
 		HorizontalPanel horizontalPanel_1 = new HorizontalPanel();
@@ -172,57 +249,25 @@ private static final String BOOKUPLOADENTRYPOINT = "Book upoload entry point";
 		HorizontalPanel horizontalPanelRadioButton = new HorizontalPanel();
 		verticalPanel_2.add(horizontalPanelRadioButton);
 		horizontalPanelRadioButton.setWidth("100%");
-		
-		SimpleRadioButton =new RadioButton(BookUploadEntryPoint.radioButtonGroup, RADIO_BUTTON_SIMPLE_LABEL);
-		PDFRadioButton =new RadioButton(BookUploadEntryPoint.radioButtonGroup, RADIO_BUTTON_PDF_LABEL);
-		
-		ClickHandler event=new ClickHandler() {
-			public void onClick(ClickEvent event) {
-				if (event.getSource() == PDFRadioButton){
-				//Poner Panel Simple
-					actualFiles=1;
-					PanelUploaders.clear();
-					PanelUploaders.add(FU);
-					PanelUploaders.remove(FU1);
-					PanelUploaders.remove(FU2);
-					PanelUploaders.remove(FU3);
-					SubmitButton.setEnabled(false);
-					startNewBlobstoreSessionPDF();
-					PlusButton.setVisible(false);
-					Accepnow=AcceptPDF;
-					putacceptInFileUploaders();	
-				}
-				else 
-				{
-					actualFiles=4;
-					PanelUploaders.clear();
-					PanelUploaders.add(FU);
-					PanelUploaders.add(FU1);
-					PanelUploaders.add(FU2);
-					PanelUploaders.add(FU3);
-					SubmitButton.setEnabled(false);
-					startNewBlobstoreSessionSimple();
-					PlusButton.setVisible(true);
-					Accepnow=AcceptJPG;
-					putacceptInFileUploaders();
-				}
-			}
-		};
-		
+
+		SimpleRadioButton = new RadioButton(
+				BookUploadEntryPoint.radioButtonGroup,
+				RADIO_BUTTON_SIMPLE_LABEL);
+		PDFRadioButton = new RadioButton(BookUploadEntryPoint.radioButtonGroup,
+				RADIO_BUTTON_PDF_LABEL);
+
 		SimpleRadioButton.addClickHandler(event);
 		PDFRadioButton.addClickHandler(event);
-		
+
 		horizontalPanelRadioButton.add(SimpleRadioButton);
 		horizontalPanelRadioButton.add(PDFRadioButton);
 		SimpleRadioButton.setValue(true);
-		
-		
-		
+
 		HorizontalPanel horizontalPanel_2 = new HorizontalPanel();
 		verticalPanel_2.add(horizontalPanel_2);
 		horizontalPanel_2.setWidth("100%");
-		
-		 AuthotLabel = new Label(AUTORLABEL);
+
+		AuthotLabel = new Label(AUTORLABEL);
 		AuthotLabel.setStyleName("gwt-LabelLoad");
 		horizontalPanel_2.add(AuthotLabel);
 
@@ -308,10 +353,6 @@ private static final String BOOKUPLOADENTRYPOINT = "Book upoload entry point";
 		PanelUploaders.add(FU3);
 		FU3.setSize("100%", "100%");
 
-		Accepnow=AcceptJPG;
-		putacceptInFileUploaders();
-		
-		
 		SimplePanel simplePanel = new SimplePanel();
 		verticalPanel_3.add(simplePanel);
 		simplePanel.setSize("100%", "100%");
@@ -367,8 +408,8 @@ private static final String BOOKUPLOADENTRYPOINT = "Book upoload entry point";
 		SubmitButton.setHTML(UPLOAD);
 		SubmitButton.addClickHandler(new ClickHandler() {
 			public void onClick(ClickEvent event) {
-				
-				//Recorro los uploaders para ver cuales estan llenos
+
+				// Recorro los uploaders para ver cuales estan llenos
 				ArrayList<Widget> Listanueva = new ArrayList<Widget>();
 				for (Widget widget : PanelUploaders) {
 					FileUpload T = (FileUpload) widget;
@@ -377,11 +418,11 @@ private static final String BOOKUPLOADENTRYPOINT = "Book upoload entry point";
 						Listanueva.add(T);
 					}
 				}
-				
-				//Elimino todos
+
+				// Elimino todos
 				PanelUploaders.clear();
-				
-				//Relleno con los que estan llenos y los numero
+
+				// Relleno con los que estan llenos y los numero
 				int i = 0;
 				for (Widget widget : Listanueva) {
 					FileUpload T = (FileUpload) widget;
@@ -389,20 +430,19 @@ private static final String BOOKUPLOADENTRYPOINT = "Book upoload entry point";
 					PanelUploaders.add(widget);
 					i++;
 				}
-				
-				//A subir!!!
-				if ((!Listanueva.isEmpty()) && !TitleTextBox.getText().isEmpty())
-					{
+
+				// A subir!!!
+				if ((!Listanueva.isEmpty())
+						&& !TitleTextBox.getText().isEmpty()) {
 					LoadingPanel.getInstance().center();
-					LoadingPanel.getInstance().setLabelTexto(InformationConstants.UPLOADING);
+					LoadingPanel.getInstance().setLabelTexto(
+							InformationConstants.UPLOADING);
 					form.submit();
-					}
-				else
-					{
+				} else {
 					Window.alert(ErrorConstants.TEXT_NULL_OR_NO_IMAGEN);
 					restarPanelOld();
-					}
-				
+				}
+
 			}
 
 			/**
@@ -410,36 +450,33 @@ private static final String BOOKUPLOADENTRYPOINT = "Book upoload entry point";
 			 */
 			private void restarPanelOld() {
 				PanelUploaders.clear();
-				if (PDFRadioButton.getValue()){
-					//Poner Panel Simple
-						actualFiles=1;
-						PanelUploaders.add(FU);
-						PanelUploaders.remove(FU1);
-						PanelUploaders.remove(FU2);
-						PanelUploaders.remove(FU3);
-						SubmitButton.setEnabled(false);
-						startNewBlobstoreSessionPDF();
-						PlusButton.setVisible(false);
-						Accepnow=AcceptPDF;
-						putacceptInFileUploaders();
-						
-						
-					}
-					else 
-					{
-						actualFiles=4;
-						PanelUploaders.add(FU);
-						PanelUploaders.add(FU1);
-						PanelUploaders.add(FU2);
-						PanelUploaders.add(FU3);
-						SubmitButton.setEnabled(false);
-						startNewBlobstoreSessionSimple();
-						PlusButton.setVisible(true);
-						Accepnow=AcceptJPG;
-						putacceptInFileUploaders();
-						
-					}
-				
+				if (PDFRadioButton.getValue()) {
+					// Poner Panel Simple
+					actualFiles = 1;
+					PanelUploaders.add(FU);
+					PanelUploaders.remove(FU1);
+					PanelUploaders.remove(FU2);
+					PanelUploaders.remove(FU3);
+					SubmitButton.setEnabled(false);
+					startNewBlobstoreSessionPDF();
+					PlusButton.setVisible(false);
+					Accepnow = AcceptPDF;
+					putacceptInFileUploaders();
+
+				} else {
+					actualFiles = 4;
+					PanelUploaders.add(FU);
+					PanelUploaders.add(FU1);
+					PanelUploaders.add(FU2);
+					PanelUploaders.add(FU3);
+					SubmitButton.setEnabled(false);
+					startNewBlobstoreSessionSimple();
+					PlusButton.setVisible(true);
+					Accepnow = AcceptJPG;
+					putacceptInFileUploaders();
+
+				}
+
 			}
 		});
 		verticalPanel_2.add(SubmitButton);
@@ -476,53 +513,13 @@ private static final String BOOKUPLOADENTRYPOINT = "Book upoload entry point";
 		});
 
 		SubmitButton.setStyleName("gwt-ButtonCenter");
-
-		
-		SubmitCompleteHandler Simple = new FormPanel.SubmitCompleteHandler() {
-
-		
-			public void onSubmitComplete(SubmitCompleteEvent event) {
-				
-				LoadingPanel.getInstance().hide();
-				
-				//startNewBlobstoreSession();
-				String results=event.getResults();
-				results=results.replaceAll("\\<.*?\\>","");
-				if ((event.getResults()!=null)&&!(results.isEmpty()))
-					Window.alert(event.getResults());
-				LoadingPanel.getInstance().center();
-				LoadingPanel.getInstance().setLabelTexto(InformationConstants.LOADING);
-				bookReaderServiceHolder.loadUserById(ActualState.getUser()
-						.getId(), new AsyncCallback<UserClient>() {
-
-					public void onSuccess(UserClient result) {
-						ActualState.setUser(result);
-						Controlador.change2BookAdminstrator();
-						// form.reset();
-						LoadingPanel.getInstance().hide();
-
-					}
-
-					public void onFailure(Throwable caught) {
-						Window.alert(ErrorConstants.ERROR_LOAD_FORCE_LOGIN);
-						Window.Location.reload();
-						LoadingPanel.getInstance().hide();
-					}
-				});
-
-			}
-		};
-		
-		
-		
-		
-
-		
-
-		actualFiles = 4;
 		SimpleRadioButton.setValue(true);
 		form.addSubmitCompleteHandler(Simple);
 		startNewBlobstoreSessionSimple();
+		
+		PanelEdicion = new AbsolutePanel();
+		if (ActualState.isLanguageActive())
+			closeEditPanel();
 	}
 
 	/**
@@ -530,32 +527,296 @@ private static final String BOOKUPLOADENTRYPOINT = "Book upoload entry point";
 	 */
 	protected void putacceptInFileUploaders() {
 		for (Widget uploader : PanelUploaders) {
-			((FileUpload)uploader).getElement().setAttribute("accept", Accepnow);
+			((FileUpload) uploader).getElement().setAttribute("accept",
+					Accepnow);
 		}
-		
+
 	}
 
 	/**
 	 * Inicia el sistema para subir archivos para la carga en JPG
 	 */
 	private void startNewBlobstoreSessionSimple() {
-		String A=GWT.getHostPageBaseURL();
-		
-		A=A+"upload";
-				form.setAction(A);
-				SubmitButton.setEnabled(true);
+		String A = GWT.getHostPageBaseURL();
+
+		A = A + "upload";
+		form.setAction(A);
+		SubmitButton.setEnabled(true);
 
 	}
-	
+
 	/**
 	 * Inicial el sistema para subir archivos en PDF
 	 */
 	private void startNewBlobstoreSessionPDF() {
-		String A=GWT.getHostPageBaseURL();
-		
-		A=A+"pdf2pngserverlet";
-				form.setAction(A);
-				SubmitButton.setEnabled(true);
+		String A = GWT.getHostPageBaseURL();
 
+		A = A + "pdf2pngserverlet";
+		form.setAction(A);
+		SubmitButton.setEnabled(true);
+
+	}
+	
+	/**
+	 * Funcion de cerrado del panel de edicion
+	 */
+	public void closeEditPanel() {
+		rootPanel.remove(PanelEdicion);
+		rootPanel.add(PanelEdicion, PanelFondoGeneral.getOffsetWidth()
+				- Constants.TAMANOBOTOBEDITOFF, 0);
+		PanelEdicion.setSize(Constants.TAMANOBOTOBEDITOFF+Constants.PX, "50px");
+		PanelEdicion.clear();
+		PanelEdicion.setStyleName("");
+		Button Boton = new Button();
+		PanelEdicion.add(Boton, 0, 0);
+		Boton.setHTML(InformationConstants.EDIT_BOTTON);
+		Boton.addClickHandler(new ClickHandler() {
+
+			@Override
+			public void onClick(ClickEvent event) {
+				OpenEditPanel();
+
+			}
+		});
+
+	}
+
+	/**
+	 * Funcion de apertura del panel de edicion
+	 */
+	public void OpenEditPanel() {
+		rootPanel.remove(PanelEdicion);
+		rootPanel.add(PanelEdicion, 0, 0);
+		PanelEdicion.setSize(PanelFondoGeneral.getOffsetWidth() + "px",
+				PanelFondoGeneral.getOffsetHeight() + "px");
+		PanelEdicion.clear();
+		PanelEdicion.setStyleName("BlancoTransparente");
+		Button Boton = new Button();
+		PanelEdicion.add(Boton, PanelEdicion.getOffsetWidth()
+				- Constants.TAMANOBOTOBEDITON, 0);
+		Boton.setHTML(InformationConstants.END_EDIT_BOTTON);
+		Boton.addClickHandler(new ClickHandler() {
+
+			@Override
+			public void onClick(ClickEvent event) {
+				closeEditPanel();
+
+				if (!CloseMenuItemTextBox.getText().isEmpty())
+					MENUITEMCLOSE = CloseMenuItemTextBox
+							.getText();
+				else
+					MENUITEMCLOSE = MENUITEMCLOSE_RESET;
+
+				if (!SimpleRadioButtonTextBox.getText().isEmpty())
+					RADIO_BUTTON_SIMPLE_LABEL = SimpleRadioButtonTextBox.getText();
+				else
+					RADIO_BUTTON_SIMPLE_LABEL = RADIO_BUTTON_SIMPLE_LABEL_RESET;
+
+				if (!PDFRadioButtonTextBox.getText().isEmpty())
+					RADIO_BUTTON_PDF_LABEL = PDFRadioButtonTextBox.getText();
+				else
+					RADIO_BUTTON_PDF_LABEL = RADIO_BUTTON_PDF_LABEL_RESET;
+
+				if (!AuthotLabelTextBox.getText().isEmpty())
+					AUTORLABEL = AuthotLabelTextBox
+							.getText();
+				else
+					AUTORLABEL = AUTORLABEL_RESET;
+				
+				if (!PublishYearLabelTextBox.getText().isEmpty())
+					PUBLISHYEARLABEL = PublishYearLabelTextBox
+							.getText();
+				else
+					PUBLISHYEARLABEL = PUBLISHYEARLABEL_RESET;
+
+				if (!TittleLabelTextBox.getText().isEmpty())
+					TITTLELABEL = TittleLabelTextBox
+							.getText();
+				else
+					TITTLELABEL = TITTLELABEL_RESET;
+
+				if (!SubmitButtonTextBox.getText().isEmpty())
+					UPLOAD = SubmitButtonTextBox
+							.getText();
+				else
+					UPLOAD = UPLOAD_RESET;
+
+
+				ParsearFieldsAItems();
+				SaveChages();
+			}
+		});
+
+		CloseMenuItemTextBox = new TextBox();
+		CloseMenuItemTextBox.setText(MENUITEMCLOSE);
+		CloseMenuItemTextBox.setSize(
+				CloseMenuItem.getOffsetWidth() + "px",
+				CloseMenuItem.getOffsetHeight() + "px");
+		PanelEdicion.add(CloseMenuItemTextBox,
+				CloseMenuItem.getAbsoluteLeft(),
+				CloseMenuItem.getAbsoluteTop());
+
+		SimpleRadioButtonTextBox = new TextBox();
+		SimpleRadioButtonTextBox.setText(RADIO_BUTTON_SIMPLE_LABEL);
+		SimpleRadioButtonTextBox.setSize(SimpleRadioButton.getOffsetWidth()
+				+ "px", SimpleRadioButton.getOffsetHeight() + "px");
+		PanelEdicion.add(SimpleRadioButtonTextBox,
+				SimpleRadioButton.getAbsoluteLeft(),
+				SimpleRadioButton.getAbsoluteTop());
+
+		PDFRadioButtonTextBox = new TextBox();
+		PDFRadioButtonTextBox.setText(RADIO_BUTTON_PDF_LABEL);
+		PDFRadioButtonTextBox.setSize(
+				PDFRadioButton.getOffsetWidth() + "px",
+				PDFRadioButton.getOffsetHeight() + "px");
+		PanelEdicion.add(PDFRadioButtonTextBox,
+				PDFRadioButton.getAbsoluteLeft(),
+				PDFRadioButton.getAbsoluteTop());
+
+		AuthotLabelTextBox = new TextBox();
+		AuthotLabelTextBox.setText(AUTORLABEL);
+		AuthotLabelTextBox.setSize(
+				AuthotLabel.getOffsetWidth() + "px",
+				AuthotLabel.getOffsetHeight() + "px");
+		PanelEdicion.add(AuthotLabelTextBox,
+				AuthotLabel.getAbsoluteLeft(),
+				AuthotLabel.getAbsoluteTop());
+		
+		PublishYearLabelTextBox = new TextBox();
+		PublishYearLabelTextBox.setText(PUBLISHYEARLABEL);
+		PublishYearLabelTextBox.setSize(
+				PublishYearLabel.getOffsetWidth() + "px",
+				PublishYearLabel.getOffsetHeight() + "px");
+		PanelEdicion.add(		PublishYearLabelTextBox,
+				PublishYearLabel.getAbsoluteLeft(),
+				PublishYearLabel.getAbsoluteTop());
+		
+		TittleLabelTextBox = new TextBox();
+		TittleLabelTextBox.setText(TITTLELABEL);
+		TittleLabelTextBox.setSize(
+				TittleLabel.getOffsetWidth() + "px",
+				TittleLabel.getOffsetHeight() + "px");
+		PanelEdicion.add(TittleLabelTextBox,
+				TittleLabel.getAbsoluteLeft(),
+				TittleLabel.getAbsoluteTop());
+		
+		SubmitButtonTextBox = new TextBox();
+		SubmitButtonTextBox.setText(UPLOAD);
+		SubmitButtonTextBox.setSize(
+				SubmitButton.getOffsetWidth() + "px",
+				SubmitButton.getOffsetHeight() + "px");
+		PanelEdicion.add(SubmitButtonTextBox,
+				SubmitButton.getAbsoluteLeft(),
+				SubmitButton.getAbsoluteTop());
+
+
+	}
+
+	/**
+	 * Guarda los cambios en el lenguaje actual
+	 */
+	protected void SaveChages() {
+		Language LanguageActual = ActualState.getActualLanguage();
+		String BookUploadEntryPointLanguageConfiguration = toFile();
+		LanguageActual
+				.setBookUploadEntryPointLanguageConfiguration(BookUploadEntryPointLanguageConfiguration);
+		ActualState.saveLanguageActual(LanguageActual);
+	}
+
+	/**
+	 * Parsea los elementos con el texto actual
+	 */
+	public void ParsearFieldsAItems() {
+		CloseMenuItem.setHTML(MENUITEMCLOSE);
+		SimpleRadioButton.setHTML(RADIO_BUTTON_SIMPLE_LABEL);
+		PDFRadioButton.setText(RADIO_BUTTON_PDF_LABEL);
+		AuthotLabel.setText(AUTORLABEL);
+		PublishYearLabel.setText(PUBLISHYEARLABEL);
+		TittleLabel.setText(TITTLELABEL);
+		SubmitButton.setText(UPLOAD);
+
+	}
+
+	/**
+	 * Obtiene el texto a salvar de las etiquetras en el proceso de salvado en el lenguaje
+	 * @return Texto con las etiquetas a salvar
+	 */
+	public static String toFile() {
+		StringBuffer SB = new StringBuffer();
+		SB.append(MENUITEMCLOSE + "\r\n");
+		SB.append(RADIO_BUTTON_SIMPLE_LABEL + "\r\n");
+		SB.append(RADIO_BUTTON_PDF_LABEL + "\r\n");
+		SB.append(AUTORLABEL + "\r\n");
+		SB.append(PUBLISHYEARLABEL + "\r\n");
+		SB.append(TITTLELABEL + "\r\n");
+		SB.append(UPLOAD + "\r\n");
+		return SB.toString();
+	}
+
+	/**
+	 * Carga el texto entrada en las etiquetas del sistema
+	 * @param Entrada Texto que entrara en las etiquetas
+	 */
+	public static void FromFile(String Entrada) {
+		if (Entrada.length()==0) 
+			ParsearFieldsAItemsRESET();
+		else
+		{
+		String[] Lista = Entrada.split("\r\n");
+		if (Lista.length >= NCampos) {
+			if (!Lista[0].isEmpty())
+				MENUITEMCLOSE = Lista[0];
+			else
+				MENUITEMCLOSE = MENUITEMCLOSE_RESET;
+			if (!Lista[1].isEmpty())
+				RADIO_BUTTON_SIMPLE_LABEL = Lista[1];
+			else
+				RADIO_BUTTON_SIMPLE_LABEL = RADIO_BUTTON_SIMPLE_LABEL_RESET;
+			if (!Lista[2].isEmpty())
+				RADIO_BUTTON_PDF_LABEL = Lista[2];
+			else
+				RADIO_BUTTON_PDF_LABEL = RADIO_BUTTON_PDF_LABEL_RESET;
+			if (!Lista[3].isEmpty())
+				AUTORLABEL = Lista[3];
+			else
+				AUTORLABEL = AUTORLABEL_RESET;
+			
+			if (!Lista[4].isEmpty())
+				PUBLISHYEARLABEL = Lista[4];
+			else
+				PUBLISHYEARLABEL = PUBLISHYEARLABEL_RESET;
+			
+			if (!Lista[5].isEmpty())
+				TITTLELABEL = Lista[5];
+			else
+				TITTLELABEL = TITTLELABEL_RESET;
+			
+			if (!Lista[6].isEmpty())
+				UPLOAD = Lista[6];
+			else
+				UPLOAD = UPLOAD_RESET;
+			
+		} else
+			Logger.GetLogger().severe(
+					BookUploadEntryPoint.class.toString(),
+					ActualState.getUser().toString(),
+					ErrorConstants.ERROR_LOADING_LANGUAGE_IN
+							+ BOOKUPLOADENTRYPOINT);
+		ParsearFieldsAItemsRESET();
+		}
+	}
+	
+	/**
+	 * Parsea los elementos a default en caso de error.
+	 */
+	private static void ParsearFieldsAItemsRESET() {
+		MENUITEMCLOSE = MENUITEMCLOSE_RESET;
+		RADIO_BUTTON_SIMPLE_LABEL = RADIO_BUTTON_SIMPLE_LABEL_RESET;
+		RADIO_BUTTON_PDF_LABEL = RADIO_BUTTON_PDF_LABEL_RESET;
+		AUTORLABEL = AUTORLABEL_RESET;
+		PUBLISHYEARLABEL = PUBLISHYEARLABEL_RESET;
+		TITTLELABEL = TITTLELABEL_RESET;
+		UPLOAD = UPLOAD_RESET;
+		
 	}
 }
