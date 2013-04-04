@@ -61,29 +61,49 @@ private static final String BOOKUPLOADENTRYPOINT = "Book upoload entry point";
 	private static String AUTORLABEL = "Autor:";
 	private static String PUBLISHYEARLABEL = "Published Year:";
 	private static String TITTLELABEL = "Title:";
-	
-	
 	private static String UPLOAD= "Upload";
+	
+	private static final String MENUITEMCLOSE_RESET = "Close";
+	private static final String RADIO_BUTTON_SIMPLE_LABEL_RESET="Simple";
+	private static final String RADIO_BUTTON_PDF_LABEL_RESET="PDF";
+	private static final String AUTORLABEL_RESET = "Autor:";
+	private static final String PUBLISHYEARLABEL_RESET = "Published Year:";
+	private static final String TITTLELABEL_RESET = "Title:";
+	private static final String UPLOAD_RESET= "Upload";
 	
 	static ImageServiceAsync userImageService = GWT.create(ImageService.class);
 	static GWTServiceAsync bookReaderServiceHolder = GWT
 			.create(GWTService.class);
-	private TextBox author;
-	private TextBox publishedYear;
-	private TextBox title;
+	private TextBox AuthorTextBox;
+	private TextBox PublishedYearTextBox;
+	private TextBox TitleTextBox;
 	private TextBox userApp;
 	private int actualFiles;
 	private VerticalPanel PanelUploaders;
 	private FormPanel form;
 	private FileUpload FU;
-	private Button submitButton;
 	private FileUpload FU1;
 	private FileUpload FU2;
 	private FileUpload FU3;
-	private RadioButton SimpleRadioButton;
-	private RadioButton PDFRadioButton;
 	private Button PlusButton;
 	private String Accepnow;
+
+	private MenuItem CloseMenuItem;
+	private RadioButton SimpleRadioButton;
+	private RadioButton PDFRadioButton;
+	private Label AuthotLabel;
+	private Label PublishYearLabel;
+	private Label TittleLabel;
+	private Button SubmitButton;
+
+	private TextBox CloseMenuItemTextBox;
+	private TextBox SimpleRadioButtonTextBox;
+	private TextBox PDFRadioButtonTextBox;
+	private TextBox AuthotLabelTextBox;
+	private TextBox PublishYearLabelTextBox;
+	private TextBox TittleLabelTextBox;
+	private TextBox SubmitButtonTextBox;
+	
 	
 	private static final String AcceptJPG="image/png, image/gif,image/jpeg";
 	private static final String AcceptPDF="application/pdf";
@@ -106,14 +126,15 @@ private static final String BOOKUPLOADENTRYPOINT = "Book upoload entry point";
 		RP.add(menuBar,0,0);
 		menuBar.setWidth("100%");
 
-		MenuItem mntmNewItem = new MenuItem(MENUITEMCLOSE, false, new Command() {
+		CloseMenuItem = new MenuItem(MENUITEMCLOSE, false, new Command() {
 
 			public void execute() {
 				Controlador.change2BookAdminstrator();
 
 			}
 		});
-		menuBar.addItem(mntmNewItem);
+		menuBar.addItem(CloseMenuItem);
+		CloseMenuItem.setHTML(MENUITEMCLOSE);
 
 		HorizontalPanel horizontalPanel = new HorizontalPanel();
 		horizontalPanel.setStyleName("fondoLogo");
@@ -165,7 +186,7 @@ private static final String BOOKUPLOADENTRYPOINT = "Book upoload entry point";
 					PanelUploaders.remove(FU1);
 					PanelUploaders.remove(FU2);
 					PanelUploaders.remove(FU3);
-					submitButton.setEnabled(false);
+					SubmitButton.setEnabled(false);
 					startNewBlobstoreSessionPDF();
 					PlusButton.setVisible(false);
 					Accepnow=AcceptPDF;
@@ -179,7 +200,7 @@ private static final String BOOKUPLOADENTRYPOINT = "Book upoload entry point";
 					PanelUploaders.add(FU1);
 					PanelUploaders.add(FU2);
 					PanelUploaders.add(FU3);
-					submitButton.setEnabled(false);
+					SubmitButton.setEnabled(false);
 					startNewBlobstoreSessionSimple();
 					PlusButton.setVisible(true);
 					Accepnow=AcceptJPG;
@@ -201,9 +222,9 @@ private static final String BOOKUPLOADENTRYPOINT = "Book upoload entry point";
 		verticalPanel_2.add(horizontalPanel_2);
 		horizontalPanel_2.setWidth("100%");
 		
-		Label lblAutor = new Label(AUTORLABEL);
-		lblAutor.setStyleName("gwt-LabelLoad");
-		horizontalPanel_2.add(lblAutor);
+		 AuthotLabel = new Label(AUTORLABEL);
+		AuthotLabel.setStyleName("gwt-LabelLoad");
+		horizontalPanel_2.add(AuthotLabel);
 
 		HorizontalPanel horizontalPanel_3 = new HorizontalPanel();
 		horizontalPanel_3.setSpacing(1);
@@ -212,44 +233,44 @@ private static final String BOOKUPLOADENTRYPOINT = "Book upoload entry point";
 		verticalPanel_2.add(horizontalPanel_3);
 		horizontalPanel_3.setWidth("100%");
 
-		author = new TextBox();
-		horizontalPanel_3.add(author);
-		author.setWidth("393px");
-		author.setName(Constants.BLOB_AUTHOR);
+		AuthorTextBox = new TextBox();
+		horizontalPanel_3.add(AuthorTextBox);
+		AuthorTextBox.setWidth("393px");
+		AuthorTextBox.setName(Constants.BLOB_AUTHOR);
 
 		HorizontalPanel horizontalPanel_5 = new HorizontalPanel();
 		verticalPanel_2.add(horizontalPanel_5);
 
-		Label lblNewLabel = new Label(PUBLISHYEARLABEL);
-		lblNewLabel.setStyleName("gwt-LabelLoad");
-		horizontalPanel_5.add(lblNewLabel);
+		PublishYearLabel = new Label(PUBLISHYEARLABEL);
+		PublishYearLabel.setStyleName("gwt-LabelLoad");
+		horizontalPanel_5.add(PublishYearLabel);
 
 		HorizontalPanel horizontalPanel_6 = new HorizontalPanel();
 		horizontalPanel_6
 				.setHorizontalAlignment(HasHorizontalAlignment.ALIGN_RIGHT);
 		verticalPanel_2.add(horizontalPanel_6);
 		horizontalPanel_6.setWidth("100%");
-		publishedYear = new TextBox();
-		horizontalPanel_6.add(publishedYear);
-		publishedYear.setWidth("393px");
-		publishedYear.setName(Constants.BLOB_PUBLISHED_YEAR);
+		PublishedYearTextBox = new TextBox();
+		horizontalPanel_6.add(PublishedYearTextBox);
+		PublishedYearTextBox.setWidth("393px");
+		PublishedYearTextBox.setName(Constants.BLOB_PUBLISHED_YEAR);
 
 		HorizontalPanel horizontalPanel_8 = new HorizontalPanel();
 		verticalPanel_2.add(horizontalPanel_8);
 
-		Label lblNewLabel_1 = new Label(TITTLELABEL);
-		lblNewLabel_1.setStyleName("gwt-LabelLoad");
-		horizontalPanel_8.add(lblNewLabel_1);
+		TittleLabel = new Label(TITTLELABEL);
+		TittleLabel.setStyleName("gwt-LabelLoad");
+		horizontalPanel_8.add(TittleLabel);
 
 		HorizontalPanel horizontalPanel_7 = new HorizontalPanel();
 		horizontalPanel_7
 				.setHorizontalAlignment(HasHorizontalAlignment.ALIGN_RIGHT);
 		verticalPanel_2.add(horizontalPanel_7);
 		horizontalPanel_7.setWidth("100%");
-		title = new TextBox();
-		horizontalPanel_7.add(title);
-		title.setWidth("393px");
-		title.setName(Constants.BLOB_TITLE);
+		TitleTextBox = new TextBox();
+		horizontalPanel_7.add(TitleTextBox);
+		TitleTextBox.setWidth("393px");
+		TitleTextBox.setName(Constants.BLOB_TITLE);
 
 		userApp = new TextBox();
 		verticalPanel_2.add(userApp);
@@ -296,6 +317,7 @@ private static final String BOOKUPLOADENTRYPOINT = "Book upoload entry point";
 		simplePanel.setSize("100%", "100%");
 
 		PlusButton = new Button(PLUS);
+		PlusButton.setHTML(PLUS);
 		simplePanel.setWidget(PlusButton);
 		PlusButton.addClickHandler(new ClickHandler() {
 			public void onClick(ClickEvent event) {
@@ -341,8 +363,9 @@ private static final String BOOKUPLOADENTRYPOINT = "Book upoload entry point";
 
 		PlusButton.setStyleName("gwt-ButtonCenter");
 
-		submitButton = new Button(UPLOAD);
-		submitButton.addClickHandler(new ClickHandler() {
+		SubmitButton = new Button(UPLOAD);
+		SubmitButton.setHTML(UPLOAD);
+		SubmitButton.addClickHandler(new ClickHandler() {
 			public void onClick(ClickEvent event) {
 				
 				//Recorro los uploaders para ver cuales estan llenos
@@ -368,7 +391,7 @@ private static final String BOOKUPLOADENTRYPOINT = "Book upoload entry point";
 				}
 				
 				//A subir!!!
-				if ((!Listanueva.isEmpty()) && !title.getText().isEmpty())
+				if ((!Listanueva.isEmpty()) && !TitleTextBox.getText().isEmpty())
 					{
 					LoadingPanel.getInstance().center();
 					LoadingPanel.getInstance().setLabelTexto(InformationConstants.UPLOADING);
@@ -394,7 +417,7 @@ private static final String BOOKUPLOADENTRYPOINT = "Book upoload entry point";
 						PanelUploaders.remove(FU1);
 						PanelUploaders.remove(FU2);
 						PanelUploaders.remove(FU3);
-						submitButton.setEnabled(false);
+						SubmitButton.setEnabled(false);
 						startNewBlobstoreSessionPDF();
 						PlusButton.setVisible(false);
 						Accepnow=AcceptPDF;
@@ -409,7 +432,7 @@ private static final String BOOKUPLOADENTRYPOINT = "Book upoload entry point";
 						PanelUploaders.add(FU1);
 						PanelUploaders.add(FU2);
 						PanelUploaders.add(FU3);
-						submitButton.setEnabled(false);
+						SubmitButton.setEnabled(false);
 						startNewBlobstoreSessionSimple();
 						PlusButton.setVisible(true);
 						Accepnow=AcceptJPG;
@@ -419,10 +442,10 @@ private static final String BOOKUPLOADENTRYPOINT = "Book upoload entry point";
 				
 			}
 		});
-		verticalPanel_2.add(submitButton);
-		submitButton.setWidth("100%");
-		submitButton.setEnabled(false);
-		submitButton.addClickHandler(new ClickHandler() {
+		verticalPanel_2.add(SubmitButton);
+		SubmitButton.setWidth("100%");
+		SubmitButton.setEnabled(false);
+		SubmitButton.addClickHandler(new ClickHandler() {
 
 			public void onClick(ClickEvent event) {
 				((Button) event.getSource()).setStyleName("gwt-ButtonCenter");
@@ -430,20 +453,20 @@ private static final String BOOKUPLOADENTRYPOINT = "Book upoload entry point";
 			}
 		});
 
-		submitButton.addMouseDownHandler(new MouseDownHandler() {
+		SubmitButton.addMouseDownHandler(new MouseDownHandler() {
 			public void onMouseDown(MouseDownEvent event) {
 				((Button) event.getSource())
 						.setStyleName("gwt-ButtonCenterPush");
 			}
 		});
 
-		submitButton.addMouseOutHandler(new MouseOutHandler() {
+		SubmitButton.addMouseOutHandler(new MouseOutHandler() {
 			public void onMouseOut(MouseOutEvent event) {
 				((Button) event.getSource()).setStyleName("gwt-ButtonCenter");
 			}
 		});
 
-		submitButton.addMouseOverHandler(new MouseOverHandler() {
+		SubmitButton.addMouseOverHandler(new MouseOverHandler() {
 			public void onMouseOver(MouseOverEvent event) {
 
 				((Button) event.getSource())
@@ -452,7 +475,7 @@ private static final String BOOKUPLOADENTRYPOINT = "Book upoload entry point";
 			}
 		});
 
-		submitButton.setStyleName("gwt-ButtonCenter");
+		SubmitButton.setStyleName("gwt-ButtonCenter");
 
 		
 		SubmitCompleteHandler Simple = new FormPanel.SubmitCompleteHandler() {
@@ -520,7 +543,7 @@ private static final String BOOKUPLOADENTRYPOINT = "Book upoload entry point";
 		
 		A=A+"upload";
 				form.setAction(A);
-				submitButton.setEnabled(true);
+				SubmitButton.setEnabled(true);
 
 	}
 	
@@ -532,7 +555,7 @@ private static final String BOOKUPLOADENTRYPOINT = "Book upoload entry point";
 		
 		A=A+"pdf2pngserverlet";
 				form.setAction(A);
-				submitButton.setEnabled(true);
+				SubmitButton.setEnabled(true);
 
 	}
 }
