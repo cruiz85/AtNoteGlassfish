@@ -155,8 +155,7 @@ public class BookUploadEntryPoint implements EntryPoint {
 			}
 		};
 
-		Accepnow = AcceptJPG;
-		putacceptInFileUploaders();
+		
 
 		SubmitCompleteHandler Simple = new FormPanel.SubmitCompleteHandler() {
 
@@ -196,7 +195,7 @@ public class BookUploadEntryPoint implements EntryPoint {
 		actualFiles = 4;
 
 		PanelFondoGeneral = new DockLayoutPanel(Unit.PX);
-		rootPanel.add(PanelFondoGeneral);
+		rootPanel.add(PanelFondoGeneral,0,0);
 		PanelFondoGeneral.setSize("100%", "100%");
 
 		MenuBar menuBar = new MenuBar(false);
@@ -516,6 +515,9 @@ public class BookUploadEntryPoint implements EntryPoint {
 		SimpleRadioButton.setValue(true);
 		form.addSubmitCompleteHandler(Simple);
 		startNewBlobstoreSessionSimple();
+		
+		Accepnow = AcceptJPG;
+		putacceptInFileUploaders();
 		
 		PanelEdicion = new AbsolutePanel();
 		if (ActualState.isLanguageActive())

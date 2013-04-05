@@ -37,6 +37,8 @@ import com.google.gwt.user.client.ui.HasHorizontalAlignment;
 import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.HasVerticalAlignment;
 import com.google.gwt.user.client.ui.Image;
+import com.google.gwt.user.client.ui.DockLayoutPanel;
+import com.google.gwt.dom.client.Style.Unit;
 
 public class CatalogAdmintrationEntryPoint implements EntryPoint {
 
@@ -58,15 +60,16 @@ public class CatalogAdmintrationEntryPoint implements EntryPoint {
 	 */
 	public void onModuleLoad() {
 		RootPanel RootTXOriginal = RootPanel.get();
-		RootPanel RootMenu = RootPanel.get("Menu");
-		RootTXOriginal.setSize("100%", "100%");
-		RootMenu.setStyleName("Root");
-		RootTXOriginal.setStyleName("Root");
+		RootTXOriginal.setSize("", "");
 		
 		yo=this;
 		
+		DockLayoutPanel dockLayoutPanel = new DockLayoutPanel(Unit.PX);
+		RootTXOriginal.add(dockLayoutPanel,0,0);
+		dockLayoutPanel.setSize("100%", "100%");
+		
 		MenuBar menuBar = new MenuBar(false);
-		RootMenu.add(menuBar);
+		dockLayoutPanel.addNorth(menuBar, 25.0);
 		menuBar.setWidth("100%");
 		
 		MenuItem menuItem = new MenuItem(CATALOGEMENUITEM, false, (Command) null);
@@ -99,10 +102,10 @@ public class CatalogAdmintrationEntryPoint implements EntryPoint {
 		menuBar.addItem(mntmBack);
 		
 		VerticalPanel verticalPanel = new VerticalPanel();
+		dockLayoutPanel.add(verticalPanel);
 		verticalPanel.setStyleName("fondoLogo");
 		verticalPanel.setHorizontalAlignment(HasHorizontalAlignment.ALIGN_CENTER);
-		RootTXOriginal.add(verticalPanel,0,25);
-		verticalPanel.setSize("100%", "96%");
+		verticalPanel.setSize("100%", "100%");
 		
 		HorizontalPanel horizontalPanel = new HorizontalPanel();
 		horizontalPanel.setSpacing(15);
