@@ -4,7 +4,6 @@ import lector.client.admin.tagstypes.EditorTagsAndTypes;
 import lector.client.book.reader.GWTService;
 import lector.client.book.reader.GWTServiceAsync;
 import lector.client.controler.ActualState;
-import lector.client.controler.CalendarNow;
 import lector.client.controler.Controlador;
 import lector.client.controler.ConstantsError;
 
@@ -15,6 +14,7 @@ import lector.client.controler.ConstantsInformation;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.PopupPanel;
+import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.VerticalPanel;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.core.client.GWT;
@@ -29,6 +29,26 @@ import com.google.gwt.event.dom.client.MouseOverHandler;
 
 public class CatalogSeleccionMenuPopupPanel extends PopupPanel {
 
+	private static String CHANGE_VISIBILITYBUTTON = "Change Visibility";
+	private static String EDITBUTTON = "Edit";
+	private static String SELECTBUTTON = "Select";
+	private static String DELETEBUTTON = "Delete";
+	
+	private static final String CHANGE_VISIBILITYBUTTON_RESET = "Change Visibility";
+	private static final String EDITBUTTON_RESET = "Edit";
+	private static final String SELECTBUTTON_RESET = "Select";
+	private static final String DELETEBUTTON_RESET = "Delete";
+	
+	private Button SelectButton;
+	private Button Deletebutton;
+	private Button EditButton;
+	private Button ChangeVisivilityButton;
+	
+	private TextBox SelectButtonTextBox;
+	private TextBox DeletebuttonTextBox;
+	private TextBox EditButtonTextBox;
+	private TextBox ChangeVisivilityButtonTextBox;
+	
 	private CatalogButton BLan;
 	private CatalogAdmintrationEntryPoint Father;
 	static GWTServiceAsync bookReaderServiceHolder = GWT
@@ -43,17 +63,17 @@ public class CatalogSeleccionMenuPopupPanel extends PopupPanel {
 		setWidget(verticalPanel);
 		verticalPanel.setSize("100%", "100%");
 		
-		Button btnNewButton = new Button("Select");
-		btnNewButton.addClickHandler(new ClickHandler() {
+		SelectButton = new Button(SELECTBUTTON);
+		SelectButton.addClickHandler(new ClickHandler() {
 			public void onClick(ClickEvent event) {
 				BLan.swap();
 				hide();
 			}
 		});
-		btnNewButton.setSize("100%", "100%");
+		SelectButton.setSize("100%", "100%");
 		
-		Button btnNewButton_1 = new Button("Delete");
-		btnNewButton_1.addClickHandler(new ClickHandler() {
+		Deletebutton = new Button(DELETEBUTTON);
+		Deletebutton.addClickHandler(new ClickHandler() {
 			public void onClick(ClickEvent event) {
 				
 				if (Window
@@ -62,7 +82,7 @@ public class CatalogSeleccionMenuPopupPanel extends PopupPanel {
 				{
 				hide();
 				LoadingPanel.getInstance().center();
-				LoadingPanel.getInstance().setLabelTexto("Deleting...");
+				LoadingPanel.getInstance().setLabelTexto(ConstantsInformation.DELETING);
 				bookReaderServiceHolder.deleteCatalog(BLan.getCatalog().getId(), new AsyncCallback<Void>() {
 					
 					public void onSuccess(Void result) {
@@ -86,27 +106,27 @@ public class CatalogSeleccionMenuPopupPanel extends PopupPanel {
 				}
 			}
 		});
-		btnNewButton_1.addMouseDownHandler(new MouseDownHandler() {
+		Deletebutton.addMouseDownHandler(new MouseDownHandler() {
 			public void onMouseDown(MouseDownEvent event) {
 				((Button)event.getSource()).setStyleName("gwt-ButtonPush");
 			}
 		});
-		btnNewButton_1.addMouseOutHandler(new MouseOutHandler() {
+		Deletebutton.addMouseOutHandler(new MouseOutHandler() {
 			public void onMouseOut(MouseOutEvent event) {
 				((Button)event.getSource()).setStyleName("gwt-ButtonTOP");
 			}
 		});
-		btnNewButton_1.addMouseOverHandler(new MouseOverHandler() {
+		Deletebutton.addMouseOverHandler(new MouseOverHandler() {
 			public void onMouseOver(MouseOverEvent event) {
 				((Button)event.getSource()).setStyleName("gwt-ButtonTOPOver");
 			}
 		});
-		btnNewButton_1.setStyleName("gwt-ButtonTOP");
-		verticalPanel.add(btnNewButton_1);
-		btnNewButton_1.setSize("100%", "100%");
+		Deletebutton.setStyleName("gwt-ButtonTOP");
+		verticalPanel.add(Deletebutton);
+		Deletebutton.setSize("100%", "100%");
 		
-		Button btnNewButton_2 = new Button("Edit");
-		btnNewButton_2.addClickHandler(new ClickHandler() {
+		EditButton = new Button(EDITBUTTON);
+		EditButton.addClickHandler(new ClickHandler() {
 			public void onClick(ClickEvent event) {
 				hide();
 				Logger.GetLogger().info(this.getClass().getName(),
@@ -118,27 +138,27 @@ public class CatalogSeleccionMenuPopupPanel extends PopupPanel {
 				
 			}
 		});
-		btnNewButton_2.addMouseDownHandler(new MouseDownHandler() {
+		EditButton.addMouseDownHandler(new MouseDownHandler() {
 			public void onMouseDown(MouseDownEvent event) {
 				((Button)event.getSource()).setStyleName("gwt-ButtonPush");
 			}
 		});
-		btnNewButton_2.addMouseOutHandler(new MouseOutHandler() {
+		EditButton.addMouseOutHandler(new MouseOutHandler() {
 			public void onMouseOut(MouseOutEvent event) {
 				((Button)event.getSource()).setStyleName("gwt-ButtonTOP");
 			}
 		});
-		btnNewButton_2.addMouseOverHandler(new MouseOverHandler() {
+		EditButton.addMouseOverHandler(new MouseOverHandler() {
 			public void onMouseOver(MouseOverEvent event) {
 				((Button)event.getSource()).setStyleName("gwt-ButtonTOPOver");
 			}
 		});
-		btnNewButton_2.setStyleName("gwt-ButtonTOP");
-		verticalPanel.add(btnNewButton_2);
-		btnNewButton_2.setSize("100%", "100%");
+		EditButton.setStyleName("gwt-ButtonTOP");
+		verticalPanel.add(EditButton);
+		EditButton.setSize("100%", "100%");
 		
-		Button btnNewButton_3 = new Button("Change Visibility");
-		btnNewButton_3.addClickHandler(new ClickHandler() {
+		ChangeVisivilityButton = new Button(CHANGE_VISIBILITYBUTTON);
+		ChangeVisivilityButton.addClickHandler(new ClickHandler() {
 			public void onClick(ClickEvent event) {
 				hide();
 				ChangeVisivilityPopupPanel Nuevo=new ChangeVisivilityPopupPanel(BLan.getCatalog(), Father);
@@ -146,24 +166,24 @@ public class CatalogSeleccionMenuPopupPanel extends PopupPanel {
 			}
 		});
 		
-		btnNewButton_3.setStyleName("gwt-ButtonBotton");
-		btnNewButton_3.setSize("100%", "100%");
-		btnNewButton_3.addMouseOutHandler(new MouseOutHandler() {
+		ChangeVisivilityButton.setStyleName("gwt-ButtonBotton");
+		ChangeVisivilityButton.setSize("100%", "100%");
+		ChangeVisivilityButton.addMouseOutHandler(new MouseOutHandler() {
 			public void onMouseOut(MouseOutEvent event) {
 				((Button)event.getSource()).setStyleName("gwt-ButtonBotton");
 			}
 		});
-		btnNewButton_3.addMouseOverHandler(new MouseOverHandler() {
+		ChangeVisivilityButton.addMouseOverHandler(new MouseOverHandler() {
 			public void onMouseOver(MouseOverEvent event) {
 				((Button)event.getSource()).setStyleName("gwt-ButtonBottonOver");
 			}
 		});
-		btnNewButton_3.addMouseDownHandler(new MouseDownHandler() {
+		ChangeVisivilityButton.addMouseDownHandler(new MouseDownHandler() {
 			public void onMouseDown(MouseDownEvent event) {
 				((Button)event.getSource()).setStyleName("gwt-ButtonPushBotton");
 			}
 		});
-		verticalPanel.add(btnNewButton_3);
+		verticalPanel.add(ChangeVisivilityButton);
 	}
 
 }

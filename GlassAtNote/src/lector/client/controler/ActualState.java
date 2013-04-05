@@ -18,6 +18,7 @@ import lector.client.admin.book.BookAdministrationEntryPoint;
 import lector.client.admin.book.googleAPI.SearcherGoogleEntryPoint;
 import lector.client.admin.book.googleAPI.VisorSearcherGoogleBookPopupPanel;
 import lector.client.admin.book.upload.BookUploadEntryPoint;
+import lector.client.admin.catalog.CatalogAdmintrationEntryPoint;
 import lector.client.admin.generalPanels.PublicPrivatePanelComposite;
 import lector.client.book.reader.GWTService;
 import lector.client.book.reader.GWTServiceAsync;
@@ -139,7 +140,9 @@ public class ActualState {
 		VisorSearcherGoogleBookPopupPanel.FromFile(ActualLanguage.getVisorSearcherGoogleBookPopupPanelLanguageConfiguration());
 		//package lector.client.admin.book.upload;
 		BookUploadEntryPoint.FromFile(ActualLanguage.getBookUploadEntryPointLanguageConfiguration());
-	
+		//package lector.client.admin.catalog;
+		CatalogAdmintrationEntryPoint.FromFile(ActualLanguage.getCatalogAdmintrationEntryPointLanguageConfiguration());
+		
 		//package lector.client.admin.generalPanels;
 		PublicPrivatePanelComposite.FromFile(ActualLanguage.getPublicPrivatePanelCompositeLanguageConfiguration());
 	

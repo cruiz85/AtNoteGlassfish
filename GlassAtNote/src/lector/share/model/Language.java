@@ -49,6 +49,8 @@ public class Language implements Serializable {
 	private String VisorSearcherGoogleBookPopupPanelLanguageConfiguration="";
 	@Column(columnDefinition = "LONGTEXT")
 	private String BookUploadEntryPointLanguageConfiguration="";
+	@Column(columnDefinition = "LONGTEXT")
+	private	String CatalogAdmintrationEntryPointLanguageConfiguration="";
 	
 	// MainWindow
 	private String NamePage = "@Note";
@@ -282,6 +284,15 @@ public class Language implements Serializable {
 	public void setBookUploadEntryPointLanguageConfiguration(
 			String bookUploadEntryPointLanguageConfiguration) {
 		BookUploadEntryPointLanguageConfiguration = bookUploadEntryPointLanguageConfiguration;
+	}
+
+	public String getCatalogAdmintrationEntryPointLanguageConfiguration() {
+		return CatalogAdmintrationEntryPointLanguageConfiguration;
+	}
+
+	public void setCatalogAdmintrationEntryPointLanguageConfiguration(
+			String catalogAdmintrationEntryPointLanguageConfiguration) {
+		CatalogAdmintrationEntryPointLanguageConfiguration = catalogAdmintrationEntryPointLanguageConfiguration;
 	}
 
 	public void setNewAdmin(String newAdmin) {
