@@ -278,9 +278,12 @@ public class RichTextToolbar extends Composite {
 				String url = Window.prompt(GUI_DIALOG_INSERTURL, "http://");
 				if (url != null) {
 					if (isHTMLMode()) {
-						changeHtmlStyle("<a href=\""+url+"\">","</a>");
+						changeHtmlStyle("<a href=\""+url+"\" target=\"_blank\"  rel=\"external\">","</a>");
 					} else {
-						styleTextFormatter.createLink(url);
+						JsArrayString tx = getSelection(styleText.getElement());
+						String selectedText = tx.get(0);
+						styleTextFormatter.insertHTML("<a href=\""+url+"\" target=\"_blank\"  rel=\"external\">"+selectedText+"</a>");
+						//createLink(url);
 					}
 				}
 			} else if (event.getSource().equals(breaklink)) {
