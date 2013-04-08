@@ -60,6 +60,6 @@ public class Constants {
 	public static final String FROM_NAME = "CENTRO DE REGISTRO ATNOTE";
 	public static final String MAIL_SUBJECT = "Gracias por registrarse en @note...";
 	public static final String MAIL_BODY_TEXT = "Gracias por registrarse en @note. <br /> Este correo usted lo ha recibido" +
-			" por motivo de una verificación de cuenta, si usted desconoce el emisor de este correo haga caso omiso, sino, por favor pulse el link que se encuentra debajo";
+			" por motivo de una verificaciÃ³n de cuenta, si usted desconoce el emisor de este correo haga caso omiso, sino, por favor pulse el link que se encuentra debajo";
 	
 }

@@ -748,7 +748,7 @@ public class GWTServiceImpl extends RemoteServiceServlet implements GWTService {
 		return ServiceManagerUtils.produceGroupClients(list);
 	}
 
-	// TODO LANZAR EXCEPCIÓN
+	// TODO LANZAR EXCEPCIï¿½N
 	private UserApp findUser(Long id) throws UserNotFoundException {
 		EntityManager entityManager = emf.createEntityManager();
 		UserApp a = entityManager.find(UserApp.class, id);
@@ -819,7 +819,7 @@ public class GWTServiceImpl extends RemoteServiceServlet implements GWTService {
 		return a;
 	}
 
-	// TODO LANZAR EXCEPCIÓN
+	// TODO LANZAR EXCEPCIï¿½N
 	public Annotation findAnnotation(Long id)
 			throws AnnotationNotFoundException {
 		EntityManager entityManager = emf.createEntityManager();
@@ -832,7 +832,7 @@ public class GWTServiceImpl extends RemoteServiceServlet implements GWTService {
 		return a;
 	}
 
-	// TODO LANZAR EXCEPCIÓN
+	// TODO LANZAR EXCEPCIï¿½N
 	private AnnotationThread findAnnotationThread(Long id)
 			throws AnnotationThreadNotFoundException {
 		EntityManager entityManager = emf.createEntityManager();
@@ -916,7 +916,7 @@ public class GWTServiceImpl extends RemoteServiceServlet implements GWTService {
 		return a;
 	}
 
-	// TODO LANZAR EXCEPCIÓN
+	// TODO LANZAR EXCEPCIï¿½N
 	public Professor findProfessor(Long id) throws ProfessorNotFoundException {
 		EntityManager entityManager = emf.createEntityManager();
 		Professor a = entityManager.find(Professor.class, id);
@@ -928,7 +928,7 @@ public class GWTServiceImpl extends RemoteServiceServlet implements GWTService {
 		return a;
 	}
 
-	// TODO LANZAR EXCEPCIÓN
+	// TODO LANZAR EXCEPCIï¿½N
 	private Catalogo findCatalogo(Long id) throws CatalogoNotFoundException {
 		EntityManager entityManager = emf.createEntityManager();
 		entityManager.getEntityManagerFactory().getCache().evictAll();
@@ -1249,7 +1249,7 @@ public class GWTServiceImpl extends RemoteServiceServlet implements GWTService {
 		boolean isUpdatability = false;
 		boolean isVisibility = false;
 
-		// NO SE COMPRUEBA EL LIBRO PORQUE EN UNA EDICION ES JAMÁS CAMBIARÁ EL
+		// NO SE COMPRUEBA EL LIBRO PORQUE EN UNA EDICION ES JAMï¿½S CAMBIARï¿½ EL
 		// LIBRO
 		if (!annotation.getComment().equals(aClient.getComment())) {
 			annotation.setComment(aClient.getComment());
@@ -1425,7 +1425,7 @@ public class GWTServiceImpl extends RemoteServiceServlet implements GWTService {
 			entityManager.close();
 		}
 
-		return ServiceManagerUtils.produceAnnotationClients(list); // método
+		return ServiceManagerUtils.produceAnnotationClients(list); // mï¿½todo
 																	// esta
 		// retornando null
 	}
@@ -1492,7 +1492,7 @@ public class GWTServiceImpl extends RemoteServiceServlet implements GWTService {
 		return ServiceManagerUtils.produceAnnotationClients(list);
 	}
 
-	// TODO que hace este método.
+	// TODO que hace este mï¿½todo.
 	@Override
 	public List<AnnotationClient> getAnnotationsByIdsAndAuthorsTeacher(
 			List<Long> ids, List<Long> authorIds, Long Activity) {
@@ -1500,7 +1500,7 @@ public class GWTServiceImpl extends RemoteServiceServlet implements GWTService {
 		return null;
 	}
 
-	// TODO que hace este método.
+	// TODO que hace este mï¿½todo.
 	@Override
 	public List<AnnotationClient> getAnnotationsByTeacherIds(List<Long> ids,
 			Long readingActivityId) {
@@ -2420,7 +2420,7 @@ public class GWTServiceImpl extends RemoteServiceServlet implements GWTService {
 			userTransaction.commit();
 		} catch (Exception e) {
 			ServiceManagerUtils.rollback(userTransaction); // TODO utilizar
-															// método de
+															// mï¿½todo de
 															// logger
 		}
 		if (entityManager.isOpen()) {
@@ -2743,7 +2743,7 @@ public class GWTServiceImpl extends RemoteServiceServlet implements GWTService {
 			userTransaction.commit();
 		} catch (Exception e) {
 			ServiceManagerUtils.rollback(userTransaction); // TODO utilizar
-															// método de
+															// mï¿½todo de
 															// logger
 		}
 		if (entityManager.isOpen()) {
@@ -4046,7 +4046,7 @@ public class GWTServiceImpl extends RemoteServiceServlet implements GWTService {
 			userTransaction.commit();
 		} catch (Exception e) {
 			ServiceManagerUtils.rollback(userTransaction); // TODO utilizar
-															// método de
+															// mï¿½todo de
 															// logger
 		}
 		if (entityManager.isOpen()) {
@@ -4451,8 +4451,8 @@ public class GWTServiceImpl extends RemoteServiceServlet implements GWTService {
 			// String mail = "hola   ";
 			String mail = "<strong>"
 					+ Constants.MAIL_BODY_TEXT
-					+ "</strong><br/><br/><a href=\"http://horchata.fdi.ucm.es/GlassAtNote/Validator.php?confirmationCode="
-					+ code + "\">Accede a Atnote!!!</a> ";
+					+ "</strong><br/><br/>Click <a href=\"http://a-note.fdi.ucm.es/GlassAtNote/Validator.php?confirmationCode="
+					+ code + "\">here</a> to confirm access to Atnote";
 			message.setContent(mail, "text/html");
 			// Send the message
 

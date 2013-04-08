@@ -33460,3 +33460,1256 @@ Rebinding com.google.gwt.user.client.ui.MenuBar.Resources
       Compiling...
          Compilation completed in 0,02 seconds
       Removing invalidated units
+Public resources found in...
+   [WARN] Error processing classpath URL 'file:/C:/Program Files/Eclipse/plugins/com.google.gdt.eclipse.designer.hosted.2_2_3.1.2.r42x201302131702/gwt-dev-designtime.jar'
+java.net.URISyntaxException: Illegal character in path at index 16: file:/C:/Program Files/Eclipse/plugins/com.google.gdt.eclipse.designer.hosted.2_2_3.1.2.r42x201302131702/gwt-dev-designtime.jar
+	at java.net.URI$Parser.fail(Unknown Source)
+	at java.net.URI$Parser.checkChars(Unknown Source)
+	at java.net.URI$Parser.parseHierarchical(Unknown Source)
+	at java.net.URI$Parser.parse(Unknown Source)
+	at java.net.URI.<init>(Unknown Source)
+	at java.net.URL.toURI(Unknown Source)
+	at com.google.gwt.dev.resource.impl.ResourceOracleImpl.addAllClassPathEntries(ResourceOracleImpl.java:326)
+	at com.google.gwt.dev.resource.impl.ResourceOracleImpl.getAllClassPathEntries(ResourceOracleImpl.java:361)
+	at com.google.gwt.dev.resource.impl.ResourceOracleImpl.<init>(ResourceOracleImpl.java:405)
+	at com.google.gwt.dev.cfg.ModuleDef.normalize(ModuleDef.java:545)
+	at com.google.gwt.dev.cfg.ModuleDefLoader.doLoadModule(ModuleDefLoader.java:202)
+	at com.google.gwt.dev.cfg.ModuleDefLoader.loadFromResources(ModuleDefLoader.java:172)
+	at com.google.gwt.dev.cfg.ModuleDefLoader.loadFromClassPath(ModuleDefLoader.java:144)
+	at com.google.gwt.dev.shell.designtime.HostedModeSupportImpl.loadModule(HostedModeSupportImpl.java:85)
+	at com.google.gwt.dev.shell.designtime.HostedModeSupportImpl.createModuleSpaceHost(HostedModeSupportImpl.java:64)
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(Unknown Source)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(Unknown Source)
+	at java.lang.reflect.Method.invoke(Unknown Source)
+	at org.eclipse.wb.internal.core.utils.reflect.ReflectionUtils.invokeMethod(ReflectionUtils.java:869)
+	at com.google.gdt.eclipse.designer.hosted.tdt.HostedModeSupport.createModuleSpaceHost(HostedModeSupport.java:447)
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(Unknown Source)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(Unknown Source)
+	at java.lang.reflect.Method.invoke(Unknown Source)
+	at org.eclipse.wb.internal.core.utils.reflect.ReflectionUtils.invokeMethod(ReflectionUtils.java:869)
+	at com.google.gdt.eclipse.designer.WarmUpSupport.warmUpHostedMode(WarmUpSupport.java:125)
+	at com.google.gdt.eclipse.designer.WarmUpSupport.warmUpHostedMode(WarmUpSupport.java:103)
+	at com.google.gdt.eclipse.designer.WarmUpSupport.doWarmUp(WarmUpSupport.java:84)
+	at com.google.gdt.eclipse.designer.Activator.earlyStartup(Activator.java:190)
+	at org.eclipse.ui.internal.EarlyStartupRunnable.runEarlyStartup(EarlyStartupRunnable.java:87)
+	at org.eclipse.ui.internal.EarlyStartupRunnable.run(EarlyStartupRunnable.java:73)
+	at org.eclipse.core.runtime.SafeRunner.run(SafeRunner.java:42)
+	at org.eclipse.ui.internal.Workbench$54.run(Workbench.java:2412)
+	at org.eclipse.core.internal.jobs.Worker.run(Worker.java:53)
+Translatable source found in...
+Found 0 cached/archived units.  Used 0 / 2723 units from cache.
+Compiling...
+   50% complete (ETR: 3 seconds)
+   50% complete (ETR: 3 seconds)
+   50% complete (ETR: 3 seconds)
+   50% complete (ETR: 3 seconds)
+   50% complete (ETR: 3 seconds)
+   50% complete (ETR: 3 seconds)
+   60% complete (ETR: 3 seconds)
+   70% complete (ETR: 2 seconds)
+   80% complete (ETR: 2 seconds)
+   90% complete (ETR: 1 seconds)
+   100% complete (ETR: 0 seconds)
+   Compilation completed in 15,79 seconds
+Removing invalidated units
+Finding entry point classes
+Public resources found in...
+   [WARN] Error processing classpath URL 'file:/C:/Program Files/Eclipse/plugins/com.google.gdt.eclipse.designer.hosted.2_2_3.1.2.r42x201302131702/gwt-dev-designtime.jar'
+java.net.URISyntaxException: Illegal character in path at index 16: file:/C:/Program Files/Eclipse/plugins/com.google.gdt.eclipse.designer.hosted.2_2_3.1.2.r42x201302131702/gwt-dev-designtime.jar
+	at java.net.URI$Parser.fail(Unknown Source)
+	at java.net.URI$Parser.checkChars(Unknown Source)
+	at java.net.URI$Parser.parseHierarchical(Unknown Source)
+	at java.net.URI$Parser.parse(Unknown Source)
+	at java.net.URI.<init>(Unknown Source)
+	at java.net.URL.toURI(Unknown Source)
+	at com.google.gwt.dev.resource.impl.ResourceOracleImpl.addAllClassPathEntries(ResourceOracleImpl.java:326)
+	at com.google.gwt.dev.resource.impl.ResourceOracleImpl.getAllClassPathEntries(ResourceOracleImpl.java:361)
+	at com.google.gwt.dev.resource.impl.ResourceOracleImpl.<init>(ResourceOracleImpl.java:405)
+	at com.google.gwt.dev.cfg.ModuleDef.normalize(ModuleDef.java:545)
+	at com.google.gwt.dev.cfg.ModuleDefLoader.doLoadModule(ModuleDefLoader.java:202)
+	at com.google.gwt.dev.cfg.ModuleDefLoader.loadFromResources(ModuleDefLoader.java:172)
+	at com.google.gwt.dev.cfg.ModuleDefLoader.loadFromClassPath(ModuleDefLoader.java:144)
+	at com.google.gwt.dev.shell.designtime.HostedModeSupportImpl.loadModule(HostedModeSupportImpl.java:85)
+	at com.google.gwt.dev.shell.designtime.HostedModeSupportImpl.createModuleSpaceHost(HostedModeSupportImpl.java:64)
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(Unknown Source)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(Unknown Source)
+	at java.lang.reflect.Method.invoke(Unknown Source)
+	at org.eclipse.wb.internal.core.utils.reflect.ReflectionUtils.invokeMethod(ReflectionUtils.java:869)
+	at com.google.gdt.eclipse.designer.hosted.tdt.HostedModeSupport.createModuleSpaceHost(HostedModeSupport.java:447)
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(Unknown Source)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(Unknown Source)
+	at java.lang.reflect.Method.invoke(Unknown Source)
+	at org.eclipse.wb.internal.core.utils.reflect.ReflectionUtils.invokeMethod(ReflectionUtils.java:869)
+	at com.google.gdt.eclipse.designer.WarmUpSupport.warmUpHostedMode(WarmUpSupport.java:125)
+	at com.google.gdt.eclipse.designer.WarmUpSupport.warmUpHostedMode(WarmUpSupport.java:104)
+	at com.google.gdt.eclipse.designer.WarmUpSupport.doWarmUp(WarmUpSupport.java:84)
+	at com.google.gdt.eclipse.designer.Activator.earlyStartup(Activator.java:190)
+	at org.eclipse.ui.internal.EarlyStartupRunnable.runEarlyStartup(EarlyStartupRunnable.java:87)
+	at org.eclipse.ui.internal.EarlyStartupRunnable.run(EarlyStartupRunnable.java:73)
+	at org.eclipse.core.runtime.SafeRunner.run(SafeRunner.java:42)
+	at org.eclipse.ui.internal.Workbench$54.run(Workbench.java:2412)
+	at org.eclipse.core.internal.jobs.Worker.run(Worker.java:53)
+Translatable source found in...
+Found 2723 cached/archived units.  Used 2723 / 2723 units from cache.
+Compiling...
+   Compilation completed in 0,00 seconds
+Removing invalidated units
+Finding entry point classes
+Public resources found in...
+   [WARN] Error processing classpath URL 'file:/C:/Program Files/Eclipse/plugins/com.google.gdt.eclipse.designer.hosted.2_2_3.1.2.r42x201302131702/gwt-dev-designtime.jar'
+java.net.URISyntaxException: Illegal character in path at index 16: file:/C:/Program Files/Eclipse/plugins/com.google.gdt.eclipse.designer.hosted.2_2_3.1.2.r42x201302131702/gwt-dev-designtime.jar
+	at java.net.URI$Parser.fail(Unknown Source)
+	at java.net.URI$Parser.checkChars(Unknown Source)
+	at java.net.URI$Parser.parseHierarchical(Unknown Source)
+	at java.net.URI$Parser.parse(Unknown Source)
+	at java.net.URI.<init>(Unknown Source)
+	at java.net.URL.toURI(Unknown Source)
+	at com.google.gwt.dev.resource.impl.ResourceOracleImpl.addAllClassPathEntries(ResourceOracleImpl.java:326)
+	at com.google.gwt.dev.resource.impl.ResourceOracleImpl.getAllClassPathEntries(ResourceOracleImpl.java:361)
+	at com.google.gwt.dev.resource.impl.ResourceOracleImpl.<init>(ResourceOracleImpl.java:405)
+	at com.google.gwt.dev.cfg.ModuleDef.normalize(ModuleDef.java:545)
+	at com.google.gwt.dev.cfg.ModuleDefLoader.doLoadModule(ModuleDefLoader.java:202)
+	at com.google.gwt.dev.cfg.ModuleDefLoader.loadFromResources(ModuleDefLoader.java:172)
+	at com.google.gwt.dev.cfg.ModuleDefLoader.loadFromClassPath(ModuleDefLoader.java:144)
+	at com.google.gwt.dev.shell.designtime.HostedModeSupportImpl.loadModule(HostedModeSupportImpl.java:85)
+	at com.google.gwt.dev.shell.designtime.HostedModeSupportImpl.createModuleSpaceHost(HostedModeSupportImpl.java:64)
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(Unknown Source)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(Unknown Source)
+	at java.lang.reflect.Method.invoke(Unknown Source)
+	at org.eclipse.wb.internal.core.utils.reflect.ReflectionUtils.invokeMethod(ReflectionUtils.java:869)
+	at com.google.gdt.eclipse.designer.hosted.tdt.HostedModeSupport.createModuleSpaceHost(HostedModeSupport.java:447)
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(Unknown Source)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(Unknown Source)
+	at java.lang.reflect.Method.invoke(Unknown Source)
+	at org.eclipse.wb.internal.core.utils.reflect.ReflectionUtils.invokeMethod(ReflectionUtils.java:869)
+	at com.google.gdt.eclipse.designer.WarmUpSupport.warmUpHostedMode(WarmUpSupport.java:125)
+	at com.google.gdt.eclipse.designer.WarmUpSupport.warmUpHostedMode(WarmUpSupport.java:105)
+	at com.google.gdt.eclipse.designer.WarmUpSupport.doWarmUp(WarmUpSupport.java:84)
+	at com.google.gdt.eclipse.designer.Activator.earlyStartup(Activator.java:190)
+	at org.eclipse.ui.internal.EarlyStartupRunnable.runEarlyStartup(EarlyStartupRunnable.java:87)
+	at org.eclipse.ui.internal.EarlyStartupRunnable.run(EarlyStartupRunnable.java:73)
+	at org.eclipse.core.runtime.SafeRunner.run(SafeRunner.java:42)
+	at org.eclipse.ui.internal.Workbench$54.run(Workbench.java:2412)
+	at org.eclipse.core.internal.jobs.Worker.run(Worker.java:53)
+Translatable source found in...
+Found 2723 cached/archived units.  Used 2723 / 2723 units from cache.
+Compiling...
+   Compilation completed in 0,00 seconds
+Removing invalidated units
+Finding entry point classes
+Public resources found in...
+   [WARN] Error processing classpath URL 'file:/C:/Program Files/Eclipse/plugins/com.google.gdt.eclipse.designer.hosted.2_2_3.1.2.r42x201302131702/gwt-dev-designtime.jar'
+java.net.URISyntaxException: Illegal character in path at index 16: file:/C:/Program Files/Eclipse/plugins/com.google.gdt.eclipse.designer.hosted.2_2_3.1.2.r42x201302131702/gwt-dev-designtime.jar
+	at java.net.URI$Parser.fail(Unknown Source)
+	at java.net.URI$Parser.checkChars(Unknown Source)
+	at java.net.URI$Parser.parseHierarchical(Unknown Source)
+	at java.net.URI$Parser.parse(Unknown Source)
+	at java.net.URI.<init>(Unknown Source)
+	at java.net.URL.toURI(Unknown Source)
+	at com.google.gwt.dev.resource.impl.ResourceOracleImpl.addAllClassPathEntries(ResourceOracleImpl.java:326)
+	at com.google.gwt.dev.resource.impl.ResourceOracleImpl.getAllClassPathEntries(ResourceOracleImpl.java:361)
+	at com.google.gwt.dev.resource.impl.ResourceOracleImpl.<init>(ResourceOracleImpl.java:405)
+	at com.google.gwt.dev.cfg.ModuleDef.normalize(ModuleDef.java:545)
+	at com.google.gwt.dev.cfg.ModuleDefLoader.doLoadModule(ModuleDefLoader.java:202)
+	at com.google.gwt.dev.cfg.ModuleDefLoader.loadFromResources(ModuleDefLoader.java:172)
+	at com.google.gwt.dev.cfg.ModuleDefLoader.loadFromClassPath(ModuleDefLoader.java:144)
+	at com.google.gwt.dev.shell.designtime.HostedModeSupportImpl.loadModule(HostedModeSupportImpl.java:85)
+	at com.google.gwt.dev.shell.designtime.HostedModeSupportImpl.createModuleSpaceHost(HostedModeSupportImpl.java:64)
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(Unknown Source)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(Unknown Source)
+	at java.lang.reflect.Method.invoke(Unknown Source)
+	at org.eclipse.wb.internal.core.utils.reflect.ReflectionUtils.invokeMethod(ReflectionUtils.java:869)
+	at com.google.gdt.eclipse.designer.hosted.tdt.HostedModeSupport.createModuleSpaceHost(HostedModeSupport.java:447)
+	at com.google.gwt.dev.shell.designtime.ModuleSpace.<init>(ModuleSpace.java:60)
+	at com.google.gdt.eclipse.designer.webkit.jsni.ModuleSpaceWebKit.<init>(ModuleSpaceWebKit.java:45)
+	at com.google.gdt.eclipse.designer.webkit.BrowserShellWebKit.setUrl(BrowserShellWebKit.java:85)
+	at com.google.gdt.eclipse.designer.hosted.tdt.HostedModeSupport.startup(HostedModeSupport.java:184)
+	at com.google.gdt.eclipse.designer.model.widgets.support.GwtState.initialize0(GwtState.java:248)
+	at com.google.gdt.eclipse.designer.model.widgets.support.GwtState.initialize(GwtState.java:206)
+	at com.google.gdt.eclipse.designer.parser.ParseFactory.getClassLoader(ParseFactory.java:429)
+	at org.eclipse.wb.internal.core.parser.AbstractParseFactory.initializeClassLoader(AbstractParseFactory.java:732)
+	at com.google.gdt.eclipse.designer.parser.ParseFactory.getRootContext(ParseFactory.java:117)
+	at org.eclipse.wb.internal.core.parser.JavaInfoParser.prepareParseContext(JavaInfoParser.java:1182)
+	at org.eclipse.wb.internal.core.parser.JavaInfoParser.parse(JavaInfoParser.java:242)
+	at org.eclipse.wb.internal.core.parser.JavaInfoParser.access$9(JavaInfoParser.java:238)
+	at org.eclipse.wb.internal.core.parser.JavaInfoParser$1.runObject(JavaInfoParser.java:153)
+	at org.eclipse.wb.internal.core.parser.JavaInfoParser$1.runObject(JavaInfoParser.java:1)
+	at org.eclipse.wb.internal.core.utils.execution.ExecutionUtils.runDesignTime(ExecutionUtils.java:159)
+	at org.eclipse.wb.internal.core.parser.JavaInfoParser.parse(JavaInfoParser.java:151)
+	at org.eclipse.wb.internal.core.editor.DesignPage.internal_refreshGEF(DesignPage.java:534)
+	at org.eclipse.wb.internal.core.editor.DesignPage.access$9(DesignPage.java:522)
+	at org.eclipse.wb.internal.core.editor.DesignPage$8$1.run(DesignPage.java:449)
+	at org.eclipse.swt.widgets.Synchronizer.syncExec(Synchronizer.java:180)
+	at org.eclipse.ui.internal.UISynchronizer.syncExec(UISynchronizer.java:150)
+	at org.eclipse.swt.widgets.Display.syncExec(Display.java:4687)
+	at org.eclipse.wb.internal.core.editor.DesignPage$8.run(DesignPage.java:446)
+	at org.eclipse.jface.operation.ModalContext.runInCurrentThread(ModalContext.java:464)
+	at org.eclipse.jface.operation.ModalContext.run(ModalContext.java:372)
+	at org.eclipse.jface.dialogs.ProgressMonitorDialog.run(ProgressMonitorDialog.java:507)
+	at org.eclipse.wb.internal.core.editor.DesignPage.internal_refreshGEF_withProgress(DesignPage.java:465)
+	at org.eclipse.wb.internal.core.editor.DesignPage.internal_refreshGEF(DesignPage.java:415)
+	at org.eclipse.wb.internal.core.editor.UndoManager.refreshDesignerEditor(UndoManager.java:381)
+	at org.eclipse.wb.internal.core.editor.UndoManager.activate(UndoManager.java:90)
+	at org.eclipse.wb.internal.core.editor.DesignPage.handleActiveState_True(DesignPage.java:263)
+	at org.eclipse.wb.internal.core.editor.DesignPage.handleActiveState(DesignPage.java:241)
+	at org.eclipse.wb.internal.core.editor.multi.DefaultMultiMode.showPage(DefaultMultiMode.java:125)
+	at org.eclipse.wb.internal.core.editor.multi.DefaultMultiMode$1.widgetSelected(DefaultMultiMode.java:63)
+	at org.eclipse.swt.widgets.TypedListener.handleEvent(TypedListener.java:248)
+	at org.eclipse.swt.widgets.EventTable.sendEvent(EventTable.java:84)
+	at org.eclipse.swt.widgets.Widget.sendEvent(Widget.java:1053)
+	at org.eclipse.swt.widgets.Widget.sendEvent(Widget.java:1077)
+	at org.eclipse.swt.widgets.Widget.sendEvent(Widget.java:1062)
+	at org.eclipse.swt.widgets.Widget.notifyListeners(Widget.java:774)
+	at org.eclipse.swt.custom.CTabFolder.setSelection(CTabFolder.java:3028)
+	at org.eclipse.swt.custom.CTabFolder.onMouse(CTabFolder.java:1749)
+	at org.eclipse.swt.custom.CTabFolder$1.handleEvent(CTabFolder.java:278)
+	at org.eclipse.swt.widgets.EventTable.sendEvent(EventTable.java:84)
+	at org.eclipse.swt.widgets.Widget.sendEvent(Widget.java:1053)
+	at org.eclipse.swt.widgets.Display.runDeferredEvents(Display.java:4169)
+	at org.eclipse.swt.widgets.Display.readAndDispatch(Display.java:3758)
+	at org.eclipse.e4.ui.internal.workbench.swt.PartRenderingEngine$9.run(PartRenderingEngine.java:1053)
+	at org.eclipse.core.databinding.observable.Realm.runWithDefault(Realm.java:332)
+	at org.eclipse.e4.ui.internal.workbench.swt.PartRenderingEngine.run(PartRenderingEngine.java:942)
+	at org.eclipse.e4.ui.internal.workbench.E4Workbench.createAndRunUI(E4Workbench.java:86)
+	at org.eclipse.ui.internal.Workbench$5.run(Workbench.java:588)
+	at org.eclipse.core.databinding.observable.Realm.runWithDefault(Realm.java:332)
+	at org.eclipse.ui.internal.Workbench.createAndRunWorkbench(Workbench.java:543)
+	at org.eclipse.ui.PlatformUI.createAndRunWorkbench(PlatformUI.java:149)
+	at org.eclipse.ui.internal.ide.application.IDEApplication.start(IDEApplication.java:124)
+	at org.eclipse.equinox.internal.app.EclipseAppHandle.run(EclipseAppHandle.java:196)
+	at org.eclipse.core.runtime.internal.adaptor.EclipseAppLauncher.runApplication(EclipseAppLauncher.java:110)
+	at org.eclipse.core.runtime.internal.adaptor.EclipseAppLauncher.start(EclipseAppLauncher.java:79)
+	at org.eclipse.core.runtime.adaptor.EclipseStarter.run(EclipseStarter.java:353)
+	at org.eclipse.core.runtime.adaptor.EclipseStarter.run(EclipseStarter.java:180)
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(Unknown Source)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(Unknown Source)
+	at java.lang.reflect.Method.invoke(Unknown Source)
+	at org.eclipse.equinox.launcher.Main.invokeFramework(Main.java:629)
+	at org.eclipse.equinox.launcher.Main.basicRun(Main.java:584)
+	at org.eclipse.equinox.launcher.Main.run(Main.java:1438)
+	at org.eclipse.equinox.launcher.Main.main(Main.java:1414)
+Translatable source found in...
+Found 0 cached/archived units.  Used 0 / 3136 units from cache.
+Compiling...
+   70% complete (ETR: 2 seconds)
+   70% complete (ETR: 2 seconds)
+   70% complete (ETR: 2 seconds)
+   70% complete (ETR: 2 seconds)
+   70% complete (ETR: 2 seconds)
+   70% complete (ETR: 2 seconds)
+   70% complete (ETR: 2 seconds)
+   70% complete (ETR: 2 seconds)
+   80% complete (ETR: 1 seconds)
+   90% complete (ETR: 1 seconds)
+   100% complete (ETR: 0 seconds)
+   Compilation completed in 11,28 seconds
+Validating units:
+   [WARN] Warnings in 'jar:file:/C:/Users/Joaquin%20Gayoso/git/AtNoteGlassfish/GlassAtNote/libs/gwt-incubator-20101117-r1766.jar!/com/google/gwt/widgetideas/client/impl/GlassPanelImpl.java'
+      [WARN] Line 30: Referencing deprecated class 'com.google.gwt.user.client.impl.DocumentRootImpl'
+      [WARN] Line 38: Referencing deprecated class 'com.google.gwt.user.client.impl.DocumentRootImpl'
+Removing invalidated units
+Finding entry point classes
+Rebinding com.google.gwt.i18n.client.impl.LocaleInfoImpl
+   Invoking generator com.google.gwt.i18n.rebind.LocaleInfoGenerator
+      Processing interface com.google.gwt.i18n.client.constants.NumberConstantsImpl
+         Generating method body for notANumber()
+         Generating method body for currencyPattern()
+         Generating method body for decimalPattern()
+         Generating method body for decimalSeparator()
+         Generating method body for defCurrencyCode()
+         Generating method body for exponentialSymbol()
+         Generating method body for globalCurrencyPattern()
+         Generating method body for groupingSeparator()
+         Generating method body for infinity()
+         Generating method body for minusSign()
+         Generating method body for monetaryGroupingSeparator()
+         Generating method body for monetarySeparator()
+         Generating method body for percent()
+         Generating method body for percentPattern()
+         Generating method body for perMill()
+         Generating method body for plusSign()
+         Generating method body for scientificPattern()
+         Generating method body for simpleCurrencyPattern()
+         Generating method body for zeroDigit()
+   Adding '3' new generated units
+      Compiling...
+         Compilation completed in 0,02 seconds
+      Removing invalidated units
+Rebinding com.google.gwt.user.client.ui.MenuBar.Resources
+   Invoking generator com.google.gwt.resources.rebind.context.InlineClientBundleGenerator
+      Preparing method menuBarSubMenuIcon
+         Adding image 'com.google.gwt.user.client.ui.MenuBar.Resources.menuBarSubMenuIcon'
+   Adding '1' new generated units
+      Compiling...
+         Compilation completed in 0,06 seconds
+      Removing invalidated units
+Public resources found in...
+   [WARN] Error processing classpath URL 'file:/C:/Program Files/Eclipse/plugins/com.google.gdt.eclipse.designer.hosted.2_2_3.1.2.r42x201302131702/gwt-dev-designtime.jar'
+java.net.URISyntaxException: Illegal character in path at index 16: file:/C:/Program Files/Eclipse/plugins/com.google.gdt.eclipse.designer.hosted.2_2_3.1.2.r42x201302131702/gwt-dev-designtime.jar
+	at java.net.URI$Parser.fail(Unknown Source)
+	at java.net.URI$Parser.checkChars(Unknown Source)
+	at java.net.URI$Parser.parseHierarchical(Unknown Source)
+	at java.net.URI$Parser.parse(Unknown Source)
+	at java.net.URI.<init>(Unknown Source)
+	at java.net.URL.toURI(Unknown Source)
+	at com.google.gwt.dev.resource.impl.ResourceOracleImpl.addAllClassPathEntries(ResourceOracleImpl.java:326)
+	at com.google.gwt.dev.resource.impl.ResourceOracleImpl.getAllClassPathEntries(ResourceOracleImpl.java:361)
+	at com.google.gwt.dev.resource.impl.ResourceOracleImpl.<init>(ResourceOracleImpl.java:405)
+	at com.google.gwt.dev.cfg.ModuleDef.normalize(ModuleDef.java:545)
+	at com.google.gwt.dev.cfg.ModuleDefLoader.doLoadModule(ModuleDefLoader.java:202)
+	at com.google.gwt.dev.cfg.ModuleDefLoader.loadFromResources(ModuleDefLoader.java:172)
+	at com.google.gwt.dev.cfg.ModuleDefLoader.loadFromClassPath(ModuleDefLoader.java:144)
+	at com.google.gwt.dev.shell.designtime.HostedModeSupportImpl.loadModule(HostedModeSupportImpl.java:85)
+	at com.google.gwt.dev.shell.designtime.HostedModeSupportImpl.createModuleSpaceHost(HostedModeSupportImpl.java:64)
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(Unknown Source)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(Unknown Source)
+	at java.lang.reflect.Method.invoke(Unknown Source)
+	at org.eclipse.wb.internal.core.utils.reflect.ReflectionUtils.invokeMethod(ReflectionUtils.java:869)
+	at com.google.gdt.eclipse.designer.hosted.tdt.HostedModeSupport.createModuleSpaceHost(HostedModeSupport.java:447)
+	at com.google.gwt.dev.shell.designtime.ModuleSpace.<init>(ModuleSpace.java:60)
+	at com.google.gdt.eclipse.designer.webkit.jsni.ModuleSpaceWebKit.<init>(ModuleSpaceWebKit.java:45)
+	at com.google.gdt.eclipse.designer.webkit.BrowserShellWebKit.setUrl(BrowserShellWebKit.java:85)
+	at com.google.gdt.eclipse.designer.hosted.tdt.HostedModeSupport.startup(HostedModeSupport.java:184)
+	at com.google.gdt.eclipse.designer.model.widgets.support.GwtState.initialize0(GwtState.java:248)
+	at com.google.gdt.eclipse.designer.model.widgets.support.GwtState.initialize(GwtState.java:206)
+	at com.google.gdt.eclipse.designer.parser.ParseFactory.getClassLoader(ParseFactory.java:429)
+	at org.eclipse.wb.internal.core.parser.AbstractParseFactory.initializeClassLoader(AbstractParseFactory.java:732)
+	at com.google.gdt.eclipse.designer.parser.ParseFactory.getRootContext(ParseFactory.java:117)
+	at org.eclipse.wb.internal.core.parser.JavaInfoParser.prepareParseContext(JavaInfoParser.java:1182)
+	at org.eclipse.wb.internal.core.parser.JavaInfoParser.parse(JavaInfoParser.java:242)
+	at org.eclipse.wb.internal.core.parser.JavaInfoParser.access$9(JavaInfoParser.java:238)
+	at org.eclipse.wb.internal.core.parser.JavaInfoParser$1.runObject(JavaInfoParser.java:153)
+	at org.eclipse.wb.internal.core.parser.JavaInfoParser$1.runObject(JavaInfoParser.java:1)
+	at org.eclipse.wb.internal.core.utils.execution.ExecutionUtils.runDesignTime(ExecutionUtils.java:159)
+	at org.eclipse.wb.internal.core.parser.JavaInfoParser.parse(JavaInfoParser.java:151)
+	at org.eclipse.wb.internal.core.editor.DesignPage.internal_refreshGEF(DesignPage.java:534)
+	at org.eclipse.wb.internal.core.editor.DesignPage.access$9(DesignPage.java:522)
+	at org.eclipse.wb.internal.core.editor.DesignPage$8$1.run(DesignPage.java:449)
+	at org.eclipse.swt.widgets.Synchronizer.syncExec(Synchronizer.java:180)
+	at org.eclipse.ui.internal.UISynchronizer.syncExec(UISynchronizer.java:150)
+	at org.eclipse.swt.widgets.Display.syncExec(Display.java:4687)
+	at org.eclipse.wb.internal.core.editor.DesignPage$8.run(DesignPage.java:446)
+	at org.eclipse.jface.operation.ModalContext.runInCurrentThread(ModalContext.java:464)
+	at org.eclipse.jface.operation.ModalContext.run(ModalContext.java:372)
+	at org.eclipse.jface.dialogs.ProgressMonitorDialog.run(ProgressMonitorDialog.java:507)
+	at org.eclipse.wb.internal.core.editor.DesignPage.internal_refreshGEF_withProgress(DesignPage.java:465)
+	at org.eclipse.wb.internal.core.editor.DesignPage.internal_refreshGEF(DesignPage.java:415)
+	at org.eclipse.wb.internal.core.editor.UndoManager.refreshDesignerEditor(UndoManager.java:381)
+	at org.eclipse.wb.internal.core.editor.UndoManager.activate(UndoManager.java:90)
+	at org.eclipse.wb.internal.core.editor.DesignPage.handleActiveState_True(DesignPage.java:263)
+	at org.eclipse.wb.internal.core.editor.DesignPage.handleActiveState(DesignPage.java:241)
+	at org.eclipse.wb.internal.core.editor.multi.DefaultMultiMode.showPage(DefaultMultiMode.java:125)
+	at org.eclipse.wb.internal.core.editor.multi.DefaultMultiMode$1.widgetSelected(DefaultMultiMode.java:63)
+	at org.eclipse.swt.widgets.TypedListener.handleEvent(TypedListener.java:248)
+	at org.eclipse.swt.widgets.EventTable.sendEvent(EventTable.java:84)
+	at org.eclipse.swt.widgets.Widget.sendEvent(Widget.java:1053)
+	at org.eclipse.swt.widgets.Widget.sendEvent(Widget.java:1077)
+	at org.eclipse.swt.widgets.Widget.sendEvent(Widget.java:1062)
+	at org.eclipse.swt.widgets.Widget.notifyListeners(Widget.java:774)
+	at org.eclipse.swt.custom.CTabFolder.setSelection(CTabFolder.java:3028)
+	at org.eclipse.swt.custom.CTabFolder.onMouse(CTabFolder.java:1749)
+	at org.eclipse.swt.custom.CTabFolder$1.handleEvent(CTabFolder.java:278)
+	at org.eclipse.swt.widgets.EventTable.sendEvent(EventTable.java:84)
+	at org.eclipse.swt.widgets.Widget.sendEvent(Widget.java:1053)
+	at org.eclipse.swt.widgets.Display.runDeferredEvents(Display.java:4169)
+	at org.eclipse.swt.widgets.Display.readAndDispatch(Display.java:3758)
+	at org.eclipse.e4.ui.internal.workbench.swt.PartRenderingEngine$9.run(PartRenderingEngine.java:1053)
+	at org.eclipse.core.databinding.observable.Realm.runWithDefault(Realm.java:332)
+	at org.eclipse.e4.ui.internal.workbench.swt.PartRenderingEngine.run(PartRenderingEngine.java:942)
+	at org.eclipse.e4.ui.internal.workbench.E4Workbench.createAndRunUI(E4Workbench.java:86)
+	at org.eclipse.ui.internal.Workbench$5.run(Workbench.java:588)
+	at org.eclipse.core.databinding.observable.Realm.runWithDefault(Realm.java:332)
+	at org.eclipse.ui.internal.Workbench.createAndRunWorkbench(Workbench.java:543)
+	at org.eclipse.ui.PlatformUI.createAndRunWorkbench(PlatformUI.java:149)
+	at org.eclipse.ui.internal.ide.application.IDEApplication.start(IDEApplication.java:124)
+	at org.eclipse.equinox.internal.app.EclipseAppHandle.run(EclipseAppHandle.java:196)
+	at org.eclipse.core.runtime.internal.adaptor.EclipseAppLauncher.runApplication(EclipseAppLauncher.java:110)
+	at org.eclipse.core.runtime.internal.adaptor.EclipseAppLauncher.start(EclipseAppLauncher.java:79)
+	at org.eclipse.core.runtime.adaptor.EclipseStarter.run(EclipseStarter.java:353)
+	at org.eclipse.core.runtime.adaptor.EclipseStarter.run(EclipseStarter.java:180)
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(Unknown Source)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(Unknown Source)
+	at java.lang.reflect.Method.invoke(Unknown Source)
+	at org.eclipse.equinox.launcher.Main.invokeFramework(Main.java:629)
+	at org.eclipse.equinox.launcher.Main.basicRun(Main.java:584)
+	at org.eclipse.equinox.launcher.Main.run(Main.java:1438)
+	at org.eclipse.equinox.launcher.Main.main(Main.java:1414)
+Translatable source found in...
+Found 0 cached/archived units.  Used 0 / 3136 units from cache.
+Compiling...
+   70% complete (ETR: 1 seconds)
+   70% complete (ETR: 1 seconds)
+   70% complete (ETR: 1 seconds)
+   70% complete (ETR: 1 seconds)
+   70% complete (ETR: 1 seconds)
+   70% complete (ETR: 1 seconds)
+   70% complete (ETR: 1 seconds)
+   70% complete (ETR: 1 seconds)
+   80% complete (ETR: 1 seconds)
+   90% complete (ETR: 1 seconds)
+   100% complete (ETR: 0 seconds)
+   Compilation completed in 10,17 seconds
+Validating units:
+   [WARN] Warnings in 'jar:file:/C:/Users/Joaquin%20Gayoso/git/AtNoteGlassfish/GlassAtNote/libs/gwt-incubator-20101117-r1766.jar!/com/google/gwt/widgetideas/client/impl/GlassPanelImpl.java'
+      [WARN] Line 30: Referencing deprecated class 'com.google.gwt.user.client.impl.DocumentRootImpl'
+      [WARN] Line 38: Referencing deprecated class 'com.google.gwt.user.client.impl.DocumentRootImpl'
+Removing invalidated units
+Finding entry point classes
+Rebinding com.google.gwt.i18n.client.impl.LocaleInfoImpl
+   Invoking generator com.google.gwt.i18n.rebind.LocaleInfoGenerator
+      Processing interface com.google.gwt.i18n.client.constants.NumberConstantsImpl
+         Generating method body for notANumber()
+         Generating method body for currencyPattern()
+         Generating method body for decimalPattern()
+         Generating method body for decimalSeparator()
+         Generating method body for defCurrencyCode()
+         Generating method body for exponentialSymbol()
+         Generating method body for globalCurrencyPattern()
+         Generating method body for groupingSeparator()
+         Generating method body for infinity()
+         Generating method body for minusSign()
+         Generating method body for monetaryGroupingSeparator()
+         Generating method body for monetarySeparator()
+         Generating method body for percent()
+         Generating method body for percentPattern()
+         Generating method body for perMill()
+         Generating method body for plusSign()
+         Generating method body for scientificPattern()
+         Generating method body for simpleCurrencyPattern()
+         Generating method body for zeroDigit()
+   Adding '3' new generated units
+      Compiling...
+         Compilation completed in 0,02 seconds
+      Removing invalidated units
+Rebinding com.google.gwt.user.client.ui.MenuBar.Resources
+   Invoking generator com.google.gwt.resources.rebind.context.InlineClientBundleGenerator
+      Preparing method menuBarSubMenuIcon
+         Adding image 'com.google.gwt.user.client.ui.MenuBar.Resources.menuBarSubMenuIcon'
+   Adding '1' new generated units
+      Compiling...
+         Compilation completed in 0,02 seconds
+      Removing invalidated units
+Rebinding com.google.gwt.user.client.ui.FormPanel.IFrameTemplate
+   Invoking generator com.google.gwt.safehtml.rebind.SafeHtmlTemplatesGenerator
+      Constructing interface com.google.gwt.user.client.ui.FormPanel.IFrameTemplate
+         Generating method body for get()
+   Adding '1' new generated units
+      Compiling...
+         Compilation completed in 0,01 seconds
+      Removing invalidated units
+Rebinding lector.client.book.reader.ImageService
+   Invoking generator com.google.gwt.user.rebind.rpc.ServiceInterfaceProxyGenerator
+      Generating client proxy for remote service interface 'lector.client.book.reader.ImageService'
+         Analyzing 'lector.client.book.reader.ImageService' for serializable types
+            Analyzing methods:
+               public abstract lector.share.model.client.BookClient loadBookById(java.lang.Long id) throws lector.share.model.BookNotFoundException
+                  Parameter: java.lang.Long id
+                     java.lang.Long is already a root type.
+               public abstract java.lang.String loadHTMLStringForExportUni(lector.share.model.ExportObject exportObject)
+                  Return type: java.lang.String
+                     java.lang.String is already a root type.
+               public abstract java.lang.String loadRTFStringForExportUni(lector.share.model.ExportObject exportObject)
+                  Return type: java.lang.String
+                     java.lang.String is already a root type.
+                  Parameter: lector.share.model.ExportObject exportObject
+                     lector.share.model.ExportObject is already a root type.
+         Using a shard size of 0 for TypeSerializerCreator createMethodMap
+   Adding '49' new generated units
+      Compiling...
+         Compilation completed in 0,22 seconds
+      Removing invalidated units
+Rebinding lector.client.book.reader.GWTService
+   Invoking generator com.google.gwt.user.rebind.rpc.ServiceInterfaceProxyGenerator
+      Generating client proxy for remote service interface 'lector.client.book.reader.GWTService'
+         Analyzing 'lector.client.book.reader.GWTService' for serializable types
+            Analyzing methods:
+               public abstract void addChildEntry(java.lang.Long entryId, java.lang.Long fatherTypeCategory) throws lector.share.model.TwinBrotherException, lector.share.model.GeneralException
+                  Parameter: java.lang.Long entryId
+                     java.lang.Long is already a root type.
+                  Parameter: java.lang.Long fatherTypeCategory
+                     java.lang.Long is already a root type.
+                  Throws:
+                     lector.share.model.GeneralException is already a root type.
+               public abstract void addChildToCatalog(lector.share.model.client.EntryClient entryClient, java.lang.Long catalogId) throws lector.share.model.TwinBrotherException, lector.share.model.GeneralException
+                  Parameter: java.lang.Long catalogId
+                     java.lang.Long is already a root type.
+                  Throws:
+                     lector.share.model.TwinBrotherException is already a root type.
+                     lector.share.model.GeneralException is already a root type.
+               public abstract void addStudentToBeValidated(java.lang.Long userId, java.lang.Long groupId) throws lector.share.model.GeneralException
+                  Parameter: java.lang.Long userId
+                     java.lang.Long is already a root type.
+                  Parameter: java.lang.Long groupId
+                     java.lang.Long is already a root type.
+                  Throws:
+                     lector.share.model.GeneralException is already a root type.
+               public abstract void deleteAnnotation(java.lang.Long annotationId) throws lector.share.model.GeneralException, lector.share.model.AnnotationNotFoundException
+                  Parameter: java.lang.Long annotationId
+                     java.lang.Long is already a root type.
+                  Throws:
+                     lector.share.model.GeneralException is already a root type.
+               public abstract void deleteAnnotationThread(java.lang.Long annotationThreadId) throws lector.share.model.GeneralException
+                  Parameter: java.lang.Long annotationThreadId
+                     java.lang.Long is already a root type.
+                  Throws:
+                     lector.share.model.GeneralException is already a root type.
+               public abstract void deleteBookById(java.lang.Long id) throws lector.share.model.GeneralException
+                  Parameter: java.lang.Long id
+                     java.lang.Long is already a root type.
+                  Throws:
+                     lector.share.model.GeneralException is already a root type.
+               public abstract void deleteCatalog(java.lang.Long catalogId) throws lector.share.model.GeneralException
+                  Parameter: java.lang.Long catalogId
+                     java.lang.Long is already a root type.
+                  Throws:
+                     lector.share.model.GeneralException is already a root type.
+               public abstract void deleteGroup(java.lang.Long groupId) throws lector.share.model.GeneralException
+                  Parameter: java.lang.Long groupId
+                     java.lang.Long is already a root type.
+                  Throws:
+                     lector.share.model.GeneralException is already a root type.
+               public abstract void deleteLanguage(java.lang.Long languageId) throws lector.share.model.GeneralException
+                  Parameter: java.lang.Long languageId
+                     java.lang.Long is already a root type.
+                  Throws:
+                     lector.share.model.GeneralException is already a root type.
+               public abstract void deleteProfessorById(java.lang.Long professorId) throws lector.share.model.GeneralException
+                  Parameter: java.lang.Long professorId
+                     java.lang.Long is already a root type.
+                  Throws:
+                     lector.share.model.GeneralException is already a root type.
+               public abstract void deleteReadingActivity(java.lang.Long readingActivityId) throws lector.share.model.GeneralException, lector.share.model.NullParameterException, lector.share.model.AnnotationNotFoundException
+                  Parameter: java.lang.Long readingActivityId
+                     java.lang.Long is already a root type.
+                  Throws:
+                     lector.share.model.GeneralException is already a root type.
+                     lector.share.model.AnnotationNotFoundException is already a root type.
+               public abstract void deleteStudentById(java.lang.Long studentId) throws lector.share.model.GeneralException
+                  Parameter: java.lang.Long studentId
+                     java.lang.Long is already a root type.
+                  Throws:
+                     lector.share.model.GeneralException is already a root type.
+               public abstract void deleteTag(java.lang.Long typeId, java.lang.Long fatherId) throws lector.share.model.GeneralException
+                  Parameter: java.lang.Long typeId
+                     java.lang.Long is already a root type.
+                  Parameter: java.lang.Long fatherId
+                     java.lang.Long is already a root type.
+                  Throws:
+                     lector.share.model.GeneralException is already a root type.
+               public abstract void deleteTypeCategory(java.lang.Long typeCategoryId, java.lang.Long fatherFolderDBId) throws lector.share.model.GeneralException
+                  Parameter: java.lang.Long typeCategoryId
+                     java.lang.Long is already a root type.
+                  Parameter: java.lang.Long fatherFolderDBId
+                     java.lang.Long is already a root type.
+                  Throws:
+                     lector.share.model.GeneralException is already a root type.
+               public abstract boolean deleteUserWithPassword(java.lang.Long userId, java.lang.String password) throws lector.share.model.GeneralException
+                  Parameter: java.lang.Long userId
+                     java.lang.Long is already a root type.
+                  Parameter: java.lang.String password
+                     java.lang.String is already a root type.
+                  Throws:
+                     lector.share.model.GeneralException is already a root type.
+               public abstract void fusionFolder(java.lang.Long typeCategoryFromId, java.lang.Long typeCategoryToId) throws lector.share.model.IlegalFolderFusionException, lector.share.model.GeneralException
+                  Parameter: java.lang.Long typeCategoryFromId
+                     java.lang.Long is already a root type.
+                  Parameter: java.lang.Long typeCategoryToId
+                     java.lang.Long is already a root type.
+                  Throws:
+                     lector.share.model.GeneralException is already a root type.
+               public abstract void fusionTypes(java.lang.Long typeFromId, java.lang.Long typeToId) throws lector.share.model.GeneralException, lector.share.model.NullParameterException
+                  Parameter: java.lang.Long typeFromId
+                     java.lang.Long is already a root type.
+                  Parameter: java.lang.Long typeToId
+                     java.lang.Long is already a root type.
+                  Throws:
+                     lector.share.model.GeneralException is already a root type.
+                     lector.share.model.NullParameterException is already a root type.
+               public abstract java.util.List<lector.share.model.client.AnnotationThreadClient> getAnnotationThreadsByItsAnnotation(java.lang.Long annotationId) throws lector.share.model.GeneralException, lector.share.model.AnnotationThreadNotFoundException
+                  Parameter: java.lang.Long annotationId
+                     java.lang.Long is already a root type.
+                  Throws:
+                     lector.share.model.GeneralException is already a root type.
+               public abstract java.util.List<lector.share.model.client.AnnotationClient> getAnnotationsByBookId(java.lang.Long activityId, java.lang.String bookId) throws lector.share.model.GeneralException, lector.share.model.AnnotationNotFoundException, lector.share.model.NullParameterException, lector.share.model.BookNotFoundException
+                  Parameter: java.lang.Long activityId
+                     java.lang.Long is already a root type.
+                  Parameter: java.lang.String bookId
+                     java.lang.String is already a root type.
+                  Throws:
+                     lector.share.model.GeneralException is already a root type.
+                     lector.share.model.AnnotationNotFoundException is already a root type.
+                     lector.share.model.NullParameterException is already a root type.
+               public abstract java.util.List<lector.share.model.client.AnnotationClient> getAnnotationsByIds(java.util.List<java.lang.Long> ids) throws lector.share.model.GeneralException, lector.share.model.GroupNotFoundException
+                  Return type: java.util.List<lector.share.model.client.AnnotationClient>
+                     java.util.List<lector.share.model.client.AnnotationClient> is already a root type.
+                  Throws:
+                     lector.share.model.GeneralException is already a root type.
+               public abstract java.util.List<lector.share.model.client.AnnotationClient> getAnnotationsByIdsAndAuthorsTeacher(java.util.List<java.lang.Long> ids, java.util.List<java.lang.Long> authorIds, java.lang.Long Activity)
+                  Return type: java.util.List<lector.share.model.client.AnnotationClient>
+                     java.util.List<lector.share.model.client.AnnotationClient> is already a root type.
+                  Parameter: java.util.List<java.lang.Long> ids
+                     java.util.List<java.lang.Long> is already a root type.
+                  Parameter: java.util.List<java.lang.Long> authorIds
+                     java.util.List<java.lang.Long> is already a root type.
+                  Parameter: java.lang.Long Activity
+                     java.lang.Long is already a root type.
+               public abstract java.util.List<lector.share.model.client.AnnotationClient> getAnnotationsByPageNumber(java.lang.Integer pageNumber, java.lang.String bookId, java.lang.Long readingActivityId) throws lector.share.model.GeneralException, lector.share.model.AnnotationNotFoundException, lector.share.model.NullParameterException, lector.share.model.BookNotFoundException
+                  Return type: java.util.List<lector.share.model.client.AnnotationClient>
+                     java.util.List<lector.share.model.client.AnnotationClient> is already a root type.
+                  Parameter: java.lang.String bookId
+                     java.lang.String is already a root type.
+                  Parameter: java.lang.Long readingActivityId
+                     java.lang.Long is already a root type.
+                  Throws:
+                     lector.share.model.GeneralException is already a root type.
+                     lector.share.model.AnnotationNotFoundException is already a root type.
+                     lector.share.model.NullParameterException is already a root type.
+                     lector.share.model.BookNotFoundException is already a root type.
+               public abstract java.util.List<lector.share.model.client.AnnotationClient> getAnnotationsByPageNumbertAndUserId(java.lang.Integer pageNumber, java.lang.String bookId, java.lang.Long studentId, java.lang.Long readingActivityId) throws lector.share.model.GeneralException, lector.share.model.AnnotationNotFoundException
+                  Return type: java.util.List<lector.share.model.client.AnnotationClient>
+                     java.util.List<lector.share.model.client.AnnotationClient> is already a root type.
+                  Parameter: java.lang.Integer pageNumber
+                     java.lang.Integer is already a root type.
+                  Parameter: java.lang.String bookId
+                     java.lang.String is already a root type.
+                  Parameter: java.lang.Long studentId
+                     java.lang.Long is already a root type.
+                  Parameter: java.lang.Long readingActivityId
+                     java.lang.Long is already a root type.
+                  Throws:
+                     lector.share.model.GeneralException is already a root type.
+                     lector.share.model.AnnotationNotFoundException is already a root type.
+               public abstract java.util.List<lector.share.model.client.AnnotationClient> getAnnotationsByTeacherIds(java.util.List<java.lang.Long> ids, java.lang.Long readingActivityId)
+                  Return type: java.util.List<lector.share.model.client.AnnotationClient>
+                     java.util.List<lector.share.model.client.AnnotationClient> is already a root type.
+                  Parameter: java.util.List<java.lang.Long> ids
+                     java.util.List<java.lang.Long> is already a root type.
+                  Parameter: java.lang.Long readingActivityId
+                     java.lang.Long is already a root type.
+               public abstract java.util.List<lector.share.model.client.AnnotationClient> getAnnotationsByTypeClientIdsForProfessor(java.util.List<java.lang.Long> ids, java.lang.Long readingActivityId, java.lang.Long professorId) throws lector.share.model.GeneralException, lector.share.model.TagNotFoundException
+                  Return type: java.util.List<lector.share.model.client.AnnotationClient>
+                     java.util.List<lector.share.model.client.AnnotationClient> is already a root type.
+                  Parameter: java.util.List<java.lang.Long> ids
+                     java.util.List<java.lang.Long> is already a root type.
+                  Parameter: java.lang.Long readingActivityId
+                     java.lang.Long is already a root type.
+                  Parameter: java.lang.Long professorId
+                     java.lang.Long is already a root type.
+                  Throws:
+                     lector.share.model.GeneralException is already a root type.
+               public abstract java.util.List<lector.share.model.client.AnnotationClient> getAnnotationsByTypeClientIdsForStudent(java.util.List<java.lang.Long> ids, java.lang.Long readingActivityId, java.lang.Long studentId) throws lector.share.model.GeneralException, lector.share.model.TagNotFoundException
+                  Return type: java.util.List<lector.share.model.client.AnnotationClient>
+                     java.util.List<lector.share.model.client.AnnotationClient> is already a root type.
+                  Parameter: java.util.List<java.lang.Long> ids
+                     java.util.List<java.lang.Long> is already a root type.
+                  Parameter: java.lang.Long readingActivityId
+                     java.lang.Long is already a root type.
+                  Parameter: java.lang.Long studentId
+                     java.lang.Long is already a root type.
+                  Throws:
+                     lector.share.model.GeneralException is already a root type.
+                     lector.share.model.TagNotFoundException is already a root type.
+               public abstract java.util.List<lector.share.model.client.AnnotationClient> getAnnotationsForStudentId(java.util.List<java.lang.Long> ids, java.lang.Long Student) throws lector.share.model.GeneralException, lector.share.model.AnnotationNotFoundException
+                  Return type: java.util.List<lector.share.model.client.AnnotationClient>
+                     java.util.List<lector.share.model.client.AnnotationClient> is already a root type.
+                  Parameter: java.util.List<java.lang.Long> ids
+                     java.util.List<java.lang.Long> is already a root type.
+                  Parameter: java.lang.Long Student
+                     java.lang.Long is already a root type.
+                  Throws:
+                     lector.share.model.GeneralException is already a root type.
+                     lector.share.model.AnnotationNotFoundException is already a root type.
+               public abstract java.lang.Integer getAnnotationsNumberByTagName(java.lang.String annotationTagName) throws lector.share.model.GeneralException, lector.share.model.NullParameterException, lector.share.model.AnnotationNotFoundException
+                  Parameter: java.lang.String annotationTagName
+                     java.lang.String is already a root type.
+                  Throws:
+                     lector.share.model.GeneralException is already a root type.
+                     lector.share.model.NullParameterException is already a root type.
+                     lector.share.model.AnnotationNotFoundException is already a root type.
+               public abstract java.util.List<lector.share.model.client.GoogleBookClient> getBookClients(java.lang.String query, int start)
+                  Parameter: java.lang.String query
+                     java.lang.String is already a root type.
+               public abstract java.util.List<lector.share.model.client.BookClient> getBookClientsByIds(java.util.List<java.lang.Long> ids) throws lector.share.model.BookNotFoundException, lector.share.model.GeneralException
+                  Parameter: java.util.List<java.lang.Long> ids
+                     java.util.List<java.lang.Long> is already a root type.
+                  Throws:
+                     lector.share.model.BookNotFoundException is already a root type.
+                     lector.share.model.GeneralException is already a root type.
+               public abstract java.util.List<lector.share.model.client.CatalogoClient> getCatalogs() throws lector.share.model.GeneralException, lector.share.model.CatalogoNotFoundException
+                  Throws:
+                     lector.share.model.GeneralException is already a root type.
+               public abstract java.util.List<java.lang.Long> getEntriesIdsByNames(java.util.ArrayList<java.lang.String> names, java.lang.Long catalogTeacher, java.lang.Long catalogOpen)
+                  Parameter: java.lang.Long catalogTeacher
+                     java.lang.Long is already a root type.
+                  Parameter: java.lang.Long catalogOpen
+                     java.lang.Long is already a root type.
+               public abstract java.util.List<lector.share.model.client.GoogleBookClient> getGoogleBookClients(java.lang.String query)
+                  Return type: java.util.List<lector.share.model.client.GoogleBookClient>
+                     java.util.List<lector.share.model.client.GoogleBookClient> is already a root type.
+                  Parameter: java.lang.String query
+                     java.lang.String is already a root type.
+               public abstract java.util.List<lector.share.model.client.GroupClient> getGroupsByIds(java.util.List<java.lang.Long> ids) throws lector.share.model.GroupNotFoundException, lector.share.model.GeneralException
+                  Parameter: java.util.List<java.lang.Long> ids
+                     java.util.List<java.lang.Long> is already a root type.
+                  Throws:
+                     lector.share.model.GroupNotFoundException is already a root type.
+                     lector.share.model.GeneralException is already a root type.
+               public abstract java.util.List<lector.share.model.client.GroupClient> getGroupsByUserId(java.lang.Long userId) throws lector.share.model.GroupNotFoundException, lector.share.model.GeneralException
+                  Return type: java.util.List<lector.share.model.client.GroupClient>
+                     java.util.List<lector.share.model.client.GroupClient> is already a root type.
+                  Parameter: java.lang.Long userId
+                     java.lang.Long is already a root type.
+                  Throws:
+                     lector.share.model.GroupNotFoundException is already a root type.
+                     lector.share.model.GeneralException is already a root type.
+               public abstract java.lang.String getJSONServiceTODrawGraph(java.lang.String query, java.lang.String data)
+                  Return type: java.lang.String
+                     java.lang.String is already a root type.
+                  Parameter: java.lang.String query
+                     java.lang.String is already a root type.
+                  Parameter: java.lang.String data
+                     java.lang.String is already a root type.
+               public abstract java.util.List<lector.share.model.Language> getLanguages() throws lector.share.model.GeneralException, lector.share.model.LanguageNotFoundException, lector.share.model.NullParameterException
+                  Throws:
+                     lector.share.model.GeneralException is already a root type.
+                     lector.share.model.NullParameterException is already a root type.
+               public abstract java.util.List<java.lang.String> getLanguagesNames() throws lector.share.model.GeneralException, lector.share.model.LanguageNotFoundException, lector.share.model.NullParameterException
+                  Throws:
+                     lector.share.model.GeneralException is already a root type.
+                     lector.share.model.LanguageNotFoundException is already a root type.
+                     lector.share.model.NullParameterException is already a root type.
+               public abstract java.util.List<lector.share.model.client.ProfessorClient> getProfessors() throws lector.share.model.GeneralException, lector.share.model.ProfessorNotFoundException
+                  Throws:
+                     lector.share.model.GeneralException is already a root type.
+               public abstract java.util.List<lector.share.model.client.ProfessorClient> getProfessorsAnnotatorsByActivityId(java.lang.Long activityId) throws lector.share.model.GeneralException, lector.share.model.UserNotFoundException
+                  Return type: java.util.List<lector.share.model.client.ProfessorClient>
+                     java.util.List<lector.share.model.client.ProfessorClient> is already a root type.
+                  Parameter: java.lang.Long activityId
+                     java.lang.Long is already a root type.
+                  Throws:
+                     lector.share.model.GeneralException is already a root type.
+               public abstract java.util.List<lector.share.model.client.ReadingActivityClient> getReadingActivitiesByProfessorId(java.lang.Long professorId) throws lector.share.model.GeneralException, lector.share.model.ReadingActivityNotFoundException
+                  Parameter: java.lang.Long professorId
+                     java.lang.Long is already a root type.
+                  Throws:
+                     lector.share.model.GeneralException is already a root type.
+               public abstract java.util.List<lector.share.model.client.ReadingActivityClient> getReadingActivitiesByStudentId(java.lang.Long studentId) throws lector.share.model.GeneralException, lector.share.model.UserNotFoundException, lector.share.model.GroupNotFoundException
+                  Return type: java.util.List<lector.share.model.client.ReadingActivityClient>
+                     java.util.List<lector.share.model.client.ReadingActivityClient> is already a root type.
+                  Parameter: java.lang.Long studentId
+                     java.lang.Long is already a root type.
+                  Throws:
+                     lector.share.model.GeneralException is already a root type.
+                     lector.share.model.UserNotFoundException is already a root type.
+                     lector.share.model.GroupNotFoundException is already a root type.
+               public abstract java.util.List<lector.share.model.client.EntryClient> getSonsFromFolderDB(java.lang.Long typeCategoryId)
+                  Parameter: java.lang.Long typeCategoryId
+                     java.lang.Long is already a root type.
+               public abstract java.util.List<lector.share.model.client.StudentClient> getStudents() throws lector.share.model.GeneralException, lector.share.model.StudentNotFoundException
+                  Throws:
+                     lector.share.model.GeneralException is already a root type.
+               public abstract java.util.List<lector.share.model.client.TypeClient> getTypesByIds(java.util.List<java.lang.Long> typeIds) throws lector.share.model.GeneralException
+                  Parameter: java.util.List<java.lang.Long> typeIds
+                     java.util.List<java.lang.Long> is already a root type.
+                  Throws:
+                     lector.share.model.GeneralException is already a root type.
+               public abstract java.util.List<lector.share.model.client.TypeClient> getTypesByNameAndCatalogId(java.util.List<java.lang.String> typeNames, java.lang.Long catalogId) throws lector.share.model.GeneralException
+                  Return type: java.util.List<lector.share.model.client.TypeClient>
+                     java.util.List<lector.share.model.client.TypeClient> is already a root type.
+                  Parameter: java.lang.Long catalogId
+                     java.lang.Long is already a root type.
+                  Throws:
+                     lector.share.model.GeneralException is already a root type.
+               public abstract java.util.List<lector.share.model.client.StudentClient> getUsersByGroupId(java.lang.Long groupId) throws lector.share.model.GeneralException, lector.share.model.GroupNotFoundException
+                  Return type: java.util.List<lector.share.model.client.StudentClient>
+                     java.util.List<lector.share.model.client.StudentClient> is already a root type.
+                  Parameter: java.lang.Long groupId
+                     java.lang.Long is already a root type.
+                  Throws:
+                     lector.share.model.GeneralException is already a root type.
+                     lector.share.model.GroupNotFoundException is already a root type.
+               public abstract java.util.List<lector.share.model.client.CatalogoClient> getVisbibleCatalogsByProfessorId(java.lang.Long professorId) throws lector.share.model.GeneralException, lector.share.model.CatalogoNotFoundException
+                  Return type: java.util.List<lector.share.model.client.CatalogoClient>
+                     java.util.List<lector.share.model.client.CatalogoClient> is already a root type.
+                  Parameter: java.lang.Long professorId
+                     java.lang.Long is already a root type.
+                  Throws:
+                     lector.share.model.GeneralException is already a root type.
+                     lector.share.model.CatalogoNotFoundException is already a root type.
+               public abstract lector.share.model.client.BookClient loadBookClientById(java.lang.Long id) throws lector.share.model.BookNotFoundException, lector.share.model.GeneralException
+                  Parameter: java.lang.Long id
+                     java.lang.Long is already a root type.
+                  Throws:
+                     lector.share.model.BookNotFoundException is already a root type.
+                     lector.share.model.GeneralException is already a root type.
+               public abstract lector.share.model.client.CatalogoClient loadCatalogById(java.lang.Long catalogId)
+                  Parameter: java.lang.Long catalogId
+                     java.lang.Long is already a root type.
+               public abstract lector.share.model.client.GoogleBookClient loadFullBookInGoogle(java.lang.String query)
+                  Parameter: java.lang.String query
+                     java.lang.String is already a root type.
+               public abstract lector.share.model.client.GroupClient loadGroupById(java.lang.Long groupId) throws lector.share.model.GroupNotFoundException, lector.share.model.GeneralException
+                  Parameter: java.lang.Long groupId
+                     java.lang.Long is already a root type.
+                  Throws:
+                     lector.share.model.GroupNotFoundException is already a root type.
+                     lector.share.model.GeneralException is already a root type.
+               public abstract lector.share.model.Language loadLanguageById(java.lang.Long languageId) throws lector.share.model.LanguageNotFoundException, lector.share.model.GeneralException
+                  Parameter: java.lang.Long languageId
+                     java.lang.Long is already a root type.
+                  Throws:
+                     lector.share.model.LanguageNotFoundException is already a root type.
+                     lector.share.model.GeneralException is already a root type.
+               public abstract lector.share.model.client.ReadingActivityClient loadReadingActivityById(java.lang.Long readingActivityId) throws lector.share.model.ReadingActivityNotFoundException, lector.share.model.GeneralException
+                  Parameter: java.lang.Long readingActivityId
+                     java.lang.Long is already a root type.
+                  Throws:
+                     lector.share.model.ReadingActivityNotFoundException is already a root type.
+                     lector.share.model.GeneralException is already a root type.
+               public abstract lector.share.model.client.TypeClient loadTypeById(java.lang.Long typeId) throws lector.share.model.TagNotFoundException, lector.share.model.GeneralException
+                  Parameter: java.lang.Long typeId
+                     java.lang.Long is already a root type.
+                  Throws:
+                     lector.share.model.TagNotFoundException is already a root type.
+                     lector.share.model.GeneralException is already a root type.
+               public abstract lector.share.model.client.TypeClient loadTypeByNameAndCatalogId(java.lang.String typeName, java.lang.Long catalogId) throws lector.share.model.TagNotFoundException, lector.share.model.GeneralException
+                  Return type: lector.share.model.client.TypeClient
+                     lector.share.model.client.TypeClient is already a root type.
+                  Parameter: java.lang.String typeName
+                     java.lang.String is already a root type.
+                  Parameter: java.lang.Long catalogId
+                     java.lang.Long is already a root type.
+                  Throws:
+                     lector.share.model.TagNotFoundException is already a root type.
+                     lector.share.model.GeneralException is already a root type.
+               public abstract lector.share.model.client.TypeCategoryClient loadTypeCategoryById(java.lang.Long typeCategoryId) throws lector.share.model.GeneralException, lector.share.model.FolderDBNotFoundException
+                  Parameter: java.lang.Long typeCategoryId
+                     java.lang.Long is already a root type.
+                  Throws:
+                     lector.share.model.GeneralException is already a root type.
+               public abstract lector.share.model.client.TypeCategoryClient loadTypeCategoryByNameAndCatalogId(java.lang.String typeCategoryName, java.lang.Long catalogId) throws lector.share.model.GeneralException, lector.share.model.FolderDBNotFoundException
+                  Return type: lector.share.model.client.TypeCategoryClient
+                     lector.share.model.client.TypeCategoryClient is already a root type.
+                  Parameter: java.lang.String typeCategoryName
+                     java.lang.String is already a root type.
+                  Parameter: java.lang.Long catalogId
+                     java.lang.Long is already a root type.
+                  Throws:
+                     lector.share.model.GeneralException is already a root type.
+                     lector.share.model.FolderDBNotFoundException is already a root type.
+               public abstract lector.share.model.client.UserClient loadUserById(java.lang.Long userId) throws lector.share.model.UserNotFoundException, lector.share.model.GeneralException
+                  Parameter: java.lang.Long userId
+                     java.lang.Long is already a root type.
+                  Throws:
+                     lector.share.model.UserNotFoundException is already a root type.
+                     lector.share.model.GeneralException is already a root type.
+               public abstract lector.share.model.client.UserClient login(java.lang.String userName, java.lang.String password) throws lector.share.model.UserNotFoundException, lector.share.model.NotAuthenticatedException, lector.share.model.GeneralException
+                  Return type: lector.share.model.client.UserClient
+                     lector.share.model.client.UserClient is already a root type.
+                  Parameter: java.lang.String userName
+                     java.lang.String is already a root type.
+                  Parameter: java.lang.String password
+                     java.lang.String is already a root type.
+                  Throws:
+                     lector.share.model.UserNotFoundException is already a root type.
+                     lector.share.model.GeneralException is already a root type.
+               public abstract void moveFolderDB(java.lang.Long typeCategoryId, java.lang.Long typeCategoryFromId, java.lang.Long typeCategoryToId) throws lector.share.model.GeneralException, lector.share.model.DecendanceException
+                  Parameter: java.lang.Long typeCategoryId
+                     java.lang.Long is already a root type.
+                  Parameter: java.lang.Long typeCategoryFromId
+                     java.lang.Long is already a root type.
+                  Parameter: java.lang.Long typeCategoryToId
+                     java.lang.Long is already a root type.
+                  Throws:
+                     lector.share.model.GeneralException is already a root type.
+               public abstract void moveType(java.lang.Long typeCategoryFromId, java.lang.Long typeId, java.lang.Long typeCategoryToId) throws lector.share.model.GeneralException
+                  Parameter: java.lang.Long typeCategoryFromId
+                     java.lang.Long is already a root type.
+                  Parameter: java.lang.Long typeId
+                     java.lang.Long is already a root type.
+                  Parameter: java.lang.Long typeCategoryToId
+                     java.lang.Long is already a root type.
+                  Throws:
+                     lector.share.model.GeneralException is already a root type.
+               public abstract void removeStudentsToBeValidated(java.util.List<java.lang.Long> userIds, java.lang.Long groupId) throws lector.share.model.GeneralException
+                  Parameter: java.util.List<java.lang.Long> userIds
+                     java.util.List<java.lang.Long> is already a root type.
+                  Parameter: java.lang.Long groupId
+                     java.lang.Long is already a root type.
+                  Throws:
+                     lector.share.model.GeneralException is already a root type.
+               public abstract void removeUserParticipatingInGroup(java.lang.Long userId, java.lang.Long groupId) throws lector.share.model.GeneralException
+                  Parameter: java.lang.Long userId
+                     java.lang.Long is already a root type.
+                  Parameter: java.lang.Long groupId
+                     java.lang.Long is already a root type.
+                  Throws:
+                     lector.share.model.GeneralException is already a root type.
+               public abstract void renameType(java.lang.Long typeIds, java.lang.String newTagName)
+                  Parameter: java.lang.Long typeIds
+                     java.lang.Long is already a root type.
+                  Parameter: java.lang.String newTagName
+                     java.lang.String is already a root type.
+               public abstract void renameTypeCategory(java.lang.Long typeCategoryId, java.lang.String newFolderDBName)
+                  Parameter: java.lang.Long typeCategoryId
+                     java.lang.Long is already a root type.
+                  Parameter: java.lang.String newFolderDBName
+                     java.lang.String is already a root type.
+               public abstract void saveAnnotation(lector.share.model.client.AnnotationClient annotationClient) throws lector.share.model.GeneralException
+                  Throws:
+                     lector.share.model.GeneralException is already a root type.
+               public abstract void saveAnnotationThread(lector.share.model.client.AnnotationThreadClient annotationThreadClient) throws lector.share.model.GeneralException
+                  Throws:
+                     lector.share.model.GeneralException is already a root type.
+               public abstract void saveCatalog(lector.share.model.client.CatalogoClient catalogClient) throws lector.share.model.GeneralException
+                  Throws:
+                     lector.share.model.GeneralException is already a root type.
+               public abstract void saveGroup(lector.share.model.client.GroupClient groupClient) throws lector.share.model.GeneralException
+                  Throws:
+                     lector.share.model.GeneralException is already a root type.
+               public abstract void saveLanguage(lector.share.model.Language language) throws lector.share.model.GeneralException
+                  Throws:
+                     lector.share.model.GeneralException is already a root type.
+               public abstract void saveReadingActivity(lector.share.model.client.ReadingActivityClient readingActivityClient) throws lector.share.model.GeneralException
+                  Throws:
+                     lector.share.model.GeneralException is already a root type.
+               public abstract void saveType(lector.share.model.client.TypeClient typesys, java.lang.Long fatherEntry) throws lector.share.model.GeneralException
+                  Parameter: java.lang.Long fatherEntry
+                     java.lang.Long is already a root type.
+                  Throws:
+                     lector.share.model.GeneralException is already a root type.
+               public abstract void saveTypeCategory(lector.share.model.client.TypeCategoryClient typeCategoryClient, java.lang.Long fatherEntry) throws lector.share.model.GeneralException
+                  Parameter: java.lang.Long fatherEntry
+                     java.lang.Long is already a root type.
+                  Throws:
+                     lector.share.model.GeneralException is already a root type.
+               public abstract void saveUser(lector.share.model.client.UserClient userClient) throws lector.share.model.GeneralException, lector.share.model.UserNotFoundException
+                  Throws:
+                     lector.share.model.GeneralException is already a root type.
+                     lector.share.model.UserNotFoundException is already a root type.
+               public abstract void updateCatalog(lector.share.model.client.CatalogoClient catalogClient) throws lector.share.model.CatalogoNotFoundException, lector.share.model.GeneralException
+                  Parameter: lector.share.model.client.CatalogoClient catalogClient
+                     lector.share.model.client.CatalogoClient is already a root type.
+                  Throws:
+                     lector.share.model.CatalogoNotFoundException is already a root type.
+                     lector.share.model.GeneralException is already a root type.
+               public abstract void updateType(lector.share.model.client.TypeClient typesys) throws lector.share.model.TagNotFoundException
+                  Parameter: lector.share.model.client.TypeClient typesys
+                     lector.share.model.client.TypeClient is already a root type.
+                  Throws:
+                     lector.share.model.TagNotFoundException is already a root type.
+               public abstract void updateTypeCategory(lector.share.model.client.TypeCategoryClient typeCategoryClient) throws lector.share.model.FolderDBNotFoundException
+                  Parameter: lector.share.model.client.TypeCategoryClient typeCategoryClient
+                     lector.share.model.client.TypeCategoryClient is already a root type.
+                  Throws:
+                     lector.share.model.FolderDBNotFoundException is already a root type.
+               public abstract boolean updateUser(java.lang.Long userId, java.lang.String password) throws lector.share.model.GeneralException
+                  Parameter: java.lang.Long userId
+                     java.lang.Long is already a root type.
+                  Parameter: java.lang.String password
+                     java.lang.String is already a root type.
+                  Throws:
+                     lector.share.model.GeneralException is already a root type.
+               public abstract void validStudentToBeInGroup(java.lang.Long userId, java.lang.Long groupId) throws lector.share.model.GeneralException
+                  Parameter: java.lang.Long userId
+                     java.lang.Long is already a root type.
+                  Parameter: java.lang.Long groupId
+                     java.lang.Long is already a root type.
+                  Throws:
+                     lector.share.model.GeneralException is already a root type.
+               public abstract void validateStudentsToBeInGroup(java.util.List<java.lang.Long> userIds, java.lang.Long groupId) throws lector.share.model.GeneralException
+                  Parameter: java.util.List<java.lang.Long> userIds
+                     java.util.List<java.lang.Long> is already a root type.
+                  Parameter: java.lang.Long groupId
+                     java.lang.Long is already a root type.
+                  Throws:
+                     lector.share.model.GeneralException is already a root type.
+         Using a shard size of 0 for TypeSerializerCreator createMethodMap
+   Adding '69' new generated units
+      Compiling...
+         Compilation completed in 0,22 seconds
+      Removing invalidated units
+Public resources found in...
+   [WARN] Error processing classpath URL 'file:/C:/Program Files/Eclipse/plugins/com.google.gdt.eclipse.designer.hosted.2_2_3.1.2.r42x201302131702/gwt-dev-designtime.jar'
+java.net.URISyntaxException: Illegal character in path at index 16: file:/C:/Program Files/Eclipse/plugins/com.google.gdt.eclipse.designer.hosted.2_2_3.1.2.r42x201302131702/gwt-dev-designtime.jar
+	at java.net.URI$Parser.fail(Unknown Source)
+	at java.net.URI$Parser.checkChars(Unknown Source)
+	at java.net.URI$Parser.parseHierarchical(Unknown Source)
+	at java.net.URI$Parser.parse(Unknown Source)
+	at java.net.URI.<init>(Unknown Source)
+	at java.net.URL.toURI(Unknown Source)
+	at com.google.gwt.dev.resource.impl.ResourceOracleImpl.addAllClassPathEntries(ResourceOracleImpl.java:326)
+	at com.google.gwt.dev.resource.impl.ResourceOracleImpl.getAllClassPathEntries(ResourceOracleImpl.java:361)
+	at com.google.gwt.dev.resource.impl.ResourceOracleImpl.<init>(ResourceOracleImpl.java:405)
+	at com.google.gwt.dev.cfg.ModuleDef.normalize(ModuleDef.java:545)
+	at com.google.gwt.dev.cfg.ModuleDefLoader.doLoadModule(ModuleDefLoader.java:202)
+	at com.google.gwt.dev.cfg.ModuleDefLoader.loadFromResources(ModuleDefLoader.java:172)
+	at com.google.gwt.dev.cfg.ModuleDefLoader.loadFromClassPath(ModuleDefLoader.java:144)
+	at com.google.gwt.dev.shell.designtime.HostedModeSupportImpl.loadModule(HostedModeSupportImpl.java:85)
+	at com.google.gwt.dev.shell.designtime.HostedModeSupportImpl.createModuleSpaceHost(HostedModeSupportImpl.java:64)
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(Unknown Source)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(Unknown Source)
+	at java.lang.reflect.Method.invoke(Unknown Source)
+	at org.eclipse.wb.internal.core.utils.reflect.ReflectionUtils.invokeMethod(ReflectionUtils.java:869)
+	at com.google.gdt.eclipse.designer.hosted.tdt.HostedModeSupport.createModuleSpaceHost(HostedModeSupport.java:447)
+	at com.google.gwt.dev.shell.designtime.ModuleSpace.<init>(ModuleSpace.java:60)
+	at com.google.gdt.eclipse.designer.webkit.jsni.ModuleSpaceWebKit.<init>(ModuleSpaceWebKit.java:45)
+	at com.google.gdt.eclipse.designer.webkit.BrowserShellWebKit.setUrl(BrowserShellWebKit.java:85)
+	at com.google.gdt.eclipse.designer.hosted.tdt.HostedModeSupport.startup(HostedModeSupport.java:184)
+	at com.google.gdt.eclipse.designer.model.widgets.support.GwtState.initialize0(GwtState.java:248)
+	at com.google.gdt.eclipse.designer.model.widgets.support.GwtState.initialize(GwtState.java:206)
+	at com.google.gdt.eclipse.designer.parser.ParseFactory.getClassLoader(ParseFactory.java:429)
+	at org.eclipse.wb.internal.core.parser.AbstractParseFactory.initializeClassLoader(AbstractParseFactory.java:732)
+	at com.google.gdt.eclipse.designer.parser.ParseFactory.getRootContext(ParseFactory.java:117)
+	at org.eclipse.wb.internal.core.parser.JavaInfoParser.prepareParseContext(JavaInfoParser.java:1182)
+	at org.eclipse.wb.internal.core.parser.JavaInfoParser.parse(JavaInfoParser.java:242)
+	at org.eclipse.wb.internal.core.parser.JavaInfoParser.access$9(JavaInfoParser.java:238)
+	at org.eclipse.wb.internal.core.parser.JavaInfoParser$1.runObject(JavaInfoParser.java:153)
+	at org.eclipse.wb.internal.core.parser.JavaInfoParser$1.runObject(JavaInfoParser.java:1)
+	at org.eclipse.wb.internal.core.utils.execution.ExecutionUtils.runDesignTime(ExecutionUtils.java:159)
+	at org.eclipse.wb.internal.core.parser.JavaInfoParser.parse(JavaInfoParser.java:151)
+	at org.eclipse.wb.internal.core.editor.DesignPage.internal_refreshGEF(DesignPage.java:534)
+	at org.eclipse.wb.internal.core.editor.DesignPage.access$9(DesignPage.java:522)
+	at org.eclipse.wb.internal.core.editor.DesignPage$8$1.run(DesignPage.java:449)
+	at org.eclipse.swt.widgets.Synchronizer.syncExec(Synchronizer.java:180)
+	at org.eclipse.ui.internal.UISynchronizer.syncExec(UISynchronizer.java:150)
+	at org.eclipse.swt.widgets.Display.syncExec(Display.java:4687)
+	at org.eclipse.wb.internal.core.editor.DesignPage$8.run(DesignPage.java:446)
+	at org.eclipse.jface.operation.ModalContext.runInCurrentThread(ModalContext.java:464)
+	at org.eclipse.jface.operation.ModalContext.run(ModalContext.java:372)
+	at org.eclipse.jface.dialogs.ProgressMonitorDialog.run(ProgressMonitorDialog.java:507)
+	at org.eclipse.wb.internal.core.editor.DesignPage.internal_refreshGEF_withProgress(DesignPage.java:465)
+	at org.eclipse.wb.internal.core.editor.DesignPage.internal_refreshGEF(DesignPage.java:415)
+	at org.eclipse.wb.internal.core.editor.UndoManager.refreshDesignerEditor(UndoManager.java:381)
+	at org.eclipse.wb.internal.core.editor.DesignPage.refreshGEF(DesignPage.java:392)
+	at org.eclipse.wb.internal.core.editor.DesignPage$4.run(DesignPage.java:285)
+	at org.eclipse.wb.internal.core.utils.execution.ExecutionUtils.runLog(ExecutionUtils.java:106)
+	at org.eclipse.wb.internal.core.editor.DesignPage.checkDependenciesOnDesignPageActivation(DesignPage.java:280)
+	at org.eclipse.wb.internal.core.editor.DesignPage.access$3(DesignPage.java:278)
+	at org.eclipse.wb.internal.core.editor.DesignPage$1$1.run(DesignPage.java:105)
+	at org.eclipse.wb.internal.core.utils.execution.ExecutionUtils.runLog(ExecutionUtils.java:106)
+	at org.eclipse.wb.internal.core.utils.execution.ExecutionUtils$4.run(ExecutionUtils.java:203)
+	at org.eclipse.swt.widgets.RunnableLock.run(RunnableLock.java:35)
+	at org.eclipse.swt.widgets.Synchronizer.runAsyncMessages(Synchronizer.java:135)
+	at org.eclipse.swt.widgets.Display.runAsyncMessages(Display.java:4144)
+	at org.eclipse.swt.widgets.Display.readAndDispatch(Display.java:3761)
+	at org.eclipse.e4.ui.internal.workbench.swt.PartRenderingEngine$9.run(PartRenderingEngine.java:1053)
+	at org.eclipse.core.databinding.observable.Realm.runWithDefault(Realm.java:332)
+	at org.eclipse.e4.ui.internal.workbench.swt.PartRenderingEngine.run(PartRenderingEngine.java:942)
+	at org.eclipse.e4.ui.internal.workbench.E4Workbench.createAndRunUI(E4Workbench.java:86)
+	at org.eclipse.ui.internal.Workbench$5.run(Workbench.java:588)
+	at org.eclipse.core.databinding.observable.Realm.runWithDefault(Realm.java:332)
+	at org.eclipse.ui.internal.Workbench.createAndRunWorkbench(Workbench.java:543)
+	at org.eclipse.ui.PlatformUI.createAndRunWorkbench(PlatformUI.java:149)
+	at org.eclipse.ui.internal.ide.application.IDEApplication.start(IDEApplication.java:124)
+	at org.eclipse.equinox.internal.app.EclipseAppHandle.run(EclipseAppHandle.java:196)
+	at org.eclipse.core.runtime.internal.adaptor.EclipseAppLauncher.runApplication(EclipseAppLauncher.java:110)
+	at org.eclipse.core.runtime.internal.adaptor.EclipseAppLauncher.start(EclipseAppLauncher.java:79)
+	at org.eclipse.core.runtime.adaptor.EclipseStarter.run(EclipseStarter.java:353)
+	at org.eclipse.core.runtime.adaptor.EclipseStarter.run(EclipseStarter.java:180)
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(Unknown Source)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(Unknown Source)
+	at java.lang.reflect.Method.invoke(Unknown Source)
+	at org.eclipse.equinox.launcher.Main.invokeFramework(Main.java:629)
+	at org.eclipse.equinox.launcher.Main.basicRun(Main.java:584)
+	at org.eclipse.equinox.launcher.Main.run(Main.java:1438)
+	at org.eclipse.equinox.launcher.Main.main(Main.java:1414)
+Translatable source found in...
+Found 3134 cached/archived units.  Used 3134 / 3136 units from cache.
+Compiling...
+   Compilation completed in 0,06 seconds
+Validating units:
+   [WARN] Warnings in 'jar:file:/C:/Users/Joaquin%20Gayoso/git/AtNoteGlassfish/GlassAtNote/libs/gwt-incubator-20101117-r1766.jar!/com/google/gwt/widgetideas/client/impl/GlassPanelImpl.java'
+      [WARN] Line 30: Referencing deprecated class 'com.google.gwt.user.client.impl.DocumentRootImpl'
+      [WARN] Line 38: Referencing deprecated class 'com.google.gwt.user.client.impl.DocumentRootImpl'
+Removing invalidated units
+Finding entry point classes
+Rebinding com.google.gwt.i18n.client.impl.LocaleInfoImpl
+   Invoking generator com.google.gwt.i18n.rebind.LocaleInfoGenerator
+      Processing interface com.google.gwt.i18n.client.constants.NumberConstantsImpl
+         Generating method body for notANumber()
+         Generating method body for currencyPattern()
+         Generating method body for decimalPattern()
+         Generating method body for decimalSeparator()
+         Generating method body for defCurrencyCode()
+         Generating method body for exponentialSymbol()
+         Generating method body for globalCurrencyPattern()
+         Generating method body for groupingSeparator()
+         Generating method body for infinity()
+         Generating method body for minusSign()
+         Generating method body for monetaryGroupingSeparator()
+         Generating method body for monetarySeparator()
+         Generating method body for percent()
+         Generating method body for percentPattern()
+         Generating method body for perMill()
+         Generating method body for plusSign()
+         Generating method body for scientificPattern()
+         Generating method body for simpleCurrencyPattern()
+         Generating method body for zeroDigit()
+   Adding '3' new generated units
+      Compiling...
+         Compilation completed in 0,00 seconds
+      Removing invalidated units
+Rebinding com.google.gwt.user.client.ui.MenuBar.Resources
+   Invoking generator com.google.gwt.resources.rebind.context.InlineClientBundleGenerator
+      Preparing method menuBarSubMenuIcon
+         Adding image 'com.google.gwt.user.client.ui.MenuBar.Resources.menuBarSubMenuIcon'
+   Adding '1' new generated units
+      Compiling...
+         Compilation completed in 0,02 seconds
+      Removing invalidated units
+Public resources found in...
+   [WARN] Error processing classpath URL 'file:/C:/Program Files/Eclipse/plugins/com.google.gdt.eclipse.designer.hosted.2_2_3.1.2.r42x201302131702/gwt-dev-designtime.jar'
+java.net.URISyntaxException: Illegal character in path at index 16: file:/C:/Program Files/Eclipse/plugins/com.google.gdt.eclipse.designer.hosted.2_2_3.1.2.r42x201302131702/gwt-dev-designtime.jar
+	at java.net.URI$Parser.fail(Unknown Source)
+	at java.net.URI$Parser.checkChars(Unknown Source)
+	at java.net.URI$Parser.parseHierarchical(Unknown Source)
+	at java.net.URI$Parser.parse(Unknown Source)
+	at java.net.URI.<init>(Unknown Source)
+	at java.net.URL.toURI(Unknown Source)
+	at com.google.gwt.dev.resource.impl.ResourceOracleImpl.addAllClassPathEntries(ResourceOracleImpl.java:326)
+	at com.google.gwt.dev.resource.impl.ResourceOracleImpl.getAllClassPathEntries(ResourceOracleImpl.java:361)
+	at com.google.gwt.dev.resource.impl.ResourceOracleImpl.<init>(ResourceOracleImpl.java:405)
+	at com.google.gwt.dev.cfg.ModuleDef.normalize(ModuleDef.java:545)
+	at com.google.gwt.dev.cfg.ModuleDefLoader.doLoadModule(ModuleDefLoader.java:202)
+	at com.google.gwt.dev.cfg.ModuleDefLoader.loadFromResources(ModuleDefLoader.java:172)
+	at com.google.gwt.dev.cfg.ModuleDefLoader.loadFromClassPath(ModuleDefLoader.java:144)
+	at com.google.gwt.dev.shell.designtime.HostedModeSupportImpl.loadModule(HostedModeSupportImpl.java:85)
+	at com.google.gwt.dev.shell.designtime.HostedModeSupportImpl.createModuleSpaceHost(HostedModeSupportImpl.java:64)
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(Unknown Source)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(Unknown Source)
+	at java.lang.reflect.Method.invoke(Unknown Source)
+	at org.eclipse.wb.internal.core.utils.reflect.ReflectionUtils.invokeMethod(ReflectionUtils.java:869)
+	at com.google.gdt.eclipse.designer.hosted.tdt.HostedModeSupport.createModuleSpaceHost(HostedModeSupport.java:447)
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(Unknown Source)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(Unknown Source)
+	at java.lang.reflect.Method.invoke(Unknown Source)
+	at org.eclipse.wb.internal.core.utils.reflect.ReflectionUtils.invokeMethod(ReflectionUtils.java:869)
+	at com.google.gdt.eclipse.designer.WarmUpSupport.warmUpHostedMode(WarmUpSupport.java:125)
+	at com.google.gdt.eclipse.designer.WarmUpSupport.warmUpHostedMode(WarmUpSupport.java:103)
+	at com.google.gdt.eclipse.designer.WarmUpSupport.doWarmUp(WarmUpSupport.java:84)
+	at com.google.gdt.eclipse.designer.Activator.earlyStartup(Activator.java:190)
+	at org.eclipse.ui.internal.EarlyStartupRunnable.runEarlyStartup(EarlyStartupRunnable.java:87)
+	at org.eclipse.ui.internal.EarlyStartupRunnable.run(EarlyStartupRunnable.java:73)
+	at org.eclipse.core.runtime.SafeRunner.run(SafeRunner.java:42)
+	at org.eclipse.ui.internal.Workbench$54.run(Workbench.java:2412)
+	at org.eclipse.core.internal.jobs.Worker.run(Worker.java:53)
+Translatable source found in...
+Found 0 cached/archived units.  Used 0 / 2723 units from cache.
+Compiling...
+   60% complete (ETR: 3 seconds)
+   60% complete (ETR: 3 seconds)
+   60% complete (ETR: 3 seconds)
+   60% complete (ETR: 3 seconds)
+   60% complete (ETR: 3 seconds)
+   60% complete (ETR: 3 seconds)
+   60% complete (ETR: 3 seconds)
+   70% complete (ETR: 2 seconds)
+   80% complete (ETR: 1 seconds)
+   90% complete (ETR: 1 seconds)
+   100% complete (ETR: 0 seconds)
+   Compilation completed in 8,42 seconds
+Removing invalidated units
+Finding entry point classes
+Public resources found in...
+   [WARN] Error processing classpath URL 'file:/C:/Program Files/Eclipse/plugins/com.google.gdt.eclipse.designer.hosted.2_2_3.1.2.r42x201302131702/gwt-dev-designtime.jar'
+java.net.URISyntaxException: Illegal character in path at index 16: file:/C:/Program Files/Eclipse/plugins/com.google.gdt.eclipse.designer.hosted.2_2_3.1.2.r42x201302131702/gwt-dev-designtime.jar
+	at java.net.URI$Parser.fail(Unknown Source)
+	at java.net.URI$Parser.checkChars(Unknown Source)
+	at java.net.URI$Parser.parseHierarchical(Unknown Source)
+	at java.net.URI$Parser.parse(Unknown Source)
+	at java.net.URI.<init>(Unknown Source)
+	at java.net.URL.toURI(Unknown Source)
+	at com.google.gwt.dev.resource.impl.ResourceOracleImpl.addAllClassPathEntries(ResourceOracleImpl.java:326)
+	at com.google.gwt.dev.resource.impl.ResourceOracleImpl.getAllClassPathEntries(ResourceOracleImpl.java:361)
+	at com.google.gwt.dev.resource.impl.ResourceOracleImpl.<init>(ResourceOracleImpl.java:405)
+	at com.google.gwt.dev.cfg.ModuleDef.normalize(ModuleDef.java:545)
+	at com.google.gwt.dev.cfg.ModuleDefLoader.doLoadModule(ModuleDefLoader.java:202)
+	at com.google.gwt.dev.cfg.ModuleDefLoader.loadFromResources(ModuleDefLoader.java:172)
+	at com.google.gwt.dev.cfg.ModuleDefLoader.loadFromClassPath(ModuleDefLoader.java:144)
+	at com.google.gwt.dev.shell.designtime.HostedModeSupportImpl.loadModule(HostedModeSupportImpl.java:85)
+	at com.google.gwt.dev.shell.designtime.HostedModeSupportImpl.createModuleSpaceHost(HostedModeSupportImpl.java:64)
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(Unknown Source)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(Unknown Source)
+	at java.lang.reflect.Method.invoke(Unknown Source)
+	at org.eclipse.wb.internal.core.utils.reflect.ReflectionUtils.invokeMethod(ReflectionUtils.java:869)
+	at com.google.gdt.eclipse.designer.hosted.tdt.HostedModeSupport.createModuleSpaceHost(HostedModeSupport.java:447)
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(Unknown Source)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(Unknown Source)
+	at java.lang.reflect.Method.invoke(Unknown Source)
+	at org.eclipse.wb.internal.core.utils.reflect.ReflectionUtils.invokeMethod(ReflectionUtils.java:869)
+	at com.google.gdt.eclipse.designer.WarmUpSupport.warmUpHostedMode(WarmUpSupport.java:125)
+	at com.google.gdt.eclipse.designer.WarmUpSupport.warmUpHostedMode(WarmUpSupport.java:104)
+	at com.google.gdt.eclipse.designer.WarmUpSupport.doWarmUp(WarmUpSupport.java:84)
+	at com.google.gdt.eclipse.designer.Activator.earlyStartup(Activator.java:190)
+	at org.eclipse.ui.internal.EarlyStartupRunnable.runEarlyStartup(EarlyStartupRunnable.java:87)
+	at org.eclipse.ui.internal.EarlyStartupRunnable.run(EarlyStartupRunnable.java:73)
+	at org.eclipse.core.runtime.SafeRunner.run(SafeRunner.java:42)
+	at org.eclipse.ui.internal.Workbench$54.run(Workbench.java:2412)
+	at org.eclipse.core.internal.jobs.Worker.run(Worker.java:53)
+Translatable source found in...
+Found 2723 cached/archived units.  Used 2723 / 2723 units from cache.
+Compiling...
+   Compilation completed in 0,00 seconds
+Removing invalidated units
+Finding entry point classes
+Public resources found in...
+   [WARN] Error processing classpath URL 'file:/C:/Program Files/Eclipse/plugins/com.google.gdt.eclipse.designer.hosted.2_2_3.1.2.r42x201302131702/gwt-dev-designtime.jar'
+java.net.URISyntaxException: Illegal character in path at index 16: file:/C:/Program Files/Eclipse/plugins/com.google.gdt.eclipse.designer.hosted.2_2_3.1.2.r42x201302131702/gwt-dev-designtime.jar
+	at java.net.URI$Parser.fail(Unknown Source)
+	at java.net.URI$Parser.checkChars(Unknown Source)
+	at java.net.URI$Parser.parseHierarchical(Unknown Source)
+	at java.net.URI$Parser.parse(Unknown Source)
+	at java.net.URI.<init>(Unknown Source)
+	at java.net.URL.toURI(Unknown Source)
+	at com.google.gwt.dev.resource.impl.ResourceOracleImpl.addAllClassPathEntries(ResourceOracleImpl.java:326)
+	at com.google.gwt.dev.resource.impl.ResourceOracleImpl.getAllClassPathEntries(ResourceOracleImpl.java:361)
+	at com.google.gwt.dev.resource.impl.ResourceOracleImpl.<init>(ResourceOracleImpl.java:405)
+	at com.google.gwt.dev.cfg.ModuleDef.normalize(ModuleDef.java:545)
+	at com.google.gwt.dev.cfg.ModuleDefLoader.doLoadModule(ModuleDefLoader.java:202)
+	at com.google.gwt.dev.cfg.ModuleDefLoader.loadFromResources(ModuleDefLoader.java:172)
+	at com.google.gwt.dev.cfg.ModuleDefLoader.loadFromClassPath(ModuleDefLoader.java:144)
+	at com.google.gwt.dev.shell.designtime.HostedModeSupportImpl.loadModule(HostedModeSupportImpl.java:85)
+	at com.google.gwt.dev.shell.designtime.HostedModeSupportImpl.createModuleSpaceHost(HostedModeSupportImpl.java:64)
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(Unknown Source)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(Unknown Source)
+	at java.lang.reflect.Method.invoke(Unknown Source)
+	at org.eclipse.wb.internal.core.utils.reflect.ReflectionUtils.invokeMethod(ReflectionUtils.java:869)
+	at com.google.gdt.eclipse.designer.hosted.tdt.HostedModeSupport.createModuleSpaceHost(HostedModeSupport.java:447)
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(Unknown Source)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(Unknown Source)
+	at java.lang.reflect.Method.invoke(Unknown Source)
+	at org.eclipse.wb.internal.core.utils.reflect.ReflectionUtils.invokeMethod(ReflectionUtils.java:869)
+	at com.google.gdt.eclipse.designer.WarmUpSupport.warmUpHostedMode(WarmUpSupport.java:125)
+	at com.google.gdt.eclipse.designer.WarmUpSupport.warmUpHostedMode(WarmUpSupport.java:105)
+	at com.google.gdt.eclipse.designer.WarmUpSupport.doWarmUp(WarmUpSupport.java:84)
+	at com.google.gdt.eclipse.designer.Activator.earlyStartup(Activator.java:190)
+	at org.eclipse.ui.internal.EarlyStartupRunnable.runEarlyStartup(EarlyStartupRunnable.java:87)
+	at org.eclipse.ui.internal.EarlyStartupRunnable.run(EarlyStartupRunnable.java:73)
+	at org.eclipse.core.runtime.SafeRunner.run(SafeRunner.java:42)
+	at org.eclipse.ui.internal.Workbench$54.run(Workbench.java:2412)
+	at org.eclipse.core.internal.jobs.Worker.run(Worker.java:53)
+Translatable source found in...
+Found 2723 cached/archived units.  Used 2723 / 2723 units from cache.
+Compiling...
+   Compilation completed in 0,00 seconds
+Removing invalidated units
+Finding entry point classes
