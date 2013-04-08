@@ -35,7 +35,7 @@ if (mysql_affected_rows()>0)
 <body>
 	
 <p>If you not be redirect in five seconds press this link: 
-<a href=\"http://a-note.fdi.ucm.es/">http://a-note.fdi.ucm.es/</a></p>
+<a href=\"http://a-note.fdi.ucm.es/\">http://a-note.fdi.ucm.es/</a></p>
 	
 </body>
 	
