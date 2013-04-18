@@ -95,7 +95,7 @@ public class RepresentacionTemplateCategory extends Composite {
 						RepresentacionTemplateCategory Padrenew=((VerticalPanelTemplate) Padreact.getParent()).getFatherObject();
 						LoadingPanel.getInstance().center();
 						LoadingPanel.getInstance().setLabelTexto("Loading...");
-						exportServiceHolder.moveCategory(Padreact.getT().getId(), Padrenew.getT().getId(), YO.getT().getId(), new AsyncCallback<Void>() {
+						exportServiceHolder.moveCategory(Padrenew.getT().getId(), YO.getT().getId(),YO.getT().getTemplate().getId(), new AsyncCallback<Void>() {
 							
 							public void onSuccess(Void result) {
 								LoadingPanel.getInstance().hide();
@@ -159,7 +159,7 @@ public class RepresentacionTemplateCategory extends Composite {
 						
 							LoadingPanel.getInstance().center();
 							LoadingPanel.getInstance().setLabelTexto("Loading...");
-							exportServiceHolder.moveCategory(Padreact.getT().getId(), nuevoPadre.getT().getId(), YO.getT().getId(), new AsyncCallback<Void>() {
+							exportServiceHolder.moveCategory(nuevoPadre.getT().getId(), YO.getT().getId(),YO.getT().getTemplate().getId(), new AsyncCallback<Void>() {
 							
 							public void onSuccess(Void result) {
 								LoadingPanel.getInstance().hide();

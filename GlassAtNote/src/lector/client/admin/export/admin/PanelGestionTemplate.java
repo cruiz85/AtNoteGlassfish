@@ -6,6 +6,7 @@ import lector.client.book.reader.ExportService;
 import lector.client.book.reader.ExportServiceAsync;
 import lector.client.controler.Constants;
 import lector.client.controler.ConstantsError;
+import lector.client.controler.ConstantsInformation;
 import lector.client.reader.LoadingPanel;
 import lector.share.model.client.TemplateCategoryClient;
 import lector.share.model.client.TemplateClient;
@@ -53,61 +54,7 @@ public class PanelGestionTemplate extends Composite {
 		PanelTemplate = new VerticalPanel();
 		PanelTemplate.add(Actual);
 		initWidget(PanelTemplate);
-//		refresh();
-		
-		for (TemplateCategoryClient templateCategory : t.getCategories()) {
-			RepresentacionTemplateCategory Nuevo=new RepresentacionTemplateCategory(templateCategory, Actual,Actual.getProfundidad());
-			Nuevo.setclickHandel(new ClickHandler() {
-				
-				public void onClick(ClickEvent event) {
-					ButtonTemplateRep Mas=(ButtonTemplateRep)event.getSource();
-					Actual.getBotonSelect().setStyleName("gwt-ButtonCenterContinuoDoble");
-					Actual.setSelected(false);
-					Actual=Mas.getTRep();
-					Actual.getBotonSelect().setStyleName("gwt-ButtonCenterContinuoDobleSelect");
-					Actual.setSelected(true);
-					
-				}
-			});
-			ActualBase.addSon(Nuevo);
-			procesaHijo(Nuevo);
-			
-		}
-		
-		
-//		LoadingPanel.getInstance().center();
-//		LoadingPanel.getInstance().setLabelTexto("Loading...");
-//		exportServiceHolder.getTemplatesByIds(T.getCategories(), new AsyncCallback<ArrayList<TemplateCategory>>() {
-//			
-//			public void onSuccess(ArrayList<TemplateCategory> result) {
-//				LoadingPanel.getInstance().hide();
-//				for (TemplateCategory templateCategory : result) {
-//					RepresentacionTemplateCategory Nuevo=new RepresentacionTemplateCategory(templateCategory, Actual,Actual.getProfundidad());
-//					Nuevo.setclickHandel(new ClickHandler() {
-//						
-//						public void onClick(ClickEvent event) {
-//							ButtonTemplateRep Mas=(ButtonTemplateRep)event.getSource();
-//							Actual.getBotonSelect().setStyleName("gwt-ButtonCenterContinuoDoble");
-//							Actual.setSelected(false);
-//							Actual=Mas.getTRep();
-//							Actual.getBotonSelect().setStyleName("gwt-ButtonCenterContinuoDobleSelect");
-//							Actual.setSelected(true);
-//							
-//						}
-//					});
-//					ActualBase.addSon(Nuevo);
-//					ArbitroLlamadasTemplates.getInstance().addElement(Nuevo);
-//				}
-//				
-//				
-//			}
-//			
-//			public void onFailure(Throwable caught) {
-//				LoadingPanel.getInstance().hide();
-//				Window.alert(ErrorConstants.ERROR_RETRIVING_TEMPLATE_MASTER_CATEGORIES1+ T.getName() + ErrorConstants.ERROR_RETRIVING_TEMPLATE_MASTER_CATEGORIES2);
-//				
-//			}
-//		});
+		refresh();
 		
 		
 	
@@ -115,7 +62,7 @@ public class PanelGestionTemplate extends Composite {
 
 	private void procesaHijo(RepresentacionTemplateCategory nuevo) {
 		for (TemplateCategoryClient templateCategory : nuevo.getT().getSubCategories()) {
-			RepresentacionTemplateCategory Nuevo=new RepresentacionTemplateCategory(templateCategory, Actual,Actual.getProfundidad());
+			RepresentacionTemplateCategory Nuevo=new RepresentacionTemplateCategory(templateCategory, nuevo,nuevo.getProfundidad()+1);
 			Nuevo.setclickHandel(new ClickHandler() {
 				
 				public void onClick(ClickEvent event) {
@@ -157,7 +104,7 @@ public class PanelGestionTemplate extends Composite {
 		PanelTemplate.clear();
 		PanelTemplate.add(Actual);
 		LoadingPanel.getInstance().center();
-		LoadingPanel.getInstance().setLabelTexto("Loading...");
+		LoadingPanel.getInstance().setLabelTexto(ConstantsInformation.LOADING);
 		exportServiceHolder.loadTemplateById(T.getId(), new AsyncCallback<TemplateClient>() {
 			
 			public void onSuccess(TemplateClient result) {
@@ -165,7 +112,7 @@ public class PanelGestionTemplate extends Composite {
 				ActualBaseT.setSubCategories(result.getCategories());
 				T=result;
 				for (TemplateCategoryClient templateCategory : T.getCategories()) {
-					RepresentacionTemplateCategory Nuevo=new RepresentacionTemplateCategory(templateCategory, Actual,Actual.getProfundidad());
+					RepresentacionTemplateCategory Nuevo=new RepresentacionTemplateCategory(templateCategory, Actual,Actual.getProfundidad()+1);
 					Nuevo.setclickHandel(new ClickHandler() {
 						
 						public void onClick(ClickEvent event) {

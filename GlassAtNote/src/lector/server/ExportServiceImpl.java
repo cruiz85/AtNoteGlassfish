@@ -121,7 +121,7 @@ public class ExportServiceImpl extends RemoteServiceServlet implements
 			userTransaction.commit();
 		} catch (Exception e) {
 			ServiceManagerUtils.rollback(userTransaction); // TODO utilizar
-															// método de
+															// mï¿½todo de
 															// logger
 		}
 		if (entityManager.isOpen()) {
@@ -345,7 +345,6 @@ public class ExportServiceImpl extends RemoteServiceServlet implements
 			}
 
 		} catch (TemplateNotFoundException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (TemplateCategoryNotFoundException tcnfe) {
 			tcnfe.printStackTrace();
@@ -453,7 +452,7 @@ public class ExportServiceImpl extends RemoteServiceServlet implements
 			userTransaction.commit();
 		} catch (Exception e) {
 			ServiceManagerUtils.rollback(userTransaction); // TODO utilizar
-															// método de
+															// mï¿½todo de
 															// logger
 		}
 		if (entityManager.isOpen()) {
