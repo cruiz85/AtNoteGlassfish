@@ -51,7 +51,7 @@ public class AdministradorEntryPoint implements EntryPoint {
 	private static String CATALOG_BUTTON = "Catalogue";
 	private static String INTERFACE_LANGUAGE_BUTTON = "Interface Languages";
 	private static String EXPORT_TEMPLATES_BUTTON = "Export Templates";
-	private static String ACTIVITY_BUTTON="Activity";
+	private static String ACTIVITY_BUTTON="Create an activity";
 	private static String GROUP_BUTTON = "Group";
 	private static String USERS_BUTTON = "Users";
 	private static String ADMINISTRATORS_BUTTON = "Administrators";

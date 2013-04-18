@@ -27,7 +27,7 @@ public class ConstantsError {
 	public static String ERROR_UPDATING_TEMPLATE_CATEGORY="Error updating template category";
 	public static String ERROR_THIS_IS_A_TEMPLATE_DELETE="This is a Template, a template cannot be deleted here, go back if you want to delete the entire category";
 	public static String ERROR_DELETING_TEMPLATE_CATEGORY="Error deleting template category";
-	public static String ERROR_SELECTION_TOO_SLOW="The selection area is too small, please select a area more big";
+	public static String ERROR_SELECTION_TOO_SMALL="The selection area is too small, please select an area bigger";
 	public static String ERROR_ON_MOVE_CATEGORY_DEGRADING="Error degrading the category, please try again";
 	public static String ERROR_THERE_ARE_NOT_UP_BROTHER_TO_DEGRADE="There are not a up brother to degrade the category";
 	public static String ERROR_THERE_ARE_NOT_DOWN_BROTHER="There are not a down brother to swap weights the category";

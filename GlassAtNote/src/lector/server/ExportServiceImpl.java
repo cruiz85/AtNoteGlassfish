@@ -342,12 +342,15 @@ public class ExportServiceImpl extends RemoteServiceServlet implements
 				TemplateCategory fromFather = templateCategory.getFather();
 				templateCategory.setFather(newFather);
 				persistObjectsForCategoryMove(template, newFather, fromFather);
+				saveTemplateCategory(templateCategory);
 			}
 
 		} catch (TemplateNotFoundException e) {
 			e.printStackTrace();
 		} catch (TemplateCategoryNotFoundException tcnfe) {
 			tcnfe.printStackTrace();
+		} catch (GeneralException e) {
+			e.printStackTrace();
 		}
 
 	}
@@ -370,9 +373,27 @@ public class ExportServiceImpl extends RemoteServiceServlet implements
 	@Override
 	public void deleteTemplateCategory(Long templateCategoryId)
 			throws GeneralException {
+		try {
+			TemplateCategory templateCategory = findTemplateCategory(templateCategoryId);
+			TemplateCategory Father=templateCategory.getFather();
+			if (Father==null)
+			{
+				Template tenTemplate= templateCategory.getTemplate();
+				tenTemplate.getCategories().remove(templateCategory);
+				saveTemplate(tenTemplate);
+			}else
+			{
+				Father.getSubCategories().remove(templateCategory);
+				saveTemplateCategory(templateCategory);
+				
+			}
+			if (templateCategory.getSubCategories().size()!=0)
+				for (TemplateCategory hijos : templateCategory.getSubCategories()) {
+					deleteTemplateCategory(hijos.getId());
+				}
 		EntityManager entityManager = emf.createEntityManager();
 
-		try {
+
 			userTransaction.begin();
 			entityManager.createQuery(
 					"DELETE FROM TemplateCategory s WHERE s.id="
@@ -384,12 +405,13 @@ public class ExportServiceImpl extends RemoteServiceServlet implements
 					"Exception in method deleteTemplateCategoryById"
 							+ e.getMessage(), e.getStackTrace());
 		}
+		
 	}
 
 	@Override
 	public Template removeCategoriesFromTemplate(Long templateId,
 			List<Long> categoriesIds) {
-		// TODO Auto-generated method stub
+	
 		return null;
 	}
 
@@ -411,7 +433,6 @@ public class ExportServiceImpl extends RemoteServiceServlet implements
 				TemplateGenerator.Start(tClient, template);
 				templateClients.add(tClient);
 			} catch (TemplateNotFoundException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 

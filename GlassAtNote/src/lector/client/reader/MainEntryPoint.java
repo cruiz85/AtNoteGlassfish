@@ -1389,7 +1389,7 @@ pageBack.addMouseDownHandler(new MouseDownHandler() {
 					if (isSelectionMode){
 						if (!selectorvacio(popUpSelectoract))
 							popUpSelector.add(popUpSelectoract);
-						else Window.alert(ConstantsError.ERROR_SELECTION_TOO_SLOW);
+						else Window.alert(ConstantsError.ERROR_SELECTION_TOO_SMALL);
 						
 						if (!event.isShiftKeyDown())
 						{
