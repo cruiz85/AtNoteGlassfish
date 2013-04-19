@@ -335,14 +335,27 @@ public class ExportServiceImpl extends RemoteServiceServlet implements
 				fromFather.getSubCategories().remove(templateCategory);
 				templateCategory.setFather(newFather);
 				persistObjectsForCategoryMove(template, null, fromFather);
+				saveTemplateCategory(templateCategory);
 			} else {
 				if (!newFather.getSubCategories().contains(templateCategory)) {
 					newFather.getSubCategories().add(templateCategory);
 				}
 				TemplateCategory fromFather = templateCategory.getFather();
-				templateCategory.setFather(newFather);
-				persistObjectsForCategoryMove(template, newFather, fromFather);
-				saveTemplateCategory(templateCategory);
+				if (fromFather==null)
+				{
+					template=removeCategorieFromTemplate(template, templateCategory);
+					templateCategory.setFather(newFather);
+					persistObjectsForCategoryMove(template, newFather, null);
+					saveTemplateCategory(templateCategory);
+				}
+				else
+				{
+					fromFather.getSubCategories().remove(templateCategory);
+					templateCategory.setFather(newFather);
+					persistObjectsForCategoryMove(template, newFather, fromFather);
+					saveTemplateCategory(templateCategory);
+				}
+				
 			}
 
 		} catch (TemplateNotFoundException e) {
@@ -369,6 +382,24 @@ public class ExportServiceImpl extends RemoteServiceServlet implements
 	// }
 	//
 	// }
+
+	private Template removeCategorieFromTemplate(Template template,
+			TemplateCategory templateCategory) {
+			TemplateCategory found=null;
+			for (TemplateCategory candidate : template.getCategories()) {
+				if (candidate.getId().equals(templateCategory.getId()))
+					{
+					found=candidate;
+					break;
+					}
+				
+			}
+			if (found!=null)
+				template.getCategories().remove(found);
+			else System.err.println("Error intentas borrar un template category que en la base de datos no existe en el template");
+			return template;
+		
+	}
 
 	@Override
 	public void deleteTemplateCategory(Long templateCategoryId)
